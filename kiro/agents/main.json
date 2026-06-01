@@ -1,0 +1,16 @@
+{
+  "name": "main",
+  "tools": [
+    "@builtin",
+    "@memory"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    }
+  }
+}

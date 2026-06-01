@@ -1,0 +1,51 @@
+{
+  "name": "default",
+  "description": "閉環方法論 agent — 跨專案通用版",
+  "prompt": "file://../prompts/closed-loop-system.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "use_aws",
+    "introspect",
+    "knowledge",
+    "grep",
+    "glob",
+    "code",
+    "web_fetch",
+    "web_search",
+    "todo_list",
+    "subagent"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "introspect",
+    "todo_list",
+    "web_fetch",
+    "web_search"
+  ],
+  "resources": [
+    "file://CLAUDE.md",
+    "file://.kiro/CLAUDE.md",
+    "file://AGENTS.md",
+    "skill://.kiro/skills/**/SKILL.md",
+    "skill://~/.kiro/skills/**/SKILL.md"
+  ],
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "write",
+        "command": "echo ⚠️ [閘門B] 修改前請確認已完成因果鏈分析"
+      }
+    ]
+  },
+  "toolsSettings": {
+    "shell": {
+      "autoAllowReadonly": true
+    }
+  },
+  "welcomeMessage": "閉環方法論 agent 已啟動。依據任務等級（微小/中型/大型）自動選擇流程。繁體中文互動。"
+}

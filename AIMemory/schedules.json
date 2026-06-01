@@ -1,0 +1,16 @@
+[
+  {
+    "chatId": 509424983,
+    "userId": 509424983,
+    "runAt": 1780344000000,
+    "prompt": "/dream",
+    "recurrence": {
+      "kind": "daily",
+      "hour": 4,
+      "minute": 0,
+      "second": 0
+    },
+    "id": "76ec2288",
+    "createdAt": 1780046358068
+  }
+]

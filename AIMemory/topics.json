@@ -1,0 +1,80 @@
+// Topic classification rules for bridge preamble + list_facts.
+// Edit freely — bridge re-reads this file every ~2s, no /restart needed.
+// Schema: [{ topic: string, keywords: string[] }]
+//   - Keywords are lowercase substrings; fact text is lowercased before matching.
+//   - First matching rule wins; facts matching nothing become 'misc'.
+//   - Topic names should be short and unique (case-insensitive).
+// If the file is deleted or malformed, bridge falls back to built-in defaults.
+[
+  {
+    "topic": "uk-slot",
+    "keywords": [
+      "uk_pirates_queen",
+      "uk_slot",
+      "slot 遊戲",
+      "老虎機",
+      "astarte framework",
+      "cocos creator",
+      "pq3",
+      "pq9999",
+      "robinhood",
+      "eyestrike",
+      "pirate2",
+      "slotextensions",
+      "uk slot"
+    ]
+  },
+  {
+    "topic": "bridge-project",
+    "keywords": [
+      "telegram-kiro-bridge",
+      "desktop-pet",
+      "bridge 專案",
+      "grammy",
+      "acp ",
+      "mcp-memory",
+      "buildpreamble"
+    ]
+  },
+  {
+    "topic": "skill-system",
+    "keywords": [
+      "skill.md",
+      "skill：",
+      "skill:",
+      "萃取",
+      "skillopt",
+      "writing-skills",
+      "memory-to-skill",
+      "~/.kiro/skills"
+    ]
+  },
+  {
+    "topic": "user-pref",
+    "keywords": [
+      "使用者偏好",
+      "使用者工作流",
+      "偏好 agent",
+      "github 帳號"
+    ]
+  },
+  {
+    "topic": "people",
+    "keywords": [
+      "認識",
+      "igs",
+      "鈊象",
+      "小葉",
+      "葉錦頤"
+    ]
+  },
+  {
+    "topic": "tool-eval",
+    "keywords": [
+      "評估後決定",
+      "暫不安裝",
+      "webwright",
+      "框架評估"
+    ]
+  }
+]
