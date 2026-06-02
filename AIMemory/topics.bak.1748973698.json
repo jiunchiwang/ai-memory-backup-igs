@@ -33,11 +33,7 @@
       "grammy",
       "acp ",
       "mcp-memory",
-      "buildpreamble",
-      "/dream",
-      "wikisync",
-      "parallel_delegate",
-      "cross-check"
+      "buildpreamble"
     ]
   },
   {
@@ -51,17 +47,6 @@
       "writing-skills",
       "memory-to-skill",
       "~/.kiro/skills"
-    ]
-  },
-  {
-    "topic": "tool-eval",
-    "keywords": [
-      "評估後決定",
-      "暫不安裝",
-      "webwright",
-      "框架評估",
-      "借鏡",
-      "dynamic workflow"
     ]
   },
   {
@@ -81,6 +66,15 @@
       "鈊象",
       "小葉",
       "葉錦頤"
+    ]
+  },
+  {
+    "topic": "tool-eval",
+    "keywords": [
+      "評估後決定",
+      "暫不安裝",
+      "webwright",
+      "框架評估"
     ]
   }
 ]

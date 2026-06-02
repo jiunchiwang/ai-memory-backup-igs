@@ -1,1 +1,0 @@
-- [f_60159c] [2026-05-31T09:29:54.137Z] 使用者在 /dream 維運流程中加入 docupdate 步驟，每日自動比對 README 與 usage-guide.html 的差異並補上缺少的功能說明

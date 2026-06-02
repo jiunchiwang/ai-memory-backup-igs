@@ -1,1 +1,3 @@
 - [f_73e043] [2026-05-29T16:20:19.513Z] 使用者對微軟 Webwright（瀏覽器自動化框架）評估後決定暫不安裝，等有需要再說
+- [f_491a65] [2026-06-02T13:30:02.296Z] 使用者建立了 docs/claude-code-workflows.html 作為 Claude Code Dynamic Workflows 的介紹與架構比較頁面
+- [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
