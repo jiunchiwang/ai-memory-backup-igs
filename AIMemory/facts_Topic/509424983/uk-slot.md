@@ -2,3 +2,4 @@
 - [f_79c118] [2026-05-29T12:03:17.165Z] uk_pirates_queen 是 UK 市場的海盜女王主題 slot 遊戲，6列5行盤面，含消除連鎖、懸賞令倍率、Free Game、輪盤選獎等機制
 - [f_967ccc] [2026-05-29T20:06:30.567Z] 使用者有一個 Cocos Creator 3.6.2 老虎機模板專案 uk_slot_template 位於 G:\Cocos_Project\uk_slot_template，是所有 UK slot 遊戲的 fork 來源
 - [f_e8b2cf] [2026-05-29T20:06:30.570Z] uk_slot_template 支援三種轉輪玩法：Standard（傳統滾動）、Cascade（消除天降）、Tumble（快速掉落+乘倍），透過 FillStrategy 策略模式切換
+- [f_991386] [2026-06-01T12:16:45.036Z] 使用者的 uk_slot_template 團隊規範要求方法（method/function）使用大駝峰（PascalCase）命名

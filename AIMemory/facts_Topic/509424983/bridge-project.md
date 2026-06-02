@@ -1,3 +1,4 @@
 - [f_4e8237] [2026-05-29T12:03:17.153Z] 使用者有一個 telegram-kiro-bridge 專案位於 G:\AI\telegram-kiro-bridge-main，含 desktop-pet Electron 桌面寵物功能
 - [f_d21a12] [2026-05-29T20:06:30.574Z] 使用者的 AIMemory 系統位於 G:\AI\AIMemory，含 facts、topics、wiki、dailylog、sessions 等子結構，由 telegram-kiro-bridge 的 /dream 每日凌晨 04:00 自動維運
 - [f_0b90e2] [2026-05-31T09:29:54.126Z] 使用者建立了 docs/usage-guide.html 作為 telegram-kiro-bridge 的功能教學頁面，深色主題，依重要性分 12 章節附範例
+- [f_b7206d] [2026-06-01T10:57:23.404Z] 使用者已設定 telegram-kiro-bridge 的 start.bat 在 Windows 開機時自動啟動（透過 shell:startup 資料夾的 bat 檔）
