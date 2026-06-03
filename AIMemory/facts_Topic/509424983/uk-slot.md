@@ -3,3 +3,10 @@
 - [f_967ccc] [2026-05-29T20:06:30.567Z] 使用者有一個 Cocos Creator 3.6.2 老虎機模板專案 uk_slot_template 位於 G:\Cocos_Project\uk_slot_template，是所有 UK slot 遊戲的 fork 來源
 - [f_e8b2cf] [2026-05-29T20:06:30.570Z] uk_slot_template 支援三種轉輪玩法：Standard（傳統滾動）、Cascade（消除天降）、Tumble（快速掉落+乘倍），透過 FillStrategy 策略模式切換
 - [f_991386] [2026-06-01T12:16:45.036Z] 使用者的 uk_slot_template 團隊規範要求方法（method/function）使用大駝峰（PascalCase）命名
+- [f_cea694] [2026-06-03T08:26:49.768Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_eye_strike 位於 G:\Cocos_Project\uk_slot_eye_strike，其 MultiplierManager.m_downEffectSpine 的 Idle 動畫是靜止的，已記為待優化項目（改用靜態圖+隱藏Spine省效能）
+- [f_3f7536] [2026-06-03T12:26:41.806Z] cocos的老虎機專案都不能去改動Astarte Framework
+- [f_r0b1nh] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_722_robinhood_client 位於 G:\Cocos_Project\uk_722_robinhood_client，Robin Hood 主題
+- [f_wr4th9] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_739_wrath_of_thunder_client 位於 G:\Cocos_Project\uk_739_wrath_of_thunder_client，Wrath of Thunder 雷神主題
+- [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
+- [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
+- [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題

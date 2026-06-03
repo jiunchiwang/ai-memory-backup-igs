@@ -11,22 +11,17 @@
     "keywords": [
       "uk_pirates_queen",
       "uk_slot",
-      "uk_722",
-      "uk_739",
-      "uk_746",
-      "uk_872",
-      "robinhood",
-      "eyestrike",
-      "far_west",
-      "wrath_of_thunder",
-      "chachacha",
       "slot 遊戲",
       "老虎機",
       "astarte framework",
       "cocos creator",
-      "cocos_project",
-      "fillstrategy",
-      "pascalcase"
+      "pq3",
+      "pq9999",
+      "robinhood",
+      "eyestrike",
+      "pirate2",
+      "slotextensions",
+      "uk slot"
     ]
   },
   {
@@ -42,43 +37,11 @@
       "/dream",
       "wikisync",
       "parallel_delegate",
-      "cross-check",
-      "start.bat",
-      "backup_repo_dir",
-      "ai-memory-backup",
-      "usage-guide.html",
-      "docupdate",
-      "aimemory",
-      "wiki 知識庫"
+      "cross-check"
     ]
   },
   {
-    "topic": "user-pref",
-    "keywords": [
-      "使用者偏好",
-      "使用者工作流",
-      "偏好 agent",
-      "偏好 html",
-      "偏好 git",
-      "commit 訊息",
-      "產 pdf 的工作流程",
-      "目錄錨點跳轉"
-    ]
-  },
-  {
-    "topic": "dev-tools",
-    "keywords": [
-      "已安裝 python",
-      "youtube-transcript-api",
-      "playwright",
-      "chromium",
-      "to_pdf.py",
-      "gtc-taipei",
-      "黃仁勳"
-    ]
-  },
-  {
-    "topic": "skill-and-eval",
+    "topic": "skill-system",
     "keywords": [
       "skill.md",
       "skill：",
@@ -87,12 +50,27 @@
       "skillopt",
       "writing-skills",
       "memory-to-skill",
-      "~/.kiro/skills",
+      "~/.kiro/skills"
+    ]
+  },
+  {
+    "topic": "tool-eval",
+    "keywords": [
       "評估後決定",
       "暫不安裝",
       "webwright",
+      "框架評估",
       "借鏡",
       "dynamic workflow"
+    ]
+  },
+  {
+    "topic": "user-pref",
+    "keywords": [
+      "使用者偏好",
+      "使用者工作流",
+      "偏好 agent",
+      "github 帳號"
     ]
   },
   {

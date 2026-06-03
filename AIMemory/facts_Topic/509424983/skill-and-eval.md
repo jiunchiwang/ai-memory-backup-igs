@@ -1,2 +1,3 @@
+- [f_73e043] [2026-05-29T16:20:19.513Z] 使用者對微軟 Webwright（瀏覽器自動化框架）評估後決定暫不安裝，等有需要再說
 - [f_e6ba59] [2026-05-29T16:20:19.517Z] 使用者對微軟 SkillOpt 論文感興趣，已將其迭代原則整合進 writing-skills SKILL.md
 - [f_cb10bc] [2026-05-29T16:20:19.519Z] 使用者從「從LLM到AI_Agent.pdf」（IGS 小葉內訓教材）萃取了 4 個 skill：dual-skill-review-loop、non-engineer-agent-design、knowhow-accumulation、self-eval-prompt-pattern

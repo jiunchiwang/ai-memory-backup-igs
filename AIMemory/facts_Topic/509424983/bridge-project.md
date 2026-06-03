@@ -3,7 +3,6 @@
 - [f_0b90e2] [2026-05-31T09:29:54.126Z] 使用者建立了 docs/usage-guide.html 作為 telegram-kiro-bridge 的功能教學頁面，深色主題，依重要性分 12 章節附範例
 - [f_60159c] [2026-05-31T09:29:54.137Z] 使用者在 /dream 維運流程中加入 docupdate 步驟，每日自動比對 README 與 usage-guide.html 的差異並補上缺少的功能說明
 - [f_b7206d] [2026-06-01T10:57:23.404Z] 使用者已設定 telegram-kiro-bridge 的 start.bat 在 Windows 開機時自動啟動（透過 shell:startup 資料夾的 bat 檔）
-- [f_87759e] [2026-06-02T00:33:13.791Z] 使用者的 wiki 知識庫已產出第一頁 wiki/concepts/uk-slot.md，wikisync 門檻為 ≥5 facts 才自動產頁
 - [f_5a495e] [2026-06-02T13:30:02.283Z] 使用者已在 telegram-kiro-bridge 的 PARALLEL_DELEGATE 機制中加入 cross-check 功能，借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
-- [f_4f8733] [2026-06-02T20:08:16.198Z] 使用者的 topics.json 已更新：bridge-project 加入 /dream、wikisync、parallel_delegate、cross-check 等 keyword；tool-eval 加入借鏡、dynamic workflow，misc 降為 0 條
+- [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
 - [f_a10e66] [2026-06-03T01:38:17.048Z] 使用者的 telegram-kiro-bridge 備份 repo 位於 G:\AI\ai-memory-backup-igs，remote 為 https://github.com/jiunchiwang/ai-memory-backup-igs.git，branch 為 master
