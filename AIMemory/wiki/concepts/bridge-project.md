@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-04
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66]
+updated: 2026-06-06
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -53,6 +53,12 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 ## Wiki 知識庫
 
 wiki 系統門檻為 ≥5 facts 才自動產出 concepts 頁面（由 `/wikisync` 步驟處理）。
+
+## 多機器部署
+
+- 此專案已在第二台機器部署（G: 磁碟，`MEMORY_DIR=G:\AI\AIMemory`）
+- 原開發機使用 F: 磁碟（`F:\AI\AIMemory`）
+- `.env` 必須正確設定 `MEMORY_DIR`、`BACKUP_REPO_DIR`，否則 `/dream` 維運全部失敗
 
 ## 相關
 

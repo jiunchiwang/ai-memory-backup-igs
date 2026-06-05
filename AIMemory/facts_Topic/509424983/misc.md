@@ -1,0 +1,1 @@
+- [f_ed0429] [2026-06-04T20:09:05.205Z] 使用者的 ms-wiki-knowledge-base skill 已從磁碟刪除但 .usage.json 仍有紀錄（orphan 狀態），use_count=18 是所有 skill 中最高的
