@@ -1,1 +1,3 @@
 - [f_ed0429] [2026-06-04T20:09:05.205Z] 使用者的 ms-wiki-knowledge-base skill 已從磁碟刪除但 .usage.json 仍有紀錄（orphan 狀態），use_count=18 是所有 skill 中最高的
+- [f_8f81fa] [2026-06-05T20:09:33.252Z] 使用者已安裝 ui-ux-pro-max skill 到 ~/.kiro/steering/ui-ux-pro-max/（透過 uipro-cli），用於 HTML 頁面設計時自動提供配色、字型、佈局建議
+- [f_273d6e] [2026-06-05T20:09:33.272Z] 使用者建立了 docs/llm-to-ai-agent-summary.html 作為「從LLM到AI_Agent.pdf」的重點學習整理頁面（深色主題、8 章節、目錄跳轉）
