@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-06
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7]
+updated: 2026-06-08
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_273d6e]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -27,6 +27,7 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 ## 文件與教學
 
 - `docs/usage-guide.html` — 功能教學頁面，深色主題，依重要性分 12 章節附範例
+- `docs/llm-to-ai-agent-summary.html` — 「從LLM到AI_Agent.pdf」重點學習整理頁面（深色主題、8 章節、目錄跳轉）
 - `/dream` 流程含 `docupdate` 步驟，每日自動比對 README 與 HTML 差異並補上缺少的功能說明
 
 ## 部署配置
@@ -63,3 +64,4 @@ wiki 系統門檻為 ≥5 facts 才自動產出 concepts 頁面（由 `/wikisync
 ## 相關
 
 - [[uk-slot]] — 使用者的主要開發產品線
+- [[skill-and-eval]] — skill 評估與管理追蹤

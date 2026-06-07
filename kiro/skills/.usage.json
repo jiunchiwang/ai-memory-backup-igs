@@ -1,10 +1,10 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-06T20:05:59.965Z",
+  "_last_updated_at": "2026-06-07T20:14:41.758Z",
   "skills": {
     "writing-skills": {
       "created_at": "2026-05-29T12:42:01.456Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.740Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:47.789Z",
       "last_agent_used_at": "2026-05-29T13:05:08.597Z",
       "use_count": 2,
       "last_reason": "參考 SKILL.md 結構規範和 CSO 原則撰寫 4 個新 skill",
@@ -14,7 +14,7 @@
     },
     "ms-portable-skill-authoring": {
       "created_at": "2026-05-29T13:05:08.597Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.742Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:47.894Z",
       "last_agent_used_at": "2026-05-29T13:05:08.597Z",
       "use_count": 1,
       "last_reason": "確保 skill 不含硬編碼路徑，使用 ${MEMORY_DIR} 等變數引用",
@@ -24,9 +24,9 @@
     },
     "memory-to-skill": {
       "created_at": "2026-05-29T20:01:58.179Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.744Z",
-      "last_agent_used_at": "2026-06-06T20:02:32.546Z",
-      "use_count": 8,
+      "last_bridge_listed_at": "2026-06-06T23:44:48.023Z",
+      "last_agent_used_at": "2026-06-07T20:04:51.133Z",
+      "use_count": 9,
       "last_reason": "完整執行掃描流程：讀 session、比對 9 個既有 ms-* skill frontmatter、依門檻篩選後判斷無候選",
       "pinned": false,
       "notes": null,
@@ -34,9 +34,9 @@
     },
     "ms-wiki-knowledge-base": {
       "created_at": "2026-05-29T20:03:43.602Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.745Z",
-      "last_agent_used_at": "2026-06-06T20:05:59.965Z",
-      "use_count": 24,
+      "last_bridge_listed_at": "2026-06-06T23:44:48.105Z",
+      "last_agent_used_at": "2026-06-07T20:14:41.758Z",
+      "use_count": 27,
       "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
@@ -44,7 +44,7 @@
     },
     "closed-loop": {
       "created_at": "2026-05-14T09:28:55.605Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.747Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.169Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -54,7 +54,7 @@
     },
     "dual-skill-review-loop": {
       "created_at": "2026-05-29T13:03:17.852Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.748Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.206Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -64,7 +64,7 @@
     },
     "knowhow-accumulation": {
       "created_at": "2026-05-29T13:04:22.387Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.749Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.233Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -74,7 +74,7 @@
     },
     "ms-agent-scheduled-prompts": {
       "created_at": "2026-05-29T08:58:12.625Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.751Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.273Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -84,7 +84,7 @@
     },
     "ms-agent-text-token-signaling": {
       "created_at": "2026-05-29T08:58:12.628Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.753Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.360Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -94,7 +94,7 @@
     },
     "ms-kiro-strreplace-silent-fail": {
       "created_at": "2026-05-29T08:58:12.630Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.754Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.441Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -104,7 +104,7 @@
     },
     "ms-streaming-token-pipeline": {
       "created_at": "2026-05-29T08:58:12.636Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.756Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.518Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -114,7 +114,7 @@
     },
     "ms-telegram-ask-button-protocol": {
       "created_at": "2026-05-29T08:58:12.640Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.757Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.565Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -124,7 +124,7 @@
     },
     "ms-telegram-bot-rate-limit-survival": {
       "created_at": "2026-05-29T08:58:12.643Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.759Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.648Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -134,7 +134,7 @@
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.760Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.704Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -144,7 +144,7 @@
     },
     "ms-windows-shell-interactive-prompt": {
       "created_at": "2026-05-29T08:58:12.650Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.761Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.753Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -154,7 +154,7 @@
     },
     "non-engineer-agent-design": {
       "created_at": "2026-05-29T13:03:49.224Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.763Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.844Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -164,7 +164,7 @@
     },
     "self-eval-prompt-pattern": {
       "created_at": "2026-05-29T13:04:56.604Z",
-      "last_bridge_listed_at": "2026-05-29T23:56:28.764Z",
+      "last_bridge_listed_at": "2026-06-06T23:44:48.979Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -174,7 +174,7 @@
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-05T12:58:42.278Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-06-06T23:44:49.125Z",
       "last_agent_used_at": "2026-06-05T12:58:42.278Z",
       "use_count": 1,
       "last_reason": "參考 design system generator 推薦配色與佈局原則，手動覆寫字型選擇避免兒童風",
