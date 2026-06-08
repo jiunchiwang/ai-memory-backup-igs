@@ -1,1 +1,2 @@
 - [f_7c41c5] [2026-06-03T12:19:51.275Z] 使用者的機器已安裝 Python youtube-transcript-api、playwright + chromium，可用於抓 YouTube 字幕和 HTML 轉 PDF
+- [f_07d587] [2026-06-08T11:49:43.143Z] 使用者有一個 GitHubTool 專案位於 G:\AI\GitHubTool，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織，功能含批量建倉、批量權限、團隊成員管理

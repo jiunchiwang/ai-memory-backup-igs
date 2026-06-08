@@ -7,3 +7,4 @@
 - [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
 - [f_a10e66] [2026-06-03T01:38:17.048Z] 使用者的 telegram-kiro-bridge 備份 repo 位於 G:\AI\ai-memory-backup-igs，remote 為 https://github.com/jiunchiwang/ai-memory-backup-igs.git，branch 為 master
 - [f_721fa7] [2026-06-04T20:09:05.182Z] 使用者的 AIMemory 實際路徑為 G:\AI\AIMemory（此機器為 G: 磁碟，非原開發機的 F:\AI\AIMemory）
+- [f_273d6e] [2026-06-05T20:09:33.272Z] 使用者建立了 docs/llm-to-ai-agent-summary.html 作為「從LLM到AI_Agent.pdf」的重點學習整理頁面（深色主題、8 章節、目錄跳轉）
