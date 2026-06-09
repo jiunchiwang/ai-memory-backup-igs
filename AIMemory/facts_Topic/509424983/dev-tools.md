@@ -1,2 +1,4 @@
 - [f_7c41c5] [2026-06-03T12:19:51.275Z] 使用者的機器已安裝 Python youtube-transcript-api、playwright + chromium，可用於抓 YouTube 字幕和 HTML 轉 PDF
 - [f_07d587] [2026-06-08T11:49:43.143Z] 使用者有一個 GitHubTool 專案位於 G:\AI\GitHubTool，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織，功能含批量建倉、批量權限、團隊成員管理
+- [f_0b76be] [2026-06-09T08:29:22.325Z] 使用者建立了 docs/typescript-guide.html 作為 TypeScript 完整教學手冊的 HTML 版本（深色主題、左側目錄、語法高亮），來源為 OneDrive Obsidian Vault 的 typescript-guide_Claude.md
+- [f_86246b] [2026-06-09T08:29:22.331Z] 使用者的 Obsidian Vault 位於 C:\Users\jiunchiwang\OneDrive - International Games System\文件\Obsidian Vault\，內含 TypeScript 等技術筆記

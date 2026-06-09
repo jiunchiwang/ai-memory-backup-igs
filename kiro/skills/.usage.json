@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-08T20:05:39.617Z",
+  "_last_updated_at": "2026-06-09T20:06:06.930Z",
   "skills": {
     "writing-skills": {
       "created_at": "2026-05-29T12:42:01.456Z",
@@ -25,22 +25,12 @@
     "memory-to-skill": {
       "created_at": "2026-05-29T20:01:58.179Z",
       "last_bridge_listed_at": "2026-06-06T23:44:48.023Z",
-      "last_agent_used_at": "2026-06-08T20:01:27.239Z",
-      "use_count": 10,
-      "last_reason": "完整執行掃描流程：讀 3 個 session、比對既有 ms-* skill frontmatter、依四問門檻篩選後判斷無候選、無 rationale fact",
+      "last_agent_used_at": "2026-06-09T20:02:16.709Z",
+      "use_count": 11,
+      "last_reason": "完整執行掃描流程：讀 6 個 session（3 組重複 + 1 大型 dream log）、比對 9 個 ms-* skill frontmatter、依四問門檻篩選後判斷無候選、rationale 掃描零命中",
       "pinned": false,
       "notes": null,
       "orphan": false
-    },
-    "ms-wiki-knowledge-base": {
-      "created_at": "2026-05-29T20:03:43.602Z",
-      "last_bridge_listed_at": "2026-06-06T23:44:48.105Z",
-      "last_agent_used_at": "2026-06-08T20:05:39.617Z",
-      "use_count": 30,
-      "last_reason": "wikilint 步驟",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
     },
     "closed-loop": {
       "created_at": "2026-05-14T09:28:55.605Z",
@@ -175,9 +165,19 @@
     "ui-ux-pro-max": {
       "created_at": "2026-06-05T12:58:42.278Z",
       "last_bridge_listed_at": "2026-06-06T23:44:49.125Z",
-      "last_agent_used_at": "2026-06-05T12:58:42.278Z",
-      "use_count": 1,
-      "last_reason": "參考 design system generator 推薦配色與佈局原則，手動覆寫字型選擇避免兒童風",
+      "last_agent_used_at": "2026-06-09T01:30:23.427Z",
+      "use_count": 2,
+      "last_reason": "用 --design-system 取得深色主題技術文件的配色、字型與風格建議，套用到 HTML 產出",
+      "pinned": false,
+      "notes": null,
+      "orphan": true
+    },
+    "ms-wiki-knowledge-base": {
+      "created_at": "2026-06-09T20:04:21.223Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-06-09T20:06:06.930Z",
+      "use_count": 3,
+      "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
       "orphan": true
