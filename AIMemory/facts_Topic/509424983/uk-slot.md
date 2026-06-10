@@ -10,3 +10,4 @@
 - [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
 - [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
+- [f_e9d947] [2026-06-10T11:47:01.979Z] uk_872_eyestrike2_client 專案在 .claude_temp/ 資料夾維護一份 proto參數說明.md，記錄 ar2es2Proto.d.ts 的欄位用途與值域，作為開發參考文件

@@ -1,3 +1,10 @@
 {
-  "chat.defaultModel": "claude-opus-4.6"
+  "chat.defaultModel": "claude-opus-4.6",
+  "chat.modelDefaults": {
+    "claude-opus-4.6": {
+      "output_config": {
+        "effort": "max"
+      }
+    }
+  }
 }

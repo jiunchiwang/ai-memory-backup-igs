@@ -2,7 +2,7 @@
   {
     "chatId": 509424983,
     "userId": 509424983,
-    "runAt": 1781035200000,
+    "runAt": 1781121600000,
     "prompt": "/dream",
     "recurrence": {
       "kind": "daily",
