@@ -9,7 +9,9 @@
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory 系統、備份機制、品質機制）
 - [[skill-and-eval]] — Skill 評估與管理（方法論整合、工具評估決策、orphan 追蹤）
 
+- [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
+
 ---
 
-Total pages: 3
-Last updated: 2026-06-11
+Total pages: 4
+Last updated: 2026-06-12
