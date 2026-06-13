@@ -2,8 +2,8 @@
 title: Skill 評估與管理
 type: concept
 created: 2026-06-08
-updated: 2026-06-08
-sources: [f_73e043, f_e6ba59, f_cb10bc, f_af99c8, f_ed0429, f_8f81fa]
+updated: 2026-06-14
+sources: [f_73e043, f_e6ba59, f_cb10bc, f_af99c8, f_8f81fa]
 ---
 
 # Skill 評估與管理
@@ -39,7 +39,7 @@ sources: [f_73e043, f_e6ba59, f_cb10bc, f_af99c8, f_ed0429, f_8f81fa]
 
 ## Orphan 追蹤
 
-`ms-wiki-knowledge-base` 曾是使用頻率最高的 skill（use_count=18~24），SKILL.md 已刪除但 `.usage.json` 紀錄殘留（orphan 狀態）。其功能已內化到 bridge preamble 和 `/wikisync`、`/wikilint` 等指令中。
+`ms-wiki-knowledge-base` 曾是使用頻率最高的 skill（use_count=18~24），SKILL.md 已刪除，`.usage.json` 紀錄也已於 2026-06-13 清除。其功能已完全內化到 bridge preamble 和 `/wikisync`、`/wikilint` 等指令中。
 
 ## 相關
 
