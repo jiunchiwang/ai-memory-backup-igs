@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-06-11
-sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947]
+updated: 2026-06-18
+sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_09acc4, f_4b8ff5, f_c01dbd, f_e61df4, f_89a745]
 ---
 
 # UK Slot 老虎機專案群
@@ -47,6 +47,22 @@ sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, 
 ## 待優化項目
 
 - uk_slot_eye_strike：`MultiplierManager.m_downEffectSpine` 的 Idle 動畫實際靜止，可優化為靜態圖 + 隱藏 Spine 省效能
+- uk_pirates_queen：懸賞令（WantedPoster）退場時 `cc.Layout` 瞬間重排視覺突兀，需改為動畫過渡
+
+## Spine-Viewer 插件
+
+Cocos Creator 全域插件，位於 `~/.CocosCreator/extensions/spine-viewer`，用於分析 Spine 資源效能。
+
+- **Batch Scan**：掃描指定目錄下所有 Spine，輸出 Excel（5 欄：Spine檔名、Skin、Animation、Triangle數(最大)、DrawCall）
+- **Triangle 計算**：全 keyframe 掃描（從 animation timelines 抽取所有 frame time 取最大值）
+- **DrawCall 計算**：CPU 模擬 PolygonBatcher 合批規則（texture identity + blend mode 斷批），不需要 WebGL context
+- **效能**：用 `child_process.fork` 獨立進程執行批量掃描，不阻塞 Cocos 主進程
+- **注意**：spine-webgl TextureAtlas 的 texture factory callback 每次呼叫必須回傳獨立物件（含 getImage 方法），否則 DC 比對失效
+- **打包**：`pack.bat` 產出 `spine-viewer-release.zip`，對方解壓到 `~/.CocosCreator/extensions/` 即可
+
+### Cocos Creator 3.6 插件開發踩坑
+
+- `Editor.Message.send` 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 
 ## 相關
 

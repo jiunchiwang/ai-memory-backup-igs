@@ -11,3 +11,6 @@
 - [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
 - [f_e9d947] [2026-06-10T11:47:01.979Z] uk_872_eyestrike2_client 專案在 .claude_temp/ 資料夾維護一份 proto參數說明.md，記錄 ar2es2Proto.d.ts 的欄位用途與值域，作為開發參考文件
+- [f_02cb06] [2026-06-17T10:50:58.031Z] spine-viewer 插件位於 C:\Users\jiunchiwang\.CocosCreator\extensions\spine-viewer，Cocos Creator ≥3.6.2 使用
+- [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
+- [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化

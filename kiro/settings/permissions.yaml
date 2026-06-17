@@ -1,0 +1,15 @@
+rules:
+  - capability: shell
+    match:
+      - npm run typecheck
+      - npm *
+      - node editor-extension/install.js *
+      - ls *
+      - Get-ChildItem *
+      - "*"
+      - python *
+    effect: allow
+  - capability: web_fetch
+    effect: allow
+  - capability: web_search
+    effect: allow

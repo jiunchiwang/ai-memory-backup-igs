@@ -26,7 +26,11 @@
       "cocos creator",
       "cocos_project",
       "fillstrategy",
-      "pascalcase"
+      "pascalcase",
+      "spine-viewer",
+      "spine-webgl",
+      "drawcall",
+      "triangle"
     ]
   },
   {
@@ -50,7 +54,8 @@
       "docupdate",
       "aimemory",
       "wiki 知識庫",
-      "llm-to-ai-agent"
+      "llm-to-ai-agent",
+      "hermes"
     ]
   },
   {

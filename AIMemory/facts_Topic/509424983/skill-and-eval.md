@@ -2,3 +2,4 @@
 - [f_e6ba59] [2026-05-29T16:20:19.517Z] 使用者對微軟 SkillOpt 論文感興趣，已將其迭代原則整合進 writing-skills SKILL.md
 - [f_cb10bc] [2026-05-29T16:20:19.519Z] 使用者從「從LLM到AI_Agent.pdf」（IGS 小葉內訓教材）萃取了 4 個 skill：dual-skill-review-loop、non-engineer-agent-design、knowhow-accumulation、self-eval-prompt-pattern
 - [f_8f81fa] [2026-06-05T20:09:33.252Z] 使用者已安裝 ui-ux-pro-max skill 到 ~/.kiro/steering/ui-ux-pro-max/（透過 uipro-cli），用於 HTML 頁面設計時自動提供配色、字型、佈局建議
+- [f_e47a60] [2026-06-17T06:23:30.362Z] 使用者關注 Hermes AI Agent 的 Skill 市集和語音模式，認為值得 bridge 借鏡

@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-08
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_273d6e]
+updated: 2026-06-18
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_273d6e, f_07d587, f_460731]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -28,7 +28,12 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 
 - `docs/usage-guide.html` — 功能教學頁面，深色主題，依重要性分 12 章節附範例
 - `docs/llm-to-ai-agent-summary.html` — 「從LLM到AI_Agent.pdf」重點學習整理頁面（深色主題、8 章節、目錄跳轉）
+- `docs/hermes-vs-bridge.html` — Hermes AI Agent vs Bridge 功能比較頁面（7 區塊比較表 + 6 張評分卡）
 - `/dream` 流程含 `docupdate` 步驟，每日自動比對 README 與 HTML 差異並補上缺少的功能說明
+
+## 相關工具
+
+- **GitHubTool**：位於 `G:\AI\GitHubTool`，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織（批量建倉、權限、團隊管理）
 
 ## 部署配置
 
