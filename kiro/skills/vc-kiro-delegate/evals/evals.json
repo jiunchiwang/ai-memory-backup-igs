@@ -1,0 +1,26 @@
+{
+  "skill_name": "kiro-delegate",
+  "evals": [
+    {
+      "id": 1,
+      "name": "add-function-natural",
+      "prompt": "我有一個 utils.py 在這個 workspace 根目錄，已經有 deep_merge 跟 chunk 兩個函式。請幫我新增一個 flatten_dict(d, sep='.') 函式，把巢狀字典攤平成單層，例如 {'a': {'b': 1}} → {'a.b': 1}。要遵循檔案既有的 Google-style docstring 風格，加上 type hint。不要動到既有的函式，不要新增 import。",
+      "expected_trigger": "natural — 不提 kiro，看 skill 是否自動觸發委派",
+      "files": ["fixtures/add-function/utils.py"]
+    },
+    {
+      "id": 2,
+      "name": "write-tests-save-tokens",
+      "prompt": "幫我寫單元測試。calculator.py 在 workspace 根目錄，裡面有 add/subtract/multiply/divide/power 五個函式。請在同目錄產生 test_calculator.py，用 pytest 風格，每個函式都要有正常 case 與 edge case（例如 divide by zero、negative exponent、float 精度）。這份測試會寫不少，幫我省點 token，寫完跑 pytest 確認都通過。",
+      "expected_trigger": "implicit — 用「省 token」暗示應該委派",
+      "files": ["fixtures/write-tests/calculator.py"]
+    },
+    {
+      "id": 3,
+      "name": "refactor-explicit-kiro",
+      "prompt": "processor.py 裡的 process_data 函式太長了（90 行做了驗證/過濾/排序/聚合/格式化五件事），請幫我重構成多個小函式，每個職責單一、命名清楚。對外 API 與行為必須完全不變（同樣的 input 要產生同樣的 output）。重構完後請寫一個簡單的 smoke test 驗證重構前後行為一致。請用 kiro 幫我做這個任務。",
+      "expected_trigger": "explicit — 明說「用 kiro」",
+      "files": ["fixtures/refactor-long-function/processor.py"]
+    }
+  ]
+}

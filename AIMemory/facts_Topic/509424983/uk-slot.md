@@ -14,3 +14,8 @@
 - [f_02cb06] [2026-06-17T10:50:58.031Z] spine-viewer 插件位於 C:\Users\jiunchiwang\.CocosCreator\extensions\spine-viewer，Cocos Creator ≥3.6.2 使用
 - [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 - [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化
+- [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
+- [f_e22204] [2026-06-19T02:11:08.803Z] 使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）
+- [f_9322f0] [2026-06-19T02:11:08.809Z] uk_slot_eye_strike 的 GameId=658、ShortGameName=ar2es、盤面 6 列不等高（5-4-4-4-4-5）共 26 格、proto 來自 @igs-arcade-division-rd2/uk_658_eyestrike_proto
+- [f_82c757] [2026-06-19T02:11:08.816Z] uk_slot_eye_strike 有 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
+- [f_c563ec] [2026-06-19T02:11:08.821Z] uk_slot_eye_strike 的文件更新策略：AI.md 踩坑/結構性改動時更新；modules.md 改完某模組時增量更新該段；只讀不改不更新
