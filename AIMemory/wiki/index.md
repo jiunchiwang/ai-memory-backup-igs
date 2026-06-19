@@ -14,4 +14,4 @@
 ---
 
 Total pages: 4
-Last updated: 2026-06-18
+Last updated: 2026-06-20

@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-18
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_273d6e, f_07d587, f_460731]
+updated: 2026-06-20
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_273d6e, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_691141, f_c3d198, f_7d7ffe]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -46,6 +46,26 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - Remote：`https://github.com/jiunchiwang/ai-memory-backup-igs.git`（branch: master）
 - `/backup` 指令：robocopy AIMemory + agent 設定目錄到 repo → git push
 - 每日 `/dream` 自動觸發備份步驟
+
+## 訊息排版美化
+
+2026-06-19 實作 Telegram 訊息 HTML 美化功能：
+- 新增 `src/format-html.ts`（Markdown → Telegram HTML 轉換）
+- 修改 `telegram-ui.ts` 和 `run-prompt.ts`，主 agent 回覆改用 `parse_mode: HTML`
+- 支援：粗體、斜體、code block、inline code、blockquote、連結、刪除線
+- 每個 `editMessageText` 都有 strip-tags fallback 防 400 error
+- 設計文件：`docs/telegram-formatting-plan.md`
+- 選 HTML 而非 MarkdownV2：因為 agent 輸出常含 `_ * [ ]` 等字元，MarkdownV2 跳脫規則太嚴格會大量 400 error；HTML 只需 escape `<>&`
+
+未來可升級：Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 `sendRichMessage` 使用，最多 32768 字。
+
+## AI 策略與正典語料庫
+
+跨模型 AI 策略 v4 核心原則：**正典語料庫（canonical corpus）本身就是產品**——以 markdown + git 追蹤的精煉知識為唯一真實來源（`G:\AI\AI-canonical`），CLI / MCP / bridge / 索引都只是部署基礎設施而非產品本體。
+
+儲存政策：
+- **公開 GitHub repo（AI-canonical）**：正典 skills、steering 政策與通用文件
+- **僅本地保留（不進版控）**：session 執行日誌與框架內部狀態
 
 ## 品質機制
 

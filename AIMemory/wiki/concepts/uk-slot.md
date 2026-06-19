@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-06-18
-sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_09acc4, f_4b8ff5, f_c01dbd, f_e61df4, f_89a745]
+updated: 2026-06-20
+sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_09acc4, f_4b8ff5, f_c01dbd, f_e61df4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_c563ec, f_46f6e0, f_94500e]
 ---
 
 # UK Slot 老虎機專案群
@@ -40,6 +40,21 @@ sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, 
 | uk_872_eyestrike2_client | `G:\Cocos_Project\uk_872_eyestrike2_client` | Eye Strike 2（續作） |
 | uk_slot_chachacha | `G:\Cocos_Project\uk_slot_chachacha` | Cha Cha Cha 拉丁舞/水果 |
 
+## 專案文件規範
+
+所有 UK slot 專案採用分層文件策略（skill `uk-slot-project-docs` 控制）：
+- **AI.md**（索引層，≤2000 字）— 專案 meta、盤面、模組地圖、踩坑
+- **docs/modules.md**（詳細層）— 每個模組的事件介面、依賴、資料流
+
+不管改動檔案數多少，進入老虎機專案時都主動建立/更新 AI.md。
+
+## uk_slot_eye_strike 詳細
+
+- GameId=658、ShortGameName=ar2es
+- 盤面 6 列不等高（5-4-4-4-4-5）共 26 格
+- Proto 來自 `@igs-arcade-division-rd2/uk_658_eyestrike_proto`
+- 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
+
 ## 開發參考文件
 
 - uk_872_eyestrike2_client：`.claude_temp/proto參數說明.md` 記錄 `ar2es2Proto.d.ts` 的欄位用途與值域，作為 proto 協議開發參考
@@ -48,6 +63,16 @@ sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, 
 
 - uk_slot_eye_strike：`MultiplierManager.m_downEffectSpine` 的 Idle 動畫實際靜止，可優化為靜態圖 + 隱藏 Spine 省效能
 - uk_pirates_queen：懸賞令（WantedPoster）退場時 `cc.Layout` 瞬間重排視覺突兀，需改為動畫過渡
+
+## 重要設計模式
+
+### Ghost Slot 雙佔位機制
+
+Cocos 版面在「兩項移除一項」時避免置中跳動（snap），使用 ghost slot：item root 佔 Layout 格但 Content 設 `active=false`。同時滿足 0→1 置中、2→1 不跳動、旋轉相容，不需改動 Layout 參數。
+
+### 並發 Gotcha
+
+在 `Promise.all` 之前的同步階段計算狀態決策（例如 `willGhost`），會與並發 group dispatch 產生 race condition。解法：把這類決策移到 async 階段計算。
 
 ## Spine-Viewer 插件
 
