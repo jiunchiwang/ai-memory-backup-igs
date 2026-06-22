@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-06-20
-sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_09acc4, f_4b8ff5, f_c01dbd, f_e61df4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_c563ec, f_46f6e0, f_94500e]
+updated: 2026-06-23
+sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d]
 ---
 
 # UK Slot 老虎機專案群

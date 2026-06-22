@@ -7,8 +7,9 @@
 - [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
 - [f_a10e66] [2026-06-03T01:38:17.048Z] 使用者的 telegram-kiro-bridge 備份 repo 位於 G:\AI\ai-memory-backup-igs，remote 為 https://github.com/jiunchiwang/ai-memory-backup-igs.git，branch 為 master
 - [f_721fa7] [2026-06-04T20:09:05.182Z] 使用者的 AIMemory 實際路徑為 G:\AI\AIMemory（此機器為 G: 磁碟，非原開發機的 F:\AI\AIMemory）
-- [f_273d6e] [2026-06-05T20:09:33.272Z] 使用者建立了 docs/llm-to-ai-agent-summary.html 作為「從LLM到AI_Agent.pdf」的重點學習整理頁面（深色主題、8 章節、目錄跳轉）
 - [f_460731] [2026-06-17T06:23:30.329Z] 使用者建立了 docs/hermes-vs-bridge.html 作為 Hermes（Nous Research）vs Telegram-Kiro-Bridge 的功能比較頁面（深色主題、7 區塊比較表 + 6 張評分卡）
+- [f_e47a60] [2026-06-17T06:23:30.362Z] 使用者關注 Hermes AI Agent 的 Skill 市集和語音模式，認為值得 bridge 借鏡
 - [f_7d747c] [2026-06-19T08:57:00.670Z] telegram-kiro-bridge 已實作 Telegram 訊息排版美化功能：新增 src/format-html.ts（Markdown→HTML 轉換），修改 telegram-ui.ts 和 run-prompt.ts，主 agent 回覆改用 parse_mode: HTML 渲染（粗體、斜體、code block、inline code、blockquote、連結、刪除線），每個 editMessageText 都有 strip-tags fallback 防 400 error
 - [f_5b7f6a] [2026-06-19T08:57:00.701Z] telegram-kiro-bridge 美化方案選用 HTML 而非 MarkdownV2（因為 agent 輸出常含 _ * [ ] 等字元，MarkdownV2 跳脫規則太嚴格會導致大量 400 error；HTML 只需 escape <>&）
-- [f_691141] [2026-06-19T08:57:00.722Z] telegram-kiro-bridge 的排版美化方案設計文件存放於 docs/telegram-formatting-plan.md
+- [f_381c4b] [2026-06-19T08:57:00.714Z] Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 sendRichMessage + InputRichMessage 使用，最多 32768 字；bridge 未來可升級但目前先用傳統 HTML parse_mode
+- [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考

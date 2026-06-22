@@ -2,8 +2,8 @@
 title: Skill 評估與管理
 type: concept
 created: 2026-06-08
-updated: 2026-06-16
-sources: [f_af99c8, f_8f81fa]
+updated: 2026-06-23
+sources: [f_73e043, f_e6ba59, f_cb10bc, f_4f4b55]
 ---
 
 # Skill 評估與管理
@@ -35,7 +35,7 @@ sources: [f_af99c8, f_8f81fa]
 
 ## UI/UX 設計輔助
 
-已安裝 `ui-ux-pro-max` skill 到 `~/.kiro/steering/`（透過 uipro-cli），提供 HTML 頁面設計時的配色、字型、佈局建議。裝在 steering/ 而非 skills/ 是該工具的設計（含 Python 腳本搜尋資料庫）。
+已安裝 `ui-ux-pro-max` skill，正本位於 `G:\AI\AI-canonical\skills\general\ui-ux-pro-max\`，透過 junction 投影到各 CLI。提供 HTML 頁面設計時的配色、字型、佈局建議（含 Python 腳本搜尋資料庫）。
 
 ## Orphan 追蹤
 

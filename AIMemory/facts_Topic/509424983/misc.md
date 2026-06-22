@@ -1,12 +1,1 @@
-- [f_34322c] [2026-06-12T20:04:49.262Z] 使用者的餐券剩下 18 張（2026-06-12）
-- [f_f944d1] [2026-06-17T10:50:58.059Z] spine-viewer 的 batch scan 功能用 child_process.fork 獨立進程執行，不阻塞 Cocos 主進程
-- [f_bf6094] [2026-06-17T10:50:58.088Z] spine-viewer 的 DrawCall 計算採 CPU 模擬 PolygonBatcher 合批規則（texture identity + blend mode 斷批），不需要 WebGL context
-- [f_28e62a] [2026-06-17T10:50:58.111Z] spine-viewer 的 Triangle 計算採全 keyframe 掃描（從 animation timelines 抽取所有 frame time 取最大值）
-- [f_4b8ff5] [2026-06-17T10:50:58.151Z] spine-viewer 打包用 pack.bat 產出 spine-viewer-release.zip（含 dist + static + node_modules + package.json），對方解壓到 ~/.CocosCreator/extensions/ 即可
-- [f_c01dbd] [2026-06-17T10:50:58.161Z] spine-webgl TextureAtlas 的 texture factory callback 每次呼叫必須回傳獨立物件（含 getImage 方法），否則 DC 比對失效
-- [f_e61df4] [2026-06-17T10:50:58.181Z] 參考 Excel 格式為 5 欄：Spine檔名、Skin、Animation、Triangle數(最大)、DrawCall
-- [f_c3d198] [2026-06-19T07:55:58.294Z] 跨模型 AI 策略 v4 的核心原則:正典語料庫(canonical corpus)本身就是產品——以 markdown + git 追蹤的精煉知識為唯一真實來源(G:\AI\AI-canonical),CLI / MCP / bridge / 索引都只是部署基礎設施而非產品本體。
-- [f_7d7ffe] [2026-06-19T07:56:04.782Z] AI 產物的雲端 vs 本地儲存政策:正典 skills、steering 政策與通用文件放公開 GitHub repo(AI-canonical);session 執行日誌與框架內部狀態僅保留本地、不進版控。
-- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
-- [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
-- [f_381c4b] [2026-06-19T08:57:00.714Z] Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 sendRichMessage + InputRichMessage 使用，最多 32768 字；bridge 未來可升級但目前先用傳統 HTML parse_mode
+- [f_273d6e] [2026-06-05T20:09:33.272Z] 使用者建立了 docs/llm-to-ai-agent-summary.html 作為「從LLM到AI_Agent.pdf」的重點學習整理頁面（深色主題、8 章節、目錄跳轉）

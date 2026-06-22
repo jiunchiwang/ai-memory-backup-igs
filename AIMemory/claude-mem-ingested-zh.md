@@ -12,3 +12,11 @@
 捨棄:Wanted Poster 多筆設計規格草稿/方案排名/smoke-test 等一次性過程紀錄(#7–#9、#11、#13–#18);#6 ExtraBet 公版還原屬一次性事件,且「禁改公版」已由 UK conventions 涵蓋。
 
 去重:寫入前以 list_facts 對 AIMemory(53 筆)掃描,皆無重複。
+
+## 2026-06-20(來源 shortlist 1 筆 → 精選後寫入 1 條)
+
+來源 project:`10.3.1`(AI 策略)。
+
+1. [來源 10.3.1] 在 headless(無人值守)Claude 自動化腳本中,用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget,即可強制走 proposal-only(只提案、不直接寫入記憶)工作流程,避免自動流程擅自改寫長期記憶。
+
+去重:寫入前以 list_facts 對 AIMemory(claude-mem / disallowedTools / headless / daily-claudemem 多關鍵字)掃描,無重複。

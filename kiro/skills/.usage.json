@@ -1,22 +1,22 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-19T20:09:46.207Z",
+  "_last_updated_at": "2026-06-22T20:09:13.764Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-06-19T20:03:51.510Z",
-      "use_count": 9,
-      "last_reason": "掃描 5 session、四問篩選 5 候選全不達門檻、spec 頻率候選判定非 pattern、rationale 3 處皆已有 fact、5 檔搬移",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
+      "last_agent_used_at": "2026-06-22T20:02:10.019Z",
+      "use_count": 10,
+      "last_reason": "掃描 7 session、四問篩選候選全不達門檻、backup 頻率候選判定為 dream step prompt 非 pattern、rationale 3 處已有 fact、7 檔搬移",
       "pinned": false,
       "notes": null,
       "orphan": false
     },
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-16T20:03:02.023Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-06-19T20:09:46.207Z",
-      "use_count": 12,
+      "last_bridge_listed_at": "2026-06-22T09:56:51.093Z",
+      "last_agent_used_at": "2026-06-22T20:09:13.764Z",
+      "use_count": 15,
       "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
@@ -24,20 +24,260 @@
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-06-22T09:56:51.141Z",
       "last_agent_used_at": "2026-06-17T01:03:41.884Z",
       "use_count": 1,
       "last_reason": "生成比較頁面的設計系統（配色、字型、風格建議）",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-project-docs": {
       "created_at": "2026-06-19T02:00:09.159Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-06-22T09:56:51.151Z",
       "last_agent_used_at": "2026-06-19T02:00:09.159Z",
       "use_count": 1,
       "last_reason": "首次建立並驗證此 skill 的分層文件規範",
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "skill-workflow": {
+      "created_at": "2026-06-22T07:31:15.157Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.168Z",
+      "last_agent_used_at": "2026-06-22T07:31:15.157Z",
+      "use_count": 1,
+      "last_reason": "依照 v4 正本流程新增 skill：複製到 canonical → sync.ps1 投影",
+      "pinned": false,
+      "notes": null,
+      "orphan": true
+    },
+    "claude-mem-curate": {
+      "created_at": "2026-06-19T07:53:36.451Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.176Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "dual-skill-review-loop": {
+      "created_at": "2026-05-29T13:03:17.852Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.183Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "excel-to-ai-doc": {
+      "created_at": "2026-06-22T05:47:24.030Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.189Z",
+      "last_agent_used_at": "2026-06-22T11:10:22.700Z",
+      "use_count": 1,
+      "last_reason": "轉換 872 神眼奪金2 線上工項列表 xlsx 為 AI 可讀文件結構",
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "huashu-slides": {
+      "created_at": "2026-02-23T13:13:08.000Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.195Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "knowhow-accumulation": {
+      "created_at": "2026-05-29T13:04:22.387Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.200Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-agent-scheduled-prompts": {
+      "created_at": "2026-05-29T08:58:12.625Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.205Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-agent-text-token-signaling": {
+      "created_at": "2026-05-29T08:58:12.628Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.211Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-kiro-strreplace-silent-fail": {
+      "created_at": "2026-05-29T08:58:12.630Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.215Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-portable-skill-authoring": {
+      "created_at": "2026-05-29T08:58:12.634Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.222Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-streaming-token-pipeline": {
+      "created_at": "2026-05-29T08:58:12.636Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.226Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-telegram-ask-button-protocol": {
+      "created_at": "2026-05-29T08:58:12.640Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.234Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-telegram-bot-rate-limit-survival": {
+      "created_at": "2026-05-29T08:58:12.643Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.242Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-windows-shell-exit-code-false-positive": {
+      "created_at": "2026-05-29T08:58:12.647Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.251Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-windows-shell-interactive-prompt": {
+      "created_at": "2026-05-29T08:58:12.650Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.263Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "non-engineer-agent-design": {
+      "created_at": "2026-05-29T13:03:49.224Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.273Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "self-eval-prompt-pattern": {
+      "created_at": "2026-05-29T13:04:56.604Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.278Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "skill-creator": {
+      "created_at": "2026-02-24T17:26:48.000Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.283Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "uk-slot-extrabet": {
+      "created_at": "2026-06-16T07:54:26.401Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.289Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "uk-slot-fake-reel-manager": {
+      "created_at": "2026-05-06T05:42:57.357Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.293Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "uk-slot-multilang-sync": {
+      "created_at": "2026-06-11T07:19:35.267Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.299Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "uk-slot-state-machine": {
+      "created_at": "2026-02-25T02:28:57.398Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.304Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "vc-kiro-delegate": {
+      "created_at": "2026-05-06T09:18:41.260Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.311Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "writing-skills": {
+      "created_at": "2026-05-29T12:41:52.929Z",
+      "last_bridge_listed_at": "2026-06-22T09:56:51.317Z",
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
       "pinned": false,
       "notes": null,
       "orphan": false

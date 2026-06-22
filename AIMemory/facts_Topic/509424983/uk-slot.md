@@ -11,11 +11,12 @@
 - [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
 - [f_e9d947] [2026-06-10T11:47:01.979Z] uk_872_eyestrike2_client 專案在 .claude_temp/ 資料夾維護一份 proto參數說明.md，記錄 ar2es2Proto.d.ts 的欄位用途與值域，作為開發參考文件
-- [f_02cb06] [2026-06-17T10:50:58.031Z] spine-viewer 插件位於 C:\Users\jiunchiwang\.CocosCreator\extensions\spine-viewer，Cocos Creator ≥3.6.2 使用
 - [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 - [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化
 - [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
 - [f_e22204] [2026-06-19T02:11:08.803Z] 使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）
 - [f_9322f0] [2026-06-19T02:11:08.809Z] uk_slot_eye_strike 的 GameId=658、ShortGameName=ar2es、盤面 6 列不等高（5-4-4-4-4-5）共 26 格、proto 來自 @igs-arcade-division-rd2/uk_658_eyestrike_proto
 - [f_82c757] [2026-06-19T02:11:08.816Z] uk_slot_eye_strike 有 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
-- [f_c563ec] [2026-06-19T02:11:08.821Z] uk_slot_eye_strike 的文件更新策略：AI.md 踩坑/結構性改動時更新；modules.md 改完某模組時增量更新該段；只讀不改不更新
+- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
+- [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
+- [f_b0253d] [2026-06-22T12:52:36.605Z] 使用者有一份 872 神眼奪金2 的線上工項列表 Excel（G:\AI\872神眼奪金2_線上工項列表.xlsx，~42MB），已轉換為 AI 文件存於 G:\AI\output\872_eyestrike2\（含 50 張圖、12 個稀疏 sheet、223 個合併範圍）
