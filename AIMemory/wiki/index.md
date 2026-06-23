@@ -12,7 +12,11 @@
 - [[spine-viewer]] — Spine Viewer 插件（Cocos Creator 編輯器擴充，批次掃描 DrawCall/Triangle 效能報告）
 - [[ai-strategy]] — 跨模型 AI 策略（正典語料庫架構、投影分發、headless 安全機制）
 
+## Lessons
+
+- [[uk-slot-pitfalls]] — UK Slot 踩坑經驗（Layout 退場重排、Promise.all race condition、ghost slot 雙佔位）
+
 ---
 
-Total pages: 6
+Total pages: 7
 Last updated: 2026-06-23

@@ -20,3 +20,13 @@
 1. [來源 10.3.1] 在 headless(無人值守)Claude 自動化腳本中,用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget,即可強制走 proposal-only(只提案、不直接寫入記憶)工作流程,避免自動流程擅自改寫長期記憶。
 
 去重:寫入前以 list_facts 對 AIMemory(claude-mem / disallowedTools / headless / daily-claudemem 多關鍵字)掃描,無重複。
+
+## 2026-06-23(來源 shortlist 2 筆 → 精選後寫入 1 條)
+
+來源 project:`uk_872_eyestrike2_client`(老虎機 client)。
+
+1. [來源 uk_872_eyestrike2_client] uk_872_eyestrike2_client 專案架構規範:Spine 動畫一律透過 SpineKit 播放(統一的 Spine 播放架構),不直接操作底層 spine 元件。
+
+捨棄:「Skin assets 指定用於 feature grid 中段過場燈光演出」屬單一專案特定場景的一次性細節,非可重用 pattern。
+
+去重:寫入前以 list_facts 對 AIMemory(Spine / SpineKit 關鍵字,62 筆)掃描,既有 Spine 紀錄皆為 spine-viewer 工具相關,無重複(寫入後 shard=uk-slot.md)。
