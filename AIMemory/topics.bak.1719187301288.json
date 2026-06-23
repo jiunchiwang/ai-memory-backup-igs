@@ -54,12 +54,7 @@
       "reelsymbolmode",
       "cascade",
       "tumble",
-      "proto 來自",
-      "spinekit",
-      "igs",
-      "鈊象",
-      "小葉",
-      "葉錦頤"
+      "proto 來自"
     ]
   },
   {
@@ -88,8 +83,7 @@
       "parse_mode",
       "format-html",
       "hermes",
-      "cowart",
-      "headroom"
+      "cowart"
     ]
   },
   {
@@ -104,12 +98,10 @@
       "投影",
       "junction",
       "ai 策略",
+      "skill 新增/修改",
       "headless",
       "disallowedtools",
-      "proposal-only",
-      "closed-loop",
-      "karpathy",
-      "steering 架構"
+      "proposal-only"
     ]
   },
   {
@@ -126,7 +118,10 @@
       "評估後決定",
       "暫不安裝",
       "webwright",
+      "借鏡",
       "dynamic workflow",
+      "ui-ux-pro-max",
+      ".usage.json",
       "excel-to-ai-doc"
     ]
   },
@@ -138,6 +133,8 @@
       "playwright",
       "chromium",
       "to_pdf.py",
+      "gtc-taipei",
+      "黃仁勳",
       "githubtool",
       "obsidian vault",
       "typescript-guide",
@@ -154,7 +151,18 @@
       "偏好 git",
       "commit 訊息",
       "產 pdf 的工作流程",
-      "目錄錨點跳轉"
+      "目錄錨點跳轉",
+      "餐券"
+    ]
+  },
+  {
+    "topic": "people",
+    "keywords": [
+      "認識",
+      "igs",
+      "鈊象",
+      "小葉",
+      "葉錦頤"
     ]
   }
 ]

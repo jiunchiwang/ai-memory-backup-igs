@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-23
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd]
+updated: 2026-06-24
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -71,6 +71,14 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 
 - PARALLEL_DELEGATE 已加入 **cross-check** 功能（≥2 specialist 結果時自動注入交叉驗證指引），借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
 - 設計決策：只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（架構定位不同、規模不需要）
+
+## Context 壓縮（Headroom 評估）
+
+研究 Headroom（headroomlabs-ai/headroom）後的整合優先級：
+1. **方案 A（MCP server）**：零改 code，agent 自主壓大 tool output
+2. **方案 D（headroom learn）**：獨立跑，挖失敗 session 產改進建議
+3. **方案 C（library 整合）**：最有效但需改 bridge core
+4. ~~方案 B（proxy）~~：排除，因為 Kiro CLI 不吃 `ANTHROPIC_BASE_URL`
 
 ## Topic 分類系統
 

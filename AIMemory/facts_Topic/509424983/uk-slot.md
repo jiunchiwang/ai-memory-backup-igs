@@ -1,8 +1,11 @@
 - [f_093bcf] [2026-05-29T12:03:17.162Z] 使用者有一個 Cocos Creator 3.6.2 老虎機專案 uk_pirates_queen 位於 G:\Cocos_Project\uk_pirates_queen，使用 Astarte Framework 和 TypeScript
 - [f_79c118] [2026-05-29T12:03:17.165Z] uk_pirates_queen 是 UK 市場的海盜女王主題 slot 遊戲，6列5行盤面，含消除連鎖、懸賞令倍率、Free Game、輪盤選獎等機制
+- [f_cb10bc] [2026-05-29T16:20:19.519Z] 使用者從「從LLM到AI_Agent.pdf」（IGS 小葉內訓教材）萃取了 4 個 skill：dual-skill-review-loop、non-engineer-agent-design、knowhow-accumulation、self-eval-prompt-pattern
+- [f_d0757b] [2026-05-29T16:20:19.523Z] 使用者認識 IGS（鈊象電子）的工程師小葉（葉錦頤），該文件來自其商用魚機 RD7 部門 7 週內訓
 - [f_967ccc] [2026-05-29T20:06:30.567Z] 使用者有一個 Cocos Creator 3.6.2 老虎機模板專案 uk_slot_template 位於 G:\Cocos_Project\uk_slot_template，是所有 UK slot 遊戲的 fork 來源
 - [f_e8b2cf] [2026-05-29T20:06:30.570Z] uk_slot_template 支援三種轉輪玩法：Standard（傳統滾動）、Cascade（消除天降）、Tumble（快速掉落+乘倍），透過 FillStrategy 策略模式切換
 - [f_991386] [2026-06-01T12:16:45.036Z] 使用者的 uk_slot_template 團隊規範要求方法（method/function）使用大駝峰（PascalCase）命名
+- [f_a10e66] [2026-06-03T01:38:17.048Z] 使用者的 telegram-kiro-bridge 備份 repo 位於 G:\AI\ai-memory-backup-igs，remote 為 https://github.com/jiunchiwang/ai-memory-backup-igs.git，branch 為 master
 - [f_cea694] [2026-06-03T08:26:49.768Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_eye_strike 位於 G:\Cocos_Project\uk_slot_eye_strike，其 MultiplierManager.m_downEffectSpine 的 Idle 動畫是靜止的，已記為待優化項目（改用靜態圖+隱藏Spine省效能）
 - [f_3f7536] [2026-06-03T12:26:41.806Z] cocos的老虎機專案都不能去改動Astarte Framework
 - [f_r0b1nh] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_722_robinhood_client 位於 G:\Cocos_Project\uk_722_robinhood_client，Robin Hood 主題
@@ -10,6 +13,7 @@
 - [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
 - [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
+- [f_07d587] [2026-06-08T11:49:43.143Z] 使用者有一個 GitHubTool 專案位於 G:\AI\GitHubTool，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織，功能含批量建倉、批量權限、團隊成員管理
 - [f_e9d947] [2026-06-10T11:47:01.979Z] uk_872_eyestrike2_client 專案在 .claude_temp/ 資料夾維護一份 proto參數說明.md，記錄 ar2es2Proto.d.ts 的欄位用途與值域，作為開發參考文件
 - [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 - [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化

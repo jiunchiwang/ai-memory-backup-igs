@@ -1,4 +1,1 @@
-- [f_73e043] [2026-05-29T16:20:19.513Z] 使用者對微軟 Webwright（瀏覽器自動化框架）評估後決定暫不安裝，等有需要再說
-- [f_e6ba59] [2026-05-29T16:20:19.517Z] 使用者對微軟 SkillOpt 論文感興趣，已將其迭代原則整合進 writing-skills SKILL.md
-- [f_cb10bc] [2026-05-29T16:20:19.519Z] 使用者從「從LLM到AI_Agent.pdf」（IGS 小葉內訓教材）萃取了 4 個 skill：dual-skill-review-loop、non-engineer-agent-design、knowhow-accumulation、self-eval-prompt-pattern
 - [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構

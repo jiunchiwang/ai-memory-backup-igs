@@ -3,3 +3,4 @@
 - [f_7d7ffe] [2026-06-19T07:56:04.782Z] AI 產物的雲端 vs 本地儲存政策:正典 skills、steering 政策與通用文件放公開 GitHub repo(AI-canonical);session 執行日誌與框架內部狀態僅保留本地、不進版控。
 - [f_e3b009] [2026-06-19T20:31:38.098Z] 在 headless（無人值守）Claude 自動化腳本中，用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget，即可強制走 proposal-only（只提案、不直接寫入記憶）工作流程，避免自動流程擅自改寫長期記憶。
 - [2026-06-22T15:29:17.398Z] 因為跨模型共用所以新增/修改 skill 一律在正本 G:\AI\AI-canonical\skills\<domain>\<name>\SKILL.md 操作再跑 sync.ps1 投影（排除直接改 ~/.kiro/skills 因為是 junction 會被覆蓋）；完整 SOP 見 steering/skill-workflow.md
+- [f_e6394d] [2026-06-23T12:00:49.577Z] 使用者的 steering 架構決策：closed-loop-system.md（完整閉環）與 karpathy-guardrails.md（精簡 4 原則）共存而非合併——前者用於主 agent 長 session，後者用於 specialist/delegation/短任務場景，省 token 又不失約束

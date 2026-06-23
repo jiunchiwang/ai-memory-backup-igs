@@ -5,7 +5,6 @@
 - [f_b7206d] [2026-06-01T10:57:23.404Z] 使用者已設定 telegram-kiro-bridge 的 start.bat 在 Windows 開機時自動啟動（透過 shell:startup 資料夾的 bat 檔）
 - [f_5a495e] [2026-06-02T13:30:02.283Z] 使用者已在 telegram-kiro-bridge 的 PARALLEL_DELEGATE 機制中加入 cross-check 功能，借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
 - [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
-- [f_a10e66] [2026-06-03T01:38:17.048Z] 使用者的 telegram-kiro-bridge 備份 repo 位於 G:\AI\ai-memory-backup-igs，remote 為 https://github.com/jiunchiwang/ai-memory-backup-igs.git，branch 為 master
 - [f_721fa7] [2026-06-04T20:09:05.182Z] 使用者的 AIMemory 實際路徑為 G:\AI\AIMemory（此機器為 G: 磁碟，非原開發機的 F:\AI\AIMemory）
 - [f_460731] [2026-06-17T06:23:30.329Z] 使用者建立了 docs/hermes-vs-bridge.html 作為 Hermes（Nous Research）vs Telegram-Kiro-Bridge 的功能比較頁面（深色主題、7 區塊比較表 + 6 張評分卡）
 - [f_e47a60] [2026-06-17T06:23:30.362Z] 使用者關注 Hermes AI Agent 的 Skill 市集和語音模式，認為值得 bridge 借鏡
@@ -13,3 +12,4 @@
 - [f_5b7f6a] [2026-06-19T08:57:00.701Z] telegram-kiro-bridge 美化方案選用 HTML 而非 MarkdownV2（因為 agent 輸出常含 _ * [ ] 等字元，MarkdownV2 跳脫規則太嚴格會導致大量 400 error；HTML 只需 escape <>&）
 - [f_381c4b] [2026-06-19T08:57:00.714Z] Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 sendRichMessage + InputRichMessage 使用，最多 32768 字；bridge 未來可升級但目前先用傳統 HTML parse_mode
 - [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考
+- [f_c228c9] [2026-06-23T12:00:49.553Z] 使用者研究 Headroom（headroomlabs-ai/headroom）後，整合優先級決策：方案 A（MCP server 掛給 agent）> 方案 D（headroom learn 獨立跑）> 方案 C（bridge library 整合）；排除方案 B（proxy wrap）因為 Kiro CLI 大概不吃 ANTHROPIC_BASE_URL

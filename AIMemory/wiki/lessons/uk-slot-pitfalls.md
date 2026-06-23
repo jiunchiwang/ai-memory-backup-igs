@@ -1,7 +1,13 @@
-# UK Slot 踩坑經驗
+---
+title: UK Slot 踩坑經驗
+type: lesson
+created: 2026-06-23
+updated: 2026-06-23
+sources: [f_89a745, f_46f6e0, f_94500e]
+why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 和 race condition，所以記錄防護模式
+---
 
-> 來源 facts：f_89a745, f_46f6e0, f_94500e
-> 最後更新：2026-06-23
+# UK Slot 踩坑經驗
 
 ---
 

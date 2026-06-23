@@ -1,3 +1,11 @@
+---
+title: Agent 系統五層架構
+type: concept
+created: 2026-06-11
+updated: 2026-06-11
+sources: []
+---
+
 # Agent System Architecture — 五層公司比喻
 
 > 來源：社群圖解「MCP、Agent SDK、Memory、Workflow 到底是什麼關係？」

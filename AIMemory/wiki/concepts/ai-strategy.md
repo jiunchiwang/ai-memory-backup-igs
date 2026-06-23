@@ -2,8 +2,8 @@
 type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
-updated: 2026-06-23
-sources: [f_c3d198, f_7d7ffe, f_e3b009]
+updated: 2026-06-24
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -47,6 +47,13 @@ G:\AI\AI-canonical\          ← 正本（source of truth）
 
 - Headless 自動化（無人值守）時，用 `claude.exe --disallowedTools mcp__memory__remember,mcp__memory__forget` 封鎖記憶寫入，強制走 proposal-only 工作流程
 - 避免自動流程擅自改寫長期記憶
+
+## Steering 架構
+
+`closed-loop-system.md`（完整閉環）與 `karpathy-guardrails.md`（精簡 4 原則）共存而非合併：
+- **完整閉環**：主 agent 長 session 使用（Phase 1-5、閘門、因果鏈分析）
+- **精簡 4 原則**：specialist / delegation / 短任務場景（Think → Simplicity → Surgical → Goal-Driven）
+- 理由：省 token 又不失約束；精簡版的力量在「短到能一次讀完就內化」
 
 ## 相關
 
