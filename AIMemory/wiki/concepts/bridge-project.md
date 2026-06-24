@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-24
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9]
+updated: 2026-06-25
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -22,14 +22,14 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - **dailylog** — 每日摘要
 - **sessions** — 對話紀錄（處理完搬到 oldSessions）
 
-每日凌晨 04:00 由 `/dream` 自動維運（memorytoskill → topicreview → wikisync → factlint → wikilint → skilllint → docupdate → specialistreview → artifactcleanup → backup → restart）。
+每日凌晨 04:00 由 `/dream` 自動維運（memorytoskill → topicreview → wikisync → factlint → wikilint → skilllint → specialistreview → artifactcleanup → backup → restart）。
 
 ## 文件與教學
 
-- `docs/usage-guide.html` — 功能教學頁面，深色主題，依重要性分 12 章節附範例
+- `docs/usage-guide.html` — 功能教學頁面，深色主題，24 章節附範例（含 Environment Preamble、Event Log、AI.md、RTK Shell、Codegraph、429 防護）
 - `docs/llm-to-ai-agent-summary.html` — 「從LLM到AI_Agent.pdf」重點學習整理頁面（深色主題、8 章節、目錄跳轉）
 - `docs/hermes-vs-bridge.html` — Hermes AI Agent vs Bridge 功能比較頁面（7 區塊比較表 + 6 張評分卡）
-- `/dream` 流程含 `docupdate` 步驟，每日自動比對 README 與 HTML 差異並補上缺少的功能說明
+- `docs/karpathy-wiki-alignment-roadmap.html` — Karpathy LLM Wiki × Bridge 改進 Roadmap
 
 ## 相關工具
 
@@ -71,6 +71,22 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 
 - PARALLEL_DELEGATE 已加入 **cross-check** 功能（≥2 specialist 結果時自動注入交叉驗證指引），借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
 - 設計決策：只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（架構定位不同、規模不需要）
+
+## Specialist 分身系統
+
+`specialist-domains.json` 配置 3 個分身（2026-06-24）：
+- **slot-dev**：UK 老虎機開發（claude-sonnet-4，memory MCP）
+- **researcher**：深度研究 / AI 策略（claude-sonnet-4，memory + google MCP）
+- **general**：完整能力並行多工（inheritsAll，claude-sonnet-4，memory + google MCP）
+
+## Embedding Router
+
+本地 ONNX 模型 `bge-small-zh-v1.5`（23.3 MB），效能 2.6 ms/embed、512 維向量。模型快取在 `node_modules/@xenova/transformers/.cache/`。7 個語意應用：memory recall、skill routing、wiki retrieval、notebook routing、intent classification、sticker auto-select、重複 fact 偵測。
+
+## UI 修復紀錄
+
+- `/help` inline keyboard：parse_mode 從 Markdown 改為 HTML + `escHtml()`（desc/usage 含 `*_<>|${}` 導致 API 400）
+- 「返回選單」按鈕：callback data 從 `help:menu` 改為 `help:_back`（原本與 COMMAND_SPECS `name:menu` 撞名被攔截）
 
 ## Context 壓縮（Headroom 評估）
 

@@ -1,0 +1,25 @@
+{
+  "name": "slot-dev",
+  "description": "UK 老虎機遊戲開發 specialist（Cocos Creator + Astarte Framework + TypeScript）",
+  "tools": [
+    "@builtin",
+    "@memory"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    }
+  }
+}

@@ -1,7 +1,5 @@
 - [f_4e8237] [2026-05-29T12:03:17.153Z] 使用者有一個 telegram-kiro-bridge 專案位於 G:\AI\telegram-kiro-bridge-main，含 desktop-pet Electron 桌面寵物功能
 - [f_d21a12] [2026-05-29T20:06:30.574Z] 使用者的 AIMemory 系統位於 G:\AI\AIMemory，含 facts、topics、wiki、dailylog、sessions 等子結構，由 telegram-kiro-bridge 的 /dream 每日凌晨 04:00 自動維運
-- [f_0b90e2] [2026-05-31T09:29:54.126Z] 使用者建立了 docs/usage-guide.html 作為 telegram-kiro-bridge 的功能教學頁面，深色主題，依重要性分 12 章節附範例
-- [f_60159c] [2026-05-31T09:29:54.137Z] 使用者在 /dream 維運流程中加入 docupdate 步驟，每日自動比對 README 與 usage-guide.html 的差異並補上缺少的功能說明
 - [f_b7206d] [2026-06-01T10:57:23.404Z] 使用者已設定 telegram-kiro-bridge 的 start.bat 在 Windows 開機時自動啟動（透過 shell:startup 資料夾的 bat 檔）
 - [f_5a495e] [2026-06-02T13:30:02.283Z] 使用者已在 telegram-kiro-bridge 的 PARALLEL_DELEGATE 機制中加入 cross-check 功能，借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
 - [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
@@ -13,3 +11,8 @@
 - [f_381c4b] [2026-06-19T08:57:00.714Z] Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 sendRichMessage + InputRichMessage 使用，最多 32768 字；bridge 未來可升級但目前先用傳統 HTML parse_mode
 - [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考
 - [f_c228c9] [2026-06-23T12:00:49.553Z] 使用者研究 Headroom（headroomlabs-ai/headroom）後，整合優先級決策：方案 A（MCP server 掛給 agent）> 方案 D（headroom learn 獨立跑）> 方案 C（bridge library 整合）；排除方案 B（proxy wrap）因為 Kiro CLI 大概不吃 ANTHROPIC_BASE_URL
+- [f_71bf67] [2026-06-23T22:08:31.550Z] telegram-kiro-bridge 的 /help inline keyboard 說明按鈕已從 parse_mode Markdown 改為 HTML + escHtml，因為 desc/usage 含大量 MarkdownV1 敏感字元（*_<>|${}）會導致 Telegram API 400 error 按鈕無回應；修改檔案：bot-setup.ts、index.ts、commands/misc.ts
+- [f_789096] [2026-06-23T22:16:32.067Z] telegram-kiro-bridge 的 /help inline keyboard「返回選單」按鈕 callback data 從 help:menu 改為 help:_back，因為原本與 COMMAND_SPECS 的 name:menu 撞名導致點 ⌨️ menu 按鈕時被攔截無法顯示說明；修改檔案：bot-setup.ts、index.ts
+- [f_5a515c] [2026-06-24T09:09:27.571Z] telegram-kiro-bridge 的 usage-guide.html 已從 18 章節擴充到 24 章節（新增 Environment Preamble、Event Log、AI.md、RTK Shell、Codegraph、429 防護），Local LLM 後端已從 Ollama 修正為 llama.cpp，Dream 步驟從 12 步修正為 README 的 10 步
+- [f_1c58e2] [2026-06-24T09:09:27.577Z] 此台機器（jiunchiwang）的 Embedding Router 模型快取在 node_modules/@xenova/transformers/.cache/（23.3 MB），非 ~/.cache/huggingface/；效能實測平均 2.6 ms/embed、向量 512 維
+- [f_937543] [2026-06-24T09:09:27.582Z] telegram-kiro-bridge 的 Dream 預設步驟不含 docupdate（README source of truth 為 10 步：memorytoskill→topicreview→wikisync→factlint→wikilint→skilllint→specialistreview→artifactcleanup→backup→restart）

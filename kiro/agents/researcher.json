@@ -1,9 +1,18 @@
 {
-  "name": "main",
+  "name": "researcher",
+  "description": "深度研究與方法論 specialist（AI 策略、知識管理、agent 設計模式分析）",
   "tools": [
     "@builtin",
     "@memory",
     "@google"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
   ],
   "mcpServers": {
     "memory": {

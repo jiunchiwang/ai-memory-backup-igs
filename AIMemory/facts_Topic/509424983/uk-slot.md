@@ -25,3 +25,4 @@
 - [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
 - [f_b0253d] [2026-06-22T12:52:36.605Z] 使用者有一份 872 神眼奪金2 的線上工項列表 Excel（G:\AI\872神眼奪金2_線上工項列表.xlsx，~42MB），已轉換為 AI 文件存於 G:\AI\output\872_eyestrike2\（含 50 張圖、12 個稀疏 sheet、223 個合併範圍）
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
+- [f_36e058] [2026-06-24T09:09:27.556Z] telegram-kiro-bridge 的 specialist-domains.json 已配置 3 個分身：slot-dev（UK 老虎機，claude-sonnet-4，memory MCP）、researcher（深度研究/AI策略，claude-sonnet-4，memory+google MCP）、general（完整能力並行多工，inheritsAll，claude-sonnet-4，memory+google MCP）

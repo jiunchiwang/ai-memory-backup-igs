@@ -1,4 +1,3 @@
-- [f_99b243] [2026-06-03T12:19:51.310Z] 使用者產 PDF 的工作流程：HTML+CSS 排版 → Playwright headless Chromium 渲染（docs/to_pdf.py），不用 fpdf2 或 WeasyPrint
 - [f_c3d198] [2026-06-19T07:55:58.294Z] 跨模型 AI 策略 v4 的核心原則:正典語料庫(canonical corpus)本身就是產品——以 markdown + git 追蹤的精煉知識為唯一真實來源(G:\AI\AI-canonical),CLI / MCP / bridge / 索引都只是部署基礎設施而非產品本體。
 - [f_7d7ffe] [2026-06-19T07:56:04.782Z] AI 產物的雲端 vs 本地儲存政策:正典 skills、steering 政策與通用文件放公開 GitHub repo(AI-canonical);session 執行日誌與框架內部狀態僅保留本地、不進版控。
 - [f_e3b009] [2026-06-19T20:31:38.098Z] 在 headless（無人值守）Claude 自動化腳本中，用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget，即可強制走 proposal-only（只提案、不直接寫入記憶）工作流程，避免自動流程擅自改寫長期記憶。

@@ -80,6 +80,7 @@
       "backup_repo_dir",
       "ai-memory-backup",
       "usage-guide.html",
+      "docupdate",
       "aimemory",
       "wiki 知識庫",
       "telegram bot api",
@@ -88,10 +89,7 @@
       "format-html",
       "hermes",
       "cowart",
-      "headroom",
-      "specialist-domains",
-      "embed router",
-      "embedding router"
+      "headroom"
     ]
   },
   {
@@ -106,14 +104,12 @@
       "投影",
       "junction",
       "ai 策略",
-      "headless（無人值守）",
+      "headless",
       "disallowedtools",
       "proposal-only",
       "closed-loop",
       "karpathy",
-      "steering 架構",
-      "steering/",
-      "skill-workflow"
+      "steering 架構"
     ]
   },
   {

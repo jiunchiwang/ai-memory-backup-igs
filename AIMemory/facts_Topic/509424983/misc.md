@@ -1,1 +1,1 @@
-- [f_273d6e] [2026-06-05T20:09:33.272Z] 使用者建立了 docs/llm-to-ai-agent-summary.html 作為「從LLM到AI_Agent.pdf」的重點學習整理頁面（深色主題、8 章節、目錄跳轉）
+- [f_5871a8] [2026-06-24T09:09:27.586Z] 此台機器的 Kiro agent config 路徑為 C:\Users\jiunchiwang\.kiro（非舊機器 C:\Users\tonykuo\.kiro），smoke test 中硬寫的 tonykuo 路徑需注意

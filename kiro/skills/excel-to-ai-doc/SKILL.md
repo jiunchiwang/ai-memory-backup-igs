@@ -31,6 +31,11 @@ python <this-skill-dir>/scripts/convert.py "<path/to/spec.xlsx>" [output-dir]
 
 **⚠️ Windows 注意**：腳本的 `print()` 進度訊息在 Windows cmd/PowerShell 下可能因 cp950 編碼問題不顯示（但轉換仍正常執行）。如需看進度，可設環境變數：`set PYTHONUTF8=1`。
 
+**⚠️ Windows + 檔名含單引號（`'`）或其他特殊字元**：cmd.exe 的雙引號無法正確處理路徑中的 `'`（會靜默失敗 exit code 1、無輸出）。改用 PowerShell 執行，單引號內的 `'` 用 `''` 跳脫：
+```powershell
+powershell -Command "$env:PYTHONUTF8='1'; python -u '<script>' '<file-with-apostrophe''s-name.xlsx>' '<output-dir>'"
+```
+
 **⏱ 大檔案（>10MB / 含大量嵌入圖）可能需要 10-30 秒**，期間無輸出不代表失敗。
 
 Re-running is safe: it skips copy-to-self and clears `images/` first, so no stale files. No need to delete the old output.

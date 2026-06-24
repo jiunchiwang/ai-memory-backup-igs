@@ -1,9 +1,18 @@
 {
-  "name": "main",
+  "name": "general",
+  "description": "完整能力 specialist，用於並行多工（繼承所有 skill 和 MCP）",
   "tools": [
     "@builtin",
     "@memory",
     "@google"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
   ],
   "mcpServers": {
     "memory": {

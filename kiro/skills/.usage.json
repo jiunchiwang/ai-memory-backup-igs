@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-23T20:07:52.227Z",
+  "_last_updated_at": "2026-06-24T20:08:48.514Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-06-23T20:07:52.227Z",
-      "use_count": 14,
-      "last_reason": "wikilint 步驟：掃描 7 wiki pages，無孤兒無斷連，修復 2 頁缺失的 YAML frontmatter",
+      "last_agent_used_at": "2026-06-24T20:06:10.642Z",
+      "use_count": 16,
+      "last_reason": "wikisync 步驟——更新 bridge-project page 追加 specialist/embed-router/UI 修復段落+5 fact IDs",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +15,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-16T20:03:02.023Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.093Z",
-      "last_agent_used_at": "2026-06-22T20:09:13.764Z",
-      "use_count": 15,
-      "last_reason": "wikilint 步驟",
+      "last_agent_used_at": "2026-06-24T20:08:48.514Z",
+      "use_count": 17,
+      "last_reason": "wikilint 步驟——7 頁全部健康，0 stale/orphan/broken links",
       "pinned": false,
       "notes": null,
       "orphan": true
@@ -75,9 +75,9 @@
     "excel-to-ai-doc": {
       "created_at": "2026-06-22T05:47:24.030Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.189Z",
-      "last_agent_used_at": "2026-06-22T11:10:22.700Z",
-      "use_count": 1,
-      "last_reason": "轉換 872 神眼奪金2 線上工項列表 xlsx 為 AI 可讀文件結構",
+      "last_agent_used_at": "2026-06-24T06:58:12.704Z",
+      "use_count": 2,
+      "last_reason": "轉換 3 Leprechauns Pots 規格書 xlsx 為 AI 可讀結構",
       "pinned": false,
       "notes": null,
       "orphan": false
