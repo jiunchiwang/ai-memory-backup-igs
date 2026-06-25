@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-24T20:08:48.514Z",
+  "_last_updated_at": "2026-06-25T20:03:06.910Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-06-24T20:06:10.642Z",
-      "use_count": 16,
-      "last_reason": "wikisync 步驟——更新 bridge-project page 追加 specialist/embed-router/UI 修復段落+5 fact IDs",
+      "last_agent_used_at": "2026-06-25T20:01:16.239Z",
+      "use_count": 17,
+      "last_reason": "掃描 1 session（6/25 Karpathy 研究+dream），無候選達門檻，1 檔搬移",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +15,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-16T20:03:02.023Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.093Z",
-      "last_agent_used_at": "2026-06-24T20:08:48.514Z",
-      "use_count": 17,
-      "last_reason": "wikilint 步驟——7 頁全部健康，0 stale/orphan/broken links",
+      "last_agent_used_at": "2026-06-25T20:03:06.910Z",
+      "use_count": 20,
+      "last_reason": "wikilint 步驟——7 頁全部健康，與昨天結果一致",
       "pinned": false,
       "notes": null,
       "orphan": true
@@ -75,9 +75,9 @@
     "excel-to-ai-doc": {
       "created_at": "2026-06-22T05:47:24.030Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.189Z",
-      "last_agent_used_at": "2026-06-24T06:58:12.704Z",
-      "use_count": 2,
-      "last_reason": "轉換 3 Leprechauns Pots 規格書 xlsx 為 AI 可讀結構",
+      "last_agent_used_at": "2026-06-25T02:29:16.293Z",
+      "use_count": 3,
+      "last_reason": "分析 Game_Summary_File 產出格式的能力與限制，對比原始規格書判斷遺漏",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -225,9 +225,9 @@
     "uk-slot-extrabet": {
       "created_at": "2026-06-16T07:54:26.401Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.289Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-06-25T02:29:16.293Z",
+      "use_count": 1,
+      "last_reason": "歸納框架元件介面文件化程度作為「AI-ready spec 需要什麼」的參考",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -235,9 +235,9 @@
     "uk-slot-fake-reel-manager": {
       "created_at": "2026-05-06T05:42:57.357Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.293Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-06-25T02:29:16.293Z",
+      "use_count": 1,
+      "last_reason": "歸納假轉輪帶在規格→程式映射中的角色（BetMode/GameType 分類、事件 API）",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -255,9 +255,9 @@
     "uk-slot-state-machine": {
       "created_at": "2026-02-25T02:28:57.398Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.304Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-06-25T02:29:16.293Z",
+      "use_count": 1,
+      "last_reason": "歸納 AI 開發時需要的 State Machine 框架知識（CommonState vs 自訂 State、模板選擇）",
       "pinned": false,
       "notes": null,
       "orphan": false
