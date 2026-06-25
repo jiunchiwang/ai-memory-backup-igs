@@ -1,5 +1,17 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-06-25(來源 shortlist 5 筆 → 精選後寫入 2 條)
+
+來源 project:`uk_pirates_queen`、`uk_872_eyestrike2_client`。
+
+1. [來源 uk_pirates_queen,#1 → shard user-pref] 使用者偏好 git commit 前先確認:執行 commit 之前應多問幾個釐清問題並取得使用者同意,不要逕自 commit。
+2. [來源 uk_872_eyestrike2_client,合併 #4/#5 → shard misc] 驗證 TypeScript 介面重構/整併時用 npx tsc --noEmit 做型別檢查;遇 TS6.0 deprecation 警告可加 --ignoreDeprecations 6.0 抑制以聚焦真正錯誤。
+
+捨棄:#2/#3(telegram-kiro-bridge 分支改名 main-old-backup、cherry-pick --skip commit 0610f54)屬一次性 repo 狀態事件,非跨 session 可重用。
+
+去重:寫入前以 list_facts 對 AIMemory(67 筆)掃描;既有「git commit 訊息使用中文」與本次「commit 前先確認」屬不同面向,TS 既有條目為專案/文件性質,皆無重複。
+
+
 ## 2026-06-19(來源 shortlist 15 筆 → 精選合併後寫入 4 條)
 
 來源 project:`10.3.1`(AI 策略)、`uk_pirates_queen`(老虎機)。

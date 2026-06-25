@@ -16,3 +16,4 @@
 - [f_5a515c] [2026-06-24T09:09:27.571Z] telegram-kiro-bridge 的 usage-guide.html 已從 18 章節擴充到 24 章節（新增 Environment Preamble、Event Log、AI.md、RTK Shell、Codegraph、429 防護），Local LLM 後端已從 Ollama 修正為 llama.cpp，Dream 步驟從 12 步修正為 README 的 10 步
 - [f_1c58e2] [2026-06-24T09:09:27.577Z] 此台機器（jiunchiwang）的 Embedding Router 模型快取在 node_modules/@xenova/transformers/.cache/（23.3 MB），非 ~/.cache/huggingface/；效能實測平均 2.6 ms/embed、向量 512 維
 - [f_937543] [2026-06-24T09:09:27.582Z] telegram-kiro-bridge 的 Dream 預設步驟不含 docupdate（README source of truth 為 10 步：memorytoskill→topicreview→wikisync→factlint→wikilint→skilllint→specialistreview→artifactcleanup→backup→restart）
+- [f_9d641c] [2026-06-25T00:29:55.028Z] telegram-kiro-bridge 已產出 Karpathy LLM Wiki 對照改進 roadmap（docs/karpathy-wiki-alignment-roadmap.html），識別 3 個 P0 差距：Unified Activity Log、Ingest Ripple 漣漪更新、Query Auto-save 探索複利
