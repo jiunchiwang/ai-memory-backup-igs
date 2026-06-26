@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-25T20:03:06.910Z",
+  "_last_updated_at": "2026-06-26T20:04:25.334Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-06-25T20:01:16.239Z",
-      "use_count": 17,
-      "last_reason": "掃描 1 session（6/25 Karpathy 研究+dream），無候選達門檻，1 檔搬移",
+      "last_agent_used_at": "2026-06-26T20:01:37.065Z",
+      "use_count": 18,
+      "last_reason": "掃描 3 session（6/26 pattern-library + 證券戶 + Hermes），無候選達門檻，3 檔搬移",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +15,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-16T20:03:02.023Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.093Z",
-      "last_agent_used_at": "2026-06-25T20:03:06.910Z",
-      "use_count": 20,
-      "last_reason": "wikilint 步驟——7 頁全部健康，與昨天結果一致",
+      "last_agent_used_at": "2026-06-26T20:04:25.334Z",
+      "use_count": 23,
+      "last_reason": "wikilint 步驟——發現 uk-slot-pitfalls stale，補上 drop-out 凍結踩坑段（第 4 條），bump updated",
       "pinned": false,
       "notes": null,
       "orphan": true
@@ -75,9 +75,9 @@
     "excel-to-ai-doc": {
       "created_at": "2026-06-22T05:47:24.030Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.189Z",
-      "last_agent_used_at": "2026-06-25T02:29:16.293Z",
-      "use_count": 3,
-      "last_reason": "分析 Game_Summary_File 產出格式的能力與限制，對比原始規格書判斷遺漏",
+      "last_agent_used_at": "2026-06-26T05:22:10.572Z",
+      "use_count": 4,
+      "last_reason": "將 Eye Strike2 規格書.xlsx 轉換為 AI 可讀文件結構",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -278,6 +278,16 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "uk-slot-pattern-library": {
+      "created_at": "2026-06-26T05:33:19.199Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-06-26T12:59:13.743Z",
+      "use_count": 3,
+      "last_reason": "重新檢視並改進 pattern library：補齊 3 張薄弱卡片深度、SKILL.md 索引加驗證狀態欄與頻率定義、全 21 張卡加反模式段",
       "pinned": false,
       "notes": null,
       "orphan": false

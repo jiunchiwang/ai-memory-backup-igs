@@ -1,5 +1,15 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-06-26(來源 shortlist 5 筆 → 精選合併後寫入 1 條)
+
+來源 project:`uk_pirates_queen`(掉落動畫時序重構工作流)。
+
+1. [合併 #3/#4 → shard uk-slot] uk_pirates_queen 掉落動畫凍結視窗回歸:根因為把凍結語意(m_isInDropMode)與掉落動畫 promise(m_dropAllSymbolsOutOfScreenPromise)混為一談、且在 StartSpin(L943)直接觸發掉落;採 MVP 最小手術——拆出 m_isInDropMode 專職凍結、promise 降為純動畫 handle、掉落觸發移到獨立 TriggerDropOut() method。
+
+捨棄:#1(multi-agent review 啟動)、#5(設計工作流啟動 wf_2ff596b5)屬一次性過程紀錄;#2(judge panel 評分 66/58/42)為一次性評選結果,可重用技術核心已併入上條。
+
+去重:寫入前以 list_facts 對 AIMemory(70 筆)掃描 pirates_queen / DropOut / freeze / StartSpin,皆無重複。
+
 ## 2026-06-25(來源 shortlist 5 筆 → 精選後寫入 2 條)
 
 來源 project:`uk_pirates_queen`、`uk_872_eyestrike2_client`。

@@ -1,1 +1,2 @@
 - [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
+- [f_afed83] [2026-06-26T13:11:01.066Z] uk-slot-pattern-library 的 SKILL.md 索引已新增「頻率定義」表格（高≥3專案、中1-2、低=僅規格）與「驗證狀態」欄（✅已實作/⚠️僅規格推導），全 21 張 pattern 卡片各加 5 條「常見錯誤」反模式段

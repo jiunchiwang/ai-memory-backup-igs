@@ -26,3 +26,4 @@
 - [f_b0253d] [2026-06-22T12:52:36.605Z] 使用者有一份 872 神眼奪金2 的線上工項列表 Excel（G:\AI\872神眼奪金2_線上工項列表.xlsx，~42MB），已轉換為 AI 文件存於 G:\AI\output\872_eyestrike2\（含 50 張圖、12 個稀疏 sheet、223 個合併範圍）
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
 - [f_36e058] [2026-06-24T09:09:27.556Z] telegram-kiro-bridge 的 specialist-domains.json 已配置 3 個分身：slot-dev（UK 老虎機，claude-sonnet-4，memory MCP）、researcher（深度研究/AI策略，claude-sonnet-4，memory+google MCP）、general（完整能力並行多工，inheritsAll，claude-sonnet-4，memory+google MCP）
+- [f_e9bd6a] [2026-06-25T20:31:57.782Z] uk_pirates_queen 的掉落動畫（drop-out）凍結視窗回歸問題，根因是把凍結語意（m_isInDropMode）與掉落動畫 promise（m_dropAllSymbolsOutOfScreenPromise）混為一談，且直接在 StartSpin（約 L943）觸發掉落；經對抗式評選後採 MVP 最小手術方案：新增 m_isInDropMode 布林專職凍結語意、把 promise 降級為純動畫 handle、並把掉落觸發從 StartSpin 移到獨立的 TriggerDropOut() method。

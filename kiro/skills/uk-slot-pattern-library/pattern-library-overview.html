@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UK Slot Pattern Library — 模式庫總覽</title>
+<style>
+:root{--bg:#0f1419;--surface:#1a2332;--surface2:#1e2a3a;--border:#2d3f52;--text:#e8edf4;--muted:#8899aa;--accent:#4fc3f7;--green:#66bb6a;--yellow:#ffd54f;--orange:#ff8a65;--red:#ef5350;--purple:#ab47bc}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:2rem;max-width:1400px;margin:0 auto}
+h1{font-size:1.8rem;margin-bottom:.3rem}
+h2{font-size:1.3rem;color:var(--accent);margin:2rem 0 1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+h3{font-size:1rem;color:var(--muted);margin:1.2rem 0 .5rem}
+.subtitle{color:var(--muted);margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1rem;margin:1rem 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .2s;cursor:pointer;position:relative}
+.card:hover{border-color:var(--accent)}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
+.card-desc{font-size:.85rem;color:var(--muted);margin-bottom:.6rem}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600}
+.badge-high{background:var(--green);color:#000}
+.badge-mid{background:var(--yellow);color:#000}
+.badge-base{background:var(--muted);color:#fff}
+.badge-new{background:var(--purple);color:#fff}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--surface2);color:var(--muted);margin-right:4px}
+.detail{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.85rem}
+.card.open .detail{display:block}
+.card.open{border-color:var(--accent);background:var(--surface2)}
+table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.8rem}
+th,td{padding:.4rem .6rem;border:1px solid var(--border);text-align:left}
+th{background:var(--surface2);color:var(--accent);font-weight:600}
+.section-label{font-weight:600;color:var(--accent);margin-top:.8rem;margin-bottom:.3rem;font-size:.85rem}
+ul{padding-left:1.2rem;margin:.3rem 0}
+li{font-size:.82rem;color:var(--muted);margin:.2rem 0}
+code{background:var(--surface2);padding:1px 4px;border-radius:3px;font-size:.8rem}
+.stats{display:flex;gap:2rem;margin:1.5rem 0;flex-wrap:wrap}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem 1.5rem;text-align:center}
+.stat-num{font-size:2rem;font-weight:700;color:var(--accent)}
+.stat-label{font-size:.8rem;color:var(--muted)}
+.flow{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;margin:1rem 0;font-family:'Cascadia Code',monospace;font-size:.8rem;white-space:pre;overflow-x:auto;line-height:1.8;color:var(--muted)}
+.flow em{color:var(--accent);font-style:normal}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0;font-size:.8rem}
+.legend-item{display:flex;align-items:center;gap:.3rem}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+</style>
+</head>
+<body>
+<h1>🎰 UK Slot Pattern Library</h1>
+<p class="subtitle">路線 C 翻譯層的 grounding — 從規格書映射 Feature 到程式實作的模式庫<br>15 張模式卡片 · 7 個參考專案 · 點擊卡片展開詳細資訊</p>
+
+<div class="stats">
+<div class="stat-box"><div class="stat-num">15</div><div class="stat-label">模式卡片</div></div>
+<div class="stat-box"><div class="stat-num">7</div><div class="stat-label">參考專案</div></div>
+<div class="stat-box"><div class="stat-num">7</div><div class="stat-label">卡片 Section</div></div>
+<div class="stat-box"><div class="stat-num">3LP</div><div class="stat-label">最新驗證</div></div>
+</div>
+
+<div class="legend">
+<div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> 高頻</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div> 中頻</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div> 基礎</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> 新增</div>
+</div>
+
+<h2>📋 使用流程</h2>
+<div class="flow"><em>Step 1</em> 讀取規格書，辨識 Feature 關鍵字
+   ↓
+<em>Step 2</em> 比對 patterns/ 下的模式卡片「識別條件」→ 找到最接近的已知模式
+   ↓
+<em>Step 3</em> 標出規格與參考卡片的差異點（變體辨識）
+   ↓
+<em>Step 4</em> 根據卡片的「程式映射」（State / Manager / Proto）產出實作骨架
+   ↓
+<em>Step 5</em> 若規格無法匹配任何現有模式 → 標記 NEW，完成後回寫新卡片</div>
+
+<h2>🃏 模式卡片</h2>
+<div class="grid">
+</div>
+
+<h2>📄 模式卡片格式規範</h2>
+<div class="flow">每張卡片統一 7 個 Section：
+
+<em>## 識別條件</em>     — 規格書出現什麼關鍵字/描述時匹配此模式
+<em>## 參考實作</em>     — 哪個專案、哪些檔案（含大小）
+<em>## State 映射</em>   — 需不需要新 State、走哪個現有 State
+<em>## Data 需求</em>    — proto 結構假設（TypeScript interface）
+<em>## 演出時序</em>     — 程式視角的 step-by-step（標註 await/即時）
+<em>## 常見變體</em>     — 已知的不同實作方式
+<em>## 邊界案例</em>     — 容易漏的規則、交互衝突</div>
+
+<h2>✅ 3LP 驗證案例（3 Leprechaun's Pots）</h2>
+<table>
+<tr><th>Feature</th><th>匹配 Pattern</th><th>差異點</th></tr>
+<tr><td>F01 Collect Feature</td><td>#1 collect-feature</td><td>5級JP、複數COLLECT、CASH升級外觀</td></tr>
+<tr><td>F02 三蒐集盆子</td><td>#2 scatter-collect</td><td>3色+Super、4階段、7種FG組合</td></tr>
+<tr><td>F03 Expand</td><td>#3 expand-reel</td><td>一次擴展 3→5、搭配 +1 SPIN</td></tr>
+<tr><td>F04 Multiplier</td><td>#4 multiplier-grid</td><td>累加型、兩色框、搭配 Bomb→Collect</td></tr>
+<tr><td>F05 Clover Bomb</td><td>#5 bomb-feature</td><td>垂直整輪、需有COLLECT才作用</td></tr>
+<tr><td>F06 Bomb 事件</td><td>#5 bomb-feature (variant)</td><td>小妖精投擲入場、spinning/停輪兩種時機</td></tr>
+<tr><td>F07 COLLECT 神秘事件</td><td><span class="badge badge-new">NEW #14</span></td><td>全新模式，已回寫為新卡片</td></tr>
+<tr><td>F08 聽牌</td><td>#8 near-miss</td><td>COLLECT聽牌+CASH聽牌兩種</td></tr>
+<tr><td>F09 大獎預告</td><td>#8 near-miss (variant)</td><td>旋轉中全屏動畫，非停輪演出</td></tr>
+<tr><td>F10 Buy Bonus</td><td>#11 buy-bonus</td><td>3品項對應特色數量</td></tr>
+<tr><td>F11 FG Retrigger</td><td>#2 scatter-collect (variant)</td><td>FG中追加未獲得特色</td></tr>
+</table>
+
+<h2>🏗️ 作用鏈（Feature Chain）</h2>
+<div class="flow">SpinState 旋轉中
+  └─ 收到 SpinAck → <em>BigWin Announce?</em> → 播完後停輪
+  └─ <em>NearMiss?</em> → 聽牌演出 → 正常停輪
+      ↓ (轉輪停止)
+EFFECT_START → SCATTER_SHOW（Scatter 飛入盆子）
+      ↓
+Feature 作用鏈（AWARD 前）：
+  <em>CollectMystery?</em> → <em>BombEvent?</em> → <em>BombFeature</em> → <em>Multiplier</em> → <em>CollectFeature</em>
+      ↓
+AWARD（線獎對獎 + BigWin 報獎）→ ROUND_SHOW_END → CHECK_STATE
+      ↓
+<em>PlusBonusSpin</em> / <em>FgNewFeature</em> / ENTER_FREE / LEAVE_FREE / ROUND_END → IDLE</div>
+
+<p style="color:var(--muted);margin-top:3rem;font-size:.75rem;text-align:center">
+Generated 2026-06-25 · uk-slot-pattern-library · 15 patterns · AI-canonical-corp
+</p>
+
+<script>
+const patterns = [
+{id:1,name:"Collect Feature",freq:"high",refs:["eye_strike","wrath_of_thunder","3LP"],
+ desc:"COLLECT 符號收集盤面所有 CASH/JP 獎金值",
+ identify:["「COLLECT」出現在特定輪（通常第5輪）","「CASH 符號帶數字/獎金值」","「收集盤面上所有 CASH 的獎金值」"],
+ state:"CollectFeatureState（獨立 State，複雜型建議）",
+ variants:["單/複數 COLLECT","搭配 Multiplier","搭配 Bomb","CASH 升級（銅→銀→金）","搭配神秘事件","5 級 JP"],
+ edges:["收分順序：CASH 先→JP 後","GRAND/MEGA 獨立報獎面板","複數 COLLECT 由上到下排隊","作用順序 Bomb→Multiplier→Collect"]},
+{id:2,name:"Scatter 蒐集觸發",freq:"high",refs:["eye_strike","3LP"],
+ desc:"多色 Scatter 飛入盆子/容器，累積成長後觸發 FG",
+ identify:["「Scatter 收集/蒐集到盆子」","「累積 N 個觸發免費遊戲」","「多種顏色對應不同 FG 特色」"],
+ state:"ScatterShowState + PotCollectManager",
+ variants:["單盆子 vs 多盆子","Super Scatter 一次進所有盆子","FG 中可再觸發未獲得特色","7 種 FG 組合（3LP）"],
+ edges:["每輪最多 1 顆 Scatter","Super 不與單色同時出現","觸發動畫必須一階一階長","跨 session 持久化"]},
+{id:3,name:"盤面擴展 (Expand)",freq:"mid",refs:["wrath_of_thunder","3LP"],
+ desc:"FG 中盤面從 3×5 擴張至 5×5，上下各增加一排",
+ identify:["「盤面擴張/擴展」","「3×5 → 5×5」","「增加行數」"],
+ state:"不需新 State — SlotReels.SwitchReelMode()",
+ variants:["漸進擴展（4→5→6→7）","一次擴展（3→5）","擴展搭配 +1 SPIN","擴展搭配 Multiplier 格"],
+ edges:["FakeReelManager 需同步切換行數","回 MG 時多餘符號清除","RecoverSpinAck 需判 IsFG","EffectPlate 座標系對應"]},
+{id:4,name:"Multiplier 格子",freq:"mid",refs:["eye_strike","3LP"],
+ desc:"盤面格位帶持續性乘倍標記，CASH 落在該格時收分先乘倍",
+ identify:["「指定位置增加乘倍」","「累加提升」","「兩種顏色效果框」"],
+ state:"無獨立 State — 嵌入 FeatureShowState + CollectState",
+ variants:["累加型 vs 固定型","Bomb 產出+Multiplier 連動","擴展盤面乘倍","乘倍上限"],
+ edges:["同格同輪多次累加的計算時機","乘倍格滿盤時純累加","Replay/Unshow 須可逆","JP 轉分數→乘倍→Collect 三步驟順序"]},
+{id:5,name:"Bomb 爆炸",freq:"mid",refs:["chachacha","eye_strike","3LP"],
+ desc:"炸彈符號觸發爆炸，影響範圍產出/升級 CASH",
+ identify:["「Bomb 符號停輪後爆炸」","「爆炸路徑產出 CASH」","「複數炸彈逐顆作用」"],
+ state:"BombFeatureState（3LP）或 FeatureShowState 內嵌",
+ variants:["8方向（chachacha）","垂直整輪（3LP Clover Bomb）","小妖精投擲 BombEvent","條件限制（需有 COLLECT 才作用）"],
+ edges:["重疊範圍處理","炸彈炸到另一顆炸彈","爆炸超出盤面邊界","無 COLLECT 時不作用（3LP）"]},
+{id:6,name:"BonusGame Pick",freq:"high",refs:["722 robinhood","746 far_west"],
+ desc:"觸發後進入獨立 Bonus 場景，玩家主動選擇決定獎勵",
+ identify:["「進入 Bonus 場景」","「玩家選擇/pick」","「多 stage 遞進」"],
+ state:"ENTER_BONUS → BONUS_GAME → LEAVE_BONUS",
+ variants:["單 stage pick","多 stage 遞進（弓箭→錢袋）","射擊互動型"],
+ edges:["Bonus 場景資源預載","中途斷線重連的 stage 還原","結算動畫與主遊戲切換"]},
+{id:7,name:"Respin",freq:"mid",refs:["eye_strike","746 far_west","3LP"],
+ desc:"鎖定部分格子，僅旋轉未鎖定區域，重複直到無新鎖定",
+ identify:["「鎖定格子」「Respin」","「重複旋轉直到無新鎖定」"],
+ state:"EnterRespin → RespinSpin loop → LeaveRespin",
+ variants:["整列鎖定","單格鎖定","多類型 RespinType","+1 SPIN 非鎖定型（3LP）"],
+ edges:["全盤鎖定需立即結束","FG 內觸發需正確巢狀回 FG","Respin 期間 UI 禁用"]},
+{id:8,name:"NearMiss 聽牌",freq:"high",refs:["eye_strike","template","3LP"],
+ desc:"Server 判定接近大獎，client 在停輪做減速/震動演出增強緊張感",
+ identify:["「聽牌」「NearWin」","「接近大獎但未中」","「特殊減速/震動」"],
+ state:"不需獨立 State — SpinState 停輪內嵌處理",
+ variants:["COLLECT 聽牌（第5輪）","CASH 聽牌（第1~4輪）","大獎預告 BigWin Announcement（3LP）"],
+ edges:["turbo/skip 時需縮短演出","NearMiss + 實際中獎重疊","大獎預告+NearMiss 同手串接"]},
+{id:9,name:"FakeReelManager",freq:"high",refs:["eye_strike","722","746","3LP"],
+ desc:"管理假轉輪帶，依 BetMode 切換不同帶組（Normal/ExtraBet/BuyBonus）",
+ identify:["「投注模式切換轉輪帶」","「FakeReel」","「BetMode」"],
+ state:"不需獨立 State — 在 SpinState 前由 Manager 切帶",
+ variants:["2 模式（Normal/ExtraBet）","3 模式（+BuyBonus）","4 模式（eye_strike）"],
+ edges:["盤面擴展時行數同步","BetMode 切換時機（spin 前）","RecoverSpinAck 需還原正確帶"]},
+{id:10,name:"ExtraBet",freq:"mid",refs:["eye_strike"],
+ desc:"額外押注解鎖進階玩法（提升機率/解鎖符號）",
+ identify:["「ExtraBet」「加倍投注」","「額外押注解鎖功能」"],
+ state:"不需獨立 State — ExtraBetComponent + UI 跳窗",
+ variants:["單倍率單步驟","多倍率兩步驟跳窗"],
+ edges:["與 BuyBonus 互斥","Unshow/Replay 還原","FakeReel 帶切換同步"]},
+{id:11,name:"Buy Bonus",freq:"high",refs:["框架 CommonBuyBonus","tct","722","3LP"],
+ desc:"玩家付費直接跳過 BaseGame 進入 FreeGame",
+ identify:["「購買 Bonus」「Buy Feature」","「付費直接進入 FG」"],
+ state:"不需獨立 State — IDLE 彈面板 → WaitRes → EnterFree",
+ variants:["固定單品項","多品項面板","品項與 FG 特色綁定（3LP：3種品項對應特色數量）"],
+ edges:["與 ExtraBet 互斥","餘額不足即時檢查","FakeReel BetMode 切換","品項與 FG 配置一致性"]},
+{id:12,name:"Wild 變身",freq:"mid",refs:["722 robinhood"],
+ desc:"特定條件下普通符號轉換為 Wild",
+ identify:["「符號變身為 Wild」","「角色升級為百搭版本」"],
+ state:"不需獨立 State — PlateShowState / FeatureShowState 處理",
+ variants:["角色型（3種角色各有 Wild 版）","條件觸發型"],
+ edges:["變身後才對獎","plateInfo symbolId 替換時機","Unshow 需還原原始符號"]},
+{id:13,name:"Mystery 符號",freq:"mid",refs:["eye_strike","746 far_west","wrath_of_thunder"],
+ desc:"停輪後 Mystery 符號揭示為其他符號（server 決定）",
+ identify:["「Mystery 符號/神秘符號」","「停輪後轉換/揭示」","「所有 Mystery 轉為同一種」"],
+ state:"不需獨立 State — PlateShowState 內嵌揭示動畫",
+ variants:["轉為 CASH/JP（eye_strike）","轉為一般符號","server-only 自動轉換（無動畫）"],
+ edges:["揭示在對獎前完成","RecoverSpinAck 需用轉換後結果","與 Collect 互動順序"]},
+{id:14,name:"COLLECT 神秘事件",freq:"mid",refs:["3LP"],badge:"new",
+ desc:"停輪後第5輪逐格重轉，追加更多 COLLECT 符號",
+ identify:["「停輪後觸發神秘事件」","「第5輪一格一格重轉」","「轉出更多 COLLECT」"],
+ state:"CollectMysteryState（獨立 State）",
+ variants:["MG 門檻較高","FG 門檻較低","與 BombEvent(停輪後)互斥"],
+ edges:["已有 COLLECT 格跳過不轉","新增 COLLECT 需被後續 CollectFeature 識別","turbo 需加速版","與 BombEvent 時序互斥"]},
+{id:15,name:"Template 骨架",freq:"base",refs:["uk_slot_template"],
+ desc:"基礎 State Machine + API Surface，所有衍生遊戲以此為起點",
+ identify:["新專案建立時","需要確認框架提供哪些 State"],
+ state:"18 States（4 Framework + 14 GAMEVIEW_STATE）",
+ variants:["Standard SpinMode","Cascade SpinMode","Tumble SpinMode"],
+ edges:["Framework State 不可改","GAMEVIEW_STATE 可擴展","CheckState 是路由器核心"]}
+];
+
+const grid = document.querySelector('.grid');
+patterns.forEach(p => {
+  const freqClass = p.freq==='high'?'badge-high':p.freq==='mid'?'badge-mid':'badge-base';
+  const freqLabel = p.freq==='high'?'高頻':p.freq==='mid'?'中頻':'基礎';
+  const newBadge = p.badge==='new'?'<span class="badge badge-new">NEW</span>':'';
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-title">
+      <span>#${p.id}</span>
+      <span>${p.name}</span>
+      <span class="badge ${freqClass}">${freqLabel}</span>
+      ${newBadge}
+    </div>
+    <div class="card-desc">${p.desc}</div>
+    <div style="margin-bottom:.3rem">${p.refs.map(r=>'<span class="tag">'+r+'</span>').join('')}</div>
+    <div class="detail">
+      <div class="section-label">🔍 識別條件</div>
+      <ul>${p.identify.map(i=>'<li>'+i+'</li>').join('')}</ul>
+      <div class="section-label">🔀 State 映射</div>
+      <p style="color:var(--text);margin:.3rem 0"><code>${p.state}</code></p>
+      <div class="section-label">🔄 常見變體</div>
+      <ul>${p.variants.map(v=>'<li>'+v+'</li>').join('')}</ul>
+      <div class="section-label">⚠️ 邊界案例</div>
+      <ul>${p.edges.map(e=>'<li>'+e+'</li>').join('')}</ul>
+    </div>`;
+  card.addEventListener('click', () => card.classList.toggle('open'));
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
