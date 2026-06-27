@@ -96,6 +96,41 @@ writing-skills 要求 **「No skill without a failing test first」**（TDD-for-
 
 寧可少寫一個 skill，不要濫建。
 
+### Confidence Scoring（量化門檻）
+
+四個問題通過後，用信心分數做最終裁決。分數由兩個維度算出：
+
+| 維度 | 計算 | 直覺 |
+|------|------|------|
+| **頻率 F** | `min(出現次數 / 5, 1.0)` | 出現 5+ 次 = 滿分 |
+| **成本 C** | `min(平均消耗 turn 數 / 10, 1.0)` | 每次花 10+ turn = 滿分 |
+
+```
+confidence = F × C
+```
+
+「出現次數」的計量來源（取最大值）：
+- session transcripts 中出現同 pattern 的 session 數
+- dailylog 提及次數
+- facts 中相關記錄數
+
+「平均消耗 turn 數」= 該 pattern 所在 session 的 user turn 總數平均值（估算即可）。
+
+**門檻決策表：**
+
+| confidence | 動作 |
+|-----------|------|
+| ≥ 0.5 | ✅ 進入 Step 3（正式候選） |
+| 0.3 – 0.49 | ⏳ 不建 skill，`remember("pattern: <描述> 出現 N 次，score=X")` 留底觀察 |
+| < 0.3 | ❌ 跳過，不記錄 |
+
+**範例：**
+- 某個 Windows shell 陷阱出現 4 次、每次花 6 turn → `F=0.8, C=0.6, score=0.48` → 留底
+- 同一個 pattern 出現 5 次、每次花 12 turn → `F=1.0, C=1.0, score=1.0` → 直接進候選
+- 某 API 怪癖出現 2 次、每次花 3 turn → `F=0.4, C=0.3, score=0.12` → 跳過
+
+> 💡 靈感來源：[ECC continuous-learning-v2](https://github.com/affaan-m/ECC) 的 instinct confidence scoring。差異：ECC 用 hooks 即時觀測，我們用事後 session 掃描。
+
 ## Step 3 — 比對已安裝的 ms- skill（關鍵步驟）
 
 **在動手寫任何新 skill 之前**，先列出 `${SKILL_DIR}/` 底下所有 `ms-` 開頭的目錄，讀每個 SKILL.md 的 YAML frontmatter。

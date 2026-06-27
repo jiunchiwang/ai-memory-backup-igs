@@ -1,26 +1,16 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-26T20:04:25.334Z",
+  "_last_updated_at": "2026-06-27T20:11:41.543Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-06-26T20:01:37.065Z",
-      "use_count": 18,
-      "last_reason": "掃描 3 session（6/26 pattern-library + 證券戶 + Hermes），無候選達門檻，3 檔搬移",
+      "last_agent_used_at": "2026-06-27T20:11:41.543Z",
+      "use_count": 22,
+      "last_reason": "wikilint 步驟：檢查 10 頁 wiki 的過時/孤兒/斷連狀態",
       "pinned": false,
       "notes": null,
       "orphan": false
-    },
-    "ms-wiki-knowledge-base": {
-      "created_at": "2026-06-16T20:03:02.023Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.093Z",
-      "last_agent_used_at": "2026-06-26T20:04:25.334Z",
-      "use_count": 23,
-      "last_reason": "wikilint 步驟——發現 uk-slot-pitfalls stale，補上 drop-out 凍結踩坑段（第 4 條），bump updated",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -41,16 +31,6 @@
       "pinned": false,
       "notes": null,
       "orphan": false
-    },
-    "skill-workflow": {
-      "created_at": "2026-06-22T07:31:15.157Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.168Z",
-      "last_agent_used_at": "2026-06-22T07:31:15.157Z",
-      "use_count": 1,
-      "last_reason": "依照 v4 正本流程新增 skill：複製到 canonical → sync.ps1 投影",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",

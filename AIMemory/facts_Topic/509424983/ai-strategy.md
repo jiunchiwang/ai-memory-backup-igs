@@ -3,4 +3,4 @@
 - [f_e3b009] [2026-06-19T20:31:38.098Z] 在 headless（無人值守）Claude 自動化腳本中，用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget，即可強制走 proposal-only（只提案、不直接寫入記憶）工作流程，避免自動流程擅自改寫長期記憶。
 - [2026-06-22T15:29:17.398Z] 因為跨模型共用所以新增/修改 skill 一律在正本 G:\AI\AI-canonical\skills\<domain>\<name>\SKILL.md 操作再跑 sync.ps1 投影（排除直接改 ~/.kiro/skills 因為是 junction 會被覆蓋）；完整 SOP 見 steering/skill-workflow.md
 - [f_e6394d] [2026-06-23T12:00:49.577Z] 使用者的 steering 架構決策：closed-loop-system.md（完整閉環）與 karpathy-guardrails.md（精簡 4 原則）共存而非合併——前者用於主 agent 長 session，後者用於 specialist/delegation/短任務場景，省 token 又不失約束
-- [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
+- [f_6d4701] [2026-06-27T00:45:09.031Z] memory-to-skill 正本 SKILL.md 已加入 Confidence Scoring 量化門檻（Step 2 後）：confidence = F×C（頻率×成本），≥0.5 進候選、0.3-0.49 留底觀察、<0.3 跳過；靈感來自 ECC continuous-learning-v2 的 instinct confidence scoring

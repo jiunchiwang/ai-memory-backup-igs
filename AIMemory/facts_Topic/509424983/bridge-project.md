@@ -1,18 +1,16 @@
 - [f_4e8237] [2026-05-29T12:03:17.153Z] 使用者有一個 telegram-kiro-bridge 專案位於 G:\AI\telegram-kiro-bridge-main，含 desktop-pet Electron 桌面寵物功能
 - [f_d21a12] [2026-05-29T20:06:30.574Z] 使用者的 AIMemory 系統位於 G:\AI\AIMemory，含 facts、topics、wiki、dailylog、sessions 等子結構，由 telegram-kiro-bridge 的 /dream 每日凌晨 04:00 自動維運
 - [f_b7206d] [2026-06-01T10:57:23.404Z] 使用者已設定 telegram-kiro-bridge 的 start.bat 在 Windows 開機時自動啟動（透過 shell:startup 資料夾的 bat 檔）
-- [f_5a495e] [2026-06-02T13:30:02.283Z] 使用者已在 telegram-kiro-bridge 的 PARALLEL_DELEGATE 機制中加入 cross-check 功能，借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
-- [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
-- [f_721fa7] [2026-06-04T20:09:05.182Z] 使用者的 AIMemory 實際路徑為 G:\AI\AIMemory（此機器為 G: 磁碟，非原開發機的 F:\AI\AIMemory）
-
 - [f_7d747c] [2026-06-19T08:57:00.670Z] telegram-kiro-bridge 已實作 Telegram 訊息排版美化功能：新增 src/format-html.ts（Markdown→HTML 轉換），修改 telegram-ui.ts 和 run-prompt.ts，主 agent 回覆改用 parse_mode: HTML 渲染（粗體、斜體、code block、inline code、blockquote、連結、刪除線），每個 editMessageText 都有 strip-tags fallback 防 400 error
 - [f_5b7f6a] [2026-06-19T08:57:00.701Z] telegram-kiro-bridge 美化方案選用 HTML 而非 MarkdownV2（因為 agent 輸出常含 _ * [ ] 等字元，MarkdownV2 跳脫規則太嚴格會導致大量 400 error；HTML 只需 escape <>&）
 - [f_381c4b] [2026-06-19T08:57:00.714Z] Telegram Bot API 10.1（2026-06-11）新增 Rich Messages 支援標題/表格/清單/LaTeX/摺疊區塊/腳註，透過 sendRichMessage + InputRichMessage 使用，最多 32768 字；bridge 未來可升級但目前先用傳統 HTML parse_mode
-- [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考
-- [f_c228c9] [2026-06-23T12:00:49.553Z] 使用者研究 Headroom（headroomlabs-ai/headroom）後，整合優先級決策：方案 A（MCP server 掛給 agent）> 方案 D（headroom learn 獨立跑）> 方案 C（bridge library 整合）；排除方案 B（proxy wrap）因為 Kiro CLI 大概不吃 ANTHROPIC_BASE_URL
 - [f_71bf67] [2026-06-23T22:08:31.550Z] telegram-kiro-bridge 的 /help inline keyboard 說明按鈕已從 parse_mode Markdown 改為 HTML + escHtml，因為 desc/usage 含大量 MarkdownV1 敏感字元（*_<>|${}）會導致 Telegram API 400 error 按鈕無回應；修改檔案：bot-setup.ts、index.ts、commands/misc.ts
 - [f_789096] [2026-06-23T22:16:32.067Z] telegram-kiro-bridge 的 /help inline keyboard「返回選單」按鈕 callback data 從 help:menu 改為 help:_back，因為原本與 COMMAND_SPECS 的 name:menu 撞名導致點 ⌨️ menu 按鈕時被攔截無法顯示說明；修改檔案：bot-setup.ts、index.ts
-- [f_5a515c] [2026-06-24T09:09:27.571Z] telegram-kiro-bridge 的 usage-guide.html 已從 18 章節擴充到 24 章節（新增 Environment Preamble、Event Log、AI.md、RTK Shell、Codegraph、429 防護），Local LLM 後端已從 Ollama 修正為 llama.cpp，Dream 步驟從 12 步修正為 README 的 10 步
-- [f_1c58e2] [2026-06-24T09:09:27.577Z] 此台機器（jiunchiwang）的 Embedding Router 模型快取在 node_modules/@xenova/transformers/.cache/（23.3 MB），非 ~/.cache/huggingface/；效能實測平均 2.6 ms/embed、向量 512 維
-- [f_937543] [2026-06-24T09:09:27.582Z] telegram-kiro-bridge 的 Dream 預設步驟不含 docupdate（README source of truth 為 10 步：memorytoskill→topicreview→wikisync→factlint→wikilint→skilllint→specialistreview→artifactcleanup→backup→restart）
-- [f_9d641c] [2026-06-25T00:29:55.028Z] telegram-kiro-bridge 已產出 Karpathy LLM Wiki 對照改進 roadmap（docs/karpathy-wiki-alignment-roadmap.html），識別 3 個 P0 差距：Unified Activity Log、Ingest Ripple 漣漪更新、Query Auto-save 探索複利
+- [f_d0b214] [2026-06-26T20:44:45.674Z] 此台機器的 dream.json 已明確建立於 C:\Users\jiunchiwang\.kiro\dream.json（13 步：sharedsync→dailylog→memorytoskill→topicreview→wikisync→factlint→wikilint→skilllint→docupdate→specialistreview→artifactcleanup→backup→restart），不再依賴 bridge 內建 DEFAULT_STEPS fallback
+- [f_651961] [2026-06-26T23:53:28.363Z] telegram-kiro-bridge 的 upstream 原始 repo 為 redkilin/telegram-kiro-bridge（remote name: upstream），fork 為 jiunchiwang/telegram-kiro-bridge（remote name: origin）
+- [f_75d645] [2026-06-27T00:55:47.555Z] telegram-kiro-bridge 已實作 Optimistic Cancel 改善方案（2026-06-27）：/cancel 後 bridge 立即清 inflight + 停 streaming + edit placeholder 顯示「⛔ 已取消」+ 回覆確認可繼續對話；force-kill timeout 從 60s 降為 15s；改動檔案：sessionManager.ts、run-prompt.ts、commands/misc.ts
+- [f_a6e65d] [2026-06-27T01:14:09.205Z] telegram-kiro-bridge 的 /skillsearch 安裝路徑已從硬寫 G:\AI\AI-canonical\skills\general 改為動態（SKILL_CANONICAL_DIR env → fallback），並加入 domain 自動判斷（slot prefix → slot/，其餘 → general/）、cache 10min TTL + maxSize=20、fetch 10s timeout、安裝後自動跑 sync.ps1 -Apply
+- [f_78b50f] [2026-06-27T08:00:59.512Z] telegram-kiro-bridge 已新增 Context Budget Discipline preamble steering（memory.ts）+ 70% token budget 警告注入（run-prompt.ts _budgetWarned flag），解決「research 階段 context 膨脹導致任務被打斷」的盲區
+- [f_bd10fc] [2026-06-27T08:00:59.517Z] telegram-kiro-bridge 已新增 ASK Button Discipline preamble steering（memory.ts）：當回覆含 2+ 選項或 yes/no 確認時，強制使用 <<ASK:...>> token 渲染按鈕，附自偵測 trigger keywords
+- [f_0a8153] [2026-06-27T08:00:59.524Z] 使用者確認 bridge 的自我改進優先級：Context Budget（事前紀律 + 事中熔斷）和 ASK 強制觸發規則是當前最需要的兩個 preamble 加強項
+- [2026-06-28T04:03:58.025Z] bridge 設計原則：Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊（排除全面複製 CC 架構因為定位不同）；保持差異化優勢（語意路由 + topic shard + embed-router 是 CC 沒有的）

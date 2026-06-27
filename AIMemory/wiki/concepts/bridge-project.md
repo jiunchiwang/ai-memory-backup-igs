@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-25
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543]
+updated: 2026-06-28
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -114,3 +114,32 @@ wiki 系統門檻為 ≥5 facts 才自動產出 concepts 頁面（由 `/wikisync
 
 - [[uk-slot]] — 使用者的主要開發產品線
 - [[skill-and-eval]] — skill 評估與管理追蹤
+
+
+## 近期改善（2026-06-26~28）
+
+### Optimistic Cancel
+
+`/cancel` 後 bridge 立即清 inflight + 停 streaming + 編輯 placeholder 顯示「⛔ 已取消」。使用者無需等 CLI 回應即可送新訊息。Force-kill timeout 從 60s 降為 15s。
+
+### /skillsearch 指令
+
+呼叫 SkillsMP API 搜尋公開 SKILL.md。安裝路徑動態判斷 domain（slot → slot/，其餘 → general/）、cache 10min、fetch 10s timeout、安裝後自動跑 sync.ps1。
+
+### Preamble Steering 加強
+
+- **Context Budget Discipline**：事前估算 + 70% token 事中熔斷警告
+- **ASK Button Discipline**：2+ 選項強制使用 `<<ASK:...>>` token
+
+### Dream 配置
+
+dream.json 已建立於 `~/.kiro/dream.json`（13 步），不再依賴 bridge 內建 DEFAULT_STEPS fallback。
+
+### 設計原則
+
+Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊；保持差異化優勢（語意路由 + topic shard + embed-router）。詳見 [[bridge-research]]。
+
+### Git 架構
+
+- upstream：`redkilin/telegram-kiro-bridge`（remote: upstream）
+- fork：`jiunchiwang/telegram-kiro-bridge`（remote: origin）

@@ -59,40 +59,7 @@
       "igs",
       "鈊象",
       "小葉",
-      "葉錦頤",
-      "pattern-library",
-      "excel-to-ai-doc"
-    ]
-  },
-  {
-    "topic": "bridge-research",
-    "keywords": [
-      "hermes",
-      "cowart",
-      "headroom",
-      "loop engineering",
-      "loop-engineering",
-      "claudecodetools",
-      "claude code tools",
-      "skillsmp",
-      "posttooluse",
-      "posttool",
-      "tool usage log",
-      "instinct observer",
-      "karpathy-wiki",
-      "karpathy lm",
-      "ingest ripple",
-      "query auto-save",
-      "worktree isolation",
-      "specialist persistent memory",
-      "pluggable posttool",
-      "roadmap",
-      "方案a",
-      "方案b",
-      "方案c",
-      "方案d",
-      "借鏡",
-      "可借鏡"
+      "葉錦頤"
     ]
   },
   {
@@ -101,7 +68,6 @@
       "telegram-kiro-bridge",
       "desktop-pet",
       "bridge 專案",
-      "bridge 設計",
       "grammy",
       "acp ",
       "mcp-memory",
@@ -120,20 +86,12 @@
       "rich messages",
       "parse_mode",
       "format-html",
+      "hermes",
+      "cowart",
+      "headroom",
       "specialist-domains",
       "embed router",
-      "embedding router",
-      "optimistic cancel",
-      "/cancel",
-      "/skillsearch",
-      "state.md 三段式",
-      "context budget",
-      "ask button discipline",
-      "preamble steering",
-      "dream.json",
-      ".usage.json",
-      "event-log",
-      "hit-log"
+      "embedding router"
     ]
   },
   {
@@ -155,9 +113,7 @@
       "karpathy",
       "steering 架構",
       "steering/",
-      "skill-workflow",
-      "中介層",
-      "功能對齊"
+      "skill-workflow"
     ]
   },
   {
@@ -175,8 +131,7 @@
       "暫不安裝",
       "webwright",
       "dynamic workflow",
-      "confidence scoring",
-      "skill_propose"
+      "excel-to-ai-doc"
     ]
   },
   {
@@ -190,12 +145,7 @@
       "githubtool",
       "obsidian vault",
       "typescript-guide",
-      "streamlit",
-      "tsc --noemit",
-      "npx tsc",
-      "此台機器",
-      "jiunchiwang",
-      "node_modules/@xenova"
+      "streamlit"
     ]
   },
   {
@@ -208,10 +158,7 @@
       "偏好 git",
       "commit 訊息",
       "產 pdf 的工作流程",
-      "目錄錨點跳轉",
-      "使用者確認",
-      "使用者決定",
-      "自我改進優先級"
+      "目錄錨點跳轉"
     ]
   }
 ]

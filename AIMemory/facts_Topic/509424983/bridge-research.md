@@ -1,0 +1,15 @@
+- [f_5a495e] [2026-06-02T13:30:02.283Z] 使用者已在 telegram-kiro-bridge 的 PARALLEL_DELEGATE 機制中加入 cross-check 功能，借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
+- [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
+- [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考
+- [f_c228c9] [2026-06-23T12:00:49.553Z] 使用者研究 Headroom（headroomlabs-ai/headroom）後，整合優先級決策：方案 A（MCP server 掛給 agent）> 方案 D（headroom learn 獨立跑）> 方案 C（bridge library 整合）；排除方案 B（proxy wrap）因為 Kiro CLI 大概不吃 ANTHROPIC_BASE_URL
+- [f_9d641c] [2026-06-25T00:29:55.028Z] telegram-kiro-bridge 已產出 Karpathy LLM Wiki 對照改進 roadmap（docs/karpathy-wiki-alignment-roadmap.html），識別 3 個 P0 差距：Unified Activity Log、Ingest Ripple 漣漪更新、Query Auto-save 探索複利
+- [f_7f1ee1] [2026-06-26T23:53:28.343Z] telegram-kiro-bridge 已實作 /skillsearch 指令：呼叫 SkillsMP API（skillsmp.com）搜尋公開 SKILL.md，支援查看詳情和一鍵安裝到正本目錄 G:\AI\AI-canonical\skills\general\；callback prefix 為 SS:，匿名 API 50次/天免 key
+- [f_d933fc] [2026-06-26T23:53:28.356Z] 使用者知道 SkillsMP（skillsmp.com）是一個收錄約 196 萬份 SKILL.md 的公開市集/目錄，格式與自己使用的完全相容（Claude Code / Codex / Kiro 通用），有 REST API 可程式化存取
+- [f_5bd2fc] [2026-06-27T00:45:09.018Z] SkillsMP 上的 196 萬份 skill 絕大多數設計給 Claude Code 本地 CLI 環境（依賴 PostToolUse hooks、.claude/ 目錄、memory_remember API），bridge 的 ACP+Telegram 架構無法直接安裝使用，但可借鏡概念融入現有機制
+- [f_db1e8b] [2026-06-27T00:45:09.040Z] telegram-kiro-bridge 已實作方案 A Tool Usage Log（2026-06-27）：event-log.ts 新增 tool_call 事件類型、sessionManager.ts 在 tool_call_update 的 completed/failed 各加一行 logEvent，每個 tool call 完成/失敗都寫入 events.jsonl
+- [f_029977] [2026-06-27T00:45:09.043Z] telegram-kiro-bridge 產出 docs/post-tool-hooks-proposal.html，記錄 PostToolUse Hooks 三方比較（Claude Code / ECC / bridge）與 A→B→C 漸進改善方案
+- [f_50c2e9] [2026-06-27T06:21:25.469Z] telegram-kiro-bridge 已實作 STATE.md 三段式（Loop Engineering 借鏡）：/dream 結束前用 meta prompt 將 stepResults 分類為 High Priority / Watch List / Noise 三段，覆寫 ${MEMORY_DIR}/STATE.md；改動檔案：src/commands/dream.ts
+- [f_9b0067] [2026-06-27T06:21:25.482Z] Loop Engineering 改善 roadmap 待做項目：#2 Loop Budget 顯式化（每日 token aggregate + 趨勢報告，等 Parallel Delegate/Relay 大量使用時再做）、#3 漸進 Level 標記（dream step 加 L1/L2/L3 欄位，等新增自動化步驟時再做）
+- [f_f1be4b] [2026-06-27T06:21:25.490Z] 使用者研究 cobusgreyling/loop-engineering（⭐2.7k）後判斷 bridge 已超越其設計（語意路由、Self-improving、跨機 Relay、Local LLM），最大借鏡價值在操作紀律（L1 先行、顯式 budget、三段式 state、attempt cap）
+- [f_31228e] [2026-06-27T08:00:59.499Z] telegram-kiro-bridge 已產出 docs/claude-code-tools-research.html 互動式研究報告（454行、8 tab），含 Claude Code 六大子系統架構、與 bridge 六維對比、8 個新可借鏡方向（Specialist Persistent Memory + Pluggable PostTool Hooks 最高價值）及 A→B→C→D 漸進 roadmap
+- [2026-06-28T04:03:58.025Z] ClaudeCodeTools v7.0 把固定 5-Phase 改為 Claude Code 原生 Workflow，因為對照實驗顯示固定流程對正確性沒幫助但 token 很貴（排除繼續固定 5-Phase 因為成本高且無益正確率）— 使用者的 closed-loop-system.md 源自此 repo 應同步考量
