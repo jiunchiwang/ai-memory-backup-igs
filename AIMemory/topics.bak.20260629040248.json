@@ -160,7 +160,25 @@
       "功能對齊"
     ]
   },
-
+  {
+    "topic": "skill-and-eval",
+    "keywords": [
+      "skill.md",
+      "skill：",
+      "skill:",
+      "萃取",
+      "skillopt",
+      "writing-skills",
+      "memory-to-skill",
+      "~/.kiro/skills",
+      "評估後決定",
+      "暫不安裝",
+      "webwright",
+      "dynamic workflow",
+      "confidence scoring",
+      "skill_propose"
+    ]
+  },
   {
     "topic": "dev-tools",
     "keywords": [

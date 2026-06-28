@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-06-27T20:11:41.543Z",
+  "_last_updated_at": "2026-06-28T20:08:05.867Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-06-27T20:11:41.543Z",
-      "use_count": 22,
-      "last_reason": "wikilint 步驟：檢查 10 頁 wiki 的過時/孤兒/斷連狀態",
+      "last_agent_used_at": "2026-06-28T20:08:05.867Z",
+      "use_count": 26,
+      "last_reason": "wikilint 步驟：檢查 10 頁 wiki 過時/孤兒/斷連狀態",
       "pinned": false,
       "notes": null,
       "orphan": false

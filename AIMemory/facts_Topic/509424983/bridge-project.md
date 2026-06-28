@@ -14,3 +14,5 @@
 - [f_bd10fc] [2026-06-27T08:00:59.517Z] telegram-kiro-bridge 已新增 ASK Button Discipline preamble steering（memory.ts）：當回覆含 2+ 選項或 yes/no 確認時，強制使用 <<ASK:...>> token 渲染按鈕，附自偵測 trigger keywords
 - [f_0a8153] [2026-06-27T08:00:59.524Z] 使用者確認 bridge 的自我改進優先級：Context Budget（事前紀律 + 事中熔斷）和 ASK 強制觸發規則是當前最需要的兩個 preamble 加強項
 - [2026-06-28T04:03:58.025Z] bridge 設計原則：Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊（排除全面複製 CC 架構因為定位不同）；保持差異化優勢（語意路由 + topic shard + embed-router 是 CC 沒有的）
+- [f_9b1654] [2026-06-28T12:39:41.773Z] telegram-kiro-bridge 已實作 QUIET_HOURS 功能（config.ts + scheduler.ts）：env QUIET_HOURS=HH-HH 格式，靜默期間所有排程延遲到結束時刻才 fire，支援跨午夜；目前未在 .env 啟用，保留備用
+- [f_7366e2] [2026-06-28T12:39:41.790Z] telegram-kiro-bridge 的 Passive Monitor 排程（id: f970aa0a）已從 every 2h 改為 cron 0 8,10,12,14,16,18,20,22 * * *，深夜 00:00-08:00 不觸發；dream 04:00 不受影響
