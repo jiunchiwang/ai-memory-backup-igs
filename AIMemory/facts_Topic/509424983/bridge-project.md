@@ -16,3 +16,4 @@
 - [2026-06-28T04:03:58.025Z] bridge 設計原則：Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊（排除全面複製 CC 架構因為定位不同）；保持差異化優勢（語意路由 + topic shard + embed-router 是 CC 沒有的）
 - [f_9b1654] [2026-06-28T12:39:41.773Z] telegram-kiro-bridge 已實作 QUIET_HOURS 功能（config.ts + scheduler.ts）：env QUIET_HOURS=HH-HH 格式，靜默期間所有排程延遲到結束時刻才 fire，支援跨午夜；目前未在 .env 啟用，保留備用
 - [f_7366e2] [2026-06-28T12:39:41.790Z] telegram-kiro-bridge 的 Passive Monitor 排程（id: f970aa0a）已從 every 2h 改為 cron 0 8,10,12,14,16,18,20,22 * * *，深夜 00:00-08:00 不觸發；dream 04:00 不受影響
+- [f_dd04ac] [2026-06-29T13:13:44.675Z] 使用者想用 Obsidian 瀏覽 AIMemory wiki，偏好把 G:\AI\AIMemory 或其 wiki 子目錄當作 Obsidian vault 開啟

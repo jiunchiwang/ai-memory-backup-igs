@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "handoffs/handoff-509424983-2026-06-17T10-50-58.md",
+                "file": "wiki/concepts/bridge-project.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "handoff-509424983-2026-06-17T10-50-58"
+              "title": "bridge-project"
             }
           }
         ]
@@ -183,25 +183,33 @@
       "bases:建立新的 base": false
     }
   },
-  "active": "e0442dcc7743ff7b",
+  "active": "22a02900826b6a3d",
   "lastOpenFiles": [
+    "oldSessions/session-509424983-2026-06-29T14-16-58.md",
+    "oldSessions/session-509424983-2026-06-29T14-16-57.md",
+    "oldSessions/session-509424983-2026-06-29T13-13-36.md",
+    "oldSessions/session-509424983-2026-06-29T13-13-35.md",
+    "oldSessions/session-509424983-2026-06-29T10-48-04.md",
+    "oldSessions/session-509424983-2026-06-28T20-09-39.md",
+    "dailylog/2026-06-29.md",
+    "sessions/session-509424983-2026-06-29T14-16-58.md",
+    "working-state-509424983.md",
+    "sessions/session-509424983-2026-06-29T14-16-57.md",
+    "sessions/session-509424983-2026-06-29T13-13-36.md",
+    "sessions/session-509424983-2026-06-29T13-13-35.md",
+    "wiki/concepts/bridge-research.md",
+    "wiki/concepts/bridge-project.md",
+    "wiki/concepts/ai-strategy.md",
+    "wiki/concepts/agent-system-architecture.md",
+    "wiki/tasks/skill-candidates.md",
+    "wiki/index.md",
+    "handoffs/handoff-509424983-2026-06-17T10-50-58.md",
     "sessions/session-509424983-2026-06-19T02-10-56.md",
     "sessions/session-509424983-2026-06-19T02-10-55.md",
     "facts_Topic/509424983/uk-slot.md",
     "facts_Topic/509424983/user-pref.md",
     "facts_Topic/509424983/skill-and-eval.md",
     "facts_Topic/509424983/people.md",
-    "facts_Topic/509424983/misc.md",
-    "facts_Topic/509424983/dev-tools.md",
-    "facts_Topic/509424983/bridge-project.md",
-    "handoffs/handoff-509424983-2026-06-17T10-50-58.md",
-    "sessions/session-509424983-2026-06-18T20-04-47.md",
-    "wiki/tasks/skill-candidates.md",
-    "wiki/concepts/uk-slot.md",
-    "wiki/concepts/skill-and-eval.md",
-    "wiki/concepts/bridge-project.md",
-    "wiki/concepts/agent-system-architecture.md",
-    "wiki/index.md",
-    "facts-509424983.md"
+    "facts_Topic/509424983/misc.md"
   ]
 }
