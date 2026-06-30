@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-06-29
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654]
+updated: 2026-07-01
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -46,6 +46,18 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - Remote：`https://github.com/jiunchiwang/ai-memory-backup-igs.git`（branch: master）
 - `/backup` 指令：robocopy AIMemory + agent 設定目錄到 repo → git push
 - 每日 `/dream` 自動觸發備份步驟
+
+## Session 歸檔與恢復
+
+Session 關閉時自動匯出結構化 JSON 歸檔（`session-archive-{chatId}.json`），下次建立 session 時自動注入 ~300 字摘要到 preamble，注入後自動刪除歸檔檔案。
+
+- **歸檔觸發**：idle timeout / `/reset` / `/restart` / crash / health monitor 偵測到死 PID
+- **恢復內容**：session duration + turn 數 + goal 進度 + 最近 2-5 句 assistant 摘要
+- **設計決策**：per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；恢復只注入摘要（排除全量 turn 因為會佔太多 context budget）
+- **乾淨重開**：`/reset clean`（或 `/reset fresh`）結束 session 後額外刪除歸檔 + working-state，下次零上下文
+- 說明頁：`docs/session-archive-explained.html`
+
+與 [[bridge-research|Working State]] 互補：working-state 告訴 agent 下一步做什麼，archive 告訴 agent 上下文在哪。
 
 ## 訊息排版美化
 

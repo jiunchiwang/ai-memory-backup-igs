@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-06-28
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e]
+updated: 2026-07-01
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -60,8 +60,8 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 | 階段 | 名稱 | 狀態 |
 |------|------|------|
 | ✅ A | Tool Usage Log | 已完成 |
-| ⬜ B | Pluggable PostTool Hooks（~80 行） | 待做 |
-| ⬜ B+ | Specialist Persistent Memory（~50 行） | 待做 |
+| ✅ B | Pluggable PostTool Hooks（~90 行） | 已完成 |
+| ✅ B+ | Specialist Persistent Memory（~50 行） | 已完成 |
 | ⬜ C | Instinct Observer（~300 行） | 遠期 |
 | ⬜ D | Worktree Isolation（~100 行） | 遠期 |
 
@@ -69,3 +69,37 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 
 - ⬜ #2 Loop Budget 顯式化（等 Parallel Delegate 大量使用）
 - ⬜ #3 漸進 Level 標記（等新增自動化步驟）
+
+
+### ai_multi_agent（IGS-ARCADE-DIVISION-RD2）
+
+- 來源：`github.com/IGS-ARCADE-DIVISION-RD2/ai_multi_agent` release branch（公司私有）
+- 本地路徑：`G:\AI\Study\ai_multi_agent`
+- 定位：Python 多 Agent 團隊框架，Telegram Forum Topic 路由，中心化 Daemon + 多獨立 subprocess
+- 比較報告：`G:\AI\Study\ai_multi_agent\comparison-report.html`
+
+#### 架構差異
+
+| 維度 | ai_multi_agent | bridge |
+|------|---------------|--------|
+| 模型 | 中心化 Daemon + 多 Agent process | 單一 Bridge + Specialist subprocess |
+| 通訊 | MCP tool → HTTP API（FastAPI :8470） | Text token protocol（<<TOKEN:...>>） |
+| UI 隔離 | Forum Topic 天然隔離 | /specialist 手動切換 |
+| 回覆 | MCP reply() 一次性送出 | Streaming chunk 即時編輯 |
+
+#### 吸收方案（5 個已評估，3 個已實作）
+
+| # | 方案 | 狀態 | 日期 | 說明 |
+|---|------|------|------|------|
+| 1 | ACP Protocol Trace | ✅ 已完成 | 2026-06-30 | `src/acp-trace.ts` + acpClient.ts 插入；JSONL 寫到 `${MEMORY_DIR}/acp-trace/` |
+| 2 | Reply Dedup | ✅ 已完成 | 2026-06-30 | `src/reply-dedup.ts` + run-prompt.ts 兩個注入點 guard；SHA-256 + 5min window |
+| 3 | Runtime Health Monitor | ✅ 已完成 | 2026-06-30 | sessionManager.ts sweepIdle 加 `process.kill(pid, 0)` 探測；AcpProvider 暴露 pid |
+| 4 | Session 歸檔/恢復 | ✅ 已完成 | 2026-06-30 | `src/session-archive.ts`（220 行）+ sessionManager create/drop 整合；per-chatId 單檔 JSON + preamble 摘要注入 |
+| 5 | Conversation Summarizer（重啟前摘要） | ⬜ P2 | — | close 前用 local LLM 跑摘要存到 working state |
+
+#### 排除項目（ai_multi_agent 有但 bridge 不需要/已有更好方案）
+
+- Forum Topic 路由 — bridge 是單人使用，/specialist 夠用
+- Warm Pool — bridge 單 session 模型，不需要預熱池
+- Leader/Worker 角色分層 — bridge 的 specialist 已有 domain 隔離
+- Backend 熱切換 — bridge 用 env 切換 + restart，改動頻率低

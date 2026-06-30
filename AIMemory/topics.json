@@ -92,7 +92,8 @@
       "方案c",
       "方案d",
       "借鏡",
-      "可借鏡"
+      "可借鏡",
+      "ai_multi_agent"
     ]
   },
   {
@@ -133,7 +134,9 @@
       "dream.json",
       ".usage.json",
       "event-log",
-      "hit-log"
+      "hit-log",
+      "session archive",
+      "session-archive"
     ]
   },
   {

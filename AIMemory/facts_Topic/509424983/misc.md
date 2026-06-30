@@ -1,0 +1,3 @@
+- [f_7fcdfa] [2026-06-30T09:01:02.085Z] ai_multi_agent 比較報告產出於 G:\AI\Study\ai_multi_agent\comparison-report.html（暗色主題、6 tab、含評分橫條圖）
+- [f_046ffa] [2026-06-30T11:06:51.134Z] Session Archive 設計決策：因為只需最近一次 session 所以 per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；因為避免 context 爆炸所以恢復只注入 ~300 字摘要（排除全量 turn 注入因為會佔太多 budget）；turn text 截斷 2000 字
+- [f_ae069c] [2026-06-30T11:06:51.166Z] docs/session-archive-explained.html 已產出：暗色主題互動式說明頁（流程圖、JSON 範例、時間軸、比較卡片、設計決策），供使用者瀏覽 session archive 機制

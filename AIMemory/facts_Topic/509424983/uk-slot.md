@@ -30,3 +30,4 @@
 - [f_e9bd6a] [2026-06-25T20:31:57.782Z] uk_pirates_queen 的掉落動畫（drop-out）凍結視窗回歸問題，根因是把凍結語意（m_isInDropMode）與掉落動畫 promise（m_dropAllSymbolsOutOfScreenPromise）混為一談，且直接在 StartSpin（約 L943）觸發掉落；經對抗式評選後採 MVP 最小手術方案：新增 m_isInDropMode 布林專職凍結語意、把 promise 降級為純動畫 handle、並把掉落觸發從 StartSpin 移到獨立的 TriggerDropOut() method。
 - [f_afed83] [2026-06-26T13:11:01.066Z] uk-slot-pattern-library 的 SKILL.md 索引已新增「頻率定義」表格（高≥3專案、中1-2、低=僅規格）與「驗證狀態」欄（✅已實作/⚠️僅規格推導），全 21 張 pattern 卡片各加 5 條「常見錯誤」反模式段
 - [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
+- [f_1a894e] [2026-06-30T09:01:02.069Z] ai_multi_agent（IGS-ARCADE-DIVISION-RD2 私有 repo）clone 在 G:\AI\Study\ai_multi_agent，是公司同事參考 telegram-kiro-bridge 開發的 Python 多 Agent 團隊框架，使用 Telegram Forum Topic 路由 + 中心化 Daemon + ACP Python SDK

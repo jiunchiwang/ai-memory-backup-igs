@@ -17,3 +17,8 @@
 - [f_9b1654] [2026-06-28T12:39:41.773Z] telegram-kiro-bridge 已實作 QUIET_HOURS 功能（config.ts + scheduler.ts）：env QUIET_HOURS=HH-HH 格式，靜默期間所有排程延遲到結束時刻才 fire，支援跨午夜；目前未在 .env 啟用，保留備用
 - [f_7366e2] [2026-06-28T12:39:41.790Z] telegram-kiro-bridge 的 Passive Monitor 排程（id: f970aa0a）已從 every 2h 改為 cron 0 8,10,12,14,16,18,20,22 * * *，深夜 00:00-08:00 不觸發；dream 04:00 不受影響
 - [f_dd04ac] [2026-06-29T13:13:44.675Z] 使用者想用 Obsidian 瀏覽 AIMemory wiki，偏好把 G:\AI\AIMemory 或其 wiki 子目錄當作 Obsidian vault 開啟
+- [f_725d70] [2026-06-30T03:50:12.969Z] telegram-kiro-bridge 的 smoke scripts 已從硬寫路徑改為動態偵測（check-preamble/check-topic-match 用 detectUserId helper：env MEMORY_USER_ID → .user-id 檔 → glob facts-*.md；check-specialist 用 detectAgentConfigDir() + 結構驗證取代精確值比對），確保跨機器可攜
+- [f_b533eb] [2026-06-30T06:47:02.798Z] 使用者的 telegram-kiro-bridge ACP 設定為 kiro-cli acp --model claude-opus-4.6 -a，未顯式指定 --effort flag，主 agent 用 claude-opus-4.6
+- [f_456de2] [2026-06-30T11:06:51.101Z] telegram-kiro-bridge 已實作 P1 Session 歸檔/恢復機制：session 關閉時 exportSession() 寫結構化 JSON 到 session-archive-{chatId}.json（含 turns/goal/stats/recentSummary），新 session 建立時 loadArchive() + buildRestorationBlock() 注入 preamble 後自動刪除；與 working-state 互補（WS 說做什麼，archive 說上下文在哪）
+- [f_645ea3] [2026-06-30T11:06:51.120Z] telegram-kiro-bridge 已新增 /reset clean（或 /reset fresh）指令：結束 session 後額外刪除 session-archive + working-state，下次對話不帶入上次上下文；預設 /reset 行為不變（照舊歸檔）
+- [f_892166] [2026-06-30T11:06:51.156Z] telegram-kiro-bridge 新增 scripts/check-p0-improvements.mjs（12 assertions 驗證 reply-dedup + acp-trace + health monitor）和 scripts/check-session-archive.mjs（41 assertions 驗證完整 archive lifecycle）
