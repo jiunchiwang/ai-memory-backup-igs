@@ -1,5 +1,16 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-01(來源 shortlist 10 筆 → 精選後寫入 2 條)
+
+來源 project:`telegram-kiro-bridge-main`(Post-Tool Hook 多 agent 設計工作流)。
+
+1. [來源 telegram-kiro-bridge-main,#6 → shard bridge-project] AI 長期警戒模式清單(問題追蹤.md 的 7 條,設計架構師必讀):#001 未查證就宣稱存在、#002 存在 vs 路由混淆、#003 單一來源推斷、#004 忽略字面證據、#005 共享值私有化、#006 行數預算過度樂觀、#007 單一視角自審盲點;可作對抗檢查清單。
+2. [來源 telegram-kiro-bridge-main,合併 #5/#7/#8 → shard misc] 可重用多 agent 設計工作流(dev-design)四階段:Explore 查證程式碼 → Propose 3 個競爭方案(常收斂到單一寫入匯流點)→ Adversarial 找致命缺陷評分 → Synthesize 整合最終規格;能在設計初期抓出如多輪迴圈 snapshot 過期(staleness)之類隱性 bug。
+
+捨棄:#1/#2(EyeStrike2 Trail/FlyManager 實作細節)、#3(throwaway-cluster.mjs 一次性驗證腳本)、#4(P1-design-spec.md 產物建立)、#9(工作流啟動 run ID)、#10(NearWin 最小手術選型)皆屬一次性專案實作/過程紀錄,非跨 session 可重用。
+
+去重:寫入前以 list_facts 對 AIMemory(75 筆)掃描 design workflow / adversarial / vigilance / self-review,皆無重複。
+
 ## 2026-06-26(來源 shortlist 5 筆 → 精選合併後寫入 1 條)
 
 來源 project:`uk_pirates_queen`(掉落動畫時序重構工作流)。
