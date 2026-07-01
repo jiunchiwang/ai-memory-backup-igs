@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-01
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c]
+updated: 2026-07-02
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -86,10 +86,10 @@ Session 關閉時自動匯出結構化 JSON 歸檔（`session-archive-{chatId}.j
 
 ## Specialist 分身系統
 
-`specialist-domains.json` 配置 3 個分身（2026-06-24）：
-- **slot-dev**：UK 老虎機開發（claude-sonnet-4，memory MCP）
-- **researcher**：深度研究 / AI 策略（claude-sonnet-4，memory + google MCP）
-- **general**：完整能力並行多工（inheritsAll，claude-sonnet-4，memory + google MCP）
+`specialist-domains.json` 配置 3 個分身（2026-06-24，model 2026-07-01 更新）：
+- **slot-dev**：UK 老虎機開發（claude-sonnet-4.6，memory MCP）
+- **researcher**：深度研究 / AI 策略（claude-sonnet-4.6，memory + google MCP）
+- **general**：完整能力並行多工（inheritsAll，claude-sonnet-4.6，memory + google MCP）
 
 ## Embedding Router
 

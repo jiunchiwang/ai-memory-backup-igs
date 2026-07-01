@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-DLC Methodology Power 研究報告</title>
+<style>
+:root {
+  --bg: #0f1419;
+  --surface: #1a2332;
+  --surface2: #243447;
+  --border: #2d4a5e;
+  --text: #e8edf2;
+  --text-muted: #8899a6;
+  --accent: #1da1f2;
+  --accent2: #7c4dff;
+  --green: #17bf63;
+  --orange: #ffad1f;
+  --red: #e0245e;
+  --blue-phase: #4fc3f7;
+  --green-phase: #66bb6a;
+  --yellow-phase: #fdd835;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.header h1 {
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.header .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+.header .meta {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.header .meta span {
+  background: var(--surface2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.tab {
+  padding: 0.7rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.tab:hover { background: var(--surface2); color: var(--text); }
+.tab.active {
+  background: var(--surface2);
+  color: var(--accent);
+  border-bottom-color: var(--surface2);
+  font-weight: 600;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.card h3 {
+  font-size: 1.1rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--text);
+}
+
+/* Phase diagram */
+.phase-flow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+.phase-box {
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  min-width: 140px;
+}
+.phase-inception { background: rgba(79, 195, 247, 0.15); border: 1px solid var(--blue-phase); color: var(--blue-phase); }
+.phase-construction { background: rgba(102, 187, 106, 0.15); border: 1px solid var(--green-phase); color: var(--green-phase); }
+.phase-operations { background: rgba(253, 216, 53, 0.15); border: 1px solid var(--yellow-phase); color: var(--yellow-phase); }
+.arrow { color: var(--text-muted); font-size: 1.5rem; }
+
+/* Stage list */
+.stage-list { list-style: none; padding: 0; }
+.stage-list li {
+  padding: 0.6rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.9rem;
+}
+.stage-list li.always { background: rgba(23, 191, 99, 0.1); border-left: 3px solid var(--green); }
+.stage-list li.conditional { background: rgba(255, 173, 31, 0.1); border-left: 3px solid var(--orange); }
+.badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.badge-always { background: var(--green); color: #000; }
+.badge-conditional { background: var(--orange); color: #000; }
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--surface2);
+  color: var(--accent);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+tr:hover td { background: rgba(29, 161, 242, 0.05); }
+
+/* Tree */
+.tree {
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  background: var(--surface2);
+  padding: 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+.tree .dir { color: var(--accent); font-weight: 600; }
+.tree .file { color: var(--text); }
+.tree .comment { color: var(--text-muted); font-style: italic; }
+
+/* Verdict */
+.verdict {
+  background: linear-gradient(135deg, rgba(29, 161, 242, 0.1), rgba(124, 77, 255, 0.1));
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+.verdict h3 { color: var(--accent); margin-bottom: 0.8rem; }
+.verdict ul { padding-left: 1.5rem; }
+.verdict li { margin: 0.4rem 0; }
+
+/* Pros/Cons */
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+@media (max-width: 700px) { .pros-cons { grid-template-columns: 1fr; } }
+.pros, .cons {
+  padding: 1rem;
+  border-radius: 8px;
+}
+.pros { background: rgba(23, 191, 99, 0.08); border: 1px solid rgba(23, 191, 99, 0.3); }
+.cons { background: rgba(224, 36, 94, 0.08); border: 1px solid rgba(224, 36, 94, 0.3); }
+.pros h4 { color: var(--green); margin-bottom: 0.5rem; }
+.cons h4 { color: var(--red); margin-bottom: 0.5rem; }
+.pros li, .cons li { margin: 0.3rem 0; font-size: 0.9rem; }
+
+/* Adaptive example */
+.example-box {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+  border-left: 3px solid var(--accent2);
+}
+.example-box .label {
+  font-weight: 600;
+  color: var(--accent2);
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+.example-box .steps {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>AI-DLC Methodology Power</h1>
+  <div class="subtitle">aws-samples/sample-aidlc-kiro-power 研究報告</div>
+  <div class="meta">
+    <span>⭐ 21 stars</span>
+    <span>📜 MIT-0 License</span>
+    <span>🎯 Kiro IDE Power</span>
+    <span>📅 2026-07-01 研究</span>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" data-tab="overview">概覽</div>
+  <div class="tab" data-tab="architecture">架構</div>
+  <div class="tab" data-tab="lifecycle">三階段生命週期</div>
+  <div class="tab" data-tab="adaptive">自適應機制</div>
+  <div class="tab" data-tab="compare">與 Closed-Loop 比較</div>
+  <div class="tab" data-tab="takeaway">借鏡價值</div>
+</div>
+
+<!-- Panel: Overview -->
+<div class="panel active" id="overview">
+  <div class="card">
+    <h2>什麼是 AI-DLC？</h2>
+    <p><strong>AI-DLC</strong>（AI-Driven Development Life Cycle）是一套打包成 Kiro IDE Power 的<strong>自適應軟體開發方法論</strong>。它根據專案複雜度、風險、既有 codebase 狀態，智慧判斷哪些開發流程步驟值得執行、哪些可以跳過。</p>
+
+    <h3>核心理念</h3>
+    <p style="margin:0.5rem 0; padding:0.8rem; background:var(--surface2); border-radius:8px; border-left:3px solid var(--accent);">
+      <em>"The workflow adapts to the work, not the other way around."</em><br>
+      工作流程適配工作本身，而非反過來。
+    </p>
+
+    <h3>Key Benefits</h3>
+    <table>
+      <tr><th>特性</th><th>說明</th></tr>
+      <tr><td>Adaptive Execution</td><td>只跑有價值的 stage，簡單改動不拖泥帶水</td></tr>
+      <tr><td>Quality Gates</td><td>每個 major stage 有 explicit user approval</td></tr>
+      <tr><td>Complete Audit Trail</td><td>所有 user input + AI decision 帶 timestamp 寫 audit.md</td></tr>
+      <tr><td>Risk-Based</td><td>高風險專案自動走全套，低風險精簡處理</td></tr>
+      <tr><td>Zero Dependencies</td><td>不需要 MCP server、不需要外部服務，純 methodology</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Panel: Architecture -->
+<div class="panel" id="architecture">
+  <div class="card">
+    <h2>檔案結構</h2>
+    <div class="tree">
+<span class="dir">powers/ai-dlc-methodology/</span>
+├── <span class="file">POWER.md</span>              <span class="comment">← Power 定義（metadata + 文件索引）</span>
+├── <span class="dir">steering/</span>
+│   └── <span class="file">core-workflow.md</span>  <span class="comment">← 主調度檔（always loaded，決定跑哪些 stage）</span>
+└── <span class="dir">workflows/</span>
+    ├── <span class="dir">common/</span>            <span class="comment">← 10 個通用規則</span>
+    │   ├── process-overview.md
+    │   ├── terminology.md
+    │   ├── content-validation.md
+    │   ├── question-format-guide.md
+    │   ├── session-continuity.md
+    │   ├── welcome-message.md
+    │   ├── depth-levels.md
+    │   ├── error-handling.md
+    │   ├── overconfidence-prevention.md
+    │   └── workflow-changes.md
+    ├── <span class="dir">inception/</span>         <span class="comment">← 7 個規劃階段</span>
+    │   ├── workspace-detection.md
+    │   ├── reverse-engineering.md
+    │   ├── requirements-analysis.md
+    │   ├── user-stories.md
+    │   ├── workflow-planning.md
+    │   ├── application-design.md
+    │   └── units-generation.md
+    ├── <span class="dir">construction/</span>      <span class="comment">← 6 個實作階段</span>
+    │   ├── functional-design.md
+    │   ├── nfr-requirements.md
+    │   ├── nfr-design.md
+    │   ├── infrastructure-design.md
+    │   ├── code-generation.md
+    │   └── build-and-test.md
+    └── <span class="dir">operations/</span>        <span class="comment">← placeholder</span>
+        └── operations.md
+    </div>
+
+    <h3>載入策略</h3>
+    <table>
+      <tr><th>層級</th><th>載入方式</th><th>內容</th></tr>
+      <tr><td>steering/core-workflow.md</td><td><strong>Always loaded</strong>（進 context）</td><td>主流程調度 + conditional 判斷規則</td></tr>
+      <tr><td>workflows/common/*</td><td>啟動時載入關鍵幾個</td><td>validation / question format / session continuity</td></tr>
+      <tr><td>workflows/{phase}/*</td><td><strong>On-demand readFile</strong></td><td>進到該 stage 才載入詳細步驟</td></tr>
+    </table>
+    <p style="margin-top:1rem; color:var(--text-muted);">這個 lazy-loading 設計有效控制 context 消耗——steering 只放「什麼條件跑什麼」的規則，detail 到了才讀。</p>
+  </div>
+
+  <div class="card">
+    <h2>產出 Artifacts 結構</h2>
+    <div class="tree">
+<span class="dir">aidlc-docs/</span>
+├── <span class="file">aidlc-state.md</span>       <span class="comment">← 動態狀態追蹤（哪些 stage 跑了/跳了）</span>
+├── <span class="file">audit.md</span>             <span class="comment">← 完整審計軌跡（raw user input + timestamp）</span>
+├── <span class="dir">inception/</span>
+│   ├── plans/
+│   ├── reverse-engineering/
+│   ├── requirements/
+│   ├── user-stories/
+│   └── application-design/
+├── <span class="dir">construction/</span>
+│   ├── plans/
+│   ├── {unit-name}/         <span class="comment">← per-unit artifacts</span>
+│   │   ├── functional-design/
+│   │   ├── nfr-requirements/
+│   │   ├── nfr-design/
+│   │   ├── infrastructure-design/
+│   │   └── code/
+│   └── build-and-test/
+└── <span class="dir">operations/</span>           <span class="comment">← placeholder</span>
+    </div>
+  </div>
+</div>
+
+<!-- Panel: Lifecycle -->
+<div class="panel" id="lifecycle">
+  <div class="card">
+    <h2>三階段生命週期</h2>
+    <div class="phase-flow">
+      <div class="phase-box phase-inception">🔵 INCEPTION<br><small>WHAT / WHY</small></div>
+      <span class="arrow">→</span>
+      <div class="phase-box phase-construction">🟢 CONSTRUCTION<br><small>HOW</small></div>
+      <span class="arrow">→</span>
+      <div class="phase-box phase-operations">🟡 OPERATIONS<br><small>DEPLOY / RUN</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔵 INCEPTION — 規劃 & 架構</h2>
+    <p>決定<strong>做什麼</strong>以及<strong>為什麼做</strong></p>
+    <ul class="stage-list">
+      <li class="always"><span class="badge badge-always">必跑</span> Workspace Detection — 掃描專案結構、判斷 brownfield/greenfield</li>
+      <li class="conditional"><span class="badge badge-conditional">條件</span> Reverse Engineering — 分析既有 codebase（僅 brownfield）</li>
+      <li class="always"><span class="badge badge-always">必跑</span> Requirements Analysis — 需求分析（depth 自適應）</li>
+      <li class="conditional"><span class="badge badge-conditional">條件</span> User Stories — 使用者故事 & personas（有 user-facing 功能時）</li>
+      <li class="always"><span class="badge badge-always">必跑</span> Workflow Planning — 產出執行計畫 + Mermaid 視覺化</li>
+      <li class="conditional"><span class="badge badge-conditional">條件</span> Application Design — 元件/服務架構設計</li>
+      <li class="conditional"><span class="badge badge-conditional">條件</span> Units Generation — 拆分工作單元</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🟢 CONSTRUCTION — 設計 & 實作</h2>
+    <p>決定<strong>怎麼做</strong>— 每個 unit 獨立走完整 loop</p>
+    <ul class="stage-list">
+      <li class="conditional"><span class="badge badge-conditional">per-unit</span> Functional Design — 業務邏輯設計（technology-agnostic）</li>
+      <li class="conditional"><span class="badge badge-conditional">per-unit</span> NFR Requirements — 非功能需求 + tech stack 選型</li>
+      <li class="conditional"><span class="badge badge-conditional">per-unit</span> NFR Design — NFR patterns + logical components</li>
+      <li class="conditional"><span class="badge badge-conditional">per-unit</span> Infrastructure Design — 映射到實際基礎設施</li>
+      <li class="always"><span class="badge badge-always">per-unit 必跑</span> Code Generation — 分兩步：Planning → Generation</li>
+      <li class="always"><span class="badge badge-always">必跑</span> Build and Test — 所有 unit 完成後統一跑</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🟡 OPERATIONS — 部署 & 監控</h2>
+    <p>目前只是 <strong>placeholder</strong>，未來擴展用。Build & Test 在 CONSTRUCTION 階段處理。</p>
+  </div>
+</div>
+
+<!-- Panel: Adaptive -->
+<div class="panel" id="adaptive">
+  <div class="card">
+    <h2>自適應判斷機制</h2>
+    <p>AI-DLC 根據四個因子判斷每個 stage 是否需要執行：</p>
+    <table>
+      <tr><th>因子</th><th>說明</th></tr>
+      <tr><td>User's stated intent</td><td>使用者描述的清晰度與完整度</td></tr>
+      <tr><td>Existing codebase</td><td>有無既有 code（brownfield vs greenfield）</td></tr>
+      <tr><td>Complexity & scope</td><td>影響範圍、跨元件程度</td></tr>
+      <tr><td>Risk & impact</td><td>風險等級、是否影響 production</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Adaptive Depth（三級深度）</h2>
+    <table>
+      <tr><th>深度</th><th>條件</th><th>做法</th></tr>
+      <tr><td style="color:var(--green)">Minimal</td><td>簡單、清晰的需求</td><td>只記錄 intent analysis</td></tr>
+      <tr><td style="color:var(--orange)">Standard</td><td>一般複雜度</td><td>收集 functional + non-functional 需求</td></tr>
+      <tr><td style="color:var(--red)">Comprehensive</td><td>高複雜度、高風險</td><td>完整需求追溯 + traceability</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>實際跑出來的差異範例</h2>
+
+    <div class="example-box">
+      <div class="label">🔧 Simple Bug Fix</div>
+      <div class="steps">Workspace Detection → Requirements Analysis (minimal) → Workflow Planning → Code Generation → Build and Test</div>
+    </div>
+
+    <div class="example-box">
+      <div class="label">✨ New Feature in Existing App</div>
+      <div class="steps">Workspace Detection → Reverse Engineering → Requirements Analysis (standard) → Workflow Planning → Functional Design → Code Generation → Build and Test</div>
+    </div>
+
+    <div class="example-box">
+      <div class="label">🏗️ Greenfield Application</div>
+      <div class="steps">Workspace Detection → Requirements Analysis (comprehensive) → User Stories → Application Design → Units Generation → Workflow Planning → [Per-unit: NFR Req → NFR Design → Infra Design → Code Gen] → Build and Test</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>強制規則（Non-negotiable）</h2>
+    <table>
+      <tr><th>規則</th><th>內容</th></tr>
+      <tr><td>Content Validation</td><td>寫檔前必須驗證（尤其 Mermaid syntax）</td></tr>
+      <tr><td>Structured Questions</td><td>問問題必須用 A/B/C/D/E + [Answer]: 格式</td></tr>
+      <tr><td>Explicit Approval</td><td>每個 major stage 結束必須等 user 確認</td></tr>
+      <tr><td>Audit Logging</td><td>所有 user input 原文 + ISO timestamp 寫 audit.md</td></tr>
+      <tr><td>Checkbox Tracking</td><td>Plan + Stage 雙層 checkbox 即時更新進度</td></tr>
+      <tr><td>No Emergent Behavior</td><td>Construction 階段只用標準 2-option completion menu</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Panel: Compare -->
+<div class="panel" id="compare">
+  <div class="card">
+    <h2>AI-DLC vs. 你的 Closed-Loop System</h2>
+    <table>
+      <tr><th>面向</th><th>AI-DLC Power</th><th>Closed-Loop System</th></tr>
+      <tr>
+        <td><strong>定位</strong></td>
+        <td>Kiro IDE Power（GUI + Power panel）</td>
+        <td>CLI agent steering（preamble 注入）</td>
+      </tr>
+      <tr>
+        <td><strong>粒度</strong></td>
+        <td>極細：每個 stage 一份 .md、per-unit loop</td>
+        <td>5 Phase 一份檔搞定（P1~P5）</td>
+      </tr>
+      <tr>
+        <td><strong>複雜度判定</strong></td>
+        <td>多因子智慧評估（risk / scope / codebase state）</td>
+        <td>行數 + 檔案數三級制（微小/中型/大型）</td>
+      </tr>
+      <tr>
+        <td><strong>Context 策略</strong></td>
+        <td>on-demand readFile（lazy load）</td>
+        <td>全量注入 steering</td>
+      </tr>
+      <tr>
+        <td><strong>Audit</strong></td>
+        <td>強制 audit.md（ISO timestamp + raw input）</td>
+        <td>無獨立 audit，靠 fact + session transcript</td>
+      </tr>
+      <tr>
+        <td><strong>彈性</strong></td>
+        <td>單一 workflow，靠 conditional stage 跳步</td>
+        <td>三套流程（完整/精簡/微小直做）</td>
+      </tr>
+      <tr>
+        <td><strong>Human-in-the-loop</strong></td>
+        <td>每個 stage 強制 approval gate</td>
+        <td>閘門 A/B 後直接執行</td>
+      </tr>
+      <tr>
+        <td><strong>Self-improvement</strong></td>
+        <td>❌ 無 reflexion 機制</td>
+        <td>✅ 熔斷 + push back + learning-log</td>
+      </tr>
+      <tr>
+        <td><strong>適用場景</strong></td>
+        <td>團隊協作、有 PM 的正式專案</td>
+        <td>單人自動化開發、headless agent</td>
+      </tr>
+      <tr>
+        <td><strong>Token 效率</strong></td>
+        <td>⚠️ 全套跑完 context 很重</td>
+        <td>✅ 精簡模式省 token</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>設計哲學差異</h2>
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>AI-DLC 更好的地方</h4>
+        <ul>
+          <li>Audit trail 完整性（每筆 raw input 原文保留）</li>
+          <li>Lazy-loading 策略省 context</li>
+          <li>Per-unit construction loop 適合大型拆分</li>
+          <li>Overconfidence prevention 專用規則</li>
+          <li>Structured question format 標準化互動</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>Closed-Loop 更好的地方</h4>
+        <ul>
+          <li>Reflexion + 熔斷機制（自我修正）</li>
+          <li>Push-back 義務（對使用者提出質疑）</li>
+          <li>因果鏈分析（修改前評估影響）</li>
+          <li>事實主張閘門（分 A/B 級證據）</li>
+          <li>三套粒度選擇（不 over-engineer 小任務）</li>
+          <li>自動執行（不用每步都問人）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Panel: Takeaway -->
+<div class="panel" id="takeaway">
+  <div class="card">
+    <h2>可借鏡的設計模式</h2>
+
+    <div class="verdict">
+      <h3>1. On-Demand Workflow Loading</h3>
+      <p>steering 只放調度規則 + 判斷條件；detail 到了該 stage 才 readFile 載入。</p>
+      <ul>
+        <li><strong>你的場景</strong>：closed-loop-system.md 全量注入 preamble 消耗 context；可考慮把 Phase detail（如 P1 架構師、P3 檢核師的完整規則）拆出去，只在任務等級匹配時才讀</li>
+        <li><strong>難度</strong>：低——Kiro steering 本就支援多檔</li>
+      </ul>
+    </div>
+
+    <div class="verdict">
+      <h3>2. Structured Audit Trail</h3>
+      <p>獨立 audit.md 記錄所有互動（ISO timestamp + raw user input + AI response + context）。</p>
+      <ul>
+        <li><strong>你的場景</strong>：目前靠 session transcript + facts；如果想追蹤 agent 決策品質/回溯問題，可加 lightweight audit</li>
+        <li><strong>可行做法</strong>：bridge 的 event-log.jsonl 已有類似基礎，可擴展</li>
+      </ul>
+    </div>
+
+    <div class="verdict">
+      <h3>3. Per-Unit Construction Loop</h3>
+      <p>大型任務拆成 units，每個 unit 獨立走完整 design→code→test cycle。</p>
+      <ul>
+        <li><strong>你的場景</strong>：closed-loop 的 P2 實作師目前是線性的；大型任務可引入 unit 概念讓每個模組各自閉環</li>
+        <li><strong>注意</strong>：bridge 的 /goal 已有 multi-turn 能力，可配合</li>
+      </ul>
+    </div>
+
+    <div class="verdict">
+      <h3>4. Overconfidence Prevention 規則</h3>
+      <p>專門一份檔案教 AI 不要過度自信（不確定就標記、不猜測就問）。</p>
+      <ul>
+        <li><strong>你的場景</strong>：closed-loop 的事實主張閘門 + 質疑熔斷已涵蓋類似功能，但沒有明確的「overconfidence」用語引導</li>
+        <li><strong>可做</strong>：在 karpathy-guardrails.md 加一條「不確定時明確標記信心等級」</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>不建議直接採用的部分</h2>
+    <table>
+      <tr><th>部分</th><th>原因</th></tr>
+      <tr><td>每步 explicit approval gate</td><td>對自動化 /goal 是反模式；你需要的是 agent 自主執行 + 出問題才停</td></tr>
+      <tr><td>Structured question A/B/C/D/E</td><td>Telegram 場景用 ASK button 更好，不需要 [Answer]: 格式</td></tr>
+      <tr><td>Welcome message</td><td>你的 bridge 已有 /start；多餘</td></tr>
+      <tr><td>Operations phase</td><td>目前只是 placeholder，沒有實質內容</td></tr>
+      <tr><td>Workspace detection stage</td><td>你的 AI.md + codegraph 已覆蓋更好</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>最終結論</h2>
+    <p style="font-size:1.05rem; line-height:1.8;">
+      AI-DLC Power 是一套<strong>過程導向的 waterfall-lite 方法論</strong>，適合團隊協作 + PM 監管的場景。
+      對你的<strong>單人自動化 bridge + headless agent</strong> 來說：
+    </p>
+    <ul style="margin:1rem 0; padding-left:1.5rem; line-height:2;">
+      <li>✅ 借鏡 <strong>lazy-loading steering</strong> 思路省 context</li>
+      <li>✅ 借鏡 <strong>per-unit loop</strong> 處理大型任務拆分</li>
+      <li>✅ 借鏡 <strong>overconfidence prevention</strong> 概念</li>
+      <li>⚠️ 不需要它的 approval gate 密度</li>
+      <li>⚠️ 你的 reflexion + push-back + 因果鏈比它更進階</li>
+      <li>❌ 不適合直接安裝使用（Kiro IDE Power 格式 ≠ CLI steering）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- container -->
+
+<div class="footer">
+  研究日期：2026-07-01 | 來源：github.com/aws-samples/sample-aidlc-kiro-power | 分析：Kiro Agent
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

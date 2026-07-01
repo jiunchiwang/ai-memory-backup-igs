@@ -17,5 +17,10 @@
   - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）
   - 觀察點：若 dream 報告格式穩定且處理流程可模板化
 
+- [ ] **external-repo-absorption-methodology** | count=2 | score=0.40 | 留底觀察
+  - 代表 session: 2026-06-30 ai_multi_agent 研究→吸收 3 個 P0 改進、2026-07-01 AI-DLC Power 研究→借鏡 4 點
+  - 觀察點：若出現第 3~5 次「clone/browse 外部 repo → 比較 → 決定吸收哪些」的完整循環，且每次有固定步驟（README 掃描 → 架構比較 → 吸收決策表 → 實作），則升格
+  - 與 research-to-html-report 區別：該候選是「研究過程中產 HTML 報告」的輸出格式；本候選是「外部 repo 吸收方法論」的輸入流程
+
 ---
-Last updated: 2026-06-28
+Last updated: 2026-07-02

@@ -93,7 +93,9 @@
       "方案d",
       "借鏡",
       "可借鏡",
-      "ai_multi_agent"
+      "ai_multi_agent",
+      "dev-design",
+      "設計工作流"
     ]
   },
   {
@@ -180,7 +182,8 @@
       "npx tsc",
       "此台機器",
       "jiunchiwang",
-      "node_modules/@xenova"
+      "node_modules/@xenova",
+      "model id"
     ]
   },
   {

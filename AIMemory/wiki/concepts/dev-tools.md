@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-06-28
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a]
+updated: 2026-07-02
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c]
 ---
 
 # 開發工具與環境設定
@@ -17,6 +17,10 @@ sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a]
 - **Kiro agent config**：`C:\Users\jiunchiwang\.kiro`（非舊機器的 `C:\Users\tonykuo\.kiro`）
 - **Obsidian Vault**：`C:\Users\jiunchiwang\OneDrive - International Games System\文件\Obsidian Vault\`
 - smoke test 中硬寫的 tonykuo 路徑需注意替換
+
+### Kiro CLI Model ID 格式
+
+Kiro CLI 使用**短名格式**（如 `claude-sonnet-4.6`、`claude-opus-4.6`），不是完整 API model ID（如 `claude-sonnet-4-5-20250514`）。可用清單：`auto` / `claude-opus-4.6` / `claude-sonnet-4.6` / `claude-opus-4.5` / `claude-sonnet-4.5` / `claude-sonnet-4` / `claude-haiku-4.5` / `deepseek-3.2`。
 
 ## 已安裝工具
 
