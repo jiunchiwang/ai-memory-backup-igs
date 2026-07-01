@@ -1,2 +1,3 @@
 - [f_0561d8] [2026-06-30T20:31:50.038Z] 可重用的多 agent 設計工作流(dev-design)分四階段:Explore 先查證實際程式碼架構 → Propose 產出 3 個互相競爭的設計方案(常會收斂到單一寫入匯流點)→ Adversarial 對抗找出致命缺陷並評分 → Synthesize 整合出最終規格;此流程能在設計初期就抓出如「多輪迴圈中 snapshot 過期(staleness)」這類隱性 bug。
 - [f_fedf5c] [2026-07-01T03:18:55.033Z] Kiro CLI 的 model ID 用短名格式（如 claude-sonnet-4.6、claude-opus-4.6），不是完整 API model ID（如 claude-sonnet-4-5-20250514）；可用清單含 auto / claude-opus-4.6 / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5 / deepseek-3.2
+- [f_eb92f6] [2026-07-01T20:14:03.795Z] dream routine 的 /factlint 步驟中，node script 因 Windows 換行符（CRLF）比對失敗導致 facts-509424983.md 被意外清空為 0 bytes——未來 factlint 刪除操作必須改用逐行精確匹配而非 bulk filter，且刪除前先備份原檔

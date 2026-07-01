@@ -1,22 +1,21 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-06-30T20:12:34.936Z
+Last run: 2026-07-02T04:13:42.406+08:00
 
 ## High Priority (action needed)
-— 無
+- 🐛 facts-509424983.md 被 factlint 的 node script 意外清空（0 bytes），必須從 `G:\AI\ai-memory-backup-igs` git repo 還原，還原前禁止執行 /backup
+- 📝 還原後需手動刪除 7 條過時 facts（f_36e058、f_357890、f_7d747c、f_71bf67、f_789096、f_afed83、f_d0b214）
+- 🐛 /specialistreview、/artifactcleanup、/backup 因 facts 遺失未執行，還原後需補跑
 
 ## Watch List (monitor)
-- 9 個 underused skill（claude-mem-curate、dual-skill-review-loop、huashu-slides、knowhow-accumulation、non-engineer-agent-design、self-eval-prompt-pattern、vc-kiro-delegate、skill-creator、writing-skills）從未使用，低優先級考慮移除
-- ms-wiki-knowledge-base orphan=true（活躍使用 count=6 但 junction 不存在）
-- wiki/concepts/uk-slot.md (06-23) 和 ai-strategy.md (06-24) 輕微 stale，下次有架構性新 facts 時順便更新
-- skill-candidates.md 追蹤 3 個未成熟候選（research-to-html-report score=0.80 最接近門檻）
-- /specialistreview、/artifactcleanup、/backup 本次未執行（Kiro CLI session 無法觸發 bridge 內部指令）
+- 💤 skill-candidates 新增 external-repo-absorption-methodology（count=2, score=0.40），再出現 1-3 次可升格
+- 💤 ms-wiki-knowledge-base orphan=true 但活躍使用 count=7，低優先修正
+- 💤 uk-slot / ai-strategy wiki 輕微 stale（新 facts 不影響核心，暫不動）
+- ⚠️ Repo 膨脹 ratio=4.4（>3.0），待 facts 還原後 factlint 清理純記錄性 facts
 
 ## Noise (ignored this run)
-- dailylog 產出 2026-06-30.md（19 行，7 完成項）
-- memorytoskill 無新建 skill（門檻嚴格，正確行為），搬移 8 session 檔
-- topicreview 微調 3 keywords，misc 3→0
-- wikisync 更新 bridge-research + bridge-project（Phase B+/P1 完成 + Session Archive 段落）
-- factlint 刪除 12 條純記錄性 facts，~63 條健康
-- wikilint 10 頁全健康，0 孤兒 0 斷連
-- skilllint 19 健康 0 stale 0 conflict
-- docupdate 確認 usage-guide.html 已是最新
+- dailylog 產出正常（16 行）
+- topicreview 微調 3 keywords，misc→0
+- wikisync 更新 2 頁（bridge-project、dev-tools）
+- wikilint 10 頁全健康、0 孤兒、0 斷連
+- skilllint 19 健康 / 9 underused（無害）/ 0 stale / 0 conflict
+- docupdate 無差異
