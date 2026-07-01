@@ -1,4 +1,2 @@
-- [f_7fcdfa] [2026-06-30T09:01:02.085Z] ai_multi_agent 比較報告產出於 G:\AI\Study\ai_multi_agent\comparison-report.html（暗色主題、6 tab、含評分橫條圖）
-- [f_046ffa] [2026-06-30T11:06:51.134Z] Session Archive 設計決策：因為只需最近一次 session 所以 per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；因為避免 context 爆炸所以恢復只注入 ~300 字摘要（排除全量 turn 注入因為會佔太多 budget）；turn text 截斷 2000 字
-- [f_ae069c] [2026-06-30T11:06:51.166Z] docs/session-archive-explained.html 已產出：暗色主題互動式說明頁（流程圖、JSON 範例、時間軸、比較卡片、設計決策），供使用者瀏覽 session archive 機制
 - [f_0561d8] [2026-06-30T20:31:50.038Z] 可重用的多 agent 設計工作流(dev-design)分四階段:Explore 先查證實際程式碼架構 → Propose 產出 3 個互相競爭的設計方案(常會收斂到單一寫入匯流點)→ Adversarial 對抗找出致命缺陷並評分 → Synthesize 整合出最終規格;此流程能在設計初期就抓出如「多輪迴圈中 snapshot 過期(staleness)」這類隱性 bug。
+- [f_fedf5c] [2026-07-01T03:18:55.033Z] Kiro CLI 的 model ID 用短名格式（如 claude-sonnet-4.6、claude-opus-4.6），不是完整 API model ID（如 claude-sonnet-4-5-20250514）；可用清單含 auto / claude-opus-4.6 / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5 / deepseek-3.2

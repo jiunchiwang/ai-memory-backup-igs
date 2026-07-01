@@ -14,7 +14,6 @@
 - [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
 - [f_07d587] [2026-06-08T11:49:43.143Z] 使用者有一個 GitHubTool 專案位於 G:\AI\GitHubTool，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織，功能含批量建倉、批量權限、團隊成員管理
-- [f_e9d947] [2026-06-10T11:47:01.979Z] uk_872_eyestrike2_client 專案在 .claude_temp/ 資料夾維護一份 proto參數說明.md，記錄 ar2es2Proto.d.ts 的欄位用途與值域，作為開發參考文件
 - [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 - [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化
 - [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
@@ -24,7 +23,6 @@
 - [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
 - [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
 - [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
-- [f_b0253d] [2026-06-22T12:52:36.605Z] 使用者有一份 872 神眼奪金2 的線上工項列表 Excel（G:\AI\872神眼奪金2_線上工項列表.xlsx，~42MB），已轉換為 AI 文件存於 G:\AI\output\872_eyestrike2\（含 50 張圖、12 個稀疏 sheet、223 個合併範圍）
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
 - [f_36e058] [2026-06-24T09:09:27.556Z] telegram-kiro-bridge 的 specialist-domains.json 已配置 3 個分身：slot-dev（UK 老虎機，claude-sonnet-4，memory MCP）、researcher（深度研究/AI策略，claude-sonnet-4，memory+google MCP）、general（完整能力並行多工，inheritsAll，claude-sonnet-4，memory+google MCP）
 - [f_e9bd6a] [2026-06-25T20:31:57.782Z] uk_pirates_queen 的掉落動畫（drop-out）凍結視窗回歸問題，根因是把凍結語意（m_isInDropMode）與掉落動畫 promise（m_dropAllSymbolsOutOfScreenPromise）混為一談，且直接在 StartSpin（約 L943）觸發掉落；經對抗式評選後採 MVP 最小手術方案：新增 m_isInDropMode 布林專職凍結語意、把 promise 降級為純動畫 handle、並把掉落觸發從 StartSpin 移到獨立的 TriggerDropOut() method。
