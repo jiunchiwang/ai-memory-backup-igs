@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-02
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309]
+updated: 2026-07-03
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -83,6 +83,23 @@ Session 關閉時自動匯出結構化 JSON 歸檔（`session-archive-{chatId}.j
 
 - PARALLEL_DELEGATE 已加入 **cross-check** 功能（≥2 specialist 結果時自動注入交叉驗證指引），借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
 - 設計決策：只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（架構定位不同、規模不需要）
+
+## Factlint 三層防禦
+
+2026-07-01 因 agent 繞過 MCP `forget` tool 改用 `node -e` shell command，Windows CRLF 比對失敗導致 master facts 清空。事後建立三層防禦：
+
+1. **Preamble 硬禁令**：FACTLINT_PROMPT 開頭加 `⛔ CRITICAL SAFETY RULE` 禁止 shell 直接操作 facts 檔
+2. **空寫保護 + 比例閘門**：`forgetCommit()` 中 `kept.length === 0` 時 throw；刪除 >50% 時 throw
+3. **寫前備份**：`forgetCommit()` 寫入前自動 `copyFileSync` 到 `.bak.<timestamp>`
+
+根因：MCP 的 `readMasterLines` 用 `split(/\r?\n/)` 本身安全，問題在 agent 繞過 MCP 自己寫 script 用 `split('\n')` 對 CRLF 檔案失敗。
+
+## User Profile 結構化注入
+
+2026-07-02 實作。`${MEMORY_DIR}/user-profile.md` 獨立存放使用者畫像（5 區塊：身份 / 溝通風格 / 工作偏好 / Agent 設定偏好 / 工作節奏），preamble 固定注入於 envBlock 和 memoryBlock 之間。
+
+- 設計決策：因為畫像是穩定結構化資料所以獨立成檔（排除混在 facts 因為語意召回不保證每次注入）
+- Preamble 佔比：~842 字元 / ~19k total ≈ 4%，極輕量
 
 ## Specialist 分身系統
 

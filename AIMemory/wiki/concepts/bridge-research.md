@@ -2,7 +2,7 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-01
+updated: 2026-07-03
 sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e]
 ---
 
@@ -103,3 +103,11 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 - Warm Pool — bridge 單 session 模型，不需要預熱池
 - Leader/Worker 角色分層 — bridge 的 specialist 已有 domain 隔離
 - Backend 熱切換 — bridge 用 env 切換 + restart，改動頻率低
+
+### 侯智薰 AI Agent 7 層 Harness 架構（2026-07-02）
+
+研究侯智薰（雷蒙）對照 Hermes Agent（⭐20 萬）的文章，歸納 7 層：核心規則 / 技能 / 精煉記憶 / 使用者畫像 / 對話歷史 / 生命週期自動化 / 多平台門面。
+
+**結論**：bridge 已覆蓋全部 7 層，且超越部分包括 embedding router、Local LLM、Specialist 分身、跨機 Relay、Self-improving reflexion、Context budget discipline。借鏡成果：觸發 P1 user-profile 獨立化實作。
+
+P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 session」基礎設施但方向不同——反思升級 vs 壓縮上下文）。

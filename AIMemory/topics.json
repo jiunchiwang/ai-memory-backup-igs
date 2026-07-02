@@ -138,7 +138,9 @@
       "event-log",
       "hit-log",
       "session archive",
-      "session-archive"
+      "session-archive",
+      "factlint",
+      "forgetcommit"
     ]
   },
   {
