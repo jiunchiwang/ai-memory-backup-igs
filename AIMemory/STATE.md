@@ -1,21 +1,22 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-02T04:13:42.406+08:00
+Last run: 2026-07-03T04:12:12.408+08:00
 
 ## High Priority (action needed)
-- 🐛 facts-509424983.md 被 factlint 的 node script 意外清空（0 bytes），必須從 `G:\AI\ai-memory-backup-igs` git repo 還原，還原前禁止執行 /backup
-- 📝 還原後需手動刪除 7 條過時 facts（f_36e058、f_357890、f_7d747c、f_71bf67、f_789096、f_afed83、f_d0b214）
-- 🐛 /specialistreview、/artifactcleanup、/backup 因 facts 遺失未執行，還原後需補跑
+- Bridge 啟動後刪 2 條過時 facts：`forget({ query: "node script 因 Windows 換行符" })` + `forget({ query: "ai_multi_agent 吸收決策" })`
+- Bridge 啟動後執行 `/backup` 推送今日 wiki/topics/dailylog/docs 更新
 
 ## Watch List (monitor)
-- 💤 skill-candidates 新增 external-repo-absorption-methodology（count=2, score=0.40），再出現 1-3 次可升格
-- 💤 ms-wiki-knowledge-base orphan=true 但活躍使用 count=7，低優先修正
-- 💤 uk-slot / ai-strategy wiki 輕微 stale（新 facts 不影響核心，暫不動）
-- ⚠️ Repo 膨脹 ratio=4.4（>3.0），待 facts 還原後 factlint 清理純記錄性 facts
+- external-repo-absorption-methodology 候選 count=3, score=0.48（差 2 次可升格 skill）
+- ms-wiki-knowledge-base orphan=true 但活躍 count=10（考慮加入正本或改 flag）
+- Repo 膨脹 ratio=3.9（>3.0），uk-slot 路徑記錄多但有用，暫不動
+- P2 週度反思迴圈待規劃（與 Conversation Summarizer 共享 session 掃描基礎設施）
 
 ## Noise (ignored this run)
-- dailylog 產出正常（16 行）
-- topicreview 微調 3 keywords，misc→0
-- wikisync 更新 2 頁（bridge-project、dev-tools）
-- wikilint 10 頁全健康、0 孤兒、0 斷連
-- skilllint 19 健康 / 9 underused（無害）/ 0 stale / 0 conflict
-- docupdate 無差異
+- /sharedsync：3 commits 入 main，README 補齊新功能 + 結構 + Last updated
+- /dailylog：2026-07-02.md 產出完成
+- /topicreview：misc 歸零，7 topics / 162 keywords
+- /wikisync：bridge-project + bridge-research 更新完成
+- /wikilint：10 頁全健康
+- /skilllint：19 健康 / 9 underused（無害）/ 0 stale
+- /docupdate：usage-guide.html +3 章節
+- /specialistreview, /artifactcleanup：bridge 端下次自動補跑
