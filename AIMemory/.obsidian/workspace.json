@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/concepts/bridge-project.md",
+                "file": "STATE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "bridge-project"
+              "title": "STATE"
             }
           }
         ]
@@ -185,8 +185,24 @@
   },
   "active": "22a02900826b6a3d",
   "lastOpenFiles": [
-    "sessions/session-509424983-2026-06-29T20-09-21.md",
+    "acp-trace/acp-trace-74b98101.jsonl",
+    "acp-trace/acp-trace-b2adf43a.jsonl",
+    "sessions/session-509424983-2026-07-03T08-31-59.md",
     "working-state-509424983.md",
+    "session-archive-509424983.json",
+    "sessions/session-509424983-2026-07-03T08-31-58.md",
+    "wiki/wiki-auto-save-candidates.jsonl",
+    "acp-trace/acp-trace-e6a7ab1e.jsonl",
+    "sessions/session-509424983-2026-07-03T08-08-51.md",
+    "acp-trace/acp-trace-24d780ba.jsonl",
+    "acp-trace/acp-trace-ce3bd144.jsonl",
+    "acp-trace/acp-trace-a069d2e9.jsonl",
+    "acp-trace/acp-trace-a4e9bd4d.jsonl",
+    "README.md",
+    "STATE.md",
+    "acp-trace/acp-trace-028972bc.jsonl",
+    "wiki/concepts/bridge-project.md",
+    "sessions/session-509424983-2026-06-29T20-09-21.md",
     "oldSessions/session-509424983-2026-06-29T14-16-58.md",
     "oldSessions/session-509424983-2026-06-29T14-16-57.md",
     "oldSessions/session-509424983-2026-06-29T13-13-36.md",
@@ -199,17 +215,10 @@
     "sessions/session-509424983-2026-06-29T13-13-36.md",
     "sessions/session-509424983-2026-06-29T13-13-35.md",
     "wiki/concepts/bridge-research.md",
-    "wiki/concepts/bridge-project.md",
     "wiki/concepts/ai-strategy.md",
     "wiki/concepts/agent-system-architecture.md",
     "wiki/tasks/skill-candidates.md",
     "wiki/index.md",
-    "handoffs/handoff-509424983-2026-06-17T10-50-58.md",
-    "sessions/session-509424983-2026-06-19T02-10-56.md",
-    "sessions/session-509424983-2026-06-19T02-10-55.md",
-    "facts_Topic/509424983/uk-slot.md",
-    "facts_Topic/509424983/user-pref.md",
-    "facts_Topic/509424983/skill-and-eval.md",
-    "facts_Topic/509424983/people.md"
+    "handoffs/handoff-509424983-2026-06-17T10-50-58.md"
   ]
 }

@@ -24,8 +24,6 @@
 - [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
 - [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
-- [f_36e058] [2026-06-24T09:09:27.556Z] telegram-kiro-bridge 的 specialist-domains.json 已配置 3 個分身：slot-dev（UK 老虎機，claude-sonnet-4，memory MCP）、researcher（深度研究/AI策略，claude-sonnet-4，memory+google MCP）、general（完整能力並行多工，inheritsAll，claude-sonnet-4，memory+google MCP）
 - [f_e9bd6a] [2026-06-25T20:31:57.782Z] uk_pirates_queen 的掉落動畫（drop-out）凍結視窗回歸問題，根因是把凍結語意（m_isInDropMode）與掉落動畫 promise（m_dropAllSymbolsOutOfScreenPromise）混為一談，且直接在 StartSpin（約 L943）觸發掉落；經對抗式評選後採 MVP 最小手術方案：新增 m_isInDropMode 布林專職凍結語意、把 promise 降級為純動畫 handle、並把掉落觸發從 StartSpin 移到獨立的 TriggerDropOut() method。
-- [f_afed83] [2026-06-26T13:11:01.066Z] uk-slot-pattern-library 的 SKILL.md 索引已新增「頻率定義」表格（高≥3專案、中1-2、低=僅規格）與「驗證狀態」欄（✅已實作/⚠️僅規格推導），全 21 張 pattern 卡片各加 5 條「常見錯誤」反模式段
 - [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
 - [f_1a894e] [2026-06-30T09:01:02.069Z] ai_multi_agent（IGS-ARCADE-DIVISION-RD2 私有 repo）clone 在 G:\AI\Study\ai_multi_agent，是公司同事參考 telegram-kiro-bridge 開發的 Python 多 Agent 團隊框架，使用 Telegram Forum Topic 路由 + 中心化 Daemon + ACP Python SDK

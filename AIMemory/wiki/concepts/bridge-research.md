@@ -51,9 +51,9 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 
 ### Karpathy LLM Wiki 對齊（P0）
 
-1. **Unified Activity Log** — 統一各 log（~100 行）
-2. **Ingest Ripple** — 漣漪式更新 wiki（~200 行）
-3. **Query Auto-save** — 自動存優質回覆為 wiki（~150 行）
+1. **Unified Activity Log** — 統一各 log（~100 行）✅ 2026-07-03
+2. **Ingest Ripple** — 漣漪式更新 wiki（~200 行）✅ 2026-07-03
+3. **Query Auto-save** — 自動存優質回覆為 wiki（~150 行）✅ 2026-07-03
 
 ### PostToolUse Hooks（A→B→C→D）
 
@@ -95,7 +95,7 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 | 2 | Reply Dedup | ✅ 已完成 | 2026-06-30 | `src/reply-dedup.ts` + run-prompt.ts 兩個注入點 guard；SHA-256 + 5min window |
 | 3 | Runtime Health Monitor | ✅ 已完成 | 2026-06-30 | sessionManager.ts sweepIdle 加 `process.kill(pid, 0)` 探測；AcpProvider 暴露 pid |
 | 4 | Session 歸檔/恢復 | ✅ 已完成 | 2026-06-30 | `src/session-archive.ts`（220 行）+ sessionManager create/drop 整合；per-chatId 單檔 JSON + preamble 摘要注入 |
-| 5 | Conversation Summarizer（重啟前摘要） | ⬜ P2 | — | close 前用 local LLM 跑摘要存到 working state |
+| 5 | Conversation Summarizer（重啟前摘要） | ✅ 已關閉 | 2026-07-03 | upstream `archiveSummaryEnabled` + llama.cpp 真摘要已覆蓋此需求，不再獨立追蹤 |
 
 #### 排除項目（ai_multi_agent 有但 bridge 不需要/已有更好方案）
 

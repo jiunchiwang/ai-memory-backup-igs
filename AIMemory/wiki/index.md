@@ -22,7 +22,11 @@
 
 - [[skill-candidates]] — 未成熟 Skill 候選追蹤（pattern、count、觀察點）
 
+## Queries
+
+- [[fable]] — Claude Fable 5 修正 Karpathy P0 接線 Bug（7 個問題 + 教訓 + commit）
+
 ---
 
-Total pages: 10
-Last updated: 2026-07-03
+Total pages: 11
+Last updated: 2026-07-04

@@ -1,0 +1,99 @@
+[
+  {
+    "name": "slot-dev",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--agent",
+        "slot-dev",
+        "-a",
+        "--model",
+        "claude-sonnet-4.6"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/slot-dev",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "maxTurns": 30,
+    "timeoutMs": 1800000
+  },
+  {
+    "name": "researcher",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--agent",
+        "researcher",
+        "-a",
+        "--model",
+        "claude-sonnet-4.6"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/researcher",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      },
+      {
+        "name": "google",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "maxTurns": 30,
+    "timeoutMs": 1800000
+  },
+  {
+    "name": "general",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--agent",
+        "general",
+        "-a",
+        "--model",
+        "claude-sonnet-4.6"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/general",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      },
+      {
+        "name": "google",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "maxTurns": 30,
+    "timeoutMs": 1800000
+  }
+]
