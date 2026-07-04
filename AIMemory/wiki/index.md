@@ -25,8 +25,9 @@
 ## Queries
 
 - [[fable]] — Claude Fable 5 修正 Karpathy P0 接線 Bug（7 個問題 + 教訓 + commit）
+- [[askintel-time-split]] — Intel 排程分割策略（輕量 daily + 重量 podcast 隔天）
 
 ---
 
-Total pages: 11
-Last updated: 2026-07-04
+Total pages: 12
+Last updated: 2026-07-05

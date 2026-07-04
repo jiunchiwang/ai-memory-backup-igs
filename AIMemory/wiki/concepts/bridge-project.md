@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-04
-sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6]
+updated: 2026-07-05
+sources: [f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -107,6 +107,31 @@ Session 關閉時自動匯出結構化 JSON 歸檔（`session-archive-{chatId}.j
 - **slot-dev**：UK 老虎機開發（claude-sonnet-4.6，memory MCP）
 - **researcher**：深度研究 / AI 策略（claude-sonnet-4.6，memory + google MCP）
 - **general**：完整能力並行多工（inheritsAll，claude-sonnet-4.6，memory + google MCP）
+
+## Daily Intel 情報排程
+
+2026-07-04 設定 `/intel` 排程（三個 profile）：
+
+| Profile | 頻率 | 時間 |
+|---|---|---|
+| `ai`（AI 每日情報） | 每日 | 08:00 |
+| `game-industry`（遊戲產業） | 每日 | 08:00 |
+| `topic-ai`（AI podcast 模式） | 隔天 | 08:00（`cron 0 8 */2 * *`） |
+
+使用者偏好 split 策略：輕量 daily + 重量 podcast 隔天，避免早晨資訊過載。
+
+## Kiro CLI Model 配置
+
+Kiro CLI 使用**短名格式** model ID（非完整 API model ID）：
+
+| 短名 | 對應 |
+|---|---|
+| `claude-opus-4.6` | 主 agent 使用 |
+| `claude-sonnet-4.6` | specialist 分身使用（1M context、1.30x cost） |
+| `claude-haiku-4.5` | 輕量任務 |
+| `deepseek-3.2` | 備用 |
+
+完整可用清單：`auto / claude-opus-4.6 / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5 / deepseek-3.2`
 
 ## Embedding Router
 

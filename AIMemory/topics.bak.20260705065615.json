@@ -81,12 +81,8 @@
       "instinct observer",
       "karpathy-wiki",
       "karpathy lm",
-      "karpathy p0",
       "ingest ripple",
-      "ingest-ripple",
       "query auto-save",
-      "query-auto-save",
-      "activity-log.ts",
       "worktree isolation",
       "specialist persistent memory",
       "pluggable posttool",
@@ -104,10 +100,7 @@
       "雷蒙",
       "7 層",
       "harness 架構",
-      "已超越",
-      "fable",
-      "接線 bug",
-      "p0 三模組"
+      "已超越"
     ]
   },
   {
@@ -152,19 +145,7 @@
       "session archive",
       "session-archive",
       "factlint",
-      "forgetcommit",
-      "/intel",
-      "intel 排程",
-      "passive monitor",
-      "specialist-memory",
-      "user-profile.md",
-      "/reset clean",
-      "fork（jiunchiwang",
-      "upstream（redkilin",
-      "fork 同步策略",
-      "kiro-cli acp",
-      "model id",
-      "kiro cli 的 model"
+      "forgetcommit"
     ]
   },
   {
@@ -188,15 +169,10 @@
       "steering/",
       "skill-workflow",
       "中介層",
-      "功能對齊",
-      "memory-to-skill",
-      "confidence scoring",
-      "量化門檻",
-      "長期警戒模式",
-      "問題追蹤.md",
-      "自我改進優先級"
+      "功能對齊"
     ]
   },
+
   {
     "topic": "dev-tools",
     "keywords": [
@@ -213,7 +189,8 @@
       "npx tsc",
       "此台機器",
       "jiunchiwang",
-      "node_modules/@xenova"
+      "node_modules/@xenova",
+      "model id"
     ]
   },
   {
@@ -229,10 +206,7 @@
       "目錄錨點跳轉",
       "使用者確認",
       "使用者決定",
-      "自我改進優先級",
-      "偏好 split",
-      "偏好 obsidian",
-      "使用者想用 obsidian"
+      "自我改進優先級"
     ]
   }
 ]
