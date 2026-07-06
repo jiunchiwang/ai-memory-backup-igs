@@ -1,0 +1,252 @@
+# [telegram-kiro-bridge-main] recent context, 2026-06-24 3:16pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,039 tokens to read)
+- Work investment: 314,722 tokens spent on research, building, and decisions
+- Your savings: 94% reduction from reuse
+
+### Jun 19, 2026
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2664 | 5:53 PM | 🔵 | startProxy usage in run-prompt.ts reduced to import and comment only |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2665 | " | 🔄 | Specialist proxy symbols in index.ts reduced to imports only |  |  |
+| #2666 | 5:54 PM | 🔄 | Index.ts imports confirm handleSpecialistProxy integration |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2667 | 5:57 PM | 🔵 | Duplicate relay/parallel-delegate dispatch logic identified |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2668 | 5:58 PM | 🔵 | run-prompt.ts uses separate dispatch function names |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2669 | " | 🔵 | Canonical relay dispatch functions are imported but never called |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2670 | " | 🔵 | run-prompt.ts inline dispatch implementation details revealed |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2671 | 5:59 PM | 🔵 | relay.ts canonical dispatch implementations match run-prompt.ts duplicates line-by-line |  |  |
+| #2672 | 6:00 PM | ✅ | Added registerTask import to relay.ts for dispatch consolidation |  |  |
+| #2673 | " | ✅ | Enhanced dispatchRelayVisible with task registration and debug logging |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2674 | 6:01 PM | ✅ | Imported canonical dispatch functions into run-prompt.ts |  |  |
+| #2675 | " | 🔄 | Consolidated relay and parallel dispatch logic in run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2676 | 6:02 PM | 🔄 | Relay dispatch consolidation verified with clean TypeScript compilation |  |  |
+| #2677 | " | 🔵 | Orphaned imports identified in run-prompt.ts after consolidation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2678 | " | 🔵 | Import cleanup targets identified for run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2679 | 6:03 PM | 🔵 | Additional imports verified as still needed in run-prompt.ts |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2680 | " | 🔄 | Removed orphaned imports from run-prompt.ts after dispatch consolidation |  |  |
+| #2681 | " | 🔄 | Removed saveDelegationContext and loadDelegationContext imports from run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2682 | 6:04 PM | 🔵 | index.ts has identical orphaned relay import pattern as run-prompt.ts |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2683 | " | 🔄 | Removed unused dispatch function imports from index.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2684 | " | 🔄 | Relay dispatch consolidation complete with clean TypeScript compilation |  |  |
+| #2685 | " | 🔄 | Verified single source of truth for relay dispatch across codebase |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2686 | 6:06 PM | 🔵 | Relay system headless dispatch architecture |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2687 | " | 🔵 | Stop reason handling in prompt execution |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2688 | 6:07 PM | 🔵 | StopReason type definition across provider architecture |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2689 | " | 🔄 | Added stopReason parameter to headless relay dispatch interface |  |  |
+| #2690 | " | ✅ | Integrated stopReason into headless relay diagnostic logging |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2691 | 6:08 PM | 🔄 | Consolidated headless relay dispatch in run-prompt.ts to shared function |  |  |
+| #2692 | " | ✅ | Added dispatchRelayHeadless import to run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2693 | " | ✅ | TypeScript compilation verified after headless relay consolidation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2694 | " | 🔵 | Remaining relay function usage in run-prompt.ts after consolidation |  |  |
+| #2695 | 6:09 PM | 🔄 | Removed orphaned relay send function imports from run-prompt.ts |  |  |
+
+### Jun 22, 2026
+
+**AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2855 | 5:27 PM | 🔵 | Bridge multi-agent platform compatibility verification |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2856 | 5:35 PM | 🔵 | Skill-workflow implementation location questioned |  |  |
+
+**#S919** Check sync.ps1 to confirm whether converting steering from copy to junction would cause conflicts (Jun 22, 5:36 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2857 | 5:36 PM | 🔵 | Steering files use copy synchronization, not symlinks |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2858 | 5:39 PM | 🔵 | Steering projection uses copy instead of junction, creating sync risks |  |  |
+
+**#S920** Check sync.ps1 to confirm whether converting steering from copy to junction would cause conflicts (Jun 22, 5:39 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2859 | 5:40 PM | 🔵 | Kiro writes custom steering content to projection directory, blocking junction conversion |  |  |
+
+**#S921** Check sync.ps1 to confirm whether converting steering from copy to junction would cause conflicts (Jun 22, 5:40 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2860 | 5:40 PM | 🔵 | ui-ux-pro-max is real directory with skill structure, would pollute canonical git repo if junctioned |  |  |
+
+**#S922** Investigate steering sync mechanism and move misplaced ui-ux-pro-max folder to skills canonical location (Jun 22, 5:40 PM)
+
+**#S923** Cleanup of misplaced ui-ux-pro-max directory in ~/.kiro/steering/ (Jun 22, 5:43 PM)
+
+**..\..\g\AI\AI-canonical\skills\general\ui-ux-pro-max**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2861 | 5:43 PM | 🔵 | ui-ux-pro-max already exists in canonical skills/general with proper junctions |  |  |
+
+**..\..\c\Users\jiunchiwang\.kiro\steering\ui-ux-pro-max**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2862 | " | 🔵 | Stray ui-ux-pro-max in steering is identical to canonical but with older timestamps |  |  |
+| #2863 | " | ✅ | Removed misplaced ui-ux-pro-max duplicate from ~/.kiro/steering/ |  |  |
+
+**#S924** Investigate root cause of orphaned ui-ux-pro-max skill directory in ~/.kiro/steering/ and verify no duplicate tracking (Jun 22, 5:45 PM)
+
+**src/backup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2864 | 5:46 PM | 🔵 | Remote control feature search in telegram-kiro-bridge |  |  |
+
+**.claude/commands/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2865 | " | 🔵 | No /remote-control command found in Claude commands |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2866 | 5:47 PM | 🔵 | Skill creation and management infrastructure in telegram-kiro-bridge |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2867 | " | 🔵 | Agent configuration directory auto-detection logic |  |  |
+
+**skills/general/ui-ux-pro-max/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2868 | " | 🔵 | ui-ux-pro-max skill provenance and tracking status |  |  |
+
+**#S925** Verify skill usage tracking status and orphan flag for ui-ux-pro-max skill (Jun 22, 5:52 PM)
+
+**src/usageStore.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2869 | 5:53 PM | 🔵 | usageStore orphan flag auto-corrects on disk rescan |  |  |
+
+**src/dream-config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2870 | 5:54 PM | 🔵 | Dream command configuration verified |  |  |
+
+**#S926** Verification of bridge integration with personal AI operating system and cleanup of duplicate skill folder (Jun 22, 5:55 PM)
+
+**#S927** Evaluate steering file integration approach for Kiro-CLI bridge mode and determine if pure index-based injection is sufficient (Jun 22, 5:59 PM)
+
+**#S928** Verification of steering file integration between bridge and personal AI operating system (Kiro) (Jun 22, 6:07 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2871 | 6:09 PM | 🔵 | Memory system not yet initialized for telegram-kiro-bridge project |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\bridge-steering-integration.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2872 | " | ✅ | Documented steering integration architecture for bridge project |  |  |
+
+
+Access 315k tokens of past research & decisions for just 19,039t. Use MCP search tools to access memories by ID.

@@ -1,0 +1,234 @@
+# [uk_pirates_queen] recent context, 2026-06-25 6:03pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (20,073 tokens to read)
+- Work investment: 283,566 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 25, 2026
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3033 | 9:29 AM | 🔵 | Drop and fall sequence coordination mechanism |  |  |
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3034 | 10:11 AM | 🔵 | FreeGame shows big award hint during SpinState entry, before spin loop starts |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3035 | " | 🔵 | OnRecvSpinAck_Test exists as alternative handler alongside production version |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3036 | " | 🔵 | SetPlateInfo triggers drop animation chain when server plate data arrives |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3037 | 10:12 AM | 🔵 | SetPlateInfo called from SetNowRoundInfo during OnRecvSpinAck processing |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3038 | 10:17 AM | 🔵 | Animation Sequencing Conflict in FreeGame Flow |  |  |
+
+**#S969** Launch multi-agent design workflow to solve DropAllSymbolsOutOfScreen waiting for ShowBigAwardHint with path-aware FreeGame coordination (Jun 25, 10:17 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3039 | 10:18 AM | ⚖️ | Multi-Agent Design Workflow Launched for Animation Sequencing Redesign |  |  |
+
+**#S970** Review slot reel drop animation refactoring - user requested /dev-review for quality and security audit (Jun 25, 10:18 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3040 | 10:19 AM | 🔵 | Additional Execution Paths Identified for Animation Coordination |  |  |
+| #3041 | 10:21 AM | 🔵 | Explore Phase Completed: Dual Freeze Mechanism and IsMgOmen Deadlock Risk Discovered |  |  |
+| #3042 | 10:22 AM | 🔵 | SetReelTimes Appears Uncalled - StopTime Initialization Gap Found |  |  |
+| #3043 | 10:23 AM | ⚖️ | MVP-First Design Proposal: Explicit TriggerDropOut with m_isInDropMode Freeze Flag |  |  |
+| #3044 | " | ⚖️ | Three Design Proposals Completed: TriggerDropOut vs ArmDropOut Strategies |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3045 | 10:24 AM | 🔵 | PlayBigAwardEffect Implementation Verified: Finite Duration Animation |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3046 | 10:27 AM | ⚖️ | Judge Panel Verdict: MVP Minimal Surgery Wins with Critical Flaws Requiring Design-Level Fixes |  |  |
+
+**#S971** Implement solution for delaying SlotReels.DropAllSymbolsOutOfScreen animation until after GameView.ShowBigAwardHint completes, covering both normal game and Free Game paths (Jun 25, 10:43 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3047 | 10:43 AM | 🔄 | Reel symbol drop-out animation sequencing refactored to follow big award hint |  |  |
+
+**#S972** Generate commit message for R-1 bugfix: drop-in animation freeze causing old reels to keep spinning during anticipation period (Jun 25, 10:45 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3048 | 10:48 AM | 🔴 | Correctness review identified critical freeze window regression in drop-out refactoring |  |  |
+| #3049 | " | 🔵 | Quality review identified undocumented visual behavior change in waiting window freeze semantics |  |  |
+
+**..\..\Cocos_Project\uk_pirates_queen\.claude-loop\artifacts\P3-review.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3050 | 10:58 AM | ⚖️ | Multi-agent code review identified freeze window regression requiring user decision |  |  |
+
+**#S973** Diagnose why GoldTarget sometimes doesn't play IN animation in slot game (Jun 25, 11:26 AM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3051 | 11:48 AM | 🔵 | Bounty/Wanted Poster System Architecture in FreeGame |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3052 | 11:52 AM | 🔴 | Clear Bounty Data When FreeGame Ends |  |  |
+
+**#S974** Debug GoldTarget missing IN animation in FreeGame mode - user unable to reproduce the issue (Jun 25, 12:15 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3053 | 1:24 PM | 🔵 | NearWin logic disabled during FreeGame mode |  |  |
+| #3054 | " | 🔵 | Target symbol spine animation reuse during falls |  |  |
+| #3055 | 1:25 PM | ✅ | Added diagnostic logging for Target symbol spine reuse during falls |  |  |
+| #3056 | " | ✅ | Added diagnostic logging for new Target spine creation during falls |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3057 | " | ✅ | TypeScript validation passed after diagnostic logging additions |  |  |
+
+**#S975** Debug intermittent GoldTarget IN animation not playing issue in FreeGame mode (Jun 25, 2:03 PM)
+
+**#S976** Stop FreeGame BGM when FG_End sound effect plays (Jun 25, 2:08 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3058 | 2:09 PM | ✅ | Added diagnostic logging for GoldTarget IN animation debugging |  |  |
+| #3059 | " | ✅ | Implemented comprehensive GoldTarget animation path diagnostics |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3060 | 2:13 PM | 🔵 | Initial toFixed Usage Search in Codebase |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3061 | " | 🔵 | Winning Score Formatting System Located |  |  |
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3062 | 2:14 PM | 🔵 | Number Formatting System File Scope Identified |  |  |
+
+**extensions/astarte-framework/assets/utilis/Tools.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3063 | " | 🔵 | FORMAT_NUMBER_TYPE Enum Definition Located in Framework |  |  |
+| #3064 | " | 🔵 | Complete FORMAT_NUMBER_TYPE Enum and Decimal Configuration System |  |  |
+
+**extensions/astarte-framework/assets/Component/BigWinComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3065 | 2:17 PM | 🔵 | FormatNumberThousands Usage in Framework Components |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3066 | " | 🔵 | Small Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/Common/BigWinControll.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3067 | " | 🔵 | Big Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3068 | 4:24 PM | 🔵 | WantedPosterItem fade animation currently only handles multiplier label |  |  |
+| #3069 | " | 🔵 | m_x9999UIOpacity property exists but is never used |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3070 | " | 🔵 | m_x9999UIOpacity not configured in prefab |  |  |
+| #3071 | 4:25 PM | 🔵 | Prefab structure confirmed with 789 total lines |  |  |
+| #3072 | " | 🔵 | UIOpacity component exists on x9999 node but not bound to property |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3073 | 4:26 PM | 🔴 | Added fade animations for x9999 multiplier indicator |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3074 | " | 🔴 | Wired m_x9999UIOpacity to UIOpacity component in prefab |  |  |
+| #3075 | " | ✅ | Validated prefab binding for m_x9999UIOpacity |  |  |
+
+**#S977** Fix Free Game BGM timing to stop when FG_End sound plays during free game exit (Jun 25, 5:01 PM)
+
+**assets/Script/FreeGame/FreeGameExitManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3076 | 5:02 PM | 🔵 | FreeGame BGM stop timing issue identified |  |  |
+| #3077 | " | 🔵 | FreeGameExitManager uses event-driven architecture without direct GameView reference |  |  |
+| #3078 | " | 🔵 | PLAY_OUT_SPINE_ANIM event handler receives four parameters |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3079 | 5:03 PM | 🔴 | Stop FreeGame BGM when FG_End sound effect plays |  |  |
+| #3080 | 5:04 PM | 🔄 | Remove redundant FreeGame BGM stop call |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3081 | " | ✅ | TypeScript compilation validates FreeGame BGM stop changes |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3082 | 5:31 PM | 🔴 | Free Game BGM Stop Timing Fix |  |  |
+
+**#S978** Add fade in/fade out handling for m_x9999Node in WantedPosterItem animations, and commit FreeGame BGM timing adjustment (Jun 25, 5:31 PM)
+
+**Investigated**: Reviewed commit history showing WantedPoster X9999 fade effects already committed in 3b6c133. Examined LeaveFreeState BGM timing implementation for commit e922757.
+
+**Learned**: WantedPosterItem's m_x9999Node fade in/fade out functionality (similar to m_multiplierLabelUIOpacity) was previously implemented and committed. FreeGame BGM stop timing needs to sync with FG_End event rather than happening later in the flow.
+
+**Completed**: Committed e922757 to main branch with LeaveFreeState.ts changes - FreeGame BGM stop timing moved forward to synchronize with FG_End. WantedPoster X9999 fade effects were already completed in earlier commit 3b6c133.
+
+**Next Steps**: Work is committed locally to main but not pushed to origin/main. Awaiting user instruction on whether to push changes to remote repository.
+
+
+Access 284k tokens of past research & decisions for just 20,073t. Use MCP search tools to access memories by ID.

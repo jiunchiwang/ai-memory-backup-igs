@@ -1,0 +1,212 @@
+# [uk_pirates_queen] recent context, 2026-06-08 1:04pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,402 tokens to read)
+- Work investment: 430,614 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jun 5, 2026
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1987 | 11:45 AM | 🟣 | Added wild position collection and filtering helper methods for BC-14 |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1988 | 12:25 PM | 🔄 | Made CheckPlateInfo flexible for cascade validation |  |  |
+
+**assets/Script/GameState/MatchingPatchUpState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1989 | " | 🟣 | Added cascade plate validation in MatchingPatchUpState |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1990 | 2:10 PM | 🟣 | ADD_MULTIPLIER and ADD_MULTIPLIER_WITH_ANIM event implementation |  |  |
+
+**assets/Script/Common/SpriteChange.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1991 | 2:52 PM | 🔵 | SpriteChange component implements index bounds validation |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1992 | 2:54 PM | 🔵 | Mapped multiplier method usage across MultiplierBase system |  |  |
+
+**assets/Script/MultBase/MultiplierBase.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1993 | 2:55 PM | ✅ | Added warn import to MultiplierBase |  |  |
+| #1994 | " | 🟣 | Added upper bounds clamping to SetMultiplier method |  |  |
+| #1995 | 2:56 PM | 🟣 | Implemented GetMaxMultiplierIndex for bounds calculation |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1996 | " | 🔵 | Verified AddMultiplier methods use safe increment pattern |  |  |
+| #1997 | " | 🟣 | Added early-exit checks for max multiplier in all Add methods |  |  |
+
+**assets/Script/MultBase/MultiplierBase.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1998 | 2:57 PM | ✅ | Verified bounds checking implementation passes TypeScript validation |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1999 | 2:59 PM | 🔵 | Spine animation completion patterns in codebase |  |  |
+
+**assets/Script/MultBase/MultiplierBase.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2000 | 3:00 PM | 🔴 | Replaced hardcoded setTimeout with spine animation completion listener |  |  |
+| #2001 | " | ✅ | Multiplier system timing fix validated clean |  |  |
+
+**#S712** Migrate upgrade animation timing from requestAnimationFrame to scheduleOnce with timeout fallback (Jun 5, 3:00 PM)
+
+**assets/Script/MultBase/MultiplierBase.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2002 | 3:17 PM | ✅ | Added upgrade animation timeout fallback constant |  |  |
+| #2003 | " | 🔴 | Replaced requestAnimationFrame with scheduleOnce and added timeout fallback |  |  |
+
+**#S713** Understanding game symbol elimination flow redesign - from sequential bounty/non-bounty processing to unified elimination (Jun 5, 3:18 PM)
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2004 | 3:27 PM | 🔵 | Game elimination flow uses sequential state machine for symbol removal |  |  |
+
+**#S714** Refactor game mechanics for wanted poster upgrades with ADD operations in steps 2 and 4, remove grouped sequential playback, and eliminate symbol removal for bounties (Jun 5, 3:29 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2005 | 3:54 PM | ⚖️ | Game mechanics refinement for steps 2 and 4 with bounty and wild symbol behavior |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2006 | " | 🔵 | Located wanted poster explosion and symbol effect methods in EffectPlate |  |  |
+| #2007 | " | 🔵 | WantedPoster effect methods implementation details in EffectPlate |  |  |
+
+**#S715** Refactor elimination logic: decouple symbol/wild removal from bounty performance and unify all elimination in ExplodeState (Jun 5, 3:56 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2008 | 3:59 PM | 🔵 | Typo in SlotReels method name: Exlpode instead of Explode |  |  |
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2009 | 4:04 PM | 🔄 | Unified symbol elimination logic in ExplodeState |  |  |
+| #2010 | " | 🟣 | Implemented BuildUnifiedExplodeData method and ADD-based multiplier updates |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2011 | " | 🔄 | Bounty groups now perform in parallel with elimination decoupled |  |  |
+| #2012 | " | 🔄 | Renamed PlayBountyGroupEliminate to PlayBountyGroupPerform and removed elimination parameters |  |  |
+| #2013 | 4:05 PM | 🔄 | Removed WantedPosterExplodeEffect calls from bounty performance flow |  |  |
+| #2014 | " | 🔄 | Removed dead code: FilterWildPositions and CollectBountyWildPositions methods |  |  |
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2015 | " | 🔵 | TypeScript validation confirms refactoring is type-safe |  |  |
+| #2016 | 4:06 PM | 🔵 | Refactored code is error-free despite framework type definition issues |  |  |
+| #2017 | " | 🔵 | Zero TypeScript errors in refactored ExplodeState and WantedPosterState confirmed |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2018 | 4:07 PM | ✅ | Updated PlayBountyGroupPerform JSDoc to reflect new stage flow |  |  |
+| #2019 | " | ✅ | Updated FilterNonWildPositions comment to clarify wild handling in new flow |  |  |
+
+**#S716** Evaluating whether to add validation check comparing client multiplier base values against server BasePlateIndex (Jun 5, 4:07 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2020 | 5:02 PM | 🔵 | Multiplier Base Index Management System |  |  |
+
+**#S717** Implement multiplier base plate regression guard with server validation checks (Jun 5, 5:04 PM)
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2021 | 5:10 PM | 🟣 | Multiplier base server validation guard implemented |  |  |
+
+**assets/Script/GameState/MatchingPatchUpState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2022 | " | 🟣 | Multiplier validation integrated into cascade elimination flow |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2023 | " | ✅ | Type-safe validation confirmed for multiplier guard implementation |  |  |
+
+**#S718** User requested to commit completed game state refactoring with elimination logic and server sync improvements (Jun 5, 5:16 PM)
+
+**#S719** User requested to stop work after committing changes to 4 files (Jun 5, 5:17 PM)
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2024 | 5:18 PM | 🟣 | Unified elimination flow and restructured wanted poster presentation timing |  |  |
+
+**#S722** Make ExtraBet visibility follow server ShowExtra field in uk_pirates_queen, referencing uk-slot-extrabet skill pattern (Jun 5, 5:18 PM)
+
+### Jun 8, 2026
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2025 | 10:33 AM | 🔵 | ExtraBet implementation in uk_pirates_queen GameView |  |  |
+| #2026 | 10:34 AM | 🔵 | GameInfoData proto contains ShowExtra field for server-controlled visibility |  |  |
+| #2027 | " | 🔵 | GameInfoData decoded in OnCommand info ack handler |  |  |
+| #2028 | " | 🔵 | ExtraBet visibility controlled by game state transitions, not server data |  |  |
+| #2029 | 10:38 AM | 🟣 | Added server-driven ExtraBet visibility control flag |  |  |
+| #2030 | " | 🟣 | Integrated server ExtraBet flag into multi-bet display logic |  |  |
+| #2031 | 10:39 AM | 🟣 | Implemented server-controlled ExtraBet feature gating system |  |  |
+| #2032 | " | ✅ | TypeScript validation confirms ExtraBet gating implementation is type-safe |  |  |
+
+**C:\ProgramData\cocos\editors\Creator\3.6.2\resources\resources\3d\engine\bin\.declarations\cc.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2033 | " | 🔵 | TypeScript errors are framework-level, not in ExtraBet implementation |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2034 | 10:40 AM | ✅ | IDE diagnostics confirm zero errors in ExtraBet implementation |  |  |
+
+**#S723** Implemented server-controlled ExtraBet feature gating system in Pirates Queen slot game (Jun 8, 10:40 AM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2035 | 11:51 AM | 🟣 | Added Wanted Board visual element to main game scene |  |  |
+| #2036 | 11:52 AM | 🟣 | ExtraBet feature now controlled by server-side ShowExtra flag |  |  |
+
+
+Access 431k tokens of past research & decisions for just 17,402t. Use MCP search tools to access memories by ID.

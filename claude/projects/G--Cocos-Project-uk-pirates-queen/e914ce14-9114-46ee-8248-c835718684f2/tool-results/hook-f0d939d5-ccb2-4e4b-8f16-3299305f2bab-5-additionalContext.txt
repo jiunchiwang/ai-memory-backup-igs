@@ -1,0 +1,236 @@
+# [uk_pirates_queen] recent context, 2026-06-22 6:19pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,676 tokens to read)
+- Work investment: 128,409 tokens spent on research, building, and decisions
+- Your savings: 85% reduction from reuse
+
+### Jun 18, 2026
+
+**uk_pirates_queen/extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2522 | 10:19 AM | 🔵 | Multiple projects share astarte-framework with ExtraBetComponent.ts |  |  |
+| #2523 | 10:20 AM | 🔵 | ExtraBetComponent.ts differs by only 3 lines from template version |  |  |
+| #2524 | " | 🔵 | Identified unauthorized framework modification: two-step cancel ExtraBet logic |  |  |
+
+**assets/Script/ExtraBet/ExtraBetWindow.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2525 | 10:21 AM | 🔵 | Pirates Queen has project-specific two-step ExtraBet implementation |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2526 | " | 🔵 | SetTwoStepMulti exists in framework, creating cross-project impact concern |  |  |
+
+**extensions/astarte-framework/package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2527 | 10:22 AM | 🔵 | Framework modification unique to Pirates Queen, not present in other projects |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2528 | 10:30 AM | 🔴 | Restored ExtraBetComponent to match framework baseline |  |  |
+
+**.claudedocs/ExtraBet-公版誤改還原記錄.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2529 | " | ⚖️ | Documented framework restoration decision and two-step ExtraBet glitch trade-off |  |  |
+
+**uk_slot_template/CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2530 | 10:46 AM | 🔵 | UK slot project CLAUDE.md documentation inventory completed |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2531 | 10:53 AM | ✅ | Added UK slot game development conventions to project documentation |  |  |
+
+### Jun 22, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2815 | 3:56 PM | 🔵 | Skill storage locations and directory structure explored |  |  |
+
+**..\..\AI\AI-canonical\skills\general**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2816 | 4:04 PM | 🔵 | Canonical Skills Architecture Already Deployed |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\skill-creator**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2817 | 4:05 PM | 🔵 | Dual-Repo Routing by Domain Confirmed |  |  |
+
+**#S908** Verify skill sync mechanism and discovered encoding bug in sync.ps1 (Jun 22, 4:09 PM)
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2818 | 4:10 PM | 🔵 | Understanding sync.ps1 junction-based skill projection mechanism |  |  |
+
+**..\..\AI\AI-canonical\skills\general\_sync-test-deleteme\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2819 | " | 🟣 | Created test skill to verify canonical-to-junction projection workflow |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\_sync-test-deleteme**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2820 | 4:11 PM | 🟣 | Verified canonical skill projection via sync.ps1 successfully creates junctions |  |  |
+| #2821 | " | ✅ | Cleaned up test skill after successful projection verification |  |  |
+
+**#S909** UTF-8 BOM encoding fix for sync.ps1 to resolve PowerShell 5.1 Chinese character mojibake errors (Jun 22, 4:13 PM)
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2822 | 4:13 PM | 🔵 | Confirmed sync.ps1 encoding issue: UTF-8 without BOM |  |  |
+
+**..\..\AI\AI-canonical\README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2823 | 4:14 PM | 🔵 | Mapped sync.ps1 usage across AI-canonical codebase |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2824 | " | 🔴 | Fixed sync.ps1 encoding by adding UTF-8 BOM |  |  |
+| #2825 | 4:15 PM | 🔴 | Verified sync.ps1 BOM fix eliminates encoding errors |  |  |
+| #2826 | " | 🔵 | Git tracks UTF-8 BOM addition as minimal line change |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2827 | 4:16 PM | 🔵 | Exploring skill addition workflow in Claude Code |  |  |
+
+**#S910** User asked whether the skill-workflow documentation in AI-canonical/steering is actively being followed by the AI, after completing a UTF-8 BOM encoding fix (Jun 22, 4:16 PM)
+
+**#S911** Confirmed that skill-workflow.md has no effect on Claude Code - root cause analysis and solution proposals (Jun 22, 4:20 PM)
+
+**C:\Users\jiunchiwang\.kiro\steering\skill-workflow.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2828 | 4:20 PM | 🔵 | skill-workflow.md not integrated into Claude Code context |  |  |
+
+**#S912** User asked how to add new skills and where they would be added in the system workflow (Jun 22, 4:23 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2829 | 4:25 PM | 🔵 | Investigated @import syntax in CLAUDE.md |  |  |
+| #2830 | " | 🔵 | Learned @import syntax and behavior in CLAUDE.md files |  |  |
+| #2831 | " | 🔵 | Verified @import path resolution capabilities in CLAUDE.md |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2832 | 4:27 PM | 🔵 | Examined steering file projection mechanism in sync.ps1 |  |  |
+| #2833 | " | 🟣 | Extended sync.ps1 to project steering files to Claude Code with auto-import |  |  |
+| #2834 | 4:28 PM | ✅ | Verified sync.ps1 modifications in dry-run mode |  |  |
+
+**C:\Users\jiunchiwang\.claude\steering\closed-loop-system.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2835 | " | 🟣 | Deployed steering file projection to Claude Code with verified idempotency |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2836 | 4:29 PM | ✅ | Committed steering projection enhancement to version control |  |  |
+
+**#S913** User requested review of machine migration process to verify correctness (Jun 22, 4:31 PM)
+
+**.githooks/pre-commit**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2837 | 4:32 PM | 🔵 | Pre-commit hook has no uncommitted changes |  |  |
+| #2838 | " | 🔵 | Git core.fileMode disabled, no mode changes on pre-commit hook |  |  |
+| #2839 | " | 🔵 | Git reports .githooks/pre-commit modified despite identical content and line endings |  |  |
+| #2840 | " | 🔵 | Confirmed phantom modification via identical blob hashes |  |  |
+
+**..\..\AI\AI-canonical\tools\bootstrap.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2841 | 4:37 PM | 🔵 | Machine Migration Bootstrap Process Reviewed |  |  |
+
+**#S914** Review and fix machine migration workflow - found @import sequencing gap in bootstrap.ps1 (Jun 22, 4:37 PM)
+
+**..\..\AI\AI-canonical\tools\pull.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2842 | 4:38 PM | 🔵 | Pull Script for Syncing Machine from GitHub |  |  |
+
+**#S915** Clean em-dash from bootstrap.ps1 and push changes to repository (Jun 22, 4:55 PM)
+
+**..\..\AI\AI-canonical\tools\bootstrap.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2843 | 4:55 PM | 🔴 | Fixed missing @import in bootstrap sequence |  |  |
+| #2844 | " | ✅ | Validated bootstrap.ps1 syntax and encoding after fix |  |  |
+| #2845 | 4:56 PM | 🔵 | Located non-ASCII em-dash in bootstrap.ps1 header |  |  |
+| #2846 | " | ✅ | Replaced em-dash with hyphen in bootstrap.ps1 comment |  |  |
+
+**#S916** Personal AI operating system documentation review for beginner clarity - resulted in cross-machine synchronization workflow refinements and ASCII-only standardization (Jun 22, 4:58 PM)
+
+**..\..\AI\AI-canonical\tools\pull.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2847 | 4:58 PM | ✅ | Replaced em-dash with hyphen in pull.ps1 comment |  |  |
+
+**.gitattributes**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2848 | 5:04 PM | 🔵 | AI-canonical repository structure mapped for documentation review |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2849 | " | 🔵 | Personal AI OS documentation structure reviewed for beginner onboarding |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2850 | " | 🔵 | Critical documentation gaps identified for beginner onboarding |  |  |
+
+**#S917** Repository onboarding audit and gap remediation - verifying self-contained AI handoff capability (Jun 22, 5:08 PM)
+
+**cross-model-ai-strategy-v4.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2851 | 5:10 PM | ✅ | Core design document committed to repository |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2852 | " | 🔄 | README restructured as navigation index for AI handoff |  |  |
+
+**policies/memory-policy.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2853 | 5:11 PM | ✅ | Memory policy documentation created |  |  |
+
+**cross-model-ai-strategy-v4.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2854 | " | ✅ | Onboarding documentation shipped to GitHub |  |  |
+
+
+Access 128k tokens of past research & decisions for just 18,676t. Use MCP search tools to access memories by ID.

@@ -1,0 +1,214 @@
+# [uk_872_eyestrike2_client] recent context, 2026-07-06 3:14pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (16,491 tokens to read)
+- Work investment: 290,832 tokens spent on research, building, and decisions
+- Your savings: 94% reduction from reuse
+
+### Jun 30, 2026
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3425 | 6:49 PM | 🔵 | Server Position Encoding Uses Variable Row Heights |  |  |
+
+**assets/Script/GameState/FeatureResultShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3426 | " | 🔵 | Feature Position Validation Pattern |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3427 | 6:50 PM | 🔵 | SlotReels Position-to-World Coordinate Conversion |  |  |
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3428 | 6:51 PM | ✅ | Trail Event Parameter Renamed from roundIndex to colIndex |  |  |
+| #3429 | " | ✅ | Updated Trail Split Constant Documentation |  |  |
+| #3430 | " | 🔄 | Completed roundIndex to colIndex Parameter Rename |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3431 | " | 🔄 | Reverted Feature Loop from Index-Based to For-Of |  |  |
+| #3432 | 6:52 PM | 🔄 | Removed roundIndex Parameter from PlayFlyEffect Call |  |  |
+| #3433 | " | 🟣 | Implemented Position-Based Trail Selection |  |  |
+| #3434 | " | ✅ | Added Common Import for Position Decoding |  |  |
+| #3435 | " | ✅ | Trail System Refactoring Validated Clean |  |  |
+
+**#S1072** Implement FeatureWheel Trail flying effect with dual Spine routing, object pooling, and debug test cases (Jun 30, 7:03 PM)
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3436 | 7:03 PM | 🔵 | FlyManager test infrastructure already exists with disabled test keycodes |  |  |
+| #3437 | 7:05 PM | 🟣 | Added FeatureWheel Trail test keycodes for position verification |  |  |
+| #3438 | 7:06 PM | 🟣 | Implemented FeatureWheel Trail position test methods with interactive cycling |  |  |
+| #3439 | " | ✅ | FlyManager test code passes TypeScript validation with no errors |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3440 | " | ✅ | Full TypeScript compilation confirms all changes are type-safe |  |  |
+
+**FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3441 | 7:07 PM | ⚖️ | Trail effect architecture for FeatureWheel |  |  |
+
+**#S1073** Implement FeatureWheel trail effect with column-based left/right Trail Spine selection (Jun 30, 7:07 PM)
+
+**#S1079** User requested git commit for FeatureWheel Trail animation implementation (Jun 30, 7:28 PM)
+
+### Jul 1, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3472 | 3:34 PM | 🔵 | SessionEnd Hook Failure on Session Termination |  |  |
+| #3473 | 3:35 PM | 🔵 | SessionEnd Hook Source Identified as openai-codex Plugin |  |  |
+
+**.claude/plugins/cache/openai-codex/codex/1.0.4/hooks/hooks.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3474 | " | 🔵 | SessionEnd Hook Implementation Details |  |  |
+
+**assets\Script\FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3475 | 4:43 PM | 🔵 | Located PlayFeatureWheelTrailAnimation function with incorrect trail start points |  |  |
+| #3476 | " | 🔵 | Trail animation only sets end bone position, not start bone |  |  |
+| #3477 | 4:44 PM | 🔵 | Trail animation triggered via FLY_EVENT message system |  |  |
+| #3478 | " | 🔵 | Other animations set both start and end bones, trail animation only sets end bone |  |  |
+| #3479 | " | 🔵 | PlayFlyToCollectAnimation demonstrates correct bone manipulation pattern |  |  |
+| #3480 | 4:45 PM | 🔴 | Added Trail_Start bone retrieval and validation to fix trail animation starting point |  |  |
+| #3481 | " | 🔴 | Fixed trail animation incorrect starting point by setting Trail_Start bone positions |  |  |
+| #3482 | " | ✅ | Updated PlayFeatureWheelTrailAnimation JSDoc to document start bone positioning |  |  |
+| #3483 | " | 🔵 | Code changes compiled successfully with no errors after trail animation fix |  |  |
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3484 | 4:58 PM | 🟣 | FeatureWheel Trail Animation System with Dual-Bone Control |  |  |
+
+**#S1080** Fix FeatureWheel Trail animation starting points by setting Trail_Start and Trail_Start_R bone positions (Jul 1, 4:59 PM)
+
+**assets/Script/GameState/PlateShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3485 | 4:59 PM | 🔄 | PlateShowState State Flow Delegation to Common Handler |  |  |
+| #3486 | " | ✅ | Committed PlateShowState Refactor (2fbef36) |  |  |
+| #3487 | 5:00 PM | ✅ | Amended Commit Message (b534963) |  |  |
+
+**#S1081** Diagnosed "Hook cancelled" error appearing during session shutdown from SessionEnd hook (Jul 1, 7:08 PM)
+
+**#S1087** Refactor FreeGameIntro UI visibility timing to trigger based on animation events (Jul 1, 7:08 PM)
+
+**assets/Script/Spine/InLoopOutSpine.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3488 | 7:11 PM | 🔵 | FreeGame entrance animation system architecture discovered |  |  |
+
+**assets/Script/FreeGame/FreeGameIntro.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3489 | 7:12 PM | 🟣 | FreeGame entrance animation controller implemented |  |  |
+
+**assets/Script/GameState/EnterFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3490 | 7:13 PM | 🟣 | FreeGame intro animation integrated into game state flow |  |  |
+
+### Jul 3, 2026
+
+**assets/Script/FreeGame/FreeGameIntro.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3532 | 11:13 AM | 🔵 | Free Game Intro Animation System Structure |  |  |
+
+**assets/Script/Spine/InLoopOutSpine.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3533 | 11:18 AM | 🔵 | InLoopOutSpine Animation Event Callback System |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3534 | " | 🔵 | GameView.SetOtherUIShow Method Implementation |  |  |
+
+**assets/Script/**/***
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3535 | 11:19 AM | 🔵 | FG_On and MG_Off Events Not Found in Codebase |  |  |
+
+**assets/Script/Spine/BaseSpine.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3536 | " | 🔵 | Spine Animation Event Callback Flow Architecture |  |  |
+
+**assets/Script/FreeGame/FreeGameIntro.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3537 | 11:20 AM | 🔄 | Extracted GetGameView Helper Method in FreeGameIntro |  |  |
+| #3538 | " | 🟣 | Free Game Intro UI Visibility Control Implementation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3539 | " | ✅ | TypeScript Type Checking Validation Passed |  |  |
+
+**#S1088** Commit UI visibility changes driven by Spine animation events in PlayIntro (Jul 3, 11:23 AM)
+
+**#S1089** Add event-driven UI visibility control during PlayIntro entrance animation for FG_On and MG_Off events (Jul 3, 11:25 AM)
+
+**assets/Script/FreeGame/FreeGameIntro.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3540 | 11:25 AM | 🔄 | Extract Spine animation event names into named constants |  |  |
+| #3541 | 11:26 AM | 🔄 | Replace hardcoded "MG_Off" event string with AnimEvent.HideOtherUI constant |  |  |
+| #3542 | " | 🔄 | Replace hardcoded "FG_On" event string with AnimEvent.ShowOtherUI constant |  |  |
+
+**#S1094** Add Label property to FreeGameIntro.ts for displaying total FreeGame rounds and modify events to pass round count parameter (Jul 3, 11:27 AM)
+
+**assets/Script/FreeGame/FreeGameIntro.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3549 | 2:05 PM | 🟣 | Added round count display to FreeGame intro animation |  |  |
+
+**assets/Script/GameState/EnterFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3550 | " | ✅ | Connected FreeTotalRound data flow to FreeGame intro |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3551 | " | ✅ | Updated test hotkey to support new intro event signature |  |  |
+
+**#S1095** Add event handling to PlayIntro animation for FG_On and MG_Off events to control UI visibility, including totalRound parameter support (Jul 3, 2:06 PM)
+
+**Investigated**: FreeGameIntro.ts component structure, event dispatch mechanism in EnterFreeState.ts and GameView.ts, and how PlayIntro animation events are triggered
+
+**Learned**: PlayIntro function needed to accept totalRound parameter to display total FreeGame rounds won; event callbacks must be threaded through Dispatch calls to prevent flow deadlock; animation events FG_On/MG_Off trigger during intro sequence to control UI visibility
+
+**Completed**: Modified FreeGameIntro.ts to add m_totalRoundLabel property and update PlayIntro signature to accept totalRound parameter; updated OnEvent handler to pass arguments correctly; modified EnterFreeState.ts (line 125) and GameView.ts (line 2436) to dispatch totalRound value with PLAY event; type checking passed successfully
+
+**Next Steps**: Awaiting user confirmation to commit changes; Label component requires manual binding in Cocos editor prefab inspector
+
+
+Access 291k tokens of past research & decisions for just 16,491t. Use MCP search tools to access memories by ID.

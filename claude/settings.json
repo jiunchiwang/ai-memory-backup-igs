@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(claude doctor:*)",
+      "Bash(claude install:*)",
+      "mcp__plugin_serena_serena__find_symbol"
+    ]
+  },
+  "model": "claude-fable-5[1m]",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/c/Users/jiunchiwang/.claude/hooks/kiro-usage-tracker.sh'"
+          }
+        ]
+      }
+    ]
+  },
+  "enableWorkflows": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash '/c/Users/jiunchiwang/.claude/statusline-command.sh'"
+  },
+  "enabledPlugins": {
+    "claude-md-management@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "serena@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "codex@openai-codex": true,
+    "webwright@webwright": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "webwright": {
+      "source": {
+        "source": "github",
+        "repo": "microsoft/Webwright"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "feedbackSurveyState": {
+    "lastShownTime": 1754020442176
+  },
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ]
+    },
+    "google": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
+      ]
+    }
+  }
+}

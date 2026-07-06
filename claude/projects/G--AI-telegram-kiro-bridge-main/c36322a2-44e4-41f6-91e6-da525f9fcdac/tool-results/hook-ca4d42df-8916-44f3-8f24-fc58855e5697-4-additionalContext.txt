@@ -1,0 +1,230 @@
+# [telegram-kiro-bridge-main] recent context, 2026-06-22 5:19pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,781 tokens to read)
+- Work investment: 448,679 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jun 19, 2026
+
+**#S869** Investigate specialist message flow to determine if specialist replies go directly to Telegram users or back to main agent (Jun 19, 5:17 PM)
+
+**#S868** Create commits for pending changes including Telegram HTML rendering feature and documentation (Jun 19, 5:17 PM)
+
+**#S870** Investigation of specialist response routing: how specialist outputs reach users in proxy vs delegate modes (Jun 19, 5:33 PM)
+
+**#S871** Consolidate three duplicate specialist proxy logic implementations into a shared function (Jun 19, 5:33 PM)
+
+**#S872** Consolidate duplicate specialist proxy handling logic into single source of truth in relay.ts (Jun 19, 5:44 PM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2646 | 5:44 PM | 🔵 | Inline specialist proxy implementation in run-prompt.ts examined |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2647 | 5:45 PM | 🔵 | Three specialist proxy implementations compared for consolidation |  |  |
+
+**src/commands/misc.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2648 | " | 🔵 | Token estimation patterns differ between proxy implementations |  |  |
+
+**tsconfig.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2649 | 5:47 PM | 🔵 | TypeScript project configuration uses ES2022 with bundler resolution |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2650 | " | 🔄 | handleSpecialistProxy refactored to support dual call modes |  |  |
+| #2651 | 5:48 PM | 🔄 | Enhanced error handling in handleSpecialistProxy for dual modes |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2652 | " | 🔵 | Index.ts inline proxy handler location identified |  |  |
+| #2653 | " | 🔵 | Full inline proxy handler in index.ts analyzed |  |  |
+| #2654 | 5:49 PM | 🔄 | Index.ts proxy handler replaced with handleSpecialistProxy call |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2655 | " | 🔄 | Import handleSpecialistProxy added to run-prompt.ts |  |  |
+| #2656 | 5:50 PM | 🔄 | Final proxy duplicate eliminated - run-prompt.ts now uses handleSpecialistProxy |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2657 | " | 🔵 | TypeScript compilation errors reveal signature mismatches in ProxyHandlerOpts |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2658 | 5:51 PM | 🔵 | ScheduleParsers interface defines correct parameter signatures |  |  |
+| #2659 | " | 🔵 | ScheduleParsers interface shows correct signatures for time-parsing functions |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2660 | 5:52 PM | 🔴 | ProxyHandlerOpts interface signatures corrected to match actual function types |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2661 | " | 🔴 | TypeScript compilation passes cleanly after signature fixes |  |  |
+| #2662 | " | 🔵 | Symbol usage counts in index.ts after consolidation |  |  |
+| #2663 | 5:53 PM | 🔵 | Symbol usage counts in run-prompt.ts confirm successful consolidation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2664 | " | 🔵 | startProxy usage in run-prompt.ts reduced to import and comment only |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2665 | " | 🔄 | Specialist proxy symbols in index.ts reduced to imports only |  |  |
+| #2666 | 5:54 PM | 🔄 | Index.ts imports confirm handleSpecialistProxy integration |  |  |
+
+**#S873** Consolidate duplicated delegate dispatch logic across relay.ts, run-prompt.ts, and index.ts (Jun 19, 5:56 PM)
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2667 | 5:57 PM | 🔵 | Duplicate relay/parallel-delegate dispatch logic identified |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2668 | 5:58 PM | 🔵 | run-prompt.ts uses separate dispatch function names |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2669 | " | 🔵 | Canonical relay dispatch functions are imported but never called |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2670 | " | 🔵 | run-prompt.ts inline dispatch implementation details revealed |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2671 | 5:59 PM | 🔵 | relay.ts canonical dispatch implementations match run-prompt.ts duplicates line-by-line |  |  |
+| #2672 | 6:00 PM | ✅ | Added registerTask import to relay.ts for dispatch consolidation |  |  |
+| #2673 | " | ✅ | Enhanced dispatchRelayVisible with task registration and debug logging |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2674 | 6:01 PM | ✅ | Imported canonical dispatch functions into run-prompt.ts |  |  |
+| #2675 | " | 🔄 | Consolidated relay and parallel dispatch logic in run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2676 | 6:02 PM | 🔄 | Relay dispatch consolidation verified with clean TypeScript compilation |  |  |
+| #2677 | " | 🔵 | Orphaned imports identified in run-prompt.ts after consolidation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2678 | " | 🔵 | Import cleanup targets identified for run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2679 | 6:03 PM | 🔵 | Additional imports verified as still needed in run-prompt.ts |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2680 | " | 🔄 | Removed orphaned imports from run-prompt.ts after dispatch consolidation |  |  |
+| #2681 | " | 🔄 | Removed saveDelegationContext and loadDelegationContext imports from run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2682 | 6:04 PM | 🔵 | index.ts has identical orphaned relay import pattern as run-prompt.ts |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2683 | " | 🔄 | Removed unused dispatch function imports from index.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2684 | " | 🔄 | Relay dispatch consolidation complete with clean TypeScript compilation |  |  |
+| #2685 | " | 🔄 | Verified single source of truth for relay dispatch across codebase |  |  |
+
+**#S874** Commit current changes consolidating relay dispatch logic, parse_mode migration, and specialist proxy merging (Jun 19, 6:06 PM)
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2686 | 6:06 PM | 🔵 | Relay system headless dispatch architecture |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2687 | " | 🔵 | Stop reason handling in prompt execution |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2688 | 6:07 PM | 🔵 | StopReason type definition across provider architecture |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2689 | " | 🔄 | Added stopReason parameter to headless relay dispatch interface |  |  |
+| #2690 | " | ✅ | Integrated stopReason into headless relay diagnostic logging |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2691 | 6:08 PM | 🔄 | Consolidated headless relay dispatch in run-prompt.ts to shared function |  |  |
+| #2692 | " | ✅ | Added dispatchRelayHeadless import to run-prompt.ts |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2693 | " | ✅ | TypeScript compilation verified after headless relay consolidation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2694 | " | 🔵 | Remaining relay function usage in run-prompt.ts after consolidation |  |  |
+| #2695 | 6:09 PM | 🔄 | Removed orphaned relay send function imports from run-prompt.ts |  |  |
+
+**#S875** Unify specialist proxy message formatting from Markdown to HTML to match main agent format (Jun 19, 6:12 PM)
+
+**Investigated**: Examined `parse_mode: "Markdown"` usage across multiple files: relay.ts, index.ts, run-prompt.ts, misc.ts, model.ts, and dream.ts to identify user-facing message formatting that needed to be unified with the main agent's HTML approach
+
+**Learned**: The main agent uses `markdownToHtml()` from `src/format-html.ts` with `parse_mode: "HTML"` and includes a fallback mechanism that strips HTML tags and resends as plain text when parse errors occur. The specialist proxy mode in `handleSpecialistProxy()` was using direct Markdown formatting, creating inconsistency in message presentation
+
+**Completed**: Committed refactoring (0610f54) that unified message formatting to HTML across the codebase. The specialist proxy now uses `markdownToHtml()` with HTML parse_mode and includes the same fallback error handling as the main agent. Additional consolidation work reduced code duplication significantly (3 files changed, net -316 lines from deduplication). Changes include HTML parse_mode unification, specialist-proxy consolidation, relay/parallel/headless dispatch consolidation, and orphaned-import cleanup
+
+**Next Steps**: Work is complete. The commit is ready on local main branch but not yet pushed to origin
+
+
+Access 449k tokens of past research & decisions for just 18,781t. Use MCP search tools to access memories by ID.

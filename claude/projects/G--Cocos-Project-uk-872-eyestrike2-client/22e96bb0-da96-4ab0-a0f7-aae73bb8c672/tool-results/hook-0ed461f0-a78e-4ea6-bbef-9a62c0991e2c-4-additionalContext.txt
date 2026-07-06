@@ -1,0 +1,224 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-09 5:12pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (15,960 tokens to read)
+- Work investment: 209,777 tokens spent on research, building, and decisions
+- Your savings: 92% reduction from reuse
+
+### Jun 3, 2026
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1903 | 2:12 PM | ✅ | FeatureWheelManager documentation updated for 12-segment layout |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1904 | " | ✅ | Index range documentation updated from 0-9 to 0-11 |  |  |
+
+**_fw12_patch.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1905 | 2:14 PM | 🟣 | Prefab patch script created to expand wheel from 10 to 12 segments |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1906 | " | 🟣 | Prefab successfully patched to 12 segments with angle recalculation |  |  |
+| #1907 | 2:15 PM | 🔵 | Prefab angle verification confirms 30° spacing across all 12 segments |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1908 | 2:16 PM | 🔵 | TypeScript compilation confirms no FeatureWheel-related errors |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1909 | " | 🔵 | Prefab reimport failed after programmatic modification |  |  |
+| #1910 | 2:17 PM | 🟣 | Modified 12-segment prefab successfully instantiated in scene |  |  |
+| #1911 | " | 🟣 | Node tree confirms 12 items and 12 labels successfully loaded |  |  |
+
+**_fw12_patch.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1912 | " | ✅ | Verification complete - cleanup performed |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1913 | " | ✅ | Git diff shows 12-segment migration changes across 3 core files |  |  |
+
+**assets/game/Prefab/MainGame.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1924 | 4:21 PM | 🔵 | MainGame.prefab contains unintended changes |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1925 | 4:22 PM | 🟣 | Feature Wheel expanded from 10 segments to 12 segments |  |  |
+
+**#S697** Implement idle rotation animation for FeatureWheel - continuous slow rotation when idle, stop during PlaySpin (Jun 3, 4:33 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1926 | 4:36 PM | 🔵 | FeatureWheel spin state management mechanism |  |  |
+| #1927 | 4:37 PM | 🟣 | Idle rotation parameter added to FeatureWheelManager |  |  |
+| #1928 | 4:38 PM | 🟣 | Idle rotation state tracking added |  |  |
+| #1929 | " | 🟣 | Idle rotation animation implementation in update loop |  |  |
+| #1930 | " | 🟣 | Idle rotation lifecycle connected to UI visibility |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1931 | 4:39 PM | ✅ | TypeScript validation confirms idle rotation implementation |  |  |
+| #1932 | " | ✅ | IDE diagnostics confirm clean implementation |  |  |
+
+**#S698** Commit changes to Feature Wheel manual-resume idle behavior (Jun 3, 4:39 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1933 | 5:01 PM | 🟣 | Feature Wheel Manual Idle Resumption |  |  |
+| #1934 | " | 🟣 | RESUME_IDLE Event Registration and Handler |  |  |
+| #1935 | " | ✅ | Disabled Auto-Resume of Idle Rotation After Spin |  |  |
+| #1936 | 5:02 PM | 🟣 | ResumeIdle Method Implementation and Documentation Updates |  |  |
+
+**#S699** Commit Feature Wheel idle rotation with manual RESUME_IDLE event control (Jun 3, 5:07 PM)
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1937 | 5:07 PM | 🔵 | Node_FeatureWheel.prefab contains large ID renumbering |  |  |
+| #1938 | " | 🔵 | Node_FeatureWheel.prefab structure verified intact |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1939 | 5:08 PM | 🔴 | Git commit failed due to incorrect relative paths from subdirectory |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1940 | " | 🟣 | Feature Wheel idle rotation with manual resume committed |  |  |
+
+**#S700** Add Spine-based declaration animation to FeatureWheelDeclare with sequential in/out playback functionality (Jun 3, 5:08 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelDeclare.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1941 | 5:18 PM | 🟣 | FeatureWheelDeclare Spine animation playback system |  |  |
+
+**#S701** Refactor FeatureWheelDeclare from BaseSpine inheritance to composition pattern (Jun 3, 5:20 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelDeclare.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1942 | 5:22 PM | 🔵 | FeatureWheelDeclare currently extends BaseSpine |  |  |
+| #1943 | " | 🔄 | Import Component for FeatureWheelDeclare refactoring |  |  |
+| #1944 | 5:23 PM | 🔄 | Refactored FeatureWheelDeclare from inheritance to composition |  |  |
+| #1945 | " | 🔄 | Replaced inherited BaseSpine methods with composition delegation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1946 | " | ✅ | TypeScript validation confirms FeatureWheelDeclare refactoring |  |  |
+
+**#S702** Upgrade closed-loop development methodology from v7.0.1 to v7.1.0 for uk_872_eyestrike2_client (Jun 3, 5:24 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1949 | 6:07 PM | ✅ | ClaudeCodeTools upgraded to latest version |  |  |
+| #1950 | " | 🟣 | Version tracking enabled for ClaudeCodeTools cache |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1951 | " | 🔵 | Version mismatch detected: upgrade available from 7.0.1 to 7.1.0 |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1952 | 6:08 PM | ✅ | init-claude skill updated to version 7.1.0 |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1953 | 6:12 PM | ✅ | Initialized closed-loop v7.1.0 methodology for uk_872_eyestrike2_client |  |  |
+
+**.claudedocs/agents/architect.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1954 | 6:13 PM | ✅ | Deployed .claudedocs structure with TypeScript-only language guide |  |  |
+
+**.claude/settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1955 | " | ✅ | Deployed always-on hook system for L1 enforcement layer |  |  |
+
+**#S703** Closed-loop development system v7.1.0 deployment status verification for uk_872_eyestrike2_client (Jun 3, 6:14 PM)
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1956 | 6:16 PM | 🔵 | Closed-loop development system v7.1.0 fully initialized |  |  |
+| #1957 | 6:17 PM | 🔵 | Closed-loop system version synchronized across all sources |  |  |
+
+**#S739** Add public control functions to ContinuousRotate.ts for pausing and speed adjustment (Jun 3, 6:17 PM)
+
+### Jun 9, 2026
+
+**assets/Script/Common/RouletteRotate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2097 | 4:34 PM | 🔵 | Examined RouletteRotate component for rotation functionality reuse |  |  |
+
+**assets/Script/Common/ContinuousRotate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2098 | 4:35 PM | 🔄 | Created reusable ContinuousRotate component for perpetual rotation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2099 | " | ✅ | Validated ContinuousRotate component TypeScript compilation |  |  |
+| #2100 | 4:37 PM | ⚖️ | ContinuousRotate.ts needs public control functions |  |  |
+
+**#S740** Added pause/resume and dynamic control APIs to ContinuousRotate component; two cleanup tasks remain (Jun 9, 4:37 PM)
+
+**assets/Script/Common/ContinuousRotate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2101 | 4:37 PM | 🟣 | Added public control API to ContinuousRotate component |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2102 | 4:39 PM | 🔄 | Removed unused m_magicWordRingNode property from FeatureWheelManager |  |  |
+
+**#S741** Complete cleanup tasks: remove unused m_magicWordRingNode property and verify node hierarchy independence (Jun 9, 4:40 PM)
+
+**assets/Script/Common/ContinuousRotate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2103 | 4:47 PM | 🔴 | Fixed periodic stuttering in ContinuousRotate component |  |  |
+
+
+Access 210k tokens of past research & decisions for just 15,960t. Use MCP search tools to access memories by ID.

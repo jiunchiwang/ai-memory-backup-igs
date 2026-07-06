@@ -1,0 +1,232 @@
+# [uk_pirates_queen] recent context, 2026-06-24 9:18pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,495 tokens to read)
+- Work investment: 202,744 tokens spent on research, building, and decisions
+- Your savings: 91% reduction from reuse
+
+### Jun 22, 2026
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2824 | 4:14 PM | 🔴 | Fixed sync.ps1 encoding by adding UTF-8 BOM |  |  |
+| #2825 | 4:15 PM | 🔴 | Verified sync.ps1 BOM fix eliminates encoding errors |  |  |
+| #2826 | " | 🔵 | Git tracks UTF-8 BOM addition as minimal line change |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2827 | 4:16 PM | 🔵 | Exploring skill addition workflow in Claude Code |  |  |
+
+**C:\Users\jiunchiwang\.kiro\steering\skill-workflow.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2828 | 4:20 PM | 🔵 | skill-workflow.md not integrated into Claude Code context |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2829 | 4:25 PM | 🔵 | Investigated @import syntax in CLAUDE.md |  |  |
+| #2830 | " | 🔵 | Learned @import syntax and behavior in CLAUDE.md files |  |  |
+| #2831 | " | 🔵 | Verified @import path resolution capabilities in CLAUDE.md |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2832 | 4:27 PM | 🔵 | Examined steering file projection mechanism in sync.ps1 |  |  |
+| #2833 | " | 🟣 | Extended sync.ps1 to project steering files to Claude Code with auto-import |  |  |
+| #2834 | 4:28 PM | ✅ | Verified sync.ps1 modifications in dry-run mode |  |  |
+
+**C:\Users\jiunchiwang\.claude\steering\closed-loop-system.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2835 | " | 🟣 | Deployed steering file projection to Claude Code with verified idempotency |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2836 | 4:29 PM | ✅ | Committed steering projection enhancement to version control |  |  |
+
+**.githooks/pre-commit**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2837 | 4:32 PM | 🔵 | Pre-commit hook has no uncommitted changes |  |  |
+| #2838 | " | 🔵 | Git core.fileMode disabled, no mode changes on pre-commit hook |  |  |
+| #2839 | " | 🔵 | Git reports .githooks/pre-commit modified despite identical content and line endings |  |  |
+| #2840 | " | 🔵 | Confirmed phantom modification via identical blob hashes |  |  |
+
+**..\..\AI\AI-canonical\tools\bootstrap.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2841 | 4:37 PM | 🔵 | Machine Migration Bootstrap Process Reviewed |  |  |
+
+**..\..\AI\AI-canonical\tools\pull.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2842 | 4:38 PM | 🔵 | Pull Script for Syncing Machine from GitHub |  |  |
+
+**..\..\AI\AI-canonical\tools\bootstrap.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2843 | 4:55 PM | 🔴 | Fixed missing @import in bootstrap sequence |  |  |
+| #2844 | " | ✅ | Validated bootstrap.ps1 syntax and encoding after fix |  |  |
+| #2845 | 4:56 PM | 🔵 | Located non-ASCII em-dash in bootstrap.ps1 header |  |  |
+| #2846 | " | ✅ | Replaced em-dash with hyphen in bootstrap.ps1 comment |  |  |
+
+**..\..\AI\AI-canonical\tools\pull.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2847 | 4:58 PM | ✅ | Replaced em-dash with hyphen in pull.ps1 comment |  |  |
+
+**.gitattributes**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2848 | 5:04 PM | 🔵 | AI-canonical repository structure mapped for documentation review |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2849 | " | 🔵 | Personal AI OS documentation structure reviewed for beginner onboarding |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2850 | " | 🔵 | Critical documentation gaps identified for beginner onboarding |  |  |
+
+**cross-model-ai-strategy-v4.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2851 | 5:10 PM | ✅ | Core design document committed to repository |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2852 | " | 🔄 | README restructured as navigation index for AI handoff |  |  |
+
+**policies/memory-policy.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2853 | 5:11 PM | ✅ | Memory policy documentation created |  |  |
+
+**cross-model-ai-strategy-v4.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2854 | " | ✅ | Onboarding documentation shipped to GitHub |  |  |
+
+### Jun 24, 2026
+
+**assets/Script/GameState/UnshowPrepareState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2997 | 7:51 PM | 🔵 | UnshowPrepareState ExtraBet restoration timing analyzed |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2998 | " | 🔵 | ExtraBet restoration method chain in GameView identified |  |  |
+| #2999 | 7:52 PM | 🔵 | RestoreExtraBetState implementation uses force-set bypass mechanism |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3000 | " | 🔵 | ForceSetExtraBet plays ExtraBet_Close and ExtraBet_Active animations during unshow |  |  |
+| #3001 | " | 🔵 | ExtraBet bar extension and animation sequence mechanics |  |  |
+| #3002 | 7:53 PM | 🔵 | PlayAnimation method definition found at line 759 |  |  |
+| #3003 | " | 🔵 | PlayAnimation implementation blocks on Animation.EventType.FINISHED event |  |  |
+
+**#S956** Fix ExtraBet restore freeze issue using both solutions A (self-contained active guarantee) and B (scheduleOnce timeout failsafe) (Jun 24, 7:59 PM)
+
+**#S957** Investigate why ExtraBet button opens without MSGBOX_UNSHOW_BACK popup and fix the unshow restoration flow (Jun 24, 8:03 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3004 | 8:04 PM | 🔴 | Fixed ExtraBet restore freeze with active-state guarantee and timeout failsafe |  |  |
+
+**tsconfig.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3005 | " | ✅ | TypeScript type check passed for ExtraBet restore fix |  |  |
+
+**#S958** User asked about conditions where ExtraBet button opens during unshow without MSGBOX_UNSHOW_BACK popup (UnshowPrepareState.ts line 153); Claude responded about global RULES.md configuration (Jun 24, 8:05 PM)
+
+**#S959** Fixed ExtraBet button unshow bug causing animation freeze and missing MSGBOX_UNSHOW_BACK popup; committed to main after workflow clarification (Jun 24, 8:14 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3006 | 8:19 PM | ⚖️ | Git commit workflow requires user confirmation |  |  |
+
+**#S960** Fix ExtraBet button remaining lit after closing confirmation dialog without enabling the feature (Jun 24, 8:19 PM)
+
+**#S961** Fix two-step extra bet button glow persisting after user cancels the selection dialog (Jun 24, 8:37 PM)
+
+**assets/Script/ExtraBet/ExtraBetWindow.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3007 | 8:39 PM | 🔵 | ExtraBetWindow dialog return structure |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3008 | " | 🔵 | ExtraBet component rotation handling integration |  |  |
+| #3009 | 8:40 PM | 🔵 | GameView rotation handling implementation details |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3010 | 8:41 PM | 🔵 | Two-step ExtraBet activation flag lifecycle |  |  |
+
+**#S962** Fix ExtraBet button incorrectly lighting up when two-step ExtraBet is cancelled without showing MSGBOX_UNSHOW_BACK popup (Jun 24, 8:43 PM)
+
+**#S963** Complete ExtraBet two-step cancellation fix and prepare for commit - requires Cocos Editor binding before verification (Jun 24, 8:44 PM)
+
+**.claudedocs/ExtraBet-公版誤改還原記錄.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3011 | 8:47 PM | 🔵 | Previous ExtraBet framework fix was reverted to keep shared code clean |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3012 | 8:54 PM | ✅ | Added Animation reference property for ExtraBet node control |  |  |
+| #3013 | 8:55 PM | 🔴 | Implemented direct Animation control to fix ExtraBet button lighting on cancel |  |  |
+
+**#S964** Investigating ExtraBet button behavior during unshow - why it opens without MSGBOX_UNSHOW_BACK popup (Jun 24, 8:58 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3014 | 8:59 PM | 🔴 | ExtraBet glow animation cancellation fix for two-step flow |  |  |
+
+**assets/game/Prefab/MainGame.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3015 | " | 🔵 | Verified a_extraBetAnimation property added to prefab but not yet bound |  |  |
+
+**#S965** Investigation of ExtraBet button lighting bug during two-step variant cancellation flow (Jun 24, 9:02 PM)
+
+**Investigated**: Analyzed why ExtraBet button remains lit after canceling two-step ExtraBet dialog without MSGBOX_UNSHOW_BACK popup. Examined interaction between base version's ChangeBetMode and project-specific SetTwoStepMulti callback in UnshowPrepareState.ts (line 153).
+
+**Learned**: Base version ChangeBetMode unconditionally plays "ExtraBet_Active" animation after project callback completes, ignoring m_isExtra state. This overwrites the "off" animation already played by SetTwoStepMulti, causing the EX button glow to persist until bar retraction. Base version code cannot be modified, requiring project-layer workaround.
+
+**Completed**: Implemented fix in GameView.ts by adding a_extraBetAnimation reference (bound to ExtraBetNode Animation component). On cancellation, next frame plays "ExtraBet_OFF" animation and calls setTime(duration) to jump to final off state, overriding the erroneous activation. MainGame.prefab updated with component binding. Commit messages drafted (both short and detailed versions).
+
+**Next Steps**: User preparing to commit changes with provided commit message. Work complete pending commit.
+
+
+Access 203k tokens of past research & decisions for just 18,495t. Use MCP search tools to access memories by ID.

@@ -1,0 +1,252 @@
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-2- * Doctor Pattern — startup health check.
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-3- * Runs after bot.start() confirms Telegram connectivity,
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-4- * checks subsystems and notifies the user of results.
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-5- */
+src\doctor.ts-6-import { existsSync } from "node:fs";
+src\doctor.ts-7-import { readFile, access } from "node:fs/promises";
+src\doctor.ts-8-import { execFile } from "node:child_process";
+src\doctor.ts-9-import { promisify } from "node:util";
+src\doctor.ts-10-import path from "node:path";
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-11-import { config } from "./config.js";
+src\doctor.ts:12:import { isEmbedRouterReady } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-13-import { testRedisConnection } from "./relay.js";
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-14-import { detectLlamaCpp, getModel } from "./local-llm.js";
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-15-
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-16-const execFileAsync = promisify(execFile);
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-17-
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-18-export interface CheckResult {
+src\doctor.ts-19-  name: string;
+src\doctor.ts-20-  ok: boolean;
+src\doctor.ts-21-  detail?: string;
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-22-}
+--
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-58-    await access(factsFile);
+src\doctor.ts-59-    return { name: "Memory", ok: true };
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-60-  } catch {
+src\doctor.ts-61-    return { name: "Memory", ok: false, detail: `facts 檔不可讀: ${factsFile}` };
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-62-  }
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-63-}
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-64-
+src\doctor.ts-65-function checkEmbedRouter(): CheckResult {
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-66-  return {
+src\doctor.ts-67-    name: "Embedding",
+src\doctor.ts:68:    ok: isEmbedRouterReady(),
+src\doctor.ts:69:    detail: isEmbedRouterReady() ? undefined : "router 未就緒",
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-70-  };
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-71-}
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-72-
+src\doctor.ts-73-async function checkAcpCommand(): Promise<CheckResult> {
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-74-  const cmd = config.agent.command;
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-75-  try {
+src\doctor.ts-76-    await execFileAsync(cmd, ["--version"], { timeout: 5000, shell: true });
+src\doctor.ts-77-    return { name: "ACP Agent", ok: true };
+src\doctor.ts-78-  } catch (err: any) {
+G:\AI\telegram-kiro-bridge-main\src\doctor.ts-79-    // --version may not exist but if the binary is found it exits with code != ENOENT
+--
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-54-  centroids.clear();
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-55-  for (const nb of routing.notebooks) {
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-56-    const vec = await embed(nb.repr);
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-57-    centroids.set(nb.notebook_id, vec);
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-58-  }
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-59-  console.log(
+src\embed-router.ts-60-    `[embed-router] ready: model=${MODEL_NAME}, ${centroids.size} centroids`,
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-61-  );
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-62-}
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-63-
+src\embed-router.ts:64:export function isEmbedRouterReady(): boolean {
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-65-  return embedder !== null && centroids.size > 0;
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-66-}
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-67-
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-68-/**
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-69- * Route a user message to matching notebooks.
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-70- * Returns hits sorted by descending score, applying multi_match_rules when applicable.
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-71- */
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-72-export async function routeByEmbedding(
+src\embed-router.ts-73-  userMsg: string,
+G:\AI\telegram-kiro-bridge-main\src\embed-router.ts-74-  /** If provided, only consider notebooks whose title is in this set. */
+--
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-1-/**
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-2- * enrichment.ts — Shared dynamic enrichment logic (NotebookLM routing,
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-3- * wiki retrieval, memory recall) used by both the main agent turn and
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-4- * specialist proxy/delegation.
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-5- */
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-6-
+src\enrichment.ts:7:import { isEmbedRouterReady, routeByEmbedding } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-8-import { isWikiRetrievalReady, retrieveWikiPages, formatWikiBlock } from "./wiki-retrieval.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-9-import { isMemoryRecallReady, recallRelevantFacts, formatRecallBlock } from "./memory-recall.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-10-import { isIndexRetrievalReady, retrieveIndexChunks, formatIndexBlock } from "./index-retrieval.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-11-import { logHit } from "./hit-log.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-12-import { config } from "./config.js";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-13-
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-14-// ─── Types ─────────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-15-
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-16-/** Scope filter — limits enrichment to a specialist's domain. */
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-17-export interface EnrichmentScope {
+--
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-32- */
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-33-export async function runEnrichment(
+src\enrichment.ts-34-  userMsg: string,
+src\enrichment.ts-35-  userId: number | string,
+src\enrichment.ts-36-  recentFacts?: Set<string>,
+src\enrichment.ts-37-  scope?: EnrichmentScope,
+src\enrichment.ts-38-): Promise<string> {
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-39-  let prefix = "";
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-40-
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-41-  // 1. NotebookLM routing
+src\enrichment.ts:42:  if (isEmbedRouterReady()) {
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-43-    try {
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-44-      const titleFilter = scope?.notebooks?.length
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-45-        ? new Set(scope.notebooks)
+src\enrichment.ts-46-        : undefined;
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-47-      const hits = await routeByEmbedding(userMsg, titleFilter);
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-48-      if (hits.length > 0) {
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-49-        const hitLines = hits.map(
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-50-          (h) => `- 《${h.title}》(id=${h.notebookId}, score=${h.score.toFixed(3)}, strategy=${h.strategy})`,
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-51-        );
+G:\AI\telegram-kiro-bridge-main\src\enrichment.ts-52-        prefix +=
+--
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-1-/**
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-2- * Index Retrieval — semantically match user messages to PageIndex tree indexes
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-3- * and inject relevant chunks into the prompt (P3 #1).
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-4- *
+src\index-retrieval.ts-5- * At init: reads all indexes, embeds each index's top-level tree.summary.
+src\index-retrieval.ts-6- * Per turn: embeds user message, cosine vs index summaries, on hit → queryIndex → inject chunks.
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-7- */
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-8-
+src\index-retrieval.ts:9:import { embedText, cosineSim, isEmbedRouterReady } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-10-import { listIndexes, queryIndex, type QueryResult } from "./page-index.js";
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-11-import { config } from "./config.js";
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-12-
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-13-// ─── Config ──────────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-14-
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-15-const INDEX_THRESHOLD = 0.62;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-16-const INDEX_TOP_K = 1;       // max indexes to inject per turn
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-17-const MAX_CHUNKS = 3;        // max chunks per index hit
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-18-const MIN_MSG_LENGTH = 15;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-19-
+--
+src\index-retrieval.ts-25-  summary: string;
+src\index-retrieval.ts-26-  vector: Float32Array;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-27-}
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-28-
+src\index-retrieval.ts-29-let indexEntries: IndexEntry[] = [];
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-30-let initialized = false;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-31-
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-32-// ─── Public API ──────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-33-
+src\index-retrieval.ts-34-export async function initIndexRetrieval(): Promise<void> {
+src\index-retrieval.ts:35:  if (!isEmbedRouterReady()) return;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-36-
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-37-  const indexes = listIndexes(config.memoryDir);
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-38-  if (indexes.length === 0) return;
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-39-
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-40-  indexEntries = [];
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-41-  for (const idx of indexes) {
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-42-    // Read the tree summary from the index file
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-43-    const summary = await getIndexSummary(idx.slug);
+G:\AI\telegram-kiro-bridge-main\src\index-retrieval.ts-44-    if (!summary) continue;
+src\index-retrieval.ts-45-    const repr = `${idx.title}: ${summary}`;
+--
+G:\AI\telegram-kiro-bridge-main\src\index.ts-22-  type GoalDoneEntry,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-23-} from "./observerTransformer.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-24-import * as usageStore from "./usageStore.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-25-import { STICKER_MAP } from "./stickerMap.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-26-import {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-27-  buildHandoffPrompt,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-28-  parseHandoffArgs,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-29-  writeHandoffFile,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-30-} from "./handoff.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-31-import { startRelayPoller } from "./relay.js";
+src\index.ts:32:import { initEmbedRouter, routeByEmbedding, isEmbedRouterReady } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-33-import { initMemoryRecall, recallRelevantFacts, formatRecallBlock, isMemoryRecallReady } from "./memory-recall.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-34-import { initMemoryDb, syncFactsToDb } from "./memory-db.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-35-import { detectAllShardDuplicates, prefilterSpecialistRoute, rerankRecallHits, classifyIntentLLM, suggestFactMerges } from "./local-llm.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-36-import { appendRoutingLog } from "./routing-log.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-37-import { shouldRoute } from "./routing-coordinator.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-38-import { listTopicShards } from "./facts-store.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-39-import { initSkillRouter, routeToSkills, formatSkillHint, isSkillRouterReady } from "./skill-router.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-40-import { logHit, getHitStats, computeRepoHealth } from "./hit-log.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-41-import { initWikiRetrieval, retrieveWikiPages, formatWikiBlock, isWikiRetrievalReady } from "./wiki-retrieval.js";
+G:\AI\telegram-kiro-bridge-main\src\index.ts-42-import { initIntentClassifier, classifyIntent, isIntentClassifierReady } from "./intent-classifier.js";
+--
+src\index.ts-1017-          appendRoutingLog({ message: text.slice(0, 200), routedTo: "self", method: routeMethod as any, confidence: route.confidence });
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1018-        }
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1019-      }
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1020-    } catch { /* pre-filter failed — continue without hint */ }
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1021-  }
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1022-
+src\index.ts-1023-  \ Embedding-based NotebookLM routing: if the user message is semantically
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1024-  // close to a notebook's repr, prepend a context hint so the agent queries it.
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1025-  let promptText = text;
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1026-  const _skipEnrichment = session.activeProvider === "local";
+src\index.ts:1027:  if (!_skipEnrichment && isEmbedRouterReady()) {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1028-    try {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1029-      const hits = await routeByEmbedding(text);
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1030-      if (hits.length > 0) {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1031-        const hitLines = hits.map(
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1032-          (h) => `- 《${h.title}》(id=${h.notebookId}, score=${h.score.toFixed(3)}, strategy=${h.strategy})`,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1033-        );
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1034-        promptText =
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1035-          `[NotebookLM routing — embedding match]\n` +
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1036-          `以下 notebook 與使用者問題語意相近，請用 notebook_query 查詢後以該 strategy 格式回答：\n` +
+G:\AI\telegram-kiro-bridge-main\src\index.ts-1037-          hitLines.join("\n") +
+--
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-1-/**
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-2- * Intent Classifier — fuzzy match natural language messages to /commands.
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-3- *
+src\intent-classifier.ts-4- * At init: embeds each command's description as a vector.
+src\intent-classifier.ts-5- * Per turn: if the user message looks like a command intent (not a question
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-6- * to the agent), suggests the matching /command.
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-7- */
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-8-
+src\intent-classifier.ts:9:import { embedText, cosineSim, isEmbedRouterReady } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-10-
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-11-// ─── Config ──────────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-12-
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-13-const INTENT_THRESHOLD = 0.65;
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-14-const MIN_MSG_LENGTH = 4;
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-15-/** Max message length — long messages are conversations, not commands. */
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-16-const MAX_MSG_LENGTH = 25;
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-17-
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-18-// ─── Types ───────────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-19-
+--
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-37-
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-38-// ─── Public API ──────────────────────────────────────────────────────────────
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-39-
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-40-/**
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-41- * Initialize intent vectors from command specs.
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-42- * Pass the same COMMAND_SPECS array used for help/menu.
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-43- */
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-44-export async function initIntentClassifier(
+src\intent-classifier.ts-45-  commands: Array<{ name: string; usage: string; desc: string }>
+src\intent-classifier.ts-46-): Promise<void> {
+src\intent-classifier.ts:47:  if (!isEmbedRouterReady()) return;
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-48-  intents = [];
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-49-  for (const cmd of commands) {
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-50-    // Skip meta commands that aren't useful to fuzzy-match
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-51-    if (["help", "menu", "hide", "start"].includes(cmd.name)) continue;
+src\intent-classifier.ts-52-    const repr = `${cmd.name}: ${cmd.desc}`;
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-53-    const vec = await embedText(repr);
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-54-    if (vec) {
+src\intent-classifier.ts-55-      intents.push({ command: cmd.name, usage: cmd.usage, repr, vector: vec });
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-56-    }
+G:\AI\telegram-kiro-bridge-main\src\intent-classifier.ts-57-  }
+--
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-1-/**
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-2- * Memory Recall — dynamically inject relevant topic shard facts into context
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-3- * based on semantic similarity between the user message and topic representations.
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-4- *
+src\memory-recall.ts-5- * At init: builds a vector for each topic from "topic-name: keyword1, keyword2, ..."
+src\memory-recall.ts-6- * Per turn: embeds user message, finds top matching topics above threshold,
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-7- * reads those shards and returns facts to inject.
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-8- */
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-9-
+src\memory-recall.ts:10:import { embedText, cosineSim, isEmbedRouterReady } from "./embed-router.js";
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-11-import { readTopicFacts, listTopicShards } from "./facts-store.js";
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-12-import { getTopicRules } from "./topic-rules.js";
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-13-import { hybridSearch, getDb, type HybridHit } from "./memory-db.js";
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-14-import { rerankRecallHits } from "./local-llm.js";
+G:\AI\telegram-kiro-bridge-main\src\memory-recall.ts-15-import { config } from "./config.js";
+
+[Showing results with pagination = limit: 250]

@@ -1,0 +1,8 @@
+{
+  // "harness" examples (set per domain):
+  // Kiro:   "harness": "kiro-cli acp --agent {name} -a"  (default, can omit)
+  // Codex:  "harness": "codex-acp --profile {name}"
+  // Claude: "harness": "npx @agentclientprotocol/claude-agent-acp"
+  "commonSkills": [],
+  "domains": {}
+}

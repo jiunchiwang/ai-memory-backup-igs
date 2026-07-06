@@ -1,0 +1,276 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-16 11:29am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (16,409 tokens to read)
+- Work investment: 484,902 tokens spent on research, building, and decisions
+- Your savings: 97% reduction from reuse
+
+### Jun 15, 2026
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2362 | 1:41 PM | 🟣 | Registered FEATURE_WHEEL_SHOW State in State Machine |  |  |
+| #2363 | " | 🟣 | Integrated Conditional Wheel Routing in AfterShowWin |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2364 | 1:42 PM | 🟣 | Feature Wheel Integration Validated with Type Checks and Tests |  |  |
+
+**tests/FeatureWheelTypes.test.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2365 | 4:13 PM | 🔵 | BC-4 TypeToIconIndex mapping failures identified |  |  |
+| #2366 | 4:15 PM | 🔴 | BC-4 test expectations corrected for TypeToIconIndex mapping |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2367 | " | ✅ | BC-4 bugfix verified - all 415 FeatureWheelTypes tests passing |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2368 | 4:16 PM | ✅ | Feature wheel show state implementation ready for commit |  |  |
+| #2369 | " | ✅ | Feature wheel implementation staged for commit |  |  |
+| #2370 | " | 🟣 | FeatureWheelShowState committed - turn wheel演出 between plate0 award and respin |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2371 | 4:24 PM | 🟣 | Added SetFeatureWheelLayer helper method to GameView |  |  |
+
+**assets/Script/GameState/EnterFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2372 | " | 🟣 | EnterFreeState now switches FeatureWheel to FreeGame layer |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2373 | " | 🟣 | LeaveFreeState now restores FeatureWheel to MainGame layer |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2374 | 4:25 PM | ✅ | Updated GameView initialization comment to reflect completed FG layer wiring |  |  |
+
+**#S788** Commit completed FG wheel data layer switching implementation (Jun 15, 4:27 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2375 | 4:28 PM | 🟣 | FeatureWheel data layer switching for MainGame/FreeGame transitions |  |  |
+
+**#S789** Confirmed post-spin processing sequence (10-step order) and wrapped up session with FeatureWheel implementation commits (Jun 15, 4:28 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2376 | 4:29 PM | ⚖️ | Spin result processing sequence order confirmed |  |  |
+
+**#S790** Architectural planning for presentation layer State to handle FeatureWheel display sequence in slot game state machine (Jun 15, 4:29 PM)
+
+**#S791** Clarifying wheel feature pairing rules and evaluating architecture for respin upgrade/multiply/settlement flow (Jun 15, 4:33 PM)
+
+**.claude_temp/respin01.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2377 | 5:07 PM | 🔵 | WheelFeatures Position Mapping Investigation |  |  |
+
+**#S792** Server confirmation on WheelFeatures array sorting order for animation sequencing (Jun 15, 5:14 PM)
+
+**node_modules/@igs-arcade-division-rd2/uk_872_eyestrike2_proto/ar2es2Proto.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2378 | 5:14 PM | 🔵 | WheelFeatures and UpgradeResult protocol structure investigation |  |  |
+| #2379 | " | 🔵 | IFeatureResult contains Positions array - pairing data is server-provided |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2380 | 5:16 PM | 🔵 | WheelFeatures Array Pre-Sorted by Server |  |  |
+
+**#S793** Create integration interfaces for colleague's visual effects work and deprecated multiplier system (Jun 15, 5:17 PM)
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-872-eyestrike2-client\memory\reference_featurewheel_server_contract.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2381 | 5:17 PM | ✅ | Server Contract Reference Documentation Created |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-872-eyestrike2-client\memory\project_featurewheel_respin_flow.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2382 | 5:18 PM | ⚖️ | FeatureWheel-Respin Flow Architecture Design |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-872-eyestrike2-client\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2383 | " | ✅ | Memory Index Updated with FeatureWheel Documentation |  |  |
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2384 | 5:47 PM | 🟣 | Feature Wheel marking event interface for visual effects integration |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2385 | " | 🟣 | Integrated SHOW_MARK event dispatch in wheel spin loop |  |  |
+
+**#S794** Complete second batch implementation of post-respin feature result display state (Jun 15, 5:48 PM)
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2386 | 5:50 PM | 🟣 | FeatureWheel mark display event interface (integration seam) |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2387 | 5:51 PM | 🟣 | HasPostRespinFeature guard function for post-respin state routing |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2388 | 5:52 PM | 🟣 | FEATURE_RESULT_SHOW game state for post-respin wheel effects |  |  |
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2389 | " | 🟣 | APPLY_UPGRADE and APPLY_MULTIPLIER event contracts for post-respin effects |  |  |
+
+**assets/Script/GameState/FeatureResultShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2390 | " | 🟣 | FeatureResultShowState implementation for post-respin effect sequencing |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2391 | " | ✅ | GameView integration of FeatureResultShowState |  |  |
+| #2392 | " | ✅ | State machine registration of FEATURE_RESULT_SHOW |  |  |
+| #2393 | 5:53 PM | 🟣 | AfterScatterToNext routing method for post-respin effect integration |  |  |
+
+**assets/Script/GameState/ScatterShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2394 | " | ✅ | ScatterShowState integration with AfterScatterToNext routing |  |  |
+
+**tests/FeatureWheelTypes.test.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2395 | " | ✅ | Test coverage for HasPostRespinFeature guard function |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2396 | 5:54 PM | ✅ | Successful type check and test verification for batch 2 implementation |  |  |
+
+**#S795** Commit third batch of Feature Wheel implementation (Transfer + Scatter Drop event seams) (Jun 15, 5:57 PM)
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2397 | 5:57 PM | 🟣 | Post-respin feature result display state |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2398 | 5:59 PM | 🟣 | Added FreeGame wheel detection type guard |  |  |
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2399 | " | 🟣 | Added remaining feature wheel event seams |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2400 | " | 🟣 | Integrated symbol transfer event into wheel show state |  |  |
+
+**assets/Script/GameState/EnterFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2401 | 6:00 PM | 🟣 | Integrated scatter drop event into free game entry |  |  |
+
+**tests/FeatureWheelTypes.test.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2402 | " | 🟣 | Added test coverage for HasFreeGameWheel type guard |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2403 | " | ✅ | Validated third batch implementation with clean compilation and 432 passing tests |  |  |
+
+**#S796** Upgrade ClaudeCodeTools dev-closed-loop infrastructure from v7.1.0 to v7.1.2 (Jun 15, 6:06 PM)
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2404 | 6:06 PM | 🟣 | Feature Wheel Transfer and Scatter Drop Event Seams |  |  |
+
+**.claude/projects/G--Cocos-Project-uk-872-eyestrike2-client/memory/project_featurewheel_respin_flow.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2405 | 6:07 PM | ✅ | Updated Feature Wheel Progress Documentation |  |  |
+
+### Jun 16, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2406 | 9:46 AM | ✅ | ClaudeCodeTools upgraded to latest version |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2407 | " | 🔵 | ClaudeCodeTools version mismatch detected |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2408 | " | ✅ | init-claude skill updated to latest version |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2409 | 9:51 AM | ✅ | CLAUDE.md regenerated with project-specific configuration |  |  |
+
+**.claudedocs/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2410 | " | ✅ | .claudedocs directory deployed with TypeScript-only language guides |  |  |
+
+**.claude/settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2411 | 9:52 AM | ✅ | Hook system deployed with 6 scripts and settings configuration |  |  |
+
+**#S797** Upgrade closed-loop development methodology from v7.1.0 to v7.1.2 using dev:init-claude (Jun 16, 9:52 AM)
+
+**Investigated**: Version detection revealed deployed version 7.1.0 with upgrade available to v7.1.2. Template placeholders were identified (PROJECT_NAME, LANGUAGE, FRAMEWORK, TEST_COMMAND, BUILD_COMMAND, LANGUAGE_SKILL_SECTION). Existing project configuration was extracted (TypeScript, Cocos Creator 3.6.2, npx tsc --noEmit). Custom user content at top of CLAUDE.md was preserved (trade-off declarations and workflow-first approach). A Windows Store Python3 stub issue was discovered and resolved by switching to PowerShell for file operations.
+
+**Learned**: The closed-loop development methodology v7.1.2 uses a template-based deployment system with six placeholders that must be replaced with project-specific values. The upgrade process from v7.1.0 to v7.1.2 is non-breaking and uses direct template replacement rather than structured migration. The deployment includes CLAUDE.md, .claudedocs documentation structure with 9 agent prompts, 6 hook scripts plus shared helpers, language-specific guides (pruned to TypeScript only), and settings.json configuration merging. Four global workflows are available: dev-prd, dev-design, dev-review, and dev-verify.
+
+**Completed**: CLAUDE.md upgraded to v7.1.2 with project configuration preserved (uk_872_eyestrike2_client, TypeScript, Cocos Creator 3.6.2). Deployed .claudedocs directory with 28 documentation files including 9 agent prompts, pruned to retain only TypeScript language guides (README.md and typescript.md). Installed hook system with 6 scripts (impact-analysis-guard, delegation-gate, incremental-lint, delegation-tracker, prompt-understanding-guard, learning-log-checker) plus _helpers.sh shared layer. Merged hook configuration into .claude/settings.json. All verification checks passed: no placeholder residue, all components deployed, claude-mem available, 4 global workflows ready.
+
+**Next Steps**: Upgrade process complete and verified. Session ready for normal closed-loop development workflow with v7.1.2 methodology active.
+
+
+Access 485k tokens of past research & decisions for just 16,409t. Use MCP search tools to access memories by ID.

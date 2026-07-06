@@ -63,3 +63,6 @@ why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 
 - 把掉落觸發從 `StartSpin` 移到獨立的 `TriggerDropOut()` method
 
 **防護**：凍結語意與動畫 handle 永遠分開管理，避免「完成動畫 = 解除凍結」的隱含假設。
+## 相關
+
+- [[uk-slot]] — 專案群總覽與技術棧約束

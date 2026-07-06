@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-07-02
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c]
+updated: 2026-07-06
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e]
 ---
 
 # 開發工具與環境設定
@@ -43,6 +43,10 @@ npx tsc --noEmit
 ```
 
 遇到 TS6.0 deprecation 警告時加 `--ignoreDeprecations 6.0` 抑制。
+
+### Bash 呼叫 PowerShell（引號陷阱）
+
+在 bash shell 呼叫 PowerShell 時，引號（單引號 / `$_`）會被 bash 層吃掉導致 ParserError。可靠做法：把指令轉 UTF-16LE 再 base64，用 `powershell -EncodedCommand <base64>` 執行。heredoc 傳 PowerShell 也有同類格式問題，替代方案是先寫暫存 script 檔再執行。
 
 ## 文件產出
 

@@ -1,0 +1,234 @@
+# [excel-to-ai-document] recent context, 2026-06-23 8:04pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,420 tokens to read)
+- Work investment: 344,590 tokens spent on research, building, and decisions
+- Your savings: 94% reduction from reuse
+
+### Jun 22, 2026
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2712 | 11:37 AM | ✅ | Updated CLAUDE.md metadata schema in output contract section |  |  |
+| #2713 | " | ✅ | Updated CLAUDE.md architecture description for merged cell processing |  |  |
+| #2714 | " | ✅ | Documented absoluteAnchor support in CLAUDE.md architecture |  |  |
+
+**convert.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2715 | 11:41 AM | 🔄 | Fixed f-string lint warning in convert.py |  |  |
+
+**output/3 Leprechaun's Pots_規格書/metadata/metadata.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2716 | 11:42 AM | ✅ | Regenerated example output with V3 metadata schema |  |  |
+
+**convert.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2717 | 11:44 AM | 🔴 | Added safeguards to prevent PermissionError and orphaned image files |  |  |
+| #2718 | " | ✅ | Verified safeguards prevent PermissionError and handle both conversion scenarios |  |  |
+
+**output/3 Leprechaun's Pots_規格書/markdown/3 Leprechaun's Pots_規格書.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2719 | 11:49 AM | 🔵 | Generated markdown specification document structure |  |  |
+| #2720 | " | 🔵 | Excel-to-markdown converter handles complex merged cell tables and preserves game design documentation |  |  |
+
+**output/3 Leprechaun's Pots_規格書/metadata/metadata.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2721 | " | 🔵 | Image extraction metadata reveals distribution across game specification sheets |  |  |
+
+**..\..\AI\3 Leprechaun's Pots_規格書.xlsx**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2722 | 11:52 AM | 🔵 | Vector graphics in Excel contain critical game rule text missed by extraction pipeline |  |  |
+
+**convert.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2723 | 11:56 AM | 🔵 | Current image extraction pipeline only captures raster images, not shape text |  |  |
+| #2724 | " | 🔄 | Extract sheet-to-drawing mapping into helper function |  |  |
+| #2725 | " | 🟣 | Implemented shape text extraction to capture callout annotations |  |  |
+| #2726 | 11:57 AM | 🟣 | Integrated shape text annotations into markdown output generation |  |  |
+| #2727 | " | 🟣 | Wired shape text extraction into main conversion pipeline |  |  |
+
+**output/3 Leprechaun's Pots_規格書/metadata/metadata.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2728 | " | 🟣 | Verified shape text extraction end-to-end with successful test run |  |  |
+
+**output/3 Leprechaun's Pots_規格書/markdown/3 Leprechaun's Pots_規格書.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2729 | 11:58 AM | 🟣 | Shape text annotations render correctly in markdown output |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2730 | " | ✅ | Updated documentation to reflect shape text extraction feature |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2731 | " | ✅ | Documented shape text extraction in CLAUDE.md architecture section |  |  |
+| #2732 | 11:59 AM | ✅ | Updated markdown injection description to reflect dual content handling |  |  |
+
+**output/3 Leprechaun's Pots_規格書/markdown/3 Leprechaun's Pots_規格書.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2733 | 12:04 PM | 🔵 | NaN flooding quantified in Excel-to-markdown conversion |  |  |
+
+**convert.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2734 | 12:09 PM | 🟣 | Density-gated cell list extraction for sparse Excel sheets |  |  |
+| #2735 | 12:10 PM | 🟣 | Integrated sparse sheet optimization into conversion pipeline |  |  |
+| #2736 | " | 🟣 | Sparse sheet optimization deployed and validated with 72% size reduction |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2737 | " | ✅ | Updated CLAUDE.md to document sparse sheet optimization architecture |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2738 | 12:11 PM | ✅ | Updated README.md core strategy to document sparse sheet optimization |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2739 | 1:14 PM | 🔵 | Excel-to-AI-Document Project Assessed Before Git Initialization |  |  |
+| #2740 | 1:16 PM | 🔵 | Claude Hooks and Git Identity Configuration Verified |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2741 | " | ✅ | Git Ignore Configuration Created for Excel-to-AI-Document Project |  |  |
+
+**.claude/hooks/_helpers.sh**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2742 | " | ✅ | Git Repository Initialized and Files Staged for Excel-to-AI-Document |  |  |
+| #2743 | 1:17 PM | 🟣 | Initial Commit: Excel Game Specification to AI Knowledge Structure Converter |  |  |
+
+**#S891** Evaluating skill packaging approach for team sharing and cross-machine portability (Jun 22, 1:24 PM)
+
+**#S892** Clarifying whether Claude Code plugins can be shared across three agent systems (Claude Code, Codex, Kiro) (Jun 22, 1:28 PM)
+
+**#S893** Cross-agent skill portability strategy for convert.py workflow across Claude Code, Kiro, and Codex (Jun 22, 1:31 PM)
+
+**#S894** Evaluate cross-platform skill deployment strategy for Excel-to-AI-doc converter across Claude Code, Kiro, and Codex (Jun 22, 1:36 PM)
+
+**#S895** Verify Codex CLI skill support to finalize cross-platform Excel-to-AI-doc skill deployment strategy (Jun 22, 1:41 PM)
+
+**#S896** Verify Codex CLI skill support and cross-platform compatibility for Excel-to-AI-doc skill deployment (Jun 22, 1:42 PM)
+
+**#S898** Verification of SKILL.md cross-platform compatibility across Claude Code, Kiro, and Codex for excel-to-ai-doc skill deployment (Jun 22, 1:42 PM)
+
+**#S899** Initialize CLAUDE.md documentation and complete skillification of excel-to-ai-doc converter (Jun 22, 1:45 PM)
+
+**skill/excel-to-ai-doc/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2746 | 1:46 PM | 🟣 | Skill scaffold created for excel-to-ai-doc cross-platform agent skill |  |  |
+| #2747 | " | 🔵 | Skill template structure examined for excel-to-ai-doc population |  |  |
+
+**skill/excel-to-ai-doc/scripts/convert.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2748 | 1:47 PM | ✅ | Excel conversion script and dependencies moved into skill structure |  |  |
+
+**skill/excel-to-ai-doc/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2749 | " | 🟣 | Complete SKILL.md documentation written for excel-to-ai-doc cross-platform skill |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2750 | 1:48 PM | ✅ | README updated to document skill-based installation and new script paths |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2751 | " | ✅ | CLAUDE.md updated to reflect skill structure reorganization |  |  |
+
+**excel-to-ai-doc.skill**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2752 | " | 🟣 | Skill validated and packaged successfully for cross-platform distribution |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2753 | 1:49 PM | ✅ | Gitignore updated to exclude packaged skill artifacts |  |  |
+| #2754 | " | ✅ | Skill packaging changes staged for commit with verified gitignore patterns |  |  |
+| #2755 | 1:50 PM | 🟣 | Skill packaging work committed to version control |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2756 | " | 🔵 | Local agent skills directories identified for deployment testing |  |  |
+
+**~/.claude/skills/excel-to-ai-doc/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2757 | " | 🟣 | Excel-to-ai-doc skill deployed to all three agent platforms locally |  |  |
+
+**skill/excel-to-ai-doc/scripts/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2758 | 1:51 PM | ✅ | Python bytecode cache cleaned from skill source and all deployments |  |  |
+
+**#S900** Attempted to process "Eye Strike2 規格書.csv" with xlsx-to-markdown conversion pipeline (Jun 22, 1:51 PM)
+
+**..\..\UK\Eye Strike2 規格書.csv**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2759 | 1:57 PM | 🔵 | Validated CSV file format for excel-to-ai-doc testing |  |  |
+
+**..\..\AI\excel-to-ai-document\output\Eye Strike2 規格書\Eye Strike2 規格書.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2760 | 2:00 PM | ✅ | Converted Eye Strike2 規格書.xlsx to AI-readable markdown with 54 images |  |  |
+
+**..\..\AI\excel-to-ai-document\output\Eye Strike2 規格書\markdown\Eye Strike2 規格書.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2761 | " | 🔵 | Eye Strike2 conversion output quality metrics reveal 95 NaN artifacts |  |  |
+| #2762 | " | 🔵 | NaN artifacts concentrated in multilingual worksheet's dense table structure |  |  |
+
+**..\..\AI\excel-to-ai-document\output\Eye Strike2 規格書\images\2__基本規格_B82_image21.png**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2763 | 2:01 PM | 🔵 | Quality verification of extracted game specification images |  |  |
+
+**#S901** End-to-end verification of deployed spreadsheet processing skill on new file (Eye Strike2) (Jun 22, 2:36 PM)
+
+**Investigated**: Skill execution tested on a previously undeveloped file to validate generalization. Verified image extraction (54 images with cell anchors), metadata schema completeness (images/shapes/merges fields with 323 merge headers and 15 merged ranges), sparse table reconstruction (7 document-type sheets converted to cell lists), density-based table filtering (correctly preserved one true table "7.多國語言" in table format), and image readability via Vision API (successfully read password dial symbols from [B82] image).
+
+**Learned**: The skill successfully generalizes to new files without modification. Density gate correctly distinguishes document-like sheets from true tables - the multilingual translation table retained 95 NaN values for empty translation cells, which is expected behavior for preserving table structure. The complete pipeline (convert.py → cross-platform skill packaging → local deployment → execution from ~/.claude/skills/) works end-to-end. Vision API can read complex embedded images like password dials with symbol-to-letter mappings.
+
+**Completed**: Successfully deployed and verified skill running from installation location (~/.claude/skills/). Validated all core functionality: image extraction with anchoring, metadata schema generation, sparse table reconstruction, density-based filtering, and Vision-readable image output. Skill is ready for daily use and can be distributed to colleagues via .skill file or folder copy.
+
+**Next Steps**: Awaiting user decision on whether to document the multilingual table NaN observation in the repository (as issue/TODO) or consider the verification complete. No further code changes planned unless user requests adjustment to density threshold or specialized handling for translation-type tables.
+
+
+Access 345k tokens of past research & decisions for just 19,420t. Use MCP search tools to access memories by ID.

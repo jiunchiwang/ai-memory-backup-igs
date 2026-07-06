@@ -1,0 +1,266 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-06 1:26pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (20,106 tokens to read)
+- Work investment: 169,881 tokens spent on research, building, and decisions
+- Your savings: 88% reduction from reuse
+
+### Jul 6, 2026
+
+**src/provider/mcp-pool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3615 | 11:38 AM | 🔴 | Prevent TELEGRAM_BOT_TOKEN leakage to MCP child processes |  |  |
+| #3616 | " | 🔴 | MCP child processes no longer inherit TELEGRAM_BOT_TOKEN |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3617 | 11:39 AM | 🔵 | Telegram Bot Multiple Instance Conflict Error |  |  |
+
+**src/provider/mcp-pool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3618 | 11:44 AM | 🔵 | Telegram Menu Regression After MCP Token Isolation |  |  |
+
+**C:\Users\jiunchiwang\.claude\plugins\marketplaces\claude-plugins-official\external_plugins\telegram\server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3619 | " | 🔵 | Telegram Menu Hardcoded in MCP Plugin |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3620 | " | 🔵 | Duplicate setMyCommands Calls Conflict Between Plugin and Bridge |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3621 | " | 🔴 | Resolved Menu Conflict by Deleting Plugin's Scoped Commands |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3622 | 11:45 AM | 🔵 | Telegram Bridge Bot Conflict Error - Multiple Instances Running |  |  |
+
+**#S1113** Investigate and fix Telegram bot menu command issues preventing router readiness (Jul 6, 11:45 AM)
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3623 | 11:46 AM | 🔵 | Bot Command Registration Implementation Review |  |  |
+| #3624 | 11:47 AM | 🔵 | Bot Command Registration Call Site Location |  |  |
+| #3625 | " | 🟣 | Preventive Command Scope Cleanup Added to Bot Initialization |  |  |
+| #3626 | " | ✅ | Preventive Cleanup Change Verified with TypeScript |  |  |
+
+**#S1114** Execute refreshrouting command in bridge and verify router ready status - investigation revealed routing file never created (Jul 6, 11:49 AM)
+
+**src/doctor.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3627 | 11:49 AM | 🔵 | Embedding router readiness check mechanism |  |  |
+
+**src/embed-router.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3628 | " | 🔵 | Embedding router initialization requires model loading and centroid computation |  |  |
+| #3629 | 11:50 AM | 🔵 | Embedding router initialization happens at startup with graceful error handling |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3630 | " | 🔵 | Bridge config file resolution with fallback mechanism |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3631 | " | 🔵 | Missing MEMORY_DIR configuration prevents embedding router initialization |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3632 | 11:51 AM | 🔵 | MEMORY_DIR falls back to hardcoded default when not set in environment |  |  |
+| #3633 | " | 🔵 | Hardcoded MEMORY_DIR default points to non-existent F: drive on this system |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3634 | " | 🔵 | AIMemory directory exists on G: drive but MEMORY_DIR points to non-existent F: drive |  |  |
+
+**..\..\AI\AIMemory\config**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3635 | 11:52 AM | 🔵 | Config directory exists but lacks notebooklm-routing.json file |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3636 | " | 🔵 | /refresh-routing command generates notebooklm-routing.json from NotebookLM notebooks |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3637 | " | 🔵 | MEMORY_DIR is correctly configured but notebooklm-routing.json still missing |  |  |
+
+**#S1115** Passive Monitor scheduled health check - verify system status and alert on anomalies (Jul 6, 12:00 PM)
+
+**src/commands/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3638 | 12:00 PM | 🔵 | RefreshRouting command implementation and routing table generation logic |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3639 | 12:01 PM | 🔵 | NotebookLM MCP tool availability investigation |  |  |
+
+**~/.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3640 | " | 🔵 | MCP server configuration corruption in user's Claude Code setup |  |  |
+
+**C:\Users\jiunchiwang\.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3641 | " | 🔵 | NotebookLM MCP server never configured in any Claude agent CLI |  |  |
+
+**#S1116** Self-check of telegram-kiro-bridge system health after previous token leak fix (Jul 6, 12:01 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3642 | 12:02 PM | 🔵 | NotebookLM MCP setup script exists in project scripts directory |  |  |
+
+**scripts/setup-local-notebooklm-mcp.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3643 | " | 🔵 | NotebookLM MCP setup script targets wrong CLI - architectural mismatch discovered |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3644 | " | 🔵 | NotebookLM MCP server package not installed - root cause identified |  |  |
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3645 | 12:21 PM | 🔵 | NotebookLM routing configuration missing |  |  |
+| #3646 | 12:22 PM | 🔵 | Telegram-Kiro-Bridge Health Check Post-409-Fix |  |  |
+
+**#S1117** Review git diff of docs/usage-guide.html before committing documentation updates (Jul 6, 12:22 PM)
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3647 | 12:22 PM | ✅ | Usage Guide Documentation Updates |  |  |
+
+**#S1118** Status check and self-diagnosis after fixing 409 crash loop (buildSpawnEnv token leak issue) (Jul 6, 12:22 PM)
+
+**#S1119** Investigate model switching capability and availability checking in the AI chat system (Jul 6, 12:23 PM)
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3648 | 1:04 PM | 🔵 | Bridge has existing /model command for AI model switching |  |  |
+
+**src/commands/model.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3649 | " | 🔵 | Model availability checking only validates API key presence, not usage limits |  |  |
+
+**#S1120** Provider quota and rate-limit error handling with /model switching hints - implementation completed (Jul 6, 1:10 PM)
+
+**src/provider/types.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3650 | 1:10 PM | 🔵 | Provider adapter error handling lacks quota/rate-limit detection |  |  |
+
+**src/provider/direct.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3651 | 1:11 PM | 🔵 | Run-prompt error handling focuses on message delivery, not LLM API failures |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3652 | " | 🔵 | Main error handler only has special logic for ACP errors, not LLM API failures |  |  |
+
+**src/provider/direct.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3653 | 1:12 PM | 🔵 | DirectProvider.prompt() passes adapter errors through without transformation |  |  |
+
+**src/provider/tool-loop.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3654 | " | 🔵 | Tool-loop makes multiple adapter.chat() calls without error interception |  |  |
+
+**src/error-classifier.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3655 | " | 🔵 | Error classifier exists but focuses on Telegram/shell errors, not LLM provider failures |  |  |
+
+**scripts/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3656 | 1:13 PM | 🔵 | Project has extensive check script library with 51 integration test scenarios |  |  |
+
+**scripts/check-atomic-json.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3657 | " | 🔵 | Check scripts follow simple smoke test pattern with ok/fail helpers |  |  |
+
+**src/provider/quota-error.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3658 | " | 🟣 | Created quota error classifier for LLM provider failures |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3659 | 1:14 PM | 🟣 | Integrated quota error hints into main prompt error handler |  |  |
+| #3660 | " | ✅ | Added import for quotaHint function to complete integration |  |  |
+
+**src/provider/quota-error.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3661 | " | ✅ | Verified complete integration of quota error detection across codebase |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3662 | 1:15 PM | ✅ | TypeScript compilation validates quota error implementation |  |  |
+
+**scripts/check-quota-hint.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3663 | " | 🟣 | Created comprehensive smoke test for quota error detection |  |  |
+| #3664 | " | 🟣 | Quota error detection test suite passes all 15 validation cases |  |  |
+
+**#S1121** Bridge AI model switching commands and availability checking (Jul 6, 1:19 PM)
+
+**#S1122** Self-inspection of telegram-kiro-bridge system to identify pending issues and configuration gaps (Jul 6, 1:20 PM)
+
+**Investigated**: System configuration files, MCP server installation status, and known cross-platform scripting patterns in the bridge
+
+**Learned**: Two key findings emerged: (1) NotebookLM MCP server was never installed, leaving `G:\AI\AIMemory\config\notebooklm-routing.json` missing and causing incomplete embedding router functionality; (2) Calling PowerShell from bash shell has a quoting issue where single quotes and `$_` get consumed by bash layer causing ParserError - reliable workaround is converting command to UTF-16LE base64 and using `powershell -EncodedCommand`
+
+**Completed**: Self-inspection completed with two documented findings: one configuration gap (missing NotebookLM setup) and one cross-platform scripting gotcha (bash→PowerShell quoting)
+
+**Next Steps**: Awaiting user direction on whether to address the NotebookLM installation gap or continue with other bridge maintenance tasks
+
+
+Access 170k tokens of past research & decisions for just 20,106t. Use MCP search tools to access memories by ID.

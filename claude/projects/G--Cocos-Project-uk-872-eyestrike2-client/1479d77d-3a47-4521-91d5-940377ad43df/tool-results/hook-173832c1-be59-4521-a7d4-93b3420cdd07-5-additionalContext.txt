@@ -1,0 +1,206 @@
+# [uk_872_eyestrike2_client] recent context, 2026-07-01 2:48pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,490 tokens to read)
+- Work investment: 398,172 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jun 30, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3385 | 3:03 PM | ✅ | TypeScript type checking passed for Conflict 1 implementation |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3386 | 3:24 PM | 🔵 | Pre-commit state check for conflict 1 resolution |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3387 | 3:30 PM | ✅ | Feature Wheel rotation direction reversed in prefab |  |  |
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3388 | 3:57 PM | 🔵 | RestoreZoom method implements idempotent zoom restoration with guard |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3389 | 3:58 PM | ✅ | Implemented B2 approach for parallel zoom restoration and wheel exit animations |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3390 | " | ✅ | B2 implementation verified through TypeScript type checking |  |  |
+
+**#S1064** Art team provided additional specifications for spinning wheel scaling behavior and conflict resolution (Jun 30, 4:44 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3398 | 4:44 PM | 🔄 | Wheel animation exit sequence restructured for symmetry and parallel execution |  |  |
+
+**#S1065** Clarifying BigWheel standby animation behavior and resolving conflicts with previous implementation (Jun 30, 4:52 PM)
+
+**#S1066** Decision on BigWheel Spine idle state handling - whether to hide component during standby or keep visible with slow animation (Jun 30, 4:56 PM)
+
+**#S1067** User shared new design documentation for BigWheel animation sequences; Claude provided status update on resolved animation timing conflicts (Jun 30, 4:59 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3399 | 5:00 PM | 🔵 | FeatureWheel idle state implementation scope identified |  |  |
+| #3400 | " | 🔵 | FeatureWheel Spine lifecycle methods examined for refactoring |  |  |
+| #3401 | 5:01 PM | 🔄 | BigWheel Spine refactored from slow-Idle animation to hide/show on idle transitions |  |  |
+| #3402 | " | 🔴 | PlayEnter now shows BigWheel spine before entrance animation to prevent invisible feature |  |  |
+| #3403 | " | 🔄 | PlaySpineLoop simplified by removing timeScale parameter after idle animation removal |  |  |
+| #3404 | 5:02 PM | 🔄 | Completed Conflict 1 cleanup by removing IDLE_STANDBY_TIME_SCALE constant and updating SetWheelData to hide spine |  |  |
+| #3405 | " | ✅ | Updated BIG_WHEEL_ANIM documentation to reflect hide-on-idle refactoring |  |  |
+| #3406 | " | ✅ | BigWheel idle refactoring completed and verified - all orphaned code removed, type-safe |  |  |
+
+**#S1068** Finalize feature wheel trail animation implementation design with left/right prefab split based on roundIndex (Jun 30, 5:17 PM)
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3407 | 5:54 PM | 🔵 | FlyManager Trail Effect Implementation Pattern |  |  |
+
+**assets/Script/Spine/BaseSpine.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3408 | 5:55 PM | 🔵 | BaseSpine API and FeatureWheel Context for Trail Implementation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3409 | " | 🔵 | FeatureWheel Module Structure Discovery |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3410 | " | 🔵 | FeatureWheelManager Event System and Target Node Discovery |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3411 | " | 🔵 | FeatureWheel Skin Mapping System for Trail Effect |  |  |
+
+**#S1069** Refactor FeatureWheelShowState.PlayFlyEffect to use event-based approach for Feature Wheel trail animations (Jun 30, 6:10 PM)
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3412 | 6:10 PM | 🔵 | Game speed multiplier constant verified in Game_Define |  |  |
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3413 | " | 🟣 | Added FeatureWheel trail animation event definition |  |  |
+| #3414 | " | 🟣 | Added left and right trail prefab properties to FlyManager |  |  |
+| #3415 | 6:11 PM | 🟣 | Added FeatureWheel trail animation configuration constants |  |  |
+| #3416 | " | 🟣 | Registered FeatureWheel trail animation event for automatic handling |  |  |
+| #3417 | " | 🟣 | Registered FeatureWheel trail prefab object pools in onLoad |  |  |
+| #3418 | " | 🟣 | Added event dispatcher case for FeatureWheel trail animation |  |  |
+| #3419 | " | 🟣 | Implemented PlayFeatureWheelTrailAnimation core method with complete trail animation logic |  |  |
+| #3420 | 6:12 PM | ✅ | TypeScript validation passed for FlyManager feature implementation |  |  |
+| #3421 | " | ✅ | IDE diagnostics validation confirms clean FlyManager implementation |  |  |
+
+**#S1070** Implement FeatureWheel Trail Effect with Dual Spines and Round-Based Selection (Jun 30, 6:43 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3422 | 6:45 PM | 🔄 | FeatureWheelShowState.PlayFlyEffect refactored to use dedicated event-based trail animation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3423 | 6:46 PM | ⚖️ | FeatureWheel Trail Effect Implementation Plan |  |  |
+
+**#S1071** Fix flight position issue in FlyManager - user noticed positions were incorrect and requested test cases (Jun 30, 6:47 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3424 | 6:49 PM | 🔵 | Position Coordinate System and Conversion Functions |  |  |
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3425 | " | 🔵 | Server Position Encoding Uses Variable Row Heights |  |  |
+
+**assets/Script/GameState/FeatureResultShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3426 | " | 🔵 | Feature Position Validation Pattern |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3427 | 6:50 PM | 🔵 | SlotReels Position-to-World Coordinate Conversion |  |  |
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3428 | 6:51 PM | ✅ | Trail Event Parameter Renamed from roundIndex to colIndex |  |  |
+| #3429 | " | ✅ | Updated Trail Split Constant Documentation |  |  |
+| #3430 | " | 🔄 | Completed roundIndex to colIndex Parameter Rename |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3431 | " | 🔄 | Reverted Feature Loop from Index-Based to For-Of |  |  |
+| #3432 | 6:52 PM | 🔄 | Removed roundIndex Parameter from PlayFlyEffect Call |  |  |
+| #3433 | " | 🟣 | Implemented Position-Based Trail Selection |  |  |
+| #3434 | " | ✅ | Added Common Import for Position Decoding |  |  |
+| #3435 | " | ✅ | Trail System Refactoring Validated Clean |  |  |
+
+**#S1072** Implement FeatureWheel Trail flying effect with dual Spine routing, object pooling, and debug test cases (Jun 30, 7:03 PM)
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3436 | 7:03 PM | 🔵 | FlyManager test infrastructure already exists with disabled test keycodes |  |  |
+| #3437 | 7:05 PM | 🟣 | Added FeatureWheel Trail test keycodes for position verification |  |  |
+| #3438 | 7:06 PM | 🟣 | Implemented FeatureWheel Trail position test methods with interactive cycling |  |  |
+| #3439 | " | ✅ | FlyManager test code passes TypeScript validation with no errors |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3440 | " | ✅ | Full TypeScript compilation confirms all changes are type-safe |  |  |
+
+**FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3441 | 7:07 PM | ⚖️ | Trail effect architecture for FeatureWheel |  |  |
+
+**#S1073** Implement FeatureWheel trail effect with column-based left/right Trail Spine selection (Jun 30, 7:28 PM)
+
+**Investigated**: FlyManager.ts implementation patterns for trail effects, bone positioning transformation logic, and Spine pooling mechanisms
+
+**Learned**: Trail system requires dynamic bone name selection based on wheel column position. Columns 0-2 (left half) use "Trail_End_Control" bone, while columns 3-5 (right half) use "Trail_End_Control_R" bone. Both trail Spines ("EyeStrike2_Function_Trail_L" and "EyeStrike2_Function_Trail_R") share the same animation key "In" and four skins (default, Multiplier, Shift, Upgrade).
+
+**Completed**: Implemented `PlayFeatureWheelTrailAnimation` event in FlyManager.ts with conditional bone targeting. Function now determines end bone name based on `useLeft` flag derived from column position, applies proper bone transformations, switches to correct skin, and plays "In" animation before recycling. Updated error logging to use dynamic `endBoneName` variable to prevent misleading bone-not-found messages.
+
+**Next Steps**: Ready for testing with DIGIT_3 across different columns to verify left bone is used for columns 0-2 and right bone (_R) is used for columns 3-5, confirming trail positions render correctly.
+
+
+Access 398k tokens of past research & decisions for just 18,490t. Use MCP search tools to access memories by ID.

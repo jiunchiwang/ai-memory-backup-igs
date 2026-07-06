@@ -1,0 +1,238 @@
+# [uk_pirates_queen] recent context, 2026-06-29 5:31pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,557 tokens to read)
+- Work investment: 254,118 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 26, 2026
+
+**#S990** Commit changes for Wanted_MultiAdd audio integration (multiplier refresh sound effect) (Jun 26, 1:15 PM)
+
+**#S999** 實機驗證底部 Bar 贏分顯示邏輯 — 確認多盤/多局下是否顯示累積值 (Jun 26, 2:30 PM)
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3188 | 3:33 PM | 🔵 | Found all SetWinValueWithCheck call sites revealing AccumulatedWin property |  |  |
+
+**assets/Script/GameState/UnshowPrepareState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3189 | " | 🔵 | UnshowPrepareState restores AccumulatedWin for reconnection scenarios |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3190 | 3:34 PM | 🔵 | AccumulatedWin tracks cross-round wins for reconnection scenarios |  |  |
+
+**assets/Script/GameState/UnshowPrepareState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3191 | " | 🔵 | UnshowPrepareState explicitly accumulates RoundWin across multiple rounds |  |  |
+
+**#S1001** Verify bottom bar cumulative winnings display with multiple RoundInfo/PlateInfo in common game version - verification blocked by environment setup (Jun 26, 3:52 PM)
+
+**assets/Script/RecoverSpinAck.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3203 | 3:52 PM | 🔵 | Test Data Injection Mechanisms Investigation |  |  |
+
+**assets/Script/DebugToolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3204 | 3:53 PM | 🔵 | Debug Tool Infrastructure Located |  |  |
+| #3206 | " | 🔵 | SpinAck Replay Debug System |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3207 | 3:54 PM | 🔵 | SpinAck Injection Point in GameView |  |  |
+
+**#S1014** Troubleshoot git fetch OAuth callback connection error (ERR_CONNECTION_REFUSED on localhost:51569) (Jun 26, 3:55 PM)
+
+### Jun 28, 2026
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3221 | 8:39 AM | 🔵 | SPIN Button Flash Issue Investigation Started |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3222 | " | 🔵 | SPIN Button State Transitions Mapped |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3223 | 8:40 AM | 🔵 | Game State Machine Architecture Revealed |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3225 | 8:42 AM | 🔵 | Framework Bottombar Manager Location Found |  |  |
+| #3226 | 8:43 AM | 🔵 | SlotBottomBarState Enum Definition Not in Framework |  |  |
+
+**extensions/astarte-framework/assets/Managers/NewBottomBarManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3227 | " | 🔵 | SlotBottomBarState Found as Const Object |  |  |
+| #3230 | 8:44 AM | 🔵 | Complete SPIN Button State Definitions Revealed |  |  |
+| #3231 | " | 🔵 | SetSpinState Method Interface Found |  |  |
+
+**extensions/astarte-framework/assets/Component/Common_IdleState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3232 | 8:45 AM | 🔵 | Suspicious CLICK_SPIN ↔ IDLE Toggles in ExtraBetComponent |  |  |
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3233 | " | 🔵 | Root Cause Found - START_SPIN Set During Award Display |  |  |
+
+**assets/Script/GameState/RoundEndState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3235 | " | 🔵 | State Flow Reveals Flash Timing Window |  |  |
+
+**assets/Script/GameState/WaitResState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3236 | 8:46 AM | 🔵 | Additional Button State Transitions in ClickSpin and Demo Mode |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3238 | 8:47 AM | 🔵 | SetSpinState Implementation Location Confirmed |  |  |
+
+### Jun 29, 2026
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3273 | 8:44 AM | 🔵 | SPIN button state management investigation |  |  |
+| #3274 | " | 🔵 | OnSpin triggers ExtraBet bar collapse animation |  |  |
+
+**#S1015** Diagnosed Git fetch 403 error caused by missing SSO authorization for GitHub organization (Jun 29, 10:05 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3275 | 10:06 AM | 🔵 | Git Credential Manager has stored GitHub OAuth token for igs-jiunchiwang |  |  |
+
+**.git/config**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3276 | 10:07 AM | 🔵 | Git Credential Manager configured with default Windows credential helper |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3277 | " | ✅ | Cleared Git Credential Manager stored credentials for github.com |  |  |
+| #3278 | " | 🔵 | Verified Git Credential Manager cache is empty after credential erasure |  |  |
+| #3279 | 10:09 AM | 🔵 | Git Credential Manager successfully stored new OAuth token after fetch |  |  |
+
+**#S1016** Diagnose GitHub 403 authentication errors when accessing IGS-ARCADE-DIVISION-RD2 organization repositories (Jun 29, 10:11 AM)
+
+**..\..\Cocos_Project\uk_pirates_queen\gcm-diagnose.log**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3280 | 10:11 AM | 🔵 | Git Credential Manager configuration and storage backend inspection |  |  |
+| #3281 | " | ✅ | Removed sensitive GCM diagnostic log from project directory |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3282 | 10:12 AM | 🔵 | Windows Credential Manager GitHub-related credential entry identified |  |  |
+| #3283 | " | 🔵 | Complete Windows Credential Manager inventory shows no GitHub OAuth tokens |  |  |
+| #3284 | " | 🔵 | Git credential helper configuration confirms GCM managing GitHub authentication |  |  |
+| #3285 | 10:13 AM | 🔵 | GCM trace reveals OAuth credential regeneration despite empty credential store |  |  |
+
+**#S1017** Fix layer ordering bug in PlayTargetExplodeEffect where reused target Spine nodes appear on wrong layer (Jun 29, 3:47 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3286 | 3:47 PM | 🔵 | NearWin and vibration system code location identified |  |  |
+| #3287 | " | 🔵 | Three vibration trigger points found in NearWin symbol drop logic |  |  |
+| #3288 | " | 🔵 | Third vibration point located in EnterPlate sky-drop method |  |  |
+| #3289 | 3:48 PM | 🔴 | Restricted NearWin vibration to Scatter drops only - first trigger point |  |  |
+| #3290 | " | 🔴 | Restricted NearWin vibration to Scatter drops only - second trigger point |  |  |
+| #3291 | 4:10 PM | 🔴 | Cascaded SCATTER symbols missing IN animation after elimination drop |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3292 | 4:54 PM | 🔵 | Target spine layer inconsistency in PlayTargetExplodeEffect |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3293 | 4:55 PM | 🔵 | Game layer hierarchy defines five rendering layers |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3294 | " | 🔵 | PlayTargetExplodeEffect called from CountMultState during multiplier phase |  |  |
+
+**assets/Script/GameState/CountMultState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3295 | " | 🔵 | Target explosion sequence coordination with character and cannon animations |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3296 | 4:56 PM | 🔵 | Exact location of layer bug in target explosion reuse path |  |  |
+| #3297 | 4:57 PM | 🔴 | Fixed target explosion layer inconsistency by reparenting reused nodes to SCATTER layer |  |  |
+
+**#S1018** Debug and fix target/crosshair sticking to game board after spin (Jun 29, 4:58 PM)
+
+**#S1019** Investigated root cause of target symbol persistence bug and provided code fix recommendation (Jun 29, 5:08 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3298 | 5:09 PM | 🔵 | Target node cleanup mechanism investigation |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3299 | " | 🔵 | Root cause identified for sticky target bug |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3300 | 5:13 PM | 🔵 | ClearAll() invocation points mapped across game state transitions |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3301 | 5:29 PM | 🔵 | Target Spine Layer Mismatch in PlayTargetExplodeEffect |  |  |
+
+**#S1020** Fixed target Spine layer mismatch bug in PlayTargetExplodeEffect function (Jun 29, 5:29 PM)
+
+**Investigated**: PlayTargetExplodeEffect function was examined for a layer ordering issue where reused target Spine objects retained incorrect layer assignment
+
+**Learned**: When PlayTargetExplodeEffect reuses an existing target Spine at the same position, the Spine object may remain at Game_Define.LAYERS.SYMBOL (from line 1199) instead of being reassigned to the required Game_Define.LAYERS.SCATTER layer, causing rendering order problems for explosion animations
+
+**Completed**: Bug fix for target Spine layer mismatch was implemented and committed to main branch (commit 8e8df9a)
+
+**Next Steps**: Bugfix has been committed; session appears complete unless additional testing or related issues emerge
+
+
+Access 254k tokens of past research & decisions for just 17,557t. Use MCP search tools to access memories by ID.

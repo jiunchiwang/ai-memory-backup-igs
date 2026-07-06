@@ -1,0 +1,183 @@
+[1m[36m[uk_872_eyestrike2_client] recent context, 2026-06-30 1:15pm GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (23,055 tokens to read)[0m
+[2m  Work investment: 459,447 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 95% reduction from reuse[0m
+
+[1m[36mJun 26, 2026[0m
+
+[2mGeneral[0m
+  [2m#3127[0m  [2m2:14 PM[0m  🔵  Search for Wanted feature code returns no results in game scripts  
+  [2m#3128[0m  [2m2:16 PM[0m  🔵  Additional searches for bounty/wanted related code patterns yield no results  
+  [2m#3129[0m           🔵  Case-insensitive search confirms Wanted feature absent from game codebase  
+  [2m#3130[0m  [2m2:17 PM[0m  🔵  Glob search for Wanted/Bounty filenames confirms no dedicated feature files exist  
+  [2m#3141[0m  [2m2:21 PM[0m  🔵  Pattern library contains 18 slot game mechanic patterns  
+
+[2m..\..\AI\output\eye_strike2_spec\markdown\Eye Strike2 規格書.md[0m
+  [2m#3143[0m  [2m2:22 PM[0m  🔵  Eye Strike2 slot game specification contains collect and wheel feature mechanics  
+
+[2mGeneral[0m
+  [2m#3146[0m           ✅  Launched agent to extract feature list from Eye Strike2 specification  
+
+[2m..\..\AI\output\eye_strike2_spec\markdown\Eye Strike2 規格書.md[0m
+  [2m#3149[0m  [2m2:23 PM[0m  ✅  Launched parallel feature extraction agents for both slot game specifications  
+
+[2mC:\Users\jiunchiwang\.claude\skills\uk-slot-pattern-library\patterns\feature-wheel.md[0m
+  [2m#3150[0m           ✅  Reading pattern library templates for feature validation mapping  
+
+[2mC:\Users\jiunchiwang\.claude\skills\uk-slot-pattern-library\patterns\mystery-symbol.md[0m
+  [2m#3152[0m           ✅  Completed loading all pattern library templates for validation  
+
+[2m..\..\Cocos-Project-uk-872-eyestrike2-client\[specification document path - not explicitly shown][0m
+  [2m#3155[0m  [2m2:24 PM[0m  🔵  3 Leprechaun's Pots Game Specification Analysis Complete  
+
+[2massets/Script/GameView.ts[0m
+  [2m#3156[0m  [2m3:01 PM[0m  🔵  ExtraBet Feature Mapped in Cocos Game Client  
+
+[2m..\..\g\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\extra-bet.md[0m
+  [2m#3157[0m           🔵  Located ExtraBet Pattern Documentation in Canonical Skills Library  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\extra-bet.md[0m
+  [2m#3158[0m  [2m3:03 PM[0m  🔵  ExtraBet Pattern Specification Defines Implementation Criteria  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\scatter-collect.md[0m
+  [2m#3159[0m           🔵  Scatter-Collect Pattern Variants and Edge Cases Documented  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\extra-bet.md[0m
+  [2m#3160[0m           ✅  Enhanced ExtraBet Pattern Identification with Theme Aliases and Implementation-Based Criteria  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\scatter-collect.md[0m
+  [2m#3161[0m           ✅  Documented Scatter Injection FG Upgrade Variant in Scatter-Collect Pattern  
+  [2m#3162[0m  [2m3:04 PM[0m  ✅  Added Injection vs Collection Distinction Warning to Scatter-Collect Edge Cases  
+
+[2m..\..\AI\output\clash_of_olympus\Clash of Olympus.md[0m
+  [2m#3163[0m  [2m3:16 PM[0m  ✅  Excel specification converted to AI-readable format  
+
+[33m#S993[0m Third game specification validation (Wrath of Thunder v2) to test pattern library generalization and identify blind spots (Jun 26, 3:22 PM)
+
+[2m..\..\AI\output\clash_of_olympus\images\3__玩法和表演流程_K46_image30.png[0m
+  [2m#3164[0m  [2m3:22 PM[0m  🔵  VS Feature mechanism examination via specification screenshots  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\SKILL.md[0m
+  [2m#3165[0m  [2m3:23 PM[0m  🔵  Pattern-library index review confirms VS Feature gap  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\vs-feature.md[0m
+  [2m#3166[0m  [2m3:24 PM[0m  🟣  VS Feature pattern card created as pattern library entry #19  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\max-win.md[0m
+  [2m#3167[0m           🟣  MAX WIN pattern card created as pattern library entry #20  
+
+[33m#S994[0m Verify pattern-library skill using Eye Strike2 and 3 Leprechaun's Pots specification documents (Jun 26, 3:29 PM)
+
+[2m..\..\AI\output\wrath_of_thunder_v2\SLOT_Wrath of Thunder_v2.md[0m
+  [2m#3177[0m  [2m3:30 PM[0m  ✅  Wrath of Thunder v2 specification extracted to AI-readable format  
+
+[2m..\..\AI\output\wrath_of_thunder_v2\markdown\SLOT_Wrath of Thunder_v2.md[0m
+  [2m#3178[0m           🔵  Feature extraction initiated for Wrath of Thunder v2 specification  
+
+[33m#S995[0m Pattern library validation against Wrath of Thunder v2 (4th slot game) - identifying recall hits, generalization matches, and blind spots (Jun 26, 3:32 PM)
+
+[33m#S996[0m Commit and push completed pattern library updates from validation rounds (Jun 26, 3:39 PM)
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\progression-unlock.md[0m
+  [2m#3192[0m  [2m3:41 PM[0m  🟣  Created progression-unlock pattern card  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\global-multiplier.md[0m
+  [2m#3193[0m           🟣  Created global-multiplier pattern card  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\collect-feature.md[0m
+  [2m#3194[0m  [2m3:42 PM[0m  🔵  Reviewed collect-feature variants and edge cases  
+  [2m#3195[0m           ✅  Added Wrath of Thunder v2 Collect variants to collect-feature pattern  
+  [2m#3196[0m           ✅  Added edge cases for Burst and upgraded Collect interaction logic  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\SKILL.md[0m
+  [2m#3197[0m  [2m3:43 PM[0m  ✅  Updated pattern library index with new Wrath of Thunder v2 patterns  
+
+[33m#S997[0m Verify pattern-library skill using Eye Strike2 and 3 Leprechaun's Pots game specifications (Jun 26, 3:45 PM)
+
+[2mGeneral[0m
+  [2m#3198[0m  [2m3:45 PM[0m  🔵  Pattern library directory completely untracked in repository  
+  [2m#3199[0m           🔵  Pattern library is new skill addition to existing repository  
+
+[33m#S998[0m Validate pattern-library skill documentation against actual game codebases (Eye Strike2 and 3 Leprechaun's Pots specifications) (Jun 26, 3:46 PM)
+
+[2mGeneral[0m
+  [2m#3200[0m  [2m3:49 PM[0m  🟣  Pattern library validation framework launched for 5 Cocos slot game projects  
+
+[33m#S1000[0m Validate pattern-library skill documentation against actual game codebases (Eye Strike2, 3 Leprechaun's Pots, and related projects) (Jun 26, 3:50 PM)
+
+[2m..\..\Cocos_Project\uk_722_robinhood_client\assets\Script\SymbolChange.ts[0m
+  [2m#3201[0m  [2m3:51 PM[0m  🔵  Pattern Library Verification - Multi-Agent Cross-Codebase Validation  
+
+[2m..\..\Cocos_Project\uk_722_robinhood_client\assets\Script\Game_Define.ts[0m
+  [2m#3202[0m  [2m3:52 PM[0m  🔵  Pattern Library Verification Complete - File Sizes and Core Mechanisms Validated  
+
+[2m..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\FakeReelManager.ts[0m
+  [2m#3205[0m           🔵  Pattern Library Deep Verification - Advanced Feature Mechanisms and Architecture Details  
+
+[33m#S1002[0m Verify pattern-library skill using Eye Strike2 and 3 Leprechaun's Pots specification data against actual game client codebases (Jun 26, 3:53 PM)
+
+[2m..\..\Cocos_Project\uk_722_robinhood_client\assets\game\Text\demo\fake_reel_mg.txt[0m
+  [2m#3208[0m  [2m3:55 PM[0m  🔵  Pattern-library skill validation across multiple slot game projects  
+
+[2m..\..\Cocos_Project\uk_746_far_west_client\assets\Script\ColumnSymbol.ts[0m
+  [2m#3209[0m  [2m3:56 PM[0m  🔵  Slot game codebase pattern investigation across multiple projects  
+
+[2m..\..\Cocos_Project\uk_slot_eye_strike\extensions\astarte-framework\assets\utilis\ExtraBetController.ts[0m
+  [2m#3210[0m           🔵  Eye Strike ExtraBet Controller Architecture  
+
+[2m..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\MagicPot\MagicPotController.ts[0m
+  [2m#3211[0m           🔵  MagicPot Server-Client Level Mapping System  
+
+[33m#S1003[0m Ground-truth verification of game feature documentation cards against actual source code across 5 slot game projects (Jun 26, 3:56 PM)
+
+[2m..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\GameState\ScatterShowState.ts[0m
+  [2m#3212[0m  [2m3:57 PM[0m  🔵  Collect Symbol Audio and Position Tracking System  
+
+[2massets/Script/GameState/RespinState.ts[0m
+  [2m#3213[0m  [2m3:59 PM[0m  🔵  Verified far_west slot game feature implementation claims  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\collect-feature.md[0m
+  [2m#3214[0m  [2m4:01 PM[0m  🔵  Documentation error inspection before correction  
+  [2m#3215[0m           🔴  Fixed cross-project feature misattribution in collect-feature documentation  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\bomb-feature.md[0m
+  [2m#3216[0m           🔴  Corrected bomb mechanism documentation to match actual client implementations  
+  [2m#3217[0m  [2m4:02 PM[0m  ✅  Added implementation warning callout to bomb-feature reference table  
+  [2m#3218[0m           🔴  Updated bomb variants table and edge cases to reflect server-driven cascade model  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\extra-bet.md[0m
+  [2m#3219[0m           ✅  Added project-specific annotations to extra-bet and fake-reel-manager documentation  
+
+[2m..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\mystery-symbol.md[0m
+  [2m#3220[0m  [2m4:03 PM[0m  ✅  Enhanced mystery-symbol server-only variant with far_west implementation details  
+
+[33m#S1004[0m Verify pattern-library skill using Eye Strike2 and 3 Leprechaun's Pots specification documents (Jun 26, 4:03 PM)
+
+[34mInvestigated:[0m 5 pattern library markdown cards (collect-feature, bomb-feature, extra-bet, fake-reel-manager, mystery-symbol) were verified against actual source code from 5 projects: tct, robinhood, eye_strike, far_west, and chachacha. Each card's technical details (filenames, enums, state management, logic flow) were cross-checked against ground-truth implementations.
+
+[33mLearned:[0m Pattern library cards showed high accuracy overall (tct/robinhood 100%, eye_strike 7/8, far_west 95%). Code-level verification caught 2 critical issue types that spec-only validation missed: (1) cross-project misattribution where wrath_of_thunder's 4-type upgrade system was incorrectly attributed to eye_strike, and (2) design concepts mistakenly documented as actual implementation details (e.g., bomb cascade described as client recursion when it's actually server data-layer driven). Ground-truth code verification proves essential as the final validation layer.
+
+[32mCompleted:[0m 5 markdown files corrected in AI-canonical-corp pattern library: collect-feature.md (removed fictitious eye_strike upgrade types, corrected to real Collect+MagicPot mechanism); bomb-feature.md (5 major fixes: 8/4 directions, server-driven range via change_pos, Promise.all parallelism, cascade as server data layer, game-specific behavior clarification); extra-bet.md (added isTwoStep framework note); fake-reel-manager.md (added far_west entry); mystery-symbol.md (added far_west Symbol.Mystery=98 details). Changes staged but not yet committed.
+
+[35mNext Steps:[0m Awaiting user decision on whether to commit and push the 5 corrected pattern library files. Suggested commit message prepared: "fix(pattern-library): 依 5 來源專案程式碼覆驗修正 collect-feature 誤植 + bomb-feature 機制 + 3 卡註記"
+
+
+[2mAccess 459k tokens of past research & decisions for just 23,055t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

@@ -1,0 +1,226 @@
+# [uk_pirates_queen] recent context, 2026-06-25 7:24pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (15,830 tokens to read)
+- Work investment: 229,678 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 25, 2026
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3052 | 11:52 AM | 🔴 | Clear Bounty Data When FreeGame Ends |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3053 | 1:24 PM | 🔵 | NearWin logic disabled during FreeGame mode |  |  |
+| #3054 | " | 🔵 | Target symbol spine animation reuse during falls |  |  |
+| #3055 | 1:25 PM | ✅ | Added diagnostic logging for Target symbol spine reuse during falls |  |  |
+| #3056 | " | ✅ | Added diagnostic logging for new Target spine creation during falls |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3057 | " | ✅ | TypeScript validation passed after diagnostic logging additions |  |  |
+
+**#S975** Debug intermittent GoldTarget IN animation not playing issue in FreeGame mode (Jun 25, 2:03 PM)
+
+**#S976** Stop FreeGame BGM when FG_End sound effect plays (Jun 25, 2:08 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3058 | 2:09 PM | ✅ | Added diagnostic logging for GoldTarget IN animation debugging |  |  |
+| #3059 | " | ✅ | Implemented comprehensive GoldTarget animation path diagnostics |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3060 | 2:13 PM | 🔵 | Initial toFixed Usage Search in Codebase |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3061 | " | 🔵 | Winning Score Formatting System Located |  |  |
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3062 | 2:14 PM | 🔵 | Number Formatting System File Scope Identified |  |  |
+
+**extensions/astarte-framework/assets/utilis/Tools.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3063 | " | 🔵 | FORMAT_NUMBER_TYPE Enum Definition Located in Framework |  |  |
+| #3064 | " | 🔵 | Complete FORMAT_NUMBER_TYPE Enum and Decimal Configuration System |  |  |
+
+**extensions/astarte-framework/assets/Component/BigWinComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3065 | 2:17 PM | 🔵 | FormatNumberThousands Usage in Framework Components |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3066 | " | 🔵 | Small Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/Common/BigWinControll.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3067 | " | 🔵 | Big Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3068 | 4:24 PM | 🔵 | WantedPosterItem fade animation currently only handles multiplier label |  |  |
+| #3069 | " | 🔵 | m_x9999UIOpacity property exists but is never used |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3070 | " | 🔵 | m_x9999UIOpacity not configured in prefab |  |  |
+| #3071 | 4:25 PM | 🔵 | Prefab structure confirmed with 789 total lines |  |  |
+| #3072 | " | 🔵 | UIOpacity component exists on x9999 node but not bound to property |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3073 | 4:26 PM | 🔴 | Added fade animations for x9999 multiplier indicator |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3074 | " | 🔴 | Wired m_x9999UIOpacity to UIOpacity component in prefab |  |  |
+| #3075 | " | ✅ | Validated prefab binding for m_x9999UIOpacity |  |  |
+
+**#S977** Fix Free Game BGM timing to stop when FG_End sound plays during free game exit (Jun 25, 5:01 PM)
+
+**assets/Script/FreeGame/FreeGameExitManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3076 | 5:02 PM | 🔵 | FreeGame BGM stop timing issue identified |  |  |
+| #3077 | " | 🔵 | FreeGameExitManager uses event-driven architecture without direct GameView reference |  |  |
+| #3078 | " | 🔵 | PLAY_OUT_SPINE_ANIM event handler receives four parameters |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3079 | 5:03 PM | 🔴 | Stop FreeGame BGM when FG_End sound effect plays |  |  |
+| #3080 | 5:04 PM | 🔄 | Remove redundant FreeGame BGM stop call |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3081 | " | ✅ | TypeScript compilation validates FreeGame BGM stop changes |  |  |
+
+**#S978** Add fade in/fade out handling for m_x9999Node in WantedPosterItem animations, and commit FreeGame BGM timing adjustment (Jun 25, 5:04 PM)
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3082 | 5:31 PM | 🔴 | Free Game BGM Stop Timing Fix |  |  |
+
+**#S979** Fix collect演出音效重複播放 - SPIN+2場景下FG_Scatter_trigger音效疊播兩次 (Jun 25, 5:31 PM)
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3083 | 6:04 PM | 🔵 | FG_Scatter_trigger audio playback investigation |  |  |
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3084 | " | 🔵 | FG_Scatter_trigger plays once per scatter symbol in loop |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3085 | " | 🔵 | AudioManager concurrent playback limiting mechanism |  |  |
+| #3086 | " | 🔵 | Audio instance tracking and automatic cleanup mechanism |  |  |
+| #3087 | 6:05 PM | 🔵 | Default audio concurrent limit is unlimited (-1) |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3088 | " | 🔵 | Global concurrent limit set to 24 in GameView initialization |  |  |
+
+**#S980** Fix audio overlapping issue in scatter collection - move FG_Scatter_trigger sound out of loop (Jun 25, 6:11 PM)
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3089 | 6:11 PM | 🔴 | 修復 FG_Scatter_trigger 音效疊播問題 |  |  |
+
+**#S981** Verify and fix SPIN+2 totem audio playing FG_Scatter_trigger sound effect twice (Jun 25, 6:20 PM)
+
+**#S982** Investigation of whether target explosion visual effects (golden grid lines) could appear on target symbols due to code behavior (Jun 25, 6:21 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3090 | 6:46 PM | 🔵 | TARGET_EXPLODE_PREFAB_KEY and symbolPrefabKey prefab separation investigation |  |  |
+| #3091 | " | 🔵 | PlayTargetExplodeEffect prefab layer separation confirmed |  |  |
+| #3092 | " | 🔵 | Target prefab asset definitions show complete separation at source level |  |  |
+
+**assets/Script/Common/PrefabPoolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3093 | 6:47 PM | 🔵 | PrefabPoolManager key-based isolation mechanism |  |  |
+| #3094 | " | 🔵 | PrefabPoolManager template instantiation guarantees prefab isolation |  |  |
+
+**#S983** Verify whether TARGET_EXPLODE_PREFAB_KEY's Lightframe grid layers could appear on symbolPrefabKey's prefab (user suspected they shouldn't) (Jun 25, 6:56 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3095 | 6:56 PM | 🔵 | Target prefab assets located for explosion/symbol cross-contamination investigation |  |  |
+
+**game/Prefab/Symbol/TargetExplode.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3096 | 6:57 PM | 🔵 | Prefab skeleton data verified as independent - no cross-contamination possible |  |  |
+
+**game/Spine/Symbol/Target_Explode.skel.meta**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3097 | " | 🔵 | Explosion spine asset chain traced from prefab to source files |  |  |
+
+**game/Spine/Symbol/Target_Explode.atlas**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3098 | 6:58 PM | 🔵 | Explosion spine atlas contains grid line texture matching visual artifact description |  |  |
+
+**game/Spine/Symbol/Target_Explode.skel**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3099 | " | 🔵 | Explosion skeleton contains Active_Gold and Active_Red animation variants |  |  |
+| #3100 | 7:01 PM | 🔵 | Explosion skeleton contains extensive grid line rendering system with 96+ frame markers |  |  |
+| #3101 | 7:02 PM | 🔵 | Grid line system confirmed exclusive to explosion skeleton - zero presence in all symbol skeletons |  |  |
+
+**#S984** Investigate whether Active_Red's Lightframe grid layer appears on symbolPrefab and document findings in markdown (Jun 25, 7:23 PM)
+
+**Investigated**: Analyzed the architecture of Target_Explode.skel animation system, examining how Active_Red's Lightframe layer relates to symbolPrefab, including asset layer symbol skeleton slots, runtime skeleton/pool/parent layers, and prefab nesting structure
+
+**Learned**: Active_Red's grid (Lightframe) layer cannot appear on symbolPrefab due to architectural constraints: asset layer symbol skeleton has no corresponding slots (x0), runtime uses independent skeleton/pool/parent layers, and prefab layer has no nesting. The full-board 5×5 grid visual is actually baked into Target_Explode.skel's Active_Red animation itself, combining single-cell explosion with full-board LightFrame in one skeleton. Multiple targets calling `PlayTargetExplodeEffect` with `setWorldPosition(worldPos)` may cause overlapping effects when positioned to single-cell coordinates
+
+**Completed**: Root cause analysis completed identifying that the full-board grid is part of the explosion animation design itself, not a layering bug. Identified potential misalignment/ghosting issue requiring art/design team review
+
+**Next Steps**: Pending user decision on whether to investigate worldPos positioning offset behavior or prepare a summary document for stakeholders (art/design teams) explaining the findings
+
+
+Access 230k tokens of past research & decisions for just 15,830t. Use MCP search tools to access memories by ID.

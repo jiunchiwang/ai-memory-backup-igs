@@ -1,0 +1,246 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-06 1:02pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,242 tokens to read)
+- Work investment: 119,911 tokens spent on research, building, and decisions
+- Your savings: 84% reduction from reuse
+
+### Jul 6, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3598 | 11:21 AM | 🔵 | Competing Process is Claude Code Telegram Plugin Running Automatically |  |  |
+
+**C:\Users\jiunchiwang\.claude\plugins\marketplaces\claude-plugins-official\external_plugins\telegram\server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3599 | 11:22 AM | 🔵 | Claude Code Plugin Uses TELEGRAM_BOT_TOKEN Environment Variable |  |  |
+| #3600 | " | 🔵 | Claude Code Plugin Auto-Loads Token from ~/.claude/channels/telegram/.env |  |  |
+
+**C:\Users\jiunchiwang\.claude\channels\telegram\.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3601 | " | 🔵 | Plugin and Bridge Use Different Bot Tokens - Conflict is Between 7 Duplicate Bridge Processes |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3602 | 11:24 AM | 🔵 | Bridge Spawns Multiple Detached Child Processes That Can Survive Parent Death |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3603 | 11:28 AM | 🔵 | Token inheritance mapped across AcpClient spawn points |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3604 | 11:29 AM | 🔵 | buildSpawnEnv function identified as token pollution source |  |  |
+| #3605 | " | 🔴 | Fixed Telegram bot token leak causing bridge crash loop |  |  |
+| #3606 | " | ✅ | Token filtering fix verified with typecheck and process monitoring |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3607 | 11:30 AM | 🔵 | Telegram plugin traced to Cursor editor, not bridge-spawned agent |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3608 | 11:31 AM | 🔄 | Refined token filtering to explicitly disable plugin in headless sessions |  |  |
+| #3609 | " | ✅ | Refined token filtering approach verified type-safe |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3610 | " | ✅ | Cleaned up pre-fix orphaned processes and old-code bridge instance |  |  |
+| #3611 | 11:33 AM | 🔴 | Production verification confirms crash loop fully resolved |  |  |
+| #3612 | " | ✅ | Extended stability confirmed with no plugin spawn activity |  |  |
+| #3613 | " | 🔵 | Telegram Bot Bridge Failing Due to Multiple Instance Conflict |  |  |
+
+**#S1109** Fix environment variable leakage in mcp-pool.ts to prevent sensitive data exposure to child processes (Jul 6, 11:35 AM)
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3614 | 11:36 AM | 🔴 | Fixed 409 Telegram Conflict by Clearing Bot Token in Child Agent Environments |  |  |
+
+**#S1110** Telegram bot 409 Conflict error investigation led to MCP subprocess token isolation fix (Jul 6, 11:38 AM)
+
+**src/provider/mcp-pool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3615 | 11:38 AM | 🔴 | Prevent TELEGRAM_BOT_TOKEN leakage to MCP child processes |  |  |
+| #3616 | " | 🔴 | MCP child processes no longer inherit TELEGRAM_BOT_TOKEN |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3617 | 11:39 AM | 🔵 | Telegram Bot Multiple Instance Conflict Error |  |  |
+
+**#S1111** Session initiated with greeting (Jul 6, 11:39 AM)
+
+**#S1112** Telegram bridge bot 409 conflict error investigation and menu restoration (Jul 6, 11:42 AM)
+
+**src/provider/mcp-pool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3618 | 11:44 AM | 🔵 | Telegram Menu Regression After MCP Token Isolation |  |  |
+
+**C:\Users\jiunchiwang\.claude\plugins\marketplaces\claude-plugins-official\external_plugins\telegram\server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3619 | " | 🔵 | Telegram Menu Hardcoded in MCP Plugin |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3620 | " | 🔵 | Duplicate setMyCommands Calls Conflict Between Plugin and Bridge |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3621 | " | 🔴 | Resolved Menu Conflict by Deleting Plugin's Scoped Commands |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3622 | 11:45 AM | 🔵 | Telegram Bridge Bot Conflict Error - Multiple Instances Running |  |  |
+
+**#S1113** Investigate and fix Telegram bot menu command issues preventing router readiness (Jul 6, 11:45 AM)
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3623 | 11:46 AM | 🔵 | Bot Command Registration Implementation Review |  |  |
+| #3624 | 11:47 AM | 🔵 | Bot Command Registration Call Site Location |  |  |
+| #3625 | " | 🟣 | Preventive Command Scope Cleanup Added to Bot Initialization |  |  |
+| #3626 | " | ✅ | Preventive Cleanup Change Verified with TypeScript |  |  |
+
+**#S1114** Execute refreshrouting command in bridge and verify router ready status - investigation revealed routing file never created (Jul 6, 11:49 AM)
+
+**src/doctor.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3627 | 11:49 AM | 🔵 | Embedding router readiness check mechanism |  |  |
+
+**src/embed-router.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3628 | " | 🔵 | Embedding router initialization requires model loading and centroid computation |  |  |
+| #3629 | 11:50 AM | 🔵 | Embedding router initialization happens at startup with graceful error handling |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3630 | " | 🔵 | Bridge config file resolution with fallback mechanism |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3631 | " | 🔵 | Missing MEMORY_DIR configuration prevents embedding router initialization |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3632 | 11:51 AM | 🔵 | MEMORY_DIR falls back to hardcoded default when not set in environment |  |  |
+| #3633 | " | 🔵 | Hardcoded MEMORY_DIR default points to non-existent F: drive on this system |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3634 | " | 🔵 | AIMemory directory exists on G: drive but MEMORY_DIR points to non-existent F: drive |  |  |
+
+**..\..\AI\AIMemory\config**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3635 | 11:52 AM | 🔵 | Config directory exists but lacks notebooklm-routing.json file |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3636 | " | 🔵 | /refresh-routing command generates notebooklm-routing.json from NotebookLM notebooks |  |  |
+
+**.env**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3637 | " | 🔵 | MEMORY_DIR is correctly configured but notebooklm-routing.json still missing |  |  |
+
+**#S1115** Passive Monitor scheduled health check - verify system status and alert on anomalies (Jul 6, 12:00 PM)
+
+**src/commands/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3638 | 12:00 PM | 🔵 | RefreshRouting command implementation and routing table generation logic |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3639 | 12:01 PM | 🔵 | NotebookLM MCP tool availability investigation |  |  |
+
+**~/.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3640 | " | 🔵 | MCP server configuration corruption in user's Claude Code setup |  |  |
+
+**C:\Users\jiunchiwang\.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3641 | " | 🔵 | NotebookLM MCP server never configured in any Claude agent CLI |  |  |
+
+**#S1116** Self-check of telegram-kiro-bridge system health after previous token leak fix (Jul 6, 12:01 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3642 | 12:02 PM | 🔵 | NotebookLM MCP setup script exists in project scripts directory |  |  |
+
+**scripts/setup-local-notebooklm-mcp.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3643 | " | 🔵 | NotebookLM MCP setup script targets wrong CLI - architectural mismatch discovered |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3644 | " | 🔵 | NotebookLM MCP server package not installed - root cause identified |  |  |
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3645 | 12:21 PM | 🔵 | NotebookLM routing configuration missing |  |  |
+| #3646 | 12:22 PM | 🔵 | Telegram-Kiro-Bridge Health Check Post-409-Fix |  |  |
+
+**#S1117** Review git diff of docs/usage-guide.html before committing documentation updates (Jul 6, 12:22 PM)
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3647 | 12:22 PM | ✅ | Usage Guide Documentation Updates |  |  |
+
+**#S1118** Status check and self-diagnosis after fixing 409 crash loop (buildSpawnEnv token leak issue) (Jul 6, 12:23 PM)
+
+**Investigated**: Working tree state and remaining open issues in telegram-kiro-bridge
+
+**Learned**: Commit 4cad7a8 has been applied, working tree is clean. One deferred issue exists: notebooklm-routing.json references NotebookLM MCP which is not installed
+
+**Completed**: Changes addressing the 409 crash loop (buildSpawnEnv token leak) have been committed as 4cad7a8. Working tree is now clean with no pending changes
+
+**Next Steps**: Session is in stable state awaiting next task. NotebookLM routing configuration issue is documented but deferred until needed
+
+
+Access 120k tokens of past research & decisions for just 19,242t. Use MCP search tools to access memories by ID.

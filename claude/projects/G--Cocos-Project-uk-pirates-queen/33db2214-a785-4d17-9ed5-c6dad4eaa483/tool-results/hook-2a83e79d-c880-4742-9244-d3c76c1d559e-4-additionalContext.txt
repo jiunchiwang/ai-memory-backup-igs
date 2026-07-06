@@ -1,0 +1,216 @@
+# [uk_pirates_queen] recent context, 2026-06-30 4:04pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,348 tokens to read)
+- Work investment: 509,067 tokens spent on research, building, and decisions
+- Your savings: 97% reduction from reuse
+
+### Jun 29, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3282 | 10:12 AM | 🔵 | Windows Credential Manager GitHub-related credential entry identified |  |  |
+| #3283 | " | 🔵 | Complete Windows Credential Manager inventory shows no GitHub OAuth tokens |  |  |
+| #3284 | " | 🔵 | Git credential helper configuration confirms GCM managing GitHub authentication |  |  |
+| #3285 | 10:13 AM | 🔵 | GCM trace reveals OAuth credential regeneration despite empty credential store |  |  |
+
+**#S1017** Fix layer ordering bug in PlayTargetExplodeEffect where reused target Spine nodes appear on wrong layer (Jun 29, 3:47 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3286 | 3:47 PM | 🔵 | NearWin and vibration system code location identified |  |  |
+| #3287 | " | 🔵 | Three vibration trigger points found in NearWin symbol drop logic |  |  |
+| #3288 | " | 🔵 | Third vibration point located in EnterPlate sky-drop method |  |  |
+| #3289 | 3:48 PM | 🔴 | Restricted NearWin vibration to Scatter drops only - first trigger point |  |  |
+| #3290 | " | 🔴 | Restricted NearWin vibration to Scatter drops only - second trigger point |  |  |
+| #3291 | 4:10 PM | 🔴 | Cascaded SCATTER symbols missing IN animation after elimination drop |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3292 | 4:54 PM | 🔵 | Target spine layer inconsistency in PlayTargetExplodeEffect |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3293 | 4:55 PM | 🔵 | Game layer hierarchy defines five rendering layers |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3294 | " | 🔵 | PlayTargetExplodeEffect called from CountMultState during multiplier phase |  |  |
+
+**assets/Script/GameState/CountMultState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3295 | " | 🔵 | Target explosion sequence coordination with character and cannon animations |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3296 | 4:56 PM | 🔵 | Exact location of layer bug in target explosion reuse path |  |  |
+| #3297 | 4:57 PM | 🔴 | Fixed target explosion layer inconsistency by reparenting reused nodes to SCATTER layer |  |  |
+
+**#S1018** Debug and fix target/crosshair sticking to game board after spin (Jun 29, 4:58 PM)
+
+**#S1019** Investigated root cause of target symbol persistence bug and provided code fix recommendation (Jun 29, 5:08 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3298 | 5:09 PM | 🔵 | Target node cleanup mechanism investigation |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3299 | " | 🔵 | Root cause identified for sticky target bug |  |  |
+
+**#S1020** Fixed target Spine layer mismatch bug in PlayTargetExplodeEffect function (Jun 29, 5:13 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3300 | 5:13 PM | 🔵 | ClearAll() invocation points mapped across game state transitions |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3301 | 5:29 PM | 🔵 | Target Spine Layer Mismatch in PlayTargetExplodeEffect |  |  |
+
+**#S1021** Trigger slot reel DropOut immediately on Spin button press instead of waiting for OnRecvSpinAck, moving old symbols out before big award preview animation (Jun 29, 5:29 PM)
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3302 | 5:41 PM | ✅ | Disabled manual spin state reset for quick-stop wheel feature |  |  |
+
+**extensions/astarte-framework/assets/Managers/NewBottomBarManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3303 | 5:43 PM | 🔵 | START_SPIN state unused in bottom bar state machine |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3304 | 5:44 PM | 🔵 | Test function OnRecvSpinAck_Test retains original START_SPIN logic |  |  |
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3305 | " | 🔵 | AwardState also uses START_SPIN for post-BigWin button state |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3306 | 5:45 PM | 🔵 | OnRecvSpinAck_Test appears to be unused dead code |  |  |
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3307 | 7:12 PM | 🔵 | SpinState flow structure analyzed for drop-out/pre-win/drop-in refactor |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3308 | " | 🔵 | Drop-out/drop-in mechanics found across 14 files in slot game architecture |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3309 | " | 🔵 | SlotReels near-win and drop mechanics architecture revealed |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3310 | 7:13 PM | 🔵 | OnRecvSpinAck orchestration flow identified as primary refactor target |  |  |
+| #3311 | " | 🔵 | ShowBigAwardHint function structure analyzed for pre-win choreography |  |  |
+| #3312 | " | 🔵 | CheckBigAwardHint trigger conditions defined for pre-win animation activation |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3313 | 7:14 PM | 🔵 | StartSpin and TriggerDropOut idempotency mechanism revealed |  |  |
+| #3314 | " | 🔵 | StartFallAllVisibleSymbolsByServerPlateInfo handles new plate drop-in with dual-path logic |  |  |
+| #3315 | " | 🔵 | Promise consumption architecture linking TriggerDropOut to SetPlateInfo revealed |  |  |
+| #3316 | 7:15 PM | 🔵 | SetPlateInfo triggers drop-in via DropSymbolsToBoardByServerPlateInfo call |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3317 | " | 🔵 | CheckBigAwardHint FreeGame branch uses higher odds threshold |  |  |
+
+**#S1022** Refactor slot reel drop-out animation timing to start immediately when Spin button is pressed, rather than waiting for server response (Jun 29, 7:28 PM)
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3318 | 7:28 PM | 🔵 | StartSpin call chain maps spin initiation flow |  |  |
+
+**#S1023** Refactor Spin button flow to sequence reel transitions: exit old reels → play anticipation effects → enter new reels (Jun 29, 7:32 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3319 | 7:33 PM | ✅ | Updated slot reel freeze timing documentation to reflect drop-out sequence refinement |  |  |
+| #3320 | " | 🟣 | Implemented drop-out animation trigger on spin button press in slot reel system |  |  |
+
+**#S1024** User reported NearWin drop sequence skipping columns after col 0, Claude investigated cascade elimination-patch cycle (Jun 29, 7:39 PM)
+
+**_claude_temp/補牌Error那手.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3321 | 8:08 PM | 🔵 | NearWin Drop Sequence Skips Remaining Columns |  |  |
+
+**#S1025** Debug why tiles aren't filled completely before elimination when NearWin is active and scatter threshold is reached during tile filling (Jun 29, 8:09 PM)
+
+**_claude_temp/補牌Error那手.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3322 | 8:10 PM | 🔵 | Test Case Data Structure for NearWin Drop Bug |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3323 | 8:12 PM | 🔵 | Game Board Configuration and Scatter Symbol Definitions |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3324 | 8:16 PM | ⚖️ | Selected minimal-change approach for NearWin tile-filling bug fix |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3325 | " | 🔵 | NearWin tile-filling logic structure examined before fix |  |  |
+| #3326 | 8:17 PM | 🔵 | NearWin flag and effect method usage mapped across SlotReels.ts |  |  |
+| #3327 | " | 🔴 | Conditionalized NearWin effects in tile-filling loop (step 1 of fix) |  |  |
+| #3328 | 8:18 PM | 🔴 | Removed early break statement to complete NearWin tile-filling bug fix |  |  |
+| #3329 | " | ✅ | TypeScript validation passed after NearWin bug fix |  |  |
+| #3330 | " | ✅ | IDE diagnostics confirmed no issues in SlotReels.ts after fix |  |  |
+
+**#S1026** Fix SlotReels NearWin loop breaking prematurely when 5 Scatters trigger, preventing remaining reels from completing tile drops (Jun 29, 8:25 PM)
+
+### Jun 30, 2026
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3352 | 10:49 AM | 🔴 | Scatter animations freeze at last frame for Silver/Gold Collect |  |  |
+
+
+Access 509k tokens of past research & decisions for just 17,348t. Use MCP search tools to access memories by ID.

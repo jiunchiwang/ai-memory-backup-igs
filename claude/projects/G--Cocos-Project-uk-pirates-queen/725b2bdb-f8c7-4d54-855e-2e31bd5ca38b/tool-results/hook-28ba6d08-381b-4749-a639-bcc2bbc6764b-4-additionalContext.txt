@@ -1,0 +1,248 @@
+# [uk_pirates_queen] recent context, 2026-06-26 3:02pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (15,813 tokens to read)
+- Work investment: 327,535 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jun 25, 2026
+
+**#S977** Fix Free Game BGM timing to stop when FG_End sound plays during free game exit (Jun 25, 5:01 PM)
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3079 | 5:03 PM | 🔴 | Stop FreeGame BGM when FG_End sound effect plays |  |  |
+| #3080 | 5:04 PM | 🔄 | Remove redundant FreeGame BGM stop call |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3081 | " | ✅ | TypeScript compilation validates FreeGame BGM stop changes |  |  |
+
+**#S978** Add fade in/fade out handling for m_x9999Node in WantedPosterItem animations, and commit FreeGame BGM timing adjustment (Jun 25, 5:04 PM)
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3082 | 5:31 PM | 🔴 | Free Game BGM Stop Timing Fix |  |  |
+
+**#S979** Fix collect演出音效重複播放 - SPIN+2場景下FG_Scatter_trigger音效疊播兩次 (Jun 25, 5:31 PM)
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3083 | 6:04 PM | 🔵 | FG_Scatter_trigger audio playback investigation |  |  |
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3084 | " | 🔵 | FG_Scatter_trigger plays once per scatter symbol in loop |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3085 | " | 🔵 | AudioManager concurrent playback limiting mechanism |  |  |
+| #3086 | " | 🔵 | Audio instance tracking and automatic cleanup mechanism |  |  |
+| #3087 | 6:05 PM | 🔵 | Default audio concurrent limit is unlimited (-1) |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3088 | " | 🔵 | Global concurrent limit set to 24 in GameView initialization |  |  |
+
+**#S980** Fix audio overlapping issue in scatter collection - move FG_Scatter_trigger sound out of loop (Jun 25, 6:11 PM)
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3089 | 6:11 PM | 🔴 | 修復 FG_Scatter_trigger 音效疊播問題 |  |  |
+
+**#S981** Verify and fix SPIN+2 totem audio playing FG_Scatter_trigger sound effect twice (Jun 25, 6:20 PM)
+
+**#S982** Investigation of whether target explosion visual effects (golden grid lines) could appear on target symbols due to code behavior (Jun 25, 6:21 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3090 | 6:46 PM | 🔵 | TARGET_EXPLODE_PREFAB_KEY and symbolPrefabKey prefab separation investigation |  |  |
+| #3091 | " | 🔵 | PlayTargetExplodeEffect prefab layer separation confirmed |  |  |
+| #3092 | " | 🔵 | Target prefab asset definitions show complete separation at source level |  |  |
+
+**assets/Script/Common/PrefabPoolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3093 | 6:47 PM | 🔵 | PrefabPoolManager key-based isolation mechanism |  |  |
+| #3094 | " | 🔵 | PrefabPoolManager template instantiation guarantees prefab isolation |  |  |
+
+**#S983** Verify whether TARGET_EXPLODE_PREFAB_KEY's Lightframe grid layers could appear on symbolPrefabKey's prefab (user suspected they shouldn't) (Jun 25, 6:56 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3095 | 6:56 PM | 🔵 | Target prefab assets located for explosion/symbol cross-contamination investigation |  |  |
+
+**game/Prefab/Symbol/TargetExplode.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3096 | 6:57 PM | 🔵 | Prefab skeleton data verified as independent - no cross-contamination possible |  |  |
+
+**game/Spine/Symbol/Target_Explode.skel.meta**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3097 | " | 🔵 | Explosion spine asset chain traced from prefab to source files |  |  |
+
+**game/Spine/Symbol/Target_Explode.atlas**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3098 | 6:58 PM | 🔵 | Explosion spine atlas contains grid line texture matching visual artifact description |  |  |
+
+**game/Spine/Symbol/Target_Explode.skel**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3099 | " | 🔵 | Explosion skeleton contains Active_Gold and Active_Red animation variants |  |  |
+| #3100 | 7:01 PM | 🔵 | Explosion skeleton contains extensive grid line rendering system with 96+ frame markers |  |  |
+| #3101 | 7:02 PM | 🔵 | Grid line system confirmed exclusive to explosion skeleton - zero presence in all symbol skeletons |  |  |
+
+**#S984** Investigate whether Active_Red's Lightframe grid layer appears on symbolPrefab and document findings in markdown (Jun 25, 7:03 PM)
+
+**#S985** Reduce vibration intensity for tingpai (ready-to-win) state in mahjong slot game (Jun 25, 7:23 PM)
+
+### Jun 26, 2026
+
+**assets/game/Prefab/MainGame.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3106 | 1:11 PM | 🔵 | Located NearWin/聽牌 Feature Implementation Files |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3107 | " | 🔵 | Identified Near-Win Vibration Trigger Points |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3108 | 1:12 PM | 🔵 | Decoded Vibration Control Parameters |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3109 | " | 🔵 | Near-Win State Management and Vibration Triggers |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3110 | 1:13 PM | 🟣 | Added Dedicated Near-Win Shake Constant |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3111 | " | 🔄 | Modified BigHintShake to Accept Custom Distance Parameter |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3112 | " | ✅ | Updated First Near-Win Vibration Call with Reduced Intensity |  |  |
+| #3113 | " | ✅ | Updated Second Near-Win Vibration Call with Reduced Intensity |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3122 | 1:54 PM | 🟣 | Added concurrent playback limit for Wanted sound effects |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3131 | 2:19 PM | 🔵 | Located WantedPosterState bounty performance flow |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3132 | " | 🔵 | Mapped existing Wanted audio integration pattern |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3133 | " | 🔵 | Confirmed Wanted_MultiAdd audio asset exists |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3134 | 2:20 PM | 🔵 | AudioManager structure and concurrent playback control |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3135 | " | 🔵 | Wanted_MultiAdd.mp3 missing Cocos Creator meta file |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3136 | " | 🔵 | GameView auto-loads all registered AudioClips |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3137 | " | 🔵 | Wanted_MultiAdd.mp3 is newly added file without meta |  |  |
+| #3138 | 2:21 PM | 🔵 | Found existing Multiplier_add usage pattern in CountMultState |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3139 | " | 🔵 | CountMultState Multiplier_add audio timing pattern |  |  |
+
+**assets/Script/GameState/CountMultState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3140 | " | 🔵 | AudioManager import pattern for GameState classes |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3142 | 2:22 PM | 🟣 | Registered Wanted_MultiAdd audio in AudioManager |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3144 | " | 🟣 | Configured Wanted_MultiAdd concurrent playback limit |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3145 | " | ✅ | Imported AudioManager into WantedPosterState |  |  |
+| #3147 | " | 🟣 | Integrated Wanted_MultiAdd audio playback in multiplier refresh flow |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3148 | 2:23 PM | 🔵 | Loaded Cocos Creator asset management tools |  |  |
+| #3151 | " | 🔵 | TypeScript configuration deprecation warning |  |  |
+| #3153 | 2:24 PM | ✅ | Verified TypeScript correctness of audio integration changes |  |  |
+| #3154 | " | 🔵 | Confirmed implementation has zero new TypeScript errors |  |  |
+
+**#S990** Commit changes for Wanted_MultiAdd audio integration (multiplier refresh sound effect) (Jun 26, 2:30 PM)
+
+**Investigated**: Git status confirms 3 TypeScript files modified (AudioManager.ts, WantedPosterState.ts, GameView.ts) with +6/-1 lines, plus untracked files Wanted_MultiAdd.mp3 with its .meta file and SPEC.md documentation
+
+**Learned**: Audio playback timing in wanted poster feature: Wanted_burn plays during step 3 (burn animation), Wanted_MultiAdd plays in step 4 (after burn completes, before SET_MULTIPLIER_WITH_ANIM loop), triggered once per group to avoid overlap when concurrent refreshes occur
+
+**Completed**: Integrated Wanted_MultiAdd sound effect across three files: registered audio clip in AudioManager with concurrent limit of 1 in GameView (matching Wanted_in/burn pattern), added playback call in WantedPosterState after burn performance completes. All files pass TypeScript type checking. Cocos Creator generated .meta file for the audio asset
+
+**Next Steps**: Ready to commit - all code changes complete and type-safe, audio asset properly imported with .meta file present
+
+
+Access 328k tokens of past research & decisions for just 15,813t. Use MCP search tools to access memories by ID.

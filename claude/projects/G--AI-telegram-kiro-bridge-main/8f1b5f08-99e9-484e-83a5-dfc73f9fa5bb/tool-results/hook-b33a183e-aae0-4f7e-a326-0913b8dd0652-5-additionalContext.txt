@@ -1,0 +1,242 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-03 10:51am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,450 tokens to read)
+- Work investment: 167,120 tokens spent on research, building, and decisions
+- Your savings: 90% reduction from reuse
+
+### Jun 30, 2026
+
+**#S1050** Project hook modification plan B discussion and Phase 1 wrap-up checkpoint (Jun 30, 11:39 AM)
+
+**#S1051** Bridge process restart requirements and sequencing for observer code activation (Jun 30, 11:40 AM)
+
+**#S1075** User requested to fix all identified issues in the codebase after diagnostic report (Jun 30, 11:43 AM)
+
+### Jul 1, 2026
+
+**src/session-archive.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3442 | 2:00 PM | 🟣 | Session archive and restore with structured JSON persistence |  |  |
+
+**src/tool-hooks.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3443 | " | 🟣 | PostToolUse hook system with pluggable registry and specialist memory |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3444 | " | 🟣 | Tool-usage observer with dual-tier observation layer |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3445 | " | 🟣 | ACP protocol trace, reply deduplication, and runtime health monitoring |  |  |
+
+**src/session-archive.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3452 | 2:01 PM | 🔵 | Upstream merge removes locally-developed features |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3453 | " | ✅ | Clean merge resolution with upstream architectural changes |  |  |
+
+**scripts/check-daily-intel.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3454 | 2:02 PM | 🔵 | Daily Intel smoke test fails after upstream merge |  |  |
+
+**src/daily-intel/podcast.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3455 | " | 🔵 | Stale dist directory causes smoke test failure |  |  |
+
+**dist/daily-intel/podcast.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3456 | " | 🔵 | Compiled JavaScript predates source changes but contains required export |  |  |
+| #3457 | 2:03 PM | ✅ | Fresh TypeScript build resolves all smoke test failures |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3458 | 2:04 PM | 🔵 | Four smoke tests fail in full suite after merge |  |  |
+| #3459 | " | 🔵 | Two real smoke test failures: relay-context-ledger and topic-match |  |  |
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3460 | " | 🔵 | Relay context ledger test fails on session creation assertion |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3461 | " | 🔵 | Topic-match test fails on hardcoded F: drive path |  |  |
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3462 | 2:05 PM | 🔵 | Session manager no longer concatenates relay task blocks in preamble |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3463 | " | 🔵 | Session preamble now includes archiveBlock between workingState and relayTask |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3464 | " | 🔵 | Topic-match test missed portable path fix applied to other tests |  |  |
+
+**#S1076** Review and fix issues in two-day code changes - test script validation (Jul 1, 2:29 PM)
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3465 | 2:31 PM | 🔴 | Fixed relay context ledger test assertion after session archive integration |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3466 | " | ✅ | Updated check-topic-match usage documentation to reflect env-file requirement |  |  |
+
+**facts_Topic/ (topic shard files regenerated)**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3467 | " | 🔴 | Rebuilt topic shards to resolve shard-to-master log synchronization issue |  |  |
+
+**#S1077** Review two-day changes and commit status - discovered pre-commit hook mixed test fixes with auto-synced skill files (Jul 1, 2:32 PM)
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3468 | 3:22 PM | ✅ | Updated test scripts for session archive block integration |  |  |
+| #3469 | " | 🔴 | Fixed stale smoke tests after session archive integration |  |  |
+
+**#S1078** Review of past two days' changes to verify commit cleanliness and readiness (Jul 1, 3:23 PM)
+
+**default-skills/ms-portable-skill-authoring/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3470 | 3:24 PM | ✅ | Undid mixed commit to separate test fixes from auto-synced skill files |  |  |
+| #3471 | 3:25 PM | ✅ | Isolated default-skills auto-sync into dedicated commit |  |  |
+
+**#S1082** Restore missing functionality after upstream merge - investigation revealed silent tool observation layer regression (Jul 1, 3:25 PM)
+
+### Jul 3, 2026
+
+**scripts/check-acp-model-effort.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3491 | 9:11 AM | 🔵 | Four smoke test failures identified in two-day change review |  |  |
+
+**#S1083** Restore seq-tier tool observer functionality lost in upstream merge (Jul 3, 9:59 AM)
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3492 | 10:00 AM | 🔵 | Extracted seq observation layer source from pre-merge commit |  |  |
+
+**scripts/check-tool-observer.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3493 | " | 🔵 | Identified orphaned test file expecting seq observation layer |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3494 | " | 🔵 | Schema comparison confirms dual-tier system completely removed in merge |  |  |
+| #3495 | 10:01 AM | 🔵 | Full diff reveals extensive local enhancements lost in merge |  |  |
+
+**src/provider/tool-loop.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3496 | " | 🔵 | RTK command snapshot timing differs between local and merged versions |  |  |
+| #3497 | 10:02 AM | 🔴 | BC-7 regression confirmed: observations record post-RTK rewritten commands instead of originals |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3498 | " | 🔵 | Current sessionManager completely missing seq observation infrastructure |  |  |
+| #3499 | " | 🔵 | Extracted complete seq observation wiring from pre-merge sessionManager |  |  |
+| #3500 | 10:03 AM | 🔵 | Extracted complete tool_call_update seq observation recording logic |  |  |
+| #3501 | " | 🔵 | Current sessionManager missing both _toolTitles and _recentToolNames infrastructure |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3502 | 10:04 AM | ✅ | Restored dual-tier tool-observer.ts from pre-merge commit |  |  |
+
+**src/provider/tool-loop.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3503 | 10:05 AM | 🔴 | Fixed BC-7 regression: capture args before RTK rewrite for observations |  |  |
+| #3504 | " | 🔴 | Completed BC-7 fix: both observation paths now use pre-RTK args snapshot |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3505 | " | ✅ | Added tool-observer imports to sessionManager for seq observation wiring |  |  |
+| #3506 | 10:06 AM | ✅ | Added seq observation infrastructure fields to ChatSession interface |  |  |
+| #3507 | " | ✅ | Wired tool_call case to maintain seq observation infrastructure |  |  |
+| #3508 | " | 🟣 | Fully restored seq observation recording in ACP tool_call_update handler |  |  |
+| #3509 | 10:07 AM | 🟣 | Completed seq observation restoration with TURN_MARKER logic in resetTurn |  |  |
+
+**scripts/check-tool-observer.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3510 | " | 🟣 | Seq observation restoration verified: all tests pass, build clean |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3511 | " | 🟣 | Full smoke test suite passes: 43/44 tests, only pre-existing data drift failure |  |  |
+
+**src/provider/tool-loop.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3512 | 10:08 AM | 🟣 | Seq observation restoration complete: 3 files modified, all call sites reconnected |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3513 | " | 🟣 | Complete merge regression fix: 131 lines added across 3 files to restore dual-tier observations |  |  |
+
+**#S1084** Review of two-day changes revealed topic shard data drift; seq-tier restoration changes pending commit decision (Jul 3, 10:11 AM)
+
+**scripts/rebuild-topic-shards.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3518 | 10:12 AM | 🔵 | Topic shard rebuild script examined and dry-run validated |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3521 | 10:19 AM | 🔴 | Restored seq-tier tool observation layer lost in upstream merge |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3522 | " | 🔵 | session/set_config_option ACP request origin and purpose |  |  |
+
+**#S1085** User asked where session/set_config_option came from, triggering investigation into feature origin and purpose (Jul 3, 10:19 AM)
+
+
+Access 167k tokens of past research & decisions for just 17,450t. Use MCP search tools to access memories by ID.

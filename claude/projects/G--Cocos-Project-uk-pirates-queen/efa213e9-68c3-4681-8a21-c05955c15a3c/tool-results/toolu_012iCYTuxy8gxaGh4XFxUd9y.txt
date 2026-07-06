@@ -1,0 +1,246 @@
+assets\Script\WantedPoster\WantedPosterManager.ts-40-    SET_WANTED_POSTER_UI_SHOW: "WANTED_POSTER_MANAGER_SET_WANTED_POSTER_UI_SHOW",
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-41-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-42-    /**
+assets\Script\WantedPoster\WantedPosterManager.ts:43:     * @ch 對 BaseSymbol 對應的常駐 item 播 Mark → Mark_Idle loop
+assets\Script\WantedPoster\WantedPosterManager.ts:44:     * @param baseSymbol number 對應的 BaseSymbol（M1~M9）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-45-     * @param resolve () => void 播完 Mark 後呼叫（Mark_Idle 已在 spine 上 loop）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-46-     */
+assets\Script\WantedPoster\WantedPosterManager.ts-47-    PLAY_MARK: "WANTED_POSTER_MANAGER_PLAY_MARK",
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-48-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-49-    /**
+assets\Script\WantedPoster\WantedPosterManager.ts:50:     * @ch 對 BaseSymbol 對應的常駐 item 播 Mark_Active 並關閉 item
+assets\Script\WantedPoster\WantedPosterManager.ts:51:     * @param baseSymbol number 對應的 BaseSymbol
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-52-     * @param resolve () => void 播完 Mark_Active 且 item.active=false 後呼叫
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-53-     */
+assets\Script\WantedPoster\WantedPosterManager.ts-54-    PLAY_MARK_ACTIVE: "WANTED_POSTER_MANAGER_PLAY_MARK_ACTIVE",
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-114-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-115-    /**
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-116-     * @ch 各 item 目前綁定的懸賞令資料（null = 該 item 未顯示）
+assets\Script\WantedPoster\WantedPosterManager.ts:117:     * 與 m_wantedPosterItems 同索引，是「同 BaseSymbol 持續判斷」與「倍率是否變」的真實依據
+assets\Script\WantedPoster\WantedPosterManager.ts:118:     * （item 本身只記 BaseSymbol、不記 Multiple，故由 Manager 統一追蹤）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-119-     */
+assets\Script\WantedPoster\WantedPosterManager.ts-120-    private m_currentBounty: (IBountyData | null)[] = [];
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-121-    //#endregion Variables
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-267-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-268-    /**
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-269-     * @ch 處理 PLAY_MARK 事件
+assets\Script\WantedPoster\WantedPosterManager.ts:270:     * BC-4：對該 BaseSymbol 的所有相符常駐 item 同時播 Mark，全部完成才 resolve
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-271-     *       （找到 N 個就播 N 個；N=0 才視為 EH-1，0<N 屬可接受降級不 warn）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-272-     * EH-1：找不到任何對應 item（空陣列）→ warn + 立刻 resolve（不阻斷上游流程）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-273-     * EH-9：resolve callback 缺失 → error（caller bug）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-274-     */
+assets\Script\WantedPoster\WantedPosterManager.ts:275:    private HandlePlayMark(baseSymbol: number, resolve: () => void) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-276-        if (typeof resolve !== 'function') {
+assets\Script\WantedPoster\WantedPosterManager.ts-277-            warn('[WantedPosterManager] PLAY_MARK: resolve callback 缺失');
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-278-            return;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-279-        }
+assets\Script\WantedPoster\WantedPosterManager.ts:280:        const items = this.GetItemsByBaseSymbol(baseSymbol);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-281-        if (items.length === 0) {
+assets\Script\WantedPoster\WantedPosterManager.ts:282:            warn('[WantedPosterManager] PLAY_MARK: 找不到對應 item, baseSymbol=', baseSymbol);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-283-            resolve();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-284-            return;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-285-        }
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-288-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-289-    /**
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-290-     * @ch 處理 PLAY_MARK_ACTIVE 事件
+assets\Script\WantedPoster\WantedPosterManager.ts:291:     * BC-6：對該 BaseSymbol 的所有相符 item 同時播 Mark_Active 並各自 active=false
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-292-     * EH-1：找不到任何對應 item（空陣列）→ warn + 立刻 resolve
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-293-     * EH-9：resolve callback 缺失 → error
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-294-     */
+assets\Script\WantedPoster\WantedPosterManager.ts:295:    private HandlePlayMarkActive(baseSymbol: number, resolve: () => void) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-296-        if (typeof resolve !== 'function') {
+assets\Script\WantedPoster\WantedPosterManager.ts-297-            warn('[WantedPosterManager] PLAY_MARK_ACTIVE: resolve callback 缺失');
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-298-            return;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-299-        }
+assets\Script\WantedPoster\WantedPosterManager.ts:300:        const items = this.GetItemsByBaseSymbol(baseSymbol);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-301-        if (items.length === 0) {
+assets\Script\WantedPoster\WantedPosterManager.ts:302:            warn('[WantedPosterManager] PLAY_MARK_ACTIVE: 找不到對應 item, baseSymbol=', baseSymbol);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-303-            resolve();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-304-            return;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-305-        }
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-308-        for (const item of items) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-309-            const idx = this.m_wantedPosterItems.indexOf(item);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-310-            if (idx >= 0) this.m_currentBounty[idx] = null;
+assets\Script\WantedPoster\WantedPosterManager.ts:311:            item.ClearBaseSymbol();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-312-        }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-313-        // ── 非同步段：動畫播完才切換視覺。判定移到 .then（此時全波同步段已執行完）：
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-314-        //    仍有 real（survivor 留場）→ 轉 ghost 撐位讓 survivor 不 snap；否則真消失（BC-G6）
+--
+assets\Script\WantedPoster\WantedPosterManager.ts-338-            warn('[WantedPosterManager] GAME_INTRO_COMPLETE: 懸賞令物品[0] 未設置');
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-339-            return;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-340-        }
+assets\Script\WantedPoster\WantedPosterManager.ts:341:        const data: IBountyData = { BaseSymbol: Symbol.M1, BountySymbol: 0, Multiple: 9999, MultipleIndex: 0 };
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-342-        // 先 active 再 setSkin：inactive 狀態下 setSkin 不會重建已渲染骨架的 render data（殘留舊 skin）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-343-        item.node.active = true;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-344-        item.SetWantedPosterData(data);
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-349-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-350-    //#region Methods
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-351-    /**
+assets\Script\WantedPoster\WantedPosterManager.ts:352:     * @ch 設置懸賞令資料（以 BaseSymbol multiset 比對前後狀態 — 決定 進場 / 退場 / 退場再進場 / 持續）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-353-     *
+assets\Script\WantedPoster\WantedPosterManager.ts:354:     * 比對規則（內容式，計數 multiset；每個 BaseSymbol 綁定一個 item，持續者保留原綁定）：
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-355-     * - BC-20 isNewRound=true（新一局）→ 現有全部退場、新清單全部進場（整批重建）
+assets\Script\WantedPoster\WantedPosterManager.ts:356:     * - BC-21 同局・新增 BaseSymbol（計數增加）→ 進場（SetData + active + PlayIn）
+assets\Script\WantedPoster\WantedPosterManager.ts:357:     * - BC-22 同局・移除 BaseSymbol（計數減少）→ 退場（PlayOut → active=false）
+assets\Script\WantedPoster\WantedPosterManager.ts:358:     * - BC-23 同局・同 BaseSymbol・Multiple 變 → 原 item 退場再進場（PlayOut → SetData → PlayIn）
+assets\Script\WantedPoster\WantedPosterManager.ts:359:     * - BC-24 同局・同 BaseSymbol・Multiple 同・盤面(扣除被消除位置)已無此符號 → 原 item 退場再進場
+assets\Script\WantedPoster\WantedPosterManager.ts:360:     * - BC-25 同局・同 BaseSymbol・Multiple 同・盤面仍可見 → 持續，不播動畫
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-361-     * 位置重排一律交由 cc.Layout（本元件只處理 In/Out 動畫，不碰節點位置）。
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-362-     *
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-363-     * @param dataList 本輪懸賞令資料（Multiple>0 才顯示）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-364-     * @param isNewRound 是否新一局（強制整批重建）；省略視為同局 cascade
+assets\Script\WantedPoster\WantedPosterManager.ts:365:     * @param visibleBaseSymbols 盤面(扣除被消除位置)目前可見的 BaseSymbol；僅 cascade 需傳，省略視為全可見
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-366-     */
+assets\Script\WantedPoster\WantedPosterManager.ts:367:    private SetWantedPosterData(dataList: IBountyData[], isNewRound: boolean = false, visibleBaseSymbols?: number[]) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-368-        if (!this.m_wantedPosterItems || this.m_wantedPosterItems.length === 0) {
+assets\Script\WantedPoster\WantedPosterManager.ts-369-            warn('[WantedPosterManager] SetWantedPosterData: 懸賞令物品未設置');
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-370-            return;
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-383-        if (isNewRound) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-384-            this.RebuildAll(newBounties);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-385-        } else {
+assets\Script\WantedPoster\WantedPosterManager.ts:386:            this.ReconcileCascade(newBounties, visibleBaseSymbols);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-387-        }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-388-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-389-
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-424-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-425-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-426-    /**
+assets\Script\WantedPoster\WantedPosterManager.ts:427:     * @ch 同局 cascade 對帳：以 BaseSymbol multiset 比對目前綁定 ↔ 新清單，保留持續者的 item 綁定。
+assets\Script\WantedPoster\WantedPosterManager.ts:428:     *     - 同 BaseSymbol・Multiple 同・盤面仍可見 → 持續（不動）         [BC-25]
+assets\Script\WantedPoster\WantedPosterManager.ts:429:     *     - 同 BaseSymbol・Multiple 變 或 盤面已無此符號 → 原 item 退場再進場 [BC-23/BC-24]
+assets\Script\WantedPoster\WantedPosterManager.ts:430:     *     - 多出的新 BaseSymbol → 進場（優先用原本就空的 item；不足才等退場者騰出版位）[BC-21]
+assets\Script\WantedPoster\WantedPosterManager.ts:431:     *     - 少掉的舊 BaseSymbol → 退場                                  [BC-22]
+assets\Script\WantedPoster\WantedPosterManager.ts:432:     * @param visibleBaseSymbols 盤面(扣除被消除位置)可見的 BaseSymbol；省略視為全可見
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-433-     */
+assets\Script\WantedPoster\WantedPosterManager.ts:434:    private ReconcileCascade(newBounties: IBountyData[], visibleBaseSymbols?: number[]) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-435-        const count = this.m_wantedPosterItems.length;
+assets\Script\WantedPoster\WantedPosterManager.ts:436:        const visible = visibleBaseSymbols ? new Set(visibleBaseSymbols) : null;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-437-
+assets\Script\WantedPoster\WantedPosterManager.ts:438:        // 新清單依 BaseSymbol 分組成可消耗的 pool（multiset）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-439-        const pool = new Map<number, IBountyData[]>();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-440-        for (const b of newBounties) {
+assets\Script\WantedPoster\WantedPosterManager.ts:441:            const list = pool.get(b.BaseSymbol);
+assets\Script\WantedPoster\WantedPosterManager.ts:442:            if (list) list.push(b); else pool.set(b.BaseSymbol, [b]);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-443-        }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-444-
+assets\Script\WantedPoster\WantedPosterManager.ts-445-        const preFreeSlots: number[] = [];      // 更新前就空著的 item（含 pre-existing ghost），供進場立即 reuse
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-457-                if (item) preFreeSlots.push(i);              // 空格或 pre-existing ghost（皆可被新進場 reuse）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-458-                continue;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-459-            }
+assets\Script\WantedPoster\WantedPosterManager.ts:460:            const bs = cur.BaseSymbol;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-461-            const list = pool.get(bs);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-462-            if (list && list.length > 0) {
+assets\Script\WantedPoster\WantedPosterManager.ts-463-                const onBoard = visible ? visible.has(bs) : true;
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-484-            if (hasSurvivor) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-485-                // BC-G1 轉 ghost：item root 維持 active 撐住 Layout 版位，讓 BC-25 持續者不 snap
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-486-                if (item) {
+assets\Script\WantedPoster\WantedPosterManager.ts:487:                    item.ClearBaseSymbol();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-488-                    outPromises.push(item.PlayOut().then(() => { item.SetContentVisible(false); }));
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-489-                }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-490-            } else {
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-494-            }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-495-        }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-496-
+assets\Script\WantedPoster\WantedPosterManager.ts:497:        // Pass B：pool 剩餘 = 需進場的新 BaseSymbol [BC-21]
+assets\Script\WantedPoster\WantedPosterManager.ts-498-        const remaining: IBountyData[] = [];
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-499-        for (const list of pool.values()) remaining.push(...list);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-500-        for (const nb of remaining) {
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-544-            if (item && item.node.active && this.m_currentBounty[i] === null) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-545-                item.node.active = false;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-546-                item.SetContentVisible(true);   // 還原 Content 預設態，供下次進場
+assets\Script\WantedPoster\WantedPosterManager.ts:547:                item.ClearBaseSymbol();
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-548-            }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-549-        }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-550-    }
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-560-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-561-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-562-    /**
+assets\Script\WantedPoster\WantedPosterManager.ts:563:     * @ch 依 BaseSymbol 取得**所有**相符的 active 常駐 item（內部用，PLAY_MARK / PLAY_MARK_ACTIVE 路徑）
+assets\Script\WantedPoster\WantedPosterManager.ts:564:     * 同一盤面允許多筆同 BaseSymbol bounty（各自設到不同 index 的 item），故回陣列而非單一
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-565-     */
+assets\Script\WantedPoster\WantedPosterManager.ts:566:    private GetItemsByBaseSymbol(baseSymbol: number): WantedPosterItem[] {
+assets\Script\WantedPoster\WantedPosterManager.ts:567:        if (baseSymbol === null || baseSymbol === undefined) return [];
+assets\Script\WantedPoster\WantedPosterManager.ts-568-        const result: WantedPosterItem[] = [];
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-569-        for (let i = 0; i < this.m_wantedPosterItems.length; i++) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-570-            const item = this.m_wantedPosterItems[i];
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-571-            const cur = this.m_currentBounty[i];
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-572-            // 用 m_currentBounty 判斷「正在顯示真懸賞令」，排除 ghost（node.active 但綁定為 null）
+assets\Script\WantedPoster\WantedPosterManager.ts:573:            // — ghost 的 GetBaseSymbol() 已 ClearBaseSymbol 為 MAX，但以綁定為準更直接（BC-G5）
+assets\Script\WantedPoster\WantedPosterManager.ts:574:            if (item && item.node.active && cur !== null && cur.BaseSymbol === baseSymbol) {
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-575-                result.push(item);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-576-            }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-577-        }
+--
+assets\Script\WantedPoster\WantedPosterManager.ts-604-            case KeyCode.DIGIT_1:
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-605-                // 測試：顯示 1 個懸賞令
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-606-                this.SetWantedPosterData([
+assets\Script\WantedPoster\WantedPosterManager.ts:607:                    { BaseSymbol: Symbol.M1, BountySymbol: 0, Multiple: 2, MultipleIndex: 0 },
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-608-                ], true);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-609-                break;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-610-
+assets\Script\WantedPoster\WantedPosterManager.ts-611-            case KeyCode.DIGIT_2:
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-612-                // 測試：顯示 2 個懸賞令
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-613-                this.SetWantedPosterData([
+assets\Script\WantedPoster\WantedPosterManager.ts:614:                    { BaseSymbol: Symbol.M4, BountySymbol: 0, Multiple: 256, MultipleIndex: 0 },
+assets\Script\WantedPoster\WantedPosterManager.ts:615:                    { BaseSymbol: Symbol.M8, BountySymbol: 0, Multiple: 9999, MultipleIndex: 1 },
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-616-                ], true);
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-617-                break;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterManager.ts-618-
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-70-    //#endregion Properties
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-71-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-72-    //#region Variables
+assets\Script\WantedPoster\WantedPosterItem.ts:73:    /**@ch 當前綁定的 BaseSymbol*/
+assets\Script\WantedPoster\WantedPosterItem.ts:74:    private m_baseSymbol: Symbol = Symbol.MAX;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-75-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-76-    /**@ch 倍率 label 淡出時長（秒）*/
+assets\Script\WantedPoster\WantedPosterItem.ts-77-    private static readonly MULTIPLIER_FADE_OUT_DURATION: number = 0.1;
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-79-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-80-    //#region Public API
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-81-    /**
+assets\Script\WantedPoster\WantedPosterItem.ts:82:     * @ch 設置懸賞單資料：切 skin、設數字、紀錄 BaseSymbol（不負責動畫觸發，由 Manager 決定）
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-83-     * @param data 懸賞單資料
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-84-     */
+assets\Script\WantedPoster\WantedPosterItem.ts-85-    public SetWantedPosterData( data: IBountyData ): void {
+assets\Script\WantedPoster\WantedPosterItem.ts:86:        this.m_baseSymbol = data.BaseSymbol as Symbol;
+assets\Script\WantedPoster\WantedPosterItem.ts:87:        this.SetSkinBySymbol( this.m_baseSymbol );
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-88-        this.SetMultiplierLabel( data.Multiple );
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-89-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-90-
+assets\Script\WantedPoster\WantedPosterItem.ts:91:    /**@ch 取得當前綁定的 BaseSymbol（State 比對用）*/
+assets\Script\WantedPoster\WantedPosterItem.ts:92:    public GetBaseSymbol(): Symbol {
+assets\Script\WantedPoster\WantedPosterItem.ts:93:        return this.m_baseSymbol;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-94-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-95-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-96-    /**
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-105-        this.m_contentNode.active = visible;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-106-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-107-
+assets\Script\WantedPoster\WantedPosterItem.ts:108:    /**@ch 清除綁定的 BaseSymbol（ghost 化時呼叫，避免 GetBaseSymbol 回傳殘留舊符號髒值）*/
+assets\Script\WantedPoster\WantedPosterItem.ts:109:    public ClearBaseSymbol(): void {
+assets\Script\WantedPoster\WantedPosterItem.ts:110:        this.m_baseSymbol = Symbol.MAX;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-111-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-112-
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-113-    /**@ch 播 In 動畫，等播完（重設倍率 opacity 為 255，開啟新展示週期）*/
+--
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-173-     * EH-2：Symbol 不在 M1~M9 範圍 → warn + 不切
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-174-     */
+assets\Script\WantedPoster\WantedPosterItem.ts-175-    public SetSkin( symbolId: Symbol ): void {
+assets\Script\WantedPoster\WantedPosterItem.ts:176:        this.m_baseSymbol = symbolId;
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-177-        this.SetSkinBySymbol( symbolId );
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-178-    }
+G:\Cocos_Project\uk_pirates_queen\assets\Script\WantedPoster\WantedPosterItem.ts-179-

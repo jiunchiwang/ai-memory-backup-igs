@@ -1,0 +1,264 @@
+# [uk_slot_template] recent context, 2026-06-19 6:20am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (22,983 tokens to read)
+- Work investment: 357,223 tokens spent on research, building, and decisions
+- Your savings: 94% reduction from reuse
+
+### Jun 1, 2026
+
+**#S643** Complete first wave: Cross-project slot game research and template improvement proposals (Jun 1, 9:49 AM)
+
+**#S644** User requested to proceed with "second wave" of slot machine refactoring work after first wave completion (Jun 1, 10:42 AM)
+
+**#S645** Commit refactored fall calculation code, excluding .claude-loop from version control (Jun 1, 11:51 AM)
+
+**#S646** Commit fall calculation refactoring while excluding .claude-loop from version control (Jun 1, 1:05 PM)
+
+**assets/Script/FillStrategy/FallInstructions.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1729 | 1:06 PM | 🔄 | Fall calculation logic extracted to pure function computeFallInstructions |  |  |
+
+**#S647** User initiated Wave 3 refactoring phase for slot reel mechanics - DRY and data-driven reorganization (Jun 1, 1:06 PM)
+
+**.claudedocs/research/slot專案橫向研究與樣版改進方案.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1730 | 1:29 PM | 🔵 | Third Wave Improvement Plan for Slot Template |  |  |
+
+**#S648** Wave 3 refactoring completed - extracted BaseDropFillStrategy base class from duplicated Cascade/Tumble strategy code (Jun 1, 1:31 PM)
+
+**assets/Script/FillStrategy/CascadeFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1731 | 1:32 PM | 🔵 | Examined CascadeFillStrategy and TumbleFillStrategy for base class extraction |  |  |
+
+**assets/Script/ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1732 | " | 🔵 | Found strategy instantiation points in ReelDevTool |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1733 | 1:33 PM | ⚖️ | Initiated BaseDropFillStrategy base class extraction design |  |  |
+| #1734 | " | ⚖️ | Established 6-phase workflow for BaseDropFillStrategy refactoring |  |  |
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1735 | 1:35 PM | 🟣 | Completed design specification for BaseDropFillStrategy extraction |  |  |
+| #1736 | 1:38 PM | ✅ | Design review identified critical constructor initialization flaw blocking implementation |  |  |
+
+**.claude-loop/artifacts/P1b-design-review.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1737 | 1:40 PM | ✅ | Design review report documented with gate decision to revise design |  |  |
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1738 | " | ✅ | Fixed BaseDropFillStrategy constructor design per DR-1 high severity finding |  |  |
+| #1739 | 1:41 PM | ✅ | Documented constructor.name minification tradeoff per DR-4 arch-risk finding |  |  |
+| #1740 | " | ✅ | Completed subclass constructor design with explicit options handling per DR-1/DR-2 |  |  |
+| #1741 | 1:42 PM | ✅ | Completed design revision with documented review response section |  |  |
+
+**assets/Script/FillStrategy/BaseDropFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1742 | 1:43 PM | 🟣 | Implemented BaseDropFillStrategy abstract base class |  |  |
+
+**assets/Script/FillStrategy/CascadeFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1743 | 1:44 PM | 🔄 | Refactored CascadeFillStrategy to extend BaseDropFillStrategy |  |  |
+
+**assets/Script/FillStrategy/TumbleFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1744 | " | 🔄 | Refactored TumbleFillStrategy and verified TypeScript compilation passes |  |  |
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1745 | 1:47 PM | ✅ | Code review completed with zero blocking issues - behavioral equivalence verified |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1746 | 1:48 PM | ✅ | Testing verification completed - all automated tests pass |  |  |
+
+**assets/Script/FillStrategy/BaseDropFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1747 | 1:51 PM | 🔄 | Completed Wave 3 refactoring - BaseDropFillStrategy base class extraction eliminates 391 duplicate lines |  |  |
+
+**#S682** Initialize and upgrade CLAUDE.md documentation from v6.4.0 to v7.0.1 for uk_slot_template Cocos Creator project (Jun 1, 1:52 PM)
+
+**assets/Script/FillStrategy/BaseDropFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1748 | 2:22 PM | 🔄 | Fill Strategy Refactoring with Base Class Extraction |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1749 | " | 🔵 | Cocos Project Git Convention for Meta Files |  |  |
+
+**assets/Script/FillStrategy/BaseDropFillStrategy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1750 | 2:23 PM | 🔄 | Template Method Pattern Applied to Fill Strategies |  |  |
+
+### Jun 3, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1836 | 10:28 AM | 🔵 | Located CLAUDE.md template files in cache directory |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1837 | " | 🔵 | Existing CLAUDE.md file found at version 6.4.0 |  |  |
+| #1838 | 10:30 AM | 🔵 | CLAUDE.md template upgrade available from 6.4.0 to 7.0.1 |  |  |
+| #1839 | 10:31 AM | 🔵 | Project uses Cocos Creator with TypeScript validation workflow |  |  |
+
+**C:\Users\jiunchiwang\.claude\cache\ClaudeCodeTools\dev-closed-loop\CLAUDE_TEMPLATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1840 | " | 🔵 | CLAUDE_TEMPLATE.md uses placeholder variables for project customization |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1841 | " | 🔵 | Seven language guides available in ClaudeCodeTools cache |  |  |
+
+**.claudedocs/records/問題追蹤.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1842 | " | 🔵 | Project uses two-tier issue tracking with learning-log integration |  |  |
+| #1843 | 10:32 AM | 🔵 | Deployed .claudedocs has 11 additional files beyond template baseline |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1844 | " | 🔵 | Custom research documentation for slot game projects identified |  |  |
+
+**CLAUDE.md.v6bak**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1845 | 10:33 AM | ✅ | CLAUDE.md backup created before template upgrade |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1846 | " | 🔴 | CLAUDE.md template generation failed to update version tag |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1847 | 10:34 AM | 🔵 | Windows environment uses python/py commands instead of python3 |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1848 | " | ✅ | CLAUDE.md successfully upgraded to v7.0.1 template |  |  |
+| #1849 | " | 🔵 | Remaining placeholder is intentional self-documentation in v7.0.1 |  |  |
+
+**C:\Users\jiunchiwang\.claude\cache\ClaudeCodeTools\dev-closed-loop\CLAUDE_TEMPLATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1850 | 10:35 AM | 🔵 | v7.0.1 template introduces workflow orchestration replacing five-phase pipeline |  |  |
+
+**CLAUDE.md.v6bak**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1851 | " | 🔵 | v7.0.1 removes strict document access rules and embeds migration guidance |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1852 | 10:36 AM | 🔄 | Template generation improved to preserve footer documentation examples |  |  |
+
+**.claudedocs/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1853 | 10:37 AM | ✅ | .claudedocs directory upgraded to v7.0.1 while preserving custom research |  |  |
+
+**.claudedocs/languages/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1854 | " | ✅ | Language guides pruned and hook system deployed for TypeScript-only project |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1855 | 10:38 AM | ✅ | v7.0.1 template initialization completed with full verification |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1856 | " | 🔵 | Template upgrade files excluded from git tracking |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #1857 | " | 🔵 | Closed-loop files excluded via both .gitignore and local git exclude rules |  |  |
+
+**#S683** Verified closed-loop development environment v7.0.1 deployment status in uk_slot_template (Jun 3, 10:39 AM)
+
+**#S835** Comprehensive search and extraction of SPEC.md-related content from CLAUDE.md and project documentation (Jun 3, 10:40 AM)
+
+### Jun 18, 2026
+
+**SPEC.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2547 | 10:52 PM | 🔵 | UK Slot Template Project Structure and Architecture |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2548 | " | 🔵 | Project Directory Structure and Development Tooling |  |  |
+| #2549 | 10:53 PM | 🔵 | Global Development Workflows and Skill Configuration |  |  |
+| #2550 | " | 🔵 | UK Slot State Machine Skill Package Structure |  |  |
+
+**.claude/settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2551 | " | 🔵 | Development Quality Guardrails and Hook System Configuration |  |  |
+
+**Tools_SlotSetUP/README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2552 | 10:54 PM | 🔵 | Automated Dependency Setup Workflow for Slot Game Template |  |  |
+
+### Jun 19, 2026
+
+**#S836** Investigate SPEC.md maintenance rules and integration within uk_slot_template project documentation (Jun 19, 1:27 AM)
+
+**Investigated**: Searched CLAUDE.md comprehensively using multiple keyword patterns (SPEC, spec.md, 規格書, 規格檔, 規格, spec) to find references to SPEC.md and its maintenance/update triggers. Examined git status showing SPEC.md as an untracked new file.
+
+**Learned**: CLAUDE.md contains no references to SPEC.md whatsoever. The only "spec" mentions in CLAUDE.md refer to design-spec artifacts (P1-design-spec.md) generated by /dev-design workflow and stored in .claude-loop/artifacts/. SPEC.md (game specification template at project root) and design-spec (workflow output) are completely separate artifacts with different purposes. SPEC.md was created after CLAUDE.md, explaining why no integration rules exist yet.
+
+**Completed**: Confirmed that no automated synchronization mechanism or documented maintenance rules exist for SPEC.md in the current project workflow documentation.
+
+**Next Steps**: User deciding whether to establish SPEC.md maintenance rules in CLAUDE.md (e.g., triggers for updating SPEC.md when extension points, board layouts, or FillStrategy implementations change).
+
+
+Access 357k tokens of past research & decisions for just 22,983t. Use MCP search tools to access memories by ID.

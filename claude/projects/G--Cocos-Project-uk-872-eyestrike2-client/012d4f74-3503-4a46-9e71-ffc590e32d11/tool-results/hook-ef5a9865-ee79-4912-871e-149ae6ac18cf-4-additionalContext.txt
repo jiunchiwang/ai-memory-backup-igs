@@ -1,0 +1,208 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-18 9:45pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,078 tokens to read)
+- Work investment: 313,030 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jun 16, 2026
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2448 | 7:38 PM | 🟣 | Add HIDE_RESULT event for result display card dismissal |  |  |
+| #2449 | 7:39 PM | 🟣 | Add result display card properties for landing announcement |  |  |
+| #2450 | " | 🔄 | Remove unused animation constants and register HIDE_RESULT event |  |  |
+| #2451 | " | 🟣 | Wire HIDE_RESULT event handler in OnEvent dispatcher |  |  |
+| #2452 | " | 🟣 | Replace scale bounce animation with FeatureWheelResult display card |  |  |
+| #2453 | 7:40 PM | 🔴 | Auto-hide result display card when hiding wheel UI |  |  |
+| #2454 | " | 🔵 | TypeScript compilation verification passed with only deprecation warning |  |  |
+
+**#S809** Code review of FeatureWheelShowState.ts Feature Wheel animation timing logic (Jun 16, 7:44 PM)
+
+**#S810** Add temporary display delay to prevent wheel result cards from flashing away invisibly (Jun 16, 7:46 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2455 | 7:49 PM | ✅ | Added temporary result display dwell time to FeatureWheelShowState |  |  |
+| #2456 | " | 🔴 | Implemented 800ms delay before hiding wheel result display cards |  |  |
+
+**#S811** Refactor FeatureWheelShowState to use Define.Wait instead of setTimeout (Jun 16, 7:49 PM)
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2457 | 7:51 PM | 🔵 | Define.Wait API pattern discovered in codebase |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2458 | " | 🔵 | Define.Wait implementation source identified in framework |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2459 | 7:54 PM | ✅ | Added Define import to FeatureWheelShowState |  |  |
+| #2460 | " | 🔄 | Converted dwell time constant from milliseconds to seconds |  |  |
+| #2461 | " | 🔄 | Replaced setTimeout with Define.Wait in feature wheel state |  |  |
+| #2462 | " | ✅ | TypeScript compilation verified after setTimeout to Define.Wait migration |  |  |
+
+**#S812** MCP connection request and FeatureWheelManager background sprite synchronization implementation (Jun 16, 7:55 PM)
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2463 | 8:01 PM | ✅ | Added SpriteChange component to BG node in FeatureWheelResult prefab |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2464 | " | 🔵 | FeatureWheelManager result display mechanism uses SpriteChange for dynamic symbols |  |  |
+| #2465 | 8:02 PM | 🟣 | Implemented synchronized background sprite switching for FeatureWheel result display |  |  |
+
+**#S813** MCP-assisted connection of FeatureWheelManager background sprite property to BG SpriteChange component (Jun 16, 8:03 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2466 | 8:03 PM | 🔵 | MCP Cocos362 editor connection established |  |  |
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2467 | 8:04 PM | 🔵 | Located FeatureWheelManager in prefab hierarchy |  |  |
+
+**#S814** Configure FeatureWheelResult background sprite reference and discover MCP tool limitation (Jun 16, 8:04 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2468 | 8:06 PM | 🔵 | Feature Wheel UI Structure Queried in Cocos Project |  |  |
+| #2469 | " | ✅ | Feature Wheel Result Background Sprite Reference Configured |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2470 | " | 🔵 | Feature Wheel Result Properties Verified in Prefab Serialization |  |  |
+| #2471 | 8:07 PM | 🔴 | Inconsistent Serialization Format for Result Sprite References |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2472 | " | ✅ | Feature Wheel Result Background Reference Cleared |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2473 | 8:08 PM | 🔴 | Property Cleared But Still Serializes as String |  |  |
+| #2474 | 8:09 PM | 🔴 | Property Serialization Fixed from String to JSON Null |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-872-eyestrike2-client\memory\project_cocos362_mcp.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2475 | " | 🔵 | Project Uses Cocos362 MCP Server for Editor Automation |  |  |
+| #2476 | 8:10 PM | 🔴 | Cocos362 MCP Bridge component_set_property Stringifies All Values |  |  |
+
+**#S815** Troubleshoot and fix Claude Code installation issues: duplicate npm installation and TypeScript LSP Windows spawn errors (Jun 16, 8:10 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2477 | 8:25 PM | 🔵 | Multiple Claude installations detected in PATH |  |  |
+| #2478 | " | 🔵 | Development environment has TypeScript tooling and Claude packages installed globally |  |  |
+| #2479 | " | 🔵 | TypeScript LSP plugin integrated into Claude plugin system |  |  |
+| #2480 | 8:26 PM | 🔵 | TypeScript LSP plugin directory contains only documentation files |  |  |
+| #2481 | 8:27 PM | ✅ | Removed npm global Claude Code package with partial cleanup failure |  |  |
+
+**C:\Users\jiunchiwang\.claude\plugins\installed_plugins.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2482 | " | 🔵 | TypeScript LSP plugin registered and installed in Claude plugin system |  |  |
+
+**C:\Users\jiunchiwang\.claude\settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2483 | 8:28 PM | 🔵 | Claude settings confirm TypeScript LSP plugin enabled with comprehensive configuration |  |  |
+| #2484 | " | ✅ | Disabled TypeScript LSP plugin in Claude settings |  |  |
+
+**#S832** Document Unity prefab structure for BuyBonusWindow.prefab (Jun 16, 8:28 PM)
+
+### Jun 18, 2026
+
+**assets/game/Prefab/BuyBonus/BuyBonusWindow.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2532 | 1:17 PM | 🔵 | BuyBonusWindow prefab structure analyzed in Cocos Creator 3.6.2 project |  |  |
+| #2533 | " | 🔵 | Generated hierarchical node tree for BuyBonusWindow prefab |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2534 | 1:18 PM | 🔵 | BuyBonus references found across game state system |  |  |
+| #2535 | 1:19 PM | 🔵 | Component ID resolved to CommonBuyBonusCell custom class |  |  |
+
+**#S833** Understand FS_BG addition to FeatureWheelItem.prefab that should activate only for FreeGame wheel type (Jun 18, 1:19 PM)
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2536 | 5:52 PM | 🔵 | FeatureWheel prefab structure and related scripts identified |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2537 | 5:53 PM | 🔵 | FeatureWheel type system and FreeGame enum identified |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2538 | " | 🔵 | SpriteChange component identified as icon switching mechanism |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2539 | " | 🔵 | FeatureWheelManager segment binding and result display architecture |  |  |
+| #2540 | 5:54 PM | 🔵 | FeatureWheelManager maintains parallel arrays for 12 segment components |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2541 | " | 🔵 | FeatureWheelShowState references FreeGame in comment context only |  |  |
+| #2542 | " | 🔵 | FeatureWheel uses WheelDataLayer to switch between MainGame and FreeGame contexts |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2543 | 5:55 PM | 🔵 | GameView.SetFeatureWheelLayer dispatches wheel data for layer switching |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2544 | 6:04 PM | 🟣 | FS_BG background visibility controlled by FreeGame segment type |  |  |
+
+**#S834** Add FS_BG background element to FeatureWheel items that activates only for FreeGame type to enhance symbol visibility (Jun 18, 6:05 PM)
+
+**Investigated**: FeatureWheelManager.ts BindSegmentIcons() method was examined to understand the segment icon binding lifecycle and how to integrate FS_BG node toggling. TypeScript compilation was checked to validate the changes against the project codebase.
+
+**Learned**: FS_BG shares the same lifecycle as the icon sprite and is retrieved as a child node from the same item root. The result display card uses a different mechanism (sprite swapping) rather than node toggling. The FeatureWheelItem prefab already has FS_BG added with default active state set to false, eliminating the need for editor wiring or 12 individual references.
+
+**Completed**: Implemented 6-line logic in FeatureWheelManager.ts BindSegmentIcons() method that retrieves the FS_BG child node and sets it active only when segment type is FreeGame. TypeScript validation confirmed zero errors in project source code (only pre-existing third-party declaration warnings). No prefab modifications or editor configuration required.
+
+**Next Steps**: Awaiting user confirmation or instruction to commit the changes. The implementation is complete and validated.
+
+
+Access 313k tokens of past research & decisions for just 17,078t. Use MCP search tools to access memories by ID.

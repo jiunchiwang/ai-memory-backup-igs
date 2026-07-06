@@ -1,0 +1,256 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-01 3:27pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,421 tokens to read)
+- Work investment: 245,558 tokens spent on research, building, and decisions
+- Your savings: 92% reduction from reuse
+
+### Jun 30, 2026
+
+**src/provider/tool-loop.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3353 | 11:03 AM | 🔵 | Project hook modification Plan B: Tier B rich observation for DirectProvider |  |  |
+
+**#S1046** User asked about project hook modification "plan B" - Claude provided completion status of Phase 1 tool observer fixes (Jun 30, 11:04 AM)
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3355 | 11:04 AM | 🔵 | Tool-Usage Observer Phase 1 implementation verification and test validation |  |  |
+
+**scripts/check-provider.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3356 | 11:05 AM | 🔵 | Phase 1 acceptance gate validation completed with zero regressions |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3357 | " | 🔵 | Security lens review findings from dev-review workflow adversarial verification |  |  |
+| #3358 | 11:06 AM | 🔵 | Correctness lens review findings revealing data quality issues and self-inclusion bug in seq observations |  |  |
+| #3359 | " | 🔵 | Repro-quality lens adversarial verification uncovering critical self-inclusion bug and fail-silent gap |  |  |
+| #3360 | 11:21 AM | 🔄 | Recursive secret redaction in tool observer with false-positive prevention |  |  |
+| #3361 | " | 🔄 | Lazy observation building to expand error-handling coverage |  |  |
+| #3362 | 11:22 AM | 🔴 | Fixed precedingTools semantics to exclude current tool from its own observation |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3363 | " | 🔴 | Applied precedingTools exclusion fix to failed tool observation branch |  |  |
+
+**scripts/check-tool-observer.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3364 | " | 🟣 | Added regression tests for Plan B redaction fixes |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3365 | 11:23 AM | ✅ | Plan B implementation validated with full test suite passing |  |  |
+
+**#S1047** Commit Phase 1 tool observer implementation and determine next steps from remaining work items (Jun 30, 11:23 AM)
+
+**#S1048** Question about project hook modification plan B; Claude provided status update on completed tasks #4/#2/#3 and decisions pending (Jun 30, 11:30 AM)
+
+**.claude-loop/learning-log.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3366 | 11:30 AM | 🔵 | Project documentation structure for learning logs and issue tracking |  |  |
+
+**.claudedocs/records/問題追蹤.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3367 | 11:31 AM | 🔵 | Mature two-tier learning log architecture with promotion and demotion mechanisms |  |  |
+
+**.claude-loop/learning-log.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3368 | " | 🔵 | Session-level learning logs excluded from version control |  |  |
+| #3369 | 11:32 AM | 🔴 | Two implementation deviations from tool observer spec documented in learning log |  |  |
+
+**docs/post-tool-hooks-proposal.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3370 | " | 🔵 | Existing post-tool hooks proposal documents pluggable architecture |  |  |
+| #3371 | 11:33 AM | ✅ | Updated proposal documentation to reflect implemented dual-tier tool observer architecture |  |  |
+| #3372 | " | ✅ | Updated implementation roadmap reflecting completed phases and Phase 2 gate conditions |  |  |
+
+**scratchpad/throwaway-cluster.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3373 | 11:34 AM | ⚖️ | Phase 2 gate validation script created to prove schema clustering viability |  |  |
+
+**#S1049** Bridge restart inquiry and feature branch handoff confirmation for tool-observer Phase 1 implementation (Jun 30, 11:35 AM)
+
+**#S1050** Project hook modification plan B discussion and Phase 1 wrap-up checkpoint (Jun 30, 11:39 AM)
+
+**#S1051** Bridge process restart requirements and sequencing for observer code activation (Jun 30, 11:40 AM)
+
+**#S1075** User requested to fix all identified issues in the codebase after diagnostic report (Jun 30, 11:43 AM)
+
+### Jul 1, 2026
+
+**src/session-archive.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3442 | 2:00 PM | 🟣 | Session archive and restore with structured JSON persistence |  |  |
+
+**src/tool-hooks.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3443 | " | 🟣 | PostToolUse hook system with pluggable registry and specialist memory |  |  |
+
+**src/tool-observer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3444 | " | 🟣 | Tool-usage observer with dual-tier observation layer |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3445 | " | 🟣 | ACP protocol trace, reply deduplication, and runtime health monitoring |  |  |
+
+**src/commands/misc.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3446 | " | 🟣 | /reset clean command for context-free session restart |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3447 | " | 🟣 | QUIET_HOURS support for scheduled task gating |  |  |
+
+**scripts/check-daily-intel.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3448 | " | ✅ | Daily Intel learning candidate refinement and video metadata enhancement |  |  |
+
+**src/backup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3449 | " | 🟣 | Claude Code configuration and memory backup |  |  |
+
+**scripts/setup-mcp.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3450 | " | 🔴 | Claude MCP and skill config sync after adapter switch |  |  |
+
+**scripts/check-preamble.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3451 | " | 🔴 | Smoke test cross-machine portability with dynamic detection |  |  |
+
+**src/session-archive.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3452 | 2:01 PM | 🔵 | Upstream merge removes locally-developed features |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3453 | " | ✅ | Clean merge resolution with upstream architectural changes |  |  |
+
+**scripts/check-daily-intel.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3454 | 2:02 PM | 🔵 | Daily Intel smoke test fails after upstream merge |  |  |
+
+**src/daily-intel/podcast.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3455 | " | 🔵 | Stale dist directory causes smoke test failure |  |  |
+
+**dist/daily-intel/podcast.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3456 | " | 🔵 | Compiled JavaScript predates source changes but contains required export |  |  |
+| #3457 | 2:03 PM | ✅ | Fresh TypeScript build resolves all smoke test failures |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3458 | 2:04 PM | 🔵 | Four smoke tests fail in full suite after merge |  |  |
+| #3459 | " | 🔵 | Two real smoke test failures: relay-context-ledger and topic-match |  |  |
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3460 | " | 🔵 | Relay context ledger test fails on session creation assertion |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3461 | " | 🔵 | Topic-match test fails on hardcoded F: drive path |  |  |
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3462 | 2:05 PM | 🔵 | Session manager no longer concatenates relay task blocks in preamble |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3463 | " | 🔵 | Session preamble now includes archiveBlock between workingState and relayTask |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3464 | " | 🔵 | Topic-match test missed portable path fix applied to other tests |  |  |
+
+**#S1076** Review and fix issues in two-day code changes - test script validation (Jul 1, 2:29 PM)
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3465 | 2:31 PM | 🔴 | Fixed relay context ledger test assertion after session archive integration |  |  |
+
+**scripts/check-topic-match.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3466 | " | ✅ | Updated check-topic-match usage documentation to reflect env-file requirement |  |  |
+
+**facts_Topic/ (topic shard files regenerated)**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3467 | " | 🔴 | Rebuilt topic shards to resolve shard-to-master log synchronization issue |  |  |
+
+**#S1077** Review two-day changes and commit status - discovered pre-commit hook mixed test fixes with auto-synced skill files (Jul 1, 2:32 PM)
+
+**scripts/check-relay-context-ledger.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3468 | 3:22 PM | ✅ | Updated test scripts for session archive block integration |  |  |
+| #3469 | " | 🔴 | Fixed stale smoke tests after session archive integration |  |  |
+
+**default-skills/ms-portable-skill-authoring/SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3470 | 3:24 PM | ✅ | Undid mixed commit to separate test fixes from auto-synced skill files |  |  |
+| #3471 | 3:25 PM | ✅ | Isolated default-skills auto-sync into dedicated commit |  |  |
+
+**#S1078** Review of past two days' changes to verify commit cleanliness and readiness (Jul 1, 3:25 PM)
+
+**Investigated**: Two commits on main branch were examined: `0d8b2f0` (chore: sync default-skills projections - 3 skill files) and `3c88fa7` (fix: repair two stale smoke tests - 2 test files). Untracked files `docs/session-archive-explained.html` and `output/` directory were identified.
+
+**Learned**: The commits are properly separated with clean boundaries - the test fix commit contains only the 2 test files as expected, and the skill sync commit contains only the 3 skill files. A hook re-ran after the test fix but found no new skill changes to inject, confirming the sync was already complete.
+
+**Completed**: Commit review completed and validated. Both commits are confirmed clean and well-structured on main branch, but remain unpushed.
+
+**Next Steps**: Awaiting decision on whether to push the commits immediately or first address the untracked `docs/session-archive-explained.html` file.
+
+
+Access 246k tokens of past research & decisions for just 18,421t. Use MCP search tools to access memories by ID.

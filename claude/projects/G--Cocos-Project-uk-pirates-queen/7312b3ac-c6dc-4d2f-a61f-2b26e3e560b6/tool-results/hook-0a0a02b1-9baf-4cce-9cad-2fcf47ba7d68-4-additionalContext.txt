@@ -1,0 +1,270 @@
+# [uk_pirates_queen] recent context, 2026-06-16 2:46pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (15,577 tokens to read)
+- Work investment: 203,173 tokens spent on research, building, and decisions
+- Your savings: 92% reduction from reuse
+
+### Jun 9, 2026
+
+**extensions/astarte-framework/assets/Component/Spine/SpineKit.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2093 | 1:47 PM | 🔵 | Spine animation control patterns for pre-positioned frame display |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2094 | 1:52 PM | 🟣 | ShowInSettled method for instant wanted poster display |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2095 | 1:53 PM | 🔄 | HandleGameIntroComplete bypasses cascade rebuild for direct settled display |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2096 | 1:56 PM | 🟣 | Wanted poster displays settled state on GAME_INTRO_COMPLETE without entrance animation |  |  |
+
+### Jun 11, 2026
+
+**assets/game/Text/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2225 | 1:43 PM | 🔵 | Slot game project has 26 language directories with gameStrings.xml files |  |  |
+
+**assets/game/Text/en/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2226 | " | 🔵 | gameStrings.xml uses Apple plist XML format for localization keys |  |  |
+
+**assets/game/Text/tw/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2227 | " | 🔵 | All language gameStrings.xml files share identical XML structure |  |  |
+
+**scripts/sync_game_strings.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2228 | 2:09 PM | 🟣 | Multilingual string synchronization tool created |  |  |
+
+**scripts/string_keys.tsv**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2229 | " | ✅ | String key mapping file created for Excel-to-XML synchronization |  |  |
+
+**scripts/sync_game_strings.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2230 | " | 🔴 | Windows console encoding fix for emoji and multilingual characters |  |  |
+
+**scripts/string_keys.tsv**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2231 | 2:17 PM | 🔵 | Multi-language localization key mapping configuration |  |  |
+| #2232 | 2:18 PM | 🔵 | Localization key mapping mismatch detected |  |  |
+| #2233 | 2:22 PM | ✅ | Updated EXTRA_BET_DESC localization row mapping |  |  |
+
+**_claude_temp/PIRATES QUEEN 3 規格.xlsx**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2234 | " | ✅ | Verified localization sync with corrected row mapping |  |  |
+
+**assets/game/Text/bn/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2235 | 2:24 PM | ✅ | EXTRA_BET_DESC game string synchronized across 26 locales |  |  |
+
+**assets/game/Text/en/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2236 | " | 🔵 | EXTRA_BET_DESC text improvements verified across sample locales |  |  |
+
+**.git/logs/HEAD**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2237 | 2:35 PM | 🔵 | Pre-commit status check reveals 26 unstaged gameStrings.xml changes across locales |  |  |
+
+**assets/game/Text/bn/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2238 | 2:36 PM | ✅ | Staged 26 gameStrings.xml localization files for commit |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-i18n-sync\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2239 | 2:43 PM | 🟣 | Created reusable skill for UK slot i18n synchronization |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2240 | 2:46 PM | ✅ | Cleaned old skill directory and prepared for new multilang sync skill |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2241 | " | 🟣 | Initialized uk-slot-multilang-sync custom skill |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\scripts\sync_game_strings.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2242 | 2:47 PM | 🟣 | Implemented multilingual game strings synchronization script |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\scripts\string_keys.tsv**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2243 | 2:48 PM | 🟣 | Created TSV mapping template for game string Keys |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2244 | 2:49 PM | 🟣 | Completed comprehensive SKILL.md documentation for multilang sync |  |  |
+
+**_claude_temp/PIRATES QUEEN 3 規格.xlsx**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2245 | " | 🟣 | Validated skill against PIRATES QUEEN 3 project with successful dry-run |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\dist\uk-slot-multilang-sync.skill**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2246 | " | 🟣 | Validated and packaged uk-slot-multilang-sync skill for distribution |  |  |
+
+**#S771** Clarify string_keys.tsv workflow and clean up duplicate script files in multilang sync skill (Jun 11, 3:19 PM)
+
+**scripts/sync_game_strings.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2247 | 3:19 PM | ✅ | Removed duplicate game string synchronization scripts |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2248 | " | ✅ | Clarified agent-managed workflow for string_keys.tsv in multilang sync skill |  |  |
+
+**#S772** Debug visual bug where wanted poster shows wrong symbol ("1" instead of "9") on first Free Game entry but correct on subsequent entries (Jun 11, 3:20 PM)
+
+**#S773** Add diagnostic instrumentation to wanted poster system to identify root cause of M1→M9 skin switching failure on first FG entry (Jun 11, 3:41 PM)
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2249 | 3:41 PM | ✅ | Added logging import to WantedPosterItem for debugging instrumentation |  |  |
+| #2250 | 3:42 PM | ✅ | Added diagnostic logging to SetSkinBySymbol method |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2251 | " | ✅ | Added diagnostic logging to RebuildAll recycling logic |  |  |
+| #2252 | " | ✅ | Added diagnostic logging to HandleGameIntroComplete intro poster setup |  |  |
+
+**tsconfig.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2253 | 3:43 PM | ✅ | TypeScript validation passed for diagnostic instrumentation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2254 | " | ✅ | WantedPoster instrumentation verified clean with zero TypeScript errors |  |  |
+
+**#S774** Fix Wanted Poster showing wrong Spine skin (M1 instead of M9/M7) on first hand after game intro (Jun 11, 3:44 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2255 | 3:51 PM | 🔴 | Fix Spine skin rendering on inactive nodes in WantedPoster rebuild |  |  |
+| #2256 | " | 🔴 | Apply node activation fix to EnterAt method for consistent Spine rendering |  |  |
+
+**#S775** Fix FG wanted poster BaseSymbol display bug (M9 showing as M1 on first hand) and cleanup debug statements (Jun 11, 3:51 PM)
+
+**debug.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2257 | 3:56 PM | 🔴 | WantedPoster Rebuild System Verified Working |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2258 | 3:57 PM | 🔄 | Removed unused log import from WantedPosterItem |  |  |
+| #2259 | " | 🔄 | Removed WantedPoster Debug Logging |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2260 | " | 🔄 | Completed WantedPoster Debug Cleanup in Manager |  |  |
+| #2261 | " | 🔵 | Unused log Import Found in WantedPosterManager |  |  |
+
+**#S776** Apply preventive fix to HandleGameIntroComplete and maintain original state for unused imports (Jun 11, 4:00 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2262 | 4:00 PM | 🔴 | Applied preventive node activation fix to HandleGameIntroComplete |  |  |
+
+**#S777** Commit bugfix for WantedPoster skeleton skin rendering issue in uk_pirates_queen Cocos project (Jun 11, 4:01 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2263 | 4:02 PM | 🔴 | Fixed skeleton skin rendering order in WantedPosterManager |  |  |
+
+**#S798** Verify and save project internationalization configuration - confirming 26 language locales exist (Jun 11, 4:03 PM)
+
+### Jun 16, 2026
+
+**assets/game/Text/bn/gameStrings.xml**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2413 | 1:25 PM | 🔵 | Project supports 26 language locales for internationalization |  |  |
+
+**#S799** Save verified 26-language locale configuration to project memory (Jun 16, 1:26 PM)
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-pirates-queen\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2414 | 1:26 PM | ✅ | Updated memory index with 26-locale configuration |  |  |
+
+**assets/game/Text/logo/logo_bn.png**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2415 | 1:31 PM | ✅ | Multi-language logo assets initialized for 26 locales |  |  |
+
+**#S800** Created multi-language logo asset files for 26 locales in Cocos Creator project (Jun 16, 1:32 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2416 | 1:34 PM | 🔵 | Located uk-slot-multilang-sync Skill Files |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-multilang-sync\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2417 | 1:35 PM | 🔵 | UK Slot Multilang-Sync Skill Functionality Review |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-pirates-queen\memory\cocos-per-locale-asset-copy.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2418 | 1:36 PM | ⚖️ | Cocos Per-Locale Asset Copy Pattern Documented |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-pirates-queen\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2419 | 1:37 PM | ✅ | Memory Index Updated with Asset Copy Pattern |  |  |
+
+
+Access 203k tokens of past research & decisions for just 15,577t. Use MCP search tools to access memories by ID.

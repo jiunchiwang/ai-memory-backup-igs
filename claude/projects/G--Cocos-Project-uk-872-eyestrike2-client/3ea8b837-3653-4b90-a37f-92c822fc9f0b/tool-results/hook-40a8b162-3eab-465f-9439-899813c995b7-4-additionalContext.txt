@@ -1,0 +1,220 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-24 10:57am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,220 tokens to read)
+- Work investment: 259,637 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 22, 2026
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2799 | 3:40 PM | 🟣 | Implemented complete Spine animation infrastructure with PlayEnter, PlayExit, and helper methods |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2800 | " | ✅ | Removed Define import from FeatureWheelShowState in preparation for Spine integration |  |  |
+| #2801 | 3:41 PM | ✅ | Removed RESULT_DWELL_SEC constant from FeatureWheelShowState |  |  |
+| #2802 | " | 🟣 | Integrated PlayWheelEnter before spin loop and removed dwell+HIDE_RESULT from loop body |  |  |
+| #2803 | " | 🟣 | Completed Spine integration by adding PlayWheelExit after all effects and implementing Promise wrappers |  |  |
+
+**tests/FeatureWheelTypes.test.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2804 | 3:42 PM | 🔵 | TypeScript compilation and tests confirm Spine integration syntactically complete |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2805 | " | 🔵 | Zero FeatureWheel errors in full TypeScript compilation confirms clean integration |  |  |
+| #2806 | 3:43 PM | 🔵 | Final validation confirms zero TypeScript errors across all modified FeatureWheel files |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab.meta**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2807 | 3:45 PM | 🔵 | Located Node_FeatureWheel prefab usage in MainGame.prefab for Spine binding |  |  |
+
+**#S929** Integrate EyeStrike2_BigWheel Spine animations with SpineKit into Feature Wheel flow (Jun 22, 3:47 PM)
+
+**Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2808 | 3:47 PM | 🔵 | MCP Query Confirmed Node_FeatureWheel Scene Hierarchy |  |  |
+| #2809 | 3:49 PM | ✅ | BigWheel Spine Property Wired via MCP Automation |  |  |
+| #2810 | " | ✅ | Node_FeatureWheel Prefab Changes Persisted to Disk |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2811 | " | ✅ | Verified BigWheel Spine Property Binding in Prefab Files |  |  |
+| #2812 | 3:53 PM | ✅ | Reverted MCP-Based Prefab Property Wiring Due to Issues |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2813 | " | ✅ | Closed Scene After MCP Prefab Wiring Rollback |  |  |
+
+**.claude-loop/learning-log.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2814 | 3:54 PM | 🔵 | MCP component_set_property Limitation with Component-Type Properties |  |  |
+
+**assets\Script\Spine\BaseSpine.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2873 | 6:50 PM | ⚖️ | Spine Animation Playback Architecture |  |  |
+
+**#S930** FeatureWheel Spine animation migration from raw Spine SDK to SpineKit BaseSpine wrapper (Jun 22, 6:51 PM)
+
+**extensions/astarte-framework/assets/Component/Spine/SpineKit.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2874 | 6:53 PM | 🔵 | SpineKit Animation Playback Architecture |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2875 | 6:54 PM | 🔄 | Switch FeatureWheelManager to BaseSpine Wrapper |  |  |
+| #2876 | " | 🔄 | Convert m_bigWheelSpine Property to BaseSpine Type |  |  |
+| #2877 | " | 🔄 | Delegate Spine Operations to BaseSpine Wrapper Methods |  |  |
+
+**tests/FeatureWheelTypes.test.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2878 | 6:55 PM | ✅ | Update SymbolConvert Skin Test to Expect 'Shift' |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelTypes.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2879 | " | 🔵 | SymbolConvert Already Mapped to 'Shift' Skin in Implementation |  |  |
+| #2880 | " | ✅ | Remove Temporary Placeholder Documentation for Shift Skin |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2881 | 6:56 PM | 🔵 | HasPostRespinFeature Test Fails for SymbolConvert |  |  |
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2882 | " | 🔵 | FeatureWheelResult Prefab Already Has BaseSpine Components |  |  |
+| #2883 | " | 🔵 | BaseSpine Component Configuration in FeatureWheelResult Prefab |  |  |
+
+**#S931** Integrate full-screen shake and zoom effects for feature wheel enter/exit animations using existing SlotReels mechanisms (Jun 22, 6:57 PM)
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2884 | 7:06 PM | 🔵 | FeatureWheel entrance effect needs screen shake and reel zoom similar to SlotReels |  |  |
+
+**#S932** Implement FeatureWheel entrance board effects with shake and zoom-in animations during wheel performance (Jun 22, 7:12 PM)
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2885 | 7:12 PM | 🔵 | Event system import structure for shake and reel managers |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2886 | " | 🔵 | FeatureWheelShowState structure and integration points identified |  |  |
+| #2887 | 7:13 PM | ✅ | Added shake and zoom event imports to FeatureWheelShowState |  |  |
+| #2888 | " | 🟣 | Added configurable parameters for wheel entrance zoom and position effects |  |  |
+| #2889 | " | 🟣 | Wrapped wheel entrance with try/finally for guaranteed effect cleanup |  |  |
+| #2890 | 7:14 PM | 🟣 | Implemented full-screen shake and zoom effects for feature wheel entrance and exit |  |  |
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2891 | " | 🔵 | Verified ZOOM_IN_REEL parameter signature in ReelManager |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2892 | 7:15 PM | ✅ | Verified TypeScript compilation passes with shake and zoom integration |  |  |
+
+**#S933** Fixed FeatureWheel shake behavior to vibrate once on entry instead of continuous loop (Jun 22, 7:15 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2893 | 7:30 PM | 🔴 | Changed FeatureWheel entrance shake from continuous loop to single brief shake |  |  |
+
+**#S935** Remove temporary verification toggle for board entrance effects (B key feature) (Jun 22, 7:30 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2894 | 8:47 PM | ✅ | Added keyboard input imports for board effect debugging |  |  |
+| #2895 | 8:48 PM | 🟣 | Implemented B key toggle for Feature Wheel board effects |  |  |
+| #2896 | " | ✅ | Connected board effect toggle to StartBoardEffect execution |  |  |
+
+### Jun 23, 2026
+
+**#S936** Understanding FeatureWheel Spine performance documentation and completing BigWheel integration cleanup (Jun 23, 8:28 AM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2897 | 8:28 AM | ✅ | Removed keyboard input imports for temporary verification toggle |  |  |
+| #2898 | " | ✅ | Deleted B key toggle region and keyboard listener registration |  |  |
+| #2899 | " | ✅ | Removed conditional check that skipped board effects based on toggle flag |  |  |
+
+**#S937** Disable web dashboard auto-launch popup when starting Claude Code (Serena MCP) (Jun 23, 8:31 AM)
+
+**#S938** Clarification on Feature Wheel respin mechanics: whether reels 1 and 6 must both be locked during respin (Jun 23, 9:39 AM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2900 | 11:54 AM | 🔴 | Register GET_TARGET_NODE event in FeatureWheelManager |  |  |
+| #2901 | " | 🟣 | Implement GET_TARGET_NODE event handler in FeatureWheelManager |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2902 | 11:55 AM | 🟣 | Implement PlayFlyEffect with temporary scatter animation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2903 | " | ✅ | TypeScript compilation verification passed |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2904 | " | 🟣 | Complete feature wheel fly effect system implementation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2905 | 11:56 AM | ✅ | Feature wheel implementation verified type-safe despite framework declaration errors |  |  |
+| #2906 | " | ✅ | Project source code compiles with zero errors |  |  |
+
+**#S939** Implement PlayFlyEffect using PLAY_SHOW_SCATTER_TO_MAGIC_POT_ANIMATION as temporary placeholder (Jun 23, 11:57 AM)
+
+**Investigated**: Two files examined: FeatureWheelManager.ts (event registration and node retrieval) and FeatureWheelShowState.ts (fly effect implementation). Type checking performed across assets/Script directory showing zero project errors.
+
+**Learned**: GET_TARGET_NODE event constant existed but was never registered in EVENT_LIST or implemented in OnEvent handler. PlayFlyEffect needed start/end world coordinates and parallel animation dispatching with Promise.all to wait for all animations. The borrowed PLAY_SHOW_SCATTER_TO_MAGIC_POT_ANIMATION event has a pre-existing bug in FlyManager.ts:629 where callback is not invoked on fly node creation failure, causing infinite await hang.
+
+**Completed**: FeatureWheelManager.ts now implements GET_TARGET_NODE event with GetTargetNode() method providing BigWheel Spine node with fallback chain. FeatureWheelShowState.ts PlayFlyEffect rewritten to dispatch fly animations from target node world position to each symbol position from data.Positions, using parallel Promise.all pattern. Defensive checks added for empty Positions and invalid target nodes. Type checking clean with zero errors in project code.
+
+**Next Steps**: Awaiting commit decision. Primary session offered to fix pre-existing FlyManager.ts:629 callback bug that causes await hang on node creation failure.
+
+
+Access 260k tokens of past research & decisions for just 18,220t. Use MCP search tools to access memories by ID.

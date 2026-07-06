@@ -1,0 +1,226 @@
+# [uk_pirates_queen] recent context, 2026-06-25 6:40pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,606 tokens to read)
+- Work investment: 267,816 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 25, 2026
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3040 | 10:19 AM | 🔵 | Additional Execution Paths Identified for Animation Coordination |  |  |
+| #3041 | 10:21 AM | 🔵 | Explore Phase Completed: Dual Freeze Mechanism and IsMgOmen Deadlock Risk Discovered |  |  |
+| #3042 | 10:22 AM | 🔵 | SetReelTimes Appears Uncalled - StopTime Initialization Gap Found |  |  |
+| #3043 | 10:23 AM | ⚖️ | MVP-First Design Proposal: Explicit TriggerDropOut with m_isInDropMode Freeze Flag |  |  |
+| #3044 | " | ⚖️ | Three Design Proposals Completed: TriggerDropOut vs ArmDropOut Strategies |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3045 | 10:24 AM | 🔵 | PlayBigAwardEffect Implementation Verified: Finite Duration Animation |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3046 | 10:27 AM | ⚖️ | Judge Panel Verdict: MVP Minimal Surgery Wins with Critical Flaws Requiring Design-Level Fixes |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3047 | 10:43 AM | 🔄 | Reel symbol drop-out animation sequencing refactored to follow big award hint |  |  |
+
+**#S972** Generate commit message for R-1 bugfix: drop-in animation freeze causing old reels to keep spinning during anticipation period (Jun 25, 10:45 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3048 | 10:48 AM | 🔴 | Correctness review identified critical freeze window regression in drop-out refactoring |  |  |
+| #3049 | " | 🔵 | Quality review identified undocumented visual behavior change in waiting window freeze semantics |  |  |
+
+**..\..\Cocos_Project\uk_pirates_queen\.claude-loop\artifacts\P3-review.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3050 | 10:58 AM | ⚖️ | Multi-agent code review identified freeze window regression requiring user decision |  |  |
+
+**#S973** Diagnose why GoldTarget sometimes doesn't play IN animation in slot game (Jun 25, 11:26 AM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3051 | 11:48 AM | 🔵 | Bounty/Wanted Poster System Architecture in FreeGame |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3052 | 11:52 AM | 🔴 | Clear Bounty Data When FreeGame Ends |  |  |
+
+**#S974** Debug GoldTarget missing IN animation in FreeGame mode - user unable to reproduce the issue (Jun 25, 12:15 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3053 | 1:24 PM | 🔵 | NearWin logic disabled during FreeGame mode |  |  |
+| #3054 | " | 🔵 | Target symbol spine animation reuse during falls |  |  |
+| #3055 | 1:25 PM | ✅ | Added diagnostic logging for Target symbol spine reuse during falls |  |  |
+| #3056 | " | ✅ | Added diagnostic logging for new Target spine creation during falls |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3057 | " | ✅ | TypeScript validation passed after diagnostic logging additions |  |  |
+
+**#S975** Debug intermittent GoldTarget IN animation not playing issue in FreeGame mode (Jun 25, 2:03 PM)
+
+**#S976** Stop FreeGame BGM when FG_End sound effect plays (Jun 25, 2:08 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3058 | 2:09 PM | ✅ | Added diagnostic logging for GoldTarget IN animation debugging |  |  |
+| #3059 | " | ✅ | Implemented comprehensive GoldTarget animation path diagnostics |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3060 | 2:13 PM | 🔵 | Initial toFixed Usage Search in Codebase |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3061 | " | 🔵 | Winning Score Formatting System Located |  |  |
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3062 | 2:14 PM | 🔵 | Number Formatting System File Scope Identified |  |  |
+
+**extensions/astarte-framework/assets/utilis/Tools.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3063 | " | 🔵 | FORMAT_NUMBER_TYPE Enum Definition Located in Framework |  |  |
+| #3064 | " | 🔵 | Complete FORMAT_NUMBER_TYPE Enum and Decimal Configuration System |  |  |
+
+**extensions/astarte-framework/assets/Component/BigWinComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3065 | 2:17 PM | 🔵 | FormatNumberThousands Usage in Framework Components |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3066 | " | 🔵 | Small Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/Common/BigWinControll.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3067 | " | 🔵 | Big Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3068 | 4:24 PM | 🔵 | WantedPosterItem fade animation currently only handles multiplier label |  |  |
+| #3069 | " | 🔵 | m_x9999UIOpacity property exists but is never used |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3070 | " | 🔵 | m_x9999UIOpacity not configured in prefab |  |  |
+| #3071 | 4:25 PM | 🔵 | Prefab structure confirmed with 789 total lines |  |  |
+| #3072 | " | 🔵 | UIOpacity component exists on x9999 node but not bound to property |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3073 | 4:26 PM | 🔴 | Added fade animations for x9999 multiplier indicator |  |  |
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3074 | " | 🔴 | Wired m_x9999UIOpacity to UIOpacity component in prefab |  |  |
+| #3075 | " | ✅ | Validated prefab binding for m_x9999UIOpacity |  |  |
+
+**#S977** Fix Free Game BGM timing to stop when FG_End sound plays during free game exit (Jun 25, 5:01 PM)
+
+**assets/Script/FreeGame/FreeGameExitManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3076 | 5:02 PM | 🔵 | FreeGame BGM stop timing issue identified |  |  |
+| #3077 | " | 🔵 | FreeGameExitManager uses event-driven architecture without direct GameView reference |  |  |
+| #3078 | " | 🔵 | PLAY_OUT_SPINE_ANIM event handler receives four parameters |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3079 | 5:03 PM | 🔴 | Stop FreeGame BGM when FG_End sound effect plays |  |  |
+| #3080 | 5:04 PM | 🔄 | Remove redundant FreeGame BGM stop call |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3081 | " | ✅ | TypeScript compilation validates FreeGame BGM stop changes |  |  |
+
+**#S978** Add fade in/fade out handling for m_x9999Node in WantedPosterItem animations, and commit FreeGame BGM timing adjustment (Jun 25, 5:04 PM)
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3082 | 5:31 PM | 🔴 | Free Game BGM Stop Timing Fix |  |  |
+
+**#S979** Fix collect演出音效重複播放 - SPIN+2場景下FG_Scatter_trigger音效疊播兩次 (Jun 25, 5:31 PM)
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3083 | 6:04 PM | 🔵 | FG_Scatter_trigger audio playback investigation |  |  |
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3084 | " | 🔵 | FG_Scatter_trigger plays once per scatter symbol in loop |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3085 | " | 🔵 | AudioManager concurrent playback limiting mechanism |  |  |
+| #3086 | " | 🔵 | Audio instance tracking and automatic cleanup mechanism |  |  |
+| #3087 | 6:05 PM | 🔵 | Default audio concurrent limit is unlimited (-1) |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3088 | " | 🔵 | Global concurrent limit set to 24 in GameView initialization |  |  |
+
+**#S980** Fix audio overlapping issue in scatter collection - move FG_Scatter_trigger sound out of loop (Jun 25, 6:11 PM)
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3089 | 6:11 PM | 🔴 | 修復 FG_Scatter_trigger 音效疊播問題 |  |  |
+
+**#S981** Verify and fix SPIN+2 totem audio playing FG_Scatter_trigger sound effect twice (Jun 25, 6:21 PM)
+
+**Investigated**: SPIN+2 totem audio configuration was examined to confirm whether FG_Scatter_trigger sound effect was being triggered twice
+
+**Learned**: The SPIN+2 totem audio configuration had a duplicate or incorrect trigger causing FG_Scatter_trigger sound effect to play twice
+
+**Completed**: Fixed the audio trigger issue and committed the change to main branch (commit 0201d99) affecting a single file
+
+**Next Steps**: Audio fix has been deployed to main branch; work on this issue is complete
+
+
+Access 268k tokens of past research & decisions for just 19,606t. Use MCP search tools to access memories by ID.

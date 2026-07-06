@@ -54,3 +54,7 @@ sources: []
 | Memory | facts / topics / wiki / hit-log 長期記憶系統 |
 | Workflow | /dream pipeline、/goal 多 turn 執行、specialist delegation |
 | Agent SDK | bridge 本身（session 管理、specialist 分派、relay 協調、錯誤重試、reflexion） |
+
+## 相關
+
+- [[bridge-project]] — 本頁五層架構的具體實作載體

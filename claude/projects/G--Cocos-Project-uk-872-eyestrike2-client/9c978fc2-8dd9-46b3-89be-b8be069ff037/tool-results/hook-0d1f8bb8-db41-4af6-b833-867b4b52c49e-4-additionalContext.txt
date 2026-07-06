@@ -1,0 +1,216 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-16 8:28pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (16,463 tokens to read)
+- Work investment: 282,483 tokens spent on research, building, and decisions
+- Your savings: 94% reduction from reuse
+
+### Jun 15, 2026
+
+**assets/Script/FeatureWheel/FeatureMarkEvent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2404 | 6:06 PM | 🟣 | Feature Wheel Transfer and Scatter Drop Event Seams |  |  |
+
+**.claude/projects/G--Cocos-Project-uk-872-eyestrike2-client/memory/project_featurewheel_respin_flow.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2405 | 6:07 PM | ✅ | Updated Feature Wheel Progress Documentation |  |  |
+
+### Jun 16, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2406 | 9:46 AM | ✅ | ClaudeCodeTools upgraded to latest version |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2407 | " | 🔵 | ClaudeCodeTools version mismatch detected |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2408 | " | ✅ | init-claude skill updated to latest version |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2409 | 9:51 AM | ✅ | CLAUDE.md regenerated with project-specific configuration |  |  |
+
+**.claudedocs/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2410 | " | ✅ | .claudedocs directory deployed with TypeScript-only language guides |  |  |
+
+**.claude/settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2411 | 9:52 AM | ✅ | Hook system deployed with 6 scripts and settings configuration |  |  |
+
+**#S806** Implement FeatureWheelResult display as temporary replacement for wheel landing animation, discussing instantiation approach, event-driven exit, and animation replacement strategy (Jun 16, 9:52 AM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2412 | 11:34 AM | ✅ | PlayMarkEffect bypasses standard mark for Grand JP award display |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2444 | 7:30 PM | 🔵 | FeatureWheelManager.PlayLandAnnounce Current Implementation |  |  |
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2445 | " | 🔵 | FeatureWheelResult Prefab Structure Analysis |  |  |
+
+**#S807** Replace wheel landing scale bounce animation with FeatureWheelResult display card, implementing event-driven show/hide pattern using existing prefab (Jun 16, 7:36 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2446 | 7:38 PM | 🔵 | FeatureWheel landing animation implementation structure |  |  |
+| #2447 | " | 🔄 | Remove v3 import in preparation for animation replacement |  |  |
+| #2448 | " | 🟣 | Add HIDE_RESULT event for result display card dismissal |  |  |
+| #2449 | 7:39 PM | 🟣 | Add result display card properties for landing announcement |  |  |
+| #2450 | " | 🔄 | Remove unused animation constants and register HIDE_RESULT event |  |  |
+| #2451 | " | 🟣 | Wire HIDE_RESULT event handler in OnEvent dispatcher |  |  |
+| #2452 | " | 🟣 | Replace scale bounce animation with FeatureWheelResult display card |  |  |
+| #2453 | 7:40 PM | 🔴 | Auto-hide result display card when hiding wheel UI |  |  |
+| #2454 | " | 🔵 | TypeScript compilation verification passed with only deprecation warning |  |  |
+
+**#S808** Feature Wheel refactoring - transition landing animations to result display board system and retire HIDE_RESULT (Jun 16, 7:41 PM)
+
+**#S809** Code review of FeatureWheelShowState.ts Feature Wheel animation timing logic (Jun 16, 7:44 PM)
+
+**#S810** Add temporary display delay to prevent wheel result cards from flashing away invisibly (Jun 16, 7:46 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2455 | 7:49 PM | ✅ | Added temporary result display dwell time to FeatureWheelShowState |  |  |
+| #2456 | " | 🔴 | Implemented 800ms delay before hiding wheel result display cards |  |  |
+
+**#S811** Refactor FeatureWheelShowState to use Define.Wait instead of setTimeout (Jun 16, 7:49 PM)
+
+**assets/Script/FlyManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2457 | 7:51 PM | 🔵 | Define.Wait API pattern discovered in codebase |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2458 | " | 🔵 | Define.Wait implementation source identified in framework |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2459 | 7:54 PM | ✅ | Added Define import to FeatureWheelShowState |  |  |
+| #2460 | " | 🔄 | Converted dwell time constant from milliseconds to seconds |  |  |
+| #2461 | " | 🔄 | Replaced setTimeout with Define.Wait in feature wheel state |  |  |
+| #2462 | " | ✅ | TypeScript compilation verified after setTimeout to Define.Wait migration |  |  |
+
+**#S812** MCP connection request and FeatureWheelManager background sprite synchronization implementation (Jun 16, 7:55 PM)
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2463 | 8:01 PM | ✅ | Added SpriteChange component to BG node in FeatureWheelResult prefab |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2464 | " | 🔵 | FeatureWheelManager result display mechanism uses SpriteChange for dynamic symbols |  |  |
+| #2465 | 8:02 PM | 🟣 | Implemented synchronized background sprite switching for FeatureWheel result display |  |  |
+
+**#S813** MCP-assisted connection of FeatureWheelManager background sprite property to BG SpriteChange component (Jun 16, 8:03 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2466 | 8:03 PM | 🔵 | MCP Cocos362 editor connection established |  |  |
+
+**assets/game/Prefab/FeatureWheel/FeatureWheelResult.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2467 | 8:04 PM | 🔵 | Located FeatureWheelManager in prefab hierarchy |  |  |
+
+**#S814** Configure FeatureWheelResult background sprite reference and discover MCP tool limitation (Jun 16, 8:04 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2468 | 8:06 PM | 🔵 | Feature Wheel UI Structure Queried in Cocos Project |  |  |
+| #2469 | " | ✅ | Feature Wheel Result Background Sprite Reference Configured |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2470 | " | 🔵 | Feature Wheel Result Properties Verified in Prefab Serialization |  |  |
+| #2471 | 8:07 PM | 🔴 | Inconsistent Serialization Format for Result Sprite References |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2472 | " | ✅ | Feature Wheel Result Background Reference Cleared |  |  |
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2473 | 8:08 PM | 🔴 | Property Cleared But Still Serializes as String |  |  |
+| #2474 | 8:09 PM | 🔴 | Property Serialization Fixed from String to JSON Null |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--Cocos-Project-uk-872-eyestrike2-client\memory\project_cocos362_mcp.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2475 | " | 🔵 | Project Uses Cocos362 MCP Server for Editor Automation |  |  |
+| #2476 | 8:10 PM | 🔴 | Cocos362 MCP Bridge component_set_property Stringifies All Values |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2477 | 8:25 PM | 🔵 | Multiple Claude installations detected in PATH |  |  |
+| #2478 | " | 🔵 | Development environment has TypeScript tooling and Claude packages installed globally |  |  |
+| #2479 | " | 🔵 | TypeScript LSP plugin integrated into Claude plugin system |  |  |
+| #2480 | 8:26 PM | 🔵 | TypeScript LSP plugin directory contains only documentation files |  |  |
+| #2481 | 8:27 PM | ✅ | Removed npm global Claude Code package with partial cleanup failure |  |  |
+
+**C:\Users\jiunchiwang\.claude\plugins\installed_plugins.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2482 | " | 🔵 | TypeScript LSP plugin registered and installed in Claude plugin system |  |  |
+
+**C:\Users\jiunchiwang\.claude\settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2483 | 8:28 PM | 🔵 | Claude settings confirm TypeScript LSP plugin enabled with comprehensive configuration |  |  |
+| #2484 | " | ✅ | Disabled TypeScript LSP plugin in Claude settings |  |  |
+
+**#S815** Troubleshoot and fix Claude Code installation issues: duplicate npm installation and TypeScript LSP Windows spawn errors (Jun 16, 8:28 PM)
+
+**Investigated**: Diagnosed duplicate Claude Code installations in PATH (native ~/.local/bin and npm global), verified TypeScript language server installation (v5.1.3), examined Claude plugin system architecture including typescript-lsp plugin registration, installation paths, and enablement state across multiple configuration files (installed_plugins.json, settings.json)
+
+**Learned**: Claude plugin system maintains plugins across three directory types: cache (versioned installations), data (runtime state), and marketplaces (plugin definitions). Windows npm wrappers create .cmd and .ps1 launchers alongside executables. The typescript-lsp plugin was installed and enabled but causing ENOENT spawn errors on Windows despite the underlying typescript-language-server binary being correctly installed. PATH resolution prioritizes ~/.local/bin over npm global directory.
+
+**Completed**: Removed npm global @anthropic-ai/claude-code package to eliminate duplicate installation (some locked files remain but package is unregistered). Disabled typescript-lsp@claude-plugins-official plugin in C:/Users/jiunchiwang/.claude/settings.json to stop Windows spawn warnings while preserving Serena MCP for semantic navigation. Changes take effect on next Claude Code restart.
+
+**Next Steps**: User will restart Claude Code and re-run /doctor to verify both issues are resolved - the duplicate npm installation warning should be gone and the typescript-lsp ENOENT spawn error should no longer appear.
+
+
+Access 282k tokens of past research & decisions for just 16,463t. Use MCP search tools to access memories by ID.

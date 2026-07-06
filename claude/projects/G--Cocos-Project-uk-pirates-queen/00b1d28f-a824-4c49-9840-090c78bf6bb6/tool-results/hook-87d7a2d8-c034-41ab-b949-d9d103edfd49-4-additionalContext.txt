@@ -1,0 +1,252 @@
+# [uk_pirates_queen] recent context, 2026-06-25 3:51pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (21,156 tokens to read)
+- Work investment: 277,616 tokens spent on research, building, and decisions
+- Your savings: 92% reduction from reuse
+
+### Jun 24, 2026
+
+**#S965** Investigation of ExtraBet button lighting bug during two-step variant cancellation flow (Jun 24, 9:00 PM)
+
+**#S967** Fix symbol drop animation timing to occur after big award hint animation in slot game (Jun 24, 9:02 PM)
+
+**assets/Script/GameState/ScatterShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3018 | 9:21 PM | 🔵 | ScatterShowState handles pre-FreeGame scatter animations |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3019 | " | 🔵 | SCATTER animation flow uses Win/Enter/Stop/Idle but not Bingo methods |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3020 | 9:22 PM | 🔵 | SCATTER stop animations triggered per reel stop with progressive audio |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3021 | " | 🔵 | No dedicated Bingo audio clips found in AudioManager |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3022 | " | 🔵 | Recent scatter development focused on audio timing and NearWin演出 |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3023 | " | 🔵 | Scatter animation system uses three-level prefab architecture with spine reuse |  |  |
+
+**assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3024 | 9:23 PM | 🔵 | Scatter celebration audio triggers mapped to state transitions |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3025 | " | 🔵 | Reel stop cleanup restores scatter symbols and clears enter animations |  |  |
+
+**assets/Script/GameState/EnterFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3026 | " | 🔵 | EnterFreeState sequence plays Scatter_bell and transitions to free game mode |  |  |
+
+**assets/Script/GameState/AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3027 | 9:24 PM | 🔵 | AddFreeState plays scatter celebrations during mid-FG round additions |  |  |
+
+### Jun 25, 2026
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3028 | 9:28 AM | 🔵 | SlotReels drop animation implementation analyzed |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3029 | " | 🔵 | ShowBigAwardHint call sites identified in game flow |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3030 | " | 🔵 | Drop animation promise usage pattern in SlotReels |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3031 | 9:29 AM | 🔵 | Spin flow timing reveals sequencing issue |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3032 | " | 🔵 | Drop mode prevents normal spin during drop animation |  |  |
+| #3033 | " | 🔵 | Drop and fall sequence coordination mechanism |  |  |
+
+**#S968** Design solution for making DropAllSymbolsOutOfScreen wait for ShowBigAwardHint completion in FreeGame flow (Jun 25, 10:10 AM)
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3034 | 10:11 AM | 🔵 | FreeGame shows big award hint during SpinState entry, before spin loop starts |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3035 | " | 🔵 | OnRecvSpinAck_Test exists as alternative handler alongside production version |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3036 | " | 🔵 | SetPlateInfo triggers drop animation chain when server plate data arrives |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3037 | 10:12 AM | 🔵 | SetPlateInfo called from SetNowRoundInfo during OnRecvSpinAck processing |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3038 | 10:17 AM | 🔵 | Animation Sequencing Conflict in FreeGame Flow |  |  |
+
+**#S969** Launch multi-agent design workflow to solve DropAllSymbolsOutOfScreen waiting for ShowBigAwardHint with path-aware FreeGame coordination (Jun 25, 10:17 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3039 | 10:18 AM | ⚖️ | Multi-Agent Design Workflow Launched for Animation Sequencing Redesign |  |  |
+
+**#S970** Review slot reel drop animation refactoring - user requested /dev-review for quality and security audit (Jun 25, 10:18 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3040 | 10:19 AM | 🔵 | Additional Execution Paths Identified for Animation Coordination |  |  |
+| #3041 | 10:21 AM | 🔵 | Explore Phase Completed: Dual Freeze Mechanism and IsMgOmen Deadlock Risk Discovered |  |  |
+| #3042 | 10:22 AM | 🔵 | SetReelTimes Appears Uncalled - StopTime Initialization Gap Found |  |  |
+| #3043 | 10:23 AM | ⚖️ | MVP-First Design Proposal: Explicit TriggerDropOut with m_isInDropMode Freeze Flag |  |  |
+| #3044 | " | ⚖️ | Three Design Proposals Completed: TriggerDropOut vs ArmDropOut Strategies |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3045 | 10:24 AM | 🔵 | PlayBigAwardEffect Implementation Verified: Finite Duration Animation |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3046 | 10:27 AM | ⚖️ | Judge Panel Verdict: MVP Minimal Surgery Wins with Critical Flaws Requiring Design-Level Fixes |  |  |
+
+**#S971** Implement solution for delaying SlotReels.DropAllSymbolsOutOfScreen animation until after GameView.ShowBigAwardHint completes, covering both normal game and Free Game paths (Jun 25, 10:43 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3047 | 10:43 AM | 🔄 | Reel symbol drop-out animation sequencing refactored to follow big award hint |  |  |
+
+**#S972** Generate commit message for R-1 bugfix: drop-in animation freeze causing old reels to keep spinning during anticipation period (Jun 25, 10:45 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3048 | 10:48 AM | 🔴 | Correctness review identified critical freeze window regression in drop-out refactoring |  |  |
+| #3049 | " | 🔵 | Quality review identified undocumented visual behavior change in waiting window freeze semantics |  |  |
+
+**..\..\Cocos_Project\uk_pirates_queen\.claude-loop\artifacts\P3-review.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3050 | 10:58 AM | ⚖️ | Multi-agent code review identified freeze window regression requiring user decision |  |  |
+
+**#S973** Diagnose why GoldTarget sometimes doesn't play IN animation in slot game (Jun 25, 11:26 AM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3051 | 11:48 AM | 🔵 | Bounty/Wanted Poster System Architecture in FreeGame |  |  |
+
+**assets/Script/GameState/LeaveFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3052 | 11:52 AM | 🔴 | Clear Bounty Data When FreeGame Ends |  |  |
+
+**#S974** Debug GoldTarget missing IN animation in FreeGame mode - user unable to reproduce the issue (Jun 25, 12:15 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3053 | 1:24 PM | 🔵 | NearWin logic disabled during FreeGame mode |  |  |
+| #3054 | " | 🔵 | Target symbol spine animation reuse during falls |  |  |
+| #3055 | 1:25 PM | ✅ | Added diagnostic logging for Target symbol spine reuse during falls |  |  |
+| #3056 | " | ✅ | Added diagnostic logging for new Target spine creation during falls |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3057 | " | ✅ | TypeScript validation passed after diagnostic logging additions |  |  |
+
+**#S975** Debug intermittent GoldTarget IN animation not playing issue in FreeGame mode (Jun 25, 2:08 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3058 | 2:09 PM | ✅ | Added diagnostic logging for GoldTarget IN animation debugging |  |  |
+| #3059 | " | ✅ | Implemented comprehensive GoldTarget animation path diagnostics |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3060 | 2:13 PM | 🔵 | Initial toFixed Usage Search in Codebase |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3061 | " | 🔵 | Winning Score Formatting System Located |  |  |
+
+**assets/Script/Common/Common.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3062 | 2:14 PM | 🔵 | Number Formatting System File Scope Identified |  |  |
+
+**extensions/astarte-framework/assets/utilis/Tools.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3063 | " | 🔵 | FORMAT_NUMBER_TYPE Enum Definition Located in Framework |  |  |
+| #3064 | " | 🔵 | Complete FORMAT_NUMBER_TYPE Enum and Decimal Configuration System |  |  |
+
+**extensions/astarte-framework/assets/Component/BigWinComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3065 | 2:17 PM | 🔵 | FormatNumberThousands Usage in Framework Components |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3066 | " | 🔵 | Small Win Display Uses PERMANENT_DOT Format |  |  |
+
+**assets/Script/Common/BigWinControll.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3067 | " | 🔵 | Big Win Display Uses PERMANENT_DOT Format |  |  |
+
+
+Access 278k tokens of past research & decisions for just 21,156t. Use MCP search tools to access memories by ID.

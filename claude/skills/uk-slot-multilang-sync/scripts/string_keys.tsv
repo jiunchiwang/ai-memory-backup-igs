@@ -1,0 +1,16 @@
+# 多國語言 Key ↔ 列號 對應表(範本 — 複製到專案後填寫)
+# ─────────────────────────────────────────────────────────────
+# 格式(以 Tab 分隔):  Key <Tab> 列號 <Tab> 備註(可選)
+#   Key  : 寫進 gameStrings.xml 的標籤名(只允許英數與底線)
+#   列號 : xlsx「多國語言」工作表的「實際 Excel 列號」
+#          ⚠️ 不是內部「編號」欄(編號常中斷、不可靠)
+#   備註 : 給人看的,腳本只拿來顯示
+# # 開頭或空行會被忽略。
+#
+# 用法(在專案根目錄執行):
+#   python <skill>/scripts/sync_game_strings.py --xlsx 規格.xlsx --mapping 此檔            # dry-run
+#   python <skill>/scripts/sync_game_strings.py --xlsx 規格.xlsx --mapping 此檔 --write    # 寫入
+# ─────────────────────────────────────────────────────────────
+# 範例(刪掉換成你的):
+# BONUS_GAME_TXT	28	標題
+# EXTRA_BET_DESC	60	EXTRA BET內文 OFF→ON 說明

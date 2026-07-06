@@ -1,0 +1,5 @@
+- [Kiro 委派路徑規則](kiro-delegate-windows-paths.md) — Windows 下委派 Kiro 時用 drive letter 絕對路徑，避免 MSYS 路徑映射
+- [Kiro 模型版本](feedback-kiro-model-version.md) — kiro-cli 2.2.0 最強模型是 claude-opus-4.6（4.7 不存在，用錯會 exit code 1）
+- [父專案 tripleCoinTreasure](parent-project-tripleCoinTreasure.md) — uk_slot_eye_strike 從它 fork，偵錯時對比原版找改寫引入的 bug
+- [Reel visible mask buffer](reel-visible-mask-buffer.md) — mask 不止 5 cells，露出上下 plate 各約 1 row buffer，影響 plate refresh 修法選擇
+- [Short spin up plate 殘留](short-spin-up-plate-residual.md) — 已知設計侷限：short spin 時 up plate 沒 TRIG 機會殘留前手內容，已評估不修

@@ -65,6 +65,33 @@
     ]
   },
   {
+    "topic": "bridge-acp",
+    "keywords": [
+      "claude-agent-acp",
+      "kiro-cli acp",
+      "kiro-cli chat",
+      "acp_model",
+      "acp_agent_command",
+      "acp 已從",
+      "kiro cli 的 model",
+      "kiro cli 可用",
+      "非 claude model",
+      "model id",
+      "specialist-domains",
+      "parallel delegate",
+      "parallel_delegate",
+      "co-authored-by",
+      "impact-gate",
+      "tool-hooks",
+      "pretooluse hook",
+      "hooks 在 session",
+      "claude-fable",
+      "set_config_option",
+      "deepseek",
+      "qwen3-coder"
+    ]
+  },
+  {
     "topic": "bridge-research",
     "keywords": [
       "hermes",
@@ -104,10 +131,7 @@
       "雷蒙",
       "7 層",
       "harness 架構",
-      "已超越",
-      "fable",
-      "接線 bug",
-      "p0 三模組"
+      "已超越"
     ]
   },
   {
@@ -123,7 +147,6 @@
       "buildpreamble",
       "/dream",
       "wikisync",
-      "parallel_delegate",
       "cross-check",
       "start.bat",
       "backup_repo_dir",
@@ -135,9 +158,11 @@
       "rich messages",
       "parse_mode",
       "format-html",
-      "specialist-domains",
       "embed router",
       "embedding router",
+      "embedding model",
+      "embedding 解耦",
+      "notebooklm",
       "optimistic cancel",
       "/cancel",
       "/skillsearch",
@@ -161,10 +186,7 @@
       "/reset clean",
       "fork（jiunchiwang",
       "upstream（redkilin",
-      "fork 同步策略",
-      "kiro-cli acp",
-      "model id",
-      "kiro cli 的 model"
+      "fork 同步策略"
     ]
   },
   {
@@ -213,7 +235,9 @@
       "npx tsc",
       "此台機器",
       "jiunchiwang",
-      "node_modules/@xenova"
+      "node_modules/@xenova",
+      "powershell",
+      "encodedcommand"
     ]
   },
   {
@@ -229,7 +253,6 @@
       "目錄錨點跳轉",
       "使用者確認",
       "使用者決定",
-      "自我改進優先級",
       "偏好 split",
       "偏好 obsidian",
       "使用者想用 obsidian"

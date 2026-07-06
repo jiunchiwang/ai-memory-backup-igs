@@ -1,0 +1,216 @@
+# [uk_pirates_queen] recent context, 2026-06-08 6:57pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (16,948 tokens to read)
+- Work investment: 408,963 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jun 5, 2026
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2016 | 4:06 PM | 🔵 | Refactored code is error-free despite framework type definition issues |  |  |
+| #2017 | " | 🔵 | Zero TypeScript errors in refactored ExplodeState and WantedPosterState confirmed |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2018 | 4:07 PM | ✅ | Updated PlayBountyGroupPerform JSDoc to reflect new stage flow |  |  |
+| #2019 | " | ✅ | Updated FilterNonWildPositions comment to clarify wild handling in new flow |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2020 | 5:02 PM | 🔵 | Multiplier Base Index Management System |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2021 | 5:10 PM | 🟣 | Multiplier base server validation guard implemented |  |  |
+
+**assets/Script/GameState/MatchingPatchUpState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2022 | " | 🟣 | Multiplier validation integrated into cascade elimination flow |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2023 | " | ✅ | Type-safe validation confirmed for multiplier guard implementation |  |  |
+
+**#S719** User requested to stop work after committing changes to 4 files (Jun 5, 5:17 PM)
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2024 | 5:18 PM | 🟣 | Unified elimination flow and restructured wanted poster presentation timing |  |  |
+
+**#S722** Make ExtraBet visibility follow server ShowExtra field in uk_pirates_queen, referencing uk-slot-extrabet skill pattern (Jun 5, 5:18 PM)
+
+### Jun 8, 2026
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2025 | 10:33 AM | 🔵 | ExtraBet implementation in uk_pirates_queen GameView |  |  |
+| #2026 | 10:34 AM | 🔵 | GameInfoData proto contains ShowExtra field for server-controlled visibility |  |  |
+| #2027 | " | 🔵 | GameInfoData decoded in OnCommand info ack handler |  |  |
+| #2028 | " | 🔵 | ExtraBet visibility controlled by game state transitions, not server data |  |  |
+
+**#S723** Implemented server-controlled ExtraBet feature gating system in Pirates Queen slot game (Jun 8, 10:35 AM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2029 | 10:38 AM | 🟣 | Added server-driven ExtraBet visibility control flag |  |  |
+| #2030 | " | 🟣 | Integrated server ExtraBet flag into multi-bet display logic |  |  |
+| #2031 | 10:39 AM | 🟣 | Implemented server-controlled ExtraBet feature gating system |  |  |
+| #2032 | " | ✅ | TypeScript validation confirms ExtraBet gating implementation is type-safe |  |  |
+
+**C:\ProgramData\cocos\editors\Creator\3.6.2\resources\resources\3d\engine\bin\.declarations\cc.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2033 | " | 🔵 | TypeScript errors are framework-level, not in ExtraBet implementation |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2034 | 10:40 AM | ✅ | IDE diagnostics confirm zero errors in ExtraBet implementation |  |  |
+
+**#S724** Implement GAME_INTRO_COMPLETE event handler in WantedPosterManager to respond when GameIntroManager receives Wanted_On Spine event (Jun 8, 10:40 AM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2035 | 11:51 AM | 🟣 | Added Wanted Board visual element to main game scene |  |  |
+| #2036 | 11:52 AM | 🟣 | ExtraBet feature now controlled by server-side ShowExtra flag |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2037 | 1:26 PM | 🔵 | Wanted Poster multiplier display uses capped label, needs conditional node switching |  |  |
+| #2038 | 1:27 PM | 🟣 | Conditional multiplier display switches between label and X9999 node |  |  |
+| #2039 | 1:28 PM | 🔄 | Simplified conditional multiplier display logic with isMax flag |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2040 | 1:37 PM | 🔵 | WantedPosterManager event system structure reviewed |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2041 | 1:38 PM | 🔵 | Game specification and symbol system reviewed |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2042 | " | 🔵 | Symbol enum and IBountyData interface structure confirmed |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2043 | 1:39 PM | 🟣 | GAME_INTRO_COMPLETE event registered in event system |  |  |
+| #2044 | " | 🟣 | Event handler case added for GAME_INTRO_COMPLETE |  |  |
+| #2045 | " | 🟣 | GAME_INTRO_COMPLETE event handler fully implemented |  |  |
+| #2046 | " | 🔵 | TypeScript diagnostics verified for WantedPosterManager implementation |  |  |
+
+**#S725** Wire GameIntroManager to dispatch GAME_INTRO_COMPLETE event when Spine animation emits "Wanted_On" frame event during intro playback (Jun 8, 1:48 PM)
+
+**assets/Script/GameIntroManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2047 | 1:50 PM | 🟣 | Added Spine frame event constant for wanted poster trigger |  |  |
+| #2048 | " | 🟣 | Connected Spine frame event callback to intro animation playback |  |  |
+| #2049 | " | 🟣 | Completed Spine-to-WantedPoster event pipeline with dispatcher and cleanup |  |  |
+
+**#S727** Modify SetWantedPosterData to always exit-then-enter when poster already showing, eliminating direct update behavior (Jun 8, 1:51 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2050 | 4:47 PM | 🔵 | Current SetWantedPosterData transition logic analyzed |  |  |
+
+**#S728** Simplified WantedPosterManager BC-12 behavior to always replay Out→In animations for active items regardless of BaseSymbol changes (Jun 8, 4:48 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2051 | 4:51 PM | ✅ | Simplified wanted poster update behavior to always replay Out→In transition |  |  |
+| #2052 | " | 🔄 | Removed unused prevBaseSymbol variable after behavior simplification |  |  |
+| #2053 | " | 🔄 | Completed BC-12 simplification by collapsing conditional branches |  |  |
+
+**#S729** Investigate multiplier base plate sync issue when two targets overlap on same position (+1 vs +2 discrepancy) (Jun 8, 4:52 PM)
+
+**assets/Script/GameState/CountMultState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2054 | 5:39 PM | 🔵 | Investigated multiplier base increment logic for duplicate elimination positions |  |  |
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2055 | " | 🔵 | Found root cause of duplicate position increment issue in ExplodeState |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2056 | " | 🔵 | Identified multiplier increment mechanism only supports +1 per position |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2057 | 5:40 PM | 🔵 | Confirmed deduplication in BuildUnifiedExplodeData prevents correct multi-target increment counting |  |  |
+
+**#S730** Update JSDoc comments for ADD_MULTIPLIER_WITH_ANIM event to document new amount and callback parameters (Jun 8, 5:49 PM)
+
+**assets/Script/MultBase/MultiplierBase.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2058 | 5:51 PM | 🔵 | MultiplierBase component manages visual display and upgrade animations |  |  |
+
+**SPEC.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2059 | " | 🔵 | Game specification confirms Target elimination range mechanics |  |  |
+| #2060 | 5:52 PM | 🔵 | Multiplier Base specification defines increment per cascade chain |  |  |
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2061 | 5:53 PM | 🔴 | Fixed multiplier base sync when targets overlap on same position |  |  |
+
+**assets/Script/MultBase/MultiplierBaseManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2062 | " | 🔴 | Updated MultiplierBaseManager to support variable increment amounts for target overlaps |  |  |
+| #2063 | " | 🔄 | Updated AddAllMultiplierWithAnim to support batch variable increments |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2064 | 5:54 PM | ✅ | TypeScript compilation validates all multiplier overlap fix changes |  |  |
+
+**#S731** Commit pending changes to ExploreState.ts and MultiplierBaseManager.ts (Jun 8, 6:01 PM)
+
+**assets/Script/GameState/ExplodeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2065 | 6:01 PM | 🔴 | Fixed multiplier base plate sync when target ranges overlap |  |  |
+
+
+Access 409k tokens of past research & decisions for just 16,948t. Use MCP search tools to access memories by ID.

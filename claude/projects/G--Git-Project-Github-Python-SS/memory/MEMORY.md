@@ -1,0 +1,1 @@
+- [SS GUI 工具規格](project_gui_tool.md) — Streamlit GUI 化，5 大功能模組已確認（2026-04-15）

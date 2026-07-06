@@ -1,0 +1,157 @@
+[1m[36m[uk_pirates_queen] recent context, 2026-06-08 5:20pm GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (17,024 tokens to read)[0m
+[2m  Work investment: 398,940 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 96% reduction from reuse[0m
+
+[1m[36mJun 5, 2026[0m
+
+[2massets/Script/GameState/ExplodeState.ts[0m
+  [2m#2004[0m  [2m3:27 PM[0m  🔵  Game elimination flow uses sequential state machine for symbol removal  
+
+[2mGeneral[0m
+  [2m#2005[0m  [2m3:54 PM[0m  ⚖️  Game mechanics refinement for steps 2 and 4 with bounty and wild symbol behavior  
+
+[2massets/Script/EffectPlate/EffectPlate.ts[0m
+  [2m#2006[0m           🔵  Located wanted poster explosion and symbol effect methods in EffectPlate  
+  [2m#2007[0m           🔵  WantedPoster effect methods implementation details in EffectPlate  
+
+[2massets/Script/SlotReels.ts[0m
+  [2m#2008[0m  [2m3:59 PM[0m  🔵  Typo in SlotReels method name: Exlpode instead of Explode  
+
+[2massets/Script/GameState/ExplodeState.ts[0m
+  [2m#2009[0m  [2m4:04 PM[0m  🔄  Unified symbol elimination logic in ExplodeState  
+  [2m#2010[0m           🟣  Implemented BuildUnifiedExplodeData method and ADD-based multiplier updates  
+
+[2massets/Script/GameState/WantedPosterState.ts[0m
+  [2m#2011[0m           🔄  Bounty groups now perform in parallel with elimination decoupled  
+  [2m#2012[0m           🔄  Renamed PlayBountyGroupEliminate to PlayBountyGroupPerform and removed elimination parameters  
+  [2m#2013[0m  [2m4:05 PM[0m  🔄  Removed WantedPosterExplodeEffect calls from bounty performance flow  
+  [2m#2014[0m           🔄  Removed dead code: FilterWildPositions and CollectBountyWildPositions methods  
+
+[2massets/Script/GameState/ExplodeState.ts[0m
+  [2m#2015[0m           🔵  TypeScript validation confirms refactoring is type-safe  
+  [2m#2016[0m  [2m4:06 PM[0m  🔵  Refactored code is error-free despite framework type definition issues  
+  [2m#2017[0m           🔵  Zero TypeScript errors in refactored ExplodeState and WantedPosterState confirmed  
+
+[2massets/Script/GameState/WantedPosterState.ts[0m
+  [2m#2018[0m  [2m4:07 PM[0m  ✅  Updated PlayBountyGroupPerform JSDoc to reflect new stage flow  
+  [2m#2019[0m           ✅  Updated FilterNonWildPositions comment to clarify wild handling in new flow  
+
+[33m#S716[0m Evaluating whether to add validation check comparing client multiplier base values against server BasePlateIndex (Jun 5, 4:07 PM)
+
+[2massets/Script/EffectPlate/EffectPlate.ts[0m
+  [2m#2020[0m  [2m5:02 PM[0m  🔵  Multiplier Base Index Management System  
+
+[33m#S717[0m Implement multiplier base plate regression guard with server validation checks (Jun 5, 5:04 PM)
+
+[2massets/Script/MultBase/MultiplierBaseManager.ts[0m
+  [2m#2021[0m  [2m5:10 PM[0m  🟣  Multiplier base server validation guard implemented  
+
+[2massets/Script/GameState/MatchingPatchUpState.ts[0m
+  [2m#2022[0m           🟣  Multiplier validation integrated into cascade elimination flow  
+
+[2mGeneral[0m
+  [2m#2023[0m           ✅  Type-safe validation confirmed for multiplier guard implementation  
+
+[33m#S718[0m User requested to commit completed game state refactoring with elimination logic and server sync improvements (Jun 5, 5:16 PM)
+
+[33m#S719[0m User requested to stop work after committing changes to 4 files (Jun 5, 5:17 PM)
+
+[2massets/Script/GameState/ExplodeState.ts[0m
+  [2m#2024[0m  [2m5:18 PM[0m  🟣  Unified elimination flow and restructured wanted poster presentation timing  
+
+[33m#S722[0m Make ExtraBet visibility follow server ShowExtra field in uk_pirates_queen, referencing uk-slot-extrabet skill pattern (Jun 5, 5:18 PM)
+
+[1m[36mJun 8, 2026[0m
+
+[2massets/Script/GameView.ts[0m
+  [2m#2025[0m  [2m10:33 AM[0m  🔵  ExtraBet implementation in uk_pirates_queen GameView  
+  [2m#2026[0m  [2m10:34 AM[0m  🔵  GameInfoData proto contains ShowExtra field for server-controlled visibility  
+  [2m#2027[0m            🔵  GameInfoData decoded in OnCommand info ack handler  
+  [2m#2028[0m            🔵  ExtraBet visibility controlled by game state transitions, not server data  
+
+[33m#S723[0m Implemented server-controlled ExtraBet feature gating system in Pirates Queen slot game (Jun 8, 10:35 AM)
+
+[2massets/Script/GameView.ts[0m
+  [2m#2029[0m  [2m10:38 AM[0m  🟣  Added server-driven ExtraBet visibility control flag  
+  [2m#2030[0m            🟣  Integrated server ExtraBet flag into multi-bet display logic  
+  [2m#2031[0m  [2m10:39 AM[0m  🟣  Implemented server-controlled ExtraBet feature gating system  
+  [2m#2032[0m            ✅  TypeScript validation confirms ExtraBet gating implementation is type-safe  
+
+[2mC:\ProgramData\cocos\editors\Creator\3.6.2\resources\resources\3d\engine\bin\.declarations\cc.d.ts[0m
+  [2m#2033[0m            🔵  TypeScript errors are framework-level, not in ExtraBet implementation  
+
+[2massets/Script/GameView.ts[0m
+  [2m#2034[0m  [2m10:40 AM[0m  ✅  IDE diagnostics confirm zero errors in ExtraBet implementation  
+
+[33m#S724[0m Implement GAME_INTRO_COMPLETE event handler in WantedPosterManager to respond when GameIntroManager receives Wanted_On Spine event (Jun 8, 10:40 AM)
+
+[2massets/Script/GameView.ts[0m
+  [2m#2035[0m  [2m11:51 AM[0m  🟣  Added Wanted Board visual element to main game scene  
+  [2m#2036[0m  [2m11:52 AM[0m  🟣  ExtraBet feature now controlled by server-side ShowExtra flag  
+
+[2massets/Script/WantedPoster/WantedPosterItem.ts[0m
+  [2m#2037[0m  [2m1:26 PM[0m  🔵  Wanted Poster multiplier display uses capped label, needs conditional node switching  
+  [2m#2038[0m  [2m1:27 PM[0m  🟣  Conditional multiplier display switches between label and X9999 node  
+  [2m#2039[0m  [2m1:28 PM[0m  🔄  Simplified conditional multiplier display logic with isMax flag  
+
+[2massets/Script/WantedPoster/WantedPosterManager.ts[0m
+  [2m#2040[0m  [2m1:37 PM[0m  🔵  WantedPosterManager event system structure reviewed  
+
+[2massets/Script/WantedPoster/WantedPosterItem.ts[0m
+  [2m#2041[0m  [2m1:38 PM[0m  🔵  Game specification and symbol system reviewed  
+
+[2massets/Script/Game_Define.ts[0m
+  [2m#2042[0m           🔵  Symbol enum and IBountyData interface structure confirmed  
+
+[2massets/Script/WantedPoster/WantedPosterManager.ts[0m
+  [2m#2043[0m  [2m1:39 PM[0m  🟣  GAME_INTRO_COMPLETE event registered in event system  
+  [2m#2044[0m           🟣  Event handler case added for GAME_INTRO_COMPLETE  
+  [2m#2045[0m           🟣  GAME_INTRO_COMPLETE event handler fully implemented  
+  [2m#2046[0m           🔵  TypeScript diagnostics verified for WantedPosterManager implementation  
+
+[33m#S725[0m Wire GameIntroManager to dispatch GAME_INTRO_COMPLETE event when Spine animation emits "Wanted_On" frame event during intro playback (Jun 8, 1:48 PM)
+
+[2massets/Script/GameIntroManager.ts[0m
+  [2m#2047[0m  [2m1:50 PM[0m  🟣  Added Spine frame event constant for wanted poster trigger  
+  [2m#2048[0m           🟣  Connected Spine frame event callback to intro animation playback  
+  [2m#2049[0m           🟣  Completed Spine-to-WantedPoster event pipeline with dispatcher and cleanup  
+
+[33m#S727[0m Modify SetWantedPosterData to always exit-then-enter when poster already showing, eliminating direct update behavior (Jun 8, 1:51 PM)
+
+[2massets/Script/WantedPoster/WantedPosterManager.ts[0m
+  [2m#2050[0m  [2m4:47 PM[0m  🔵  Current SetWantedPosterData transition logic analyzed  
+  [2m#2051[0m  [2m4:51 PM[0m  ✅  Simplified wanted poster update behavior to always replay Out→In transition  
+  [2m#2052[0m           🔄  Removed unused prevBaseSymbol variable after behavior simplification  
+  [2m#2053[0m           🔄  Completed BC-12 simplification by collapsing conditional branches  
+
+[33m#S728[0m Simplified WantedPosterManager BC-12 behavior to always replay Out→In animations for active items regardless of BaseSymbol changes (Jun 8, 4:52 PM)
+
+[34mInvestigated:[0m Examined WantedPosterManager.SetWantedPosterData method logic, particularly the three-branch conditional handling for active items (BC-1 new activation, BC-12 same BaseSymbol, EH-6 changed BaseSymbol). Reviewed how prevBaseSymbol comparison was used to determine whether to skip animations versus play full Out→In sequence.
+
+[33mLearned:[0m The wanted poster system previously had an optimization where active items with unchanged BaseSymbol would update the multiplier label synchronously without replaying entrance animations. This created two distinct code paths for active items depending on BaseSymbol comparison. The BC-13 "fewer to more" coordinated transition logic and BC-1/BC-2 activation/deactivation flows remain independent of this change.
+
+[32mCompleted:[0m Refactored WantedPosterManager.ts to collapse three-branch logic into two branches: (1) inactive→active items play In animation directly, (2) all previously active items now uniformly play Out→SetData→In sequence regardless of whether BaseSymbol or only multiplier changed. Removed obsolete prevBaseSymbol variable and updated method documentation to reflect merged BC-12/EH-6 behavior. Diagnostics confirmed no TypeScript errors.
+
+[35mNext Steps:[0m Work is complete for this refactoring. Primary session recommends testing in Cocos Editor to verify the new animation rhythm behaves as expected, particularly for scenarios with frequent multiplier changes where items will now visibly exit and re-enter rather than updating labels in-place.
+
+
+[2mAccess 399k tokens of past research & decisions for just 17,024t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

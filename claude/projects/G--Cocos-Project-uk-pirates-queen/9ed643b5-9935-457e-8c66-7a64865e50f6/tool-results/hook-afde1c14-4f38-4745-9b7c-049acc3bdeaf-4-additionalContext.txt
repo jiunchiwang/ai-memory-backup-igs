@@ -1,0 +1,216 @@
+# [uk_pirates_queen] recent context, 2026-06-29 4:22pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,393 tokens to read)
+- Work investment: 206,515 tokens spent on research, building, and decisions
+- Your savings: 92% reduction from reuse
+
+### Jun 25, 2026
+
+**#S982** Investigation of whether target explosion visual effects (golden grid lines) could appear on target symbols due to code behavior (Jun 25, 6:21 PM)
+
+**#S983** Verify whether TARGET_EXPLODE_PREFAB_KEY's Lightframe grid layers could appear on symbolPrefabKey's prefab (user suspected they shouldn't) (Jun 25, 6:56 PM)
+
+**#S984** Investigate whether Active_Red's Lightframe grid layer appears on symbolPrefab and document findings in markdown (Jun 25, 7:03 PM)
+
+**#S985** Reduce vibration intensity for tingpai (ready-to-win) state in mahjong slot game (Jun 25, 7:23 PM)
+
+### Jun 26, 2026
+
+**#S990** Commit changes for Wanted_MultiAdd audio integration (multiplier refresh sound effect) (Jun 26, 1:15 PM)
+
+**#S999** 實機驗證底部 Bar 贏分顯示邏輯 — 確認多盤/多局下是否顯示累積值 (Jun 26, 2:30 PM)
+
+**assets/Script/GameState/RoundEndState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3176 | 3:27 PM | 🔵 | RoundEndState manages round completion and index reset logic |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3179 | 3:30 PM | 🔵 | SetWinValueWithCheck method located in framework bottom bar manager |  |  |
+
+**extensions/astarte-framework/assets/Managers/NewBottomBarManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3180 | 3:31 PM | 🔵 | NewBottomBarManager interface defines CheckWin structure with maxWin field |  |  |
+| #3181 | " | 🔵 | SetWinValueWithCheck is interface method without implementation in framework source |  |  |
+| #3182 | " | 🔵 | CheckWin interface structure clarified with maxWin and value fields |  |  |
+| #3183 | " | 🔵 | Confirmed SetWinValueWithCheck is abstract framework interface |  |  |
+| #3184 | 3:32 PM | 🔵 | Framework exports newBottombarManager singleton instance |  |  |
+| #3185 | " | 🔵 | newBottombarManager references Astarte.NewBottombar implementation |  |  |
+
+**assets/Script/GameState/CheckState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3186 | " | 🔵 | CheckState routes game flow based on round completion and free game conditions |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3187 | 3:33 PM | 🔵 | CurPlateIndex tracks progression through PlateQueue within each round |  |  |
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3188 | " | 🔵 | Found all SetWinValueWithCheck call sites revealing AccumulatedWin property |  |  |
+
+**assets/Script/GameState/UnshowPrepareState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3189 | " | 🔵 | UnshowPrepareState restores AccumulatedWin for reconnection scenarios |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3190 | 3:34 PM | 🔵 | AccumulatedWin tracks cross-round wins for reconnection scenarios |  |  |
+
+**assets/Script/GameState/UnshowPrepareState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3191 | " | 🔵 | UnshowPrepareState explicitly accumulates RoundWin across multiple rounds |  |  |
+
+**#S1001** Verify bottom bar cumulative winnings display with multiple RoundInfo/PlateInfo in common game version - verification blocked by environment setup (Jun 26, 3:52 PM)
+
+**assets/Script/RecoverSpinAck.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3203 | 3:52 PM | 🔵 | Test Data Injection Mechanisms Investigation |  |  |
+
+**assets/Script/DebugToolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3204 | 3:53 PM | 🔵 | Debug Tool Infrastructure Located |  |  |
+| #3206 | " | 🔵 | SpinAck Replay Debug System |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3207 | 3:54 PM | 🔵 | SpinAck Injection Point in GameView |  |  |
+
+**#S1014** Troubleshoot git fetch OAuth callback connection error (ERR_CONNECTION_REFUSED on localhost:51569) (Jun 26, 3:55 PM)
+
+### Jun 28, 2026
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3221 | 8:39 AM | 🔵 | SPIN Button Flash Issue Investigation Started |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3222 | " | 🔵 | SPIN Button State Transitions Mapped |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3223 | 8:40 AM | 🔵 | Game State Machine Architecture Revealed |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3225 | 8:42 AM | 🔵 | Framework Bottombar Manager Location Found |  |  |
+| #3226 | 8:43 AM | 🔵 | SlotBottomBarState Enum Definition Not in Framework |  |  |
+
+**extensions/astarte-framework/assets/Managers/NewBottomBarManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3227 | " | 🔵 | SlotBottomBarState Found as Const Object |  |  |
+| #3230 | 8:44 AM | 🔵 | Complete SPIN Button State Definitions Revealed |  |  |
+| #3231 | " | 🔵 | SetSpinState Method Interface Found |  |  |
+
+**extensions/astarte-framework/assets/Component/Common_IdleState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3232 | 8:45 AM | 🔵 | Suspicious CLICK_SPIN ↔ IDLE Toggles in ExtraBetComponent |  |  |
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3233 | " | 🔵 | Root Cause Found - START_SPIN Set During Award Display |  |  |
+
+**assets/Script/GameState/RoundEndState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3235 | " | 🔵 | State Flow Reveals Flash Timing Window |  |  |
+
+**assets/Script/GameState/WaitResState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3236 | 8:46 AM | 🔵 | Additional Button State Transitions in ClickSpin and Demo Mode |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3238 | 8:47 AM | 🔵 | SetSpinState Implementation Location Confirmed |  |  |
+
+### Jun 29, 2026
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3273 | 8:44 AM | 🔵 | SPIN button state management investigation |  |  |
+| #3274 | " | 🔵 | OnSpin triggers ExtraBet bar collapse animation |  |  |
+
+**#S1015** Diagnosed Git fetch 403 error caused by missing SSO authorization for GitHub organization (Jun 29, 10:05 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3275 | 10:06 AM | 🔵 | Git Credential Manager has stored GitHub OAuth token for igs-jiunchiwang |  |  |
+
+**.git/config**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3276 | 10:07 AM | 🔵 | Git Credential Manager configured with default Windows credential helper |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3277 | " | ✅ | Cleared Git Credential Manager stored credentials for github.com |  |  |
+| #3278 | " | 🔵 | Verified Git Credential Manager cache is empty after credential erasure |  |  |
+| #3279 | 10:09 AM | 🔵 | Git Credential Manager successfully stored new OAuth token after fetch |  |  |
+
+**..\..\Cocos_Project\uk_pirates_queen\gcm-diagnose.log**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3280 | 10:11 AM | 🔵 | Git Credential Manager configuration and storage backend inspection |  |  |
+| #3281 | " | ✅ | Removed sensitive GCM diagnostic log from project directory |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3282 | 10:12 AM | 🔵 | Windows Credential Manager GitHub-related credential entry identified |  |  |
+| #3283 | " | 🔵 | Complete Windows Credential Manager inventory shows no GitHub OAuth tokens |  |  |
+| #3284 | " | 🔵 | Git credential helper configuration confirms GCM managing GitHub authentication |  |  |
+| #3285 | 10:13 AM | 🔵 | GCM trace reveals OAuth credential regeneration despite empty credential store |  |  |
+
+**#S1016** Diagnose GitHub 403 authentication errors when accessing IGS-ARCADE-DIVISION-RD2 organization repositories (Jun 29, 3:47 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3286 | 3:47 PM | 🔵 | NearWin and vibration system code location identified |  |  |
+| #3287 | " | 🔵 | Three vibration trigger points found in NearWin symbol drop logic |  |  |
+| #3288 | " | 🔵 | Third vibration point located in EnterPlate sky-drop method |  |  |
+| #3289 | 3:48 PM | 🔴 | Restricted NearWin vibration to Scatter drops only - first trigger point |  |  |
+| #3290 | " | 🔴 | Restricted NearWin vibration to Scatter drops only - second trigger point |  |  |
+| #3291 | 4:10 PM | 🔴 | Cascaded SCATTER symbols missing IN animation after elimination drop |  |  |
+
+
+Access 207k tokens of past research & decisions for just 17,393t. Use MCP search tools to access memories by ID.

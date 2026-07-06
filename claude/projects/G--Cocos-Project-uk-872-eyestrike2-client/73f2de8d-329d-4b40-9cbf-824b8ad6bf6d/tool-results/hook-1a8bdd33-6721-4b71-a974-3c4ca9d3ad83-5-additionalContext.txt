@@ -1,0 +1,220 @@
+# [uk_872_eyestrike2_client] recent context, 2026-06-30 5:38pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (21,615 tokens to read)
+- Work investment: 403,359 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jun 26, 2026
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\global-multiplier.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3193 | 3:41 PM | 🟣 | Created global-multiplier pattern card |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\collect-feature.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3194 | 3:42 PM | 🔵 | Reviewed collect-feature variants and edge cases |  |  |
+| #3195 | " | ✅ | Added Wrath of Thunder v2 Collect variants to collect-feature pattern |  |  |
+| #3196 | " | ✅ | Added edge cases for Burst and upgraded Collect interaction logic |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3197 | 3:43 PM | ✅ | Updated pattern library index with new Wrath of Thunder v2 patterns |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3198 | 3:45 PM | 🔵 | Pattern library directory completely untracked in repository |  |  |
+| #3199 | " | 🔵 | Pattern library is new skill addition to existing repository |  |  |
+| #3200 | 3:49 PM | 🟣 | Pattern library validation framework launched for 5 Cocos slot game projects |  |  |
+
+**..\..\Cocos_Project\uk_722_robinhood_client\assets\Script\SymbolChange.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3201 | 3:51 PM | 🔵 | Pattern Library Verification - Multi-Agent Cross-Codebase Validation |  |  |
+
+**..\..\Cocos_Project\uk_722_robinhood_client\assets\Script\Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3202 | 3:52 PM | 🔵 | Pattern Library Verification Complete - File Sizes and Core Mechanisms Validated |  |  |
+
+**..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\FakeReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3205 | " | 🔵 | Pattern Library Deep Verification - Advanced Feature Mechanisms and Architecture Details |  |  |
+
+**..\..\Cocos_Project\uk_722_robinhood_client\assets\game\Text\demo\fake_reel_mg.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3208 | 3:55 PM | 🔵 | Pattern-library skill validation across multiple slot game projects |  |  |
+
+**..\..\Cocos_Project\uk_746_far_west_client\assets\Script\ColumnSymbol.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3209 | 3:56 PM | 🔵 | Slot game codebase pattern investigation across multiple projects |  |  |
+
+**..\..\Cocos_Project\uk_slot_eye_strike\extensions\astarte-framework\assets\utilis\ExtraBetController.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3210 | " | 🔵 | Eye Strike ExtraBet Controller Architecture |  |  |
+
+**..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\MagicPot\MagicPotController.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3211 | " | 🔵 | MagicPot Server-Client Level Mapping System |  |  |
+
+**..\..\Cocos_Project\uk_slot_eye_strike\assets\Script\GameState\ScatterShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3212 | 3:57 PM | 🔵 | Collect Symbol Audio and Position Tracking System |  |  |
+
+**assets/Script/GameState/RespinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3213 | 3:59 PM | 🔵 | Verified far_west slot game feature implementation claims |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\collect-feature.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3214 | 4:01 PM | 🔵 | Documentation error inspection before correction |  |  |
+| #3215 | " | 🔴 | Fixed cross-project feature misattribution in collect-feature documentation |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\bomb-feature.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3216 | " | 🔴 | Corrected bomb mechanism documentation to match actual client implementations |  |  |
+| #3217 | 4:02 PM | ✅ | Added implementation warning callout to bomb-feature reference table |  |  |
+| #3218 | " | 🔴 | Updated bomb variants table and edge cases to reflect server-driven cascade model |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\extra-bet.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3219 | " | ✅ | Added project-specific annotations to extra-bet and fake-reel-manager documentation |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-pattern-library\patterns\mystery-symbol.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3220 | 4:03 PM | ✅ | Enhanced mystery-symbol server-only variant with far_west implementation details |  |  |
+
+### Jun 30, 2026
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3374 | 2:09 PM | 🔵 | Feature Wheel Spine animation timing mismatch identified |  |  |
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3375 | 2:10 PM | 🔵 | Board zoom mechanics verified in ReelManager |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3376 | 2:54 PM | 🔵 | SpeedUp base constant confirmed for animation timeScale |  |  |
+| #3377 | " | 🔵 | SpeedUp is a static constant not modified at runtime |  |  |
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3378 | 3:01 PM | 🔵 | BigWheel Idle animation flow investigation |  |  |
+| #3379 | " | 🟣 | Added IDLE_STANDBY_TIME_SCALE constant for BigWheel Idle animation speed |  |  |
+| #3380 | " | 🟣 | Added PlayIdleStandby call to SetWheelData lifecycle |  |  |
+| #3381 | 3:02 PM | 🟣 | Added fast-forward Idle animation during wheel spin |  |  |
+| #3382 | " | 🔄 | Extracted PlayIdleStandby method to centralize slow idle animation logic |  |  |
+| #3383 | " | 🟣 | PlaySpineLoop now supports optional timeScale parameter for dual-speed animation |  |  |
+| #3384 | " | ✅ | Updated BIG_WHEEL_ANIM documentation to reflect dual-speed Idle animation usage |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3385 | 3:03 PM | ✅ | TypeScript type checking passed for Conflict 1 implementation |  |  |
+
+**#S1057** Commit conflict 1 safely first, then analyze conflict 2's exit animation timing approaches (Jun 30, 3:04 PM)
+
+**#S1058** Git commit scope verification after resolving Feature Wheel merge conflict (Jun 30, 3:23 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3386 | 3:24 PM | 🔵 | Pre-commit state check for conflict 1 resolution |  |  |
+
+**#S1059** Art team provided supplemental specifications for spinning wheel animation states and transitions (Jun 30, 3:29 PM)
+
+**assets/game/Prefab/FeatureWheel/Node_FeatureWheel.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3387 | 3:30 PM | ✅ | Feature Wheel rotation direction reversed in prefab |  |  |
+
+**#S1060** Resolve animation sequence conflict in feature wheel: scaling, flying effects, and wheel exit timing (Jun 30, 3:33 PM)
+
+**#S1061** User selected B2 approach for wheel game zoom/exit animation sequence (parallel execution) (Jun 30, 3:53 PM)
+
+**#S1063** Commit wheel animation exit refactor - making zoom restore and wheel exit parallel (Jun 30, 3:57 PM)
+
+**assets/Script/ReelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3388 | 3:57 PM | 🔵 | RestoreZoom method implements idempotent zoom restoration with guard |  |  |
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3389 | 3:58 PM | ✅ | Implemented B2 approach for parallel zoom restoration and wheel exit animations |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3390 | " | ✅ | B2 implementation verified through TypeScript type checking |  |  |
+
+**#S1064** Art team provided additional specifications for spinning wheel scaling behavior and conflict resolution (Jun 30, 4:44 PM)
+
+**assets/Script/GameState/FeatureWheelShowState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3398 | 4:44 PM | 🔄 | Wheel animation exit sequence restructured for symmetry and parallel execution |  |  |
+
+**#S1065** Clarifying BigWheel standby animation behavior and resolving conflicts with previous implementation (Jun 30, 4:52 PM)
+
+**#S1066** Decision on BigWheel Spine idle state handling - whether to hide component during standby or keep visible with slow animation (Jun 30, 4:56 PM)
+
+**assets/Script/FeatureWheel/FeatureWheelManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3399 | 5:00 PM | 🔵 | FeatureWheel idle state implementation scope identified |  |  |
+| #3400 | " | 🔵 | FeatureWheel Spine lifecycle methods examined for refactoring |  |  |
+| #3401 | 5:01 PM | 🔄 | BigWheel Spine refactored from slow-Idle animation to hide/show on idle transitions |  |  |
+| #3402 | " | 🔴 | PlayEnter now shows BigWheel spine before entrance animation to prevent invisible feature |  |  |
+| #3403 | " | 🔄 | PlaySpineLoop simplified by removing timeScale parameter after idle animation removal |  |  |
+| #3404 | 5:02 PM | 🔄 | Completed Conflict 1 cleanup by removing IDLE_STANDBY_TIME_SCALE constant and updating SetWheelData to hide spine |  |  |
+| #3405 | " | ✅ | Updated BIG_WHEEL_ANIM documentation to reflect hide-on-idle refactoring |  |  |
+| #3406 | " | ✅ | BigWheel idle refactoring completed and verified - all orphaned code removed, type-safe |  |  |
+
+**#S1067** User shared new design documentation for BigWheel animation sequences; Claude provided status update on resolved animation timing conflicts (Jun 30, 5:17 PM)
+
+**Investigated**: BigWheel animation timeline conflicts including fast-forward Idle state, standby Idle visibility, exit shrink timing, and turntable scaling behavior
+
+**Learned**: BigWheel complete animation sequence flows: standby hidden (12-frame soft rotation) → entrance display + Active → fast-forward Idle → stop Collect → flight + marking → exit shrink || Out → hide back to standby. Three specific conflicts/differences were identified and addressed with different resolution strategies
+
+**Completed**: Three commits resolving animation conflicts: (1) Conflict 1 fast-forward Idle preserved in commit a18fa62; (2) Conflict 1 standby Idle reverted to "standby hidden" in commit 3f534fb; (3) Conflict 2 exit shrink with parallel Out resolved in commit 8c68478. Working tree is clean after commit 3f534fb
+
+**Next Steps**: Waiting for user to verify the three commits in actual game environment. Difference 3 (turntable scaling with zoom) is on hold pending art team feedback. Ready to address any issues found during verification or implement difference 3 when feedback arrives
+
+
+Access 403k tokens of past research & decisions for just 21,615t. Use MCP search tools to access memories by ID.

@@ -1,0 +1,234 @@
+# [uk_pirates_queen] recent context, 2026-06-22 3:54pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (28,680 tokens to read)
+- Work investment: 434,986 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jun 16, 2026
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-extrabet\references\architecture.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2441 | 3:39 PM | 🔵 | ExtraBet Architecture Documentation Details |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2442 | 3:49 PM | ⚖️ | ExtraBet multiplier base board switching implementation plan for variant B |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\uk-slot-extrabet\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2443 | 3:54 PM | ✅ | Documented ExtraBet persistent visual integration gotchas in skill reference |  |  |
+
+### Jun 17, 2026
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2485 | 7:33 PM | 🔵 | Layout positioning issue during cascade transitions in WantedPosterManager |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2486 | " | 🔵 | WantedPosterItem animation capabilities for transition solutions |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2487 | 8:10 PM | ⚖️ | ReconcileCascade layout fix scoped to 2→1 card removal only |  |  |
+
+**#S822** Investigating whether Method 5 can handle single-item centering in wanted poster UI layout system, and validating assumptions about item hiding mechanisms (Jun 17, 8:32 PM)
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2488 | 8:32 PM | 🔵 | WantedPosterItem prefab structure verified for visibility controls |  |  |
+
+**assets/game/Prefab/WantedPoster/Node_WantedPoster.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2489 | 8:33 PM | 🔵 | Node_WantedPoster container structure uses cc.Layout for positioning |  |  |
+
+**#S823** Evaluating simplified approach (M5) for bounty card visibility control using node hierarchy instead of alpha manipulation (Jun 17, 8:42 PM)
+
+**#S824** Evaluation of inner Content node approach for hiding wanted poster items during ghost state transitions (Method 1 refinement) (Jun 17, 8:47 PM)
+
+**#S825** Design specification for wanted poster single-item centering issue - when 2 posters reduce to 1 survivor, layout should center but currently doesn't (Jun 17, 8:51 PM)
+
+**.claudedocs/records/問題追蹤.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2490 | 8:51 PM | 🔵 | Quality control documentation system for iterative development cycles |  |  |
+| #2491 | 8:52 PM | 🔵 | Escalated vigilance patterns with evidence-based demotion lifecycle |  |  |
+
+**#S826** User selected option A to proceed with /dev-design adversarial validation for the WantedPoster single-card centering specification (Jun 17, 8:59 PM)
+
+**.claudedocs/WantedPoster-單張不置中-設計規格.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2492 | 9:01 PM | ⚖️ | Ghost slot trigger rule finalized based on continuous-display principle |  |  |
+| #2493 | " | ⚖️ | PLAY_MARK_ACTIVE path confirmed to use ghost mechanism (OPEN-1 resolved) |  |  |
+| #2494 | 9:02 PM | ✅ | Behavioral contracts (BC-G1 through BC-G7) refined with finalized design decisions |  |  |
+
+**#S827** Brainstorm solutions for abrupt layout repositioning in ReconcileCascade when removing wanted posters; user observed tool count increasing during workflow execution (Jun 17, 9:04 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2495 | 9:05 PM | 🔵 | WantedPoster cascade removal causes abrupt layout repositioning |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2496 | 9:06 PM | 🔵 | WantedPoster animation flow and state management architecture |  |  |
+
+**assets/Script/GameState/MatchingPatchUpState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2497 | " | 🔵 | Cascade reconciliation flow determines poster persistence via visible symbols |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2498 | 9:13 PM | 🔵 | ReconcileCascade layout repositioning appears abrupt when removing items |  |  |
+
+**#S828** Wanted poster alignment verification and implementation checkpoint before Manager ghost state machine (Jun 17, 9:14 PM)
+
+**assets/resources/Prefabs/WantedPoster/Node_WantedPoster.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2499 | 9:29 PM | 🔵 | ReconcileCascade layout snap root cause and ghost solution analysis completed |  |  |
+
+**.claudedocs/WantedPoster-單張不置中-設計規格.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2500 | 9:31 PM | ⚖️ | Ghost slot solution converged with three-phase strengthening and critical trade-off identification |  |  |
+| #2501 | 9:32 PM | ⚖️ | Ghost slot solution finalized with NormalizeGhosts lifecycle convergence and three critical gap fixes |  |  |
+| #2502 | 9:36 PM | ⚖️ | Three ghost slot approaches ranked with fatal flaws identified and recommendation to hybridize approach 1 with critical fixes |  |  |
+| #2503 | 9:42 PM | ⚖️ | Ghost slot solution approved with six mandatory pre-implementation fixes after identifying five fatal flaws |  |  |
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2504 | 9:47 PM | ⚖️ | Ghost slot design specification for wanted poster single-item non-centering converged after adversarial validation |  |  |
+| #2505 | 10:08 PM | ⚖️ | Wanted Poster Ghost Slot Architecture Finalized via Multi-Agent Judge Panel |  |  |
+
+**extensions/astarte-framework/assets/Component/Spine/New/NewBoneFollow.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2506 | 10:10 PM | 🔵 | NewBoneFollow Hierarchy Dependency Investigation for Reparent Risk |  |  |
+
+**.claudedocs/WantedPoster-單張不置中-設計規格.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2507 | 10:17 PM | ⚖️ | Design Specification Upgraded to Authoritative Version with Blocker Verification |  |  |
+| #2508 | 10:20 PM | 🔴 | Ghost Cleanup Gap Fixed for All-Items-Removed Scenario |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2509 | 10:21 PM | 🟣 | Content Node Property Added to WantedPosterItem for Ghost Slot Control |  |  |
+| #2510 | " | 🟣 | Ghost Slot API Methods Implemented in WantedPosterItem |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2511 | 10:22 PM | ✅ | WantedPosterItem Ghost Slot Changes Type-Check Clean |  |  |
+
+**#S829** UK slot machine project: restore accidentally modified official template framework and document the changes (Jun 17, 10:40 PM)
+
+**assets/game/Prefab/WantedPoster/WantedPosterItem.prefab**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2512 | 10:40 PM | ✅ | WantedPosterItem prefab restructured with Content node for ghost display isolation |  |  |
+| #2513 | 10:45 PM | ⚖️ | Content node reparenting approach validated through alignment smoke-test |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2514 | " | 🟣 | WantedPosterManager ghost state machine implementation for multiplier display isolation |  |  |
+| #2515 | 10:46 PM | 🟣 | Ghost state machine async timing implementation with race condition handling |  |  |
+| #2516 | " | 🔄 | Ghost state cleanup integrated into all entry points with Content visibility restoration |  |  |
+| #2517 | 10:47 PM | 🟣 | ReconcileCascade survivor-aware ghost transitions for layout snap prevention |  |  |
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2518 | 10:48 PM | ✅ | Ghost state machine implementation passes TypeScript type checking |  |  |
+
+**.claudedocs/WantedPoster-單張不置中-設計規格.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2519 | 10:50 PM | ⚖️ | Design spec updated: HandlePlayMarkActive ghost decision moved to async phase to fix race condition |  |  |
+| #2520 | " | ⚖️ | Design spec updated: m_ghostOwner timestamp array omitted from implementation per YAGNI principle |  |  |
+
+### Jun 18, 2026
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2521 | 10:19 AM | 🔵 | ExtraBetComponent.ts in framework directory is git-ignored |  |  |
+
+**uk_pirates_queen/extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2522 | " | 🔵 | Multiple projects share astarte-framework with ExtraBetComponent.ts |  |  |
+| #2523 | 10:20 AM | 🔵 | ExtraBetComponent.ts differs by only 3 lines from template version |  |  |
+| #2524 | " | 🔵 | Identified unauthorized framework modification: two-step cancel ExtraBet logic |  |  |
+
+**assets/Script/ExtraBet/ExtraBetWindow.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2525 | 10:21 AM | 🔵 | Pirates Queen has project-specific two-step ExtraBet implementation |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2526 | " | 🔵 | SetTwoStepMulti exists in framework, creating cross-project impact concern |  |  |
+
+**extensions/astarte-framework/package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2527 | 10:22 AM | 🔵 | Framework modification unique to Pirates Queen, not present in other projects |  |  |
+
+**extensions/astarte-framework/assets/Component/ExtraBetComponent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2528 | 10:30 AM | 🔴 | Restored ExtraBetComponent to match framework baseline |  |  |
+
+**.claudedocs/ExtraBet-公版誤改還原記錄.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2529 | " | ⚖️ | Documented framework restoration decision and two-step ExtraBet glitch trade-off |  |  |
+
+**#S830** Fix accidental framework file modifications in ExtraBet feature and establish rule to prevent future edits (Jun 18, 10:34 AM)
+
+**uk_slot_template/CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2530 | 10:46 AM | 🔵 | UK slot project CLAUDE.md documentation inventory completed |  |  |
+
+**#S831** Fix accidental modification of framework template file ExtraBetComponent.ts and establish UK project conventions (Jun 18, 10:52 AM)
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #2531 | 10:53 AM | ✅ | Added UK slot game development conventions to project documentation |  |  |
+
+
+Access 435k tokens of past research & decisions for just 28,680t. Use MCP search tools to access memories by ID.
