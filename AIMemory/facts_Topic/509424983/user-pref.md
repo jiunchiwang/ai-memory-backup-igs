@@ -2,3 +2,4 @@
 - [f_70542c] [2026-06-01T12:16:45.051Z] 使用者偏好 git commit 訊息使用中文
 - [f_8a4a0e] [2026-06-03T12:19:51.293Z] 使用者偏好 HTML 文件要有目錄錨點跳轉功能（點擊跳段落 + 回目錄連結）
 - [f_e0ce0f] [2026-06-24T20:31:28.200Z] 使用者偏好 git commit 前先確認：執行 commit 之前應多問幾個釐清問題並取得使用者同意，不要逕自 commit。
+- [f_42aed5] [2026-07-07T16:09:52.075Z] 使用者決定 idle sweep 靜默存檔維持現狀不加 Telegram 通知；/reset 的「Saved → sessions/xxx」訊息只在當下仍有 live session 且有歷史時才顯示，四條 transcript 儲存路徑（/reset、onBeforeClose、crash、/session park）皆正常運作

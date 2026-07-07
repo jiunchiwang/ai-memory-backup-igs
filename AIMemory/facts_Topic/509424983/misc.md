@@ -1,0 +1,17 @@
+- [f_5a4d84] [2026-07-06T20:13:27.756Z] uk_917 規格書的「4. 玩法流程圖」與「7. 音樂音效」工作表原檔即為空頁（非轉換漏抽）；賠付數值依慣例外置於機率文件（規格書標 {??}）
+- [f_bd8491] [2026-07-06T20:36:15.363Z] 使用者評估過三模型分工架構提案（Fable 5 當 orchestrator 佔約 10% tokens、Codex 5.5 當 executor 佔約 60%、Gemini 3.1 Pro 當 reviewer 佔約 15%），決定暫緩不採用，避免未來重複提案
+- [f_36e49d] [2026-07-06T22:56:52.248Z] 使用者對 preamble 大小的取捨判斷：佔 context 5-6% 可接受但到警戒線就削減；優先砍 facts tail 與 guideline 區塊（排除 wiki 索引瘦身與維持現狀），理由是舊 facts 有 topic index + list_facts 補位
+- [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
+- [f_7a309c] [2026-07-07T07:52:13.393Z] uk_917 開發進度（2026-07-07）：M0a 起專案完成且驗收通過（ReelDevTool 5 欄假盤驗轉輪），dev-spec.md + SPEC.md 已產出，repo 全本地無 remote；ShortGameName 未定（scene 佔位 ar2es，等 M0b）、機率文件 {} 值未拿到
+- [f_a4bcd5] [2026-07-07T07:52:13.423Z] uk_917 已自產 proto stub（fa53ea2）：proto-stub/uk917.proto（dev-spec §4 假設 + 模板消費形狀）→ pbjs/pbts 產 @local-stub/uk_917_proto → assets/Script/Proto.ts 單一間接點；真 proto 到手只改 Proto.ts import + diff 兩份 .proto 核對假設，M0b/M1/M2 client 邏輯已解鎖
+- [f_be8c07] [2026-07-07T07:52:13.452Z] 使用者的除錯對策偏好：對帳/檢查類函式遇格式不符應「回報不 crash」（守衛 + error log），反對用關掉檢查或 clamp 掩蓋——理由是不用記得開回來、production 遇壞資料也不炸
+- [f_4cfe4c] [2026-07-07T07:52:13.480Z] FirstClone.bat 的 ../extensions 相對於執行時 cwd——從專案根執行會 clone 到上一層，需在 Tools_SlotSetUP/ 內執行
+- [f_539667] [2026-07-07T08:51:39.046Z] 遺留待辦：upstream 的 check-moa.mjs 壞測試（6c70901 把 resolvePreset 改 async 但測試仍同步呼叫，8 項假失敗）——與 merge 無關，可另開 commit 修並回報 upstream
+- [f_8da350] [2026-07-07T08:51:39.050Z] merge 解衝突教訓：git checkout --theirs/--ours 是整檔取代，會洗掉對側已乾淨自動合併的 hunk（combined diff 不顯示乾淨 hunk）；雙邊都有改動的檔案應用 git merge-file 三方合併或 checkout -m 恢復衝突標記後只改衝突區，並逐檔 diff 兩側核對無遺失
+- [f_842a1b] [2026-07-07T09:10:28.729Z] check-moa 壞測試待辦已完成（commit e75b45e，已 push origin/main）：根因比原判大——6c70901 不只把 resolvePreset 改 async，還以 embedding routing 整個取代 keyword routing（routing.rules 不再被讀、method 型別移除 keyword），測試已對齊新語義；使用者選擇只 commit，回報 upstream 的 PR 尚未開
+- [f_12d648] [2026-07-07T11:48:47.046Z] 使用者對 session 移植的決策：選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議；理由是 restart 連續性 + idle 殺 process 省記憶體最實、避免與 goal/MoA/relay 單 session 假設的互動風險
+- [f_948bf2] [2026-07-07T11:48:47.062Z] vc-kiro-delegate 三段 review 流程實證有效：Kiro self-review 抓到 /restart 走 shutdown() 漏清 registry、獨立 reviewer 抓到 self-review 修法誤殺 SIGINT resume 場景——兩輪各抓到一個真 bug，主 agent 接手修（不叫 Kiro 修第二次）
+- [f_e17260] [2026-07-07T13:14:07.487Z] 使用者對設定檔自動建立的方案決策：選 /agent init 顯式子指令（排除啟動時自動 seed 因為靜默寫檔到 MEMORY_DIR 違反「不逕自動作」偏好；排除訊息內嵌範本因為手機複製貼上麻煩），且 scaffold 要放另外兩個 backend 而非只 seed 一筆
+- [f_daf156] [2026-07-07T13:26:02.669Z] session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars
+- [f_e19357] [2026-07-07T16:09:52.065Z] 權限層評估結論（2026-07-08）：bridge 原本就有隱性 gate——proxy 路徑只執行安全 token 子集、delegate 輸出純文字注入主 agent 不執行任何 token，gap 報告「RELAY/DELEGATE 任何 session 都能發」描述不準；唯一實際風險是外部內容→specialist→facts 的記憶污染路徑，已由 provenance+上限緩解
+- [f_0376d5] [2026-07-07T20:34:51.301Z] uk slot 模板專案音訊決策：MG_Bgm 與 FG_Bgm 背景音樂引用在 template 專案中先註解掉（模板不附實際音檔），新遊戲專案需要 BGM 時再解除註解並補上音檔。

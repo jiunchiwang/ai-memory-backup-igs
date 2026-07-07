@@ -1,0 +1,226 @@
+# [uk_pirates_queen] recent context, 2026-07-07 9:56am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,588 tokens to read)
+- Work investment: 588,322 tokens spent on research, building, and decisions
+- Your savings: 97% reduction from reuse
+
+### Jun 29, 2026
+
+**#S1019** Investigated root cause of target symbol persistence bug and provided code fix recommendation (Jun 29, 5:08 PM)
+
+**#S1020** Fixed target Spine layer mismatch bug in PlayTargetExplodeEffect function (Jun 29, 5:13 PM)
+
+**#S1021** Trigger slot reel DropOut immediately on Spin button press instead of waiting for OnRecvSpinAck, moving old symbols out before big award preview animation (Jun 29, 5:29 PM)
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3304 | 5:44 PM | 🔵 | Test function OnRecvSpinAck_Test retains original START_SPIN logic |  |  |
+
+**assets/Script/GameState/AwardState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3305 | " | 🔵 | AwardState also uses START_SPIN for post-BigWin button state |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3306 | 5:45 PM | 🔵 | OnRecvSpinAck_Test appears to be unused dead code |  |  |
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3307 | 7:12 PM | 🔵 | SpinState flow structure analyzed for drop-out/pre-win/drop-in refactor |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3308 | " | 🔵 | Drop-out/drop-in mechanics found across 14 files in slot game architecture |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3309 | " | 🔵 | SlotReels near-win and drop mechanics architecture revealed |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3310 | 7:13 PM | 🔵 | OnRecvSpinAck orchestration flow identified as primary refactor target |  |  |
+| #3311 | " | 🔵 | ShowBigAwardHint function structure analyzed for pre-win choreography |  |  |
+| #3312 | " | 🔵 | CheckBigAwardHint trigger conditions defined for pre-win animation activation |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3313 | 7:14 PM | 🔵 | StartSpin and TriggerDropOut idempotency mechanism revealed |  |  |
+| #3314 | " | 🔵 | StartFallAllVisibleSymbolsByServerPlateInfo handles new plate drop-in with dual-path logic |  |  |
+| #3315 | " | 🔵 | Promise consumption architecture linking TriggerDropOut to SetPlateInfo revealed |  |  |
+| #3316 | 7:15 PM | 🔵 | SetPlateInfo triggers drop-in via DropSymbolsToBoardByServerPlateInfo call |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3317 | " | 🔵 | CheckBigAwardHint FreeGame branch uses higher odds threshold |  |  |
+
+**#S1022** Refactor slot reel drop-out animation timing to start immediately when Spin button is pressed, rather than waiting for server response (Jun 29, 7:28 PM)
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3318 | 7:28 PM | 🔵 | StartSpin call chain maps spin initiation flow |  |  |
+
+**#S1023** Refactor Spin button flow to sequence reel transitions: exit old reels → play anticipation effects → enter new reels (Jun 29, 7:32 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3319 | 7:33 PM | ✅ | Updated slot reel freeze timing documentation to reflect drop-out sequence refinement |  |  |
+| #3320 | " | 🟣 | Implemented drop-out animation trigger on spin button press in slot reel system |  |  |
+
+**#S1024** User reported NearWin drop sequence skipping columns after col 0, Claude investigated cascade elimination-patch cycle (Jun 29, 7:39 PM)
+
+**_claude_temp/補牌Error那手.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3321 | 8:08 PM | 🔵 | NearWin Drop Sequence Skips Remaining Columns |  |  |
+
+**#S1025** Debug why tiles aren't filled completely before elimination when NearWin is active and scatter threshold is reached during tile filling (Jun 29, 8:09 PM)
+
+**_claude_temp/補牌Error那手.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3322 | 8:10 PM | 🔵 | Test Case Data Structure for NearWin Drop Bug |  |  |
+
+**assets/Script/Game_Define.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3323 | 8:12 PM | 🔵 | Game Board Configuration and Scatter Symbol Definitions |  |  |
+
+**#S1026** Fix SlotReels NearWin loop breaking prematurely when 5 Scatters trigger, preventing remaining reels from completing tile drops (Jun 29, 8:13 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3324 | 8:16 PM | ⚖️ | Selected minimal-change approach for NearWin tile-filling bug fix |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3325 | " | 🔵 | NearWin tile-filling logic structure examined before fix |  |  |
+| #3326 | 8:17 PM | 🔵 | NearWin flag and effect method usage mapped across SlotReels.ts |  |  |
+| #3327 | " | 🔴 | Conditionalized NearWin effects in tile-filling loop (step 1 of fix) |  |  |
+| #3328 | 8:18 PM | 🔴 | Removed early break statement to complete NearWin tile-filling bug fix |  |  |
+| #3329 | " | ✅ | TypeScript validation passed after NearWin bug fix |  |  |
+| #3330 | " | ✅ | IDE diagnostics confirmed no issues in SlotReels.ts after fix |  |  |
+
+**#S1062** Commit timing adjustment for wanted poster display delay (changed from 0.1 to 0.15 seconds) (Jun 29, 8:25 PM)
+
+### Jun 30, 2026
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3352 | 10:49 AM | 🔴 | Scatter animations freeze at last frame for Silver/Gold Collect |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3391 | 4:06 PM | 🔵 | GAME_INTRO_COMPLETE Animation Timing Investigation |  |  |
+
+**assets/Script/GameIntroManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3392 | 4:07 PM | 🔵 | GAME_INTRO_COMPLETE Triggered by Spine Frame Event |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3393 | 4:10 PM | 🔴 | Added 0.1s Delay Constant for GAME_INTRO_COMPLETE Timing Fix |  |  |
+| #3394 | " | 🔴 | Implemented 0.1s Scheduled Delay for GAME_INTRO_COMPLETE Animation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3395 | 4:11 PM | ✅ | TypeScript Type Check Passed After Timing Fix |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3396 | 4:31 PM | 🔴 | Fixed wanted poster display timing in game intro sequence |  |  |
+| #3397 | 4:32 PM | ✅ | Updated comment to reflect correct 0.15 second delay value |  |  |
+
+### Jul 3, 2026
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3514 | 10:10 AM | 🔵 | WantedPosterManager transition logic and new RoundInfo requirement |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3515 | " | 🔵 | TriggerDropOut and RoundInfo coordination point identified |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3516 | 10:11 AM | 🔵 | Complete flow shows StartSpin triggers dropdown before new RoundInfo poster data arrives |  |  |
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3517 | " | 🔵 | SpinState timing reveals posters cannot exit before dropdown without round state knowledge |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3519 | 10:12 AM | 🔵 | StartSpin always triggers dropdown unconditionally at end of initialization |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3520 | 10:13 AM | 🔵 | WantedPosterState handles cascade bounty animations, not new round transitions |  |  |
+
+**#S1086** User requested to start implementation of wanted poster exit animation synchronization with slot reel drop-out (Jul 3, 10:22 AM)
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3523 | 10:22 AM | 🔵 | Wanted Poster Item Animation API Structure |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3524 | 10:23 AM | 🟣 | Added PLAY_OUT_ALL Event for Wanted Poster Exit Synchronization |  |  |
+| #3525 | 10:24 AM | 🟣 | Registered PLAY_OUT_ALL Event Handler in WantedPosterManager |  |  |
+| #3526 | " | 🟣 | Implemented HandlePlayOutAll Method for Synchronized Poster Exit |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3527 | " | ✅ | Imported WANTED_POSTER_MANAGER_EVENT into SlotReels |  |  |
+| #3528 | 10:25 AM | 🟣 | Completed Wanted Poster Synchronized Exit with Reel Drop-Out |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3529 | " | ✅ | TypeScript Typecheck Passed for Poster Synchronization Implementation |  |  |
+| #3530 | " | ✅ | Verified Zero Type Errors in Wanted Poster and SlotReels Files |  |  |
+| #3531 | 10:26 AM | 🔵 | Project Has Pre-Existing Type Errors in External Dependencies |  |  |
+
+
+Access 588k tokens of past research & decisions for just 17,588t. Use MCP search tools to access memories by ID.

@@ -1,0 +1,234 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-07 4:44pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (24,955 tokens to read)
+- Work investment: 346,933 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jul 7, 2026
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3921 | 2:43 PM | 🟣 | Proto stub compilation toolchain configured |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917Proto.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3922 | 2:44 PM | 🟣 | Proto stub compilation completed successfully |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917Proto.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3923 | " | 🟣 | Proto stub encode/decode functionality verified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3924 | " | 🔵 | Client uses protocol namespace wrapper for proto access |  |  |
+| #3925 | 2:45 PM | 🔵 | tctProto reference is legacy commented code |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\node_modules\@local-stub\uk_917_proto\uk917Proto.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3926 | " | 🟣 | Proto stub package deployed to node_modules |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\Proto.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3927 | " | 🟣 | Centralized proto import module created |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3928 | 2:46 PM | 🟣 | Client code integrated with uk917 proto stub |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3929 | " | 🔵 | Prompt Preamble Architecture in Bridge |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3930 | 2:47 PM | 🔵 | Core Prompt Processing Files Identified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\RecoverSpinAck.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3931 | " | 🟣 | Proto stub integration completed across all client consumer files |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3932 | " | 🟣 | Proto stub migration validated: zero eyestrike references remaining, TypeScript compilation clean |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3933 | " | 🔵 | Prompt Composition Flow in Bridge |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3934 | " | 🟣 | TypeScript validation confirms zero project code errors after proto migration |  |  |
+| #3935 | 2:48 PM | 🔵 | Type-checking reveals missing JackpotWin field in uk917.proto AwardData definition |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\node_modules\@igs-arcade-division-rd2\uk_658_eyestrike_proto\ar2esProto.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3936 | " | 🔵 | Generation-1 proto contains JackpotWin field missing from uk917.proto stub |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917.proto**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3937 | 2:49 PM | 🔴 | uk917.proto GameInfoData amended with missing MaxBet and BuyMul fields |  |  |
+| #3938 | " | 🔴 | uk917.proto AwardData amended with missing JackpotWin field |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\node_modules\@local-stub\uk_917_proto\uk917Proto.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3939 | " | 🔴 | Proto stub recompiled and redeployed with missing fields successfully integrated |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3940 | 2:50 PM | 🟣 | Proto stub migration validation complete: zero new errors introduced, all errors inherited from template |  |  |
+
+**#S1247** UK917 proto stub commit and discussion of documenting the dual-path proto development methodology (Jul 7, 2:51 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3941 | 3:07 PM | ✅ | Proto stub package verified in Cocos editor and ready for commit |  |  |
+
+**docs/dev-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3942 | " | ✅ | Proto stub implementation documented in dev-spec.md |  |  |
+
+**#S1248** uk_917 project milestone completion - dev specs, proto stub implementation, and ReelDevTool fixes (Jul 7, 3:08 PM)
+
+**..\..\AI\AI-canonical-corp\skills\slot\uk-slot-spec-to-impl\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3943 | 3:23 PM | 🔵 | UK slot spec-to-implementation workflow skill structure reviewed |  |  |
+| #3944 | 3:24 PM | ✅ | Documented dual-path proto stub methodology in uk-slot-spec-to-impl skill |  |  |
+| #3945 | " | ✅ | Added proto stub gotchas and best practices to uk-slot-spec-to-impl skill |  |  |
+
+**#S1249** Review colleague's Fable 5 optimization suggestions and identify opportunities to strengthen bridge prompt architecture (Jul 7, 3:25 PM)
+
+**..\..\AI\Prompt的建議.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3946 | 3:26 PM | 🔵 | Bridge prompt architecture mapped against Fable 5 optimization suggestions |  |  |
+
+**#S1250** Pattern library correction update and classification of implementation lessons (Jul 7, 3:26 PM)
+
+**#S1251** User requested to apply all suggested modifications to bridge preamble based on prior recommendations (Jul 7, 3:28 PM)
+
+**#S1252** User inquiry about whether bridge restart is required for preamble changes to take effect (Jul 7, 3:33 PM)
+
+**POLICIES/preamble-frozen-snapshot.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3947 | 3:33 PM | 🔵 | Preamble modification infrastructure reviewed before implementing improvements |  |  |
+
+**POLICIES/README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3948 | 3:34 PM | 🔵 | POLICIES directory structure for cross-agent governance |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3949 | " | 🔵 | Preamble and delegate note build functions mapped in codebase |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3950 | 3:35 PM | 🟣 | Incremental checkpoint guidance added to RESTART tool note |  |  |
+| #3951 | " | 🟣 | Task delegation three-elements added to RELAY_DELEGATE tool note |  |  |
+| #3952 | " | 🟣 | Read-back verification discipline added to Agent disciplines block |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3953 | 3:36 PM | ✅ | TypeScript compilation validated preamble improvements |  |  |
+| #3954 | " | 🔵 | Preamble structure validated: fixed-cost vs facts-gated sections |  |  |
+| #3955 | " | 🔵 | Preamble breakdown confirmed: all three improvements active in appropriate contexts |  |  |
+| #3956 | 3:37 PM | ✅ | Preamble smoke test passed with real user data and topic shards |  |  |
+| #3957 | " | 🔵 | Fixed-cost core sections measured: 4205 chars for tool notes and environment |  |  |
+
+**scripts/check-preamble.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3958 | " | ✅ | Preamble smoke test enhanced to import breakdown function |  |  |
+| #3959 | 3:38 PM | 🟣 | Fixed-cost preamble ceiling assertion added to smoke test |  |  |
+
+**POLICIES/preamble-authoring.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3960 | 3:39 PM | 🟣 | Preamble authoring policy document created for weak-model readability standard |  |  |
+
+**POLICIES/README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3961 | " | ✅ | Preamble authoring policy indexed in POLICIES directory |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3962 | " | ✅ | Final verification confirms all three preamble improvements compiled and present |  |  |
+| #3963 | 3:40 PM | ✅ | Smoke test ceiling assertion passed: fixed core 4205 chars, 30% headroom remaining |  |  |
+| #3964 | " | ✅ | Compiled JavaScript contains all improvements: 4 occurrences in 36KB output |  |  |
+| #3965 | " | ✅ | Working tree reviewed: 4 files changed with 25 insertions across preamble improvements |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3966 | 3:41 PM | 🟣 | Preamble improvements committed: three runtime enhancements plus governance infrastructure |  |  |
+
+**#S1253** Understanding bridge prompt composition and processing, investigating current runtime state (Jul 7, 3:42 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3967 | 3:43 PM | 🔵 | Telegram Bridge Process Currently Running |  |  |
+
+**#S1254** Progress checkpoint for uk_917 Leprechaun's Pots slot game client development - M0a milestone complete, proto stub integrated, ready for M0b data flow implementation (Jul 7, 3:43 PM)
+
+**#S1255** Session self-check verification of preamble configuration and readiness status (Jul 7, 3:44 PM)
+
+**.claude/hooks/impact-gate.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3968 | 3:45 PM | 🔵 | Impact-gate hook enforces causal chain analysis before file modifications |  |  |
+
+**#S1256** Passive system health monitoring check for anomalies (Jul 7, 4:02 PM)
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3969 | 4:26 PM | ✅ | Attempted upstream sync from redkilin/telegram-kiro-bridge |  |  |
+
+**.gitignore**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3970 | 4:38 PM | ✅ | Successfully synced 23 upstream commits with sophisticated conflict resolution |  |  |
+
+
+Access 347k tokens of past research & decisions for just 24,955t. Use MCP search tools to access memories by ID.

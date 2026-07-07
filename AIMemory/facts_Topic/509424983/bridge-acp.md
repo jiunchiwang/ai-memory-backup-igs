@@ -12,3 +12,8 @@
 - [f_fb7004] [2026-07-06T07:26:54.200Z] Claude Code 的 git commit Co-Authored-By trailer 是 harness 模板字串（session 啟動時定格），非 runtime model 自我宣告；harness 認不得非標準 model ID（如 claude-fable-5）時會 fallback 寫 Claude Opus 4.6，不可當實際 model 證據
 - [f_b1b0f4] [2026-07-06T07:26:54.204Z] 使用者選擇在 telegram-kiro-bridge 專案 CLAUDE.md「開發偏好」加規則：commit 的 Co-Authored-By model 名以 session 環境宣告的實際 model 為準（排除關掉 attribution 因為想保留紀錄、排除 git hook 因為對此需求過重）
 - [f_3c7a91] [2026-07-06T08:55:00.000Z] 因為 PARALLEL_DELEGATE 的 prompt 含 >>（或多行）會被 bridge token parser 截斷導致任務靜默未 spawn，所以 model benchmark 改走 kiro-cli chat --model 獨立 session 執行（排除建臨時 specialist domain 因為對一次性測試過重）
+- [f_166fd1] [2026-07-06T20:36:15.296Z] telegram-kiro-bridge 的 gate hook 決策已反轉：專案記憶文件 decision-no-gate-hook.md 改名為 decision-gate-hook-minimal.md，改採最小版 gate hook；CLAUDE.md Section 7 的完整 impact-analysis-guard PreToolUse hooks 維持不部署，此決策文件用於防止未來重複提案
+- [f_5caae0] [2026-07-07T11:48:47.050Z] ACP adapter loadSession capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定（initialize 回 -32000 需 auth）
+- [f_f6406d] [2026-07-07T13:00:14.423Z] 使用者已建立 G:\AI\AIMemory\config\acp-providers.json 啟用 /agent 多 agent 熱切換，含三個 backend：claude（claude-agent-acp，pin claude-fable-5/medium）、kiro（kiro-cli acp --model claude-opus-4.6 -a --agent main，使用者手動加了 model pin 與 --agent main）、codex（npx @zed-industries/codex-acp，auth 未解可能切換失敗）；此檔每次 /agent 即時重讀，不需重啟 bridge
+- [f_884e78] [2026-07-07T13:20:25.872Z] bridge 的 tool call 進度顯示由 sessionManager.ts 渲染（開始 🔧 {title}、完成 ✅ {toolName}），title 是 ACP adapter 回報的：claude-agent-acp 對 shell 執行類 tool call 回報泛用名「Terminal」，kiro-cli acp 的 title 風格較具描述性——切 backend 後顯示名稱不同屬正常非 bug
+- [f_7bf9a8] [2026-07-07T13:20:25.879Z] 使用者的 bridge 主 session model 已設為 claude-fable-5[1m]（1M context 變體）

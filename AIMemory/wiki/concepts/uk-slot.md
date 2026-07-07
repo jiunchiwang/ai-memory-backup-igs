@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-07-05
-sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a]
+updated: 2026-07-08
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a]
 ---
 
 # UK Slot 老虎機專案群
@@ -22,11 +22,13 @@ sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, 
 ### uk_slot_template（模板）
 
 - 位置：`G:\Cocos_Project\uk_slot_template`
-- 性質：所有 UK slot 遊戲的 fork 來源
+- 性質：所有 UK slot 遊戲的複製起新來源（git archive，不帶模板 history）
 - 支援三種轉輪玩法，透過 FillStrategy 策略模式切換：
   - **Standard** — 傳統滾動
   - **Cascade** — 消除天降
   - **Tumble** — 快速掉落 + 乘倍
+- **2026-07-07 回灌修正**（4 commits 本地未 push）：bgm 改註解佔位（模板不含音檔）、欄數陣列改 `Game_Define.COL` 衍生（原寫死 6 欄）、CheckPlateInfo 欄數不符改回報不 crash（對帳函式不應 throw）、ReelDevTool 修復（驅動缺失 + IDLE 就緒閘門，原版從未實測過）
+- **起新專案陷阱**：`FirstClone.bat` 的 `../extensions` 相對於執行時 cwd——需在 `Tools_SlotSetUP/` 內執行，從專案根執行會 clone 到上一層
 
 ### 衍生遊戲
 
@@ -39,6 +41,7 @@ sources: [f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, 
 | uk_slot_eye_strike | `G:\Cocos_Project\uk_slot_eye_strike` | Eye Strike 神眼奪金 |
 | uk_872_eyestrike2_client | `G:\Cocos_Project\uk_872_eyestrike2_client` | Eye Strike 2（續作） |
 | uk_slot_chachacha | `G:\Cocos_Project\uk_slot_chachacha` | Cha Cha Cha 拉丁舞/水果 |
+| uk_917_leprechauns_pots_client | `G:\Cocos_Project\uk_917_leprechauns_pots_client` | 3 Leprechaun's Pots（開發中）→ 詳見 [[uk-917]] |
 
 ## 專案文件規範
 

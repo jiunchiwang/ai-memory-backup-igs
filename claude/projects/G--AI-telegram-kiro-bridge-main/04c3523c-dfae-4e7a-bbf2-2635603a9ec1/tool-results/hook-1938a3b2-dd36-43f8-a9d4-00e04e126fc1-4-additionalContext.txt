@@ -1,0 +1,250 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-07 2:45pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,381 tokens to read)
+- Work investment: 204,361 tokens spent on research, building, and decisions
+- Your savings: 91% reduction from reuse
+
+### Jul 7, 2026
+
+**uk_917_leprechauns_pots_client/assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3850 | 11:24 AM | 🔴 | uk_917 committed COL-derived arrays and audio asset cleanup |  |  |
+
+**uk_slot_template/assets/Script/Audio/AudioManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3851 | " | 🔴 | uk_slot_template committed BGM placeholder comments and COL-derived arrays |  |  |
+
+**uk_917_leprechauns_pots_client/AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3852 | 11:25 AM | ✅ | Documented BGM filename mismatch and hardcoded column gotchas in AI.md |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3853 | 11:28 AM | 🔵 | SlotReels spin and validation architecture explored |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3854 | " | 🔵 | Reel column initialization and plate info flow traced |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3855 | 11:29 AM | 🔵 | Multi-plate reel architecture initialization discovered |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3856 | " | 🔵 | ReelDevTool testing framework examined |  |  |
+| #3857 | " | 🔵 | Test plate configurations and demo mode infrastructure identified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3858 | " | 🔵 | Demo mode infrastructure found but currently disabled |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3859 | 11:30 AM | 🔵 | CreatePlate column initialization implementation revealed |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3860 | " | 🔵 | MainPlateSymbol data flow from server to reel validation traced |  |  |
+| #3861 | " | 🔵 | Reconnection system and demo data loading infrastructure disabled |  |  |
+| #3862 | " | 🔵 | Network message routing for spin results identified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\extensions\astarte-framework\assets\Component\BuyBonus\CommonBuyBonus.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3863 | 11:31 AM | 🔵 | Demo mode infrastructure found in astarte-framework layer |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\extensions\astarte-framework\assets\Managers**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3864 | " | 🔵 | Astarte framework manager architecture enumerated |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\extensions\astarte-framework\assets**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3865 | " | 🔵 | No mock server or fake spin generation found in framework |  |  |
+
+**#S1229** uk917-zeus: Diagnosed server/client data mismatch (6-column server vs 5-column client) and established ReelDevTool-based validation workflow (Jul 7, 11:32 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3869 | 11:36 AM | 🔵 | Column mismatch root cause confirmed: eyestrike server returns 6 columns to 5-column UI |  |  |
+
+**assets/Script/ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3871 | 11:37 AM | 🔵 | ReelDevTool inspector-triggered spin capability examined for mock data testing |  |  |
+| #3872 | " | 🔵 | ReelDevTool usage pattern requires SlotReel and GameView node references |  |  |
+
+**SPEC.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3873 | " | ✅ | SPEC.md acceptance criteria updated to require ReelDevTool verification instead of server connection |  |  |
+
+**#S1232** Passive monitor health check - scheduled ambient monitoring of system status (Jul 7, 11:38 AM)
+
+**#S1238** Error handling strategy for CheckPlateInfo column count mismatch during demo phase (Jul 7, 12:03 PM)
+
+**#S1239** Add defensive guards for reel count mismatches between server and client to prevent crashes (Jul 7, 2:02 PM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3896 | 2:04 PM | 🔴 | Added column count guard to prevent CheckPlateInfo crash on demo data mismatch |  |  |
+
+**..\..\Cocos_Project\uk_slot_template\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3897 | " | ✅ | Applied column count guard to slot template codebase |  |  |
+
+**#S1240** UK-917 reel column fix and template updates completed with verification instructions (Jul 7, 2:05 PM)
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3898 | 2:05 PM | 🔴 | CheckPlateInfo reel count mismatch crash fixed in uk_917 |  |  |
+
+**#S1241** Fix ReelDevTool standard spin not animating - reel stays static after StartSpin call (Jul 7, 2:06 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3899 | 2:11 PM | 🔵 | ReelDevTool spin trigger verification issue identified |  |  |
+
+**assets/Script/ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3900 | 2:13 PM | 🔴 | ReelDevTool now drives spin animation during testing |  |  |
+| #3901 | " | 🔴 | ReelDevTool TestStandardSpin now enables spin driver flag |  |  |
+
+**uk_slot_template/assets/Script/ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3902 | 2:14 PM | ✅ | ReelDevTool spin driver fix backported to slot template |  |  |
+
+**#S1242** Slot machine spin trigger timing fix - guard against premature triggering and auto-start when ready (Jul 7, 2:14 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3903 | 2:22 PM | 🔵 | ReelDevTool spin timing issue - initialization race condition |  |  |
+
+**assets/Script/ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3904 | " | 🔴 | ReelDevTool deferred test execution - pending request queue added |  |  |
+
+**#S1243** Fixed game initialization gate timing to prevent premature rotation triggers (Jul 7, 2:23 PM)
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\GameState\AddFreeState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3905 | 2:26 PM | 🔵 | Slot machine game state management architecture |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3906 | " | 🔵 | State management framework imports and structure |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3907 | " | ✅ | Added CommonState import to ReelDevTool |  |  |
+| #3908 | 2:27 PM | 🔴 | Fixed premature spin trigger in ReelDevTool by checking game state readiness |  |  |
+
+**..\..\Cocos_Project\uk_slot_template\assets\Script\ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3909 | " | ✅ | Synchronized ReelDevTool with IDLE state guard to slot machine template |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3910 | " | ✅ | Added explicit boolean coercion to IsGameReady check |  |  |
+
+**#S1244** Proto file generation options during unpublished period - M0a milestone completion checkpoint (Jul 7, 2:27 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3911 | 2:34 PM | 🔴 | Game initialization gate timing fix verified and ready for commit |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\ReelDevTool.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3912 | " | 🔴 | ReelDevTool reel drive and ready gate fix committed to both repositories |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\SPEC.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3913 | " | ✅ | M0a milestone acceptance checkpoint passed and documented |  |  |
+| #3914 | " | ✅ | M0a milestone acceptance documented in git history |  |  |
+
+**#S1245** Protocol buffer schema strategy decision for uk917-zeus game development (Jul 7, 2:38 PM)
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\**\*.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3915 | 2:40 PM | 🔵 | Existing ar2esProto schema footprint inventoried |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\node_modules\@igs-arcade-division-rd2\uk_658_eyestrike_proto\ar2esProto.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3916 | " | 🔵 | Generation-1 proto package structure examined |  |  |
+| #3917 | " | 🔵 | Generation-1 proto interface hierarchy mapped |  |  |
+| #3918 | 2:41 PM | 🔵 | Generation-1 proto schema fields extracted |  |  |
+| #3919 | 2:42 PM | 🔵 | Proto package distribution format and client integration points identified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917.proto**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3920 | 2:43 PM | 🟣 | uk917 simulation proto schema implemented |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3921 | " | 🟣 | Proto stub compilation toolchain configured |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917Proto.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3922 | 2:44 PM | 🟣 | Proto stub compilation completed successfully |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\proto-stub\uk917Proto.d.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3923 | " | 🟣 | Proto stub encode/decode functionality verified |  |  |
+
+**..\..\Cocos_Project\uk_917_leprechauns_pots_client\assets\Script\SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3924 | " | 🔵 | Client uses protocol namespace wrapper for proto access |  |  |
+| #3925 | 2:45 PM | 🔵 | tctProto reference is legacy commented code |  |  |
+
+
+Access 204k tokens of past research & decisions for just 18,381t. Use MCP search tools to access memories by ID.

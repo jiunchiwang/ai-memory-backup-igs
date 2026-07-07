@@ -1,0 +1,16 @@
+{
+  "claude": {
+    "command": "claude-agent-acp",
+    "label": "Claude Code",
+    "model": "claude-fable-5",
+    "effort": "medium"
+  },
+  "kiro": {
+    "command": "kiro-cli acp --model claude-opus-4.6 -a --agent main",
+    "label": "Kiro CLI"
+  },
+  "codex": {
+    "command": "npx @zed-industries/codex-acp",
+    "label": "Codex"
+  }
+}

@@ -69,6 +69,29 @@ proto d.ts（若已發佈）。產出 `docs/dev-spec.md`，含兩張表：
 功能 ↔ proto 欄位對照。**proto 未發佈時**：整表標 ⏳，每項記錄
 「假設的資料形狀」，proto 到手後回來逐項核對假設，不符就修 dev-spec。
 
+#### ⏳ 假設路徑的具象化：自產 proto stub（2026-07-07 uk_917 實證）
+
+proto 未發佈不必卡 M0b——把假設映射表直接編譯成可用套件：
+
+```
+1. <game>/proto-stub/uk917.proto ← 三區段：
+   a. 基礎結構：抄「模板 code 實際消費的形狀」
+      （grep -rho "ar2esProto\.[A-Za-z]*" assets/Script | sort -u 盤點，
+       再用 awk 從舊 proto d.ts 抽完整 interface 欄位——⚠️ 別用行號節錄，會漏欄位）
+   b. 模板殘留相容欄位（demo proto 專屬欄位，保編譯綠，M1 清 code 後刪）
+   c. 本作特色欄位：dev-spec §4 假設逐項轉 message（field number 分段：本作 1~39、殘留 40+）
+2. pbjs -t static-module -w commonjs + pbts 產生（與正式套件同工藝）
+   → local package（node_modules/@local-stub/<game>_proto/，源與 build script 留 proto-stub/）
+3. assets/Script/Proto.ts 單一間接點：
+   import protocol from "@local-stub/..."; export default protocol;
+   全案 import 改接 ./Proto、namespace 全案 sed 一次
+4. 驗證：node 一行 encode/decode roundtrip + tsc 錯誤集合對模板 baseline diff（必須零新增）
+```
+
+真 proto 到手：只改 Proto.ts import（+ namespace sed 一次），diff 兩份 .proto 即完成
+假設核對，然後刪 proto-stub/ 與 @local-stub。
+解鎖範圍：M0b 資料流、M1 State 讀欄位、M2 機制 client 邏輯全部提前開工。
+
 **檢查點 2（請使用者過目）**：🔴 清單有沒有漏、分類有沒有錯、proto 假設合不合理。
 
 ## 步驟 3：Milestone 任務拆解
@@ -88,7 +111,7 @@ proto d.ts（若已發佈）。產出 `docs/dev-spec.md`，含兩張表：
 - 每個任務帶三要素：**規格出處**（spec 章節）、**對應 skill**（🟡 類）、
   **可驗證的驗收標準**
 - **每個 M2 機制的驗收標準必含該機制 unshow/replay 還原**——不要留到最後一次補
-- proto 晚到時 M0a + 🔴 機制設計可先行，M0b 之後的實作等 proto
+- proto 晚到時 M0a + 🔴 機制設計可先行；再做「自產 proto stub」（見步驟 2）可連 M0b/M1/M2 client 邏輯一起解鎖
 
 ### M0a 起新專案步驟
 
@@ -121,3 +144,6 @@ proto d.ts（若已發佈）。產出 `docs/dev-spec.md`，含兩張表：
 - ❌ 跳過人工檢查點直接往下走 → 源頭錯誤全線放大
 - ❌ unshow/replay 還原留到專案尾聲 → 放進每個機制的驗收標準
 - ❌ proto 假設寫完不回頭核對 → proto 到手後必須逐項驗證 ⏳ 項目
+- ❌ 抄舊 proto 形狀時用行號範圍節錄 d.ts → 會漏欄位（uk_917 漏 JackpotWin/MaxBet/BuyMul）；用 awk 抓完整 interface 區塊
+- ❌ 模板 demo 驗收拿別款 dev server 驗 → 欄數/形狀不符必炸；改用 ReelDevTool 假盤或 stub ack，端到端等真 proto
+- ❌ 全案 code 直接 import proto 套件 → 換 proto 要動幾十處；一律經 assets/Script/Proto.ts 單一間接點

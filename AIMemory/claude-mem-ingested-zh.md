@@ -63,3 +63,30 @@
 捨棄:「Skin assets 指定用於 feature grid 中段過場燈光演出」屬單一專案特定場景的一次性細節,非可重用 pattern。
 
 去重:寫入前以 list_facts 對 AIMemory(Spine / SpineKit 關鍵字,62 筆)掃描,既有 Spine 紀錄皆為 spine-viewer 工具相關,無重複(寫入後 shard=uk-slot.md)。
+
+## 2026-07-07(來源 shortlist 6 筆 → 精選後寫入 3 條)
+
+來源 project:`telegram-kiro-bridge-main`(bridge 專案,2026-07-06 decisions)。
+
+1. [來源 #1] telegram-kiro-bridge 的 skill lint(skill 健康檢查)機制:讀取 G:/AI/AIMemory/config/skill-usage.json 的 use_count 與 last_agent_used_at 使用數據,評估各 skill 是否仍被使用、是否需要淘汰或修整。(shard=bridge-project)
+2. [來源 #3] 使用者評估過三模型分工架構提案(Fable 5 當 orchestrator 佔約 10% tokens、Codex 5.5 當 executor 佔約 60%、Gemini 3.1 Pro 當 reviewer 佔約 15%),決定暫緩不採用,避免未來重複提案。(shard=misc)
+3. [來源合併 #5/#6] telegram-kiro-bridge 的 gate hook 決策已反轉:專案記憶文件 decision-no-gate-hook.md 改名為 decision-gate-hook-minimal.md,改採最小版 gate hook;CLAUDE.md Section 7 的完整 impact-analysis-guard PreToolUse hooks 維持不部署,此決策文件用於防止未來重複提案。(shard=bridge-acp)
+
+捨棄:#2(Excel→code 三步驟工作流)與既有 f_411e3f(uk-slot-spec-to-impl skill)重複;#4(PARALLEL_DELEGATE >> 截斷 gotcha)與既有 f_3c7a91 重複。
+
+去重:寫入前以 list_facts 對 AIMemory(91 筆;skill-usage / skill lint / orchestrator / Codex 5.5 / gate-hook / impact-analysis 多關鍵字)掃描,皆無重複。
+
+備註:本 session harness 未載入 memory MCP tools(server 未連上),改以 stdio JSON-RPC 直呼同一 mcp-memory.js 的 list_facts / remember tool(同一安全代碼路徑,僅 ADD,未動 forget)。
+
+## 2026-07-08(來源 shortlist 11 筆 → 精選後寫入 2 條)
+
+來源 project:`telegram-kiro-bridge-main`(2026-07-07 decisions;內容涵蓋 bridge 與 uk slot 兩域)。
+
+1. [來源 #9] uk slot 模板專案音訊決策:MG_Bgm 與 FG_Bgm 背景音樂引用在 template 專案中先註解掉(模板不附實際音檔),新遊戲專案需要 BGM 時再解除註解並補上音檔。(shard=misc)
+2. [來源 #10] Cocos extensions 目錄採專案隔離架構:棄用 G:/Cocos_Project/extensions 共用目錄,改置於各專案自身的 extensions/(如 uk_917_leprechauns_pots_client/extensions/),避免多專案共用一份 framework 互相干擾。(shard=uk-917)
+
+捨棄(9 筆):#1 token policy 已由既有 fact(token-policy.ts commit 028a5ea 顯式 policy 表 + provenance)以更終態形式涵蓋;#2 park()/onBeforeClose 汙染為中途發現、既有 fact 已記「四條 transcript 儲存路徑皆正常運作」終態;#4 SessionStore 多 session 設計已由「/session 多 session 管理 2026-07-07 結案(5 commits)」涵蓋;#5 /agent 預設 config 已由 /agent init(commit 8613135)兩條 facts 涵蓋;#8 session resume 計畫已有 fact 記錄計畫文件路徑與三層架構;#11 GRAND/MEGA 走標準收分流已由 f_23086a 涵蓋;#3/#6/#7 為一次性過程紀錄(選 workflow、啟動 review、委派 Kiro)不入庫。
+
+去重:寫入前以 list_facts(tail 20/146)+ 直接 grep facts 主檔與 facts_Topic shards(MG_Bgm / extensions / GRAND / MEGA / 917 多關鍵字)掃描,確認 2 條無重複。
+
+備註:本 session harness 同樣未載入 memory MCP tools,沿用 stdio JSON-RPC 直呼 mcp-memory.js 的 list_facts / remember(僅 ADD,未動 forget);server 需以 bridge 專案目錄為 cwd 啟動(否則 .env 的 TELEGRAM_BOT_TOKEN 讀不到)。

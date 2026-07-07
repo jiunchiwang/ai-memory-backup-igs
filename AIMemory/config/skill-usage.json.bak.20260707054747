@@ -1,0 +1,46 @@
+{
+  "_schema_version": 1,
+  "_last_updated_at": "2026-07-06T20:09:26.029Z",
+  "skills": {
+    "memory-to-skill": {
+      "created_at": "2026-07-06T08:51:49.891Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-07-06T20:04:22.550Z",
+      "use_count": 2,
+      "last_reason": "掃描 1 個 dream session，四問+confidence 篩選 0 新建 0 更新 0 留底，搬移 1 檔至 oldSessions",
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-wiki-knowledge-base": {
+      "created_at": "2026-07-06T09:01:43.817Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-07-06T20:09:26.029Z",
+      "use_count": 6,
+      "last_reason": "wikilint 步驟——15 頁過時/孤兒/斷連三項檢查全綠，41 個 wikilink 全部有效，無需修正",
+      "pinned": false,
+      "notes": null,
+      "orphan": true
+    },
+    "writing-skills": {
+      "created_at": "2026-07-06T12:47:08.453Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-07-06T12:47:08.453Z",
+      "use_count": 1,
+      "last_reason": "建立新 skill 時遵循其結構與 SDO 描述規範",
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    },
+    "ms-portable-skill-authoring": {
+      "created_at": "2026-07-06T12:47:08.454Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-07-06T12:47:08.454Z",
+      "use_count": 1,
+      "last_reason": "SKILL.md 避免寫死機器絕對路徑，模板以名稱引用",
+      "pinned": false,
+      "notes": null,
+      "orphan": false
+    }
+  }
+}

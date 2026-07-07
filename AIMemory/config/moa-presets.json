@@ -1,0 +1,49 @@
+{
+  "presets": {
+    "default": {
+      "references": [
+        "moa-ref-claude",
+        "moa-ref-kiro"
+      ],
+      "trimmed_context_turns": 5,
+      "reference_timeout_ms": 60000,
+      "enabled": true
+    },
+    "red-team": {
+      "references": [
+        "moa-ref-claude",
+        "moa-ref-adversary"
+      ],
+      "trimmed_context_turns": 10,
+      "reference_timeout_ms": 60000,
+      "enabled": true
+    },
+    "fact-check": {
+      "references": [
+        "moa-ref-claude",
+        "moa-ref-kiro"
+      ],
+      "trimmed_context_turns": 3,
+      "reference_timeout_ms": 60000,
+      "aggregator_hint": "比對各顧問的回答：所有人一致的 → 高信心直接採用；有矛盾的 → 標記 ⚠️ 並說明哪些模型持不同觀點；只有一方提到的 → 標記為「待驗證」。",
+      "enabled": true
+    }
+  },
+  "routing": {
+    "enabled": true,
+    "preset_reprs": {
+      "red-team": "安全審查 風險評估 漏洞分析 攻擊面 threat model devil's advocate 紅隊",
+      "fact-check": "事實查核 驗證正確性 真的嗎 是否屬實 verify fact check 資訊正確 支援嗎 對嗎",
+      "default": "方案評估 設計 review 架構討論 技術選型 比較 優缺點分析"
+    },
+    "fallback_preset": "default"
+  },
+  "auto_trigger": {
+    "on_goal_high_stakes": true,
+    "preset": "red-team",
+    "max_per_goal": 3,
+    "cooldown_minutes": 10
+  },
+  "trimmed_context_max_chars": 8000,
+  "turns_per_step": 4
+}

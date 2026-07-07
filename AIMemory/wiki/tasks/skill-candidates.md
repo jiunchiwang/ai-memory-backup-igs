@@ -13,13 +13,13 @@
   - 代表 session: 2026-06-27 /skillsearch 自檢（找到 5 個問題並修正）
   - 觀察點：如果對更多 skill/command 做自檢且每次都有固定 checklist，可升格
 
-- [ ] **dream-report-action** | count=1 | score=0.08 | 太低
-  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）
+- [ ] **dream-report-action** | count=2 | score=0.16 | 太低，繼續觀察
+  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）
   - 觀察點：若 dream 報告格式穩定且處理流程可模板化
 
-- [ ] **external-repo-absorption-methodology** | count=3 | score=0.48 | 留底觀察
-  - 代表 session: 2026-06-30 ai_multi_agent 研究→吸收 3 個 P0 改進、2026-07-01 AI-DLC Power 研究→借鏡 4 點、2026-07-02 侯智薰 7 層架構研究→觸發 P1 user-profile 獨立化
-  - 觀察點：若出現第 4~5 次「clone/browse 外部 repo → 比較 → 決定吸收哪些」的完整循環，且每次有固定步驟（README 掃描 → 架構比較 → 吸收決策表 → 實作），則升格
+- [ ] **external-repo-absorption-methodology** | count=4 | score=0.64 | 接近升格門檻（count ≥5 即升格）
+  - 代表 session: 2026-06-30 ai_multi_agent 研究→吸收 3 個 P0 改進、2026-07-01 AI-DLC Power 研究→借鏡 4 點、2026-07-02 侯智薰 7 層架構研究→觸發 P1 user-profile 獨立化、2026-07-07T11-48 ai_multi_agent 增量差距分析→session resume 移植（方案 ABC 評估→計畫→委派實作）
+  - 觀察點：已出現第 4 次完整循環且步驟固定（既有報告過時比對 → 增量分析 → 借鏡排序表 → 逐項風險評估 → 移植方案 ABC → 實作）；第 5 次出現時直接升格為 ms- skill
   - 與 research-to-html-report 區別：該候選是「研究過程中產 HTML 報告」的輸出格式；本候選是「外部 repo 吸收方法論」的輸入流程
 
 - [ ] **agent-cli-config-hook-portability** | count=3 | score=0.48 | 留底觀察
@@ -28,5 +28,19 @@
   - 觀察點：若第 4~5 次出現「換 CLI 後規範漏接」實際踩坑，或要做跨 CLI 投影（sync.ps1 層），可升格；屆時評估是 append 到 ms-portable-skill-authoring（跨 CLI 可攜性同域）還是獨立 skill
   - 現有覆蓋：facts f_c5dfde / f_130b5d / f_611812、memory bridge-steering-integration.md（部分）
 
+- [ ] **session-context-passphrase-e2e** | count=6 檔（3 個偵測 session） | score=0.15 | 太低，繼續觀察
+  - Pattern：用 context 暗號（如「暗號是 8964」）驗證多 session 隔離、backend 切換、session/load resume 後的 context 保留——每個 session 設一個暗號，切換/resume 後回問
+  - 代表 session: 2026-07-07T15-03~15-27 系列（BC-2/3/5/8 e2e：靛藍海豚-1707 / 8964 / 4396 跨 session 互切不互漏）
+  - 觀察點：目前只在 bridge session-store 驗證用過一輪；若未來測其他 agent 系統的 session 功能再次採用，且沉澱出固定測試腳本（暗號命名、切換順序、驗證清單），可升格
+
+- [ ] **kiro-delegate-three-stage-review** | count=2 | score=0.30 | 留底觀察
+  - Pattern：Kiro 委派實作後的三段 review — ① Kiro `--resume` self-review ② 獨立新 session Kiro 冷讀 git diff ③ 主 agent heavy review（親跑 tsc+smoke+BC 對照）；兩次實戰各抓到 1 個 self-review 漏掉的真 bug（shutdown registry 誤清、rememberFacts 無 enforcement）
+  - 代表 session: 2026-07-07T11-48（session resume `b6e028f`）、2026-07-07T16-09（token-policy `028a5ea`）
+  - 觀察點：第 3 次委派仍走同流程且再抓到 bug 就固化；屆時 **append 到 vc-kiro-delegate**（同域：委派品質保證），不新建
+
+## 誤判紀錄（防重複偵測）
+
+- ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
+
 ---
-Last updated: 2026-07-06
+Last updated: 2026-07-08

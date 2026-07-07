@@ -5,9 +5,11 @@
 
 ## Pages
 
-- [[uk-slot]] — UK 市場老虎機專案群（1 模板 + 7 衍生遊戲、技術棧約束、待優化項目）
+- [[uk-slot]] — UK 市場老虎機專案群（1 模板 + 8 衍生遊戲、技術棧約束、模板回灌與起新陷阱）
+- [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory 系統、品質機制、設計原則）
-- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、model pin、harness hooks、trailer 陷阱）
+- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、harness hooks、trailer 陷阱）
+- [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、PostTool Hooks A→D、Karpathy P0/P1）
 - [[dev-tools]] — 開發工具與環境設定（Python/Playwright/TypeScript、機器路徑、工作流程）
 - [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
@@ -26,11 +28,12 @@
 ## Queries
 
 - [[fable]] — Claude Fable 5 修正 Karpathy P0 接線 Bug（7 個問題 + 教訓 + commit）
+- [[modelcontextprotocol-typescript-sdk-mcp-typescript-sdk-v-f2c3525b]] — MCP TypeScript SDK v2 beta（套件拆分 server/client、任意 schema 庫、stateless core）
 - [[askintel-time-split]] — Intel 排程分割策略（輕量 daily + 重量 podcast 隔天）
 - [[trio-model-architecture]] — 三模型協作架構評析（借鏡點、疑點、與 bridge 差異）
 - [[embedding-router]] — 為何 doctor 報 Embedding router 未就緒（根因、影響面、解耦修復）
 
 ---
 
-Total pages: 15
-Last updated: 2026-07-06
+Total pages: 18
+Last updated: 2026-07-08

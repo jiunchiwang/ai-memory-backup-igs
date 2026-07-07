@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "chats": {
+    "509424983": {
+      "activeId": "088d3c78",
+      "sessions": [
+        {
+          "id": "088d3c78",
+          "name": "請產出 2026-07-07 的 daily l",
+          "createdAt": 1783454419028,
+          "sessionId": "7476f0a7-e1d6-4af5-a595-805ae7eb7b4a",
+          "backendKey": "claude",
+          "agentCommand": "claude-agent-acp",
+          "cwd": "G:\\AI\\telegram-kiro-bridge-main",
+          "savedAt": 1783454419020
+        }
+      ]
+    }
+  }
+}

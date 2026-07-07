@@ -1,0 +1,240 @@
+# [uk_pirates_queen] recent context, 2026-07-07 2:22pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (20,211 tokens to read)
+- Work investment: 684,003 tokens spent on research, building, and decisions
+- Your savings: 97% reduction from reuse
+
+### Jun 29, 2026
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3330 | 8:18 PM | ✅ | IDE diagnostics confirmed no issues in SlotReels.ts after fix |  |  |
+
+**#S1062** Commit timing adjustment for wanted poster display delay (changed from 0.1 to 0.15 seconds) (Jun 29, 8:25 PM)
+
+### Jun 30, 2026
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3352 | 10:49 AM | 🔴 | Scatter animations freeze at last frame for Silver/Gold Collect |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3391 | 4:06 PM | 🔵 | GAME_INTRO_COMPLETE Animation Timing Investigation |  |  |
+
+**assets/Script/GameIntroManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3392 | 4:07 PM | 🔵 | GAME_INTRO_COMPLETE Triggered by Spine Frame Event |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3393 | 4:10 PM | 🔴 | Added 0.1s Delay Constant for GAME_INTRO_COMPLETE Timing Fix |  |  |
+| #3394 | " | 🔴 | Implemented 0.1s Scheduled Delay for GAME_INTRO_COMPLETE Animation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3395 | 4:11 PM | ✅ | TypeScript Type Check Passed After Timing Fix |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3396 | 4:31 PM | 🔴 | Fixed wanted poster display timing in game intro sequence |  |  |
+
+**#S1086** User requested to start implementation of wanted poster exit animation synchronization with slot reel drop-out (Jun 30, 4:31 PM)
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3397 | 4:32 PM | ✅ | Updated comment to reflect correct 0.15 second delay value |  |  |
+
+### Jul 3, 2026
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3514 | 10:10 AM | 🔵 | WantedPosterManager transition logic and new RoundInfo requirement |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3515 | " | 🔵 | TriggerDropOut and RoundInfo coordination point identified |  |  |
+
+**assets/Script/GameView.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3516 | 10:11 AM | 🔵 | Complete flow shows StartSpin triggers dropdown before new RoundInfo poster data arrives |  |  |
+
+**assets/Script/GameState/SpinState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3517 | " | 🔵 | SpinState timing reveals posters cannot exit before dropdown without round state knowledge |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3519 | 10:12 AM | 🔵 | StartSpin always triggers dropdown unconditionally at end of initialization |  |  |
+
+**assets/Script/GameState/WantedPosterState.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3520 | 10:13 AM | 🔵 | WantedPosterState handles cascade bounty animations, not new round transitions |  |  |
+
+**#S1228** GC and Performance Optimization Analysis for Cocos Creator Slot Game (Read-Only Review) (Jul 3, 10:22 AM)
+
+**assets/Script/WantedPoster/WantedPosterItem.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3523 | 10:22 AM | 🔵 | Wanted Poster Item Animation API Structure |  |  |
+
+**assets/Script/WantedPoster/WantedPosterManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3524 | 10:23 AM | 🟣 | Added PLAY_OUT_ALL Event for Wanted Poster Exit Synchronization |  |  |
+| #3525 | 10:24 AM | 🟣 | Registered PLAY_OUT_ALL Event Handler in WantedPosterManager |  |  |
+| #3526 | " | 🟣 | Implemented HandlePlayOutAll Method for Synchronized Poster Exit |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3527 | " | ✅ | Imported WANTED_POSTER_MANAGER_EVENT into SlotReels |  |  |
+| #3528 | 10:25 AM | 🟣 | Completed Wanted Poster Synchronized Exit with Reel Drop-Out |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3529 | " | ✅ | TypeScript Typecheck Passed for Poster Synchronization Implementation |  |  |
+| #3530 | " | ✅ | Verified Zero Type Errors in Wanted Poster and SlotReels Files |  |  |
+| #3531 | 10:26 AM | 🔵 | Project Has Pre-Existing Type Errors in External Dependencies |  |  |
+
+### Jul 7, 2026
+
+**assets/Script/BackgroundManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3867 | 11:34 AM | 🔵 | Performance Patterns and Potential GC Pressure Points Identified |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3866 | " | 🔵 | GC and Performance Analysis Initiated on Cocos Game Core Systems |  |  |
+| #3868 | 11:35 AM | 🔵 | Hot Path Performance Bottlenecks and GC Optimization Opportunities Identified |  |  |
+
+**#S1230** GC and performance optimization review for game codebase without direct modifications (Jul 7, 11:36 AM)
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3870 | 11:37 AM | 🔵 | Event System Overhead and Accessor Pattern Analysis in SlotReels |  |  |
+
+**#S1231** Fix four specific bugs: WeakMap cache invalidation in PrefabPoolManager, Scatter node pool return, Promise resolution in PlayScatterStopAnimation, and shared collection race conditions in EffectPlate (Jul 7, 11:38 AM)
+
+**#S1233** Fix four object pool and async演出 bugs: WeakMap cache invalidation in PrefabPoolManager, Scatter _reparented node pool return gap, PlayScatterStopAnimation Promise leak, and shared reusable collection race conditions in EffectPlate (Jul 7, 12:00 PM)
+
+**assets/Script/Common/PrefabPoolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3874 | 12:01 PM | 🔵 | PrefabPoolManager WeakMap cache invalidation issue identified |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3875 | " | 🔵 | Scatter reparented node pool return gap discovered |  |  |
+| #3876 | " | 🔵 | PlayScatterStopAnimation Promise leak on early pool return |  |  |
+| #3877 | " | 🔵 | Shared reusable collections race condition in EffectPlate |  |  |
+
+**assets/Script/SlotReels.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3878 | 12:02 PM | 🔵 | _reparented flag lifecycle and cleanup mechanism documented |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3879 | " | 🔵 | Shared collection race condition confirmed across演出 methods |  |  |
+
+**#S1234** GC and performance optimization review for Scatter node pooling and effect animations, resulting in fixes for cache invalidation, orphan recycling, Promise handling, and shared array conflicts (Jul 7, 12:03 PM)
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3880 | 12:03 PM | 🔵 | Three specific演出 methods confirmed sharing _reusablePromises array |  |  |
+| #3881 | " | 🔵 | ReturnAllScatterEnterAnimationNodes implements defensive cleanup with proper pool return |  |  |
+| #3882 | 12:04 PM | 🔵 | Pool return patterns show proper Promise-chained cleanup in演出 methods |  |  |
+| #3883 | " | 🔵 | _reparented deletion pattern consistent across all Scatter animation methods |  |  |
+| #3884 | 12:05 PM | 🔵 | ScatterPreWin nodes demonstrate complete pool lifecycle pattern unlike Scatter animations |  |  |
+| #3885 | " | 🔵 | Scatter animation uses three-tier prefab pool with level-based key selection |  |  |
+
+**assets/Script/Common/PrefabPoolManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3886 | 12:09 PM | 🔴 | Fixed WeakMap Spine cache invalidation on node reparenting |  |  |
+
+**assets/Script/EffectPlate/EffectPlate.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3887 | 12:10 PM | 🔴 | Fixed shared collection race condition by splitting _reusablePromises into method-specific arrays |  |  |
+| #3888 | " | 🔴 | Completed shared collection isolation by updating all three演出 method implementations |  |  |
+
+**#S1235** Fix FGRouletteManager test key vulnerability - missing DEBUG guard and listener cleanup (Jul 7, 12:15 PM)
+
+**FreeGame/FGRouletteManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3889 | 1:39 PM | 🔵 | Production Input Listener Vulnerability in FGRouletteManager |  |  |
+
+**#S1236** Commit FreeGame roulette manager test key guard and memory leak fixes (Jul 7, 1:39 PM)
+
+**assets/Script/FreeGame/FGRouletteManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3890 | 1:39 PM | 🔵 | DEBUG Constant Already Imported in FGRouletteManager |  |  |
+| #3891 | 1:40 PM | 🔴 | Added Input Listener Cleanup in FGRouletteManager onDestroy |  |  |
+| #3892 | " | 🔴 | Added DEBUG Guard and Named Handler for FGRouletteManager Test Keys |  |  |
+
+**assets/Script/BackgroundManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3893 | " | 🔵 | Codebase Pattern Survey - Input Listener Cleanup Inconsistent |  |  |
+
+**tsconfig.check.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3894 | " | ✅ | Created TypeScript Check Configuration File |  |  |
+
+**assets/Script/FreeGame/FGRouletteManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #3895 | 1:41 PM | ✅ | TypeScript Validation Confirms FGRouletteManager Changes Clean |  |  |
+
+**#S1237** Review GC and performance optimization opportunities without making direct modifications - Performance fix commits landed (Jul 7, 1:47 PM)
+
+**Investigated**: Three batches of performance and memory leak fixes were reviewed and committed to the main branch across multiple areas: Scatter pool management, Promise lifecycle, AsyncUtils scheduling, Bezier configuration, TimelinePlayer data structures, and FG wheel test guards with listener leak prevention.
+
+**Learned**: The codebase has critical performance hotspots in: 1) Scatter pool orphan management and Promise hanging issues, 2) AsyncUtils resident scheduling and Bezier configuration overhead, 3) TimelinePlayer Map usage and count-up deduplication, 4) FG wheel test key guards and listener cleanup. The most sensitive area is the scroll hot path in SlotReels (fake symbol closures, SymbolInfo rebuild, unshift operations) which requires careful isolated testing. Tween lifecycle management shows missing stop() pairing in SlotReels drop animations and MultiplyFlyUI.
+
+**Completed**: Three performance fix commits successfully merged to main: commit e277308 (Scatter pool orphan recovery, Promise hang fixes, spine cache validation, promises splitting), commit 1f4df5a (AsyncUtils resident schedule, Bezier zero-config, TimelinePlayer Map optimization, count-up deduplication), and commit df7784b (FG wheel test key guards and listener leak fixes). These fixes address memory leaks, configuration overhead, and data structure inefficiencies.
+
+**Next Steps**: Two critical optimization areas remain pending: the scroll hot path triple optimization in SlotReels (fake symbol closures, SymbolInfo rebuild, unshift patterns) which requires isolated testing due to core scroll logic sensitivity, and tween lifecycle pairing issues in SlotReels drop series and MultiplyFlyUI where stop() calls are missing. These will be addressed in future sessions when needed.
+
+
+Access 684k tokens of past research & decisions for just 20,211t. Use MCP search tools to access memories by ID.

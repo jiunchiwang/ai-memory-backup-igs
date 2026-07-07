@@ -1,22 +1,19 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-03T20:12:33.787Z
+Last run: 2026-07-06T20:12:11.229Z
 
 ## High Priority (action needed)
-- Bridge 啟動後刪 3 條 facts：`forget({ query: "DEFAULT_STEPS 比 upstream 多一步 docupdate" })`、`forget({ query: "待做方案總覽報告位於 docs/pending-roadmap" })`、`forget({ query: "Loop Engineering 改善 roadmap 待做項目" })`
+- — 無（2026-07-07 全數處理完：store 已合併封存、ms-wiki-knowledge-base 實體已補回 canonical a8ced88、docs 已 commit f6423ea）
 
 ## Watch List (monitor)
-- external-repo-absorption-methodology 候選 count=3, score=0.48（差 2 次可升格 skill）
-- ms-wiki-knowledge-base orphan=true 但活躍 count=13（考慮加入正本或改 flag）
-- Repo 膨脹 ratio=5.3（>3.0），刪 3 條後預期改善至 ~4.8
-- bridge-research +5 keywords（侯智薰/雷蒙/7層），f_ad661e 待 shard rebuild 後歸位
+- writing-skills ↔ skill-creator 觸發語重疊，實戰已選前者，建議擇期合併
+- facts 膨脹 ratio 4.3（>3.0）持平，等新 facts 稀釋或下次有實質過時項再刪
+- uk_917 差異開發規格進行中：待使用者確認 1 代 / 3POT宙斯參考專案路徑與 proto 狀態
+- skill-candidates：agent-cli-config-hook-portability（count=3）持續觀察
+- 8 個 ms-* 防護 skill 建議 pin 免 skilllint 重複誤報
 
 ## Noise (ignored this run)
-- /dailylog：2026-07-03.md 產出完成（19 行）
-- /memorytoskill：8 session 掃描，0 新建/更新，16 檔搬至 oldSessions
-- /topicreview：misc 維持 0，bridge-research +5 keywords（167 total）
-- /wikisync：bridge-project 更新（+fork sync/Karpathy P0 段落），新增 queries/fable
-- /wikilint：11 頁全健康，0 orphan，0 broken link
-- /skilllint：19 健康 / 9 underused / 0 stale / 0 conflict
-- /docupdate：usage-guide.html +§12b（9 個缺漏功能補齊）
-- /artifactcleanup：0 刪除，1 留存
-- /backup、/sharedsync、/specialistreview：正常完成
+- /sharedsync、/backup、/specialistreview 正常完成無輸出
+- /artifactcleanup 刪 0 剩 1，正常
+- /sessionreflect 無 transcript 跳過
+- dailylog 覆寫補齊、topicreview/wikisync/factlint/wikilint 全綠零變更（昨日剛整理過屬預期）
+- memorytoskill 0 新建 0 更新，1 檔搬移 oldSessions

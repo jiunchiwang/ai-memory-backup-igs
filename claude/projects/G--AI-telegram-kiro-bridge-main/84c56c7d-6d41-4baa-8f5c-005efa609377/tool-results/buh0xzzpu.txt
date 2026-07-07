@@ -1,0 +1,1007 @@
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+
+[38;5;252m[0m[?25l[?25l[?25l[?25l[0m[0mGetting symbols from: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\observerTransformer.ts[0m [[38;5;12mtop_level=true[0m][38;5;244m (using tool: code)[0mGetting symbols from: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\working-state.ts[0m [[38;5;12mtop_level=true[0m][38;5;244m (using tool: code)[0mReading directory: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts[0m[38;5;244m (using tool: read, max depth: 0, max entries: 1000, excluding: defaults)[0m
+⠋ Loading...⠙ Loading...[2K[1G[1A[?25l
+  1. [38;5;12mFunction[0m [38;5;141mextractScheduleTokens[0m at [38;5;141msrc\observerTransformer.ts[0m:[38;5;244m743:8
+[0m  2. [38;5;12mFunction[0m [38;5;141mextractAskTokens[0m at [38;5;141msrc\observerTransformer.ts[0m:[38;5;244m735:8
+[0m  3. [38;5;12mFunction[0m [38;5;141mextractSendFileTokens[0m at [38;5;141msrc\observerTransformer.ts[0m:[38;5;244m727:8
+[0m  4. [38;5;12mFunction[0m [38;5;141mhideTrailingUnterminatedToken[0m at [38;5;141msrc\observerTransformer.ts[0m:[38;5;244m707:8
+[0m  5. [38;5;12mFunction[0m [38;5;141mtransform[0m at [38;5;141msrc\observerTransformer.ts[0m:[38;5;244m416:8
+[0m  [38;5;244m(15 more items found)
+[0m[38;5;244m - Completed in 0.81s[0m
+
+
+⠋ Loading...⠙ Loading...[2K[1G[1A[?25l
+  1. [38;5;12mFunction[0m [38;5;141mwriteWorkingState[0m at [38;5;141msrc\working-state.ts[0m:[38;5;244m263:8
+[0m  2. [38;5;12mFunction[0m [38;5;141minitWorkingState[0m at [38;5;141msrc\working-state.ts[0m:[38;5;244m259:8
+[0m  3. [38;5;12mInterface[0m [38;5;141mWriteWorkingStateDeps[0m at [38;5;141msrc\working-state.ts[0m:[38;5;244m252:1
+[0m  4. [38;5;12mFunction[0m [38;5;141mformatActiveRelayTasksForPreamble[0m at [38;5;141msrc\working-state.ts[0m:[38;5;244m222:8
+[0m  5. [38;5;12mFunction[0m [38;5;141maddRelayTaskOutput[0m at [38;5;141msrc\working-state.ts[0m:[38;5;244m210:8
+[0m  [38;5;244m(12 more items found)
+[0m[38;5;244m - Completed in 0.81s[0m
+
+
+[38;5;10m ✓ [0mSuccessfully read directory [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts[0m [38;5;244m(93 entries)[0m
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[?25l[0m[0mBatch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\observerTransformer.ts[0m, from line [38;5;141m169[0m to [38;5;141m197[0m
+↱ Operation 2: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\working-state.ts[0m, from line [38;5;141m1[0m to [38;5;141m70[0m
+↱ Operation 3: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-specialist-memory.mjs[0m, from line [38;5;141m1[0m to [38;5;141m40[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1511 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\observerTransformer.ts
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2498 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\working-state.ts
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1708 bytes[0m from G:\AI\telegram-kiro-bridge-main\scripts\check-specialist-memory.mjs
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[?25l[0m[0mBatch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m960[0m to [38;5;141m1050[0m
+↱ Operation 2: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m225[0m to [38;5;141m250[0m
+↱ Operation 3: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\run-prompt.ts[0m, from line [38;5;141m1430[0m to [38;5;141m1460[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m4043 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m979 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1938 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[38;5;141m> [0mNow let me look at the existing scripts to understand how they import from dist/:[0m[0m
+[?25l[0m[0mBatch fs_read operation with [38;5;141m2[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-observer-transformer.mjs[0m, from line [38;5;141m1[0m to [38;5;141m20[0m
+↱ Operation 2: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\run-prompt.ts[0m, from line [38;5;141m1440[0m to [38;5;141m1465[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m640 bytes[0m from G:\AI\telegram-kiro-bridge-main\scripts\check-observer-transformer.mjs
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1824 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 2 operations processed, 2 successful, 0 failed
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow let me check the relay.ts to find the specialist name variable and also verify run-prompt.ts line 1442 context more precisely:[0m[0m
+[?25l[0m[0mBatch fs_read operation with [38;5;141m2[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m220[0m to [38;5;141m275[0m
+↱ Operation 2: Reading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\run-prompt.ts[0m, from line [38;5;141m1395[0m to [38;5;141m1445[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2147 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2809 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 2 operations processed, 2 successful, 0 failed
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow I need to look at the relay.ts context to find the specialist name:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m180[0m to [38;5;141m220[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1706 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow let me check the index.ts proxy area for the [38;5;10mtarget[0m variable:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m930[0m to [38;5;141m975[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1914 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m910[0m to [38;5;141m930[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m895 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mGood. Now I have all the information I need. Let me also check the [38;5;10mtransformReplyTokens[0m function reference and the imports in index.ts:[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mSearching for: [38;5;141mimport.*transformReplyTokens[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src[0m[38;5;244m (using tool: grep)[0mSearching for: [38;5;141mimport.*extractMemoryTokensFromProxy[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src[0m[38;5;244m (using tool: grep)[0m
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m1 matches[0m in [38;5;244m1 files[0m under G:\AI\telegram-kiro-bridge-main\src
+[38;5;244m - Completed in 0.23s[0m
+
+
+[38;5;9m ❗ [0mNo matches found for pattern: [38;5;244mimport.*extractMemoryTokensFromProxy[0m under G:\AI\telegram-kiro-bridge-main\src
+[38;5;244m - Completed in 0.15s[0m
+
+[?25l[0m[?25l[?25l[0m[0mSearching for: [38;5;141mextractMemoryTokensFromProxy[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src[0m[38;5;244m (using tool: grep)[0mSearching for: [38;5;141mtransformReplyTokens[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src[0m[38;5;244m (using tool: grep)[0m
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m9 matches[0m in [38;5;244m5 files[0m under G:\AI\telegram-kiro-bridge-main\src
+[38;5;244m - Completed in 0.17s[0m
+
+
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m10 matches[0m in [38;5;244m4 files[0m under G:\AI\telegram-kiro-bridge-main\src
+[38;5;244m - Completed in 0.16s[0m
+
+[?25l[0m[38;5;141m> [0mNow I need to check for the [38;5;10mname[0m variable at the run-prompt.ts proxy context:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\run-prompt.ts[0m, from line [38;5;141m1405[0m to [38;5;141m1415[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m643 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mGood — in run-prompt.ts the variable is [38;5;10mname[0m (from [38;5;10mab7.specialistProxy[0m). Now let me check the import line in relay.ts more carefully:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m85[0m to [38;5;141m105[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1065 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow let me find [38;5;10mtarget[0m in relay.ts context:[0m[0m
+[?25l[0m[0mSearching for: [38;5;141mtarget|getProxyTarget[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m[38;5;244m (using tool: grep)[0m
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m83 matches[0m in [38;5;244m1 files[0m under G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts (result is truncated)
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mPerfect. The variable in relay.ts is also [38;5;10mtarget[0m (line 192). Now let me check what [38;5;10mTransformedReply[0m is exported as:[0m[0m
+[?25l[0m[0mSearching for: [38;5;141mexport.*TransformedReply[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src\observerTransformer.ts[0m[38;5;244m (using tool: grep)[0m
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m1 matches[0m in [38;5;244m1 files[0m under G:\AI\telegram-kiro-bridge-main\src\observerTransformer.ts
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[38;5;141m> [0mGood. Now I have all information needed. Let me create the implementation:[0m[0m
+[0m[0m
+🟠 收到：為 telegram-kiro-bridge 新增 token 執行權限顯式 policy 表 + specialist memory 回寫的 provenance 標記與上限。[0m[0m
+🟠 打算：[0m[0m
+1. 建 [38;5;10msrc/token-policy.ts[0m：定義 TokenSource、TokenKind、TOKEN_POLICY 集合、filterTransformedByPolicy 函式、REMEMBER_FACTS_MAX_PER_OUTPUT 常數[0m[0m
+2. 改 [38;5;10msrc/working-state.ts[0m：新增 parseRememberTokens 純函式、改 extractMemoryTokensFromProxy 加 sourceLabel 支援[0m[0m
+3. 改 [38;5;10msrc/index.ts[0m proxy 攝取點：套 filterTransformedByPolicy + 補第三參數[0m[0m
+4. 改 [38;5;10msrc/commands/relay.ts[0m proxy 攝取點：同上[0m[0m
+5. 改 [38;5;10msrc/run-prompt.ts[0m proxy 攝取點：只補 extractMemoryTokensFromProxy 第三參數[0m[0m
+6. 建 [38;5;10mscripts/check-token-policy.mjs[0m 驗證腳本[0m[0m
+7. 跑 [38;5;10mnpx tsc --noEmit[0m + [38;5;10mnode scripts/check-token-policy.mjs[0m 驗證[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\token-policy.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: 建立 src/token-policy.ts：定義 TokenSource / TokenKind / TOKEN_POLICY / filterTransformedByPolicy / REMEMBER_FACTS_MAX_PER_OUTPUT
+
+[49m[38;5;10m+      1[0m:[38;5;10m[49m /**
+[0m[49m[38;5;10m+      2[0m:[38;5;10m[49m  * Token 執行權限顯式 policy 表。
+[0m[49m[38;5;10m+      3[0m:[38;5;10m[49m  *
+[0m[49m[38;5;10m+      4[0m:[38;5;10m[49m  * 設計意圖：「權限靠宣告不靠遺漏」。
+[0m[49m[38;5;10m+      5[0m:[38;5;10m[49m  * 目前 proxy specialist 輸出的危險 token（SCHEDULE / RESTART / MOA_PLAN 等）
+[0m[49m[38;5;10m+      6[0m:[38;5;10m[49m  * 只是剛好攝取點沒呼叫對應邏輯——未來 refactor 可能誤開。
+[0m[49m[38;5;10m+      7[0m:[38;5;10m[49m  * 此模組以白名單形式宣告每個來源可以執行哪些 token kind，
+[0m[49m[38;5;10m+      8[0m:[38;5;10m[49m  * filterTransformedByPolicy 在攝取點統一攔截非法 token。
+[0m[49m[38;5;10m+      9[0m:[38;5;10m[49m  */
+[0m[49m[38;5;10m+     10[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     11[0m:[38;5;10m[49m import type { TransformedReply } from "./observerTransformer.js";
+[0m[49m[38;5;10m+     12[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     13[0m:[38;5;10m[49m // ─── 型別 ─────────────────────────────────────────────────────────────────────
+[0m[49m[38;5;10m+     14[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     15[0m:[38;5;10m[49m /** Token 來源。 */
+[0m[49m[38;5;10m+     16[0m:[38;5;10m[49m export type TokenSource = "main" | "proxy" | "delegate";
+[0m[49m[38;5;10m+     17[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     18[0m:[38;5;10m[49m /** 所有可辨識的 token 種類（與 TransformedReply 欄位一一對應）。 */
+[0m[49m[38;5;10m+     19[0m:[38;5;10m[49m export type TokenKind =
+[0m[49m[38;5;10m+     20[0m:[38;5;10m[49m   | "sendFiles"
+[0m[49m[38;5;10m+     21[0m:[38;5;10m[49m   | "scheduleTokens"
+[0m[49m[38;5;10m+     22[0m:[38;5;10m[49m   | "askTokens"
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m   | "skillUsages"
+[0m[49m[38;5;10m+     24[0m:[38;5;10m[49m   | "goalDone"
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m   | "restartToken"
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m   | "stickerEmotions"
+[0m[49m[38;5;10m+     27[0m:[38;5;10m[49m   | "skillPropose"
+[0m[49m[38;5;10m+     28[0m:[38;5;10m[49m   | "wikiQuery"
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m   | "continueToken"
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m   | "specialistProxy"
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m   | "moaPlan"
+[0m[49m[38;5;10m+     32[0m:[38;5;10m[49m   | "rememberFacts";
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m // ─── Policy 表 ────────────────────────────────────────────────────────────────
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m /**
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m  * 各來源允許執行的 token 白名單。
+[0m[49m[38;5;10m+     38[0m:[38;5;10m[49m  * - main：全部開放（主 agent 路徑完全信任）。
+[0m[49m[38;5;10m+     39[0m:[38;5;10m[49m  * - proxy：僅限安全的 UI / 記憶類 token。
+[0m[49m[38;5;10m+     40[0m:[38;5;10m[49m  * - delegate：delegate 輸出只當文字注入主 agent，不執行任何 token。
+[0m[49m[38;5;10m+     41[0m:[38;5;10m[49m  */
+[0m[49m[38;5;10m+     42[0m:[38;5;10m[49m export const TOKEN_POLICY: Record<TokenSource, ReadonlySet<TokenKind>> = {
+[0m[49m[38;5;10m+     43[0m:[38;5;10m[49m   main: new Set<TokenKind>([
+[0m[49m[38;5;10m+     44[0m:[38;5;10m[49m     "sendFiles",
+[0m[49m[38;5;10m+     45[0m:[38;5;10m[49m     "scheduleTokens",
+[0m[49m[38;5;10m+     46[0m:[38;5;10m[49m     "askTokens",
+[0m[49m[38;5;10m+     47[0m:[38;5;10m[49m     "skillUsages",
+[0m[49m[38;5;10m+     48[0m:[38;5;10m[49m     "goalDone",
+[0m[49m[38;5;10m+     49[0m:[38;5;10m[49m     "restartToken",
+[0m[49m[38;5;10m+     50[0m:[38;5;10m[49m     "stickerEmotions",
+[0m[49m[38;5;10m+     51[0m:[38;5;10m[49m     "skillPropose",
+[0m[49m[38;5;10m+     52[0m:[38;5;10m[49m     "wikiQuery",
+[0m[49m[38;5;10m+     53[0m:[38;5;10m[49m     "continueToken",
+[0m[49m[38;5;10m+     54[0m:[38;5;10m[49m     "specialistProxy",
+[0m[49m[38;5;10m+     55[0m:[38;5;10m[49m     "moaPlan",
+[0m[49m[38;5;10m+     56[0m:[38;5;10m[49m     "rememberFacts",
+[0m[49m[38;5;10m+     57[0m:[38;5;10m[49m   ]),
+[0m[49m[38;5;10m+     58[0m:[38;5;10m[49m   proxy: new Set<TokenKind>([
+[0m[49m[38;5;10m+     59[0m:[38;5;10m[49m     "sendFiles",
+[0m[49m[38;5;10m+     60[0m:[38;5;10m[49m     "askTokens",
+[0m[49m[38;5;10m+     61[0m:[38;5;10m[49m     "skillUsages",
+[0m[49m[38;5;10m+     62[0m:[38;5;10m[49m     "stickerEmotions",
+[0m[49m[38;5;10m+     63[0m:[38;5;10m[49m     "rememberFacts",
+[0m[49m[38;5;10m+     64[0m:[38;5;10m[49m   ]),
+[0m[49m[38;5;10m+     65[0m:[38;5;10m[49m   delegate: new Set<TokenKind>([]),
+[0m[49m[38;5;10m+     66[0m:[38;5;10m[49m };
+[0m[49m[38;5;10m+     67[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     68[0m:[38;5;10m[49m // ─── 過濾函式 ─────────────────────────────────────────────────────────────────
+[0m[49m[38;5;10m+     69[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     70[0m:[38;5;10m[49m /** 每個 token kind 對應 TransformedReply 中的欄位名稱與歸零值的映射。 */
+[0m[49m[38;5;10m+     71[0m:[38;5;10m[49m const FIELD_ZERO: Record<Exclude<TokenKind, "rememberFacts">, { key: keyof TransformedReply; zero: unknown }> = {
+[0m[49m[38;5;10m+     72[0m:[38;5;10m[49m   sendFiles:       { key: "sendFiles",       zero: [] },
+[0m[49m[38;5;10m+     73[0m:[38;5;10m[49m   scheduleTokens:  { key: "scheduleTokens",  zero: [] },
+[0m[49m[38;5;10m+     74[0m:[38;5;10m[49m   askTokens:       { key: "askTokens",       zero: [] },
+[0m[49m[38;5;10m+     75[0m:[38;5;10m[49m   skillUsages:     { key: "skillUsages",     zero: [] },
+[0m[49m[38;5;10m+     76[0m:[38;5;10m[49m   goalDone:        { key: "goalDone",        zero: null },
+[0m[49m[38;5;10m+     77[0m:[38;5;10m[49m   restartToken:    { key: "restartToken",    zero: null },
+[0m[49m[38;5;10m+     78[0m:[38;5;10m[49m   stickerEmotions: { key: "stickerEmotions", zero: [] },
+[0m[49m[38;5;10m+     79[0m:[38;5;10m[49m   skillPropose:    { key: "skillPropose",    zero: null },
+[0m[49m[38;5;10m+     80[0m:[38;5;10m[49m   wikiQuery:       { key: "wikiQuery",       zero: null },
+[0m[49m[38;5;10m+     81[0m:[38;5;10m[49m   continueToken:   { key: "continueToken",   zero: false },
+[0m[49m[38;5;10m+     82[0m:[38;5;10m[49m   specialistProxy: { key: "specialistProxy", zero: null },
+[0m[49m[38;5;10m+     83[0m:[38;5;10m[49m   moaPlan:         { key: "moaPlan",         zero: null },
+[0m[49m[38;5;10m+     84[0m:[38;5;10m[49m };
+[0m[49m[38;5;10m+     85[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     86[0m:[38;5;10m[49m /**
+[0m[49m[38;5;10m+     87[0m:[38;5;10m[49m  * 依 policy 過濾 TransformedReply：不在允許集合的欄位強制歸零。
+[0m[49m[38;5;10m+     88[0m:[38;5;10m[49m  * 回傳淺拷貝，不修改原物件。text 保持不變。
+[0m[49m[38;5;10m+     89[0m:[38;5;10m[49m  */
+[0m[49m[38;5;10m+     90[0m:[38;5;10m[49m export function filterTransformedByPolicy(
+[0m[49m[38;5;10m+     91[0m:[38;5;10m[49m   reply: TransformedReply,
+[0m[49m[38;5;10m+     92[0m:[38;5;10m[49m   source: TokenSource,
+[0m[49m[38;5;10m+     93[0m:[38;5;10m[49m ): TransformedReply {
+[0m[49m[38;5;10m+     94[0m:[38;5;10m[49m   const allowed = TOKEN_POLICY[source];
+[0m[49m[38;5;10m+     95[0m:[38;5;10m[49m   const filtered: TransformedReply = { ...reply };
+[0m[49m[38;5;10m+     96[0m:[38;5;10m[49m   const dropped: string[] = [];
+[0m[49m[38;5;10m+     97[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     98[0m:[38;5;10m[49m   for (const [kind, mapping] of Object.entries(FIELD_ZERO) as Array<
+[0m[49m[38;5;10m+     99[0m:[38;5;10m[49m     [Exclude<TokenKind, "rememberFacts">, { key: keyof TransformedReply; zero: unknown }]
+[0m[49m[38;5;10m+    100[0m:[38;5;10m[49m   >) {
+[0m[49m[38;5;10m+    101[0m:[38;5;10m[49m     if (allowed.has(kind)) continue;
+[0m[49m[38;5;10m+    102[0m:[38;5;10m[49m     // 判斷原欄位是否有非空內容
+[0m[49m[38;5;10m+    103[0m:[38;5;10m[49m     const val = reply[mapping.key];
+[0m[49m[38;5;10m+    104[0m:[38;5;10m[49m     const isEmpty =
+[0m[49m[38;5;10m+    105[0m:[38;5;10m[49m       val === null ||
+[0m[49m[38;5;10m+    106[0m:[38;5;10m[49m       val === undefined ||
+[0m[49m[38;5;10m+    107[0m:[38;5;10m[49m       val === false ||
+[0m[49m[38;5;10m+    108[0m:[38;5;10m[49m       (Array.isArray(val) && val.length === 0);
+[0m[49m[38;5;10m+    109[0m:[38;5;10m[49m     if (!isEmpty) {
+[0m[49m[38;5;10m+    110[0m:[38;5;10m[49m       dropped.push(kind);
+[0m[49m[38;5;10m+    111[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+    112[0m:[38;5;10m[49m     (filtered as Record<string, unknown>)[mapping.key] = mapping.zero;
+[0m[49m[38;5;10m+    113[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    114[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    115[0m:[38;5;10m[49m   if (dropped.length > 0) {
+[0m[49m[38;5;10m+    116[0m:[38;5;10m[49m     console.warn(`[token-policy] source=${source} dropped: ${dropped.join(",")}`);
+[0m[49m[38;5;10m+    117[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    118[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    119[0m:[38;5;10m[49m   return filtered;
+[0m[49m[38;5;10m+    120[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+    121[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    122[0m:[38;5;10m[49m // ─── Remember facts 上限 ─────────────────────────────────────────────────────
+[0m[49m[38;5;10m+    123[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    124[0m:[38;5;10m[49m /** 單次 specialist 輸出允許回寫的最大 fact 條數。 */
+[0m[49m[38;5;10m+    125[0m:[38;5;10m[49m export const REMEMBER_FACTS_MAX_PER_OUTPUT = 5;
+[0m[K
+Creating: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\token-policy.ts[0m
+[38;5;244m - Completed in 0.39s[0m
+
+[?25l[0m[38;5;141m> [0mNow let's modify [38;5;10msrc/working-state.ts[0m:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141msrc\working-state.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: 改 working-state.ts：新增 parseRememberTokens 純函式（含上限截斷），改 extractMemoryTokensFromProxy 加 sourceLabel provenance 支援
+
+[49m[39m   0,  0[0m:[39m[49m // ─── Memory token helpers ─────────────────────────────────────────────────────
+[0m[49m[39m   1,  1[0m:[39m[49m 
+[0m[49m[38;5;10m+      2[0m:[38;5;10m[49m import { REMEMBER_FACTS_MAX_PER_OUTPUT } from "./token-policy.js";
+[0m[49m[38;5;10m+      3[0m:[38;5;10m[49m 
+[0m[49m[39m   2,  4[0m:[39m[49m const REMEMBER_TOKEN_RE = /<<REMEMBER:\s*([^>\r\n]+?)\s*>>/g;
+[0m[49m[39m   3,  5[0m:[39m[49m 
+[0m[49m[38;5;9m-  4    [0m:[38;5;9m[49m /** Extract and process memory tokens from specialist proxy output. */
+[0m[49m[38;5;9m-  5    [0m:[38;5;9m[49m export function extractMemoryTokensFromProxy(output: string, userId: number): void {
+[0m[49m[38;5;10m+      6[0m:[38;5;10m[49m /**
+[0m[49m[38;5;10m+      7[0m:[38;5;10m[49m  * 純函式：從 specialist 輸出抽取所有 REMEMBER token 內容。
+[0m[49m[38;5;10m+      8[0m:[38;5;10m[49m  * 超過 cap 時截斷並 warn 丟棄數量。
+[0m[49m[38;5;10m+      9[0m:[38;5;10m[49m  */
+[0m[49m[38;5;10m+     10[0m:[38;5;10m[49m export function parseRememberTokens(output: string, cap: number = REMEMBER_FACTS_MAX_PER_OUTPUT): string[] {
+[0m[49m[38;5;10m+     11[0m:[38;5;10m[49m   const results: string[] = [];
+[0m[49m[39m   6, 12[0m:[39m[49m   let m: RegExpExecArray | null;
+[0m[49m[39m   7, 13[0m:[39m[49m   REMEMBER_TOKEN_RE.lastIndex = 0;
+[0m[49m[39m   8, 14[0m:[39m[49m   while ((m = REMEMBER_TOKEN_RE.exec(output)) !== null) {
+[0m[49m[39m   9, 15[0m:[39m[49m     const fact = m[1].trim();
+[0m[49m[38;5;9m- 10    [0m:[38;5;9m[49m     if (fact) {
+[0m[49m[38;5;9m- 11    [0m:[38;5;9m[49m       appendFact(userId, fact).catch((err) =>
+[0m[49m[38;5;9m- 12    [0m:[38;5;9m[49m         console.error(`[specialist:proxy] appendFact failed:`, err),
+[0m[49m[38;5;9m- 13    [0m:[38;5;9m[49m       );
+[0m[49m[38;5;9m- 14    [0m:[38;5;9m[49m     }
+[0m[49m[38;5;10m+     16[0m:[38;5;10m[49m     if (fact) results.push(fact);
+[0m[49m[38;5;10m+     17[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     18[0m:[38;5;10m[49m   if (results.length > cap) {
+[0m[49m[38;5;10m+     19[0m:[38;5;10m[49m     const discarded = results.length - cap;
+[0m[49m[38;5;10m+     20[0m:[38;5;10m[49m     console.warn(`[token-policy] parseRememberTokens: discarded ${discarded} facts (cap=${cap})`);
+[0m[49m[38;5;10m+     21[0m:[38;5;10m[49m     return results.slice(0, cap);
+[0m[49m[38;5;10m+     22[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m   return results;
+[0m[49m[38;5;10m+     24[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m /**
+[0m[49m[38;5;10m+     27[0m:[38;5;10m[49m  * Extract and process memory tokens from specialist proxy output.
+[0m[49m[38;5;10m+     28[0m:[38;5;10m[49m  * sourceLabel（可選）標記 provenance，寫入 fact 尾端。
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m  */
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m export function extractMemoryTokensFromProxy(output: string, userId: number, sourceLabel?: string): void {
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m   const facts = parseRememberTokens(output);
+[0m[49m[38;5;10m+     32[0m:[38;5;10m[49m   for (const fact of facts) {
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m     const tagged = sourceLabel ? `${fact} [via specialist:${sourceLabel}]` : fact;
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m     appendFact(userId, tagged).catch((err) =>
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m       console.error(`[specialist:proxy] appendFact failed:`, err),
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m     );
+[0m[49m[39m  15, 37[0m:[39m[49m   }
+[0m[49m[39m  16, 38[0m:[39m[49m }
+[0m[K
+Updating: [38;5;141msrc\working-state.ts[0m
+[38;5;244m - Completed in 0.38s[0m
+
+[?25l[0m[38;5;141m> [0mLet me verify the change landed:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\working-state.ts[0m, from line [38;5;141m46[0m to [38;5;141m100[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2268 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\working-state.ts
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[38;5;141m> [0mGood. Now let's update [38;5;10msrc/index.ts[0m — need to add the import and modify the proxy section:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m1[0m to [38;5;141m95[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m5846 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m95[0m to [38;5;141m105[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m536 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow I need to add the import for [38;5;10mfilterTransformedByPolicy[0m. Let me add it after the existing imports:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141msrc\index.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: 在 index.ts 新增 import filterTransformedByPolicy from token-policy.js
+
+[49m[39m  0, 0[0m:[39m[49m import { runPrompt, cancelPendingContinuation, initRunPrompt, flushOrphanTurn, type RunPromptMode } from "./run-prompt.js";
+[0m[49m[38;5;9m- 1   [0m:[38;5;9m[49m import { initWorkingState } from "./working-state.js";
+[0m[49m[38;5;10m+    1[0m:[38;5;10m[49m import { initWorkingState } from "./working-state.js";
+[0m[49m[38;5;10m+    2[0m:[38;5;10m[49m import { filterTransformedByPolicy } from "./token-policy.js";
+[0m[K
+Updating: [38;5;141msrc\index.ts[0m
+[38;5;244m - Completed in 0.35s[0m
+
+[?25l[0m[38;5;141m> [0mNow modify the proxy section in index.ts — add [38;5;10mtarget[0m as third arg to [38;5;10mextractMemoryTokensFromProxy[0m and apply the policy filter:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141msrc\index.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: index.ts proxy 攝取點：補 extractMemoryTokensFromProxy 第三參數 target + 套 filterTransformedByPolicy
+
+[49m[39m  0,  0[0m:[39m[49m       // Extract memory tokens from specialist output and write to main agent's facts.
+[0m[49m[38;5;9m- 1    [0m:[38;5;9m[49m       extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId);
+[0m[49m[38;5;10m+     1[0m:[38;5;10m[49m       extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId, target);
+[0m[49m[39m  2,  2[0m:[39m[49m 
+[0m[49m[39m  3,  3[0m:[39m[49m       // Run observer transformer on proxy output — handles SEND_FILE, ASK, STICKER
+[0m[49m[38;5;9m- 4    [0m:[38;5;9m[49m       const proxyTokens = transformReplyTokens(output, {
+[0m[49m[38;5;10m+     4[0m:[38;5;10m[49m       const proxyTokensRaw = transformReplyTokens(output, {
+[0m[49m[39m  5,  5[0m:[39m[49m         parseDuration,
+[0m[49m[39m  6,  6[0m:[39m[49m         parseAbsoluteTime,
+[0m[49m[39m  7,  7[0m:[39m[49m         parseRecurrence,
+[0m[49m[39m  8,  8[0m:[39m[49m         computeNextRunAt,
+[0m[49m[38;5;9m- 9    [0m:[38;5;9m[49m       });
+[0m[49m[38;5;10m+     9[0m:[38;5;10m[49m       });
+[0m[49m[38;5;10m+    10[0m:[38;5;10m[49m       const proxyTokens = filterTransformedByPolicy(proxyTokensRaw, "proxy");
+[0m[K
+Updating: [38;5;141msrc\index.ts[0m
+[38;5;244m - Completed in 0.31s[0m
+
+[?25l[0m[38;5;141m> [0mNow let me verify the change:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\index.ts[0m, from line [38;5;141m965[0m to [38;5;141m985[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m812 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\index.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mNow let's modify [38;5;10msrc/commands/relay.ts[0m. First, add the import:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m25[0m to [38;5;141m40[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m660 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[?25l[0m[0mI'll modify the following file: [38;5;141msrc\commands\relay.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: relay.ts 新增 import filterTransformedByPolicy
+
+[49m[39m  0, 0[0m:[39m[49m import {
+[0m[49m[39m  1, 1[0m:[39m[49m   transform as transformReplyTokens,
+[0m[49m[38;5;9m- 2   [0m:[38;5;9m[49m } from "../observerTransformer.js";
+[0m[49m[38;5;10m+    2[0m:[38;5;10m[49m } from "../observerTransformer.js";
+[0m[49m[38;5;10m+    3[0m:[38;5;10m[49m import { filterTransformedByPolicy } from "../token-policy.js";
+[0m[K
+Updating: [38;5;141msrc\commands\relay.ts[0m
+[38;5;244m - Completed in 0.42s[0m
+
+[?25l[0m[38;5;141m> [0mNow apply changes at the proxy section in relay.ts (line ~234):[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m, from line [38;5;141m231[0m to [38;5;141m250[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m763 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[?25l[0m[0mI'll modify the following file: [38;5;141msrc\commands\relay.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: relay.ts proxy 攝取點：補 extractMemoryTokensFromProxy 第三參數 target + 套 filterTransformedByPolicy
+
+[49m[38;5;9m- 0   [0m:[38;5;9m[49m     extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId);
+[0m[49m[38;5;10m+    0[0m:[38;5;10m[49m     extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId, target);
+[0m[49m[39m  1, 1[0m:[39m[49m 
+[0m[49m[38;5;9m- 2   [0m:[38;5;9m[49m     const proxyTokens = transformReplyTokens(output, {
+[0m[49m[38;5;10m+    2[0m:[38;5;10m[49m     const proxyTokensRaw = transformReplyTokens(output, {
+[0m[49m[39m  3, 3[0m:[39m[49m       parseDuration: opts.parseDuration,
+[0m[49m[39m  4, 4[0m:[39m[49m       parseAbsoluteTime: opts.parseAbsoluteTime,
+[0m[49m[39m  5, 5[0m:[39m[49m       parseRecurrence: opts.parseRecurrence,
+[0m[49m[39m  6, 6[0m:[39m[49m       computeNextRunAt: opts.computeNextRunAt,
+[0m[49m[38;5;9m- 7   [0m:[38;5;9m[49m     });
+[0m[49m[38;5;10m+    7[0m:[38;5;10m[49m     });
+[0m[49m[38;5;10m+    8[0m:[38;5;10m[49m     const proxyTokens = filterTransformedByPolicy(proxyTokensRaw, "proxy");
+[0m[K
+Updating: [38;5;141msrc\commands\relay.ts[0m
+[38;5;244m - Completed in 0.32s[0m
+
+[?25l[0m[38;5;141m> [0mNow let's fix [38;5;10msrc/run-prompt.ts[0m — only add the third parameter to [38;5;10mextractMemoryTokensFromProxy[0m:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141msrc\run-prompt.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: run-prompt.ts proxy 攝取點：補 extractMemoryTokensFromProxy 第三參數 name
+
+[49m[38;5;9m- 1442      [0m:[38;5;9m[49m             extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId);
+[0m[49m[38;5;10m+       1442[0m:[38;5;10m[49m             extractMemoryTokensFromProxy(output, ctx.from?.id ?? chatId, name);
+[0m[K
+Updating: [38;5;141msrc\run-prompt.ts[0m
+[38;5;244m - Completed in 0.35s[0m
+
+[?25l[0m[38;5;141m> [0mLet me verify this change landed in the right spot:[0m[0m
+[?25l[0m[0mSearching for: [38;5;141mextractMemoryTokensFromProxy[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src\run-prompt.ts[0m[38;5;244m (using tool: grep)[0m
+[38;5;10m ✓ [0mSuccessfully found [38;5;244m2 matches[0m in [38;5;244m1 files[0m under G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts
+[38;5;244m - Completed in 0.7s[0m
+
+[?25l[0m[38;5;141m> [0mGood. Now let's create the smoke test script. Let me first check how another [38;5;10m.mjs[0m test script works to confirm the import pattern:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-observer-transformer.mjs[0m, from line [38;5;141m1[0m to [38;5;141m50[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1928 bytes[0m from G:\AI\telegram-kiro-bridge-main\scripts\check-observer-transformer.mjs
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mGood — the scripts use [38;5;10m../dist/*.js[0m pattern with compiled output. Now let me create the check script:[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-token-policy.mjs[0m[38;5;244m (using tool: write)[0m
+Purpose: 建立 check-token-policy.mjs 驗證腳本：測試 proxy/main/delegate policy filter + parseRememberTokens 上限
+
+[49m[38;5;10m+      1[0m:[38;5;10m[49m // Smoke test: Token Policy — 權限白名單 + parseRememberTokens 上限。
+[0m[49m[38;5;10m+      2[0m:[38;5;10m[49m //
+[0m[49m[38;5;10m+      3[0m:[38;5;10m[49m // 驗證：
+[0m[49m[38;5;10m+      4[0m:[38;5;10m[49m //   1. filterTransformedByPolicy("proxy") 只保留 sendFiles/askTokens/stickerEmotions
+[0m[49m[38;5;10m+      5[0m:[38;5;10m[49m //   2. filterTransformedByPolicy("main") 不丟棄任何欄位
+[0m[49m[38;5;10m+      6[0m:[38;5;10m[49m //   3. parseRememberTokens 上限截斷正確
+[0m[49m[38;5;10m+      7[0m:[38;5;10m[49m //
+[0m[49m[38;5;10m+      8[0m:[38;5;10m[49m // Run: node scripts/check-token-policy.mjs
+[0m[49m[38;5;10m+      9[0m:[38;5;10m[49m // Uses compiled dist/ — run `npx tsc` first.
+[0m[49m[38;5;10m+     10[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     11[0m:[38;5;10m[49m import { transform } from "../dist/observerTransformer.js";
+[0m[49m[38;5;10m+     12[0m:[38;5;10m[49m import { filterTransformedByPolicy } from "../dist/token-policy.js";
+[0m[49m[38;5;10m+     13[0m:[38;5;10m[49m import { parseRememberTokens } from "../dist/working-state.js";
+[0m[49m[38;5;10m+     14[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     15[0m:[38;5;10m[49m const results = [];
+[0m[49m[38;5;10m+     16[0m:[38;5;10m[49m function ok(name) {
+[0m[49m[38;5;10m+     17[0m:[38;5;10m[49m   results.push({ name, pass: true });
+[0m[49m[38;5;10m+     18[0m:[38;5;10m[49m   console.log(`  ✓ ${name}`);
+[0m[49m[38;5;10m+     19[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     20[0m:[38;5;10m[49m function fail(name, detail) {
+[0m[49m[38;5;10m+     21[0m:[38;5;10m[49m   results.push({ name, pass: false, detail });
+[0m[49m[38;5;10m+     22[0m:[38;5;10m[49m   console.error(`  ✗ ${name}: ${detail}`);
+[0m[49m[38;5;10m+     23[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     24[0m:[38;5;10m[49m function eq(a, b) {
+[0m[49m[38;5;10m+     25[0m:[38;5;10m[49m   return JSON.stringify(a) === JSON.stringify(b);
+[0m[49m[38;5;10m+     26[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     27[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     28[0m:[38;5;10m[49m // ─── Stub schedule parsers ─────────────────────────────────────────────────
+[0m[49m[38;5;10m+     29[0m:[38;5;10m[49m const stubParsers = {
+[0m[49m[38;5;10m+     30[0m:[38;5;10m[49m   parseDuration: (raw) => (raw === "30m" ? 30 * 60 * 1000 : null),
+[0m[49m[38;5;10m+     31[0m:[38;5;10m[49m   parseAbsoluteTime: () => null,
+[0m[49m[38;5;10m+     32[0m:[38;5;10m[49m   parseRecurrence: () => null,
+[0m[49m[38;5;10m+     33[0m:[38;5;10m[49m   computeNextRunAt: () => null,
+[0m[49m[38;5;10m+     34[0m:[38;5;10m[49m   now: () => 1_700_000_000_000,
+[0m[49m[38;5;10m+     35[0m:[38;5;10m[49m };
+[0m[49m[38;5;10m+     36[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     37[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+     38[0m:[38;5;10m[49m // Test 1: filterTransformedByPolicy("proxy") 保留白名單、丟棄危險 token
+[0m[49m[38;5;10m+     39[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+     40[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     41[0m:[38;5;10m[49m console.log("\n=== Test 1: proxy policy filter ===");
+[0m[49m[38;5;10m+     42[0m:[38;5;10m[49m {
+[0m[49m[38;5;10m+     43[0m:[38;5;10m[49m   const input = [
+[0m[49m[38;5;10m+     44[0m:[38;5;10m[49m     "Hello",
+[0m[49m[38;5;10m+     45[0m:[38;5;10m[49m     "<<SEND_FILE:C:\\test\\file.png>>",
+[0m[49m[38;5;10m+     46[0m:[38;5;10m[49m     "<<ASK:q1|a=Option A|b=Option B>>",
+[0m[49m[38;5;10m+     47[0m:[38;5;10m[49m     "<<SCHEDULE:30m|reminder>>",
+[0m[49m[38;5;10m+     48[0m:[38;5;10m[49m     "<<RESTART:need restart>>",
+[0m[49m[38;5;10m+     49[0m:[38;5;10m[49m     "<<STICKER:happy>>",
+[0m[49m[38;5;10m+     50[0m:[38;5;10m[49m   ].join("\n");
+[0m[49m[38;5;10m+     51[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     52[0m:[38;5;10m[49m   const reply = transform(input, stubParsers);
+[0m[49m[38;5;10m+     53[0m:[38;5;10m[49m   const filtered = filterTransformedByPolicy(reply, "proxy");
+[0m[49m[38;5;10m+     54[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     55[0m:[38;5;10m[49m   // sendFiles 保留
+[0m[49m[38;5;10m+     56[0m:[38;5;10m[49m   if (filtered.sendFiles.length === 1 && filtered.sendFiles[0] === "C:\\test\\file.png") {
+[0m[49m[38;5;10m+     57[0m:[38;5;10m[49m     ok("proxy: sendFiles preserved");
+[0m[49m[38;5;10m+     58[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     59[0m:[38;5;10m[49m     fail("proxy: sendFiles preserved", `got ${JSON.stringify(filtered.sendFiles)}`);
+[0m[49m[38;5;10m+     60[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     61[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     62[0m:[38;5;10m[49m   // askTokens 保留
+[0m[49m[38;5;10m+     63[0m:[38;5;10m[49m   if (filtered.askTokens.length === 1 && filtered.askTokens[0].id === "q1") {
+[0m[49m[38;5;10m+     64[0m:[38;5;10m[49m     ok("proxy: askTokens preserved");
+[0m[49m[38;5;10m+     65[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     66[0m:[38;5;10m[49m     fail("proxy: askTokens preserved", `got ${JSON.stringify(filtered.askTokens)}`);
+[0m[49m[38;5;10m+     67[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     68[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     69[0m:[38;5;10m[49m   // stickerEmotions 保留
+[0m[49m[38;5;10m+     70[0m:[38;5;10m[49m   if (filtered.stickerEmotions.length === 1 && filtered.stickerEmotions[0] === "happy") {
+[0m[49m[38;5;10m+     71[0m:[38;5;10m[49m     ok("proxy: stickerEmotions preserved");
+[0m[49m[38;5;10m+     72[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     73[0m:[38;5;10m[49m     fail("proxy: stickerEmotions preserved", `got ${JSON.stringify(filtered.stickerEmotions)}`);
+[0m[49m[38;5;10m+     74[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     75[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     76[0m:[38;5;10m[49m   // scheduleTokens 被丟棄
+[0m[49m[38;5;10m+     77[0m:[38;5;10m[49m   if (filtered.scheduleTokens.length === 0) {
+[0m[49m[38;5;10m+     78[0m:[38;5;10m[49m     ok("proxy: scheduleTokens dropped");
+[0m[49m[38;5;10m+     79[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     80[0m:[38;5;10m[49m     fail("proxy: scheduleTokens dropped", `got length=${filtered.scheduleTokens.length}`);
+[0m[49m[38;5;10m+     81[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     82[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     83[0m:[38;5;10m[49m   // restartToken 被丟棄
+[0m[49m[38;5;10m+     84[0m:[38;5;10m[49m   if (filtered.restartToken === null) {
+[0m[49m[38;5;10m+     85[0m:[38;5;10m[49m     ok("proxy: restartToken dropped");
+[0m[49m[38;5;10m+     86[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     87[0m:[38;5;10m[49m     fail("proxy: restartToken dropped", `got ${JSON.stringify(filtered.restartToken)}`);
+[0m[49m[38;5;10m+     88[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     89[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     90[0m:[38;5;10m[49m   // text 保持不變
+[0m[49m[38;5;10m+     91[0m:[38;5;10m[49m   if (typeof filtered.text === "string" && filtered.text.includes("Hello")) {
+[0m[49m[38;5;10m+     92[0m:[38;5;10m[49m     ok("proxy: text preserved");
+[0m[49m[38;5;10m+     93[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+     94[0m:[38;5;10m[49m     fail("proxy: text preserved", `text missing 'Hello'`);
+[0m[49m[38;5;10m+     95[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+     96[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+     97[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+     98[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+     99[0m:[38;5;10m[49m // Test 2: filterTransformedByPolicy("main") 什麼都不動
+[0m[49m[38;5;10m+    100[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    101[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    102[0m:[38;5;10m[49m console.log("\n=== Test 2: main policy filter (no-op) ===");
+[0m[49m[38;5;10m+    103[0m:[38;5;10m[49m {
+[0m[49m[38;5;10m+    104[0m:[38;5;10m[49m   const input = [
+[0m[49m[38;5;10m+    105[0m:[38;5;10m[49m     "Result",
+[0m[49m[38;5;10m+    106[0m:[38;5;10m[49m     "<<SEND_FILE:C:\\test\\file.png>>",
+[0m[49m[38;5;10m+    107[0m:[38;5;10m[49m     "<<ASK:q2|x=X|y=Y>>",
+[0m[49m[38;5;10m+    108[0m:[38;5;10m[49m     "<<SCHEDULE:30m|do something>>",
+[0m[49m[38;5;10m+    109[0m:[38;5;10m[49m     "<<RESTART:update>>",
+[0m[49m[38;5;10m+    110[0m:[38;5;10m[49m     "<<STICKER:sad>>",
+[0m[49m[38;5;10m+    111[0m:[38;5;10m[49m   ].join("\n");
+[0m[49m[38;5;10m+    112[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    113[0m:[38;5;10m[49m   const reply = transform(input, stubParsers);
+[0m[49m[38;5;10m+    114[0m:[38;5;10m[49m   const filtered = filterTransformedByPolicy(reply, "main");
+[0m[49m[38;5;10m+    115[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    116[0m:[38;5;10m[49m   // 所有欄位與原 reply 相等
+[0m[49m[38;5;10m+    117[0m:[38;5;10m[49m   let allMatch = true;
+[0m[49m[38;5;10m+    118[0m:[38;5;10m[49m   for (const key of Object.keys(reply)) {
+[0m[49m[38;5;10m+    119[0m:[38;5;10m[49m     if (!eq(reply[key], filtered[key])) {
+[0m[49m[38;5;10m+    120[0m:[38;5;10m[49m       fail(`main: field ${key} unchanged`, `reply=${JSON.stringify(reply[key])} filtered=${JSON.stringify(filtered[key])}`);
+[0m[49m[38;5;10m+    121[0m:[38;5;10m[49m       allMatch = false;
+[0m[49m[38;5;10m+    122[0m:[38;5;10m[49m     }
+[0m[49m[38;5;10m+    123[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    124[0m:[38;5;10m[49m   if (allMatch) {
+[0m[49m[38;5;10m+    125[0m:[38;5;10m[49m     ok("main: all fields unchanged (pass-through)");
+[0m[49m[38;5;10m+    126[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    127[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+    128[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    129[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    130[0m:[38;5;10m[49m // Test 3: parseRememberTokens 上限截斷
+[0m[49m[38;5;10m+    131[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    132[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    133[0m:[38;5;10m[49m console.log("\n=== Test 3: parseRememberTokens cap ===");
+[0m[49m[38;5;10m+    134[0m:[38;5;10m[49m {
+[0m[49m[38;5;10m+    135[0m:[38;5;10m[49m   const tokens = [
+[0m[49m[38;5;10m+    136[0m:[38;5;10m[49m     "<<REMEMBER:fact one>>",
+[0m[49m[38;5;10m+    137[0m:[38;5;10m[49m     "<<REMEMBER:fact two>>",
+[0m[49m[38;5;10m+    138[0m:[38;5;10m[49m     "<<REMEMBER:  fact three  >>",
+[0m[49m[38;5;10m+    139[0m:[38;5;10m[49m     "<<REMEMBER:fact four>>",
+[0m[49m[38;5;10m+    140[0m:[38;5;10m[49m     "<<REMEMBER:fact five>>",
+[0m[49m[38;5;10m+    141[0m:[38;5;10m[49m     "<<REMEMBER:fact six>>",
+[0m[49m[38;5;10m+    142[0m:[38;5;10m[49m     "<<REMEMBER:fact seven>>",
+[0m[49m[38;5;10m+    143[0m:[38;5;10m[49m   ].join("\nsome text\n");
+[0m[49m[38;5;10m+    144[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    145[0m:[38;5;10m[49m   const parsed = parseRememberTokens(tokens);
+[0m[49m[38;5;10m+    146[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    147[0m:[38;5;10m[49m   // 預設 cap=5，只回 5 條
+[0m[49m[38;5;10m+    148[0m:[38;5;10m[49m   if (parsed.length === 5) {
+[0m[49m[38;5;10m+    149[0m:[38;5;10m[49m     ok("parseRememberTokens: 7 tokens → 5 returned (cap)");
+[0m[49m[38;5;10m+    150[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    151[0m:[38;5;10m[49m     fail("parseRememberTokens: 7 tokens → 5 returned (cap)", `got ${parsed.length}`);
+[0m[49m[38;5;10m+    152[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    153[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    154[0m:[38;5;10m[49m   // 內容正確 trim
+[0m[49m[38;5;10m+    155[0m:[38;5;10m[49m   if (parsed[0] === "fact one") {
+[0m[49m[38;5;10m+    156[0m:[38;5;10m[49m     ok("parseRememberTokens: first fact correct");
+[0m[49m[38;5;10m+    157[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    158[0m:[38;5;10m[49m     fail("parseRememberTokens: first fact correct", `got '${parsed[0]}'`);
+[0m[49m[38;5;10m+    159[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    160[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    161[0m:[38;5;10m[49m   if (parsed[2] === "fact three") {
+[0m[49m[38;5;10m+    162[0m:[38;5;10m[49m     ok("parseRememberTokens: trimmed whitespace");
+[0m[49m[38;5;10m+    163[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    164[0m:[38;5;10m[49m     fail("parseRememberTokens: trimmed whitespace", `got '${parsed[2]}'`);
+[0m[49m[38;5;10m+    165[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    166[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    167[0m:[38;5;10m[49m   if (parsed[4] === "fact five") {
+[0m[49m[38;5;10m+    168[0m:[38;5;10m[49m     ok("parseRememberTokens: fifth fact correct (last before cap)");
+[0m[49m[38;5;10m+    169[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    170[0m:[38;5;10m[49m     fail("parseRememberTokens: fifth fact correct (last before cap)", `got '${parsed[4]}'`);
+[0m[49m[38;5;10m+    171[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    172[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+    173[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    174[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    175[0m:[38;5;10m[49m // Test 4: parseRememberTokens 無超限時全數回傳
+[0m[49m[38;5;10m+    176[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    177[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    178[0m:[38;5;10m[49m console.log("\n=== Test 4: parseRememberTokens under cap ===");
+[0m[49m[38;5;10m+    179[0m:[38;5;10m[49m {
+[0m[49m[38;5;10m+    180[0m:[38;5;10m[49m   const tokens = "<<REMEMBER:alpha>>\n<<REMEMBER:beta>>";
+[0m[49m[38;5;10m+    181[0m:[38;5;10m[49m   const parsed = parseRememberTokens(tokens);
+[0m[49m[38;5;10m+    182[0m:[38;5;10m[49m   if (parsed.length === 2 && parsed[0] === "alpha" && parsed[1] === "beta") {
+[0m[49m[38;5;10m+    183[0m:[38;5;10m[49m     ok("parseRememberTokens: 2 tokens returned when under cap");
+[0m[49m[38;5;10m+    184[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    185[0m:[38;5;10m[49m     fail("parseRememberTokens: 2 tokens returned when under cap", `got ${JSON.stringify(parsed)}`);
+[0m[49m[38;5;10m+    186[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    187[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+    188[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    189[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    190[0m:[38;5;10m[49m // Test 5: delegate policy — 全部清空
+[0m[49m[38;5;10m+    191[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    192[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    193[0m:[38;5;10m[49m console.log("\n=== Test 5: delegate policy filter (empty all) ===");
+[0m[49m[38;5;10m+    194[0m:[38;5;10m[49m {
+[0m[49m[38;5;10m+    195[0m:[38;5;10m[49m   const input = [
+[0m[49m[38;5;10m+    196[0m:[38;5;10m[49m     "Delegate output",
+[0m[49m[38;5;10m+    197[0m:[38;5;10m[49m     "<<SEND_FILE:C:\\some\\path.txt>>",
+[0m[49m[38;5;10m+    198[0m:[38;5;10m[49m     "<<ASK:dq|a=A>>",
+[0m[49m[38;5;10m+    199[0m:[38;5;10m[49m     "<<STICKER:angry>>",
+[0m[49m[38;5;10m+    200[0m:[38;5;10m[49m   ].join("\n");
+[0m[49m[38;5;10m+    201[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    202[0m:[38;5;10m[49m   const reply = transform(input, stubParsers);
+[0m[49m[38;5;10m+    203[0m:[38;5;10m[49m   const filtered = filterTransformedByPolicy(reply, "delegate");
+[0m[49m[38;5;10m+    204[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    205[0m:[38;5;10m[49m   if (filtered.sendFiles.length === 0 && filtered.askTokens.length === 0 && filtered.stickerEmotions.length === 0) {
+[0m[49m[38;5;10m+    206[0m:[38;5;10m[49m     ok("delegate: all token fields zeroed");
+[0m[49m[38;5;10m+    207[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    208[0m:[38;5;10m[49m     fail("delegate: all token fields zeroed", `sendFiles=${filtered.sendFiles.length} ask=${filtered.askTokens.length} sticker=${filtered.stickerEmotions.length}`);
+[0m[49m[38;5;10m+    209[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    210[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    211[0m:[38;5;10m[49m   if (filtered.text.includes("Delegate output")) {
+[0m[49m[38;5;10m+    212[0m:[38;5;10m[49m     ok("delegate: text preserved");
+[0m[49m[38;5;10m+    213[0m:[38;5;10m[49m   } else {
+[0m[49m[38;5;10m+    214[0m:[38;5;10m[49m     fail("delegate: text preserved", `text='${filtered.text}'`);
+[0m[49m[38;5;10m+    215[0m:[38;5;10m[49m   }
+[0m[49m[38;5;10m+    216[0m:[38;5;10m[49m }
+[0m[49m[38;5;10m+    217[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    218[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    219[0m:[38;5;10m[49m // Summary
+[0m[49m[38;5;10m+    220[0m:[38;5;10m[49m // ═══════════════════════════════════════════════════════════════════════════════
+[0m[49m[38;5;10m+    221[0m:[38;5;10m[49m 
+[0m[49m[38;5;10m+    222[0m:[38;5;10m[49m console.log("\n" + "═".repeat(60));
+[0m[49m[38;5;10m+    223[0m:[38;5;10m[49m const passed = results.filter((r) => r.pass).length;
+[0m[49m[38;5;10m+    224[0m:[38;5;10m[49m const failed = results.filter((r) => !r.pass).length;
+[0m[49m[38;5;10m+    225[0m:[38;5;10m[49m if (failed === 0) {
+[0m[49m[38;5;10m+    226[0m:[38;5;10m[49m   console.log(`✅ ALL PASS (${passed} assertions)`);
+[0m[49m[38;5;10m+    227[0m:[38;5;10m[49m   process.exit(0);
+[0m[49m[38;5;10m+    228[0m:[38;5;10m[49m } else {
+[0m[49m[38;5;10m+    229[0m:[38;5;10m[49m   console.error(`❌ ${failed} FAILED, ${passed} passed`);
+[0m[49m[38;5;10m+    230[0m:[38;5;10m[49m   process.exit(1);
+[0m[49m[38;5;10m+    231[0m:[38;5;10m[49m }
+[0m[K
+Creating: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-token-policy.mjs[0m
+[38;5;244m - Completed in 0.25s[0m
+
+[?25l[0m[38;5;141m> [0mNow let's check if there's a [38;5;10mparseRememberTokens[0m export already being re-exported from relay.ts that might need updating:[0m[0m
+[?25l[0m[0mSearching for: [38;5;141mparseRememberTokens[0m in [38;5;141mG:\AI\telegram-kiro-bridge-main\src\commands\relay.ts[0m[38;5;244m (using tool: grep)[0m
+[38;5;9m ❗ [0mNo matches found for pattern: [38;5;244mparseRememberTokens[0m under G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mGood, no issues. Now let's build:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcd /d G:\AI\telegram-kiro-bridge-main && npx tsc --noEmit 2>&1[0m[38;5;244m (using tool: shell)[0m
+Purpose: Run TypeScript type check to verify no compilation errors
+
++ cd /d G:\AI\telegram-kiro-bridge-main && npx tsc --noEmit 2>&1
++                                       ~~
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidEndOfLine
+ 
+[38;5;244m - Completed in 0.923s[0m
+
+[?25l[0m[38;5;141m> [0mPowerShell issue — need to use proper syntax:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && npx tsc --noEmit 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Run TypeScript type check via cmd.exe
+
+src/token-policy.ts(112,6): error TS2352: Conversion of type 'TransformedReply' to type 'Record<string, unknown>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Index signature for type 'string' is missing in type 'TransformedReply'.
+[38;5;244m - Completed in 8.71s[0m
+
+[?25l[0m[38;5;141m> [0mSimple type cast fix:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141msrc\token-policy.ts[0m[38;5;244m (using tool: write)[0m
+Purpose: 修正 TS2352 型別轉換錯誤：intermediate cast to unknown
+
+[49m[38;5;9m- 112     [0m:[38;5;9m[49m     (filtered as Record<string, unknown>)[mapping.key] = mapping.zero;
+[0m[49m[38;5;10m+      112[0m:[38;5;10m[49m     (filtered as unknown as Record<string, unknown>)[mapping.key] = mapping.zero;
+[0m[K
+Updating: [38;5;141msrc\token-policy.ts[0m
+[38;5;244m - Completed in 0.16s[0m
+
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && npx tsc --noEmit 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Re-run TypeScript type check
+
+[38;5;244m - Completed in 4.512s[0m
+
+[?25l[0m[38;5;141m> [0mZero errors. Now let's build to produce [38;5;10mdist/[0m for the smoke test:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && npx tsc 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Full TypeScript build to produce dist/ for smoke test
+
+[38;5;244m - Completed in 5.989s[0m
+
+[?25l[0m[38;5;141m> [0mNow run the smoke test:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && node scripts/check-token-policy.mjs 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Run the new token-policy smoke test
+
+[sticker] loaded 16 emotions from G:\AI\AIMemory\sticker-map.json
+file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:8
+        throw new Error(`Missing required env var: ${name}`);
+              ^
+
+Error: Missing required env var: TELEGRAM_BOT_TOKEN
+    at required (file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:8:15)
+    at file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:58:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.11.0
+[38;5;244m - Completed in 0.497s[0m
+
+[?25l[0m[38;5;141m> [0mThe [38;5;10mworking-state.ts[0m imports [38;5;10mconfig.js[0m which requires [38;5;10mTELEGRAM_BOT_TOKEN[0m. I see the other tests set a dummy env var. Let me check how [38;5;10mcheck-specialist-memory.mjs[0m handles this:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-specialist-memory.mjs[0m, from line [38;5;141m10[0m to [38;5;141m15[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m243 bytes[0m from G:\AI\telegram-kiro-bridge-main\scripts\check-specialist-memory.mjs
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mRight — I need to set the env var before import. Let me update the script:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141mscripts\check-token-policy.mjs[0m[38;5;244m (using tool: write)[0m
+Purpose: 在 import 前設定 TELEGRAM_BOT_TOKEN dummy env var
+
+[49m[39m   1,  1[0m:[39m[49m // Smoke test: Token Policy — 權限白名單 + parseRememberTokens 上限。
+[0m[49m[39m   2,  2[0m:[39m[49m //
+[0m[49m[39m   3,  3[0m:[39m[49m // 驗證：
+[0m[49m[39m   4,  4[0m:[39m[49m //   1. filterTransformedByPolicy("proxy") 只保留 sendFiles/askTokens/stickerEmotions
+[0m[49m[39m   5,  5[0m:[39m[49m //   2. filterTransformedByPolicy("main") 不丟棄任何欄位
+[0m[49m[39m   6,  6[0m:[39m[49m //   3. parseRememberTokens 上限截斷正確
+[0m[49m[39m   7,  7[0m:[39m[49m //
+[0m[49m[39m   8,  8[0m:[39m[49m // Run: node scripts/check-token-policy.mjs
+[0m[49m[39m   9,  9[0m:[39m[49m // Uses compiled dist/ — run `npx tsc` first.
+[0m[49m[39m  10, 10[0m:[39m[49m 
+[0m[49m[38;5;10m+     11[0m:[38;5;10m[49m process.env.TELEGRAM_BOT_TOKEN ||= "dummy"; // config.ts requires it
+[0m[49m[38;5;10m+     12[0m:[38;5;10m[49m 
+[0m[49m[39m  11, 13[0m:[39m[49m import { transform } from "../dist/observerTransformer.js";
+[0m[49m[39m  12, 14[0m:[39m[49m import { filterTransformedByPolicy } from "../dist/token-policy.js";
+[0m[49m[39m  13, 15[0m:[39m[49m import { parseRememberTokens } from "../dist/working-state.js";
+[0m[K
+Updating: [38;5;141mscripts\check-token-policy.mjs[0m
+[38;5;244m - Completed in 0.28s[0m
+
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && node scripts/check-token-policy.mjs 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Re-run the smoke test with env var set
+
+[sticker] loaded 16 emotions from G:\AI\AIMemory\sticker-map.json
+file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:8
+        throw new Error(`Missing required env var: ${name}`);
+              ^
+
+Error: Missing required env var: TELEGRAM_BOT_TOKEN
+    at required (file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:8:15)
+    at file:///G:/AI/telegram-kiro-bridge-main/dist/config.js:58:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.11.0
+[38;5;244m - Completed in 0.391s[0m
+
+[?25l[0m[38;5;141m> [0mThe issue is that ESM [38;5;10mimport[0m statements are hoisted — [38;5;10mprocess.env[0m assignment happens after the import is resolved. I need to use dynamic [38;5;10mawait import()[0m instead:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141mscripts\check-token-policy.mjs[0m[38;5;244m (using tool: write)[0m
+Purpose: 改用 dynamic await import() 確保 env var 在模組載入前設定
+
+[49m[39m   0,  0[0m:[39m[49m // Smoke test: Token Policy — 權限白名單 + parseRememberTokens 上限。
+[0m[49m[39m   1,  1[0m:[39m[49m //
+[0m[49m[39m   2,  2[0m:[39m[49m // 驗證：
+[0m[49m[39m   3,  3[0m:[39m[49m //   1. filterTransformedByPolicy("proxy") 只保留 sendFiles/askTokens/stickerEmotions
+[0m[49m[39m   4,  4[0m:[39m[49m //   2. filterTransformedByPolicy("main") 不丟棄任何欄位
+[0m[49m[39m   5,  5[0m:[39m[49m //   3. parseRememberTokens 上限截斷正確
+[0m[49m[39m   6,  6[0m:[39m[49m //
+[0m[49m[39m   7,  7[0m:[39m[49m // Run: node scripts/check-token-policy.mjs
+[0m[49m[39m   8,  8[0m:[39m[49m // Uses compiled dist/ — run `npx tsc` first.
+[0m[49m[39m   9,  9[0m:[39m[49m 
+[0m[49m[39m  10, 10[0m:[39m[49m process.env.TELEGRAM_BOT_TOKEN ||= "dummy"; // config.ts requires it
+[0m[49m[39m  11, 11[0m:[39m[49m 
+[0m[49m[39m  12, 12[0m:[39m[49m const { transform } = await import("../dist/observerTransformer.js");
+[0m[49m[39m  13, 13[0m:[39m[49m const { filterTransformedByPolicy } = await import("../dist/token-policy.js");
+[0m[49m[39m  14, 14[0m:[39m[49m const { parseRememberTokens } = await import("../dist/working-state.js");
+[0m[K
+Updating: [38;5;141mscripts\check-token-policy.mjs[0m
+ ⋮ 
+[1m[38;5;9m ● Execution failed after 0.0s:
+[0m[38;5;9mno occurrences of "// Smoke test: Token Policy — 權限白名單 + parseRememberTokens 上限。
+//
+// 驗證：
+//   1. filterTransformedByPolicy("proxy") 只保留 sendFiles/askTokens/stickerEmotions
+//   2. filterTransformedByPolicy("main") 不丟棄任何欄位
+//   3. parseRememberTokens 上限截斷正確
+//
+// Run: node scripts/check-token-policy.mjs
+// Uses compiled dist/ — run `npx tsc` first.
+
+process.env.TELEGRAM_BOT_TOKEN ||= "dummy"; // config.ts requires it
+
+const { transform } = await import("../dist/observerTransformer.js");
+const { filterTransformedByPolicy } = await import("../dist/token-policy.js");
+const { parseRememberTokens } = await import("../dist/working-state.js");" were found[0m
+
+[?25l[0m[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\scripts\check-token-policy.mjs[0m, from line [38;5;141m1[0m to [38;5;141m16[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m655 bytes[0m from G:\AI\telegram-kiro-bridge-main\scripts\check-token-policy.mjs
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[38;5;141m> [0mIt kept the static imports. Let me fix this:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141mscripts\check-token-policy.mjs[0m[38;5;244m (using tool: write)[0m
+Purpose: 改用 dynamic await import() 確保 env var 在模組載入前設定
+
+[49m[39m  11, 11[0m:[39m[49m process.env.TELEGRAM_BOT_TOKEN ||= "dummy"; // config.ts requires it
+[0m[49m[39m  12, 12[0m:[39m[49m 
+[0m[49m[38;5;9m- 13    [0m:[38;5;9m[49m import { transform } from "../dist/observerTransformer.js";
+[0m[49m[38;5;9m- 14    [0m:[38;5;9m[49m import { filterTransformedByPolicy } from "../dist/token-policy.js";
+[0m[49m[38;5;9m- 15    [0m:[38;5;9m[49m import { parseRememberTokens } from "../dist/working-state.js";
+[0m[49m[38;5;10m+     13[0m:[38;5;10m[49m const { transform } = await import("../dist/observerTransformer.js");
+[0m[49m[38;5;10m+     14[0m:[38;5;10m[49m const { filterTransformedByPolicy } = await import("../dist/token-policy.js");
+[0m[49m[38;5;10m+     15[0m:[38;5;10m[49m const { parseRememberTokens } = await import("../dist/working-state.js");
+[0m[K
+Updating: [38;5;141mscripts\check-token-policy.mjs[0m
+[38;5;244m - Completed in 0.17s[0m
+
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && node scripts/check-token-policy.mjs 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Re-run the smoke test
+
+[sticker] loaded 16 emotions from G:\AI\AIMemory\sticker-map.json
+
+=== Test 1: proxy policy filter ===
+[token-policy] source=proxy dropped: scheduleTokens,restartToken
+  ✓ proxy: sendFiles preserved
+  ✗ proxy: askTokens preserved: got [{"questionId":"q1","options":[{"key":"a","label":"Option A","recommended":false},{"key":"b","label":"Option B","recommended":false}]}]
+  ✓ proxy: stickerEmotions preserved
+  ✓ proxy: scheduleTokens dropped
+  ✓ proxy: restartToken dropped
+  ✓ proxy: text preserved
+
+=== Test 2: main policy filter (no-op) ===
+  ✓ main: all fields unchanged (pass-through)
+
+=== Test 3: parseRememberTokens cap ===
+[token-policy] parseRememberTokens: discarded 2 facts (cap=5)
+  ✓ parseRememberTokens: 7 tokens → 5 returned (cap)
+  ✓ parseRememberTokens: first fact correct
+  ✓ parseRememberTokens: trimmed whitespace
+  ✓ parseRememberTokens: fifth fact correct (last before cap)
+
+=== Test 4: parseRememberTokens under cap ===
+  ✓ parseRememberTokens: 2 tokens returned when under cap
+
+=== Test 5: delegate policy filter (empty all) ===
+[token-policy] source=delegate dropped: sendFiles,askTokens,stickerEmotions
+  ✓ delegate: all token fields zeroed
+  ✓ delegate: text preserved
+
+════════════════════════════════════════════════════════════
+❌ 1 FAILED, 13 passed
+[38;5;244m - Completed in 0.480s[0m
+
+[?25l[0m[38;5;141m> [0mOne failure — the [38;5;10maskTokens[0m field uses [38;5;10mquestionId[0m not [38;5;10mid[0m. Let me fix the assertion:[0m[0m
+[?25l[0m[0mI'll modify the following file: [38;5;141mscripts\check-token-policy.mjs[0m[38;5;244m (using tool: write)[0m
+Purpose: 修正 askTokens 欄位名稱為 questionId
+
+[49m[39m  64, 64[0m:[39m[49m   // askTokens 保留
+[0m[49m[38;5;9m- 65    [0m:[38;5;9m[49m   if (filtered.askTokens.length === 1 && filtered.askTokens[0].id === "q1") {
+[0m[49m[38;5;10m+     65[0m:[38;5;10m[49m   if (filtered.askTokens.length === 1 && filtered.askTokens[0].questionId === "q1") {
+[0m[49m[39m  66, 66[0m:[39m[49m     ok("proxy: askTokens preserved");
+[0m[49m[39m  67, 67[0m:[39m[49m   } else {
+[0m[49m[39m  68, 68[0m:[39m[49m     fail("proxy: askTokens preserved", `got ${JSON.stringify(filtered.askTokens)}`);
+[0m[49m[39m  69, 69[0m:[39m[49m   }
+[0m[K
+Updating: [38;5;141mscripts\check-token-policy.mjs[0m
+[38;5;244m - Completed in 0.22s[0m
+
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && node scripts/check-token-policy.mjs 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Re-run the smoke test after fixing assertion
+
+[sticker] loaded 16 emotions from G:\AI\AIMemory\sticker-map.json
+
+=== Test 1: proxy policy filter ===
+[token-policy] source=proxy dropped: scheduleTokens,restartToken
+  ✓ proxy: sendFiles preserved
+  ✓ proxy: askTokens preserved
+  ✓ proxy: stickerEmotions preserved
+  ✓ proxy: scheduleTokens dropped
+  ✓ proxy: restartToken dropped
+  ✓ proxy: text preserved
+
+=== Test 2: main policy filter (no-op) ===
+  ✓ main: all fields unchanged (pass-through)
+
+=== Test 3: parseRememberTokens cap ===
+[token-policy] parseRememberTokens: discarded 2 facts (cap=5)
+  ✓ parseRememberTokens: 7 tokens → 5 returned (cap)
+  ✓ parseRememberTokens: first fact correct
+  ✓ parseRememberTokens: trimmed whitespace
+  ✓ parseRememberTokens: fifth fact correct (last before cap)
+
+=== Test 4: parseRememberTokens under cap ===
+  ✓ parseRememberTokens: 2 tokens returned when under cap
+
+=== Test 5: delegate policy filter (empty all) ===
+[token-policy] source=delegate dropped: sendFiles,askTokens,stickerEmotions
+  ✓ delegate: all token fields zeroed
+  ✓ delegate: text preserved
+
+════════════════════════════════════════════════════════════
+✅ ALL PASS (14 assertions)
+[38;5;244m - Completed in 0.426s[0m
+
+[?25l[0m[38;5;141m> [0mAll 14 assertions pass. Let me also run [38;5;10mnpx tsc --noEmit[0m one final time to confirm zero errors:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcmd /c "cd /d G:\AI\telegram-kiro-bridge-main && npx tsc --noEmit 2>&1"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Final TypeScript type check confirming zero errors
+
+[38;5;244m - Completed in 4.124s[0m
+
+[?25l[0m[38;5;141m> [0mBoth checks pass. Let me do a final verification read of the key files to confirm everything is coherent:[0m[0m
+[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\token-policy.ts[0m, from line [38;5;141m1[0m to [38;5;141m120[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m4389 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\token-policy.ts
+[38;5;244m - Completed in 0.0s[0m
+
+[?25l[0m[?25l[0m[0mReading file: [38;5;141mG:\AI\telegram-kiro-bridge-main\src\token-policy.ts[0m, from line [38;5;141m118[0m to [38;5;141m122[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m217 bytes[0m from G:\AI\telegram-kiro-bridge-main\src\token-policy.ts
+[38;5;244m - Completed in 0.1s[0m
+
+[?25l[0m[38;5;141m> [0mEverything looks good. Let me do a quick final summary of all changes made:[0m[0m
+[0m[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[0m
+[0m[0m
+完成。以下是所有變更摘要：[0m[0m
+[0m[0m
+[1m新增檔案：[22m[0m[0m
+[0m[0m
+1. [1m[38;5;10msrc/token-policy.ts[0m[22m — Token 執行權限顯式 policy 表[0m[0m
+   - [38;5;10mTokenSource[0m：[38;5;10m"main" | "proxy" | "delegate"[0m[0m[0m
+   - [38;5;10mTokenKind[0m：13 種 token 對應 [38;5;10mTransformedReply[0m 各欄位[0m[0m
+   - [38;5;10mTOKEN_POLICY[0m：白名單集合（main=全部、proxy=5 種安全 token、delegate=空）[0m[0m
+   - [38;5;10mfilterTransformedByPolicy()[0m：淺拷貝過濾，非法欄位歸零，有丟棄時 [38;5;10mconsole.warn[0m[0m[0m
+   - [38;5;10mREMEMBER_FACTS_MAX_PER_OUTPUT = 5[0m[0m[0m
+[0m[0m
+2. [1m[38;5;10mscripts/check-token-policy.mjs[0m[22m — 14 項斷言的 smoke test[0m[0m
+[0m[0m
+[1m修改檔案：[22m[0m[0m
+[0m[0m
+3. [1m[38;5;10msrc/working-state.ts[0m[22m[0m[0m
+   - 新增 [38;5;10mparseRememberTokens(output, cap?)[0m 純函式（抽取 + trim + 上限截斷 + warn）[0m[0m
+   - [38;5;10mextractMemoryTokensFromProxy[0m 改用 [38;5;10mparseRememberTokens[0m，新增 [38;5;10msourceLabel?[0m 第三參數（附 [38;5;10m[via specialist:${name}][0m provenance tag）[0m[0m
+[0m[0m
+4. [1m[38;5;10msrc/index.ts[0m[22m proxy 攝取點[0m[0m
+   - 加 [38;5;10mimport { filterTransformedByPolicy } from "./token-policy.js"[0m[0m[0m
+   - [38;5;10mextractMemoryTokensFromProxy(output, userId, target)[0m 補第三參數[0m[0m
+   - [38;5;10mtransformReplyTokens[0m 結果先過 [38;5;10mfilterTransformedByPolicy(x, "proxy")[0m[0m[0m
+[0m[0m
+5. [1m[38;5;10msrc/commands/relay.ts[0m[22m proxy 攝取點[0m[0m
+   - 同上模式：import + 第三參數 [38;5;10mtarget[0m + policy filter[0m[0m
+[0m[0m
+6. [1m[38;5;10msrc/run-prompt.ts[0m[22m proxy 攝取點[0m[0m
+   - 僅補 [38;5;10mextractMemoryTokensFromProxy(output, userId, name)[0m 第三參數（不加 transformer）[0m[0m
+[0m[0m
+[1m驗證結果：[22m[0m[0m
+- [38;5;10mnpx tsc --noEmit[0m → 0 errors[0m[0m
+- [38;5;10mnode scripts/check-token-policy.mjs[0m → ✅ ALL PASS (14 assertions)[0m[0m
+- 主 agent 路徑（run-prompt.ts L192/617）零改動[0m[0m
+[38;5;8m
+ ▸ Time: 5m 30s
+
+[0m[1G[0m[0m[?25h

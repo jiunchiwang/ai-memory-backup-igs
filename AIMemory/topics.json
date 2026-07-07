@@ -20,6 +20,13 @@
     ]
   },
   {
+    "topic": "uk-917",
+    "keywords": [
+      "uk_917",
+      "leprechaun"
+    ]
+  },
+  {
     "topic": "uk-slot",
     "keywords": [
       "uk_pirates_queen",
@@ -61,7 +68,10 @@
       "小葉",
       "葉錦頤",
       "pattern-library",
-      "excel-to-ai-doc"
+      "excel-to-ai-doc",
+      "firstclone",
+      "tools_slotsetup",
+      "reeldevtool"
     ]
   },
   {
@@ -88,7 +98,8 @@
       "claude-fable",
       "set_config_option",
       "deepseek",
-      "qwen3-coder"
+      "qwen3-coder",
+      "vc-kiro-delegate"
     ]
   },
   {
@@ -131,7 +142,23 @@
       "雷蒙",
       "7 層",
       "harness 架構",
-      "已超越"
+      "已超越",
+      "三模型"
+    ]
+  },
+  {
+    "topic": "bridge-session",
+    "keywords": [
+      "session resume",
+      "sessionstore",
+      "session store",
+      "/session",
+      "session-archive",
+      "session archive",
+      "acp_session_resume",
+      "多 session",
+      "savetranscript",
+      "idle sweep"
     ]
   },
   {
@@ -174,8 +201,6 @@
       ".usage.json",
       "event-log",
       "hit-log",
-      "session archive",
-      "session-archive",
       "factlint",
       "forgetcommit",
       "/intel",
@@ -186,7 +211,14 @@
       "/reset clean",
       "fork（jiunchiwang",
       "upstream（redkilin",
-      "fork 同步策略"
+      "fork 同步策略",
+      "preamble",
+      "/agent",
+      "check-moa",
+      "upstream",
+      "記憶污染",
+      "token-policy",
+      "token policy"
     ]
   },
   {
@@ -237,7 +269,10 @@
       "jiunchiwang",
       "node_modules/@xenova",
       "powershell",
-      "encodedcommand"
+      "encodedcommand",
+      "env-file",
+      "--theirs",
+      "merge-file"
     ]
   },
   {
@@ -255,7 +290,8 @@
       "使用者決定",
       "偏好 split",
       "偏好 obsidian",
-      "使用者想用 obsidian"
+      "使用者想用 obsidian",
+      "偏好"
     ]
   }
 ]
