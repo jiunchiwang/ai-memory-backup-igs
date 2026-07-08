@@ -2,7 +2,7 @@
   {
     "chatId": 509424983,
     "userId": 509424983,
-    "runAt": 1783454400000,
+    "runAt": 1783540800000,
     "prompt": "/dream",
     "recurrence": {
       "kind": "daily",
@@ -16,23 +16,17 @@
   {
     "chatId": 509424983,
     "userId": 509424983,
-    "runAt": 1783468800000,
+    "runAt": 1783569600000,
     "prompt": "[Passive Monitor] 你是被排程喚醒的 ambient agent。執行以下檢查，只有發現異常才回報，全部正常就回「✅」一個字不多說：1) 檢查目前有無 active /goal 卡住（status）2) 看 dailylog 今天有無「進行中」超過 8 小時沒更新的項目 3) 檢查 schedules.json 有無過期未觸發的排程 4) 磁碟空間（MEMORY_DIR 所在碟）若剩餘 <5GB 警告。發現問題時簡述問題+建議動作。",
     "recurrence": {
       "kind": "cron",
-      "expr": "0 8,10,12,14,16,18,20,22 * * *",
+      "expr": "0 12,22 * * *",
       "fields": {
         "minute": [
           0
         ],
         "hour": [
-          8,
-          10,
           12,
-          14,
-          16,
-          18,
-          20,
           22
         ],
         "dayOfMonth": [
@@ -99,7 +93,7 @@
   {
     "chatId": 509424983,
     "userId": 509424983,
-    "runAt": 1783468800000,
+    "runAt": 1783555200000,
     "prompt": "/intel run ai",
     "recurrence": {
       "kind": "daily",
@@ -113,7 +107,7 @@
   {
     "chatId": 509424983,
     "userId": 509424983,
-    "runAt": 1783468800000,
+    "runAt": 1783555200000,
     "prompt": "/intel run game-industry",
     "recurrence": {
       "kind": "daily",

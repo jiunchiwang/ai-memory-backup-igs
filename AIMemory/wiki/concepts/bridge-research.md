@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-07
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e]
+updated: 2026-07-09
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_a0d9ac, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -117,3 +117,28 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 **結論**：bridge 已覆蓋全部 7 層，且超越部分包括 embedding router、Local LLM、Specialist 分身、跨機 Relay、Self-improving reflexion、Context budget discipline。借鏡成果：觸發 P1 user-profile 獨立化實作。
 
 P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 session」基礎設施但方向不同——反思升級 vs 壓縮上下文）。
+
+### Rich Messages Draft 化（Roadmap P2，大型）
+
+- **背景**：Bot API 10.1（2026-06-11）新增 `sendRichMessageDraft`，grammY 1.44 已 type-safe 支援，官方 `@grammyjs/stream` v1.1.0 封裝 draft lifecycle
+- **PoC 結果**（2026-07-08，commit b265a72）：
+  - R-1 **失敗**：plugin 是 append-only 累積（yield 出去的字收不回），與 bridge 現有「整 buffer 重跑 transform → 整份 replace」streaming 模型不相容
+  - R-2 通過：`replyWithMarkdownStream` 回傳 message_id + 支援 reply_markup，ASK 按鈕可行
+  - 結論：draft 化需重寫為 hold-back incremental emitter + 無 placeholder 流程，屬大型任務
+- **已修小 bug**（commit ce0e1ac）：`tryEditRichMessageDraft` 補 catch，rich edit 失敗收斂回 false 走 plain fallback
+- **修正先前誤解**：
+  - `editMessageText + rich_message` 參數是合法 Bot API 10.1 用法，bridge 現有 rich 渲染已在生效（表格/高亮/LaTeX），非假 rich，只缺 draft 動畫
+  - 「sendRichMessageDraft 不受 429 限流」是誤解——真實收益是 draft 幀可跳過不丟資料，final sendRichMessage 照樣受限流
+  - grammY `api.raw` 是 Proxy，任意 method 名都回傳 callable——typeof guard 是死碼，能力偵測要靠 catch API 錯誤
+- **啟動方式**：從 `/dev-design` 起步，設計 hold-back emitter
+- **完整評估**：見 `docs/pending-roadmap.html` Section 7
+
+### Ruflo（前 Claude Flow，⭐46.6k）
+
+- GitHub 開源多代理編排平台，宣稱把 Claude Code 擴展成多 worker swarm + AgentDB + 成本路由
+- **自審報告揭露核心功能是 stub**：agent_spawn 未接線 LLM、hive-mind 單進程 EventEmitter（共識協議為裝飾品）、workflow_execute 回 "not found"、WASM agent 只是 echo；~240 工具只有 ~195 真正運作
+- **判斷**：不引入（綁 Claude Code 生態 + 核心 stub），bridge 已有 specialist/relay/trio-llm 覆蓋同類需求
+- **可借鏡**（列 watchlist 等 ADR G1-G4 修完再評估）：
+  - SONA 自學回饋（confidence threshold 自動拒絕低信心輸出）
+  - Batch 工具並行（單次回應 4-6 tool call）
+  - Per-task complexity scoring 做成本路由

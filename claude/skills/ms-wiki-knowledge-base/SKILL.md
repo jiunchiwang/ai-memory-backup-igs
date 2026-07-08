@@ -47,7 +47,8 @@ ${MEMORY_DIR}/wiki/
 - **矛盾**：同主題對同一事物記了不同值 → 只列報告，不刪（等使用者確認）
 - **過時**：被後面 fact 明確取代（改名/改 port/改路徑）→ 可刪
 - **重複**：語意相同措辭不同 → 可刪
-- **瑣碎**：一次性確認（「測試成功」）、過程紀錄（「commit xxx」）、只對當時 session 有意義、已被 wiki/skill 涵蓋 → 可刪
+- **瑣碎**：一次性確認（「測試成功」）、過程紀錄（「commit xxx」）、只對當時 session 有意義、已被 wiki/skill 涵蓋 → 可刪。
+  ⚠️ 「已被 wiki 涵蓋」有排除條款：fact ID 出現在任何 wiki 頁 frontmatter `sources` 中者**不列候選**——那些 fact 是 wiki 的 provenance，`forget()` 的 wiki-reference 保護會拒刪（by design），列了只會每輪重複產生噪音（2026-07-08 裁決：接受保護而非解除引用）
 
 進階檢查：
 - **衰減**：讀 access log，>60 天零命中的 topic 列「衰減候選」（不自動刪）

@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-07T20:33:38.791Z",
+  "_last_updated_at": "2026-07-08T20:13:58.204Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-07-07T20:08:22.235Z",
-      "use_count": 40,
-      "last_reason": "掃描 28 個 session 檔，四問+confidence 篩選 0 新建 0 更新、4 個候選追蹤（1 個逼近升格門檻）、2 條 rationale fact、28 檔搬移 oldSessions",
+      "last_agent_used_at": "2026-07-08T20:04:22.120Z",
+      "use_count": 41,
+      "last_reason": "執行完整 memory-to-skill 流程：掃描 sessions、識別 pattern、比對 ms- skill、抽取 rationale、搬移",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +15,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T20:33:38.791Z",
-      "use_count": 23,
-      "last_reason": "skilllint 步驟——45 store entries 全檢，發現 07-07 測試汙染（14 fixture + orphan flag 全面失真），6 underused/1 conflict/0 stale",
+      "last_agent_used_at": "2026-07-08T20:13:58.204Z",
+      "use_count": 26,
+      "last_reason": "wikilint 步驟——19 頁全檢，0 stale/0 orphan（修復 1 格式錯位+2 頁搬目錄）/0 斷連",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -30,7 +30,7 @@
       "last_reason": "建立新 skill 時遵循其結構與 SDO 描述規範",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-portable-skill-authoring": {
       "created_at": "2026-05-29T08:58:12.634Z",
@@ -40,7 +40,7 @@
       "last_reason": "SKILL.md 避免寫死機器絕對路徑，模板以名稱引用",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -50,7 +50,7 @@
       "last_reason": "生成比較頁面的設計系統（配色、字型、風格建議）",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-project-docs": {
       "created_at": "2026-06-19T02:00:09.159Z",
@@ -60,7 +60,7 @@
       "last_reason": "建立uk_917的AI.md索引層",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",
@@ -70,7 +70,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "dual-skill-review-loop": {
       "created_at": "2026-05-29T13:03:17.852Z",
@@ -80,7 +80,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "excel-to-ai-doc": {
       "created_at": "2026-06-22T05:47:24.030Z",
@@ -90,7 +90,7 @@
       "last_reason": "將 Eye Strike2 規格書.xlsx 轉換為 AI 可讀文件結構",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "huashu-slides": {
       "created_at": "2026-02-23T13:13:08.000Z",
@@ -100,7 +100,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "knowhow-accumulation": {
       "created_at": "2026-05-29T13:04:22.387Z",
@@ -110,7 +110,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-agent-scheduled-prompts": {
       "created_at": "2026-05-29T08:58:12.625Z",
@@ -120,7 +120,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-agent-text-token-signaling": {
       "created_at": "2026-05-29T08:58:12.628Z",
@@ -130,7 +130,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-kiro-strreplace-silent-fail": {
       "created_at": "2026-05-29T08:58:12.630Z",
@@ -140,17 +140,17 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-streaming-token-pipeline": {
       "created_at": "2026-05-29T08:58:12.636Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.226Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-07-08T08:40:11.777Z",
+      "use_count": 1,
+      "last_reason": "審查 Rich Messages 升級方案，比對 streaming/final 雙路共用 transform 的四組已知坑",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-telegram-ask-button-protocol": {
       "created_at": "2026-05-29T08:58:12.640Z",
@@ -160,7 +160,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-telegram-bot-rate-limit-survival": {
       "created_at": "2026-05-29T08:58:12.643Z",
@@ -170,7 +170,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
@@ -180,7 +180,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "ms-windows-shell-interactive-prompt": {
       "created_at": "2026-05-29T08:58:12.650Z",
@@ -190,7 +190,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "non-engineer-agent-design": {
       "created_at": "2026-05-29T13:03:49.224Z",
@@ -200,7 +200,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "self-eval-prompt-pattern": {
       "created_at": "2026-05-29T13:04:56.604Z",
@@ -210,7 +210,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "skill-creator": {
       "created_at": "2026-02-24T17:26:48.000Z",
@@ -220,7 +220,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-extrabet": {
       "created_at": "2026-06-16T07:54:26.401Z",
@@ -230,7 +230,7 @@
       "last_reason": "歸納框架元件介面文件化程度作為「AI-ready spec 需要什麼」的參考",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-fake-reel-manager": {
       "created_at": "2026-05-06T05:42:57.357Z",
@@ -240,7 +240,7 @@
       "last_reason": "歸納假轉輪帶在規格→程式映射中的角色（BetMode/GameType 分類、事件 API）",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-multilang-sync": {
       "created_at": "2026-06-11T07:19:35.267Z",
@@ -250,7 +250,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-state-machine": {
       "created_at": "2026-02-25T02:28:57.398Z",
@@ -260,7 +260,7 @@
       "last_reason": "歸納 AI 開發時需要的 State Machine 框架知識（CommonState vs 自訂 State、模板選擇）",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "vc-kiro-delegate": {
       "created_at": "2026-05-06T09:18:41.260Z",
@@ -270,7 +270,7 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-pattern-library": {
       "created_at": "2026-06-26T05:33:19.199Z",
@@ -280,7 +280,7 @@
       "last_reason": "10張pattern卡片對照分類，3LP變體與邊界案例直接入spec",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "sync-fork-from-upstream": {
       "created_at": "2026-07-06T02:51:00.564Z",
@@ -290,7 +290,7 @@
       "last_reason": "同步 telegram-kiro-bridge fork 到 upstream redkilin/telegram-kiro-bridge 最新 8 commit，用拋棄式分支試合併後 ff-only 合入 main",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-slot-spec-to-impl": {
       "created_at": "2026-07-07T00:59:23.331Z",
@@ -300,7 +300,7 @@
       "last_reason": "執行M0a起新專案五步驟|",
       "pinned": false,
       "notes": null,
-      "orphan": true
+      "orphan": false
     },
     "uk-conventions": {
       "created_at": "2026-07-07T02:23:18.478Z",
@@ -311,146 +311,6 @@
       "pinned": false,
       "notes": null,
       "orphan": true
-    },
-    "skill-alpha": {
-      "created_at": "2026-07-07T11:54:25.828Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:25.855Z",
-      "use_count": 2,
-      "last_reason": "read frontmatter",
-      "pinned": true,
-      "notes": null,
-      "orphan": true
-    },
-    "skill-beta": {
-      "created_at": "2026-07-07T11:54:25.831Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:25.857Z",
-      "use_count": 1,
-      "last_reason": "followed testing guide",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "skill-gamma": {
-      "created_at": "2026-07-07T11:54:25.831Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:25.859Z",
-      "use_count": 1,
-      "last_reason": "used schema",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "skill-phantom": {
-      "created_at": "2026-07-07T11:54:25.862Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:25.862Z",
-      "use_count": 1,
-      "last_reason": "made it up",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "one": {
-      "created_at": "2024-01-15T10:00:00.000Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "two": {
-      "created_at": "2026-07-07T11:54:47.093Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "only": {
-      "created_at": "2026-07-07T11:54:47.104Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "gone-soon": {
-      "created_at": "2026-07-07T11:54:47.112Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "returns": {
-      "created_at": "2026-07-07T11:54:47.119Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "alpha": {
-      "created_at": "2026-07-07T11:54:47.133Z",
-      "last_bridge_listed_at": "2026-07-07T11:54:47.148Z",
-      "last_agent_used_at": "2026-07-07T11:54:47.139Z",
-      "use_count": 3,
-      "last_reason": "third use",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "never-existed": {
-      "created_at": "2026-07-07T11:54:47.142Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:47.142Z",
-      "use_count": 1,
-      "last_reason": "agent hallucinated a name",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "target": {
-      "created_at": "2026-07-07T11:54:47.152Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "hot": {
-      "created_at": "2026-07-07T11:54:47.162Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T11:54:47.163Z",
-      "use_count": 20,
-      "last_reason": "reason 19",
-      "pinned": false,
-      "notes": null,
-      "orphan": true
-    },
-    "protected": {
-      "created_at": "2026-07-07T11:54:47.209Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": true,
-      "notes": null,
-      "orphan": false
     }
   }
 }

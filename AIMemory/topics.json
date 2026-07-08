@@ -23,6 +23,7 @@
     "topic": "uk-917",
     "keywords": [
       "uk_917",
+      "uk_917_",
       "leprechaun"
     ]
   },
@@ -31,6 +32,7 @@
     "keywords": [
       "uk_pirates_queen",
       "uk_slot",
+      "uk slot",
       "uk_722",
       "uk_739",
       "uk_746",
@@ -71,7 +73,9 @@
       "excel-to-ai-doc",
       "firstclone",
       "tools_slotsetup",
-      "reeldevtool"
+      "reeldevtool",
+      "mg_bgm",
+      "fg_bgm"
     ]
   },
   {
@@ -99,7 +103,8 @@
       "set_config_option",
       "deepseek",
       "qwen3-coder",
-      "vc-kiro-delegate"
+      "vc-kiro-delegate",
+      "acp-providers"
     ]
   },
   {
@@ -182,6 +187,7 @@
       "aimemory",
       "wiki 知識庫",
       "telegram bot api",
+      "bot api",
       "rich messages",
       "parse_mode",
       "format-html",
@@ -198,7 +204,7 @@
       "ask button discipline",
       "preamble steering",
       "dream.json",
-      ".usage.json",
+      "skill-usage",
       "event-log",
       "hit-log",
       "factlint",
@@ -218,7 +224,11 @@
       "upstream",
       "記憶污染",
       "token-policy",
-      "token policy"
+      "token policy",
+      "topics.json",
+      "smoke script",
+      "smoke test",
+      "rich-renderer"
     ]
   },
   {
@@ -272,7 +282,9 @@
       "encodedcommand",
       "env-file",
       "--theirs",
-      "merge-file"
+      "merge-file",
+      "bun runtime",
+      "node --env-file"
     ]
   },
   {

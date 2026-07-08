@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-08
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260]
+updated: 2026-07-09
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -16,6 +16,12 @@ sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, 
 - `.env`：`ACP_AGENT_COMMAND=claude-agent-acp` + `ACP_MODEL=claude-fable-5`（effort medium）
 - Model 由 bridge 在 `session/new` 後透過 `session/set_config_option` pin——**claude-agent-acp 的 CLI `--model` flag 在 ACP 模式無效**
 - 歷史配置（~2026-07-06 前）：`kiro-cli acp --model claude-opus-4.6 -a`
+
+### Fable 5 安全分類器問題（2026-07-08）
+
+- Fable 5 恢復存取後（7/1 出口管制解除），新安全分類器 false positive 率高——正常 coding/debugging 請求被誤擋，Anthropic 已承認
+- 透過 `claude-agent-acp` ACP 路徑會直接拋 `-32603 Internal error`（Usage Policy violation），**不會 fallback 到 Opus 4.8**
+- 使用者決定先觀望不換 model；備選：`claude-opus-4-8`（最穩定）或 `claude-sonnet-4-6`
 
 ## /agent 熱切換與多 Backend 設定檔（2026-07-07）
 
