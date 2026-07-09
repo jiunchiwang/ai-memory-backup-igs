@@ -2,15 +2,15 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-07-08
-sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a]
+updated: 2026-07-10
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ae2a4d, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_d03f34, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5]
 ---
 
 # UK Slot 老虎機專案群
 
 ## 概述
 
-使用者開發一系列面向 UK 市場的老虎機遊戲，基於 Cocos Creator 3.6.2 + Astarte Framework + TypeScript 技術棧。所有遊戲從共用模板 fork 而來，目前共 8 個專案（1 模板 + 7 遊戲）。
+使用者開發一系列面向 UK 市場的老虎機遊戲，基於 Cocos Creator 3.6.2 + Astarte Framework + TypeScript 技術棧。所有遊戲從共用模板 fork 而來，目前共 9 個專案（1 模板 + 7 遊戲 + 1 demo）。
 
 ## 技術棧約束
 
@@ -42,6 +42,7 @@ sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, 
 | uk_872_eyestrike2_client | `G:\Cocos_Project\uk_872_eyestrike2_client` | Eye Strike 2（續作） |
 | uk_slot_chachacha | `G:\Cocos_Project\uk_slot_chachacha` | Cha Cha Cha 拉丁舞/水果 |
 | uk_917_leprechauns_pots_client | `G:\Cocos_Project\uk_917_leprechauns_pots_client` | 3 Leprechaun's Pots（開發中）→ 詳見 [[uk-917]] |
+| clash_of_olympus_demo | `G:\Cocos_Project\clash_of_olympus_demo` | 諸神之戰 Clash of Olympus（6×4 4096-Ways，希臘神話，開發中）→ 基準 tripleCoinTreasure |
 
 ## 專案文件規範
 
@@ -50,6 +51,40 @@ sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, 
 - **docs/modules.md**（詳細層）— 每個模組的事件介面、依賴、資料流
 
 不管改動檔案數多少，進入老虎機專案時都主動建立/更新 AI.md。
+
+## uk-slot-codegen 整合（2026-07-09）
+
+同事開發的 `uk-slot-codegen` skill（全自動 codegen pipeline：xlsx→骨架→Mock→gate 驗證）已整合為 `uk-slot-spec-to-impl` 的 **M0a~M1 可選加速器**：
+
+- **定位**：快速出可跑骨架 + Mock demo，不做特色機制（custom feature 報告不實作）
+- **分工**：正式開發全程走 spec-to-impl，codegen 只承接前段骨架生成
+- **proto 慣例覆蓋**：一律經 `Proto.ts` 單一間接點（排除 codegen 原本的 replace-all-imports，因 uk_917 實戰教訓）
+- **規格轉換**：`excel-to-ai-doc` 是 canonical SOT（抽圖+保真），`spec_adapter.py` 只是 codegen 內部餵料管
+- **實測**（uk_917 probe）：17/17 gate 全過，但 spec_adapter 有 5 個 bug（SymID 排序、音效漏抽、JP 偵測等），custom feature 偵測滿分（0 漏 0 誤報）
+- **8 項回饋**全部修正完畢（commit cee689e）；整合驗證包已交付同事
+- **不抽出整合**：自有 skill 體系已自包含，codegen 保留原樣偶爾借用
+
+相關：回饋文件 `G:\AI\Skill\uk-slot-codegen-feedback.md`、驗證包 `uk-slot-integration-bundle.zip`、[[uk-slot-pitfalls]] 已回灌 5 條 codegen 來源踩坑
+
+## Clash of Olympus（諸神之戰）
+
+- **專案**：`G:\Cocos_Project\clash_of_olympus_demo`
+- **規格**：希臘神話主題、6×4 盤面 4096 Ways、基於 uk_slot_template + Astarte
+- **最近似參考**：tripleCoinTreasure-client（三幣瑞龍，GameId=399，5×3）
+- **spec-to-impl 完成**（2026-07-09）：docs/spec（80 圖）+ dev-spec.md + SPEC.md（25 任務 M0a~M4）
+- **分類**：唯一 🔴 是 VS Feature（Cash 乘倍 + Collect 乘倍 + 多 VS 順序），Collect Feature 和聚寶盆降為 🟡（模板有 Collect/Cash/CoinState + pattern-library 有驗證變體）
+- **待確認 8 項**：賠率表空白、BuyBonus 售價、FG 手數、VS 乘倍語意、聚寶盆機率、ExtraBet、Proto 時間、GameId
+- **下一步**：M0a 起專案，需先確認 GameId 和 Proto 狀態
+
+## spec-to-impl 流程教訓（2026-07-09 實證）
+
+Clash of Olympus 實作過程暴露 5 個流程偏離，已回饋改善 skill 正本（commit 14887cd）：
+
+1. 拿到規格書必須先 invoke skill 從步驟 0 開始，不可直接提方案
+2. 基準永遠是 `uk_slot_template`，衍生品只當「最近似參考」
+3. 步驟 2 必須讀 `uk-slot-pattern-library` 索引，否則會重複設計已驗證模式
+4. 新增步驟 0 前提確認 checklist + 步驟 2 前置 4 項 gate
+5. AI.md 綁定步驟 1 完成時建立
 
 ## uk_slot_eye_strike 詳細
 
@@ -99,3 +134,5 @@ Cocos Creator 全域插件，位於 `~/.CocosCreator/extensions/spine-viewer`，
 ## 相關
 
 - [[bridge-project]]（開發工具鏈的一部分）
+- [[uk-917]]（同期開發中的專案）
+- [[uk-slot-pitfalls]]（踩坑經驗，含 codegen 來源 5 條）

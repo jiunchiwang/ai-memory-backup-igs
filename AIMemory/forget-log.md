@@ -50,3 +50,26 @@
 
 - [2026-07-07T23:33:11.148Z] user=509424983 query="使用者對 preamble 大小的取捨判斷：佔 context 5-6% 可接受但到警戒線就削減；優先砍 facts tail 與 guideline 區塊（排除 wiki 索引瘦身與維持現狀），理由是舊 facts 有 topic index + list_facts 補位" deleted=0 token=forget-0b99da08-1
 
+
+
+## 2026-07-09T04:28 factlint batch delete (dream High Priority)
+
+Deleted 8 facts (completion events / superseded records):
+- f_cb10bc: 內訓教材 4 skill 萃取記錄（純來源記錄，skill 仍存在）
+- f_e255b2: uk_slot_template push 完成（純完成事件）
+- f_3b73a9: topics.json 重整記錄（已被新版取代）
+- f_f0d764: skill-usage 測試汙染問題記錄（已被 f_de4ad8 修復記錄取代，且修復記錄本身也是完成事件）
+- f_de4ad8: 測試汙染修復完成記錄（純完成事件）
+- f_7a3d00: hit-log 零命中發現（已被 f_c965d5 修復記錄取代）
+- f_ab7c55: factlint 27條刪除結果（純完成事件）
+- f_98933f: dream High Priority 全處理完成（純完成事件）
+
+Master: 163 → 155 facts
+Backup: facts-509424983.bak.20260709.md
+Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
+- [2026-07-09T20:25:59.728Z] user=509424983 query="使用者認識 IGS（鈊象電子）的工程師小葉（葉錦頤）" deleted=1 token=forget-4595c545-1
+    - [f_d0757b] [2026-05-29T16:20:19.523Z] 使用者認識 IGS（鈊象電子）的工程師小葉（葉錦頤），該文件來自其商用魚機 RD7 部門 7 週內訓
+- [2026-07-09T20:26:10.158Z] user=509424983 query="uk-conventions skill 在 usage store 且 harness 可用，但實體不在" deleted=1 token=forget-94039045-1
+    - [f_d7548f] [2026-07-07T20:38:22.816Z] uk-conventions skill 在 usage store 且 harness 可用，但實體不在 ~/.claude/skills 也不在 ~/.kiro/skills，來源待查（可能專案級或 plugin 載入）
+- [2026-07-09T20:26:21.464Z] user=509424983 query="telegram-kiro-bridge 已於 2026-07-09 同步 upstream 至 dd63cd4" deleted=1 token=forget-9b3e61c6-1
+    - [f_b12677] [2026-07-09T01:57:54.687Z] telegram-kiro-bridge 已於 2026-07-09 同步 upstream 至 dd63cd4（8 個 commit，含 session archive staleness gate、tool-use 訊息摺疊 UI、doctor specialist-domains 健檢、preamble 交辦三要素等），merge 乾淨無衝突已 push origin/main；生產 bridge 需 rebuild（tsc -p .）+ 重啟才生效

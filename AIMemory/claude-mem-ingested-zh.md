@@ -1,5 +1,25 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-10(來源 shortlist 2 筆 → 精選後寫入 1 條)
+
+來源 project:`telegram-kiro-bridge-main`(2 筆,皆 2026-07-09 decision)。
+
+1. [合併/蒸餾 shortlist #1 → shard uk-slot] 記錄反覆出現的 AI 失誤時，把「常見錯誤」分兩類:流程偏離(Process Deviations,工作流順序失誤,如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品)與技術錯誤(Technical Errors,實作層面失誤,如型別/邏輯/命名寫錯);兩類根因與修法不同,分開列並各附 session 實證。此分類法可推廣到任何 skill/knowhow 庫的錯誤紀錄。
+
+捨棄:shortlist #2(Clash of Olympus dev-spec baseline 從 tripleCoinTreasure-client 改為 uk_slot_template + uk-slot-pattern-library)——可重用核心已由既有 fact「uk-slot-spec-to-impl 流程教訓…基準永遠是 uk_slot_template 不是衍生品;步驟2必須讀 pattern-library 索引」完整涵蓋,屬重複;而 Clash of Olympus 該次 spec 修訂本身是一次性專案事件。
+
+去重:寫入前以 list_facts 對 AIMemory(179 筆)掃描 常見錯誤/spec-to-impl/流程偏離/技術錯誤/dev-spec/tripleCoinTreasure/knowhow/錯誤分類——確認兩類錯誤 taxonomy 為淨新增(既有僅記「常見錯誤新增5條流程偏離實證教訓」,未存分類法本身),#2 為重複。未呼叫 forget。
+
+## 2026-07-09(來源 shortlist 6 筆 → 精選後寫入 1 條)
+
+來源 project:`telegram-kiro-bridge-main`(5 筆)、`system32`(1 筆)。
+
+1. [來源 system32,#6 → shard bridge-project] 當 session 的 memory MCP server 未連線(ToolSearch 找不到 list_facts/remember)時,可在 G:\AI\AIMemory\tmp\mcp-call.mjs 自建 stdio JSON-RPC helper 直接 spawn G:\AI\telegram-kiro-bridge-main\dist\mcp-memory.js 呼叫記憶工具——關鍵是 cwd 須設為 bridge 專案根(dotenv 才能載到 .env)、注入 MEMORY_USER_ID 與 MEMORY_DIR=G:\AI\AIMemory,用法 node mcp-call.mjs <toolName> '<jsonArgs>' 或 @argsFile;tmp/ 會被定期清空,helper 不在時照此模式重建即可。
+
+捨棄:#1–#5(Rich Messages PoC 裁決/升級路線/grammY 1.44 支援/@grammyjs/stream append-only 否決/fix 選項執行)——AIMemory 既有 facts 已完整涵蓋(Rich Messages 升級評估、PoC 裁決列 P2、editMessageText 合法 rich 渲染、429 誤解修正、api.raw Proxy 死碼等多條),全屬重複。
+
+去重:寫入前以 list_facts 掃描 mcp-call / mcp-memory / JSON-RPC 等關鍵詞(155 筆),無重複。本次並實際重建了已被清掉的 mcp-call.mjs helper(加上 @argsFile 支援,避免 Git Bash 反斜線跳脫問題)。
+
 ## 2026-07-01(來源 shortlist 10 筆 → 精選後寫入 2 條)
 
 來源 project:`telegram-kiro-bridge-main`(Post-Tool Hook 多 agent 設計工作流)。

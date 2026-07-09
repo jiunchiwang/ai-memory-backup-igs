@@ -5,9 +5,9 @@
 
 ## Pages
 
-- [[uk-slot]] — UK 市場老虎機專案群（1 模板 + 8 衍生遊戲、技術棧約束、模板回灌與起新陷阱）
+- [[uk-slot]] — UK 市場老虎機專案群（1 模板 + 7 遊戲 + 1 demo、codegen 整合、Clash of Olympus、spec-to-impl 教訓）
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
-- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory 系統、品質機制、設計原則）
+- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages 評估、Reply Context、Smoke 隔離）
 - [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、harness hooks、trailer 陷阱）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、Rich Messages PoC、PostTool Hooks A→D、Karpathy P0/P1、Ruflo）
@@ -37,4 +37,4 @@
 ---
 
 Total pages: 19
-Last updated: 2026-07-09
+Last updated: 2026-07-10

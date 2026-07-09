@@ -7,7 +7,7 @@
       "mcp__plugin_serena_serena__find_symbol"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "PostToolUse": [
       {

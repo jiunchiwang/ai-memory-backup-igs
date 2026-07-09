@@ -1,7 +1,5 @@
 - [f_093bcf] [2026-05-29T12:03:17.162Z] 使用者有一個 Cocos Creator 3.6.2 老虎機專案 uk_pirates_queen 位於 G:\Cocos_Project\uk_pirates_queen，使用 Astarte Framework 和 TypeScript
 - [f_79c118] [2026-05-29T12:03:17.165Z] uk_pirates_queen 是 UK 市場的海盜女王主題 slot 遊戲，6列5行盤面，含消除連鎖、懸賞令倍率、Free Game、輪盤選獎等機制
-- [f_cb10bc] [2026-05-29T16:20:19.519Z] 使用者從「從LLM到AI_Agent.pdf」（IGS 小葉內訓教材）萃取了 4 個 skill：dual-skill-review-loop、non-engineer-agent-design、knowhow-accumulation、self-eval-prompt-pattern
-- [f_d0757b] [2026-05-29T16:20:19.523Z] 使用者認識 IGS（鈊象電子）的工程師小葉（葉錦頤），該文件來自其商用魚機 RD7 部門 7 週內訓
 - [f_967ccc] [2026-05-29T20:06:30.567Z] 使用者有一個 Cocos Creator 3.6.2 老虎機模板專案 uk_slot_template 位於 G:\Cocos_Project\uk_slot_template，是所有 UK slot 遊戲的 fork 來源
 - [f_e8b2cf] [2026-05-29T20:06:30.570Z] uk_slot_template 支援三種轉輪玩法：Standard（傳統滾動）、Cascade（消除天降）、Tumble（快速掉落+乘倍），透過 FillStrategy 策略模式切換
 - [f_991386] [2026-06-01T12:16:45.036Z] 使用者的 uk_slot_template 團隊規範要求方法（method/function）使用大駝峰（PascalCase）命名
@@ -30,4 +28,22 @@
 - [f_233d31] [2026-07-07T07:52:13.462Z] 使用者的回灌工作流：在衍生遊戲修到的模板級問題（工具、守衛、寫死值）一律同步回 uk_slot_template；流程級教訓回寫 AI-canonical-corp skill 正本、專案級踩坑寫專案 AI.md、模式級修正寫 pattern-library 卡片
 - [f_4cfe4c] [2026-07-07T07:52:13.480Z] FirstClone.bat 的 ../extensions 相對於執行時 cwd——從專案根執行會 clone 到上一層，需在 Tools_SlotSetUP/ 內執行
 - [f_b13c42] [2026-07-07T11:48:47.027Z] 公司（IGS RD2）有一個 Python 多 agent 框架 ai_multi_agent（Telegram Forum Topic 每 Topic 一 agent、中央 daemon + MCP reply 架構），使用者 clone 於 G:\AI\Study\ai_multi_agent 供研究；與 bridge 定位互補：它往團隊/中央艦隊走，bridge 往單人深度助理 + MoA 品質走
-- [f_e255b2] [2026-07-08T06:05:03.344Z] uk_slot_template 的本地 commit 已於 2026-07-08 全數 push 完成（最後一筆 cd83ae5 ReelDevTool 轉輪驅動+就緒閘門回灌），repo 與 origin/main 同步；AI.md、SPEC.md、docs/ 維持未版控
+- [f_0376d5] [2026-07-07T20:34:51.301Z] uk slot 模板專案音訊決策：MG_Bgm 與 FG_Bgm 背景音樂引用在 template 專案中先註解掉（模板不附實際音檔），新遊戲專案需要 BGM 時再解除註解並補上音檔。
+- [f_ba8cc5] [2026-07-09T06:01:00.742Z] 同事提供的 uk-slot-codegen skill（xlsx→骨架全自動 pipeline）已收錄進 AI-canonical-corp（commit 92d3ebd）：修正 2 個文件 bug（anchor 格式對齊 anchor_merge.py 的 <<CODEGEN_BEGIN:name>> 語法、_steps.md dangling ref）、清除雜物，並與 uk-slot-spec-to-impl 建立分流規則——codegen 定位為 spec-to-impl 的 M0a~M1 加速器（快速骨架+Mock demo），正式開發全程仍走 spec-to-impl
+- [f_73183f] [2026-07-09T06:01:00.764Z] uk-slot-codegen 的 update 模式（anchor merge）對既有手寫專案不可用——無 anchor 的代碼會被視為 CODEGEN 區覆寫，只有新專案的 new 模式有價值
+- [f_49dae6] [2026-07-09T06:01:00.770Z] codegen 類 skill 的按需讀取設計有覆蓋盲區：慣例覆蓋只寫在 SKILL.md 會被執行時跳過（agent 只讀 _flow.md 該步段落），必須就地寫進對應 Step 段落（已在 _flow.md Step 3.3 加 Proto.ts 覆蓋注記，commit f0ff193）
+- [f_4cd205] [2026-07-09T06:01:00.776Z] 規格書轉 AI 文件的分工決策：excel-to-ai-doc 是 canonical 規格語料的 source of truth（抽圖片、逐格保真、supports 人工檢查點），spec_adapter.py 只是 codegen 內部餵料管（用完即棄）——老虎機規格書一半資訊量在圖，不抽圖的方案不能當正主
+- [f_59bf73] [2026-07-09T06:01:00.783Z] 給同事的回饋文件位於 G:\AI\Skill\uk-slot-codegen-feedback.md（8 條：2 文件 bug + 3 實測 bug + 2 建議 + 1 澄清）；整合驗證包位於 G:\AI\Skill\uk-slot-integration-bundle.zip（含整合版 skills + 證據 + README 驗證指引），已傳給使用者轉交同事
+- [f_e2665f] [2026-07-09T06:01:00.789Z] uk-slot-pitfalls wiki 已回灌 5 條 codegen 來源踩坑（條目 5~9，標 [src: uk-slot-codegen]）：UTF-8 BOM 丟失、SYMBOL_COUNT 禁動態計算、Spine placeholder 用 .json、Mock 缺 RoundWin 報獎被跳過、規格書 Scatter_XXX 命名 ≠ SCATTER_SYMBOL
+- [f_ae2a4d] [2026-07-09T06:49:30.178Z] uk-slot-codegen skill 修正狀態（2026-07-09 二次確認）：文件問題 #1/#2/#7 由使用者自己修（92d3ebd/f0ff193）已完成；spec_adapter.py 的 3 個實測 bug（#3 SymID 排序部分修但沒最終 sort、#4 音效 header 無 fallback、#5 HAS_JACKPOT 不掃 JP_ 符號）和 _pitfalls.md 澄清（#6 NearWin includes 沒閉環、#8 pbjs 範圍限定未加）共 5 項仍未修——屬同事腳本本體的責任，使用者 commit 只改了文件層
+- [f_ac9912] [2026-07-09T11:41:35.464Z] uk-slot-codegen 回饋文件 8 項已全部修正完畢（commit cee689e 修 #3/#4/#5/#6/#8：spec_adapter.py SymID 排序+音效 header fallback+JP_ 符號偵測，_pitfalls.md 多 Scatter includes() 做法+pbjs 範圍限定），先前「5 項仍未修屬同事責任」的狀態已過時
+- [f_98e336] [2026-07-09T11:41:35.473Z] 使用者決定 uk-slot-codegen 不需抽出整合成獨立 skill——自有 skill 體系已自包含（spec-to-impl + pattern-library + state-machine/extrabet/fake-reel/multilang + excel-to-ai-doc + uk-slot-pitfalls），codegen 保留原樣當「偶爾借用的 M0a~M1 加速器」即可
+- [f_1b276f] [2026-07-09T11:41:35.480Z] uk-slot-pattern-library 是完全自包含的純知識庫（零硬編碼路徑、零執行依賴、專案名稱僅資訊性引用），uk-slot-codegen 則有硬依賴本地/遠端專案（E:\UK\uk_slot_template 等絕對路徑 + git clone）——兩者設計定位根本不同
+- [f_4c48e6] [2026-07-09T19:00:02.528Z] 使用者有一個新遊戲專案 Clash of Olympus（諸神之戰）位於 G:\Cocos_Project\clash_of_olympus_demo，希臘神話主題、6×4 盤面 4096 Ways、基於 uk_slot_template + Astarte Framework；規格書為 G:\AI\Clash of Olympus.xlsx，最近似參考為 tripleCoinTreasure-client（三幣瑞龍）
+- [f_d03f34] [2026-07-09T19:00:02.536Z] Clash of Olympus 的 spec-to-impl 三步驟已完成（2026-07-09）：docs/spec（80圖）+ dev-spec.md（1🔴 VS Feature + 6🟡 + 8🟢）+ SPEC.md（25任務 M0a~M4）+ AI.md；下一步是 M0a 起專案，需先確認 GameId 和 Proto 狀態
+- [f_f79167] [2026-07-09T19:00:02.541Z] Clash of Olympus 唯一 🔴 新開發機制是 VS Feature（Cash乘倍 + Collect乘倍 + 多VS作用順序）；Collect Feature 和聚寶盆都是 🟡 適配（模板已有 Collect/Cash/CoinState 骨架 + pattern-library 有驗證變體）
+- [f_e84e55] [2026-07-09T19:00:02.547Z] uk-slot-spec-to-impl skill 正本已加強（AI-canonical-corp commit 14887cd）：新增步驟0前提確認checklist、步驟2前置4項checklist gate、檢查點改模板格式輸出、AI.md綁定步驟1完成時、常見錯誤新增5條流程偏離實證教訓
+- [f_b20c5e] [2026-07-09T19:00:02.552Z] uk-slot-spec-to-impl 流程教訓（Clash of Olympus 實證）：agent 拿到規格書後必須先 invoke skill 從步驟0開始，不可直接提實作方案；基準永遠是 uk_slot_template 不是衍生品；步驟2必須讀 pattern-library 索引否則會重複設計已驗證模式
+- [f_593c2e] [2026-07-09T19:00:02.563Z] Clash of Olympus 規格書待確認事項（8項）：賠率表全空需機率文件、BuyBonus售價未定、FG手數未明、VS乘倍數值+2X vs X2語意、聚寶盆機率、ExtraBet規格、Proto發佈時間、GameId待分配
+- [f_c7ce92] [2026-07-09T19:00:02.568Z] 使用者有一個 Cocos Creator 老虎機專案 tripleCoinTreasure-client 位於 G:\Cocos_Project\tripleCoinTreasure-client，三幣瑞龍主題（GameId=399, ShortGameName=tct），5×3盤面，有Coin收集和三色Scatter（Tiger/Loong/Koi）機制，是 Clash of Olympus 的最近似參考
+- [f_8a9474] [2026-07-09T20:33:34.376Z] 記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。

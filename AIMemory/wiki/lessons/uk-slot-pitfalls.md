@@ -2,8 +2,8 @@
 title: UK Slot 踩坑經驗
 type: lesson
 created: 2026-06-23
-updated: 2026-06-27
-sources: [f_89a745, f_46f6e0, f_94500e, f_e9bd6a]
+updated: 2026-07-09
+sources: [f_89a745, f_46f6e0, f_94500e, f_e9bd6a, uk-slot-codegen skill]
 why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 和 race condition，所以記錄防護模式
 ---
 
@@ -63,6 +63,58 @@ why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 
 - 把掉落觸發從 `StartSpin` 移到獨立的 `TriggerDropOut()` method
 
 **防護**：凍結語意與動畫 handle 永遠分開管理，避免「完成動畫 = 解除凍結」的隱含假設。
+
+---
+
+## 5. UTF-8 BOM 丟失 → Cocos 不產 chunk [src: uk-slot-codegen]
+
+**症狀**：改完 .ts 後 runtime 報 `__unresolved_X`，Cocos Babel parser 報 `InvalidEscapeSequenceTemplate`。
+
+**根因**：Template .ts 是 UTF-8 with BOM（EF BB BF），`strReplace` / `WriteAllText` 類工具寫回時丟 BOM。
+
+**對策**：改既有 .ts 用 byte-level 操作（ReadAllBytes → 轉字串 → Replace → WriteAllBytes）保留 encoding。grep 看到 `?�` 亂碼 = 檔案已損壞，從 template 重新複製。
+
+---
+
+## 6. SYMBOL_COUNT 禁動態計算 [src: uk-slot-codegen]
+
+**症狀**：`Object.keys(Symbol).filter(...)` 算符號數，本機正常、build 後 runtime = 0。
+
+**根因**：Cocos bundler tree-shake 把 enum 反查代碼搖掉。
+
+**對策**：SYMBOL_COUNT 一律硬編碼數字，gate 驗證 enum member 數量與之相符。
+
+---
+
+## 7. Spine placeholder 必須用 .json [src: uk-slot-codegen]
+
+**症狀**：自產 .skel binary placeholder 永遠載入失敗。
+
+**根因**：Cocos 3.6.2 對 `.skel` 副檔名強制 binary parser，不做 JSON fallback；自產 binary 格式從未成功。
+
+**對策**：placeholder 用 .json 格式 + keyframe 帶位移（`x: 0.01`，否則不觸發 complete）；正式美術交付後直接換 .skel。
+
+---
+
+## 8. Mock 資料欄位不完整 → 報獎整段被跳過 [src: uk-slot-codegen]
+
+**症狀**：Mock spin 正常轉，但 BigWin / 報獎永遠不觸發。
+
+**根因**：mock IRoundInfo 缺 `RoundWin` → AwardState 的 `rate = undefined / bet = NaN` → `rate > 0` 為 false，整段報獎邏輯靜默跳過。陣列欄位給 undefined 也會 `.length` crash。
+
+**對策**：每個 mock mode 都設 RoundWin；所有陣列欄位給空陣列；mock 物件加 proto type annotation 讓 tsc 攔缺欄位。
+
+---
+
+## 9. 規格書 "Scatter_XXX" ≠ 程式的 SCATTER_SYMBOL [src: uk-slot-codegen]
+
+**症狀**：NearWin 永遠不觸發，或 FG 觸發判定錯符號。
+
+**根因**：規格書常把 Feature Symbol 命名為 Scatter_Expand / Scatter_Bomb 等，但 `SCATTER_SYMBOL` 只放「觸發 FG / NearWin 累計」的那一顆。且 NearWinDetector 用 `===` 比對——SCATTER_SYMBOL 必須是單一 enum member，不可 array 或裸數字。
+
+**對策**：判斷依據是「是否觸發 FG / 參與 NearWin」，不是名字；多種 Scatter 變體選一顆當門檻代表，需要全清單另開 `SCATTER_SYMBOLS` array。
+
 ## 相關
 
 - [[uk-slot]] — 專案群總覽與技術棧約束
+- `uk-slot-codegen` skill（同事的 codegen pipeline）— 條目 5~9 來源，完整踩坑見其 `_pitfalls.md`

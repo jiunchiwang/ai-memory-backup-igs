@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-08T20:13:58.204Z",
+  "_last_updated_at": "2026-07-09T20:30:57.457Z",
   "skills": {
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-07-08T20:04:22.120Z",
-      "use_count": 41,
-      "last_reason": "執行完整 memory-to-skill 流程：掃描 sessions、識別 pattern、比對 ms- skill、抽取 rationale、搬移",
+      "last_agent_used_at": "2026-07-09T20:09:40.064Z",
+      "use_count": 42,
+      "last_reason": "掃描 12 個 session 檔，四問+confidence 嚴篩 0 新建 0 更新、1 條新 rationale fact（Proto.ts vs codegen replace-all）、candidates 更新 external-repo-absorption count=5 達門檻、12 檔搬移 oldSessions",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +15,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-08T20:13:58.204Z",
-      "use_count": 26,
-      "last_reason": "wikilint 步驟——19 頁全檢，0 stale/0 orphan（修復 1 格式錯位+2 頁搬目錄）/0 斷連",
+      "last_agent_used_at": "2026-07-09T20:30:57.457Z",
+      "use_count": 29,
+      "last_reason": "wikilint 步驟——19 頁全檢，1 stale 已修復（uk-917 +3 facts）、0 orphan、0 斷連",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -38,7 +38,7 @@
       "last_agent_used_at": "2026-07-06T12:47:08.454Z",
       "use_count": 1,
       "last_reason": "SKILL.md 避免寫死機器絕對路徑，模板以名稱引用",
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -118,7 +118,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -128,7 +128,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -138,7 +138,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -148,7 +148,7 @@
       "last_agent_used_at": "2026-07-08T08:40:11.777Z",
       "use_count": 1,
       "last_reason": "審查 Rich Messages 升級方案，比對 streaming/final 雙路共用 transform 的四組已知坑",
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -158,7 +158,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -168,7 +168,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -178,7 +178,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -188,7 +188,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -268,7 +268,7 @@
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
-      "pinned": false,
+      "pinned": true,
       "notes": null,
       "orphan": false
     },
@@ -285,9 +285,9 @@
     "sync-fork-from-upstream": {
       "created_at": "2026-07-06T02:51:00.564Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-06T02:51:00.564Z",
-      "use_count": 1,
-      "last_reason": "同步 telegram-kiro-bridge fork 到 upstream redkilin/telegram-kiro-bridge 最新 8 commit，用拋棄式分支試合併後 ff-only 合入 main",
+      "last_agent_used_at": "2026-07-09T01:57:13.234Z",
+      "use_count": 2,
+      "last_reason": "執行 fork ← upstream 半自動同步流程：拋棄式分支 merge + tsc 品質閘 + 人工確認後 push",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -295,9 +295,9 @@
     "uk-slot-spec-to-impl": {
       "created_at": "2026-07-07T00:59:23.331Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-07T02:23:18.478Z",
-      "use_count": 3,
-      "last_reason": "執行M0a起新專案五步驟|",
+      "last_agent_used_at": "2026-07-09T12:27:22.955Z",
+      "use_count": 4,
+      "last_reason": "完整走步驟0~3：xlsx→spec→dev-spec→SPEC.md，過程中發現5個流程偏離並回饋改善skill正本",
       "pinned": false,
       "notes": null,
       "orphan": false
