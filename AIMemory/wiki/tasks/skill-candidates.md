@@ -17,10 +17,9 @@
   - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）
   - 觀察點：若 dream 報告格式穩定且處理流程可模板化
 
-- [ ] **external-repo-absorption-methodology** | count=5 | score=0.80 | **已達升格門檻，待使用者確認是否新建 ms- skill**
-  - 代表 session: 2026-06-30 ai_multi_agent 研究→吸收 3 個 P0 改進、2026-07-01 AI-DLC Power 研究→借鏡 4 點、2026-07-02 侯智薰 7 層架構研究→觸發 P1 user-profile 獨立化、2026-07-07T11-48 ai_multi_agent 增量差距分析→session resume 移植（方案 ABC 評估→計畫→委派實作）、**2026-07-09 同事 uk-slot-codegen skill 評估整合（review zip→compare with own skills→5-item plan→disposable probe→feedback doc→bundle）**
-  - 觀察點：第 5 次完整循環（步驟同構：評估→比對既有→方案→逐項風險→實作→驗證），score=0.80 達門檻；使用者指示「寧缺勿濫」，暫不自動升格
-  - 與 research-to-html-report 區別：該候選是「研究過程中產 HTML 報告」的輸出格式；本候選是「外部 repo/skill 吸收方法論」的輸入流程
+- [x] **external-repo-absorption-methodology** | count=5 | score=0.80 | **已升格為 ms-external-repo-absorption (2026-07-10)**
+  - 正本：`AI-canonical/skills/general/ms-external-repo-absorption/SKILL.md`
+  - 代表 session: ai_multi_agent 2 次、AI-DLC Power、侯智薰 7 層、同事 codegen skill
 
 - [ ] **agent-cli-config-hook-portability** | count=3 | score=0.48 | 留底觀察
   - Pattern：各 agent CLI 的設定檔與 hook 體系互不通用（Kiro 讀 AGENTS.md+steering、Codex 讀 AGENTS.md、Claude 讀 CLAUDE.md；hook 體系 Claude settings.json 可 exit 2 阻擋 / Kiro 自有格式 / Codex 無 blocking hook），切換 ACP adapter 時規範與閘門會靜默消失
@@ -42,6 +41,7 @@
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
 - ~~"slot" pattern（3 sessions）~~ — 2026-07-10 判定誤判：頻率偵測抓到的 3 次「slot」出現是查詢 codegen 修正狀態的問句（「請問我本機的uk-slot-codegen skill是否都有把之前測試的問題修正了?」），非可重用技術模式
+- ~~"fable relevance" / "背景 bug" / "bug 清單與修正" / "教訓 commit" / "commit 紀錄" / "紀錄 相關" / "fable" / "relevance" / "bug" 等 10 個 pattern（各 3 sessions）~~ — 2026-07-11 判定誤判：全部來自 bridge wiki retrieval 注入的 header `## [[fable]] (relevance 0.70) - 背景 - Bug 清單與修正 - 教訓 - Commit 紀錄 - 相關`，是 metadata 而非使用者行為模式（與 "score" 先例同類）
 
 ---
-Last updated: 2026-07-10
+Last updated: 2026-07-11

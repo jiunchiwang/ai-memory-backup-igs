@@ -1,0 +1,262 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-10 11:36pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (20,597 tokens to read)
+- Work investment: 215,582 tokens spent on research, building, and decisions
+- Your savings: 90% reduction from reuse
+
+### Jul 10, 2026
+
+**#S1548** Validation testing of draft streaming fixes from previous session (Jul 10, 7:33 PM)
+
+**#S1549** Clarifying agent switching behavior and model defaults when switching to Claude backend (Jul 10, 7:38 PM)
+
+**#S1550** Verify current AI model configuration and identify discrepancy between .env settings and active session model (Jul 10, 7:45 PM)
+
+**#S1551** Model verification revealed configuration conflict between global settings.json and bridge ACP provider config (Jul 10, 7:46 PM)
+
+**#S1552** Verify current AI model and ensure telegram-kiro-bridge sessions use Fable 5 (Jul 10, 7:52 PM)
+
+**#S1553** User requested verification of Claude's current AI model configuration (duplicate of previous session) (Jul 10, 8:01 PM)
+
+**#S1554** Draft streaming display bugs identified: message truncation when new content appears above and intermittent message disappearance (Jul 10, 8:10 PM)
+
+**#S1555** Review today's project changes in telegram-kiro-bridge repository (Jul 10, 8:13 PM)
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4536 | 8:16 PM | 🔵 | Draft API Configuration and Documentation Limitations |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4537 | " | 🔵 | Bot API Draft Methods Documentation Gap |  |  |
+| #4538 | 8:17 PM | 🔵 | Draft Message Method Constraints Partially Clarified |  |  |
+| #4539 | " | 🔵 | Draft Message TTL and Rate Limits Confirmed |  |  |
+
+**SPEC-draft-streaming.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4540 | 8:18 PM | 🔵 | Draft Streaming Implementation Specification Review |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4541 | " | 🔵 | Streaming Update Interval Configuration |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4542 | 8:19 PM | 🔵 | Telegram Client Draft Animation Behavior Explains Truncation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4543 | 8:21 PM | 🔵 | Final Delivery Safety Net and Multi-Path Finalization |  |  |
+
+**scripts/check-draft-streaming.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4544 | " | 🔵 | Draft Streaming Smoke Test Coverage |  |  |
+
+**scripts/check-streaming-token-strip.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4545 | 8:23 PM | 🔵 | Existing Streaming Test Focuses on Token Stripping Not Budget Stability |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4546 | 8:25 PM | 🔴 | New renderDraftReply Function Reorders Components for Append-Only Streaming |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4547 | " | ✅ | Import renderDraftReply into run-prompt Module |  |  |
+| #4548 | 8:26 PM | 🔴 | Integrated renderDraftReply and Added Draft Keepalive Timer |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4549 | 11:03 PM | 🔴 | Fixed Telegram draft streaming display rollback |  |  |
+| #4550 | 11:04 PM | ✅ | Validated draft streaming fixes with comprehensive test suite |  |  |
+
+**AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4551 | 11:05 PM | ✅ | Documented Telegram draft animation semantics and rendering requirements |  |  |
+
+**SPEC-draft-streaming.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4552 | 11:06 PM | 🔵 | Draft streaming design assumptions disproven by real-world testing |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4553 | 11:07 PM | ✅ | Draft streaming handles empty content with plain mode fallback |  |  |
+| #4554 | " | 🔴 | Fixed draft keepalive sentinel collision with empty content |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4555 | 11:08 PM | ✅ | Committed draft streaming display fixes to repository |  |  |
+
+**#S1556** Investigate why Claude Fable 5 model isn't being recognized in the ACP adapter setup (Jul 10, 11:17 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4556 | 11:19 PM | ✅ | Pushed commits to remote main branch |  |  |
+
+**src/acp-providers.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4557 | " | 🔵 | ACP backend hot-swap configuration system |  |  |
+
+**..\..\AI\AIMemory\config\acp-providers.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4558 | 11:20 PM | 🔵 | Active ACP provider configuration with three backends |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4559 | " | 🔵 | Model and effort pinning implementation via session/set_config_option |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4560 | " | 🔵 | Model and effort configuration flow across the system |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4561 | " | 🔵 | Provider creation and backend switching architecture |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4562 | 11:21 PM | 🔵 | Session resumption flow and model pinning skip logic |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4563 | " | 🔵 | Session resume validation and candidate resolution flow |  |  |
+
+**src/session-registry.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4564 | " | 🔵 | Session registry persistence structure and management |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\claude-agent-acp.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4565 | 11:22 PM | 🔵 | Claude-agent-acp installation and active session state |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4566 | " | 🔵 | Claude adapter and SDK versions installed |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\index.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4567 | " | 🔵 | Adapter model handling architecture confirmed |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4568 | " | 🔵 | Claude adapter architecture and bundled distribution |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4569 | 11:23 PM | 🔵 | Model resolution fuzzy matching algorithm in adapter |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\cli.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4570 | " | 🔵 | Bundled SDK lacks Fable model definitions causing fallback to opus-4.6 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4571 | " | 🔵 | setSessionConfigOption model validation and resolution flow |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4572 | 11:24 PM | 🔵 | Latest adapter version already installed with outdated SDK dependency |  |  |
+| #4573 | " | 🔵 | SDK version gap reveals Fable support added in 0.3.x series |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4574 | 11:26 PM | 🔵 | Alternative adapter package even more outdated with SDK 0.2.44 |  |  |
+| #4575 | " | 🔵 | setSessionConfigOption error handling explains silent fallback behavior |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\npm-cache\_logs\2026-07-10T15_29_16_119Z-eresolve-report.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4576 | 11:29 PM | 🔵 | SDK upgrade blocked by peer dependency conflict |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4577 | 11:30 PM | ✅ | Upgraded claude-agent-acp bundled SDK to 0.3.206 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\bridge.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4578 | 11:31 PM | 🔵 | SDK 0.3.206 uses different bundle structure than 0.2.83 |  |  |
+| #4579 | " | 🔵 | SDK 0.3.206 includes Fable model support |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\sdk.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4580 | " | 🔵 | SDK 0.3.206 dynamically resolves Claude Code executable path |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4581 | 11:32 PM | 🔵 | ACP client initialization uses protocol version 1 |  |  |
+
+**test-acp-model.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4582 | " | ✅ | Created integration test to verify Fable 5 model support |  |  |
+| #4583 | 11:33 PM | 🔴 | Manual SDK upgrade successfully enables Fable 5 model support |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4584 | " | ✅ | Documented SDK upgrade workaround in project AI.md |  |  |
+| #4585 | " | ✅ | Committed and pushed SDK upgrade documentation to repository |  |  |
+
+**#S1557** Review today's project changes and fix Fable 5 model support in Claude agent ACP adapter (Jul 10, 11:34 PM)
+
+**Investigated**: Global adapter directory SDK dependencies, peer dependency conflicts, ACP session initialization and model resolution behavior
+
+**Learned**: The old nested SDK (0.2.83) in the global claude-agent-acp adapter didn't support Fable 5. Upgrading to SDK 0.3.206 resolved model recognition and made claude-fable-5[1m] the default session model. The new SDK has stricter peer dependency requirements (@anthropic-ai/sdk@>=0.93.0) that also needed upgrading. Bridge model pin resolution now works correctly without adapter code changes.
+
+**Completed**: Upgraded nested SDK from 0.2.83 to 0.3.206 in %APPDATA%\npm\node_modules\@zed-industries\claude-agent-acp directory. Resolved peer dependency conflicts by upgrading @anthropic-ai/sdk. Tested ACP session initialization, model list, and default model selection. Documented the local patch workaround in AI.md (commit 91f64e2, pushed) with warnings that npm reinstalls will require reapplying the patch.
+
+**Next Steps**: User needs to restart the Telegram bridge's claude session (/agent claude or /restart) to spawn a new adapter process that picks up the SDK changes, then verify the full prompt flow works correctly with Fable 5
+
+
+Access 216k tokens of past research & decisions for just 20,597t. Use MCP search tools to access memories by ID.

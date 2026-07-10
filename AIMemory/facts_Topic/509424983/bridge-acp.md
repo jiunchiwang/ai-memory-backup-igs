@@ -20,3 +20,4 @@
 - [f_7bf9a8] [2026-07-07T13:20:25.879Z] 使用者的 bridge 主 session model 為 claude-fable-5[1m]（1M context 變體）——這是 session 層 runtime 設定；.env 的 ACP_MODEL 仍是 claude-fable-5（無 [1m] 後綴），兩者屬不同層、與 f_392c22 不矛盾（2026-07-08 消歧義）
 - [f_50d5f5] [2026-07-08T05:55:13.683Z] Claude Fable 5 在 2026-07-08 碰到安全分類器 false positive（Usage Policy violation error），透過 claude-agent-acp ACP 路徑會直接拋 -32603 error 而非 fallback 到 Opus 4.8；使用者決定先觀望不換 model
 - [f_2f4ae9] [2026-07-09T02:31:07.102Z] claude-agent-acp 不支援 effort config option——session/set_config_option 設 effort 會回 -32603 Unknown config option，bridge 已 graceful ignore 屬已知限制非故障（model pin 本身正常）；check-acp-model-effort 因此必然報 effort 拒絕
+- [f_121c69] [2026-07-10T07:40:29.748Z] telegram-kiro-bridge 借鏡 fable-advisor（echo-of-machines/fable-advisor）的 context packaging pattern（commit 4c1cfd5）：RELAY_DELEGATE 和 PARALLEL_DELEGATE 的 goal prompt 從三要素擴充為五要素（加「已知背景」「待決問題」）、PARALLEL_DELEGATE 加決策型/調查型兩種 context 模式指引、兩處加結果權重協議（給認真權重，僅經驗性失敗或一手資料矛盾時不採納）

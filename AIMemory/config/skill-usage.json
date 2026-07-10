@@ -1,13 +1,23 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-09T20:30:57.457Z",
+  "_last_updated_at": "2026-07-10T20:17:06.316Z",
   "skills": {
+    "ms-external-repo-absorption": {
+      "created_at": "2026-07-10T00:00:00.000Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": "upgraded from skill-candidates (count=5, score=0.80)",
+      "orphan": false
+    },
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-07-09T20:09:40.064Z",
-      "use_count": 42,
-      "last_reason": "掃描 12 個 session 檔，四問+confidence 嚴篩 0 新建 0 更新、1 條新 rationale fact（Proto.ts vs codegen replace-all）、candidates 更新 external-repo-absorption count=5 達門檻、12 檔搬移 oldSessions",
+      "last_agent_used_at": "2026-07-10T20:03:23.455Z",
+      "use_count": 43,
+      "last_reason": "完整流程執行：掃描 23 個 session、confidence scoring 篩選、比對 12 個 ms- skill frontmatter、頻率候選誤判判定、rationale fact 抽取",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -15,9 +25,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-09T20:30:57.457Z",
-      "use_count": 29,
-      "last_reason": "wikilint 步驟——19 頁全檢，1 stale 已修復（uk-917 +3 facts）、0 orphan、0 斷連",
+      "last_agent_used_at": "2026-07-10T20:17:06.316Z",
+      "use_count": 32,
+      "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -95,16 +105,6 @@
     "huashu-slides": {
       "created_at": "2026-02-23T13:13:08.000Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.195Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": false
-    },
-    "knowhow-accumulation": {
-      "created_at": "2026-05-29T13:04:22.387Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.200Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -192,29 +192,9 @@
       "notes": null,
       "orphan": false
     },
-    "non-engineer-agent-design": {
-      "created_at": "2026-05-29T13:03:49.224Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.273Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": false
-    },
     "self-eval-prompt-pattern": {
       "created_at": "2026-05-29T13:04:56.604Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.278Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
-      "pinned": false,
-      "notes": null,
-      "orphan": false
-    },
-    "skill-creator": {
-      "created_at": "2026-02-24T17:26:48.000Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.283Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -309,8 +289,8 @@
       "use_count": 1,
       "last_reason": "寫入uk_917專案CLAUDE.md開發規範",
       "pinned": false,
-      "notes": null,
-      "orphan": true
+      "notes": "custom command (AI-canonical-corp/commands/), not a skill — orphan detection is false positive",
+      "orphan": false
     }
   }
 }

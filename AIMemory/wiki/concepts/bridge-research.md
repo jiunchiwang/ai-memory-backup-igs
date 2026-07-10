@@ -118,20 +118,20 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 
 P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 session」基礎設施但方向不同——反思升級 vs 壓縮上下文）。
 
-### Rich Messages Draft 化（Roadmap P2，大型）
+### Rich Messages Draft 化（✅ 2026-07-10，commit e3a3a45）
 
 - **背景**：Bot API 10.1（2026-06-11）新增 `sendRichMessageDraft`，grammY 1.44 已 type-safe 支援，官方 `@grammyjs/stream` v1.1.0 封裝 draft lifecycle
 - **PoC 結果**（2026-07-08，commit b265a72）：
   - R-1 **失敗**：plugin 是 append-only 累積（yield 出去的字收不回），與 bridge 現有「整 buffer 重跑 transform → 整份 replace」streaming 模型不相容
   - R-2 通過：`replyWithMarkdownStream` 回傳 message_id + 支援 reply_markup，ASK 按鈕可行
-  - 結論：draft 化需重寫為 hold-back incremental emitter + 無 placeholder 流程，屬大型任務
+- **關鍵發現**（2026-07-10）：PoC R-1 失敗是 plugin 設計，非 API 限制。Raw API `sendRichMessageDraft` 同 `draft_id` 重複呼叫 = **全量替換 + 動畫**，與 rebuild-replace 模型完全相容，不需 hold-back emitter
+- **實作（Path A — Raw Draft API + Rebuild-Replace）**：
+  - `trySendDraft()` 新增於 `telegram-rich-renderer.ts`（plain/rich 雙模式）
+  - `run-prompt.ts` 三處改動：placeholder → draft、editNow → draft、final → sendRichMessage 持久化
+  - `TG_DRAFT_ENABLED` env var（預設開）；relay/group/非 private chat 走現有 fallback
+  - 24 assertions smoke test（`check-draft-streaming.mjs`）
+  - 設計文檔：`SPEC-draft-streaming.md`（BC-1~BC-8）
 - **已修小 bug**（commit ce0e1ac）：`tryEditRichMessageDraft` 補 catch，rich edit 失敗收斂回 false 走 plain fallback
-- **修正先前誤解**：
-  - `editMessageText + rich_message` 參數是合法 Bot API 10.1 用法，bridge 現有 rich 渲染已在生效（表格/高亮/LaTeX），非假 rich，只缺 draft 動畫
-  - 「sendRichMessageDraft 不受 429 限流」是誤解——真實收益是 draft 幀可跳過不丟資料，final sendRichMessage 照樣受限流
-  - grammY `api.raw` 是 Proxy，任意 method 名都回傳 callable——typeof guard 是死碼，能力偵測要靠 catch API 錯誤
-- **啟動方式**：從 `/dev-design` 起步，設計 hold-back emitter
-- **完整評估**：見 `docs/pending-roadmap.html` Section 7
 
 ### Ruflo（前 Claude Flow，⭐46.6k）
 

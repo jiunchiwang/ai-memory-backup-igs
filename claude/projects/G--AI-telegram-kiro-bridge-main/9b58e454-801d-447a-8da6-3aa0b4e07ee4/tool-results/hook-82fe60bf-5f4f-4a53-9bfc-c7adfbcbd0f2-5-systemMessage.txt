@@ -1,0 +1,183 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-10 11:58pm GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (20,013 tokens to read)[0m
+[2m  Work investment: 229,498 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 91% reduction from reuse[0m
+
+[1m[36mJul 10, 2026[0m
+
+[33m#S1553[0m User requested verification of Claude's current AI model configuration (duplicate of previous session) (Jul 10, 8:01 PM)
+
+[33m#S1554[0m Draft streaming display bugs identified: message truncation when new content appears above and intermittent message disappearance (Jul 10, 8:10 PM)
+
+[33m#S1555[0m Review today's project changes in telegram-kiro-bridge repository (Jul 10, 8:13 PM)
+
+[2mAI.md[0m
+  [2m#4551[0m  [2m11:05 PM[0m  ✅  Documented Telegram draft animation semantics and rendering requirements  
+
+[2mSPEC-draft-streaming.md[0m
+  [2m#4552[0m  [2m11:06 PM[0m  🔵  Draft streaming design assumptions disproven by real-world testing  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4553[0m  [2m11:07 PM[0m  ✅  Draft streaming handles empty content with plain mode fallback  
+  [2m#4554[0m            🔴  Fixed draft keepalive sentinel collision with empty content  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4555[0m  [2m11:08 PM[0m  ✅  Committed draft streaming display fixes to repository  
+
+[33m#S1556[0m Investigate why Claude Fable 5 model isn't being recognized in the ACP adapter setup (Jul 10, 11:17 PM)
+
+[2mGeneral[0m
+  [2m#4556[0m  [2m11:19 PM[0m  ✅  Pushed commits to remote main branch  
+
+[2msrc/acp-providers.ts[0m
+  [2m#4557[0m            🔵  ACP backend hot-swap configuration system  
+
+[2m..\..\AI\AIMemory\config\acp-providers.json[0m
+  [2m#4558[0m  [2m11:20 PM[0m  🔵  Active ACP provider configuration with three backends  
+
+[2msrc/acpClient.ts[0m
+  [2m#4559[0m            🔵  Model and effort pinning implementation via session/set_config_option  
+
+[2msrc/config.ts[0m
+  [2m#4560[0m            🔵  Model and effort configuration flow across the system  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4561[0m            🔵  Provider creation and backend switching architecture  
+
+[2msrc/acpClient.ts[0m
+  [2m#4562[0m  [2m11:21 PM[0m  🔵  Session resumption flow and model pinning skip logic  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4563[0m            🔵  Session resume validation and candidate resolution flow  
+
+[2msrc/session-registry.ts[0m
+  [2m#4564[0m            🔵  Session registry persistence structure and management  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\claude-agent-acp.ps1[0m
+  [2m#4565[0m  [2m11:22 PM[0m  🔵  Claude-agent-acp installation and active session state  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json[0m
+  [2m#4566[0m            🔵  Claude adapter and SDK versions installed  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\index.js[0m
+  [2m#4567[0m            🔵  Adapter model handling architecture confirmed  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist[0m
+  [2m#4568[0m            🔵  Claude adapter architecture and bundled distribution  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4569[0m  [2m11:23 PM[0m  🔵  Model resolution fuzzy matching algorithm in adapter  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\cli.js[0m
+  [2m#4570[0m            🔵  Bundled SDK lacks Fable model definitions causing fallback to opus-4.6  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4571[0m            🔵  setSessionConfigOption model validation and resolution flow  
+
+[2mGeneral[0m
+  [2m#4572[0m  [2m11:24 PM[0m  🔵  Latest adapter version already installed with outdated SDK dependency  
+  [2m#4573[0m            🔵  SDK version gap reveals Fable support added in 0.3.x series  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4574[0m  [2m11:26 PM[0m  🔵  Alternative adapter package even more outdated with SDK 0.2.44  
+  [2m#4575[0m            🔵  setSessionConfigOption error handling explains silent fallback behavior  
+
+[33m#S1557[0m Review today's project changes and fix Fable 5 model support in Claude agent ACP adapter (Jul 10, 11:26 PM)
+
+[2mC:\Users\jiunchiwang\AppData\Local\npm-cache\_logs\2026-07-10T15_29_16_119Z-eresolve-report.txt[0m
+  [2m#4576[0m  [2m11:29 PM[0m  🔵  SDK upgrade blocked by peer dependency conflict  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json[0m
+  [2m#4577[0m  [2m11:30 PM[0m  ✅  Upgraded claude-agent-acp bundled SDK to 0.3.206  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\bridge.mjs[0m
+  [2m#4578[0m  [2m11:31 PM[0m  🔵  SDK 0.3.206 uses different bundle structure than 0.2.83  
+  [2m#4579[0m            🔵  SDK 0.3.206 includes Fable model support  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\sdk.mjs[0m
+  [2m#4580[0m            🔵  SDK 0.3.206 dynamically resolves Claude Code executable path  
+
+[2m..\..\AI\telegram-kiro-bridge-main\src\acpClient.ts[0m
+  [2m#4581[0m  [2m11:32 PM[0m  🔵  ACP client initialization uses protocol version 1  
+
+[2mtest-acp-model.mjs[0m
+  [2m#4582[0m            ✅  Created integration test to verify Fable 5 model support  
+  [2m#4583[0m  [2m11:33 PM[0m  🔴  Manual SDK upgrade successfully enables Fable 5 model support  
+
+[2m..\..\AI\telegram-kiro-bridge-main\AI.md[0m
+  [2m#4584[0m            ✅  Documented SDK upgrade workaround in project AI.md  
+  [2m#4585[0m            ✅  Committed and pushed SDK upgrade documentation to repository  
+
+[33m#S1558[0m Model status check - confirming current Claude model version (Jul 10, 11:34 PM)
+
+[33m#S1559[0m Comprehensive security and correctness review of status web UI, followed by user selection to fix all 6 identified issues (Jul 10, 11:38 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4586[0m  [2m11:43 PM[0m  🟣  Specialist Dashboard Web UI - Multi-Page SPA with API Backend  
+
+[33m#S1560[0m Status server security hardening - 6 vulnerability fixes for specialist dashboard (Jul 10, 11:48 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4587[0m  [2m11:48 PM[0m  🔴  Status server crash protection and localhost-only binding  
+  [2m#4588[0m  [2m11:49 PM[0m  🔴  Removed permissive CORS headers from status server  
+  [2m#4589[0m            🔴  Added safe URL decoding and environment variable masking  
+  [2m#4590[0m            🔴  Fixed artifact filename parsing for taskIds with underscores  
+  [2m#4591[0m            🔴  Fixed fact text extraction to exclude timestamp prefix  
+
+[2m.env.example[0m
+  [2m#4592[0m  [2m11:50 PM[0m  🔵  Reviewed .env.example tail before adding STATUS_BIND_HOST documentation  
+
+[2mstatus-app/index.html[0m
+  [2m#4593[0m            🔴  Fixed cancel button to show correct status based on server response  
+
+[2m.env.example[0m
+  [2m#4594[0m            ✅  Added STATUS web UI environment variable documentation  
+
+[2mGeneral[0m
+  [2m#4595[0m            ✅  TypeScript type checking passed after all status-server security fixes  
+
+[2msrc/status-server.ts[0m
+  [2m#4596[0m  [2m11:51 PM[0m  ✅  Verified all security fixes are properly integrated in status-server.ts  
+
+[2m.tmp-regex-test.mjs[0m
+  [2m#4597[0m            ✅  Created test script to verify regex patterns and safeDecode behavior  
+  [2m#4598[0m            ✅  Verified all regex patterns and safeDecode function work correctly  
+
+[2m.env.example[0m
+  [2m#4599[0m            ✅  Confirmed STATUS environment variable documentation added to .env.example  
+
+[33m#S1561[0m User asked about current model version after completion of status server fixes and documentation updates (Jul 10, 11:52 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4600[0m  [2m11:53 PM[0m  🔴  Status server crash prevention and security hardening  
+
+[33m#S1562[0m Model verification check - confirming current model after Fable 5 pin fix (Jul 10, 11:55 PM)
+
+[34mInvestigated:[0m Current active model in telegram-kiro-bridge session; status server security posture; artifacts filename parsing logic
+
+[33mLearned:[0m claude-agent-acp Fable 5 model pin fix (commit 91f64e2) is now active - bridge Claude backend session running claude-fable-5 instead of previous Opus 4.6; bridge architecture has global unhandledRejection handler in index.ts that calls process.exit(1), meaning any uncaught async error in HTTP handlers will kill entire bridge; AIMemory artifacts filename format <date>_<taskId>_<specialist>_<slug>.json cannot be parsed with positional split('_') because taskId itself contains underscores
+
+[32mCompleted:[0m status server security hardening (commit c9174e3) - async error boundaries, safeDecode for malformed URLs, default bind to 127.0.0.1, removed CORS wildcard, env secret masking in detail API, specialist whitelist for preamble path traversal prevention, regex-based artifact filename parsing anchored to specialist name, corrected facts line parsing for timestamp prefix, Live View cancel button state tracking
+
+[35mNext Steps:[0m Model verification complete; bridge restart needed to apply status server security fixes; session continues with Fable 5 model active
+
+
+[2mAccess 229k tokens of past research & decisions for just 20,013t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

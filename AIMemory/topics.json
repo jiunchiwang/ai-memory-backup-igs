@@ -88,6 +88,45 @@
     ]
   },
   {
+    "topic": "bridge-streaming",
+    "keywords": [
+      "streaming 截斷",
+      "draft streaming",
+      "draft api",
+      "draft lifecycle",
+      "sendrichmessage",
+      "sendmessagedraft",
+      "sendrichmessagedraft",
+      "usedraftmode",
+      "tg_draft",
+      "trysend",
+      "editnow",
+      "placeholder guard",
+      "4096",
+      "tg_max",
+      "body budget",
+      "html 膨脹",
+      "post-html",
+      "renderreply",
+      "markdown 密集",
+      "entity-aware",
+      "@gramio/split",
+      "message splitter",
+      "streaming 策略",
+      "tail-truncation",
+      "rate limit",
+      "429",
+      "retry_after",
+      "限流",
+      "autoretry",
+      "maxdelayseconds",
+      "draft ttl",
+      "ephemeral draft",
+      "rich message",
+      "@grammyjs/stream"
+    ]
+  },
+  {
     "topic": "bridge-acp",
     "keywords": [
       "claude-agent-acp",
@@ -237,7 +276,17 @@
       "topics.json",
       "smoke script",
       "smoke test",
-      "rich-renderer"
+      "rich-renderer",
+      "specialist dashboard",
+      "specialist 監控",
+      "status server",
+      "status-server",
+      "status_bind_host",
+      "unhandledrejection",
+      "錯誤邊界",
+      "process.exit",
+      "electron 視窗",
+      "mini app"
     ]
   },
   {

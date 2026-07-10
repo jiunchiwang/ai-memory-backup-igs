@@ -73,3 +73,11 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_d7548f] [2026-07-07T20:38:22.816Z] uk-conventions skill 在 usage store 且 harness 可用，但實體不在 ~/.claude/skills 也不在 ~/.kiro/skills，來源待查（可能專案級或 plugin 載入）
 - [2026-07-09T20:26:21.464Z] user=509424983 query="telegram-kiro-bridge 已於 2026-07-09 同步 upstream 至 dd63cd4" deleted=1 token=forget-9b3e61c6-1
     - [f_b12677] [2026-07-09T01:57:54.687Z] telegram-kiro-bridge 已於 2026-07-09 同步 upstream 至 dd63cd4（8 個 commit，含 session archive staleness gate、tool-use 訊息摺疊 UI、doctor specialist-domains 健檢、preamble 交辦三要素等），merge 乾淨無衝突已 push origin/main；生產 bridge 需 rebuild（tsc -p .）+ 重啟才生效
+- [2026-07-10T20:13:40.605Z] user=509424983 query="external-repo-absorption-methodology 從 skill-candidates 升格為正式" deleted=1 token=forget-8c5be7f4-1
+    - [f_30c844] [2026-07-10T00:12:51.622Z] 使用者確認將 external-repo-absorption-methodology 從 skill-candidates 升格為正式 skill ms-external-repo-absorption（AI-canonical commit 542a20a），5 次同構循環達門檻
+- [2026-07-10T20:13:49.048Z] user=509424983 query="preamble 強化 commit 4c1cfd5 已於 2026-07-11 驗證正確" deleted=1 token=forget-189e4697-1
+    - [f_235a08] [2026-07-10T16:07:35.320Z] telegram-kiro-bridge 的 preamble 強化 commit 4c1cfd5 已於 2026-07-11 驗證正確：tsc 通過、ceiling 5884/8000 chars、PARALLEL_DELEGATE 新五要素文案確認落在被量測的 fixed core 內、運行中 bridge 的實際 preamble 已逐字生效、相關 smoke 全過
+- [2026-07-10T20:13:57.366Z] user=509424983 query="Fable 5 model pin 修復（commit 91f64e2 nested SDK 手動升級）已驗證生效" deleted=1 token=forget-b7da4a7d-1
+    - [f_79a52f] [2026-07-10T15:54:46.752Z] claude-agent-acp 的 Fable 5 model pin 修復（commit 91f64e2 nested SDK 手動升級）已驗證生效：bridge Claude backend session 實際跑 claude-fable-5（先前 session 為 Opus 4.6）
+- [2026-07-10T20:14:05.693Z] user=509424983 query="已完成 Specialist Dashboard v1（feat/specialist-dashboard 分支 3 commits merged" deleted=1 token=forget-570a61f8-1
+    - [f_d98d05] [2026-07-10T09:30:03.955Z] telegram-kiro-bridge 已完成 Specialist Dashboard v1（feat/specialist-dashboard 分支 3 commits merged to main）：status-server 新增 6 個 specialist API endpoints（設定/preamble/歷史/產出物/facts）、status-app/index.html 重寫為 hash-based SPA（Dashboard 卡片總覽 + Specialist Detail 五 tab + Live View SSE）、/status 指令移除 Electron 改用 web_app 按鈕（STATUS_HTTPS_URL env var 控制）+ fallback URL、status-app/main.js 與 package.json 已刪除

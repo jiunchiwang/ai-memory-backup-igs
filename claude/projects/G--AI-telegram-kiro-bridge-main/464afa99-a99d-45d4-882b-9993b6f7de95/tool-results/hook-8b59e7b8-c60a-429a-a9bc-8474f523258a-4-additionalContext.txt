@@ -1,0 +1,248 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-11 12:17am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,922 tokens to read)
+- Work investment: 191,068 tokens spent on research, building, and decisions
+- Your savings: 90% reduction from reuse
+
+### Jul 10, 2026
+
+**#S1553** User requested verification of Claude's current AI model configuration (duplicate of previous session) (Jul 10, 8:01 PM)
+
+**#S1554** Draft streaming display bugs identified: message truncation when new content appears above and intermittent message disappearance (Jul 10, 8:10 PM)
+
+**#S1555** Review today's project changes in telegram-kiro-bridge repository (Jul 10, 8:13 PM)
+
+**#S1556** Investigate why Claude Fable 5 model isn't being recognized in the ACP adapter setup (Jul 10, 11:17 PM)
+
+**src/acp-providers.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4557 | 11:19 PM | 🔵 | ACP backend hot-swap configuration system |  |  |
+
+**..\..\AI\AIMemory\config\acp-providers.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4558 | 11:20 PM | 🔵 | Active ACP provider configuration with three backends |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4559 | " | 🔵 | Model and effort pinning implementation via session/set_config_option |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4560 | " | 🔵 | Model and effort configuration flow across the system |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4561 | " | 🔵 | Provider creation and backend switching architecture |  |  |
+
+**src/acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4562 | 11:21 PM | 🔵 | Session resumption flow and model pinning skip logic |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4563 | " | 🔵 | Session resume validation and candidate resolution flow |  |  |
+
+**src/session-registry.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4564 | " | 🔵 | Session registry persistence structure and management |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\claude-agent-acp.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4565 | 11:22 PM | 🔵 | Claude-agent-acp installation and active session state |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4566 | " | 🔵 | Claude adapter and SDK versions installed |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\index.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4567 | " | 🔵 | Adapter model handling architecture confirmed |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4568 | " | 🔵 | Claude adapter architecture and bundled distribution |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4569 | 11:23 PM | 🔵 | Model resolution fuzzy matching algorithm in adapter |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\cli.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4570 | " | 🔵 | Bundled SDK lacks Fable model definitions causing fallback to opus-4.6 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4571 | " | 🔵 | setSessionConfigOption model validation and resolution flow |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4572 | 11:24 PM | 🔵 | Latest adapter version already installed with outdated SDK dependency |  |  |
+| #4573 | " | 🔵 | SDK version gap reveals Fable support added in 0.3.x series |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4574 | 11:26 PM | 🔵 | Alternative adapter package even more outdated with SDK 0.2.44 |  |  |
+| #4575 | " | 🔵 | setSessionConfigOption error handling explains silent fallback behavior |  |  |
+
+**#S1557** Review today's project changes and fix Fable 5 model support in Claude agent ACP adapter (Jul 10, 11:26 PM)
+
+**C:\Users\jiunchiwang\AppData\Local\npm-cache\_logs\2026-07-10T15_29_16_119Z-eresolve-report.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4576 | 11:29 PM | 🔵 | SDK upgrade blocked by peer dependency conflict |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4577 | 11:30 PM | ✅ | Upgraded claude-agent-acp bundled SDK to 0.3.206 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\bridge.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4578 | 11:31 PM | 🔵 | SDK 0.3.206 uses different bundle structure than 0.2.83 |  |  |
+| #4579 | " | 🔵 | SDK 0.3.206 includes Fable model support |  |  |
+
+**C:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\sdk.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4580 | " | 🔵 | SDK 0.3.206 dynamically resolves Claude Code executable path |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\acpClient.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4581 | 11:32 PM | 🔵 | ACP client initialization uses protocol version 1 |  |  |
+
+**test-acp-model.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4582 | " | ✅ | Created integration test to verify Fable 5 model support |  |  |
+| #4583 | 11:33 PM | 🔴 | Manual SDK upgrade successfully enables Fable 5 model support |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4584 | " | ✅ | Documented SDK upgrade workaround in project AI.md |  |  |
+| #4585 | " | ✅ | Committed and pushed SDK upgrade documentation to repository |  |  |
+
+**#S1558** Model status check - confirming current Claude model version (Jul 10, 11:34 PM)
+
+**#S1559** Comprehensive security and correctness review of status web UI, followed by user selection to fix all 6 identified issues (Jul 10, 11:38 PM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4586 | 11:43 PM | 🟣 | Specialist Dashboard Web UI - Multi-Page SPA with API Backend |  |  |
+
+**#S1560** Status server security hardening - 6 vulnerability fixes for specialist dashboard (Jul 10, 11:48 PM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4587 | 11:48 PM | 🔴 | Status server crash protection and localhost-only binding |  |  |
+| #4588 | 11:49 PM | 🔴 | Removed permissive CORS headers from status server |  |  |
+| #4589 | " | 🔴 | Added safe URL decoding and environment variable masking |  |  |
+| #4590 | " | 🔴 | Fixed artifact filename parsing for taskIds with underscores |  |  |
+| #4591 | " | 🔴 | Fixed fact text extraction to exclude timestamp prefix |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4592 | 11:50 PM | 🔵 | Reviewed .env.example tail before adding STATUS_BIND_HOST documentation |  |  |
+
+**status-app/index.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4593 | " | 🔴 | Fixed cancel button to show correct status based on server response |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4594 | " | ✅ | Added STATUS web UI environment variable documentation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4595 | " | ✅ | TypeScript type checking passed after all status-server security fixes |  |  |
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4596 | 11:51 PM | ✅ | Verified all security fixes are properly integrated in status-server.ts |  |  |
+
+**.tmp-regex-test.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4597 | " | ✅ | Created test script to verify regex patterns and safeDecode behavior |  |  |
+| #4598 | " | ✅ | Verified all regex patterns and safeDecode function work correctly |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4599 | " | ✅ | Confirmed STATUS environment variable documentation added to .env.example |  |  |
+
+**#S1561** User asked about current model version after completion of status server fixes and documentation updates (Jul 10, 11:52 PM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4600 | 11:53 PM | 🔴 | Status server crash prevention and security hardening |  |  |
+
+**#S1562** Model verification check - confirming current model after Fable 5 pin fix (Jul 10, 11:55 PM)
+
+### Jul 11, 2026
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4601 | 12:00 AM | 🔵 | Preamble delegate guidance enhanced with 5-element protocol |  |  |
+| #4602 | " | 🔵 | Preamble modification verification confirms clean migration to 5-element protocol |  |  |
+
+**scripts/check-preamble.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4603 | 12:01 AM | 🔵 | Preamble fixed-cost ceiling verification passes after delegate enhancement |  |  |
+
+**dist/memory.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4604 | 12:03 AM | 🔵 | Direct preamble build confirms 5-element delegate protocol successfully integrated |  |  |
+| #4605 | " | 🔵 | Fixed core size varies by facts presence—real facts scenario at 5,884 chars validates ceiling |  |  |
+
+**scripts/check-token-policy.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4606 | 12:04 AM | 🔵 | Delegate-related smoke tests pass after 5-element protocol enhancement |  |  |
+
+
+Access 191k tokens of past research & decisions for just 19,922t. Use MCP search tools to access memories by ID.

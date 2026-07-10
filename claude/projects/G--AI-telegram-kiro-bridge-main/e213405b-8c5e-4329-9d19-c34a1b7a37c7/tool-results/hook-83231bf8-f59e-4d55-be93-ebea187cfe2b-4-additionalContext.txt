@@ -1,0 +1,226 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-10 7:58pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,582 tokens to read)
+- Work investment: 451,782 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jul 10, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4462 | 6:07 PM | 🔵 | Rich Message Draft API methods identified - editRichMessageDraft and finalizeRichMessageDraft do not exist |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4463 | 6:09 PM | 🔵 | Existing rich message infrastructure before Path A draft API integration |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4464 | " | 🔵 | Current streaming edit architecture in run-prompt.ts before draft API migration |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4465 | " | 🔵 | Rich message streaming feature flag configuration |  |  |
+
+**SPEC-draft-streaming.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4466 | 6:11 PM | ⚖️ | SPEC document for Rich Message Draft Streaming (Path A) implementation |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4467 | 6:16 PM | 🟣 | Draft streaming API wrapper added |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4468 | " | 🟣 | Draft streaming feature flag added to config |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4469 | 6:17 PM | 🟣 | Draft mode initialization with fallback chain |  |  |
+| #4470 | " | 🟣 | Streaming edit guard updated for draft mode compatibility |  |  |
+| #4471 | " | 🟣 | Draft streaming integrated into editNow update path |  |  |
+| #4472 | 6:18 PM | 🟣 | Draft finalization with persistence via sendRichMessage |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4473 | " | ✅ | Draft streaming implementation passes TypeScript compilation |  |  |
+| #4474 | " | ✅ | Rich renderer smoke tests pass with draft streaming additions |  |  |
+
+**scripts/check-draft-streaming.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4475 | 6:19 PM | 🟣 | Comprehensive smoke test suite created for draft streaming |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4476 | 6:20 PM | ✅ | Draft streaming smoke tests pass completely |  |  |
+| #4477 | 6:21 PM | ✅ | Draft streaming implementation passes full regression test suite |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4478 | " | 🟣 | Draft streaming feature implementation committed to main branch |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4479 | 6:30 PM | 🔴 | Fixed placeholder guard blocking draft streaming in private chats |  |  |
+| #4480 | 6:33 PM | 🔴 | Fixed draft mode placeholder guard error in run-prompt.ts |  |  |
+| #4481 | 6:35 PM | 🔴 | Fixed draft mode placeholder guard throwing error |  |  |
+| #4482 | 6:40 PM | 🔴 | Fixed error handler draft mode compatibility in run-prompt.ts |  |  |
+
+**src/commands/misc.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4483 | " | 🔴 | Fixed /cancel command draft mode partial output preservation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4484 | 6:46 PM | 🔵 | Display bug in draft streaming: status expansion causes content shrinkage |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4485 | " | 🔵 | Root cause found: truncation logic doesn't account for combined message length |  |  |
+| #4486 | 6:49 PM | 🔴 | Fixed draft streaming display bug: body now accounts for execution status overhead |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4487 | 6:51 PM | 🔵 | Draft streaming display bug - text truncation correlation |  |  |
+| #4488 | 6:52 PM | 🔵 | Draft streaming display bug in Telegram UI |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4489 | 6:54 PM | 🔵 | Streaming message truncation fix verification |  |  |
+| #4490 | 6:56 PM | 🔵 | 檢查 Telegram Markdown 轉換實作尋找優化機會 |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4491 | 6:57 PM | 🔵 | Researching Telegram HTML Truncation Best Practices |  |  |
+| #4492 | 6:58 PM | 🔵 | Telegram Message Splitting Best Practices Identified |  |  |
+| #4493 | " | 🔵 | Framework-Specific HTML Splitting Solutions and NPM Packages Identified |  |  |
+| #4494 | 6:59 PM | 🔵 | Telegram Streaming Message Split Strategies Research |  |  |
+| #4495 | " | 🔵 | Telegram 4096 Character Limit Applies to Stripped Text, Not Raw HTML |  |  |
+| #4496 | 7:00 PM | 🔵 | Telegram Draft Streaming and Entity-Splitting Algorithm Details |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4497 | " | 🔵 | telegram-kiro-bridge Truncation Strategy Analysis: Plain Text Measurement Before HTML Conversion |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4498 | 7:01 PM | 🔵 | HTML-Safe Telegram Message Splitting Implementations Across Frameworks |  |  |
+
+**#S1542** Re-check whether Telegram streaming truncation issue is fully resolved after commit 718798e (Jul 10, 7:01 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4499 | 7:01 PM | 🔵 | Final Verification: Telegram API Specification and GramIO Entity Recalculation Logic |  |  |
+
+**#S1543** Re-verify streaming truncation fix and investigate Telegram message length handling (Jul 10, 7:01 PM)
+
+**#S1544** Fix draft TTL expiration issue causing messages to disappear during rate limiting (Jul 10, 7:04 PM)
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4500 | 7:06 PM | 🔴 | Post-HTML length guard prevents Telegram message truncation from markdown expansion |  |  |
+| #4501 | 7:10 PM | 🔴 | HTML Length Overflow Guard for Telegram Streaming |  |  |
+| #4502 | " | 🔵 | Draft TTL Expiration Causes Message Disappearance During Rate Limiting |  |  |
+
+**#S1545** Verify streaming fix for draft mode rate limit edge case (Jul 10, 7:10 PM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4503 | 7:11 PM | 🔴 | Draft TTL Expiration Fallback to Placeholder Mode |  |  |
+
+**#S1546** Self-check after completing draft streaming implementation and fixes (Jul 10, 7:12 PM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4504 | 7:14 PM | 🔴 | Draft mode fallback to placeholder on rate limit collision |  |  |
+
+**#S1547** Commit draft mode fixes for Telegram message delivery failure handling (Jul 10, 7:18 PM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4505 | 7:30 PM | 🔴 | Draft streaming fallback graceful degradation fix |  |  |
+| #4506 | " | 🔴 | Final delivery last-resort placeholder fallback |  |  |
+
+**#S1548** Validation testing of draft streaming fixes from previous session (Jul 10, 7:33 PM)
+
+**scripts/check-draft-streaming.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4507 | 7:36 PM | 🔵 | Draft Streaming Fixes Verified |  |  |
+
+**#S1549** Clarifying agent switching behavior and model defaults when switching to Claude backend (Jul 10, 7:38 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4508 | 7:45 PM | 🔵 | Agent Switch to Claude Backend Should Default to Fable 5 |  |  |
+
+**#S1550** Verify current AI model configuration and identify discrepancy between .env settings and active session model (Jul 10, 7:45 PM)
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4509 | 7:50 PM | 🔵 | Agent switching model pin fallback issue discovered |  |  |
+
+**..\..\AI\AIMemory\config\acp-providers.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4510 | 7:51 PM | 🔵 | Agent config file has correct model pin, but session ignores it |  |  |
+
+**~/.claude/settings.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4511 | 7:52 PM | 🔵 | Root cause found: Claude Code settings.json model override |  |  |
+
+**#S1551** Model verification revealed configuration conflict between global settings.json and bridge ACP provider config (Jul 10, 7:52 PM)
+
+**Investigated**: Checked Claude agent model configuration across multiple layers: .env file, acp-providers.json, and ~/.claude/settings.json. Traced how bridge spawns claude-agent-acp and attempts to pin model via session/set_config_option.
+
+**Learned**: Global ~/.claude/settings.json with "model": "opus[1m]" overrides bridge's acp-providers.json "claude-fable-5" configuration. Claude Code's global settings layer takes precedence over ACP's set_config_option, causing model pin to fail or be overwritten.
+
+**Completed**: Root cause identified: settings.json global model config conflicts with bridge's per-provider model pinning. Three solution paths evaluated and presented to user via ASK button.
+
+**Next Steps**: Awaiting user decision on configuration fix approach: remove model from settings.json (letting bridge control), change settings.json to fable-5 (affecting all Claude Code usage), or implement env var override in bridge code.
+
+
+Access 452k tokens of past research & decisions for just 19,582t. Use MCP search tools to access memories by ID.

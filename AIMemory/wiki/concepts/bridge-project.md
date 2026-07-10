@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-10
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_539667, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_75638b, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_c899ab, f_d61c50, f_493b31, f_124f9f, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_1746d0, f_a0d9ac, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_a12c14]
+updated: 2026-07-11
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_c899ab, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_1746d0, f_a0d9ac, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -248,7 +248,29 @@ Fork 的 DEFAULT_STEPS 比 upstream 多一步 `docupdate`（共 14 步）。
 
 `docs/pending-roadmap.html`（深色主題、目錄跳轉），記錄所有未完成 roadmap 項目的狀態與前置條件。
 
+## Specialist Dashboard（2026-07-10）
+
+Status server（port 3847）擴充為 specialist 監控面板：
+
+- **技術選型**：多頁面 hash-based SPA + 純 HTML/vanilla JS（排除 React SPA 太重、排除最小增量擴展性差）
+- **入口**：瀏覽器直開 `localhost:3847` + Telegram Mini App 按鈕（Electron 已移除）
+- **用途定位**：即時監控（A）+ 日常管理（B），非純除錯
+- **安全加固**（commit c9174e3）：async 錯誤邊界防 crash、預設綁 `127.0.0.1`（`STATUS_BIND_HOST` 可改）、移除 CORS `*`、env 機密遮罩、preamble 路由 specialist 白名單、artifact 檔名 specialist name 錨定 regex
+
+### 架構陷阱
+
+- `index.ts` 全域 `unhandledRejection` handler 會 `process.exit(1)` — 任何同 process 的 async callback 未捕捉 throw 都會殺掉整個 bridge，新增 server/handler 必須自帶錯誤邊界
+- `RELAY_DELEGATE` tool note 只在 `config.relay` 開啟且 `relay-peers.json` 存在時注入（目前生產不含）
+- `check-preamble.mjs` facts 為空時 memory block header 不渲染，fixed core 計算會涵蓋整份 preamble（7783 vs 真實 5884）
+
+### 其他修正
+
+- 送 `.md` 檔給 Telegram 改用 `.txt` 顯示名（InputFile 第二參數），解決中文亂碼
+- Factlint ratio 3.0 目標在 87%+ wiki-protection 下結構性不可達，已接受為設計取捨
+- 不建 bridge-dev specialist：主 agent 工作目錄就是 bridge repo，bridge-dev 是降級冗餘
+
 ## 相關
 
+- [[bridge-streaming]] — Streaming 與訊息渲染
 - [[bridge-research]] — 研究方向與外部借鏡
 - [[ai-strategy]] — 跨模型策略層

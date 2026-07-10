@@ -1,0 +1,391 @@
+G:\AI\telegram-kiro-bridge-main\src\config.ts-211-  // frequent updates, less likely to hit Telegram 429 rate-limit. Default
+G:\AI\telegram-kiro-bridge-main\src\config.ts-212-  // 1200ms; raise to 2000-3000 if 429s happen.
+G:\AI\telegram-kiro-bridge-main\src\config.ts-213-  streamEditIntervalMs:
+G:\AI\telegram-kiro-bridge-main\src\config.ts:214:    Math.max(500, Number(process.env.STREAM_EDIT_INTERVAL_MS ?? "1200")),
+G:\AI\telegram-kiro-bridge-main\src\config.ts-215-  // Max seconds grammY autoRetry will wait for Telegram 429 retry_after
+G:\AI\telegram-kiro-bridge-main\src\config.ts-216-  // before giving up. Default 60s; Telegram escalates penalties for
+G:\AI\telegram-kiro-bridge-main\src\config.ts-217-  // repeat offenders up to 120s+, so 60 covers most realistic cases.
+--
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-54-/**
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-55- * Structured result returned by dream step handlers.
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-56- * Handlers that do real computation return this directly;
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts:57: * agent-based handlers capture session.buffer as summary.
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-58- */
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-59-export interface DreamStepResult {
+G:\AI\telegram-kiro-bridge-main\src\dream-config.ts-60-  /** One-line structured summary (not LLM-generated). */
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-119-        // Handler returned structured result — use directly
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-120-        structuredResult = result as import("../dream-config.js").DreamStepResult;
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-121-        summary = structuredResult.summary;
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts:122:      } else if (session && session.buffer !== bufferBefore) {
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-123-        // Agent produced output — use last buffer content directly (truncated)
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-124-        // This is the agent's actual work output, much better than asking it to summarize itself
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts:125:        const rawOutput = session.buffer.trim();
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-126-        summary = rawOutput.slice(0, 400) || "(no output)";
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-127-      } else {
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-128-        summary = "(no output)";
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-218-        `- 全文 ≤30 行\n` +
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-219-        `- 不要加任何額外說明`;
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-220-      await runPrompt(ctx, session, statePrompt, { kind: "meta", silent: true });
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts:221:      const stateContent = (session.buffer || "").trim();
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-222-      if (stateContent && stateContent.includes("## High Priority")) {
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-223-        const statePath = path.join(MEMORY_DIR, "STATE.md");
+G:\AI\telegram-kiro-bridge-main\src\commands\dream.ts-224-        writeFileSync(statePath, stateContent + "\n", "utf8");
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-108-    session.inflight = false;
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-109-    sessions.clearInactivityTimer(session);
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-110-  }
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts:111:  const facts = parseFactsJson(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-112-  if (facts.length === 0) {
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-113-    await ctx.api.editMessageText(chatId, notice.message_id,
+G:\AI\telegram-kiro-bridge-main\src\commands\memory.ts-114-      "Summary produced no facts; memory left unchanged.");
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-240-    sessions.clearInactivityTimer(session);
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-241-  }
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-242-
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts:243:  const markdown = session.buffer.trim();
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-244-  if (!markdown) {
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-245-    await ctx.api.editMessageText(chatId, notice.message_id, "❌ handoff 產生失敗：agent 沒有輸出內容。");
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-246-    return;
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-397-      `status: ${session.client.isClosed ? "closed" : "active"}`,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-398-      `idle: ${idleSec}s`,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-399-      `history: ${users} user / ${asst} assistant`,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts:400:      `turn buffer: ${session.buffer.length} chars`,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-401-      `tool events: ${session.toolTimeline.length}`,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-402-      ``,
+G:\AI\telegram-kiro-bridge-main\src\commands\misc.ts-403-      `context use: ~${totalTok} / ${config.contextWindowTokens} tok (${pct(totalTok)})`,
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-376-
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-377-/**
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-378- * Extract relay/delegate/parallel tokens from session buffer.
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:379: * Mutates session.buffer to strip extracted tokens.
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-380- */
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-381-export function extractRelayTokens(session: ChatSession): RelayTokens {
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-382-  const relayTokens: { target: string; text: string }[] = [];
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-391-  const RELAY_RESULT_RE = /<<RELAY_RESULT:\s*([^|>\r\n]+?)\s*\|\s*(\{[^>\r\n]+?\})\s*>>/g;
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-392-  const PARALLEL_DELEGATE_RE = /<<PARALLEL_DELEGATE:\s*([^|>\r\n]+?)\s*\|\s*([^|>\r\n]+?)\s*\|\s*([^>\r\n]+?)\s*>>/g;
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-393-
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:394:  const { masked, restore } = maskCodeRegions(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-395-  const stripped = masked
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-396-    .replace(RELAY_DELEGATE_RE, (_m, target: string, body: string) => {
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-397-      let p: DelegatePayload;
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-429-      });
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-430-      return "";
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-431-    });
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:432:  session.buffer = restore(stripped);
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-433-
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-434-  // Fallback: streaming captures
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-435-  if (relayDelegateTokens.length === 0 && session._streamingDelegates?.length) {
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-462- * Check and strip <<RELAY_DONE>> from session buffer.
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-463- */
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-464-export function extractRelayDone(session: ChatSession, relayReplyTo: string | undefined): boolean {
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:465:  const { masked, restore } = maskCodeRegions(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-466-  const done = /<<RELAY_DONE>>/i.test(masked);
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-467-  if (done) {
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:468:    session.buffer = restore(masked.replace(/<<RELAY_DONE>>/gi, "").trim());
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-469-    if (relayReplyTo) relayLoopGuard?.markDone(relayReplyTo);
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-470-  }
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-471-  return done;
+--
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-521-
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-522-  console.log(
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-523-    `[chat ${chatId}] relay reply delivered headlessly to ${relayReplyTo} ` +
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts:524:      `(bufferChars=${session.buffer.length}${relayDone ? ", RELAY_DONE" : ""}, autoReply=${shouldSendAutoReply})`,
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-525-  );
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-526-
+G:\AI\telegram-kiro-bridge-main\src\commands\relay.ts-527-  if (relayDone) {
+--
+G:\AI\telegram-kiro-bridge-main\src\index.ts-176-// continues.
+G:\AI\telegram-kiro-bridge-main\src\index.ts-177-
+G:\AI\telegram-kiro-bridge-main\src\index.ts-178-// How often (ms) we're allowed to update the streaming reply message.
+G:\AI\telegram-kiro-bridge-main\src\index.ts:179:const STREAM_EDIT_INTERVAL_MS = config.streamEditIntervalMs;
+G:\AI\telegram-kiro-bridge-main\src\index.ts-180-
+G:\AI\telegram-kiro-bridge-main\src\index.ts-181-function isAllowed(ctx: Context): boolean {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-182-  if (config.allowedUserIds.length === 0) return true;
+--
+G:\AI\telegram-kiro-bridge-main\src\index.ts-642-  onRateLimitRecovery,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-643-  queuePendingMessage,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-644-  handleRestart,
+G:\AI\telegram-kiro-bridge-main\src\index.ts:645:  STREAM_EDIT_INTERVAL_MS,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-646-  MEMORY_DIR,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-647-  scheduler,
+G:\AI\telegram-kiro-bridge-main\src\index.ts-648-  scheduleStore,
+--
+G:\AI\telegram-kiro-bridge-main\src\index.ts-950-        const stripped = stripMemoryTokens(currentOutput).replace(/<<PROXY_DONE>>/gi, "").trim();
+G:\AI\telegram-kiro-bridge-main\src\index.ts-951-        if (!stripped) return;
+G:\AI\telegram-kiro-bridge-main\src\index.ts-952-        const elapsed = Date.now() - lastEditAt;
+G:\AI\telegram-kiro-bridge-main\src\index.ts:953:        if (elapsed >= STREAM_EDIT_INTERVAL_MS) {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-954-          editNow(stripped);
+G:\AI\telegram-kiro-bridge-main\src\index.ts-955-        } else if (!editTimer) {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-956-          editTimer = setTimeout(() => {
+G:\AI\telegram-kiro-bridge-main\src\index.ts-957-            editTimer = null;
+G:\AI\telegram-kiro-bridge-main\src\index.ts-958-            const latest = stripMemoryTokens(currentOutput).replace(/<<PROXY_DONE>>/gi, "").trim();
+G:\AI\telegram-kiro-bridge-main\src\index.ts-959-            if (latest) editNow(latest);
+G:\AI\telegram-kiro-bridge-main\src\index.ts:960:          }, STREAM_EDIT_INTERVAL_MS - elapsed);
+G:\AI\telegram-kiro-bridge-main\src\index.ts-961-        }
+G:\AI\telegram-kiro-bridge-main\src\index.ts-962-      };
+G:\AI\telegram-kiro-bridge-main\src\index.ts-963-
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-123-  onRateLimitRecovery: (fn: () => void | Promise<void>) => () => void;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-124-  queuePendingMessage: (chatId: number, text: string) => void;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-125-  handleRestart: (ctx: Context, opts?: { reason?: string }) => Promise<void>;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:126:  STREAM_EDIT_INTERVAL_MS: number;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-127-  MEMORY_DIR: string;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-128-  scheduler: Scheduler;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-129-  scheduleStore: ScheduleStore;
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-309-  mode: RunPromptMode = { kind: "user" },
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-310-) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-311-  const { bot, sessions, rateLimitedUntil, onRateLimitRecovery, queuePendingMessage,
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:312:    handleRestart, STREAM_EDIT_INTERVAL_MS, MEMORY_DIR, scheduler, scheduleStore } = deps();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-313-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-314-  const continuationContext: ContinuationContext | undefined =
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-315-    mode.kind === "continuation" ? mode.context : undefined;
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-433-      turnHitRateLimit = true;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-434-      if (!throttledSnapshotLogged) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-435-        throttledSnapshotLogged = true;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:436:        const snapshot = (session.buffer || "").trim();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-437-        const preview = snapshot.length > 800
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-438-          ? snapshot.slice(0, 800) + `…[+${snapshot.length - 800} chars]`
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-439-          : snapshot;
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-468-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-469-    throttledSnapshotLogged = false;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-470-    console.log(
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:471:      `[rate-limit] chat ${chatId} resuming edits — pushing latest buffer (${(session.buffer || "").length} chars)`
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-472-    );
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-473-    lastRendered = "";
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-474-    return editNow();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-475-  });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-476-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:477:  session.onUpdate = isRelay
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-478-    ? undefined
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-479-    : () => {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-480-        const elapsed = Date.now() - lastEditAt;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:481:        if (elapsed >= STREAM_EDIT_INTERVAL_MS) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-482-          editNow();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-483-        } else if (!editTimer) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-484-          editTimer = setTimeout(() => {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-485-            editTimer = null;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-486-            editNow();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:487:          }, STREAM_EDIT_INTERVAL_MS - elapsed);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-488-        }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-489-      };
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-490-
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-521-    turnFinalized = true;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-522-    session._placeholderMsgId = undefined;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-523-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:524:    if (session.buffer) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:525:      session.history.push({ role: "assistant", text: session.buffer, timestamp: Date.now() });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-526-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-527-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-528-    const toolLines = toolPrefixLines(session);
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-540-    const RELAY_RESULT_RE = /<<RELAY_RESULT:\s*([^|>\r\n]+?)\s*\|\s*(\{[^>\r\n]+?\})\s*>>/g;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-541-    const PARALLEL_DELEGATE_RE = /<<PARALLEL_DELEGATE:\s*([^|>\r\n]+?)\s*\|\s*([^|>\r\n]+?)\s*\|\s*([^>\r\n]+?)\s*>>/g;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-542-    {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:543:      const { masked, restore } = maskCodeRegions(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-544-      const stripped = masked
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-545-        .replace(RELAY_DELEGATE_RE, (_m, target: string, body: string) => {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-546-          let p: DelegatePayload;
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-578-          });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-579-          return "";
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-580-        });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:581:      session.buffer = restore(stripped);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-582-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-583-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-584-    // Fallback: recover RELAY_DELEGATE from streaming captures
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-606-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-607-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-608-    // <<RELAY_DONE>>
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:609:    const { masked: maskedForDone, restore: restoreDone } = maskCodeRegions(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-610-    const relayDone = /<<RELAY_DONE>>/i.test(maskedForDone);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-611-    if (relayDone) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:612:      session.buffer = restoreDone(maskedForDone.replace(/<<RELAY_DONE>>/gi, "").trim());
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-613-      if (relayReplyTo) getRelayLoopGuard()?.markDone(relayReplyTo);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-614-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-615-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:616:    const ab7 = transformReplyTokens(session.buffer, {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-617-      parseDuration,
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-618-      parseAbsoluteTime,
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-619-      parseRecurrence,
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-656-      try {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-657-        const gs = await goalStore.get(config.memoryDir, chatId);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-658-        if (gs && gs.status === "active") {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:659:          const result = await goalStore.incrementTurn(config.memoryDir, chatId, session.buffer ? session.buffer.slice(0, 200) : undefined);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-660-          logEvent("goal_step", { turn: result.state.turns_used, maxTurns: result.state.max_turns, pausedByBudget: result.pausedByBudget }, { chatId, userId: ctx.from?.id });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-661-          if (result.pausedByBudget) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:662:            const reflection = `Budget exhausted (${result.state.turns_used}/${result.state.max_turns}) without achieving goal. Last output: ${(session.buffer || "").slice(0, 200)}`;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-663-            const retryResult = await goalStore.markReflectionRetry(config.memoryDir, chatId, reflection);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-664-            if (retryResult.ok) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-665-              console.log(`[chat ${chatId}] goal reflection retry ${retryResult.state.reflection_retries}/${goalStore.GOAL_REFLECTION_MAX}`);
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-689-      try {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-690-        const gs = await goalStore.get(config.memoryDir, chatId);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-691-        if (gs && gs.status === "active") {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:692:          const result = await goalStore.incrementTurn(config.memoryDir, chatId, session.buffer ? session.buffer.slice(0, 200) : undefined);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-693-          logEvent("goal_step", { turn: result.state.turns_used, maxTurns: result.state.max_turns, pausedByBudget: result.pausedByBudget, continuation: true }, { chatId, userId: ctx.from?.id });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-694-          if (result.pausedByBudget) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:695:            const reflection = `Budget exhausted (${result.state.turns_used}/${result.state.max_turns}) without achieving goal. Last output: ${(session.buffer || "").slice(0, 200)}`;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-696-            const retryResult = await goalStore.markReflectionRetry(config.memoryDir, chatId, reflection);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-697-            if (retryResult.ok) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-698-              console.log(`[chat ${chatId}] goal reflection retry ${retryResult.state.reflection_retries}/${goalStore.GOAL_REFLECTION_MAX} (continuation path)`);
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-725-    // cooldown, reason dedup) live in checkMoaAutoTrigger. Fire-and-forget —
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-726-    // the blind review takes tens of seconds; the aggregation prompt goes in
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-727-    // as a meta turn (queued by runPrompt if the session is inflight).
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:728:    if (!isMeta && !ab7.goalDone && session.buffer) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-729-      try {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-730-        const gsMoa = await goalStore.get(config.memoryDir, chatId).catch(() => null);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-731-        if (gsMoa && gsMoa.status === "active") {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-732-          const moa = await import("./moa.js");
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:733:          const decision = await moa.checkMoaAutoTrigger(chatId, gsMoa, session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-734-          if (decision.fire) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:735:            const replySnapshot = session.buffer.slice(-2000);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-736-            const historySnapshot = [...session.history];
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-737-            logEvent("moa_auto_trigger", { reason: decision.reason, preset: decision.preset }, { chatId, userId: ctx.from?.id });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-738-            bot.api.sendMessage(chatId, `🧠 [MoA auto-triggered: ${decision.reason}] 盲審中…`).catch(() => {});
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-839-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-840-    if (!bodyWithReceipts) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-841-      console.warn(
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:842:        `[chat ${chatId}] empty-reply diag: stopReason=${stopReason} tools=${session.toolTimeline.length} rawBufferChars=${session.buffer.length} sendFileTokens=${sendFilePaths.length} scheduleTokens=${scheduleEntries.length} askTokens=${asks.length} rateLimitedDuringTurn=${turnHitRateLimit}`,
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-843-      );
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-844-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-845-    const emptyFallbackFinal = () => {
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-884-    const full = (replyHeader ? `${replyHeader}\n\n` : "") + toolsPrefix + body;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-885-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-886-    if (isSilentMeta) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:887:      console.log(`[chat ${chatId}] silent meta prompt completed (stopReason=${stopReason ?? "unknown"}, tools=${session.toolTimeline.length}, bufferChars=${session.buffer.length})`);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-888-      return;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-889-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-890-
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-940-      }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-941-      console.log(
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-942-        `[chat ${chatId}] relay reply delivered headlessly to ${relayReplyTo} ` +
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:943:          `(stopReason=${stopReason ?? "unknown"}, bufferChars=${session.buffer.length}` +
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-944-          `${relayDone ? ", RELAY_DONE" : ""}, autoReply=${shouldSendAutoReply})`,
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-945-      );
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-946-
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1081-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1082-    console.log(
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1083-      `[chat ${chatId}] delivered ${chunksSent}/${chunks.length} chunks ` +
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:1084:        `(stopReason=${stopReason ?? "unknown"}, bufferChars=${session.buffer.length})` +
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1085-        (chunksQueued > 0 ? `, ${chunksQueued} queued for replay` : ""),
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1086-    );
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1087-    if (askKeyboard && finalMessageId !== undefined) {
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1425-            const stripped2 = stripMemoryTokens(currentOutput).replace(/<<PROXY_DONE>>/gi, "").trim();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1426-            if (!stripped2) return;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1427-            const elapsed = Date.now() - proxyLastEditAt;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:1428:            if (elapsed >= STREAM_EDIT_INTERVAL_MS) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1429-              proxyEditNow(stripped2);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1430-            } else if (!proxyEditTimer) {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1431-              proxyEditTimer = setTimeout(() => {
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1432-                proxyEditTimer = null;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1433-                const latest = stripMemoryTokens(currentOutput).replace(/<<PROXY_DONE>>/gi, "").trim();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1434-                if (latest) proxyEditNow(latest);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:1435:              }, STREAM_EDIT_INTERVAL_MS - elapsed);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1436-            }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1437-          };
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1438-          try {
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1479-    // Hoist <<CONTINUE>> flag
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1480-    if (!isMeta && ab7.continueToken) continueTokenFired = true;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1481-    petState("done");
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:1482:    const petSummary = (session.buffer || "").replace(/<<[^>]+>>/g, "").trim().slice(0, 80);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1483-    if (petSummary) petEmit({ type: "reply", text: petSummary });
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1484-
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1485-
+--
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1532-      editTimer = null;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1533-    }
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1534-    unregisterRecovery();
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts:1535:    session.onUpdate = undefined;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1536-    session.inflight = false;
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1537-    sessions.clearInactivityTimer(session);
+G:\AI\telegram-kiro-bridge-main\src\run-prompt.ts-1538-    if (session._pendingMetaQueue.length > 0) {
+--
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-192-    session.inflight = false;
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-193-    sessions.clearInactivityTimer(session);
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-194-  }
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts:195:  console.log(`${tag}: extract raw buffer (${session.buffer.length} chars): ${session.buffer.slice(0, 400)}`);
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts:196:  const facts = parseFactsJson(session.buffer);
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-197-  console.log(`${tag}: parsed ${facts.length} fact(s) from extract`);
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-198-  if (facts.length === 0) return 0;
+G:\AI\telegram-kiro-bridge-main\src\session-extract.ts-199-  const added = await appendFactsDedup(session.userId, facts);
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-666-            this.appendOrphan(session, content.text);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-667-            break;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-668-          }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:669:          const wasEmpty = session.buffer.length === 0 && !session.thinkingBuffer;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-670-          if (up.sessionUpdate === "agent_thought_chunk") {
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-671-            session.thinkingBuffer = (session.thinkingBuffer || "") + content.text;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-672-          } else {
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:673:            session.buffer += content.text;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-674-            session.charsOut += content.text.length;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-675-          }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-676-          if (wasEmpty) petState("streaming");
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-679-          // but streaming chunks arrive unfiltered. We capture complete tokens here
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-680-          // so the final-render path can fall back to them if normal extraction finds nothing.
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-681-          // Inline/fenced code examples must stay inert, matching final token extraction.
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:682:          const captured = captureRelayDelegateTokensFromText(session.buffer, session._streamingDelegates ?? []);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-683-          session._streamingDelegates = captured.length ? captured : undefined;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:684:          session.onUpdate?.(session);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-685-        }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-686-        break;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-687-      }
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-699-        session._recentToolNames = appendToolName(session._recentToolNames ?? [], title);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-700-        session._toolInFlight = true;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-701-        petState("tool", title);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:702:        session.onUpdate?.(session);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-703-        break;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-704-      }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-705-      case "tool_call_update": {
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-730-            });
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-731-          }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-732-          if (updId) session._toolTitles?.delete(updId);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:733:          session.onUpdate?.(session);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-734-        } else if (status === "failed") {
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-735-          markToolDone(session, updId, "failed");
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-736-          session._toolInFlight = false;
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-753-              `STOP and diagnose: what assumption is wrong? Try a different approach.`
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-754-            );
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-755-          }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:756:          session.onUpdate?.(session);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-757-        }
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-758-        break;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-759-      }
+--
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-815-    // upcoming turn's streaming placeholder.
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-816-    if (session._orphanBuffer || session._orphanFlushTimer) this.flushOrphan(session);
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-817-    session._orphanSuppressUntil = undefined;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts:818:    session.buffer = "";
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-819-    session.thinkingBuffer = undefined;
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-820-    session.toolLog = [];
+G:\AI\telegram-kiro-bridge-main\src\sessionManager.ts-821-    session.toolTimeline = [];
+--
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-428-    thinkingBlock = "💭 " + preview.split("\n").join("\n> ") + "\n\n";
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-429-  }
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-430-
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts:431:  const raw = session.buffer || emptyFallback();
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-432-  const stripped = transformReplyTokens(raw, parsers).text;
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-433-  let body = stripped || emptyFallback();
+G:\AI\telegram-kiro-bridge-main\src\telegram-ui.ts-434-  if (body.length > TG_MAX) {
