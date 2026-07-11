@@ -110,3 +110,15 @@
 去重:寫入前以 list_facts(tail 20/146)+ 直接 grep facts 主檔與 facts_Topic shards(MG_Bgm / extensions / GRAND / MEGA / 917 多關鍵字)掃描,確認 2 條無重複。
 
 備註:本 session harness 同樣未載入 memory MCP tools,沿用 stdio JSON-RPC 直呼 mcp-memory.js 的 list_facts / remember(僅 ADD,未動 forget);server 需以 bridge 專案目錄為 cwd 啟動(否則 .env 的 TELEGRAM_BOT_TOKEN 讀不到)。
+
+## 2026-07-11(來源 shortlist 4 筆 → 精選後寫入 1 條)
+
+來源 project:`telegram-kiro-bridge-main`(2026-07-10 decision)。
+
+1. [來源 #1] telegram-kiro-bridge 的 Rich Message 草稿串流(Path A)採三階段生命週期:先 sendMessageDraft 送空草稿顯示「Thinking…」,再用 sendRichMessageDraft 串流更新草稿內容,最後以 sendRichMessage 定稿;完整規格見 SPEC-draft-streaming.md。(shard=bridge-streaming)
+
+捨棄(3 筆):#2/#3/#4 皆為 2026-07-09 curation session 的去重查詢過程紀錄(「query 回傳 0/179」),屬一次性過程紀錄,不具跨 session 重用價值,不入庫。
+
+去重:寫入前以 list_facts(tail 20/195)雙查詢(draft streaming / sendMessageDraft / Rich Message / 三階段 等關鍵字)確認 0 重複。
+
+備註:本 session harness 同樣未載入 memory MCP tools,沿用 stdio JSON-RPC 直呼 mcp-memory.js 的 list_facts / remember(僅 ADD,未動 forget)。

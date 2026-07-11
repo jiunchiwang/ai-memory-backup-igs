@@ -1,0 +1,242 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-11 12:00pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (20,524 tokens to read)
+- Work investment: 424,350 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jul 11, 2026
+
+**..\..\AI\telegram-kiro-bridge-main\src\usageStore.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4629 | 7:46 AM | 🔵 | markUsed automatically transitions orphan flag based on disk state |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\commands\memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4630 | 7:47 AM | 🔵 | Skilllint command implements multi-dimensional skill health checks via LLM prompt |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4631 | " | 🔵 | Fact insertion bypasses embedding cache population |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\memory-db.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4632 | 7:48 AM | 🔴 | Added embedding cache backfill to fix zero fact recall issue |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4633 | " | 🔴 | Imported backfillFactEmbeddings for integration into bridge startup |  |  |
+| #4634 | 7:49 AM | 🔴 | Integrated embedding backfill into bridge startup sequence |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\commands\memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4635 | " | ✅ | Updated skilllint prompt to skip known false-positive orphans |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4636 | " | ✅ | TypeScript compilation verified all bugfixes type-safe |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4637 | 7:50 AM | ✅ | Updated STATE.md with investigation findings and fix status |  |  |
+
+**..\..\AI\AIMemory\config\skill-usage.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4638 | 7:57 AM | ✅ | Restored three zombie skills to skill-usage registry |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4639 | 7:58 AM | ✅ | Marked zombie skills cleanup as resolved in STATE.md |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\fact-embedding-backfill-gap.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4640 | 7:59 AM | 🔵 | Documented fact embedding gap root cause and three maintenance trap patterns |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4641 | " | ✅ | Added fact-embedding-backfill-gap to memory index |  |  |
+
+**src/memory-db.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4642 | 8:02 AM | 🔴 | Fixed fact embedding generation to enable fact recall |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4643 | 8:07 AM | 🔵 | Telegram Bridge Streaming Architecture |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4644 | 9:44 AM | 🔵 | Bridge Message Display Architecture and Tool Timeline Rendering |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4645 | 9:48 AM | 🔵 | Final message assembly positions tools before content body |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4646 | " | 🔵 | Telegram rich message and draft rendering implementation |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4647 | 9:49 AM | 🔵 | Message assembly and relay handling architecture |  |  |
+| #4648 | 9:50 AM | ✅ | Tool timeline moved to message footer with blockquote formatting |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4649 | 9:51 AM | ✅ | Tool timeline refactoring type-checked successfully |  |  |
+| #4650 | 9:52 AM | ✅ | Build verification completed successfully after tool timeline refactoring |  |  |
+| #4651 | " | ✅ | Smoke tests validated tool timeline refactoring with 50/50 tests passing |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4652 | 10:09 AM | 🔵 | Tool timeline display design and Telegram constraints |  |  |
+| #4653 | " | 🔵 | Tool display formatting uses emoji prefix and elapsed time suffix |  |  |
+| #4654 | 10:12 AM | 🔴 | Tool title rendering sanitization |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4655 | 10:13 AM | 🔵 | Tool title sanitization verified working |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4656 | 10:14 AM | 🔵 | Tool lines blockquote pattern already implemented in run-prompt.ts |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4657 | 10:28 AM | 🔴 | Fixed tool title rendering overflow and newline breakage in Telegram messages |  |  |
+| #4658 | 10:29 AM | 🔵 | Orphan turn buffer mechanism handles background agent output |  |  |
+
+**src/activity-log.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4659 | " | 🔵 | Event logging infrastructure uses events.jsonl file |  |  |
+
+**scripts/check-draft-streaming.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4660 | 10:39 AM | 🔵 | Draft streaming test coverage examined |  |  |
+
+**scripts/check-ab7-goal-loop.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4661 | " | 🔵 | Goal continuation test infrastructure examined |  |  |
+
+**src/async-coalesce.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4662 | 10:40 AM | 🟣 | Async call coalescing utility created |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4663 | " | 🔄 | Streaming edit function renamed to prepare for coalescing wrapper |  |  |
+| #4664 | 10:41 AM | 🔴 | Added turnFinalized guard to placeholder edit path |  |  |
+| #4665 | " | 🔴 | Wrapped editNowInner with coalescing runner to prevent concurrent execution |  |  |
+| #4666 | " | 🔴 | Added import for coalesceAsyncRunner utility |  |  |
+
+**scripts/check-editnow-race.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4667 | 10:42 AM | 🟣 | Created smoke test for editNow concurrency fix |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4668 | 10:43 AM | 🔴 | All tests pass validating duplicate message fix with no regressions |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4669 | " | 🔵 | Identified similar editNow patterns in proxy and relay streaming paths |  |  |
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4670 | 10:51 AM | 🔵 | ms-streaming-token-pipeline skill documents four existing streaming gotchas |  |  |
+| #4671 | 10:52 AM | 🔵 | Complete ms-streaming-token-pipeline skill architecture and gotcha catalog |  |  |
+| #4672 | " | ✅ | Fifth gotcha added to ms-streaming-token-pipeline skill: concurrent streaming edit message spam |  |  |
+| #4673 | 10:53 AM | ✅ | Added streaming degradation race symptom to skill trigger conditions |  |  |
+| #4674 | " | ✅ | Complete detailed section added for gotcha #5 with root cause chain, coalescing latch solution, and implementation code |  |  |
+| #4675 | " | ✅ | Completed ms-streaming-token-pipeline skill documentation updates for fifth gotcha across all sections |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4676 | 10:54 AM | ✅ | Updated ms-streaming-token-pipeline skill synced to Kiro and Claude Code environments |  |  |
+
+**#S1580** Wiki split request for bridge-project documentation - reviewing ASK button enforcement and topic classification (Jul 11, 11:00 AM)
+
+**#S1581** Wiki split assessment for bridge-project page - understanding maintenance strategy and split approach (Jul 11, 11:10 AM)
+
+**#S1582** Full wiki split execution - creating bridge-memory and bridge-specialist pages from bridge-project (Jul 11, 11:10 AM)
+
+**#S1583** Wiki split execution - creating bridge-memory and bridge-specialist documentation pages (Jul 11, 11:11 AM)
+
+**#S1584** Full wiki split execution - restructuring bridge-project documentation by creating specialized pages and cleaning original (Jul 11, 11:11 AM)
+
+**#S1585** Complete wiki split execution - finalizing keyword routing configuration for new pages (Jul 11, 11:12 AM)
+
+**#S1586** Wiki split verification - confirming page sizes and topic routing configuration (Jul 11, 11:12 AM)
+
+**#S1587** Wiki split verification - accurate line count measurement using ReadAllLines (Jul 11, 11:12 AM)
+
+**#S1588** Wiki split completion - updating maintenance state documentation (Jul 11, 11:13 AM)
+
+**src/commands/agent.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4677 | 11:36 AM | 🔵 | Agent switching mechanism in telegram-kiro-bridge |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4678 | " | 🔵 | Session handoff archive mechanism details |  |  |
+
+**#S1589** User asked whether switching agents (/agent command) costs tokens in telegram-kiro-bridge (Jul 11, 11:37 AM)
+
+**Investigated**: Token consumption mechanics during agent backend switching, including the handoff process, preamble re-injection, and prompt cache lifecycle
+
+**Learned**: Agent switching itself is nearly free (bridge command processed locally, handoff summary generated by local llama.cpp). Real cost occurs after switching: new session requires full preamble re-injection (~10k+ chars input tokens), old prompt cache invalidated, new agent may need to re-read files for context. Token cost attributed to the target backend. Frequent back-and-forth switching most expensive (repays preamble + context rebuild each time); one-time switches to offload long tasks are cost-efficient
+
+**Completed**: Provided comprehensive explanation of switching cost structure, clarifying that the switch command is cheap but subsequent conversation in the new session incurs standard session initialization costs
+
+**Next Steps**: No active work - this was a standalone technical question about bridge architecture
+
+
+Access 424k tokens of past research & decisions for just 20,524t. Use MCP search tools to access memories by ID.

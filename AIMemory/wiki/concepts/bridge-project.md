@@ -12,265 +12,69 @@ sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, 
 
 telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:\AI\telegram-kiro-bridge-main`。透過 ACP JSON-RPC over stdio 接上 Kiro CLI / Codex / Claude / Gemini 等 agent，讓使用者在手機上直接跟 AI agent 對話、跑工具、管理長期記憶。專案另含 desktop-pet Electron 桌面寵物功能。
 
-## AIMemory 系統
+## 子系統索引（已拆分頁）
 
-專案的長期記憶系統位於 `G:\AI\AIMemory`，包含以下子結構：
-
-- **facts** — master fact log + topic shards
-- **topics** — 分類規則（`topics.json`）
-- **wiki** — 結構化知識庫（concepts / references / lessons / queries）
-- **dailylog** — 每日摘要
-- **sessions** — 對話紀錄（處理完搬到 oldSessions）
-
-每日凌晨 04:00 由 `/dream` 自動維運（memorytoskill → topicreview → wikisync → factlint → wikilint → skilllint → specialistreview → artifactcleanup → backup → restart）。
+- [[bridge-memory]] — AIMemory 結構、/dream 維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份
+- [[bridge-specialist]] — Specialist 分身配置、token 執行權限層、監控 Dashboard、PARALLEL_DELEGATE cross-check
+- [[bridge-session]] — Session 歸檔與恢復（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
+- [[bridge-acp]] — ACP adapter 切換、model pin、harness hooks。目前走 `claude-agent-acp` + pin `claude-fable-5`（2026-07-06 起）
+- [[bridge-streaming]] — Draft API 三階段 lifecycle、4096 截斷、429 限流、Rich Messages
+- [[bridge-research]] — 研究方向與外部借鏡、roadmap
 
 ## 文件與教學
 
-- `docs/usage-guide.html` — 功能教學頁面，深色主題，24 章節附範例（含 Environment Preamble、Event Log、AI.md、RTK Shell、Codegraph、429 防護）
-- `docs/llm-to-ai-agent-summary.html` — 「從LLM到AI_Agent.pdf」重點學習整理頁面（深色主題、8 章節、目錄跳轉）
-- `docs/hermes-vs-bridge.html` — Hermes AI Agent vs Bridge 功能比較頁面（7 區塊比較表 + 6 張評分卡）
-- `docs/karpathy-wiki-alignment-roadmap.html` — Karpathy LLM Wiki × Bridge 改進 Roadmap
+- `docs/usage-guide.html` — 功能教學頁面，深色主題，24 章節附範例
+- `docs/pending-roadmap.html` — 待做方案總覽（深色主題、目錄跳轉），記錄所有未完成 roadmap 項目
+- `docs/llm-to-ai-agent-summary.html`、`docs/hermes-vs-bridge.html`、`docs/karpathy-wiki-alignment-roadmap.html` — 學習/比較/roadmap 專頁
+- `docs/session-archive-explained.html` — session 歸檔說明
 
-## 相關工具
+## 部署與 Git
 
-- **GitHubTool**：位於 `G:\AI\GitHubTool`，基於 Streamlit 的 GitHub 組織管理 Web UI（Python 3.10+），主要操作對象為 IGS-ARCADE-DIVISION-RD2 組織（批量建倉、權限、團隊管理）
+- `start.bat` 開機自動啟動（`shell:startup`），process 退出後 loop 3 秒自動重來
+- 多機器部署：本機 G: 磁碟（`MEMORY_DIR=G:\AI\AIMemory`），原開發機 F: 磁碟；`.env` 必須正確設 `MEMORY_DIR`、`BACKUP_REPO_DIR`，否則 /dream 全部失敗
+- Git：upstream `redkilin/telegram-kiro-bridge`、fork `jiunchiwang/telegram-kiro-bridge`（origin）
+- Fork sync 策略：merge（非 rebase），upstream 架構為主、手動保留 fork 獨有功能。2026-07-09 upstream 已把 fork 功能 port 回上游，之後衝突面大幅縮小
+- 同步教訓：`git checkout --theirs/--ours` 是整檔取代，會洗掉對側已乾淨自動合併的 hunk——雙邊都有改動的檔案應用 `git merge-file` 三方合併並逐檔核對
+- 兩份 upstream SPEC 為 draft 未實作（acp-hot-swap、moa-provider），與 NotebookLM 修復並列暫緩待辦
 
-## 部署配置
+## 訊息排版
 
-- `start.bat` 已設定在 Windows 開機時自動啟動（透過 `shell:startup` 資料夾的 bat 檔）
-- Bridge process 退出後由 `start.bat` 的 loop 機制自動 3 秒重來
+Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegram HTML）。選 HTML 而非 MarkdownV2：agent 輸出常含 `_ * [ ]`，MarkdownV2 跳脫太嚴會大量 400 error；HTML 只需 escape `<>&`。每個 editMessageText 都有 strip-tags fallback。送 `.md` 檔改用 `.txt` 顯示名解決 in-app viewer 中文亂碼。Rich Messages / draft 化細節見 [[bridge-streaming]]。
 
-## 備份機制
+## Preamble 與 Steering
 
-- 備份 repo：`G:\AI\ai-memory-backup-igs`
-- Remote：`https://github.com/jiunchiwang/ai-memory-backup-igs.git`（branch: master）
-- `/backup` 指令：robocopy AIMemory + agent 設定目錄到 repo → git push
-- 每日 `/dream` 自動觸發備份步驟
+- **User Profile 結構化注入**（2026-07-02）：`${MEMORY_DIR}/user-profile.md` 獨立存放使用者畫像（5 區塊），preamble 固定注入。獨立成檔是因為畫像是穩定結構化資料，混在 facts 語意召回不保證每次注入
+- **Preamble 瘦身**（2026-07-06）：18.6k → ~11.7k chars（facts tail 30→10、7 個 guideline 區塊合併成 `[Agent disciplines]`）。警戒線：佔 context 5-6%；tail 不砍到 5 因為 facts 爆發式寫入會斷跨日連續性
+- **Steering 加強**：Context Budget Discipline（事前估算 + 70% 熔斷警告）、ASK Button Discipline（2+ 選項強制 `<<ASK:...>>`）
+- **Reply/Quote Context**（2026-07-07，commit 1346519）：讀 reply_to_message 與 partial quote，組 `[Reply context]` 前置於 agent prompt，截 500 字
 
-## Session 歸檔與恢復
+## 其他功能紀錄
 
-Session 生命週期知識已拆出獨立頁 → 見 [[bridge-session]]。涵蓋：蒸餾記憶層（archive 摘要注入 + `/reset clean`）、ACP session resume（`ACP_SESSION_RESUME` 閘控）、SessionStore + `/session` 多 session 管理（2026-07-07 結案）、四條 transcript 儲存路徑。說明頁：`docs/session-archive-explained.html`。
+- **Optimistic Cancel**：/cancel 立即清 inflight + 停 streaming + 顯示「⛔ 已取消」，force-kill timeout 60s→15s
+- **/skillsearch**：SkillsMP API 搜尋公開 SKILL.md，安裝後自動跑 sync.ps1
+- **/intel 情報排程**：ai + game-industry 每日 08:00、topic-ai podcast 隔天 08:00（split 策略避免早晨資訊過載）
+- **QUIET_HOURS**：靜默時段排程延遲，目前未啟用；Passive Monitor 改 cron 每日 2 次（12:00、22:00）
+- **UI 修復**：/help keyboard parse_mode 改 HTML + escHtml；「返回選單」callback data 改 `help:_back` 避免撞名
 
-## 訊息排版美化
+## 已知陷阱
 
-2026-06-19 實作 Telegram 訊息 HTML 美化功能：
-- 新增 `src/format-html.ts`（Markdown → Telegram HTML 轉換）
-- 修改 `telegram-ui.ts` 和 `run-prompt.ts`，主 agent 回覆改用 `parse_mode: HTML`
-- 支援：粗體、斜體、code block、inline code、blockquote、連結、刪除線
-- 每個 `editMessageText` 都有 strip-tags fallback 防 400 error
-- 設計文件：`docs/telegram-formatting-plan.md`
-- 選 HTML 而非 MarkdownV2：因為 agent 輸出常含 `_ * [ ]` 等字元，MarkdownV2 跳脫規則太嚴格會大量 400 error；HTML 只需 escape `<>&`
-
-### Rich Messages 評估（2026-07-08）
-
-Telegram Bot API 10.1（2026-06-11）新增 Rich Messages。grammY 1.44 + @grammyjs/stream v1.1.0 已完整支援。現有 `telegram-rich-renderer.ts` 是合法 rich 渲染（表格/高亮/LaTeX 透過 editMessageText 的 rich_message 參數），已修正 tryEditRichMessageDraft 缺 catch 的 bug（ce0e1ac）。正式升級（draft 動畫路線）列 P2——因為 sendRichMessageDraft 仍受 429 限流（非原先以為的免限流），且 draft 僅限 private chat，收益主要是 429 防禦簡化而非消除。
-
-## AI 策略與正典語料庫
-
-跨模型 AI 策略 v4 核心原則：**正典語料庫（canonical corpus）本身就是產品**——以 markdown + git 追蹤的精煉知識為唯一真實來源（`G:\AI\AI-canonical`），CLI / MCP / bridge / 索引都只是部署基礎設施而非產品本體。
-
-儲存政策：
-- **公開 GitHub repo（AI-canonical）**：正典 skills、steering 政策與通用文件
-- **僅本地保留（不進版控）**：session 執行日誌與框架內部狀態
-
-## 品質機制
-
-- PARALLEL_DELEGATE 已加入 **cross-check** 功能（≥2 specialist 結果時自動注入交叉驗證指引），借鏡自 Claude Code Dynamic Workflows 的 adversarial review 概念
-- 設計決策：只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（架構定位不同、規模不需要）
-
-## Reply/Quote Context（2026-07-07，commit 1346519）
-
-Message handler 讀 reply_to_message（含 caption）與 Bot API 7.0 partial quote，組 `[Reply context]` 區塊前置於 agent prompt，截 500 字。
-
-## Token 執行權限層（2026-07-07，commit 028a5ea）
-
-- `src/token-policy.ts` 的 `TOKEN_POLICY` 顯式白名單：main 全開 / proxy 限 sendFiles·ask·skillUsages·sticker·rememberFacts / delegate 全禁；`isTokenAllowed()` enforcement
-- Specialist memory 回寫附 `[via specialist:<name>]` provenance、單次上限 5 條
-- 評估結論：bridge 原本就有隱性 gate（proxy 只執行安全子集、delegate 輸出純文字注入不執行 token）——顯式化是防未來 refactor 誤開；唯一實際風險是外部內容→specialist→facts 的**記憶污染**路徑，已由 provenance + 上限緩解
-- 分層權限 preamble 評估後不做（僅 cosmetic，specialist preamble 已有 scope 分層）
-
-## Factlint 三層防禦
-
-2026-07-01 因 agent 繞過 MCP `forget` tool 改用 `node -e` shell command，Windows CRLF 比對失敗導致 master facts 清空。事後建立三層防禦：
-
-1. **Preamble 硬禁令**：FACTLINT_PROMPT 開頭加 `⛔ CRITICAL SAFETY RULE` 禁止 shell 直接操作 facts 檔
-2. **空寫保護 + 比例閘門**：`forgetCommit()` 中 `kept.length === 0` 時 throw；刪除 >50% 時 throw
-3. **寫前備份**：`forgetCommit()` 寫入前自動 `copyFileSync` 到 `.bak.<timestamp>`
-
-根因：MCP 的 `readMasterLines` 用 `split(/\r?\n/)` 本身安全，問題在 agent 繞過 MCP 自己寫 script 用 `split('\n')` 對 CRLF 檔案失敗。
-
-## Smoke Test 環境隔離
-
-在 bridge session 內跑 `scripts/check-*.mjs` 會大量假失敗——bridge spawn 的 agent 繼承空值環境變數（`TELEGRAM_BOT_TOKEN=""`），dotenv 不覆蓋既有 env。正確做法：`env -u` 清掉 .env 中出現的變數，但保留 `MEMORY_DIR`。
-
-## User Profile 結構化注入
-
-2026-07-02 實作。`${MEMORY_DIR}/user-profile.md` 獨立存放使用者畫像（5 區塊：身份 / 溝通風格 / 工作偏好 / Agent 設定偏好 / 工作節奏），preamble 固定注入於 envBlock 和 memoryBlock 之間。
-
-- 設計決策：因為畫像是穩定結構化資料所以獨立成檔（排除混在 facts 因為語意召回不保證每次注入）
-- Preamble 佔比：~842 字元 / ~19k total ≈ 4%，極輕量
-
-## Specialist 分身系統
-
-`specialist-domains.json` 配置 3 個分身（2026-06-24，model 2026-07-01 更新）：
-- **slot-dev**：UK 老虎機開發（claude-sonnet-4.6，memory MCP）
-- **researcher**：深度研究 / AI 策略（claude-sonnet-4.6，memory + google MCP）
-- **general**：完整能力並行多工（inheritsAll，claude-sonnet-4.6，memory + google MCP）
-
-## Daily Intel 情報排程
-
-2026-07-04 設定 `/intel` 排程（三個 profile）：
-
-| Profile | 頻率 | 時間 |
-|---|---|---|
-| `ai`（AI 每日情報） | 每日 | 08:00 |
-| `game-industry`（遊戲產業） | 每日 | 08:00 |
-| `topic-ai`（AI podcast 模式） | 隔天 | 08:00（`cron 0 8 */2 * *`） |
-
-使用者偏好 split 策略：輕量 daily + 重量 podcast 隔天，避免早晨資訊過載。
-
-## ACP 與 Model 配置
-
-ACP adapter 切換、model pin、harness hook 等知識已拆出獨立頁 → 見 [[bridge-acp]]。要點：目前走 `claude-agent-acp` + pin `claude-fable-5`（2026-07-06 起，先前為 kiro-cli acp + claude-opus-4.6）。
-
-## Embedding Router
-
-本地 ONNX 模型 `bge-small-zh-v1.5`（23.3 MB），效能 2.6 ms/embed、512 維向量。模型快取在 `node_modules/@xenova/transformers/.cache/`。7 個語意應用：memory recall、skill routing、wiki retrieval、notebook routing、intent classification、sticker auto-select、重複 fact 偵測。
-
-### Embedding 解耦修復（2026-07-06，commit ae19ebd）
-
-原本 model 載入被綁在 `notebooklm-routing.json` 上——檔案缺失時整個 embedding 子系統不啟動，連坐 8 個功能。修復後：
-
-- `initEmbedModel()` 啟動時**無條件**載入模型；`notebooklm-routing.json` 缺失只影響 NotebookLM 路由
-- `isEmbedRouterReady` 語意收窄為「NotebookLM 路由就緒」，其他模組改用 `isEmbedModelReady`
-- 這台機器 bridge 從未載入過 embedding model，修復後首次重啟會從 HuggingFace 下載 `Xenova/bge-small-zh-v1.5`（約 100MB），之後走快取
-
-### NotebookLM 懸案
-
-`config/notebooklm-routing.json` 缺失，根因是 NotebookLM MCP server 從未安裝；且 `scripts/setup-local-notebooklm-mcp.mjs` 目標 CLI 有架構性錯配，要安裝前需先修此 script。（2026-07-06 使用者決定暫緩）
-
-## UI 修復紀錄
-
-- `/help` inline keyboard：parse_mode 從 Markdown 改為 HTML + `escHtml()`（desc/usage 含 `*_<>|${}` 導致 API 400）
-- 「返回選單」按鈕：callback data 從 `help:menu` 改為 `help:_back`（原本與 COMMAND_SPECS `name:menu` 撞名被攔截）
+- Smoke test 環境隔離：bridge session 內跑 `scripts/check-*.mjs` 會假失敗（繼承空 env 蓋掉 dotenv），跑前 `env -u`（保留 MEMORY_DIR）
+- `check-preamble.mjs`：facts 為空時 memory block header 不渲染，fixed core 計算會涵蓋整份 preamble
+- `RELAY_DELEGATE` tool note 只在 `config.relay` 開啟且 `relay-peers.json` 存在時注入（目前生產不含）
 
 ## Context 壓縮（Headroom 評估）
 
-研究 Headroom（headroomlabs-ai/headroom）後的整合優先級：
-1. **方案 A（MCP server）**：零改 code，agent 自主壓大 tool output
-2. **方案 D（headroom learn）**：獨立跑，挖失敗 session 產改進建議
-3. **方案 C（library 整合）**：最有效但需改 bridge core
-4. ~~方案 B（proxy）~~：排除，因為 Kiro CLI 不吃 `ANTHROPIC_BASE_URL`
+整合優先級：方案 A（MCP server，零改 code）> 方案 D（headroom learn 獨立跑）> 方案 C（library 整合，最有效但改 core）；方案 B（proxy）排除因 Kiro CLI 不吃 `ANTHROPIC_BASE_URL`。
 
-## Topic 分類系統
+## 設計原則
 
-`topics.json` 定義 keyword-based first-match-wins 分類規則，bridge 每 2 秒重讀。目前 10 個 topic（2026-07-06 新增 [[bridge-acp]]；2026-07-08 新增 [[uk-917]]、[[bridge-session]] 並把 session 域從本頁拆出；2026-07-10 topic review 後 misc=0）。
+Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊；保持差異化優勢（語意路由 + topic shard + embed-router）。Conversation Summarizer 已由 upstream `archiveSummaryEnabled` 覆蓋，不再獨立追蹤。
 
-## Wiki 知識庫
+## 相關工具
 
-wiki 系統門檻為 ≥5 facts 才自動產出 concepts 頁面（由 `/wikisync` 步驟處理）。
-
-## 多機器部署
-
-- 此專案已在第二台機器部署（G: 磁碟，`MEMORY_DIR=G:\AI\AIMemory`）
-- 原開發機使用 F: 磁碟（`F:\AI\AIMemory`）
-- `.env` 必須正確設定 `MEMORY_DIR`、`BACKUP_REPO_DIR`，否則 `/dream` 維運全部失敗
+- **GitHubTool**：`G:\AI\GitHubTool`，Streamlit GitHub 組織管理 Web UI，主要操作 IGS-ARCADE-DIVISION-RD2 組織
 
 ## 相關
 
 - [[uk-slot]] — 使用者的主要開發產品線
-- [[skill-and-eval]] — skill 評估與管理追蹤
-
-
-## 近期改善（2026-06-26~28）
-
-### Optimistic Cancel
-
-`/cancel` 後 bridge 立即清 inflight + 停 streaming + 編輯 placeholder 顯示「⛔ 已取消」。使用者無需等 CLI 回應即可送新訊息。Force-kill timeout 從 60s 降為 15s。
-
-### /skillsearch 指令
-
-呼叫 SkillsMP API 搜尋公開 SKILL.md。安裝路徑動態判斷 domain（slot → slot/，其餘 → general/）、cache 10min、fetch 10s timeout、安裝後自動跑 sync.ps1。
-
-### Preamble Steering 加強
-
-- **Context Budget Discipline**：事前估算 + 70% token 事中熔斷警告
-- **ASK Button Discipline**：2+ 選項強制使用 `<<ASK:...>>` token
-
-### Dream 配置
-
-dream.json 已建立於 `~/.kiro/dream.json`（14 步，含 fork 獨有的 docupdate），不再依賴 bridge 內建 DEFAULT_STEPS fallback。
-
-### 設計原則
-
-Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊；保持差異化優勢（語意路由 + topic shard + embed-router）。詳見 [[bridge-research]]。
-
-### Git 架構
-
-- upstream：`redkilin/telegram-kiro-bridge`（remote: upstream）
-- fork：`jiunchiwang/telegram-kiro-bridge`（remote: origin）
-
-### QUIET_HOURS 靜默時段
-
-`QUIET_HOURS=HH-HH` 環境變數，靜默期間排程延遲到結束時刻才 fire（支援跨午夜）。目前未啟用，Passive Monitor 改用 cron 精確控制（2026-07-08 改為每日 2 次：12:00、22:00）。
-
-### Fork Sync 策略
-
-用 merge（非 rebase）合併 upstream，衝突解決原則：upstream 架構為主、手動保留 fork 獨有功能（`/reset clean`、`handleDocUpdate`、`specialist-memory`、`reaction_feedback` event）。2026-07-03 已同步至 upstream commit 4118f1d（merge commit d22a568），新增功能含 ACP model/effort pin、orphan turn flusher、Telegram rich streaming、session archive LLM summary + trivial carry-forward、bridge config 集中化到 `MEMORY_DIR/config/`。
-
-Fork 的 DEFAULT_STEPS 比 upstream 多一步 `docupdate`（共 14 步）。
-
-2026-07-09 upstream（efab1ab）已把 fork 功能 port 回上游——之後同步衝突面大幅縮小。
-
-2026-07-07 同步 upstream 23 commits（`f6341fd`，12 檔衝突手解、smoke 全綠）：MoA Phase 1-4（blind review / plan mode / debate / review-panel / read-only MCP）、`/agent` ACP 熱切換、auto_trigger semantic routing。教訓：`git checkout --theirs/--ours` 是整檔取代，會洗掉對側已乾淨自動合併的 hunk——雙邊都有改動的檔案應用 `git merge-file` 三方合併並逐檔核對。同日另完成：Telegram reply/quote 引用注入 agent prompt（`1346519`）、修 upstream check-moa 壞測試（`e75b45e`，resolvePreset 改 async + embedding routing 取代 keyword routing 後測試未跟上）。
-
-### Preamble 瘦身（2026-07-06）
-
-18.6k → ~11.7k chars 三步：facts tail 30→15→10（`MEMORY_PREAMBLE_TAIL`）、7 個 guideline 區塊合併成單一 `[Agent disciplines]`。取捨：佔 context 5-6% 為警戒線；tail 靠 topic 索引 + embedding 召回補位，但不砍到 5 因為 facts 爆發式寫入會斷跨日工作連續性（embedding 按語意不按時間召回補不了位）。
-
-2026-07-06 再次同步 upstream 8 commits（零衝突、tsc 通過），新增：`SPEC-acp-hot-swap.md`（`/agent` hot-swap 規格）、`SPEC-moa-provider.md`（MoA provider 含 preset auto-routing + workflow）、usageStore skill-usage.json 集中到 `MEMORY_DIR/config/`。兩份 SPEC 均為 draft、未實作（acp-hot-swap W1-W7、moa-provider W1-W18），與 NotebookLM 修復並列三項暫緩待辦。
-
-### Karpathy Wiki 對齊 P0（完成）
-
-三個模組已實作（commit 6931445，+1302 行）：
-
-1. **activity-log.ts**（207 行）— 統一讀取 hit-log / event-log / observations JSONL
-2. **ingest-ripple.ts**（232 行）— hook 在 `remember()` 的 `insertFact` 後觸發 wiki 漣漪式更新標記
-3. **query-auto-save.ts**（230 行）— 自動偵測優質回覆存為 wiki 候選
-
-接線 bug 由 Claude Fable 5 修正（commit d043253 + d3c35c6）：topics.json 欄位解析、shard 檔名正規化、factId 格式一致性、run-prompt / wikisync 生產端接線、activity-log 路徑對齊。
-
-### Conversation Summarizer（已關閉）
-
-原 P2 待做，upstream 的 `archiveSummaryEnabled` + llama.cpp 真摘要已完全覆蓋此需求，不再獨立追蹤。
-
-### 待做方案總覽報告
-
-`docs/pending-roadmap.html`（深色主題、目錄跳轉），記錄所有未完成 roadmap 項目的狀態與前置條件。
-
-## Specialist Dashboard（2026-07-10）
-
-Status server（port 3847）擴充為 specialist 監控面板：
-
-- **技術選型**：多頁面 hash-based SPA + 純 HTML/vanilla JS（排除 React SPA 太重、排除最小增量擴展性差）
-- **入口**：瀏覽器直開 `localhost:3847` + Telegram Mini App 按鈕（Electron 已移除）
-- **用途定位**：即時監控（A）+ 日常管理（B），非純除錯
-- **安全加固**（commit c9174e3）：async 錯誤邊界防 crash、預設綁 `127.0.0.1`（`STATUS_BIND_HOST` 可改）、移除 CORS `*`、env 機密遮罩、preamble 路由 specialist 白名單、artifact 檔名 specialist name 錨定 regex
-
-### 架構陷阱
-
-- `index.ts` 全域 `unhandledRejection` handler 會 `process.exit(1)` — 任何同 process 的 async callback 未捕捉 throw 都會殺掉整個 bridge，新增 server/handler 必須自帶錯誤邊界
-- `RELAY_DELEGATE` tool note 只在 `config.relay` 開啟且 `relay-peers.json` 存在時注入（目前生產不含）
-- `check-preamble.mjs` facts 為空時 memory block header 不渲染，fixed core 計算會涵蓋整份 preamble（7783 vs 真實 5884）
-
-### 其他修正
-
-- 送 `.md` 檔給 Telegram 改用 `.txt` 顯示名（InputFile 第二參數），解決中文亂碼
-- Factlint ratio 3.0 目標在 87%+ wiki-protection 下結構性不可達，已接受為設計取捨
-- 不建 bridge-dev specialist：主 agent 工作目錄就是 bridge repo，bridge-dev 是降級冗餘
-
-## 相關
-
-- [[bridge-streaming]] — Streaming 與訊息渲染
-- [[bridge-research]] — 研究方向與外部借鏡
-- [[ai-strategy]] — 跨模型策略層
+- [[ai-strategy]] — 跨模型策略與正典語料庫

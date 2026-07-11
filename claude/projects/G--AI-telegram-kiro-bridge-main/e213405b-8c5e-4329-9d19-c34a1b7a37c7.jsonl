@@ -706,3 +706,5 @@
 {"type":"mode","mode":"normal","sessionId":"e213405b-8c5e-4329-9d19-c34a1b7a37c7"}
 {"type":"permission-mode","permissionMode":"bypassPermissions","sessionId":"e213405b-8c5e-4329-9d19-c34a1b7a37c7"}
 {"type":"bridge-session","sessionId":"e213405b-8c5e-4329-9d19-c34a1b7a37c7","bridgeSessionId":"cse_015NRnSHa9WmgC92LR1K9k27","lastSequenceNum":0}
+{"type":"queue-operation","operation":"enqueue","timestamp":"2026-07-11T00:01:51.272Z","sessionId":"e213405b-8c5e-4329-9d19-c34a1b7a37c7","content":"/clear"}
+{"type":"queue-operation","operation":"dequeue","timestamp":"2026-07-11T00:01:51.283Z","sessionId":"e213405b-8c5e-4329-9d19-c34a1b7a37c7"}

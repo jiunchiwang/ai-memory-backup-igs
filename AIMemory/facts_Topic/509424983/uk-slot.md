@@ -48,3 +48,4 @@
 - [f_8a9474] [2026-07-09T20:33:34.376Z] 記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。
 - [f_b773d9] [2026-07-10T00:12:51.631Z] uk-conventions 是 Claude Code custom command（位於 AI-canonical-corp/commands/uk-conventions.md），不是 skill——skill-usage store 的 orphan 偵測是 false positive
 - [f_6fe390] [2026-07-10T15:54:46.749Z] AIMemory artifacts 檔名格式 <date>_<taskId>_<specialist>_<slug>.json 中 taskId 本身可含底線（如 pt_codegen_probe），positional split('_') 解析必錯，須用已知欄位（specialist name）錨定 regex
+- [f_8cc27f] [2026-07-11T03:19:33.673Z] AIMemory（G:\AI\AIMemory）本身不是 git repo，版本保護走 /backup 備份機制（robocopy 到 ai-memory-backup-igs 再 push），wiki/topics.json/STATE.md 改動不需 git commit

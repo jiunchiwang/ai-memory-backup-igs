@@ -1,5 +1,6 @@
 # Memory Index
 
+- [bridge-review-handoff-2026-07-11](project_bridge_review_handoff.md) — 全碼審查 25 條 findings 全修完（high/medium/low），僅剩舊 script BC-x 漸進回填；三個新 opt-in env 部署時要設定
 - [session-store-ui-state](project_session_store.md) — /session 多 session 管理完成，e2e 全過（BC-2/3/5/8 含跨 backend pin 連動），無待辦
 
 - [acp-session-resume-state](project_session_resume.md) — session resume 全部收尾：e2e 通過（2026-07-07 SIGINT 路徑）+ cosmetic 已補（55b3628），無待辦
@@ -8,3 +9,5 @@
 - [decision-gate-hook-minimal](decision-no-gate-hook.md) — 已部署閘門 A/B Claude-only 最小版（impact-gate.mjs + settings.local.json）；跨 CLI 投影已否決
 - [rich-messages-upgrade-verdict](project_rich_messages_upgrade.md) — @grammyjs/stream append-only 否決快速升級；小 bug 已修（ce0e1ac），draft 化須 dev-design
 - [smoke-suite-env-pitfall](project_smoke_env_pitfall.md) — bridge session 內跑 check-*.mjs 假失敗：繼承空 env 蓋掉 dotenv，跑前 env -u（留 MEMORY_DIR）
+- [fact-embedding-backfill-gap](fact-embedding-backfill-gap.md) — fact recall 恆 0 根因（fact embedding 從未算，join 重疊 0）+ dream 三項處理決策與「表面修法無效」陷阱
+- [commit-8d0b8fa-hash-erratum](commit-8d0b8fa-hash-erratum.md) — 8d0b8fa commit body 引用 hash 筆誤：173881a 應為 173591a，僅訊息參照錯，不 amend

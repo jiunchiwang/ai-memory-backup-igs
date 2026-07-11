@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "44837efa",
+      "activeId": "ece16c78",
       "sessions": [
         {
-          "id": "44837efa",
-          "name": "請產出 2026-07-10 的 daily l",
-          "createdAt": 1783700552537,
-          "sessionId": "3e5ca4a0-9fdc-40cf-8e0b-4a87e5b6375e",
+          "id": "ece16c78",
+          "name": "繼續",
+          "createdAt": 1783781180626,
+          "sessionId": "efffc08b-4835-497b-a0a8-fd3de0824be1",
           "backendKey": "kiro",
           "agentCommand": "kiro-cli",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1783700552534
+          "savedAt": 1783781180623
         }
       ]
     }

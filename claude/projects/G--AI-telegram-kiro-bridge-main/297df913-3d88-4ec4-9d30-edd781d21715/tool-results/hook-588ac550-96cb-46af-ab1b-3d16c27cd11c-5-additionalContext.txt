@@ -1,0 +1,264 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-11 8:02am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,066 tokens to read)
+- Work investment: 180,186 tokens spent on research, building, and decisions
+- Your savings: 90% reduction from reuse
+
+### Jul 10, 2026
+
+**#S1556** Investigate why Claude Fable 5 model isn't being recognized in the ACP adapter setup (Jul 10, 11:17 PM)
+
+**#S1557** Review today's project changes and fix Fable 5 model support in Claude agent ACP adapter (Jul 10, 11:26 PM)
+
+**#S1558** Model status check - confirming current Claude model version (Jul 10, 11:34 PM)
+
+**#S1559** Comprehensive security and correctness review of status web UI, followed by user selection to fix all 6 identified issues (Jul 10, 11:38 PM)
+
+**#S1560** Status server security hardening - 6 vulnerability fixes for specialist dashboard (Jul 10, 11:48 PM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4590 | 11:49 PM | 🔴 | Fixed artifact filename parsing for taskIds with underscores |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4592 | 11:50 PM | 🔵 | Reviewed .env.example tail before adding STATUS_BIND_HOST documentation |  |  |
+
+**status-app/index.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4593 | " | 🔴 | Fixed cancel button to show correct status based on server response |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4594 | " | ✅ | Added STATUS web UI environment variable documentation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4595 | " | ✅ | TypeScript type checking passed after all status-server security fixes |  |  |
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4596 | 11:51 PM | ✅ | Verified all security fixes are properly integrated in status-server.ts |  |  |
+
+**.tmp-regex-test.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4597 | " | ✅ | Created test script to verify regex patterns and safeDecode behavior |  |  |
+| #4598 | " | ✅ | Verified all regex patterns and safeDecode function work correctly |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4599 | " | ✅ | Confirmed STATUS environment variable documentation added to .env.example |  |  |
+
+**#S1561** User asked about current model version after completion of status server fixes and documentation updates (Jul 10, 11:52 PM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4600 | 11:53 PM | 🔴 | Status server crash prevention and security hardening |  |  |
+
+**#S1562** Model verification check - confirming current model after Fable 5 pin fix (Jul 10, 11:54 PM)
+
+**#S1563** Sync usage-guide.html with README.md feature and command documentation (Jul 10, 11:55 PM)
+
+### Jul 11, 2026
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4601 | 12:00 AM | 🔵 | Preamble delegate guidance enhanced with 5-element protocol |  |  |
+| #4602 | " | 🔵 | Preamble modification verification confirms clean migration to 5-element protocol |  |  |
+
+**scripts/check-preamble.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4603 | 12:01 AM | 🔵 | Preamble fixed-cost ceiling verification passes after delegate enhancement |  |  |
+
+**dist/memory.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4604 | 12:03 AM | 🔵 | Direct preamble build confirms 5-element delegate protocol successfully integrated |  |  |
+| #4605 | " | 🔵 | Fixed core size varies by facts presence—real facts scenario at 5,884 chars validates ceiling |  |  |
+
+**scripts/check-token-policy.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4606 | 12:04 AM | 🔵 | Delegate-related smoke tests pass after 5-element protocol enhancement |  |  |
+
+**#S1565** User decided to keep three zombie skills (knowhow-accumulation, non-engineer-agent-design, skill-creator) after reviewing cleanup options and fixes for fact recall and uk-conventions false positive (Jul 11, 12:20 AM)
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4608 | 7:40 AM | 🔵 | Zombie skill junctions identified for cleanup |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4609 | " | 🔵 | Zombie skill junctions exist in both Claude and Kiro directories |  |  |
+| #4610 | " | 🔵 | Skill registry files located in AIMemory config directory |  |  |
+
+**..\..\AI\AIMemory\config\skill-usage.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4611 | 7:41 AM | 🔵 | uk-conventions orphan entry located in skill registry |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4612 | " | 🔵 | Skill junction sync mechanism and zombie skill history confirmed |  |  |
+
+**..\..\AI\AIMemory\config\skill-usage.bak.20260708.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4613 | " | 🔵 | Zombie skills were already orphaned in July 8th backup |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4614 | " | 🔵 | Zombie skills absent from canonical repository recent history |  |  |
+| #4615 | 7:42 AM | 🔵 | Hit-log functionality spread across six bridge source files |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\hit-log.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4616 | " | 🔵 | Hit-log module uses append-only JSONL for fact usage tracking |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\commands\dream.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4617 | " | 🔵 | Dream command references skill orphan detection as manual intervention item |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\enrichment.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4618 | 7:43 AM | 🔵 | Hit-log tracking integrated at seven call sites across enrichment and index modules |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4619 | " | 🔵 | Hit-log records wiki and skill hits but zero fact recalls |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\memory-recall.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4620 | " | 🔵 | Memory-recall module structure identified across source files |  |  |
+| #4621 | " | 🔵 | Memory-recall implements dual-path retrieval with hybrid search and fallback |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4622 | 7:44 AM | 🔵 | Memory-recall integration code confirmed but returns empty results |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\memory-db.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4623 | " | 🔵 | Memory database architecture requires initialization and synchronization |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4624 | " | 🔵 | Bridge initialization sequence shows memory system setup order |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4625 | 7:45 AM | 🔵 | Memory database active but embedding cache potentially unpopulated |  |  |
+| #4626 | " | 🔵 | Memory database JOIN returns zero despite populated tables - hash mismatch |  |  |
+| #4627 | 7:46 AM | 🔵 | Skill-usage registry management code identified across 10 modules |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\usageStore.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4628 | " | 🔵 | Skill usage tracking includes runtime orphan detection on disk |  |  |
+| #4629 | " | 🔵 | markUsed automatically transitions orphan flag based on disk state |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\commands\memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4630 | 7:47 AM | 🔵 | Skilllint command implements multi-dimensional skill health checks via LLM prompt |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4631 | " | 🔵 | Fact insertion bypasses embedding cache population |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\memory-db.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4632 | 7:48 AM | 🔴 | Added embedding cache backfill to fix zero fact recall issue |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4633 | " | 🔴 | Imported backfillFactEmbeddings for integration into bridge startup |  |  |
+| #4634 | 7:49 AM | 🔴 | Integrated embedding backfill into bridge startup sequence |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\src\commands\memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4635 | " | ✅ | Updated skilllint prompt to skip known false-positive orphans |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4636 | " | ✅ | TypeScript compilation verified all bugfixes type-safe |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4637 | 7:50 AM | ✅ | Updated STATE.md with investigation findings and fix status |  |  |
+
+**..\..\AI\AIMemory\config\skill-usage.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4638 | 7:57 AM | ✅ | Restored three zombie skills to skill-usage registry |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4639 | 7:58 AM | ✅ | Marked zombie skills cleanup as resolved in STATE.md |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\fact-embedding-backfill-gap.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4640 | 7:59 AM | 🔵 | Documented fact embedding gap root cause and three maintenance trap patterns |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4641 | " | ✅ | Added fact-embedding-backfill-gap to memory index |  |  |
+
+**#S1566** Commit memory system fixes for fact embeddings and skill store management (Jul 11, 8:01 AM)
+
+**Investigated**: Three memory system issues were investigated: zombie skills triggering underused warnings, uk-conventions skill false positive in skilllint, and fact recall returning zero hits despite 195 stored facts. Root cause analysis revealed fact embeddings were never computed (zero overlap between facts table and embedding_cache).
+
+**Learned**: Fact embeddings require explicit computation during insertion and weren't being generated for existing facts. The `insertFact` function in memory-db.ts was missing embedding generation logic. Skilllint's underused skill detection (rule 5) can be bypassed by setting `pinned=true` in skill store entries. Entry notes can mark false positives that skilllint should skip.
+
+**Completed**: Three fixes implemented in bridge repo: (1) Zombie skills marked as pinned in store to bypass underused checks, (2) Skilllint prompt updated to skip entries with false-positive notes, (3) Fact embedding system fixed with backfillFactEmbeddings() function added to memory-db.ts and insertFact modified to compute embeddings immediately. Changes span src/memory-db.ts (+24 lines), src/index.ts (+6 lines for startup backfill), and src/commands/memory.ts (skilllint prompt). User confirmed commit of these three files.
+
+**Next Steps**: Commit the three modified files with message about fact embedding backfill fix. After commit, build and restart bridge service to trigger backfill of 195 existing fact embeddings. Monitor hit-log after restart to verify fact recall now returns non-zero results.
+
+
+Access 180k tokens of past research & decisions for just 18,066t. Use MCP search tools to access memories by ID.

@@ -1,27 +1,23 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-09T20:37:02.489Z
+Last run: 2026-07-10T20:20:42.272Z
 
 ## High Priority (action needed)
-(all items processed 2026-07-10)
+- skilllint: 3 個 zombie skill（knowhow-accumulation、non-engineer-agent-design、skill-creator）— ✅ 2026-07-11 已處理：使用者決定**保留**（否決刪除），已重建 store entry 並標 pinned=true（skilllint 規則 5 跳過 underused 檢查），正本與 junction 不動
+- skilllint: uk-conventions orphan — ✅ 2026-07-11 已處理：skilllint prompt 加 notes 排除規則（entry notes 已標 false positive，markUsed 會保留 notes），待 commit + bridge 重啟生效
+- factlint: hit-log fact type 0 筆 — ✅ 2026-07-11 已修根因：非重啟問題，是 fact embedding 從未被算（facts 195 vs embedding_cache join 重疊 0，vectorSearch 恆空、分數低於門檻）；已加 backfillFactEmbeddings（啟動補算）+ insertFact fire-and-forget 嵌入，tsc 過，待 commit + bridge 重啟生效
 
 ## Watch List (monitor)
-- hit-log fact 命中路徑仍未通（62 筆全是 skill/wiki 類型，fact type = 0），衰減分析無法執行
-- bridge-project wiki 255 行（超 200 行 guideline），下次更新考慮拆頁
-- uk-slot-codegen 未入 skill-usage store（07-09 新安裝，bridge 下次掃描應自動補上）
-- factlint 升格候選：bridge-project 有 4 條 bug/修復 fact，暫緩觀察是否累積同類
-- factlint ratio ~4.6（174 facts / ~37 wiki pages）：87%+ wiki-protected，ratio 3.0 結構性不可達，已接受為設計取捨
-- underused skills 保留觀察：huashu-slides / dual-skill-review-loop / self-eval-prompt-pattern（count=0 但使用者選擇保留）
-
-## Processed (2026-07-10)
-- factlint 5 條 stale wiki-protected facts 已刪（f_124f9f/f_539667/f_ae2a4d/f_75638b/f_a12c14）+ wiki sources 同步清除 + 額外刪 f_11b405（自標過時）→ 181→174 facts
-- factlint ratio 評估：87%+ wiki-protection 下 ratio 3.0 結構性不可達，移入 Watch List
-- skilllint orphan uk-conventions：實為 custom command（AI-canonical-corp/commands/），store 標 orphan=false + 加 notes
-- underused skills 處理：刪 3 個（skill-creator/knowhow-accumulation/non-engineer-agent-design，磁碟+store），保留 3 個（huashu-slides/dual-skill-review-loop/self-eval-prompt-pattern）
-- skill-candidates external-repo-absorption-methodology 升格為 ms-external-repo-absorption（AI-canonical commit 542a20a，已 push + sync + store 記錄）
+- topicreview: 新建 bridge-streaming shard（12 facts），bridge-project 從 65 降到 53，misc 清零
+- factlint: ratio 195/20=9.75，結構性高於 3.0 已接受為設計取捨
+- skilllint: 5 個 underused skill（claude-mem-curate、dual-skill-review-loop、huashu-slides、self-eval-prompt-pattern、uk-slot-multilang-sync），其中 3 個使用者已明確保留
+- wikisync: bridge-project 頁面過長 — ✅ 2026-07-11 已拆分：新建 bridge-memory（記憶與維運，78 行）+ bridge-specialist（分身系統，54 行）兩頁，主頁縮到 80 行；topics.json 已加對應 keyword 規則（插在 bridge-project 前）分流未來 facts，待下次 topicreview 實體重分 shard
 
 ## Noise (ignored this run)
-- dailylog 完成（27 行）、topic review misc 9→0、wikisync 更新 3 頁（bridge-project/uk-slot/uk-917）
-- factlint 刪 3 條（f_d0757b 個人聯絡/f_d7548f stale mystery/f_b12677 冗餘同步狀態）
-- wikilint 19 頁全綠（0 orphan/0 斷連）、docupdate 補「預設 Skill 自動安裝」段落
-- memorytoskill 0 新建 0 更新、1 條 rationale fact（Proto.ts vs codegen）、12 檔搬移 oldSessions
-- backup/artifactcleanup/sharedsync/specialistreview 正常完成
+- dailylog: 2026-07-10.md 寫入成功（26 行）
+- memorytoskill: 0 新建 0 更新，10 個頻率候選判定為誤判（wiki retrieval header metadata）
+- wikisync: 新增 bridge-streaming 頁、更新 uk-slot 和 bridge-project 頁
+- factlint: 刪除 4 條瑣碎 fact（199→195），0 矛盾
+- wikilint: 20 頁全健康，0 orphan，0 broken link
+- docupdate: 補 Draft API Streaming 段落到 usage-guide.html
+- artifactcleanup: 0 舊檔刪除
+- backup/sharedsync/specialistreview: 正常完成

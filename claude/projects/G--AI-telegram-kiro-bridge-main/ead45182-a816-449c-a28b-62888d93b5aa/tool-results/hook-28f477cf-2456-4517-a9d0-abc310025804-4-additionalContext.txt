@@ -1,0 +1,246 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-11 8:48pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (15,439 tokens to read)
+- Work investment: 438,033 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jul 11, 2026
+
+**#S1594** Code review of telegram-kiro-bridge program and fix identified issues (Jul 11, 3:01 PM)
+
+**#S1595** Fix all remaining code review findings - discussion of low-severity issues after medium-severity fixes were pushed (Jul 11, 3:31 PM)
+
+**#S1596** Code review of bridge program with fixes applied and pushed (Jul 11, 3:35 PM)
+
+**#S1597** User question about token costs when switching agents (Jul 11, 4:20 PM)
+
+**#S1598** Self-check verification of 8 recent telegram-kiro-bridge refactoring commits (Jul 11, 4:20 PM)
+
+**src/tool-hooks.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4797 | 4:23 PM | 🔄 | Dead code elimination - tool-hooks system removal |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4798 | " | ✅ | Relay delegation security marking |  |  |
+
+**src/pet-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4799 | " | 🔄 | Pet server WebSocket extraction |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4800 | " | 🔴 | Atomic JSON write race condition fix |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\project_smoke_env_pitfall.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4805 | 4:24 PM | ✅ | Code quality self-review verification |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4806 | 4:25 PM | 🔵 | Stale documentation references to deleted tool-hooks |  |  |
+
+**#S1599** Self-check and fix recent changes in telegram-kiro-bridge: atomicJson leak, CONTINUE token handling, and documentation cleanup (Jul 11, 4:27 PM)
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4807 | 4:29 PM | 🔴 | Completed promise leak fix in atomicJson updateJson |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4808 | 4:30 PM | 🔴 | Fixed CONTINUE token streaming visibility bug |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4809 | " | ✅ | Removed tool-hooks.ts reference from README file structure |  |  |
+| #4810 | " | ✅ | Removed tool-hooks.ts reference from README feature overview |  |  |
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4811 | " | ✅ | Removed tool-hooks.ts reference from usage-guide.html |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4812 | 4:31 PM | ✅ | Verified all three self-check fixes successfully applied |  |  |
+
+**scripts/check-atomic-json.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4813 | " | ✅ | Verified atomicJson promise leak fix with automated smoke tests |  |  |
+
+**#S1600** Diagnose two Telegram bot UI issues: missing "I selected" feedback after ASK button clicks, and slow/incomplete tool message rendering (Jul 11, 4:32 PM)
+
+**src/updateJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4814 | 4:35 PM | 🔴 | Fixed telegram-kiro-bridge module state leaks and token handling |  |  |
+
+**skilllint implementation**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4815 | " | ✅ | Resolved three pending dream maintenance items |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\commit-8d0b8fa-hash-erratum.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4816 | 4:36 PM | ✅ | Documented commit 8d0b8fa hash reference typo |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\MEMORY.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4817 | " | ✅ | Updated project memory index with erratum entry |  |  |
+
+**#S1601** Status check on unpushed commits in telegram-kiro-bridge repository (Jul 11, 7:58 PM)
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4818 | 7:58 PM | 🔵 | Mapped streaming render functions and call sites |  |  |
+| #4819 | " | 🔵 | Identified all files using render functions |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4820 | " | 🔵 | Found test scripts for render functions |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4821 | 7:59 PM | 🔵 | index.ts only imports renderReply, not a direct caller |  |  |
+| #4822 | " | 🔵 | renderReply imported alongside other Telegram UI utilities |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4823 | " | 🔵 | renderReply function signature lacks replyHeader parameter |  |  |
+| #4824 | 8:00 PM | 🔴 | Added replyHeader parameter to renderReply for streaming visibility |  |  |
+| #4825 | " | 🔴 | Integrated replyHeader into renderReply output composition |  |  |
+| #4826 | " | 🔴 | Added replyHeader parameter to renderDraftReply function |  |  |
+| #4827 | 8:01 PM | 🔴 | Integrated replyHeader into renderDraftReply output composition and budget |  |  |
+| #4828 | " | 🔄 | Refined renderDraftReply return logic for clearer header handling |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4829 | " | 🔴 | Wired replyHeader through to renderDraftReply call site |  |  |
+| #4830 | 8:02 PM | 🔴 | Wired replyHeader through final renderReply call site for placeholder streaming |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4831 | 8:03 PM | 🔴 | Implemented title update handling in tool_call_update to fix incomplete tool names |  |  |
+| #4832 | " | 🔴 | Added onUpdate trigger for intermediate title changes to refresh display |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4833 | " | ✅ | TypeScript compilation verified all fixes without errors |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4834 | 8:05 PM | 🔴 | Smoke tests confirm backward compatibility of replyHeader changes |  |  |
+
+**C:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-header.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4835 | " | 🔴 | Direct replyHeader tests confirm all streaming behavior contracts |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4838 | 8:06 PM | 🔴 | Both fixes implemented, verified with available test coverage |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4839 | 8:07 PM | 🔴 | Mapping provider event flow to prepare tool_call_update test |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4840 | " | 🔴 | Creating comprehensive integration test for tool_call_update title handling |  |  |
+
+**dist/sessionManager.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4841 | " | 🔴 | Test failing due to SessionUpdate wrapper structure mismatch |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4842 | " | 🔴 | Confirming SessionUpdate wrapper structure from applyUpdate implementation |  |  |
+
+**C:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4843 | 8:08 PM | 🔴 | Tool title update integration test passes all 8 assertions |  |  |
+
+**scripts/check-editnow-race.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4844 | " | 🔴 | Additional smoke tests confirm no regressions from fixes |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4845 | " | ✅ | Staging three modified files for commit |  |  |
+| #4846 | 8:09 PM | 🔴 | Both streaming UI fixes committed successfully |  |  |
+
+**#S1602** User queried current model configuration (Jul 11, 8:13 PM)
+
+**#S1603** User inquired about tool messages becoming longer after recent modifications; Claude explained two streaming UI fixes that were just committed (Jul 11, 8:40 PM)
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4847 | 8:44 PM | 🔴 | Tool progress display truncated to show only tool type, not full command |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4848 | " | 🔵 | Test suite reveals one expected failure from tool display truncation change |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4849 | " | 🔵 | Draft render smoke test validates streaming frame order and stability |  |  |
+| #4850 | 8:45 PM | ✅ | Updated draft render test to expect truncated tool names |  |  |
+
+**C:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4851 | " | ✅ | Updated tool-title test to verify display truncation vs timeline preservation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4852 | " | ✅ | All smoke tests pass after tool display truncation and test updates |  |  |
+
+
+Access 438k tokens of past research & decisions for just 15,439t. Use MCP search tools to access memories by ID.

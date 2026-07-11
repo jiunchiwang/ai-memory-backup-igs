@@ -1,0 +1,246 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-11 4:34pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (17,267 tokens to read)
+- Work investment: 460,871 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jul 11, 2026
+
+**#S1590** Code review of telegram-kiro-bridge program for potential issues (Jul 11, 11:37 AM)
+
+**#S1591** Code review of bridge program for issues and bugs (Jul 11, 12:54 PM)
+
+**#S1592** Session handoff preparation - documenting completed work before Fable5 model timeout (Jul 11, 2:40 PM)
+
+**#S1593** Bridge program code review and handoff documentation creation (Jul 11, 2:58 PM)
+
+**#S1594** Code review of telegram-kiro-bridge program and fix identified issues (Jul 11, 3:01 PM)
+
+**#S1595** Fix all remaining code review findings - discussion of low-severity issues after medium-severity fixes were pushed (Jul 11, 3:31 PM)
+
+**#S1596** Code review of bridge program with fixes applied and pushed (Jul 11, 3:35 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4764 | 3:38 PM | 🔵 | Found three token-related test scripts for observerTransformer verification |  |  |
+| #4765 | " | 🔵 | Located check-observer-transformer.mjs comprehensive test suite |  |  |
+| #4766 | " | ✅ | All 80 observerTransformer regression tests passed after fixes |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4767 | 3:39 PM | 🔴 | Committed observerTransformer streaming token fixes to main branch |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4768 | " | 🔵 | Examined relay.ts isDuplicate and testRedisConnection implementation for code review fixes |  |  |
+| #4769 | " | 🔄 | Added optional config parameter to redisCommand for safe test isolation |  |  |
+| #4770 | 3:40 PM | 🔴 | Fixed testRedisConnection to avoid overwriting global relay configuration |  |  |
+| #4771 | " | 🔴 | Changed dedupKey to use SHA1 hash of full text instead of first 100 characters |  |  |
+| #4772 | " | 🔴 | Added missing createHash import from node:crypto for SHA1 deduplication |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4773 | " | ✅ | TypeScript compilation verified after relay.ts fixes |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4774 | 3:41 PM | 🔴 | Committed relay deduplication and testRedisConnection fixes to main branch |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4775 | " | 🔵 | Examined autoSelectSticker emotionVectors initialization for warmup failure bug |  |  |
+| #4776 | 3:42 PM | 🔴 | Fixed autoSelectSticker to retry initialization on partial embedding failures |  |  |
+| #4777 | " | 🔄 | Removed unreachable relay auto-reply branch from user-facing path |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4778 | " | ✅ | TypeScript compilation verified after run-prompt.ts fixes |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4779 | 3:43 PM | 🔴 | Committed sticker cache retry and dead code cleanup fixes to main branch |  |  |
+
+**src/moa.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4780 | " | 🔵 | Examined moa.ts Promise.race timeout pattern for timer leak extraction |  |  |
+
+**src/utils.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4781 | " | 🔵 | Examined utils.ts exports for raceWithTimeout helper placement |  |  |
+| #4782 | 3:44 PM | 🔵 | Verified utils.ts structure and import patterns for raceWithTimeout addition |  |  |
+| #4783 | " | 🟣 | Added raceWithTimeout helper to utils.ts fixing Promise.race timer cleanup |  |  |
+
+**src/specialist.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4784 | " | 🔄 | Replaced two Promise.race timeout patterns in specialist.ts with raceWithTimeout |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4785 | 3:46 PM | 🔴 | Added compare-and-delete cleanup to atomicWriteJson writePending map |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4786 | 3:47 PM | 🔄 | Added pinnedLoaded promise field to SessionManager constructor |  |  |
+| #4787 | " | 🔴 | Added pinnedLoaded await in SessionManager.create() to prevent startup race |  |  |
+
+**src/pet-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4788 | 3:48 PM | 🔄 | Extracted createWss() helper deduplicating WebSocket connection handler setup |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4789 | 3:50 PM | 🔴 | Added prompt injection defense to buildRelayDelegationPrompt |  |  |
+
+**tsconfig.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4790 | 4:00 PM | 🔵 | TypeScript compilation validated for telegram-kiro-bridge |  |  |
+
+**scripts/check-provider.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4791 | " | 🔵 | Bridge program smoke tests all passing |  |  |
+
+**src/artifact.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4792 | 4:01 PM | 🔄 | Dead code cleanup removed 284 lines across bridge codebase |  |  |
+
+**.claudedocs/records/2026-07-11-bridge-review-handoff.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4793 | " | ✅ | Code review completion: all 22 findings resolved across 16 commits |  |  |
+
+**#S1597** User question about token costs when switching agents (Jul 11, 4:20 PM)
+
+**#S1598** Self-check verification of 8 recent telegram-kiro-bridge refactoring commits (Jul 11, 4:20 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4794 | 4:23 PM | ⚖️ | Zombie skills retention decision |  |  |
+| #4795 | " | 🔴 | uk-conventions orphan false positive fix |  |  |
+| #4796 | " | 🔴 | Fact embedding backfill implementation |  |  |
+
+**src/tool-hooks.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4797 | " | 🔄 | Dead code elimination - tool-hooks system removal |  |  |
+
+**src/commands/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4798 | " | ✅ | Relay delegation security marking |  |  |
+
+**src/pet-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4799 | " | 🔄 | Pet server WebSocket extraction |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4800 | " | 🔴 | Atomic JSON write race condition fix |  |  |
+
+**src/utils.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4801 | " | 🔴 | Timeout helper extraction and timer leak fix |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4802 | " | 🔴 | Sticker cache partial failure handling |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4803 | " | 🔴 | Relay duplicate detection and Redis connection fix |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4804 | " | 🔴 | Transformer opener whitelist and SEND_FILE repair |  |  |
+
+**C:\Users\jiunchiwang\.claude\projects\G--AI-telegram-kiro-bridge-main\memory\project_smoke_env_pitfall.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4805 | 4:24 PM | ✅ | Code quality self-review verification |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4806 | 4:25 PM | 🔵 | Stale documentation references to deleted tool-hooks |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4807 | 4:29 PM | 🔴 | Completed promise leak fix in atomicJson updateJson |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4808 | 4:30 PM | 🔴 | Fixed CONTINUE token streaming visibility bug |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4809 | " | ✅ | Removed tool-hooks.ts reference from README file structure |  |  |
+| #4810 | " | ✅ | Removed tool-hooks.ts reference from README feature overview |  |  |
+
+**docs/usage-guide.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4811 | " | ✅ | Removed tool-hooks.ts reference from usage-guide.html |  |  |
+
+**README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4812 | 4:31 PM | ✅ | Verified all three self-check fixes successfully applied |  |  |
+
+**scripts/check-atomic-json.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4813 | " | ✅ | Verified atomicJson promise leak fix with automated smoke tests |  |  |
+
+**#S1599** Self-check and fix recent changes in telegram-kiro-bridge: atomicJson leak, CONTINUE token handling, and documentation cleanup (Jul 11, 4:32 PM)
+
+**Investigated**: Primary agent reviewed three areas: updateJson memory leak in atomicJson.ts, CONTINUE token opener pattern in observerTransformer.ts, and residual tool-hooks.ts references in documentation files
+
+**Learned**: updateJson was missing the compare-and-delete cleanup mechanism that atomicWriteJson uses to prevent Promise chain memory leaks; the opener regex pattern only handled RESTART tokens but not CONTINUE tokens, causing streaming fragments to flash incorrectly; documentation still referenced deleted tool-hooks.ts functionality
+
+**Completed**: Fixed all three issues: added compare-and-delete to updateJson (smoke test 6/6 passed including 50 concurrent calls), extended opener regex to handle both RESTART and CONTINUE tokens (all token smoke tests passed 27/27, 16/16, 19, 37/37), removed tool-hooks.ts references from README.md and docs/usage-guide.html; TypeScript compilation verified clean; 4 files modified (2 src + 2 docs)
+
+**Next Steps**: Awaiting user decision on committing changes with suggested message: "fix(atomicJson,transformer): updateJson 補 compare-and-delete + opener 補 CONTINUE 裸型 + 刪 tool-hooks 文件殘留"
+
+
+Access 461k tokens of past research & decisions for just 17,267t. Use MCP search tools to access memories by ID.

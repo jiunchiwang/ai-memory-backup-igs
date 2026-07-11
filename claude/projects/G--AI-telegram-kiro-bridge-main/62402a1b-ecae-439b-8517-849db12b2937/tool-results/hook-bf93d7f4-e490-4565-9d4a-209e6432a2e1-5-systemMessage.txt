@@ -1,0 +1,183 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-11 7:39am GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (19,922 tokens to read)[0m
+[2m  Work investment: 191,068 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 90% reduction from reuse[0m
+
+[1m[36mJul 10, 2026[0m
+
+[33m#S1554[0m Draft streaming display bugs identified: message truncation when new content appears above and intermittent message disappearance (Jul 10, 8:10 PM)
+
+[33m#S1555[0m Review today's project changes in telegram-kiro-bridge repository (Jul 10, 8:13 PM)
+
+[33m#S1556[0m Investigate why Claude Fable 5 model isn't being recognized in the ACP adapter setup (Jul 10, 11:17 PM)
+
+[2msrc/acp-providers.ts[0m
+  [2m#4557[0m  [2m11:19 PM[0m  🔵  ACP backend hot-swap configuration system  
+
+[2m..\..\AI\AIMemory\config\acp-providers.json[0m
+  [2m#4558[0m  [2m11:20 PM[0m  🔵  Active ACP provider configuration with three backends  
+
+[2msrc/acpClient.ts[0m
+  [2m#4559[0m            🔵  Model and effort pinning implementation via session/set_config_option  
+
+[2msrc/config.ts[0m
+  [2m#4560[0m            🔵  Model and effort configuration flow across the system  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4561[0m            🔵  Provider creation and backend switching architecture  
+
+[2msrc/acpClient.ts[0m
+  [2m#4562[0m  [2m11:21 PM[0m  🔵  Session resumption flow and model pinning skip logic  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4563[0m            🔵  Session resume validation and candidate resolution flow  
+
+[2msrc/session-registry.ts[0m
+  [2m#4564[0m            🔵  Session registry persistence structure and management  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\claude-agent-acp.ps1[0m
+  [2m#4565[0m  [2m11:22 PM[0m  🔵  Claude-agent-acp installation and active session state  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json[0m
+  [2m#4566[0m            🔵  Claude adapter and SDK versions installed  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\index.js[0m
+  [2m#4567[0m            🔵  Adapter model handling architecture confirmed  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist[0m
+  [2m#4568[0m            🔵  Claude adapter architecture and bundled distribution  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4569[0m  [2m11:23 PM[0m  🔵  Model resolution fuzzy matching algorithm in adapter  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\cli.js[0m
+  [2m#4570[0m            🔵  Bundled SDK lacks Fable model definitions causing fallback to opus-4.6  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4571[0m            🔵  setSessionConfigOption model validation and resolution flow  
+
+[2mGeneral[0m
+  [2m#4572[0m  [2m11:24 PM[0m  🔵  Latest adapter version already installed with outdated SDK dependency  
+  [2m#4573[0m            🔵  SDK version gap reveals Fable support added in 0.3.x series  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\dist\acp-agent.js[0m
+  [2m#4574[0m  [2m11:26 PM[0m  🔵  Alternative adapter package even more outdated with SDK 0.2.44  
+  [2m#4575[0m            🔵  setSessionConfigOption error handling explains silent fallback behavior  
+
+[33m#S1557[0m Review today's project changes and fix Fable 5 model support in Claude agent ACP adapter (Jul 10, 11:26 PM)
+
+[2mC:\Users\jiunchiwang\AppData\Local\npm-cache\_logs\2026-07-10T15_29_16_119Z-eresolve-report.txt[0m
+  [2m#4576[0m  [2m11:29 PM[0m  🔵  SDK upgrade blocked by peer dependency conflict  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\package.json[0m
+  [2m#4577[0m  [2m11:30 PM[0m  ✅  Upgraded claude-agent-acp bundled SDK to 0.3.206  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\bridge.mjs[0m
+  [2m#4578[0m  [2m11:31 PM[0m  🔵  SDK 0.3.206 uses different bundle structure than 0.2.83  
+  [2m#4579[0m            🔵  SDK 0.3.206 includes Fable model support  
+
+[2mC:\Users\jiunchiwang\AppData\Roaming\npm\node_modules\@zed-industries\claude-agent-acp\node_modules\@anthropic-ai\claude-agent-sdk\sdk.mjs[0m
+  [2m#4580[0m            🔵  SDK 0.3.206 dynamically resolves Claude Code executable path  
+
+[2m..\..\AI\telegram-kiro-bridge-main\src\acpClient.ts[0m
+  [2m#4581[0m  [2m11:32 PM[0m  🔵  ACP client initialization uses protocol version 1  
+
+[2mtest-acp-model.mjs[0m
+  [2m#4582[0m            ✅  Created integration test to verify Fable 5 model support  
+  [2m#4583[0m  [2m11:33 PM[0m  🔴  Manual SDK upgrade successfully enables Fable 5 model support  
+
+[2m..\..\AI\telegram-kiro-bridge-main\AI.md[0m
+  [2m#4584[0m            ✅  Documented SDK upgrade workaround in project AI.md  
+  [2m#4585[0m            ✅  Committed and pushed SDK upgrade documentation to repository  
+
+[33m#S1558[0m Model status check - confirming current Claude model version (Jul 10, 11:34 PM)
+
+[33m#S1559[0m Comprehensive security and correctness review of status web UI, followed by user selection to fix all 6 identified issues (Jul 10, 11:38 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4586[0m  [2m11:43 PM[0m  🟣  Specialist Dashboard Web UI - Multi-Page SPA with API Backend  
+
+[33m#S1560[0m Status server security hardening - 6 vulnerability fixes for specialist dashboard (Jul 10, 11:48 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4587[0m  [2m11:48 PM[0m  🔴  Status server crash protection and localhost-only binding  
+  [2m#4588[0m  [2m11:49 PM[0m  🔴  Removed permissive CORS headers from status server  
+  [2m#4589[0m            🔴  Added safe URL decoding and environment variable masking  
+  [2m#4590[0m            🔴  Fixed artifact filename parsing for taskIds with underscores  
+  [2m#4591[0m            🔴  Fixed fact text extraction to exclude timestamp prefix  
+
+[2m.env.example[0m
+  [2m#4592[0m  [2m11:50 PM[0m  🔵  Reviewed .env.example tail before adding STATUS_BIND_HOST documentation  
+
+[2mstatus-app/index.html[0m
+  [2m#4593[0m            🔴  Fixed cancel button to show correct status based on server response  
+
+[2m.env.example[0m
+  [2m#4594[0m            ✅  Added STATUS web UI environment variable documentation  
+
+[2mGeneral[0m
+  [2m#4595[0m            ✅  TypeScript type checking passed after all status-server security fixes  
+
+[2msrc/status-server.ts[0m
+  [2m#4596[0m  [2m11:51 PM[0m  ✅  Verified all security fixes are properly integrated in status-server.ts  
+
+[2m.tmp-regex-test.mjs[0m
+  [2m#4597[0m            ✅  Created test script to verify regex patterns and safeDecode behavior  
+  [2m#4598[0m            ✅  Verified all regex patterns and safeDecode function work correctly  
+
+[2m.env.example[0m
+  [2m#4599[0m            ✅  Confirmed STATUS environment variable documentation added to .env.example  
+
+[33m#S1561[0m User asked about current model version after completion of status server fixes and documentation updates (Jul 10, 11:52 PM)
+
+[2msrc/status-server.ts[0m
+  [2m#4600[0m  [2m11:53 PM[0m  🔴  Status server crash prevention and security hardening  
+
+[33m#S1562[0m Model verification check - confirming current model after Fable 5 pin fix (Jul 10, 11:54 PM)
+
+[1m[36mJul 11, 2026[0m
+
+[2msrc/memory.ts[0m
+  [2m#4601[0m  [2m12:00 AM[0m  🔵  Preamble delegate guidance enhanced with 5-element protocol  
+  [2m#4602[0m            🔵  Preamble modification verification confirms clean migration to 5-element protocol  
+
+[2mscripts/check-preamble.mjs[0m
+  [2m#4603[0m  [2m12:01 AM[0m  🔵  Preamble fixed-cost ceiling verification passes after delegate enhancement  
+
+[2mdist/memory.js[0m
+  [2m#4604[0m  [2m12:03 AM[0m  🔵  Direct preamble build confirms 5-element delegate protocol successfully integrated  
+  [2m#4605[0m            🔵  Fixed core size varies by facts presence—real facts scenario at 5,884 chars validates ceiling  
+
+[2mscripts/check-token-policy.mjs[0m
+  [2m#4606[0m  [2m12:04 AM[0m  🔵  Delegate-related smoke tests pass after 5-element protocol enhancement  
+
+[33m#S1563[0m Sync usage-guide.html with README.md feature and command documentation (Jul 11, 12:20 AM)
+
+[34mInvestigated:[0m Compared README.md "功能一覽" (Features Overview) and "常用指令" (Common Commands) sections against all 31 sections in docs/usage-guide.html to identify documentation gaps
+
+[33mLearned:[0m The HTML guide already covers all major features from README across its sections; the only missing piece was the `/relay` command documentation (status/reopen subcommands); interestingly, HTML contains some content like `/skillsearch` and `tool_call` event type that README lacks, indicating HTML is ahead in those areas
+
+[32mCompleted:[0m Updated docs/usage-guide.html §5b Relay section to add missing `/relay` command documentation with a command table (`/relay status` shows transport status and peers, `/relay reopen` unblocks maxTurns) and example dialogue, maintaining existing HTML style with cmd/table/example classes
+
+[35mNext Steps:[0m Task complete - documentation sync finished with one gap identified and filled
+
+
+[2mAccess 191k tokens of past research & decisions for just 19,922t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777
