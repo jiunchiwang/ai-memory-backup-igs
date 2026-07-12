@@ -5137,3 +5137,153 @@
 {"ts":"2026-07-11T20:10:52.193Z","type":"tool_call","chatId":509424983,"payload":{"name":"Searching for '(Session Archive|Orphan Turn|Reply Dedup|Optimistic Cance...' in docs","status":"completed"}}
 {"ts":"2026-07-11T20:11:00.209Z","type":"tool_call","chatId":509424983,"payload":{"name":"Searching for '(Google API|google-api|pet-server|Desktop Pet|/pet)' in docs","status":"completed"}}
 {"ts":"2026-07-11T20:11:05.971Z","type":"tool_call","chatId":509424983,"payload":{"name":"Searching for '(tool 進度|tool.*title|replyHeader|Rich Streaming)' in docs","status":"completed"}}
+{"ts":"2026-07-11T23:51:33.680Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"claude","sessionId":"09dbab13-e07f-4615-9b7b-5312f749005b","resumed":false}}
+{"ts":"2026-07-11T23:52:02.307Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-11T23:52:10.417Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-11T23:52:18.141Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-11T23:52:18.291Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-11T23:52:25.128Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-11T23:52:51.513Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -l \"forget\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-11T23:53:01.130Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -l \"f_724810|f_f7fe66|f_c899ab|f_1746d0|f_602278\" G:\\AI\\AIMemory","status":"completed"}}
+{"ts":"2026-07-11T23:53:08.900Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n -C 4 \"forget\" G:\\AI\\telegram-kiro-bridge-main\\src\\facts-store.ts","status":"completed"}}
+{"ts":"2026-07-11T23:53:25.959Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n -C 10 \"forgetCommit|forgetMatch\" G:\\AI\\telegram-kiro-bridge-main\\src\\mcp-memory.ts","status":"completed"}}
+{"ts":"2026-07-11T23:53:42.947Z","type":"tool_call","chatId":509424983,"payload":{"name":"ls G:/AI/telegram-kiro-bridge-main/scripts/ | head -50; grep -E '\"(tsx|ts-node)\"|\"scripts\"' -A 15 G:/AI/telegram-kiro-bridge-main/package.json | head -30","status":"completed"}}
+{"ts":"2026-07-11T23:54:07.661Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\facts-store.ts (387 - 471)","status":"completed"}}
+{"ts":"2026-07-11T23:54:11.415Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n | head -20 \"export function deleteFact|function resolveMemoryDir|MEMORY_DIR\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-11T23:54:29.235Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep | head -3 \"f_724810\" G:\\AI\\AIMemory\\facts-509424983.md","status":"completed"}}
+{"ts":"2026-07-11T23:54:43.067Z","type":"tool_call","chatId":509424983,"payload":{"name":"Write scripts\\tmp-forget-dream-facts.mjs","status":"failed"}}
+{"ts":"2026-07-11T23:55:01.837Z","type":"tool_call","chatId":509424983,"payload":{"name":"Write scripts\\tmp-forget-dream-facts.mjs","status":"completed"}}
+{"ts":"2026-07-11T23:55:16.649Z","type":"tool_call","chatId":509424983,"payload":{"name":"MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" npx tsx scripts/tmp-forget-dream-facts.mjs","status":"completed"}}
+{"ts":"2026-07-11T23:55:29.225Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n -A 10 \"function stripFactPrefix|function extractFactId\" G:\\AI\\telegram-kiro-bridge-main\\src\\facts-store.ts","status":"completed"}}
+{"ts":"2026-07-11T23:55:43.216Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep \"f_724810|f_f7fe66|f_c899ab|f_1746d0|f_602278\" G:\\AI\\AIMemory\\facts-509424983.md","status":"completed"}}
+{"ts":"2026-07-11T23:56:02.367Z","type":"tool_call","chatId":509424983,"payload":{"name":"Write scripts\\tmp-forget-dream-facts.mjs","status":"completed"}}
+{"ts":"2026-07-11T23:56:31.835Z","type":"tool_call","chatId":509424983,"payload":{"name":"MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" npx tsx scripts/tmp-forget-dream-facts.mjs","status":"completed"}}
+{"ts":"2026-07-11T23:56:44.926Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n -C 3 \"f_c899ab|f_1746d0\" G:\\AI\\AIMemory\\wiki\\concepts\\bridge-project.md","status":"completed"}}
+{"ts":"2026-07-11T23:56:51.248Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read G:\\AI\\AIMemory\\wiki\\concepts\\bridge-project.md (1 - 10)","status":"completed"}}
+{"ts":"2026-07-11T23:57:04.765Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit G:\\AI\\AIMemory\\wiki\\concepts\\bridge-project.md","status":"completed"}}
+{"ts":"2026-07-11T23:57:12.740Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit G:\\AI\\AIMemory\\wiki\\concepts\\bridge-project.md","status":"completed"}}
+{"ts":"2026-07-11T23:57:27.843Z","type":"tool_call","chatId":509424983,"payload":{"name":"MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" npx tsx scripts/tmp-forget-dream-facts.mjs","status":"completed"}}
+{"ts":"2026-07-11T23:57:40.325Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -c 'f_724810\\|f_f7fe66\\|f_c899ab\\|f_1746d0\\|f_602278' \"G:/AI/AIMemory/facts-509424983.md\" \"G:/AI/AIMemory/facts_Topic/509424983/\"*.md; rm scripts/tmp-forget-dream-facts.mjs; tail -5 \"G:/AI/AIMemory/forget-log.md\"","status":"completed"}}
+{"ts":"2026-07-11T23:57:55.261Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read G:\\AI\\AIMemory\\STATE.md","status":"completed"}}
+{"ts":"2026-07-11T23:57:57.770Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -l \"restartBridge|process\\.exit|restart\" G:\\AI\\telegram-kiro-bridge-main\\src\\commands","status":"completed"}}
+{"ts":"2026-07-11T23:58:10.283Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -i -n | head -40 \"restart\" G:\\AI\\telegram-kiro-bridge-main\\src\\index.ts","status":"completed"}}
+{"ts":"2026-07-11T23:58:27.293Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n | head -15 \"RESTART|handleRestart\" G:\\AI\\telegram-kiro-bridge-main\\src\\observerTransformer.ts","status":"completed"}}
+{"ts":"2026-07-11T23:58:27.832Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n | head -25 \"restartToken|RESTART:\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-11T23:58:42.835Z","type":"tool_call","chatId":509424983,"payload":{"name":"ls G:/AI/telegram-kiro-bridge-main/*.bat 2>/dev/null; ls -la G:/AI/telegram-kiro-bridge-main/dist/index.js 2>/dev/null; git -C G:/AI/telegram-kiro-bridge-main log -1 --format='%h %ci %s'","status":"completed"}}
+{"ts":"2026-07-11T23:58:52.251Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read start.bat","status":"completed"}}
+{"ts":"2026-07-11T23:59:04.663Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n | head -10 \"backfillFactEmbeddings\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-11T23:59:24.696Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit G:\\AI\\AIMemory\\STATE.md","status":"completed"}}
+{"ts":"2026-07-11T23:59:37.095Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit G:\\AI\\AIMemory\\STATE.md","status":"completed"}}
+{"ts":"2026-07-11T23:59:45.095Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit G:\\AI\\AIMemory\\STATE.md","status":"completed"}}
+{"ts":"2026-07-11T23:59:54.363Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n \"2026-07-12|200 facts\" G:\\AI\\AIMemory\\STATE.md","status":"completed"}}
+{"ts":"2026-07-12T00:00:00.043Z","type":"scheduler_fire","chatId":509424983,"userId":509424983,"payload":{"entryId":"a1b2c301","isRecurring":true,"promptLength":13}}
+{"ts":"2026-07-12T00:00:00.046Z","type":"scheduler_fire","chatId":509424983,"userId":509424983,"payload":{"entryId":"a1b2c302","isRecurring":true,"promptLength":24}}
+{"ts":"2026-07-12T00:06:09.769Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"claude","sessionId":"8a5885ec-e660-4a42-8b82-23ee036288a3","resumed":false}}
+{"ts":"2026-07-12T00:06:28.310Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-12T00:06:40.873Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-12T00:06:55.703Z","type":"tool_call","chatId":509424983,"payload":{"name":"Find `G:\\AI\\AIMemory\\tmp` `mcp-call.mjs`","status":"completed"}}
+{"ts":"2026-07-12T00:06:57.754Z","type":"tool_call","chatId":509424983,"payload":{"name":"Find `G:\\AI\\telegram-kiro-bridge-main` `dist/mcp-memory.js`","status":"completed"}}
+{"ts":"2026-07-12T00:08:19.158Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs list_facts '{\"query\":\"bridge-project\",\"tail\":2}'","status":"failed"}}
+{"ts":"2026-07-12T00:08:39.459Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && env -u TELEGRAM_BOT_TOKEN -u TELEGRAM_ALLOWED_USER_ID -u ACP_AGENT_CMD MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs list_facts '{\"query\":\"bridge-project\",\"tail\":2}'","status":"completed"}}
+{"ts":"2026-07-12T00:08:58.899Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep | head -20 --include=\"*.json\" \"mcp-memory\" G:\\AI\\telegram-kiro-bridge-main","status":"completed"}}
+{"ts":"2026-07-12T00:09:08.330Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep | head -30 \"mcp-memory|mcpServers\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-12T00:09:25.625Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\provider\\mcp-pool.ts","status":"completed"}}
+{"ts":"2026-07-12T00:09:40.285Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\mcp-memory.ts (1 - 60)","status":"completed"}}
+{"ts":"2026-07-12T00:09:42.577Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -C 3 \"buildSpawnEnv|TELEGRAM_BOT_TOKEN\" G:\\AI\\telegram-kiro-bridge-main\\src\\acpClient.ts","status":"completed"}}
+{"ts":"2026-07-12T00:10:00.561Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\config.ts (1 - 70)","status":"completed"}}
+{"ts":"2026-07-12T00:10:01.342Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep | head -30 \"from \"\\./config|from '\\./config\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-12T00:10:13.710Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\sessionManager.ts (360 - 419)","status":"completed"}}
+{"ts":"2026-07-12T00:10:25.820Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -C 6 \"mcpServers\" G:\\AI\\telegram-kiro-bridge-main\\src\\sessionManager.ts","status":"completed"}}
+{"ts":"2026-07-12T00:10:36.204Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -A 10 -B 3 | head -80 \"buildReadonlyMcpServers|mcpServers:\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-12T00:10:50.061Z","type":"tool_call","chatId":509424983,"payload":{"name":"Find `G:\\AI\\telegram-kiro-bridge-main` `.mcp.json`","status":"completed"}}
+{"ts":"2026-07-12T00:10:54.245Z","type":"tool_call","chatId":509424983,"payload":{"name":"python -c \"\nimport json\nd=json.load(open(r'C:\\Users\\jiunchiwang\\.claude.json',encoding='utf-8'))\nprint('global mcpServers:', list(d.get('mcpServers',{}).keys()))\np=d.get('projects',{}).get(r'G:\\AI\\telegram-kiro-bridge-main',{})\nprint('project mcpServers:', list(p.get('mcpServers',{}).keys()))\nprint('project enabled/disabled:', p.get('enabledMcpjsonServers'), p.get('disabledMcpjsonServers'))\n\" 2>&1 | head -20","status":"completed"}}
+{"ts":"2026-07-12T00:11:06.779Z","type":"tool_call","chatId":509424983,"payload":{"name":"python -c \"\nimport json\nd=json.load(open(r'C:\\Users\\jiunchiwang\\.claude.json',encoding='utf-8'))\nprint(json.dumps(d['mcpServers']['memory'],ensure_ascii=False,indent=1))\n\"","status":"completed"}}
+{"ts":"2026-07-12T00:11:27.072Z","type":"tool_call","chatId":509424983,"payload":{"name":"git log --oneline --follow -3 -- src/ingest-ripple.ts && git log -S 'ingest-ripple' --oneline -3 -- src/mcp-memory.ts","status":"completed"}}
+{"ts":"2026-07-12T00:14:42.873Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:14:55.522Z","type":"tool_call","chatId":509424983,"payload":{"name":"Read src\\facts-store.ts (30 - 54)","status":"completed"}}
+{"ts":"2026-07-12T00:15:18.676Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep \"ingest-ripple\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-12T00:15:49.639Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep --include=\"{facts-store,memory-db,page-index,topic-rules,mcp-memory}.ts\" \"from \"\\./config\\.js\"|from \"\\./local-llm|from \"\\./embedding\" G:\\AI\\telegram-kiro-bridge-main\\src","status":"completed"}}
+{"ts":"2026-07-12T00:15:59.209Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n 'from \"\\./' src/local-llm.ts | head; echo ---; grep -rn 'import' src/memory-db.ts | grep -v node: | head","status":"completed"}}
+{"ts":"2026-07-12T00:16:11.374Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n 'from \"\\./' src/embed-router.ts src/page-index.ts src/facts-store.ts src/topic-rules.ts 2>/dev/null","status":"completed"}}
+{"ts":"2026-07-12T00:16:24.048Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"failed"}}
+{"ts":"2026-07-12T00:16:41.381Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:16:51.378Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:16:53.715Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:16:55.595Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:16:57.259Z","type":"tool_call","chatId":509424983,"payload":{"name":"Edit src\\ingest-ripple.ts","status":"completed"}}
+{"ts":"2026-07-12T00:17:16.482Z","type":"tool_call","chatId":509424983,"payload":{"name":"grep -n 'config' src/ingest-ripple.ts; echo \"--- tsc ---\"; npx tsc --noEmit && echo TSC-OK","status":"completed"}}
+{"ts":"2026-07-12T00:17:40.060Z","type":"tool_call","chatId":509424983,"payload":{"name":"npx tsc -p . && echo BUILD-OK","status":"completed"}}
+{"ts":"2026-07-12T00:17:55.187Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && TELEGRAM_BOT_TOKEN=\"\" MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs list_facts '{\"query\":\"bridge-project\",\"tail\":1}'","status":"completed"}}
+{"ts":"2026-07-12T00:18:13.820Z","type":"tool_call","chatId":509424983,"payload":{"name":"ls scripts/check-*.mjs | grep -iE 'ripple|memory|mcp|fact' ","status":"completed"}}
+{"ts":"2026-07-12T00:18:26.866Z","type":"tool_call","chatId":509424983,"payload":{"name":"env -u TELEGRAM_BOT_TOKEN -u TELEGRAM_ALLOWED_USER_ID -u ACP_AGENT_CMD node scripts/check-list-facts-tail.mjs 2>&1 | tail -5","status":"completed"}}
+{"ts":"2026-07-12T00:18:51.317Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && env -u TELEGRAM_BOT_TOKEN MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs remember '{\"fact\":\"telegram-kiro-bridge 教訓：任何會被 mcp-memory 子行程載入的模組禁止 import config.js——config 模組層就 required(TELEGRAM_BOT_TOKEN)，而 acpClient.buildSpawnEnv 刻意把該 token 置空防 409，import 即炸導致 memory MCP 啟動即死（Karpathy P0 的 ingest-ripple 引入此鏈，2026-07-12 改用 facts-store 的 resolveMemoryDir() 修復）；MEMORY_DIR 解析一律用 resolveMemoryDir()\"}' | head -8","status":"completed"}}
+{"ts":"2026-07-12T00:19:07.148Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && env -u TELEGRAM_BOT_TOKEN MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs remember '{\"text\":\"telegram-kiro-bridge 教訓：任何會被 mcp-memory 子行程載入的模組禁止 import config.js——config 模組層就 required(TELEGRAM_BOT_TOKEN)，而 acpClient.buildSpawnEnv 刻意把該 token 置空防 409，import 即炸導致 memory MCP 啟動即死（Karpathy P0 的 ingest-ripple 引入此鏈，2026-07-12 改用 facts-store 的 resolveMemoryDir() 修復）；MEMORY_DIR 解析一律用 resolveMemoryDir()\"}' | head -8","status":"completed"}}
+{"ts":"2026-07-12T00:30:56.844Z","type":"tool_call","chatId":509424983,"payload":{"name":"python -c \"\nimport json\nd=json.load(open(r'C:\\Users\\jiunchiwang\\.kiro\\agents\\main.json',encoding='utf-8'))\nm=d.get('mcpServers',{}).get('memory')\nprint(json.dumps(m,ensure_ascii=False))\n\" 2>&1; echo ---codex---; grep -A4 'mcp_servers.memory' \"$USERPROFILE/.codex/config.toml\" 2>/dev/null || echo \"no codex config\"","status":"completed"}}
+{"ts":"2026-07-12T00:31:53.376Z","type":"tool_call","chatId":509424983,"payload":{"name":"git status --short && git diff --stat","status":"completed"}}
+{"ts":"2026-07-12T00:32:22.694Z","type":"tool_call","chatId":509424983,"payload":{"name":"git add src/ingest-ripple.ts && git commit -m \"$(cat <<'EOF'\nfix(mcp-memory): 切斷 ingest-ripple → config.js 依賴，修復 memory MCP 啟動即死\n\nconfig.js 模組層 required(TELEGRAM_BOT_TOKEN)，而 buildSpawnEnv / mcp-pool\n刻意把該 token 置空防 409——mcp-memory 子行程 import 即 throw，導致\nClaude/Kiro/Codex 三個 adapter 的 memory MCP 自 Karpathy P0（5c9fbb6）起\n全數掛載失敗。改用 facts-store 的 resolveMemoryDir()（同 env 同 fallback，\n語意等價）。已在空 token 條件實測 list_facts 正常 + smoke 全過。\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>\nEOF\n)\" && git log --oneline -1","status":"completed"}}
+{"ts":"2026-07-12T00:32:47.599Z","type":"tool_call","chatId":509424983,"payload":{"name":"cd /g/AI/AIMemory/tmp && env -u TELEGRAM_BOT_TOKEN MEMORY_USER_ID=509424983 MEMORY_DIR=\"G:\\\\AI\\\\AIMemory\" node mcp-call.mjs remember '{\"text\":\"[WS] task: 修復 memory MCP 啟動即死 — 已全部完成。completed: ingest-ripple 改用 resolveMemoryDir() 切斷 config.js 依賴（commit 89ca1d6）、dist 已 rebuild、空 token 實測 + smoke 過、教訓已存 bridge-research shard。next_action: 重啟後用 ToolSearch 確認 memory MCP 工具（list_facts/remember/forget）已掛載即收工，無其他待辦\"}' | head -6","status":"completed"}}
+{"ts":"2026-07-12T00:37:13.170Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"claude","sessionId":"f35ecbd8-f008-4140-b240-65eda899a8b9","resumed":false}}
+{"ts":"2026-07-12T00:38:10.321Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-12T00:38:30.533Z","type":"tool_call","chatId":509424983,"payload":{"name":"mcp__memory__list_facts","status":"completed"}}
+{"ts":"2026-07-12T00:40:35.200Z","type":"tool_call","chatId":509424983,"payload":{"name":"PowerShell","status":"completed"}}
+{"ts":"2026-07-12T00:41:25.432Z","type":"tool_call","chatId":509424983,"payload":{"name":"PowerShell","status":"completed"}}
+{"ts":"2026-07-12T01:20:11.844Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"claude","sessionId":"14209573-5017-422e-ae1e-8777eeec2ee0","resumed":false}}
+{"ts":"2026-07-12T01:21:11.245Z","type":"tool_call","chatId":509424983,"payload":{"name":"PowerShell","status":"completed"}}
+{"ts":"2026-07-12T01:21:13.453Z","type":"tool_call","chatId":509424983,"payload":{"name":"ToolSearch","status":"completed"}}
+{"ts":"2026-07-12T01:21:30.429Z","type":"tool_call","chatId":509424983,"payload":{"name":"PowerShell","status":"completed"}}
+{"ts":"2026-07-12T01:21:32.886Z","type":"tool_call","chatId":509424983,"payload":{"name":"mcp__memory__list_facts","status":"completed"}}
+{"ts":"2026-07-12T01:38:56.749Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"kiro","sessionId":"26d9302c-09c4-441e-9f84-baec81614f71","resumed":false}}
+{"ts":"2026-07-12T02:19:57.801Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"kiro","sessionId":"569486eb-bef8-401e-9ece-a3ea35da2533","resumed":false}}
+{"ts":"2026-07-12T02:20:06.089Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T04:00:00.026Z","type":"scheduler_fire","chatId":509424983,"userId":509424983,"payload":{"entryId":"f970aa0a","isRecurring":true,"promptLength":226}}
+{"ts":"2026-07-12T14:00:00.073Z","type":"scheduler_fire","chatId":509424983,"userId":509424983,"payload":{"entryId":"f970aa0a","isRecurring":true,"promptLength":226}}
+{"ts":"2026-07-12T14:10:26.902Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"kiro","sessionId":"f8330ceb-8a38-4782-9f08-db21d25bd38b","resumed":false}}
+{"ts":"2026-07-12T14:11:00.355Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T14:11:05.693Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T14:11:07.911Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T14:11:13.142Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T14:11:13.470Z","type":"tool_call","chatId":509424983,"payload":{"name":"Fetching web content","status":"completed"}}
+{"ts":"2026-07-12T20:00:00.038Z","type":"scheduler_fire","chatId":509424983,"userId":509424983,"payload":{"entryId":"76ec2288","isRecurring":true,"promptLength":6}}
+{"ts":"2026-07-12T20:00:16.693Z","type":"session_start","chatId":509424983,"userId":509424983,"payload":{"provider":"acp","backend":"kiro","sessionId":"3d2a35d3-cc5a-4aaf-a5d9-899e4e7aa524","resumed":false}}
+{"ts":"2026-07-12T20:00:31.803Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading session-509424983-2026-07-12T00-03-21.md:1-150, session-509424983-2026-07-12T00-33-01.md:1-150, session-509424983-2026-07-12T01-17-49.md:1-150, session-509424983-2026-07-12T01-17-50.md:1-150","status":"completed"}}
+{"ts":"2026-07-12T20:00:32.006Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading session-509424983-2026-07-12T01-38-24.md:1-150, session-509424983-2026-07-12T13-45-31.md:1-150, session-509424983-2026-07-12T13-45-32.md:1-150, session-509424983-2026-07-12T15-08-16.md:1-150","status":"completed"}}
+{"ts":"2026-07-12T20:00:55.567Z","type":"tool_call","chatId":509424983,"payload":{"name":"Creating 2026-07-12.md","status":"completed"}}
+{"ts":"2026-07-12T20:01:07.536Z","type":"tool_call","chatId":509424983,"payload":{"name":"read","status":"failed"}}
+{"ts":"2026-07-12T20:01:07.562Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading SKILL.md:1","status":"completed"}}
+{"ts":"2026-07-12T20:01:11.509Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading listing sessions","status":"completed"}}
+{"ts":"2026-07-12T20:01:18.902Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading session-509424983-2026-07-11T20-12-08.md:1-300","status":"completed"}}
+{"ts":"2026-07-12T20:01:18.934Z","type":"tool_call","chatId":509424983,"payload":{"name":"Finding ms-*/SKILL.md in skills","status":"completed"}}
+{"ts":"2026-07-12T20:01:26.206Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading session-509424983-2026-07-11T20-12-08.md:301-600","status":"completed"}}
+{"ts":"2026-07-12T20:01:26.252Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading listing skills","status":"completed"}}
+{"ts":"2026-07-12T20:02:06.472Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: powershell -NoProfile -Command \"New-Item -ItemType Directory -Path 'G:\\AI\\AIMemory\\oldSessions' -Force | Out-Null; Move-Item -Path 'G:\\AI\\AIMemory\\sessions\\*.md' -Destination 'G:\\AI\\AIMemory\\oldSes...","status":"completed"}}
+{"ts":"2026-07-12T20:02:11.603Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading skill-candidates.md:1-50","status":"completed"}}
+{"ts":"2026-07-12T20:02:37.447Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/propose_topics","status":"completed"}}
+{"ts":"2026-07-12T20:02:50.002Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading topics.json:1","status":"completed"}}
+{"ts":"2026-07-12T20:03:20.746Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/apply_topics","status":"completed"}}
+{"ts":"2026-07-12T20:03:25.324Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:03:30.422Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading misc.md:1","status":"completed"}}
+{"ts":"2026-07-12T20:03:53.935Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/apply_topics","status":"completed"}}
+{"ts":"2026-07-12T20:04:22.594Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:04:22.625Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading index.md:1, bridge-research.md:1","status":"completed"}}
+{"ts":"2026-07-12T20:04:31.893Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading bridge-research.md:1","status":"completed"}}
+{"ts":"2026-07-12T20:04:47.270Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing bridge-research.md","status":"completed"}}
+{"ts":"2026-07-12T20:04:57.459Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing bridge-research.md","status":"completed"}}
+{"ts":"2026-07-12T20:05:08.329Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing bridge-research.md","status":"completed"}}
+{"ts":"2026-07-12T20:05:24.083Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing index.md","status":"completed"}}
+{"ts":"2026-07-12T20:05:27.728Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing index.md","status":"completed"}}
+{"ts":"2026-07-12T20:05:31.549Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading bridge-research.md:1-10","status":"completed"}}
+{"ts":"2026-07-12T20:06:00.854Z","type":"tool_call","chatId":509424983,"payload":{"name":"Searching for '^sources:' in wiki","status":"completed"}}
+{"ts":"2026-07-12T20:06:07.648Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading bridge-project.md:1-8","status":"completed"}}
+{"ts":"2026-07-12T20:06:07.888Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:06:16.074Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading bridge-project.md:1-40","status":"completed"}}
+{"ts":"2026-07-12T20:06:30.294Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:06:41.900Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/forget","status":"completed"}}
+{"ts":"2026-07-12T20:06:48.183Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:06:55.836Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/forget","status":"completed"}}
+{"ts":"2026-07-12T20:07:00.922Z","type":"tool_call","chatId":509424983,"payload":{"name":"Running: @memory/list_facts","status":"completed"}}
+{"ts":"2026-07-12T20:07:10.457Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading listing lessons","status":"completed"}}
+{"ts":"2026-07-12T20:07:53.347Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading listing wiki, index.md:1","status":"completed"}}
+{"ts":"2026-07-12T20:08:03.972Z","type":"tool_call","chatId":509424983,"payload":{"name":"Searching for '\\[\\[[a-z0-9_-]+\\]\\]' in wiki","status":"completed"}}
+{"ts":"2026-07-12T20:08:53.087Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading skill-usage.json:1, listing skills","status":"completed"}}
+{"ts":"2026-07-12T20:09:38.108Z","type":"tool_call","chatId":509424983,"payload":{"name":"Reading usage-guide.html:1","status":"completed"}}
+{"ts":"2026-07-12T20:09:58.023Z","type":"tool_call","chatId":509424983,"payload":{"name":"Editing usage-guide.html","status":"completed"}}

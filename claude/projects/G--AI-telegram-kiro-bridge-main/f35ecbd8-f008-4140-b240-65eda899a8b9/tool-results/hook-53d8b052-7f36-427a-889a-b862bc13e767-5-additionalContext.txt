@@ -1,0 +1,236 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-12 8:37am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (18,838 tokens to read)
+- Work investment: 158,674 tokens spent on research, building, and decisions
+- Your savings: 88% reduction from reuse
+
+### Jul 11, 2026
+
+**#S1598** Self-check verification of 8 recent telegram-kiro-bridge refactoring commits (Jul 11, 4:20 PM)
+
+**#S1599** Self-check and fix recent changes in telegram-kiro-bridge: atomicJson leak, CONTINUE token handling, and documentation cleanup (Jul 11, 4:27 PM)
+
+**#S1600** Diagnose two Telegram bot UI issues: missing "I selected" feedback after ASK button clicks, and slow/incomplete tool message rendering (Jul 11, 4:32 PM)
+
+**#S1601** Status check on unpushed commits in telegram-kiro-bridge repository (Jul 11, 7:58 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4840 | 8:07 PM | 🔴 | Creating comprehensive integration test for tool_call_update title handling |  |  |
+
+**dist/sessionManager.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4841 | " | 🔴 | Test failing due to SessionUpdate wrapper structure mismatch |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4842 | " | 🔴 | Confirming SessionUpdate wrapper structure from applyUpdate implementation |  |  |
+
+**C:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4843 | 8:08 PM | 🔴 | Tool title update integration test passes all 8 assertions |  |  |
+
+**scripts/check-editnow-race.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4844 | " | 🔴 | Additional smoke tests confirm no regressions from fixes |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4845 | " | ✅ | Staging three modified files for commit |  |  |
+| #4846 | 8:09 PM | 🔴 | Both streaming UI fixes committed successfully |  |  |
+
+**#S1602** User queried current model configuration (Jul 11, 8:13 PM)
+
+**#S1603** User inquired about tool messages becoming longer after recent modifications; Claude explained two streaming UI fixes that were just committed (Jul 11, 8:15 PM)
+
+**#S1605** Process two High Priority dream maintenance items: delete 5 flagged facts and restart bridge for embedding fix (Jul 11, 8:40 PM)
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4847 | 8:44 PM | 🔴 | Tool progress display truncated to show only tool type, not full command |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4848 | " | 🔵 | Test suite reveals one expected failure from tool display truncation change |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4849 | " | 🔵 | Draft render smoke test validates streaming frame order and stability |  |  |
+| #4850 | 8:45 PM | ✅ | Updated draft render test to expect truncated tool names |  |  |
+
+**C:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4851 | " | ✅ | Updated tool-title test to verify display truncation vs timeline preservation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4852 | " | ✅ | All smoke tests pass after tool display truncation and test updates |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4853 | 8:49 PM | 🔄 | Tool progress display shows only tool kind + duration |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4854 | " | 🔴 | Reply headers now appear in streaming frames |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4855 | " | 🟣 | Tool title backfilling from adapter updates |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4856 | 8:50 PM | 🔵 | Multi-angle parallel code review methodology |  |  |
+| #4857 | " | 🔵 | Efficiency and altitude review angles complete 7-dimension audit |  |  |
+| #4858 | " | 🔵 | Conventions angle validates CLAUDE.md compliance |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4859 | 8:52 PM | 🔴 | Bridge streaming UI: tool display simplification + reply header visibility |  |  |
+
+### Jul 12, 2026
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4860 | 7:53 AM | 🔵 | Bridge has internal fact deletion mechanism bypassing MCP |  |  |
+
+**scripts/tmp-forget-dream-facts.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4861 | 7:55 AM | 🟣 | Created one-time script for direct fact deletion bypassing MCP |  |  |
+| #4862 | " | 🔵 | forgetMatch searches fact content, not fact IDs or metadata |  |  |
+| #4863 | 7:56 AM | 🔴 | Fixed fact deletion script to use content queries instead of IDs |  |  |
+
+**..\..\AI\AIMemory\facts-509424983.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4864 | " | ✅ | Successfully deleted 3 trivia facts, 2 protected by wiki references |  |  |
+
+**..\..\AI\AIMemory\wiki\concepts\bridge-project.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4865 | 7:57 AM | 🔵 | Wiki protection mechanism uses sources array in page frontmatter |  |  |
+| #4866 | " | ✅ | Removed f_c899ab from bridge-project wiki sources to unprotect fact |  |  |
+| #4867 | " | ✅ | Completed deletion of all 5 trivia facts after removing wiki protection |  |  |
+
+**scripts/tmp-forget-dream-facts.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4868 | " | ✅ | Verified complete deletion and cleaned up temporary script |  |  |
+
+**start.bat**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4869 | 7:59 AM | 🔵 | Bridge uses start.bat supervisor loop for automatic restart and rebuild |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4870 | " | ✅ | Cleared High Priority dream maintenance tasks after completion |  |  |
+| #4871 | " | ✅ | Documented completion details in STATE.md Watch List for audit trail |  |  |
+
+**#S1606** Fix memory MCP server loading failure in Claude Code sessions - root cause diagnosis and repair (Jul 12, 8:01 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4872 | 8:06 AM | 🔵 | Memory MCP tools unavailable in current session |  |  |
+| #4873 | 8:08 AM | 🔵 | Memory MCP server functional via stdio helper workaround |  |  |
+| #4874 | 8:11 AM | 🔵 | Memory MCP server registered globally but not connected to project session |  |  |
+
+**C:\Users\jiunchiwang\.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4875 | " | 🔵 | Memory MCP server properly configured globally with correct environment |  |  |
+
+**#S1607** Cross-CLI portability verification and MCP memory server config dependency fix (Jul 12, 8:15 AM)
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4876 | 8:15 AM | 🔵 | ingest-ripple.ts dependency analysis and refactor pattern |  |  |
+| #4877 | " | 🔵 | Memory subsystem modules are config.js-free except ingest-ripple |  |  |
+
+**src/local-llm.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4878 | 8:16 AM | 🔵 | Confirmed memory-db and local-llm have no config.js dependency chain |  |  |
+
+**src/page-index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4879 | " | 🔵 | Full memory subsystem dependency graph validated as config.js-free |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4880 | " | 🔴 | Remove config.js import from ingest-ripple to fix MCP server startup |  |  |
+| #4881 | 8:17 AM | 🔴 | Complete config.memoryDir replacement in ingest-ripple.ts |  |  |
+| #4882 | " | 🔴 | Verified ingest-ripple.ts config.js removal and TypeScript validation |  |  |
+
+**dist/ingest-ripple.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4883 | " | ✅ | Built project with ingest-ripple.ts config.js removal fix |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4884 | 8:18 AM | 🔴 | Verified memory MCP server starts successfully with empty TELEGRAM_BOT_TOKEN |  |  |
+
+**scripts/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4885 | " | 🔵 | Located memory-related smoke test scripts for comprehensive validation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4886 | " | 🔴 | Memory MCP smoke tests pass with clean environment after config.js removal |  |  |
+| #4887 | 8:19 AM | 🔵 | Memory MCP remember tool invocation failed due to shell escaping issue |  |  |
+
+**..\..\AI\AIMemory\facts-509424983.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4888 | " | 🔴 | Memory MCP remember tool successfully writes lesson fact with empty TELEGRAM_BOT_TOKEN |  |  |
+
+**#S1608** Verify memory MCP status across all adapters after import chain fix (Jul 12, 8:32 AM)
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4889 | 8:32 AM | 🔴 | Memory MCP startup crash fixed across all adapters |  |  |
+
+
+Access 159k tokens of past research & decisions for just 18,838t. Use MCP search tools to access memories by ID.

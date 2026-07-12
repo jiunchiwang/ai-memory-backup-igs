@@ -3,6 +3,7 @@
 - [f_046ffa] [2026-06-30T11:06:51.134Z] Session Archive 設計決策：因為只需最近一次 session 所以 per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；因為避免 context 爆炸所以恢復只注入 ~300 字摘要（排除全量 turn 注入因為會佔太多 budget）；turn text 截斷 2000 字
 - [f_bafa71] [2026-07-07T11:48:47.041Z] telegram-kiro-bridge 已實作 ACP session resume 方案 A（feat b6e028f + docs 72277b9，已 push origin/main）：ACP_SESSION_RESUME=true 閘控且預設 off；idle/crash/SIGINT 保留 registry 可 session/load 恢復（不重注 preamble），/reset、/agent、/restart、<<RESTART>> 走 fresh 並清 registry（shutdown 帶 clearResume 參數區分）
 - [f_12d648] [2026-07-07T11:48:47.046Z] 使用者對 session 移植的決策：選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議；理由是 restart 連續性 + idle 殺 process 省記憶體最實、避免與 goal/MoA/relay 單 session 假設的互動風險
+- [f_5caae0] [2026-07-07T11:48:47.050Z] ACP adapter loadSession capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定（initialize 回 -32000 需 auth）
 - [f_86bdbb] [2026-07-07T11:48:47.056Z] session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME=true 重啟後做手動 e2e；首次啟用需觀察 replay 時序——真 adapter 若在 session/load 回應後才補送 replay update 有 token 重放風險，保守 fallback 方案在計畫檔風險 #1
 - [f_bef432] [2026-07-07T11:48:47.069Z] session resume 實作計畫與三段 review 軌跡存於 bridge repo docs/superpowers/plans/2026-07-07-acp-session-resume.md（含 BC-1~5 行為契約與 adapter 實測記錄表）
 - [f_20ed42] [2026-07-07T13:26:02.664Z] telegram-kiro-bridge 生產機 .env 的 ACP_SESSION_RESUME=true 已於 2026-07-07 啟用（.env:39 解除註解），待使用者重啟 bridge 後做手動 e2e：建 context 暗號 → idle → 驗證 resumed ACP session log + 暗號保留 + 無舊訊息/ASK token 重放

@@ -81,3 +81,21 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_79a52f] [2026-07-10T15:54:46.752Z] claude-agent-acp 的 Fable 5 model pin 修復（commit 91f64e2 nested SDK 手動升級）已驗證生效：bridge Claude backend session 實際跑 claude-fable-5（先前 session 為 Opus 4.6）
 - [2026-07-10T20:14:05.693Z] user=509424983 query="已完成 Specialist Dashboard v1（feat/specialist-dashboard 分支 3 commits merged" deleted=1 token=forget-570a61f8-1
     - [f_d98d05] [2026-07-10T09:30:03.955Z] telegram-kiro-bridge 已完成 Specialist Dashboard v1（feat/specialist-dashboard 分支 3 commits merged to main）：status-server 新增 6 個 specialist API endpoints（設定/preamble/歷史/產出物/facts）、status-app/index.html 重寫為 hash-based SPA（Dashboard 卡片總覽 + Specialist Detail 五 tab + Live View SSE）、/status 指令移除 Electron 改用 web_app 按鈕（STATUS_HTTPS_URL env var 控制）+ fallback URL、status-app/main.js 與 package.json 已刪除
+- [2026-07-11T23:56:26.704Z] user=509424983 query="寫成 173881a" deleted=1 token=forget-a6edb234-1
+    - [f_724810] [2026-07-11T11:40:35.131Z] telegram-kiro-bridge 的 commit 8d0b8fa body 引用原修正 hash 筆誤（寫成 173881a，正確為 173591a），決定不 amend，僅程式碼追溯時需知悉
+- [2026-07-11T23:56:26.817Z] user=509424983 query="先前「未 push」狀態已過時" deleted=1 token=forget-79ef8da0-1
+    - [f_f7fe66] [2026-07-11T12:13:08.819Z] telegram-kiro-bridge 的 commit 8d0b8fa 已於 2026-07-11 push 上 origin/main（cdf1ff3..8d0b8fa），先前「未 push」狀態已過時；仍需重啟 bridge 才生效
+- [2026-07-11T23:56:26.945Z] user=509424983 query="merge f6341fd 已 push" deleted=0 token=forget-6765cf0d-1
+
+- [2026-07-11T23:56:27.048Z] user=509424983 query="f970aa0a" deleted=0 token=forget-733e319b-1
+
+- [2026-07-11T23:56:27.149Z] user=509424983 query="13b25fc..cdf1ff3" deleted=1 token=forget-9e1c9ed4-1
+    - [f_602278] [2026-07-11T08:33:32.120Z] telegram-kiro-bridge 自檢修正已 commit 8d0b8fa（updateJson 補 compare-and-delete、hideTrailingUnterminatedToken opener 補 CONTINUE 裸型、刪 tool-hooks 文件殘留）；連同前面 8 個 dead-code/修正 commit（13b25fc..cdf1ff3）都需重啟 bridge 才生效
+- [2026-07-11T23:57:25.908Z] user=509424983 query="merge f6341fd 已 push" deleted=1 token=forget-6765cf0d-1
+    - [f_c899ab] [2026-07-07T08:51:39.027Z] telegram-kiro-bridge 已於 2026-07-07 同步 upstream（merge f6341fd 已 push）：拉入 23 個 commit 含 MoA Phase 1-4（blind review/plan mode/debate/review-panel/read-only MCP）、/agent ACP 熱切換、auto_trigger semantic routing——原暫緩的 SPEC-acp-hot-swap 與 SPEC-moa-provider 已由 upstream 實作補齊；需重啟 bridge 主程序才生效
+- [2026-07-11T23:57:25.932Z] user=509424983 query="f970aa0a" deleted=1 token=forget-733e319b-1
+    - [f_1746d0] [2026-07-08T06:05:03.357Z] 使用者於 2026-07-08 把 Passive Monitor 排程 f970aa0a 從每日 8 次（8-22 偶數時整點）改為每日 2 次（12:00、22:00），直接改 schedules.json，若 bridge cache 未重載需重啟生效
+- [2026-07-12T20:06:41.743Z] user=509424983 query="[WS] task: 修復 memory MCP 啟動即死" deleted=1 token=forget-a120033a-1
+    - [f_138118] [2026-07-12T00:32:42.698Z] [WS] task: 修復 memory MCP 啟動即死 — 已全部完成。completed: ingest-ripple 改用 resolveMemoryDir() 切斷 config.js 依賴（commit 89ca1d6）、dist 已 rebuild、空 token 實測 + smoke 過、教訓已存 bridge-research shard。next_action: 重啟後用 ToolSearch 確認 memory MCP 工具（list_facts/remember/forget）已掛載即收工，無其他待辦
+- [2026-07-12T20:06:55.792Z] user=509424983 query="README 已於 2026-07-07 補齊文檔並 push" deleted=0 token=forget-69547103-1
+

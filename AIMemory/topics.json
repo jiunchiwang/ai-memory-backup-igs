@@ -4,6 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
+// Last applied: 2026-07-12T20:03:53.868Z (token=topics-c188d5ea-13)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -24,7 +25,8 @@
     "keywords": [
       "uk_917",
       "uk_917_",
-      "leprechaun"
+      "leprechaun",
+      "3 leprechaun"
     ]
   },
   {
@@ -59,16 +61,12 @@
       "magicpot",
       "fakereelmanager",
       "goldblitzroulette",
-      "multiplier",
       "reelsymbolmode",
-      "cascade",
-      "tumble",
+      "cascade（消除",
+      "tumble（快速",
       "proto 來自",
       "spinekit",
       "igs",
-      "鈊象",
-      "小葉",
-      "葉錦頤",
       "pattern-library",
       "excel-to-ai-doc",
       "firstclone",
@@ -84,7 +82,8 @@
       "uk-conventions",
       "clash of olympus",
       "諸神之戰",
-      "triplecointreasure"
+      "triplecointreasure",
+      "extensions 目錄採專案隔離"
     ]
   },
   {
@@ -127,79 +126,6 @@
     ]
   },
   {
-    "topic": "bridge-acp",
-    "keywords": [
-      "claude-agent-acp",
-      "kiro-cli acp",
-      "kiro-cli chat",
-      "acp_model",
-      "acp_agent_command",
-      "acp 已從",
-      "kiro cli 的 model",
-      "kiro cli 可用",
-      "非 claude model",
-      "model id",
-      "specialist-domains",
-      "parallel delegate",
-      "parallel_delegate",
-      "co-authored-by",
-      "impact-gate",
-      "tool-hooks",
-      "pretooluse hook",
-      "hooks 在 session",
-      "claude-fable",
-      "set_config_option",
-      "deepseek",
-      "qwen3-coder",
-      "vc-kiro-delegate",
-      "acp-providers"
-    ]
-  },
-  {
-    "topic": "bridge-research",
-    "keywords": [
-      "hermes",
-      "cowart",
-      "headroom",
-      "loop engineering",
-      "loop-engineering",
-      "claudecodetools",
-      "claude code tools",
-      "skillsmp",
-      "posttooluse",
-      "posttool",
-      "tool usage log",
-      "instinct observer",
-      "karpathy-wiki",
-      "karpathy lm",
-      "karpathy p0",
-      "ingest ripple",
-      "ingest-ripple",
-      "query auto-save",
-      "query-auto-save",
-      "activity-log.ts",
-      "worktree isolation",
-      "specialist persistent memory",
-      "pluggable posttool",
-      "roadmap",
-      "方案a",
-      "方案b",
-      "方案c",
-      "方案d",
-      "借鏡",
-      "可借鏡",
-      "ai_multi_agent",
-      "dev-design",
-      "設計工作流",
-      "侯智薰",
-      "雷蒙",
-      "7 層",
-      "harness 架構",
-      "已超越",
-      "三模型"
-    ]
-  },
-  {
     "topic": "bridge-session",
     "keywords": [
       "session resume",
@@ -211,7 +137,30 @@
       "acp_session_resume",
       "多 session",
       "savetranscript",
-      "idle sweep"
+      "idle sweep",
+      "session 移植",
+      "session/load",
+      "loadsession"
+    ]
+  },
+  {
+    "topic": "bridge-specialist",
+    "keywords": [
+      "specialist dashboard",
+      "specialist 監控",
+      "specialist-memory",
+      "specialist proxy",
+      "specialist_proxy",
+      "specialist 分身",
+      "status server",
+      "status-server",
+      "status_bind_host",
+      "token-policy",
+      "token policy",
+      "記憶污染",
+      "mini app",
+      "artifacts 檔名",
+      "bridge-dev specialist"
     ]
   },
   {
@@ -247,29 +196,75 @@
       "skill-usage",
       "ai-memory-backup",
       "backup_repo_dir",
-      "state.md 三段式",
+      "state.md",
       "ingest-ripple",
       "query-auto-save",
-      "activity-log"
+      "activity-log",
+      "wiki sources 保護",
+      "provenance",
+      "dangling ref",
+      "forgetmatch",
+      "stripfactprefix",
+      "fact-access-log",
+      "zombie skill",
+      "mcp-memory.js"
     ]
   },
   {
-    "topic": "bridge-specialist",
+    "topic": "bridge-research",
     "keywords": [
-      "specialist dashboard",
-      "specialist 監控",
-      "specialist-memory",
-      "specialist proxy",
-      "specialist_proxy",
-      "specialist 分身",
-      "status server",
-      "status-server",
-      "status_bind_host",
-      "token-policy",
-      "token policy",
-      "記憶污染",
-      "mini app",
-      "artifacts 檔名"
+      "hermes",
+      "cowart",
+      "headroom",
+      "loop engineering",
+      "loop-engineering",
+      "skillsmp",
+      "posttooluse",
+      "posttool hook",
+      "karpathy-wiki",
+      "karpathy p0",
+      "dev-design",
+      "設計工作流",
+      "侯智薰",
+      "雷蒙",
+      "7 層",
+      "harness 架構",
+      "已超越",
+      "三模型分工",
+      "ai_multi_agent",
+      "fable-advisor",
+      "context packaging",
+      "claude-plugins-official"
+    ]
+  },
+  {
+    "topic": "bridge-acp",
+    "keywords": [
+      "claude-agent-acp",
+      "kiro-cli acp",
+      "kiro-cli chat",
+      "acp_model",
+      "acp_agent_command",
+      "acp 已從",
+      "kiro cli 的 model",
+      "kiro cli 可用",
+      "非 claude model",
+      "model id 用短名",
+      "parallel delegate 無法",
+      "co-authored-by",
+      "impact-gate",
+      "tool-hooks",
+      "pretooluse hook",
+      "hooks 在 session",
+      "claude-fable",
+      "set_config_option",
+      "deepseek",
+      "qwen3-coder",
+      "vc-kiro-delegate",
+      "acp-providers",
+      "三段 review",
+      "kiro self-review",
+      "loadsession capability"
     ]
   },
   {
@@ -280,20 +275,17 @@
       "bridge 專案",
       "bridge 設計",
       "grammy",
-      "acp ",
       "mcp-memory",
       "buildpreamble",
       "cross-check",
       "start.bat",
-      "usage-guide.html",
       "telegram bot api",
       "bot api",
-      "rich messages",
+      "rich messages 升級",
       "parse_mode",
       "format-html",
       "optimistic cancel",
       "/cancel",
-      "/skillsearch",
       "context budget",
       "ask button discipline",
       "preamble steering",
@@ -302,11 +294,9 @@
       "passive monitor",
       "user-profile.md",
       "/reset clean",
-      "fork（jiunchiwang",
-      "upstream（redkilin",
       "fork 同步策略",
       "preamble",
-      "/agent",
+      "/agent init",
       "check-moa",
       "upstream",
       "smoke script",
@@ -315,9 +305,15 @@
       "unhandledrejection",
       "錯誤邊界",
       "process.exit",
-      "electron 視窗",
       "bridge 教訓",
-      "atomicjson"
+      "atomicjson",
+      "bridge fork 獨有",
+      "merge 解衝突",
+      "bridge repo 的 remote",
+      "bridge 架構陷阱",
+      "check-preamble",
+      "relay_delegate tool note",
+      ".env 實際含"
     ]
   },
   {
@@ -326,28 +322,25 @@
       "正典",
       "ai-canonical",
       "canonical corpus",
-      "跨模型",
+      "跨模型 ai",
       "sync.ps1",
       "正本",
-      "投影",
       "junction",
-      "ai 策略",
       "headless（無人值守）",
       "disallowedtools",
       "proposal-only",
       "closed-loop",
-      "karpathy",
+      "karpathy-guardrails",
       "steering 架構",
-      "steering/",
-      "skill-workflow",
-      "中介層",
-      "功能對齊",
       "memory-to-skill",
       "confidence scoring",
       "量化門檻",
       "長期警戒模式",
       "問題追蹤.md",
-      "自我改進優先級"
+      "自我改進優先級",
+      "常見錯誤分成兩類",
+      "流程偏離",
+      "underused skill"
     ]
   },
   {
@@ -358,41 +351,32 @@
       "playwright",
       "chromium",
       "to_pdf.py",
-      "githubtool",
       "obsidian vault",
-      "typescript-guide",
-      "streamlit",
       "tsc --noemit",
       "npx tsc",
       "此台機器",
       "jiunchiwang",
-      "node_modules/@xenova",
       "powershell",
       "encodedcommand",
-      "env-file",
-      "--theirs",
-      "merge-file",
+      "node --env-file",
       "bun runtime",
-      "node --env-file"
+      "merge-file"
     ]
   },
   {
     "topic": "user-pref",
     "keywords": [
       "使用者偏好",
-      "使用者工作流",
       "偏好 agent",
       "偏好 html",
-      "偏好 git",
-      "commit 訊息",
+      "commit 訊息使用中文",
       "產 pdf 的工作流程",
       "目錄錨點跳轉",
-      "使用者確認",
-      "使用者決定",
       "偏好 split",
-      "偏好 obsidian",
-      "使用者想用 obsidian",
-      "偏好"
+      "commit 前先確認",
+      "回報不 crash",
+      "除錯對策偏好",
+      "回灌工作流"
     ]
   }
 ]

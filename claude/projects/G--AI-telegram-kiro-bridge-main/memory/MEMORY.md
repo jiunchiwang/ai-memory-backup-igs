@@ -1,6 +1,7 @@
 # Memory Index
 
 - [bridge-review-handoff-2026-07-11](project_bridge_review_handoff.md) — 全碼審查 25 條 findings 全修完（high/medium/low），僅剩舊 script BC-x 漸進回填；三個新 opt-in env 部署時要設定
+- [bridge-optimization-round-2026-07-12](project_optimization_round_2026-07-12.md) — 優化輪 7 項全修完（9ab3e88..f9efd87）；ACP_TRACE 改 opt-in、bot 先上線再暖 embedding；enrichment 全量合併 deferred
 - [session-store-ui-state](project_session_store.md) — /session 多 session 管理完成，e2e 全過（BC-2/3/5/8 含跨 backend pin 連動），無待辦
 
 - [acp-session-resume-state](project_session_resume.md) — session resume 全部收尾：e2e 通過（2026-07-07 SIGINT 路徑）+ cosmetic 已補（55b3628），無待辦

@@ -122,3 +122,9 @@
 去重:寫入前以 list_facts(tail 20/195)雙查詢(draft streaming / sendMessageDraft / Rich Message / 三階段 等關鍵字)確認 0 重複。
 
 備註:本 session harness 同樣未載入 memory MCP tools,沿用 stdio JSON-RPC 直呼 mcp-memory.js 的 list_facts / remember(僅 ADD,未動 forget)。
+
+## 2026-07-12(AUTO)
+
+來源 shortlist:4 筆候選(皆 telegram-kiro-bridge,2026-07-11)。精選後寫入 1 筆,丟棄 3 筆一次性任務建立紀錄(Task #10/#12/#15)。
+
+1. skilllint 於 2026-07-11 將 knowhow-accumulation、non-engineer-agent-design、skill-creator 三個 skill 標記為殭屍(zombie)skill,但經評估後決定保留不刪;日後 skilllint 再標記這三個 skill 時應視為已知豁免,不需重複提案刪除(來源:telegram-kiro-bridge)

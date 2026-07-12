@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-09
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_a0d9ac, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8]
+updated: 2026-07-13
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_a0d9ac, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -46,6 +46,25 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 - 收錄 ~196 萬份公開 SKILL.md，格式與 bridge 完全相容
 - 但絕大多數設計給 Claude Code 本地 CLI 環境，bridge 無法直接安裝使用
 - 已實作 `/skillsearch` 指令整合 API
+
+### Fable-Advisor（echo-of-machines/fable-advisor）
+
+- 借鏡 **context packaging pattern**（commit 4c1cfd5）：
+  - RELAY_DELEGATE / PARALLEL_DELEGATE goal prompt 從三要素擴充為五要素（加「已知背景」「待決問題」）
+  - PARALLEL_DELEGATE 區分決策型（自打包 context brief）/ 調查型（給路徑讓 specialist 自己讀）兩種 context 模式
+  - 結果權重協議：給 delegate 結論認真權重，僅經驗性失敗或一手資料矛盾時不採納
+
+### claude-plugins-official（anthropics/claude-plugins-official）
+
+- 官方 Telegram plugin 定位：極簡 MCP channel（reply/react/edit 三 tool + pairing access control）
+- 與 bridge 互補而非競爭——它是 Claude Code session 的 passthrough messaging，bridge 是完整 autonomous agent 平台
+- 最大借鏡：**Permission Relay** 概念（高風險操作前走 Telegram 按鈕確認）
+- 結論：現有 `<<ASK:...>>` token 已可實現同效果，只差 specialist preamble 加 guardrail 規則（列 watchlist）
+
+### 三模型分工架構（已暫緩）
+
+- 提案：Fable 5 當 orchestrator（~10% tokens）、Codex 5.5 當 executor（~60%）、Gemini 3.1 Pro 當 reviewer（~15%）
+- 決策：暫緩不採用，避免未來重複提案
 
 ## 改善 Roadmap
 
@@ -104,11 +123,12 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 - Leader/Worker 角色分層 — bridge 的 specialist 已有 domain 隔離
 - ~~Backend 熱切換 — bridge 用 env 切換 + restart，改動頻率低~~ → **排除決策已推翻**：2026-07-07 實作 `/agent` 熱切換 + `/agent init`（acp-providers.json）
 
-#### 增量 gap 報告（comparison-gap-2026-07-07.html）後續
+#### 增量 gap 報告後續（最終狀態 2026-07-07）
 
-- 權限分層（leader-only gate 等效）→ ✅ 2026-07-08 `src/token-policy.ts`：TOKEN_POLICY 顯式白名單（main/proxy/delegate）+ memory 回寫 provenance/上限（commit 028a5ea）
-- 分層權限 preamble（角色模板）→ 評估後不做（僅 cosmetic，specialist preamble 已有 scope 分層）
-- Warm Pool（specialist 冷啟動預熱）→ ⬜ 未做，體感延遲優化，遠期
+- 權限分層（leader-only gate 等效）→ ✅ 2026-07-08 `src/token-policy.ts`
+- 分層權限 preamble → 不做（specialist preamble 已有 scope 分層，僅 cosmetic）
+- MCP session/new 原生注入 + ACP trace → 已存在（gap 報告基於舊基準已過時）
+- Warm Pool（specialist 冷啟動預熱）→ ⬜ 遠期，體感延遲優化
 
 ### 侯智薰 AI Agent 7 層 Harness 架構（2026-07-02）
 

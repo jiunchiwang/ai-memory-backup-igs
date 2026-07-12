@@ -1,0 +1,206 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-12 12:00pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,479 tokens to read)
+- Work investment: 296,778 tokens spent on research, building, and decisions
+- Your savings: 93% reduction from reuse
+
+### Jul 12, 2026
+
+**scripts/tmp-forget-dream-facts.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4863 | 7:56 AM | 🔴 | Fixed fact deletion script to use content queries instead of IDs |  |  |
+
+**..\..\AI\AIMemory\facts-509424983.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4864 | " | ✅ | Successfully deleted 3 trivia facts, 2 protected by wiki references |  |  |
+
+**..\..\AI\AIMemory\wiki\concepts\bridge-project.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4865 | 7:57 AM | 🔵 | Wiki protection mechanism uses sources array in page frontmatter |  |  |
+| #4866 | " | ✅ | Removed f_c899ab from bridge-project wiki sources to unprotect fact |  |  |
+| #4867 | " | ✅ | Completed deletion of all 5 trivia facts after removing wiki protection |  |  |
+
+**scripts/tmp-forget-dream-facts.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4868 | " | ✅ | Verified complete deletion and cleaned up temporary script |  |  |
+
+**start.bat**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4869 | 7:59 AM | 🔵 | Bridge uses start.bat supervisor loop for automatic restart and rebuild |  |  |
+
+**..\..\AI\AIMemory\STATE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4870 | " | ✅ | Cleared High Priority dream maintenance tasks after completion |  |  |
+| #4871 | " | ✅ | Documented completion details in STATE.md Watch List for audit trail |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4872 | 8:06 AM | 🔵 | Memory MCP tools unavailable in current session |  |  |
+| #4873 | 8:08 AM | 🔵 | Memory MCP server functional via stdio helper workaround |  |  |
+| #4874 | 8:11 AM | 🔵 | Memory MCP server registered globally but not connected to project session |  |  |
+
+**C:\Users\jiunchiwang\.claude.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4875 | " | 🔵 | Memory MCP server properly configured globally with correct environment |  |  |
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4876 | 8:15 AM | 🔵 | ingest-ripple.ts dependency analysis and refactor pattern |  |  |
+| #4877 | " | 🔵 | Memory subsystem modules are config.js-free except ingest-ripple |  |  |
+
+**src/local-llm.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4878 | 8:16 AM | 🔵 | Confirmed memory-db and local-llm have no config.js dependency chain |  |  |
+
+**src/page-index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4879 | " | 🔵 | Full memory subsystem dependency graph validated as config.js-free |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4880 | " | 🔴 | Remove config.js import from ingest-ripple to fix MCP server startup |  |  |
+| #4881 | 8:17 AM | 🔴 | Complete config.memoryDir replacement in ingest-ripple.ts |  |  |
+| #4882 | " | 🔴 | Verified ingest-ripple.ts config.js removal and TypeScript validation |  |  |
+
+**dist/ingest-ripple.js**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4883 | " | ✅ | Built project with ingest-ripple.ts config.js removal fix |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4884 | 8:18 AM | 🔴 | Verified memory MCP server starts successfully with empty TELEGRAM_BOT_TOKEN |  |  |
+
+**scripts/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4885 | " | 🔵 | Located memory-related smoke test scripts for comprehensive validation |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4886 | " | 🔴 | Memory MCP smoke tests pass with clean environment after config.js removal |  |  |
+| #4887 | 8:19 AM | 🔵 | Memory MCP remember tool invocation failed due to shell escaping issue |  |  |
+
+**..\..\AI\AIMemory\facts-509424983.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4888 | " | 🔴 | Memory MCP remember tool successfully writes lesson fact with empty TELEGRAM_BOT_TOKEN |  |  |
+
+**#S1608** Verify memory MCP status across all adapters after import chain fix (Jul 12, 8:31 AM)
+
+**#S1609** Verify Memory MCP server functionality after pushing git commit 89ca1d6 (Jul 12, 8:32 AM)
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4889 | 8:32 AM | 🔴 | Memory MCP startup crash fixed across all adapters |  |  |
+
+**#S1610** Verify memory MCP functionality after startup fix and push commit 89ca1d6 to remote (Jul 12, 8:40 AM)
+
+**#S1611** User inquired about potential streaming display issues related to tool execution display (Jul 12, 8:42 AM)
+
+**#S1612** Diagnose Telegram bridge streaming issues where tool status messages appear slowly and incompletely (Jul 12, 8:58 AM)
+
+**#S1613** Research Telegram bot draft message jitter issue and find industry best practices for handling tool progress updates during streaming responses (Jul 12, 8:59 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4890 | 9:04 AM | 🔵 | Telegram Bot API 9.5 provides native sendMessageDraft for smooth LLM streaming |  |  |
+| #4891 | 9:05 AM | 🔵 | Telegram sendMessageDraft animation explicitly expects append-only content updates |  |  |
+| #4892 | " | 🔵 | OpenClaw separates tool progress into dedicated status draft for Telegram streaming |  |  |
+| #4893 | " | 🔵 | OpenClaw implements partial and progress modes for Telegram tool streaming visualization |  |  |
+
+**#S1614** Fix Telegram bridge streaming UX issues where tool messages appear before user choice confirmation and display incompletely (Jul 12, 9:08 AM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4894 | 9:09 AM | 🔵 | Examined existing draft update mechanism in Telegram bridge |  |  |
+| #4895 | " | 🔵 | Mapped cleanup and lifecycle management in draft update flow |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4896 | 9:11 AM | 🔄 | Separated volatile status content from append-only draft rendering |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4897 | 9:12 AM | ✅ | Imported renderStatusMessage into run-prompt module |  |  |
+| #4898 | " | 🟣 | Implemented status message lifecycle management for separate volatile content channel |  |  |
+| #4899 | 9:13 AM | 🟣 | Wired status message updates into draft streaming loop |  |  |
+| #4900 | " | 🟣 | Completed status message cleanup in finally block |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4901 | " | 🔵 | Examined existing draft render test expectations |  |  |
+| #4902 | 9:14 AM | ✅ | Added renderStatusMessage import to draft render tests |  |  |
+| #4903 | " | 🟣 | Updated tests to validate separated draft and status message channels |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4904 | 9:15 AM | 🟣 | All smoke tests pass after status message channel implementation |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4905 | " | 🟣 | Committed dual-channel draft streaming implementation solving Telegram jitter |  |  |
+
+**#S1615** Verify memory MCP is working normally after previous session's fix (Jul 12, 9:16 AM)
+
+**#S1616** Self-check verification after memory MCP fix (Jul 12, 9:18 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4906 | 9:28 AM | ✅ | Pushed Telegram bridge streaming fixes to production |  |  |
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4907 | 9:31 AM | ✅ | Documented dual-channel streaming pattern in canonical skill |  |  |
+| #4908 | " | ✅ | Added dual-channel streaming mistakes to canonical skill reference table |  |  |
+| #4909 | 9:32 AM | ✅ | Added check-draft-render smoke test to canonical skill documentation |  |  |
+| #4910 | " | ✅ | Added draft animation jitter symptom to skill usage triggers |  |  |
+
+**#S1617** Self-check verification of system state after memory MCP fix (Jul 12, 9:32 AM)
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4911 | 9:32 AM | ✅ | Elevated dual-channel pattern to core architectural principle |  |  |
+| #4912 | 9:33 AM | ✅ | Committed and deployed dual-channel streaming pattern to AI-canonical repository |  |  |
+
+
+Access 297k tokens of past research & decisions for just 19,479t. Use MCP search tools to access memories by ID.

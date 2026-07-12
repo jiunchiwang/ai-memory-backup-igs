@@ -5,4 +5,3 @@
 - [f_a8a12e] [2026-07-06T05:19:36.045Z] 在 bash shell 呼叫 PowerShell 時引號（單引號/$_）會被 bash 層吃掉導致 ParserError，可靠做法是把指令轉 UTF-16LE 再 base64，用 powershell -EncodedCommand 執行
 - [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
 - [f_eb9ddd] [2026-07-07T00:32:54.720Z] 使用者機器已安裝 Bun runtime（C:\Users\jiunchiwang\.bun\bin，含 bun.exe/bunx.exe），claude-mem plugin 的 hooks 依賴它執行，不可刪除
-- [f_8da350] [2026-07-07T08:51:39.050Z] merge 解衝突教訓：git checkout --theirs/--ours 是整檔取代，會洗掉對側已乾淨自動合併的 hunk（combined diff 不顯示乾淨 hunk）；雙邊都有改動的檔案應用 git merge-file 三方合併或 checkout -m 恢復衝突標記後只改衝突區，並逐檔 diff 兩側核對無遺失

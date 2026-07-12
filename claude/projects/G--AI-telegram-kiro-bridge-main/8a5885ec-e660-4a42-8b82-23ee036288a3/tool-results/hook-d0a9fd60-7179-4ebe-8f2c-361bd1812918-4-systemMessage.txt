@@ -1,0 +1,173 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-12 8:06am GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (18,373 tokens to read)[0m
+[2m  Work investment: 335,775 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 95% reduction from reuse[0m
+
+[1m[36mJul 11, 2026[0m
+
+[33m#S1595[0m Fix all remaining code review findings - discussion of low-severity issues after medium-severity fixes were pushed (Jul 11, 3:31 PM)
+
+[33m#S1596[0m Code review of bridge program with fixes applied and pushed (Jul 11, 3:35 PM)
+
+[33m#S1597[0m User question about token costs when switching agents (Jul 11, 4:20 PM)
+
+[33m#S1598[0m Self-check verification of 8 recent telegram-kiro-bridge refactoring commits (Jul 11, 4:20 PM)
+
+[33m#S1599[0m Self-check and fix recent changes in telegram-kiro-bridge: atomicJson leak, CONTINUE token handling, and documentation cleanup (Jul 11, 4:27 PM)
+
+[33m#S1600[0m Diagnose two Telegram bot UI issues: missing "I selected" feedback after ASK button clicks, and slow/incomplete tool message rendering (Jul 11, 4:32 PM)
+
+[33m#S1601[0m Status check on unpushed commits in telegram-kiro-bridge repository (Jul 11, 7:58 PM)
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4820[0m  [2m7:58 PM[0m  🔵  Found test scripts for render functions  
+
+[2msrc/index.ts[0m
+  [2m#4821[0m  [2m7:59 PM[0m  🔵  index.ts only imports renderReply, not a direct caller  
+  [2m#4822[0m           🔵  renderReply imported alongside other Telegram UI utilities  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4823[0m           🔵  renderReply function signature lacks replyHeader parameter  
+  [2m#4824[0m  [2m8:00 PM[0m  🔴  Added replyHeader parameter to renderReply for streaming visibility  
+  [2m#4825[0m           🔴  Integrated replyHeader into renderReply output composition  
+  [2m#4826[0m           🔴  Added replyHeader parameter to renderDraftReply function  
+  [2m#4827[0m  [2m8:01 PM[0m  🔴  Integrated replyHeader into renderDraftReply output composition and budget  
+  [2m#4828[0m           🔄  Refined renderDraftReply return logic for clearer header handling  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4829[0m           🔴  Wired replyHeader through to renderDraftReply call site  
+  [2m#4830[0m  [2m8:02 PM[0m  🔴  Wired replyHeader through final renderReply call site for placeholder streaming  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4831[0m  [2m8:03 PM[0m  🔴  Implemented title update handling in tool_call_update to fix incomplete tool names  
+  [2m#4832[0m           🔴  Added onUpdate trigger for intermediate title changes to refresh display  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4833[0m           ✅  TypeScript compilation verified all fixes without errors  
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4834[0m  [2m8:05 PM[0m  🔴  Smoke tests confirm backward compatibility of replyHeader changes  
+
+[2mC:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-header.mjs[0m
+  [2m#4835[0m           🔴  Direct replyHeader tests confirm all streaming behavior contracts  
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4838[0m  [2m8:06 PM[0m  🔴  Both fixes implemented, verified with available test coverage  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4839[0m  [2m8:07 PM[0m  🔴  Mapping provider event flow to prepare tool_call_update test  
+
+[2mGeneral[0m
+  [2m#4840[0m           🔴  Creating comprehensive integration test for tool_call_update title handling  
+
+[2mdist/sessionManager.js[0m
+  [2m#4841[0m           🔴  Test failing due to SessionUpdate wrapper structure mismatch  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4842[0m           🔴  Confirming SessionUpdate wrapper structure from applyUpdate implementation  
+
+[2mC:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs[0m
+  [2m#4843[0m  [2m8:08 PM[0m  🔴  Tool title update integration test passes all 8 assertions  
+
+[2mscripts/check-editnow-race.mjs[0m
+  [2m#4844[0m           🔴  Additional smoke tests confirm no regressions from fixes  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4845[0m           ✅  Staging three modified files for commit  
+  [2m#4846[0m  [2m8:09 PM[0m  🔴  Both streaming UI fixes committed successfully  
+
+[33m#S1602[0m User queried current model configuration (Jul 11, 8:13 PM)
+
+[33m#S1603[0m User inquired about tool messages becoming longer after recent modifications; Claude explained two streaming UI fixes that were just committed (Jul 11, 8:15 PM)
+
+[2msrc/sessionManager.ts[0m
+  [2m#4847[0m  [2m8:44 PM[0m  🔴  Tool progress display truncated to show only tool type, not full command  
+
+[2mGeneral[0m
+  [2m#4848[0m           🔵  Test suite reveals one expected failure from tool display truncation change  
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4849[0m           🔵  Draft render smoke test validates streaming frame order and stability  
+  [2m#4850[0m  [2m8:45 PM[0m  ✅  Updated draft render test to expect truncated tool names  
+
+[2mC:\Users\JIUNCH~1\AppData\Local\Temp\claude\G--AI-telegram-kiro-bridge-main\72f68eb6-8f5d-444f-965d-26d889abaa1c\scratchpad\check-tool-title.mjs[0m
+  [2m#4851[0m           ✅  Updated tool-title test to verify display truncation vs timeline preservation  
+
+[2mGeneral[0m
+  [2m#4852[0m           ✅  All smoke tests pass after tool display truncation and test updates  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4853[0m  [2m8:49 PM[0m  🔄  Tool progress display shows only tool kind + duration  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4854[0m           🔴  Reply headers now appear in streaming frames  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4855[0m           🟣  Tool title backfilling from adapter updates  
+
+[2mGeneral[0m
+  [2m#4856[0m  [2m8:50 PM[0m  🔵  Multi-angle parallel code review methodology  
+  [2m#4857[0m           🔵  Efficiency and altitude review angles complete 7-dimension audit  
+  [2m#4858[0m           🔵  Conventions angle validates CLAUDE.md compliance  
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4859[0m  [2m8:52 PM[0m  🔴  Bridge streaming UI: tool display simplification + reply header visibility  
+
+[1m[36mJul 12, 2026[0m
+
+[2msrc/facts-store.ts[0m
+  [2m#4860[0m  [2m7:53 AM[0m  🔵  Bridge has internal fact deletion mechanism bypassing MCP  
+
+[2mscripts/tmp-forget-dream-facts.mjs[0m
+  [2m#4861[0m  [2m7:55 AM[0m  🟣  Created one-time script for direct fact deletion bypassing MCP  
+  [2m#4862[0m           🔵  forgetMatch searches fact content, not fact IDs or metadata  
+  [2m#4863[0m  [2m7:56 AM[0m  🔴  Fixed fact deletion script to use content queries instead of IDs  
+
+[2m..\..\AI\AIMemory\facts-509424983.md[0m
+  [2m#4864[0m           ✅  Successfully deleted 3 trivia facts, 2 protected by wiki references  
+
+[2m..\..\AI\AIMemory\wiki\concepts\bridge-project.md[0m
+  [2m#4865[0m  [2m7:57 AM[0m  🔵  Wiki protection mechanism uses sources array in page frontmatter  
+  [2m#4866[0m           ✅  Removed f_c899ab from bridge-project wiki sources to unprotect fact  
+  [2m#4867[0m           ✅  Completed deletion of all 5 trivia facts after removing wiki protection  
+
+[2mscripts/tmp-forget-dream-facts.mjs[0m
+  [2m#4868[0m           ✅  Verified complete deletion and cleaned up temporary script  
+
+[2mstart.bat[0m
+  [2m#4869[0m  [2m7:59 AM[0m  🔵  Bridge uses start.bat supervisor loop for automatic restart and rebuild  
+
+[2m..\..\AI\AIMemory\STATE.md[0m
+  [2m#4870[0m           ✅  Cleared High Priority dream maintenance tasks after completion  
+  [2m#4871[0m           ✅  Documented completion details in STATE.md Watch List for audit trail  
+
+[33m#S1605[0m Process two High Priority dream maintenance items: delete 5 flagged facts and restart bridge for embedding fix (Jul 12, 8:01 AM)
+
+[34mInvestigated:[0m Examined factlint flagged facts (f_724810, f_f7fe66, f_c899ab, f_1746d0, f_602278) for deletion eligibility; checked bridge-project.md wiki sources for protected fact references; verified bridge restart mechanism and backfillFactEmbeddings startup hook
+
+[33mLearned:[0m Forget mechanism matches facts by content without ID prefix, requiring unique substring queries; wiki source references in frontmatter protect facts from deletion (need cleanup first); bridge <<RESTART>> token triggers supervisor respawn with latest src/ code, auto-running backfillFactEmbeddings from src/index.ts:1422
+
+[32mCompleted:[0m Deleted 5 factlint-flagged facts (trivia/operation records) via one-time tsx script calling forgetCommit()/deleteFact(); removed dangling wiki source references for f_c899ab and f_1746d0 from bridge-project.md before deletion; verified cleanup (facts reduced from 205→200, grep confirms IDs gone); cleared STATE.md High Priority section and moved completion notes to Watch List; triggered bridge restart to enable embedding backfill
+
+[35mNext Steps:[0m Bridge restarting now - backfillFactEmbeddings will run on startup; hit-log effectiveness verification scheduled for next dream run (tracked in STATE.md Watch List)
+
+
+[2mAccess 336k tokens of past research & decisions for just 18,373t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777
