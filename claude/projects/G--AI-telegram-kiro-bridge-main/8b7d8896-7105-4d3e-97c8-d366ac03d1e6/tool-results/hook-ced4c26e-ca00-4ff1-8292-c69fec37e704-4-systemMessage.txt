@@ -1,0 +1,185 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-13 8:11pm GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (20,610 tokens to read)[0m
+[2m  Work investment: 302,510 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 93% reduction from reuse[0m
+
+[1m[36mJul 13, 2026[0m
+
+[2msrc/status-push.ts[0m
+  [2m#4956[0m  [2m1:07 PM[0m  🔵  Status push notifications limited to first allowed user only  
+
+[2msrc/commands/status.ts[0m
+  [2m#4957[0m  [2m1:29 PM[0m  🔵  Status command architecture investigation  
+  [2m#4958[0m  [2m1:30 PM[0m  🟣  Added clickable status dashboard link to /status command  
+
+[2mGeneral[0m
+  [2m#4959[0m  [2m1:34 PM[0m  🔵  Telegram status command fails with localhost URL entity error  
+  [2m#4960[0m  [2m1:35 PM[0m  🔵  Telegram accepts 127.0.0.1 URLs in messages with auto-detection  
+
+[2msrc/commands/status.ts[0m
+  [2m#4961[0m           🔴  Fixed status command by using 127.0.0.1 instead of localhost  
+
+[2msrc/index.ts[0m
+  [2m#4962[0m  [2m1:42 PM[0m  ✅  Added node:util inspect import for error sanitization  
+  [2m#4963[0m           🟣  Implemented token masking in bot error handler  
+
+[2mGeneral[0m
+  [2m#4964[0m           ✅  Token masking implementation verified with TypeScript type checking  
+
+[2msrc/commands/status.ts[0m
+  [2m#4965[0m           ✅  Staged token masking and status improvements for commit  
+  [2m#4966[0m  [2m1:43 PM[0m  🟣  Committed token masking security fix and status dashboard link restoration  
+
+[33m#S1638[0m User requested a review of remaining roadmap items, but received only model identification instead (Jul 13, 2:07 PM)
+
+[33m#S1639[0m Review and update roadmap status with recent progress from July 10-13 (Jul 13, 4:54 PM)
+
+[33m#S1640[0m Assess whether README.md is too long and needs optimization (Jul 13, 4:58 PM)
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4969[0m  [2m4:58 PM[0m  🟣  Dual-channel streaming architecture for Telegram draft messages  
+
+[2msrc/config.ts[0m
+  [2m#4970[0m           🟣  Telegram draft streaming implementation with 30-second TTL ephemeral previews  
+
+[2mdocs/pending-roadmap.html[0m
+  [2m#4971[0m  [2m4:59 PM[0m  ✅  Roadmap document updated to reflect July 10-13 progress  
+  [2m#4972[0m  [2m5:00 PM[0m  ✅  Roadmap clarifies Telegram Rich Messages core completion status  
+  [2m#4973[0m           ✅  Roadmap section 7 updated from future proposal to core-completed milestone  
+
+[2mREADME.md[0m
+  [2m#4974[0m  [2m5:28 PM[0m  🔵  README.md structure analysis  
+
+[33m#S1641[0m Reorganize oversized README.md (879 lines) for telegram-kiro-bridge by splitting dense technical content into separate documentation files (Jul 13, 5:28 PM)
+
+[33m#S1642[0m Compare Fable 5's README refactoring approach vs original plan and decide which direction to proceed (Jul 13, 5:33 PM)
+
+[2mREADME.md[0m
+  [2m#4975[0m  [2m5:34 PM[0m  🔵  README.md structure analysis for documentation split  
+
+[2mdocs/[0m
+  [2m#4976[0m           🔵  Existing docs directory structure examined  
+
+[2mdocs/ab-token-protocol.md[0m
+  [2m#4977[0m           🔵  Existing token protocol documentation covers different token set  
+
+[33m#S1643[0m README restructuring completion and AI.md convention follow-up check (Jul 13, 5:55 PM)
+
+[2mREADME.md[0m
+  [2m#4978[0m  [2m5:56 PM[0m  🔵  telegram-kiro-bridge README refactoring reveals extensive existing documentation  
+
+[2mdocs/setup-agents.md[0m
+  [2m#4979[0m  [2m5:57 PM[0m  🔄  Created docs/setup-agents.md extracting multi-agent CLI setup from README  
+
+[2mdocs/token-protocols.md[0m
+  [2m#4980[0m  [2m5:59 PM[0m  🔄  Created docs/token-protocols.md for user-facing agent token specifications  
+
+[2mdocs/memory-system.md[0m
+  [2m#4981[0m  [2m6:00 PM[0m  🔄  Created docs/memory-system.md documenting long-term memory MCP architecture  
+
+[2mdocs/multi-agent.md[0m
+  [2m#4982[0m  [2m6:01 PM[0m  🔄  Created docs/multi-agent.md consolidating Specialist and Relay systems with shared infrastructure  
+
+[2mGeneral[0m
+  [2m#4983[0m  [2m6:04 PM[0m  🔵  README anchor reference audit found one cross-link requiring coordination  
+
+[33m#S1644[0m Commit documentation refactoring changes (README simplification, AI.md reorganization, new docs files) (Jul 13, 6:45 PM)
+
+[2mAI.md[0m
+  [2m#4984[0m  [2m6:46 PM[0m  🔵  Root AI.md exceeds size convention limit  
+  [2m#4985[0m           🔵  Module documentation coverage gap between old README and current AI.md  
+
+[2msrc/AI.md[0m
+  [2m#4986[0m  [2m6:49 PM[0m  🟣  Created src/AI.md module map for 90+ TypeScript modules  
+
+[2mAI.md[0m
+  [2m#4987[0m           🔄  Simplified root AI.md module section to reference src/AI.md for detailed listings  
+
+[2mREADME.md[0m
+  [2m#4988[0m  [2m6:50 PM[0m  ✅  Updated README to reference src/AI.md for complete module documentation  
+
+[2msrc/AI.md[0m
+  [2m#4989[0m           🔵  Documentation references non-existent error-classifier.ts module  
+
+[2mGeneral[0m
+  [2m#4990[0m           🔵  Error classifier module removed from codebase but still documented  
+
+[2msrc/AI.md[0m
+  [2m#4991[0m           🔴  Removed stale error-classifier.ts reference from src/AI.md documentation  
+
+[33m#S1645[0m User asked about current AI model; Claude prepared commits for completed documentation work (Jul 13, 7:02 PM)
+
+[33m#S1650[0m Fix issue before pushing to main and publishing changes; investigating portable skill authoring configuration path references (Jul 13, 7:02 PM)
+
+[2mdocs/pending-roadmap.html[0m
+  [2m#4993[0m  [2m7:03 PM[0m  ✅  Roadmap status updated for Rich Messages draft mode  
+
+[2msrc/relay.ts[0m
+  [2m#5009[0m  [2m7:51 PM[0m  ✅  Merged upstream relay multi-peer architecture into local fork  
+
+[2m..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5010[0m  [2m8:02 PM[0m  🔵  Portable skill authoring pattern for machine-specific paths  
+  [2m#5011[0m  [2m8:03 PM[0m  ✅  Relocated agent config files from AGENT_CONFIG_DIR to MEMORY_DIR/config  
+
+[2mGeneral[0m
+  [2m#5012[0m           ✅  Verified no remaining stale notebooklm-routing.json path references  
+  [2m#5013[0m           ✅  Synced updated portable skill authoring documentation to all CLI skill directories  
+
+[2m..\..\AI\AI-canonical\README.md[0m
+  [2m#5014[0m           🔵  Verified canonical repository changes before commit  
+
+[2m..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5015[0m  [2m8:04 PM[0m  ✅  Committed notebooklm-routing.json path fix to canonical skills repository  
+
+[2mGeneral[0m
+  [2m#5016[0m           ✅  Pushed canonical notebooklm-routing.json path fix to GitHub  
+
+[2m..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5017[0m           🔵  Bridge repo's default-skills projection still has outdated paths  
+
+[2m..\..\c\Users\jiunchiwang\.claude\skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5018[0m           🔵  Confirmed CLI skill directories have updated paths but bridge default-skills needs manual sync  
+
+[2mGeneral[0m
+  [2m#5019[0m  [2m8:06 PM[0m  🔵  No sync-skills automation found in bridge repository codebase  
+  [2m#5020[0m  [2m8:07 PM[0m  🔵  Git hooks configured to use .githooks directory instead of default location  
+
+[2m..\..\AI\telegram-kiro-bridge-main\.githooks\pre-commit[0m
+  [2m#5021[0m           🔵  Bridge repo has pre-commit hook that auto-syncs skills from local CLI directories  
+
+[2m..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5022[0m           ✅  Synced notebooklm-routing.json path fix into bridge default-skills directory  
+
+[2m.env.example[0m
+  [2m#5023[0m  [2m8:09 PM[0m  ✅  Merged sync-attempt branch into main with multi-peer relay fixes  
+
+[33m#S1651[0m Sync telegram-kiro-bridge with upstream repository and integrate relay multi-peer system (Jul 13, 8:10 PM)
+
+[34mInvestigated:[0m The upstream repository contained changes to the relay system, introducing multi-peer support via relay-peers.json configuration. Merge conflicts were identified between fork-specific features and upstream architectural changes.
+
+[33mLearned:[0m The relay system now supports multiple peer configurations managed through relay-peers.json. The sync process revealed 38 new relay multi-peer smoke tests in the upstream codebase. A stale path reference was discovered in the AI-canonical skill corpus during validation.
+
+[32mCompleted:[0m Successfully merged upstream changes into main branch via fast-forward, resolved all merge conflicts, deleted temporary sync-attempt branch, pushed to origin. Validated integration with tsc --noEmit, build process, and full relay smoke test suite (all 38 new check-relay-multipeer tests passing). Fixed outdated path reference in AI-canonical repository and pushed the correction.
+
+[35mNext Steps:[0m Sync operation is complete. Working tree is clean and all systems validated. Session appears to be in a ready state for next work item.
+
+
+[2mAccess 303k tokens of past research & decisions for just 20,610t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

@@ -7,22 +7,12 @@
         "acp",
         "--agent",
         "slot-dev",
-        "-a",
-        "--model",
-        "claude-sonnet-4.6"
+        "-a"
       ]
     },
     "cwd": "${BRIDGE_DIR}/specialists/slot-dev",
-    "mcpServers": [
-      {
-        "name": "memory",
-        "command": "node",
-        "args": [
-          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
-        ],
-        "disabled": false
-      }
-    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "high",
     "maxTurns": 30,
     "timeoutMs": 1800000
   },
@@ -34,30 +24,12 @@
         "acp",
         "--agent",
         "researcher",
-        "-a",
-        "--model",
-        "claude-sonnet-4.6"
+        "-a"
       ]
     },
     "cwd": "${BRIDGE_DIR}/specialists/researcher",
-    "mcpServers": [
-      {
-        "name": "memory",
-        "command": "node",
-        "args": [
-          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
-        ],
-        "disabled": false
-      },
-      {
-        "name": "google",
-        "command": "node",
-        "args": [
-          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
-        ],
-        "disabled": false
-      }
-    ],
+    "model": "claude-opus-4.6",
+    "effort": "high",
     "maxTurns": 30,
     "timeoutMs": 1800000
   },
@@ -69,30 +41,12 @@
         "acp",
         "--agent",
         "general",
-        "-a",
-        "--model",
-        "claude-sonnet-4.6"
+        "-a"
       ]
     },
     "cwd": "${BRIDGE_DIR}/specialists/general",
-    "mcpServers": [
-      {
-        "name": "memory",
-        "command": "node",
-        "args": [
-          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
-        ],
-        "disabled": false
-      },
-      {
-        "name": "google",
-        "command": "node",
-        "args": [
-          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
-        ],
-        "disabled": false
-      }
-    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "high",
     "maxTurns": 30,
     "timeoutMs": 1800000
   }

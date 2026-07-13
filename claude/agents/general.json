@@ -1,0 +1,16 @@
+{
+  "name": "general",
+  "description": "Full-capability specialist for parallel multi-tasking (inherits all skills and MCP)",
+  "tools": [
+    "@builtin"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.claude/skills/**/SKILL.md"
+  ],
+  "mcpServers": {}
+}

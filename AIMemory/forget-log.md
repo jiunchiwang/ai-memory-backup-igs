@@ -99,3 +99,7 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_138118] [2026-07-12T00:32:42.698Z] [WS] task: 修復 memory MCP 啟動即死 — 已全部完成。completed: ingest-ripple 改用 resolveMemoryDir() 切斷 config.js 依賴（commit 89ca1d6）、dist 已 rebuild、空 token 實測 + smoke 過、教訓已存 bridge-research shard。next_action: 重啟後用 ToolSearch 確認 memory MCP 工具（list_facts/remember/forget）已掛載即收工，無其他待辦
 - [2026-07-12T20:06:55.792Z] user=509424983 query="README 已於 2026-07-07 補齊文檔並 push" deleted=0 token=forget-69547103-1
 
+- [2026-07-13T20:05:52.271Z] user=509424983 query="[WS] completed: 新增 src/status-tunnel.ts" deleted=1 token=forget-cf438355-1
+    - [f_aa639e] [2026-07-13T02:23:45.380Z] [WS] completed: 新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn），index.ts 接入啟動/關閉流程，tsc 通過；重啟後 /status 應顯示 Mini App 按鈕（需有 running task）
+- [2026-07-13T20:05:54.379Z] user=509424983 query="已新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn）：bridge 啟動時 fire-and-forget spawn cloudflared" deleted=1 token=forget-273d5b67-1
+    - [f_2ca7bd] [2026-07-13T02:23:57.607Z] telegram-kiro-bridge 已新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn）：bridge 啟動時 fire-and-forget spawn cloudflared tunnel 指向 localhost:3847，解析到 trycloudflare.com URL 後動態設 process.env.STATUS_HTTPS_URL，讓 /status 在有 running task 時顯示 Telegram Mini App 按鈕；cloudflared 沒裝或 spawn 失敗則 graceful fallback 原本行為

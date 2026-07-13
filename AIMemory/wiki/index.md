@@ -40,4 +40,4 @@
 ---
 
 Total pages: 22
-Last updated: 2026-07-13
+Last updated: 2026-07-13 (bridge-memory, bridge-specialist content refresh)

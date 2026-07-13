@@ -1,0 +1,266 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 9:26pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (19,879 tokens to read)
+- Work investment: 216,097 tokens spent on research, building, and decisions
+- Your savings: 91% reduction from reuse
+
+### Jul 13, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4990 | 6:50 PM | 🔵 | Error classifier module removed from codebase but still documented |  |  |
+
+**src/AI.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4991 | " | 🔴 | Removed stale error-classifier.ts reference from src/AI.md documentation |  |  |
+
+**docs/pending-roadmap.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4993 | 7:03 PM | ✅ | Roadmap status updated for Rich Messages draft mode |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5009 | 7:51 PM | ✅ | Merged upstream relay multi-peer architecture into local fork |  |  |
+
+**..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5010 | 8:02 PM | 🔵 | Portable skill authoring pattern for machine-specific paths |  |  |
+| #5011 | 8:03 PM | ✅ | Relocated agent config files from AGENT_CONFIG_DIR to MEMORY_DIR/config |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5012 | " | ✅ | Verified no remaining stale notebooklm-routing.json path references |  |  |
+| #5013 | " | ✅ | Synced updated portable skill authoring documentation to all CLI skill directories |  |  |
+
+**..\..\AI\AI-canonical\README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5014 | " | 🔵 | Verified canonical repository changes before commit |  |  |
+
+**..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5015 | 8:04 PM | ✅ | Committed notebooklm-routing.json path fix to canonical skills repository |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5016 | " | ✅ | Pushed canonical notebooklm-routing.json path fix to GitHub |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5017 | " | 🔵 | Bridge repo's default-skills projection still has outdated paths |  |  |
+
+**..\..\c\Users\jiunchiwang\.claude\skills\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5018 | " | 🔵 | Confirmed CLI skill directories have updated paths but bridge default-skills needs manual sync |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5019 | 8:06 PM | 🔵 | No sync-skills automation found in bridge repository codebase |  |  |
+| #5020 | 8:07 PM | 🔵 | Git hooks configured to use .githooks directory instead of default location |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\.githooks\pre-commit**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5021 | " | 🔵 | Bridge repo has pre-commit hook that auto-syncs skills from local CLI directories |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5022 | " | ✅ | Synced notebooklm-routing.json path fix into bridge default-skills directory |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5023 | 8:09 PM | ✅ | Merged sync-attempt branch into main with multi-peer relay fixes |  |  |
+
+**#S1652** Sync telegram-kiro-bridge with upstream repository and handle related configuration updates (Jul 13, 8:10 PM)
+
+**#S1653** Skill placement decision for portable skill authoring and canonical repository structure investigation (Jul 13, 8:12 PM)
+
+**C:\Users\jiunchiwang\.claude\skills\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5024 | 8:13 PM | ✅ | vc-uof-hours skill installed to Claude skills directory |  |  |
+
+**#S1654** User uploaded vc-uof-hours.zip skill file and requested learning it, identifying configuration requirements, and testing execution (Jul 13, 8:19 PM)
+
+**AI-canonical-corp/README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5025 | 8:19 PM | 🔵 | AI-canonical-corp repository scope and structure documented |  |  |
+
+**#S1655** vc-uof-hours skill installation completed and local commit status confirmed (Jul 13, 8:20 PM)
+
+**C:\Users\jiunchiwang\.config\uof\config.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5026 | 8:21 PM | ✅ | UOF skill configuration created |  |  |
+| #5027 | 8:22 PM | 🟣 | UOF hours tracking skill successfully executed |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5028 | " | 🔵 | Canonical skill sync mechanism uses Windows junctions |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5029 | 8:23 PM | ✅ | vc-uof-hours skill installed to canonical corp repository |  |  |
+
+**C:\Users\jiunchiwang\.kiro\skills (33 junction links created)**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5030 | " | ✅ | Canonical skill sync executed - 33 skills projected to CLI targets |  |  |
+
+**C:\Users\jiunchiwang\.config\uof\config.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5031 | 8:24 PM | ✅ | vc-uof-hours skill verified working through junction link |  |  |
+
+**#S1656** Learn vc-uof-hours skill and test UOF form automation feasibility (Jul 13, 8:36 PM)
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5032 | 8:36 PM | 🟣 | UOF form field reconnaissance script created |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5033 | 8:38 PM | 🔵 | UOF form reconnaissance completed successfully |  |  |
+| #5034 | " | 🔵 | UOF form URLs and navigation structure mapped |  |  |
+| #5035 | " | 🔵 | Leave request form fields located in nested iframe frame[2] |  |  |
+| #5036 | " | 🔵 | Leave request form field structure fully mapped |  |  |
+
+**#S1657** User chose P2 scope for UOF form auto-fill implementation: dry-run with screenshots, manual submission only (Jul 13, 8:39 PM)
+
+**#S1658** Adversarial multi-agent code review of vc-uof-hours tool with 5 confirmed bug fixes and formalization of review workflow into permanent skill (Jul 13, 8:50 PM)
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5037 | 8:50 PM | 🟣 | UOF overtime form reconnaissance script created |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5038 | " | ⚖️ | P2 implementation plan broken into four sequential tasks |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5039 | 8:51 PM | 🔵 | Reconnaissance script execution failed with exit code 1 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5040 | " | 🔵 | UOF overtime form structure successfully mapped through reconnaissance |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5041 | " | 🔄 | Refined reconnaissance script to filter form field noise |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5042 | 8:52 PM | 🔵 | Clean overtime form field mapping extracted with 89% output reduction |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5043 | " | 🔴 | Fixed screenshot method call from frame to page object |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5044 | 8:53 PM | 🔵 | Reconnaissance script successfully completed with field mapping and screenshot |  |  |
+
+**uploads/509424983-2026-07-13T13-11-01-vc-uof-hours.zip**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5045 | 9:12 PM | 🟣 | Development review process formalized into reusable skill |  |  |
+
+**vc-uof-hours/scripts/uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5046 | " | 🟣 | Multi-agent adversarial code review workflow hardened UOF overtime query tool |  |  |
+
+**#S1659** Add skill-related pending tasks to roadmap; query bug fix and timesheet feature commits (Jul 13, 9:13 PM)
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\scripts\uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5047 | 9:13 PM | ✅ | Applied adversarial review fixes to canonical uof_query.py |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5048 | " | ✅ | Updated SKILL.md documentation to explain prorated month target calculation |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\vc-uof-hours-v2\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5049 | " | 🔵 | Adversarial review documentation needs merge to canonical DESIGN.md |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5050 | 9:14 PM | ✅ | Updated canonical DESIGN.md with corrected target calculation formulas |  |  |
+| #5051 | " | ✅ | Merged adversarial review hardening documentation into canonical DESIGN.md |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5052 | 9:15 PM | ✅ | Verified merged codebase works against production UOF system |  |  |
+| #5053 | " | ✅ | Production validation confirms prorated month target calculation fix working |  |  |
+
+**#S1660** Learn vc-uof-hours skill, identify configuration requirements, and test execution (Jul 13, 9:23 PM)
+
+**docs/pending-roadmap.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5054 | 9:23 PM | 🔵 | Roadmap documentation location identified |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5055 | " | ⚖️ | Adversarial verification review completed for vc-uof-hours skill |  |  |
+
+**#S1661** Learn vc-uof-hours skill structure, identify configuration requirements, and prepare for execution test (Jul 13, 9:26 PM)
+
+**Investigated**: The vc-uof-hours skill was examined in the AI-canonical-corp repository under the new skills/office/ domain. The skill queries UOF (company intranet) for overtime hours and vacation leave, with dry-run form pre-fill capabilities. Git history shows 4 commits: initial feature, dry-run form filling, 5 bug fixes from review workflow, and roadmap documentation.
+
+**Learned**: vc-uof-hours requires configuration at ~/.config/uof/config.json containing credentials for UOF access. The skill targets 24 hours monthly overtime tracking. Three development phases (P3: actual submission, P4: leave forms, P5: holiday overtime forms) are documented in roadmap with two uncertainties flagged: whether project lead is implicitly required, and whether system auto-overrides compensatory day settings.
+
+**Completed**: Created new "office" domain in AI-canonical-corp skills directory for non-slot corporate skills. Committed roadmap additions to vc-uof-hours DESIGN.md documenting P3/P4/P5 phases and pre-implementation clarifications needed (commit 29143f0).
+
+**Next Steps**: Execute vc-uof-hours skill for first live test run to validate query functionality and verify configuration setup works correctly.
+
+
+Access 216k tokens of past research & decisions for just 19,879t. Use MCP search tools to access memories by ID.

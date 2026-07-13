@@ -1,0 +1,22 @@
+{
+  "name": "slot-dev",
+  "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
+  "tools": [
+    "@builtin"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.claude/skills/uk-*/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/uk-slot-*/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/ms-kiro-strreplace-silent-fail/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/ms-windows-shell-exit-code-false-positive/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/ms-windows-shell-interactive-prompt/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/ms-portable-skill-authoring/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.claude/skills/writing-skills/SKILL.md"
+  ],
+  "mcpServers": {}
+}

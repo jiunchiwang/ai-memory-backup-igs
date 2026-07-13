@@ -1,0 +1,252 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 2:08pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (24,086 tokens to read)
+- Work investment: 545,734 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jul 12, 2026
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4915 | 10:05 PM | 🔴 | Fixed memory leak in atomicJson updateJson pending write tracking |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4918 | 10:06 PM | 🟣 | Implemented dual-channel streaming to fix Telegram draft animation jitter |  |  |
+| #4919 | 10:07 PM | 🔵 | Bridge optimization audit identified file I/O and polling patterns as improvement candidates |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4920 | " | 🔵 | Bridge implements bounded cache eviction patterns to prevent unbounded memory growth |  |  |
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4921 | 10:08 PM | 🔵 | Bridge code review completed with no critical optimization gaps found |  |  |
+| #4922 | " | 🔵 | Bridge dependency structure verified as clean after ingest-ripple refactor |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4923 | " | 🔵 | Bridge implements sequential enrichment pipeline with 7-stage context injection |  |  |
+
+**src/enrichment.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4924 | 10:09 PM | 🔵 | Bridge enrichment pipeline implements priority-based context budget management |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4925 | 10:10 PM | 🔵 | Bridge optimization audit completed: codebase well-architected with incremental improvement opportunities |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4926 | " | 🔵 | Bridge startup sequence initializes 9 enrichment modules with graceful degradation |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4927 | 10:11 PM | 🔵 | Bridge implements fire-and-forget logging pattern with bounded memory buffers |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4928 | " | 🔵 | Bridge implements comprehensive rate-limit handling with automatic recovery and message queueing |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4929 | 10:12 PM | 🔵 | Bridge code review completed: production-ready with mature patterns and no critical optimization gaps |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4930 | " | 🔵 | Bridge optimization audit concluded: all recent fixes verified and codebase architecture documented |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4931 | 10:13 PM | 🔵 | Bridge draft message lifecycle implements automatic cleanup via ephemeral nature |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4932 | " | 🔵 | Subagent optimization scan identified 7 high-ROI improvement opportunities in bridge codebase |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4933 | 10:14 PM | 🔵 | Bridge optimization audit completed: comprehensive review confirms production-ready codebase with 7 actionable improvements identified |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4934 | 10:15 PM | 🔵 | Bridge optimization audit final summary: production-ready with 7 incremental improvements ranked by ROI |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4935 | 10:16 PM | 🔵 | Bridge optimization audit completed with all verification checks passed |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4936 | " | 🔵 | Post-audit subagent review of recent commits identified 5 findings: 1 plausible bug, 3 cosmetic issues, 1 optimization opportunity |  |  |
+
+**src/embed-router.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4937 | 10:23 PM | 🔄 | Embedding calculation optimized with size-1 cache |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4938 | 10:25 PM | 🔴 | Status message deletion handled gracefully to prevent API retry loops |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4939 | 10:26 PM | 🔴 | Tool title fallback tightened to prevent concurrent tool call title misattribution |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4940 | 10:30 PM | 🔄 | ACP trace gated by environment variable with automatic old file cleanup |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4941 | 10:32 PM | 🔄 | Token estimation fallback deduplicated to eliminate redundant BPE encoding |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4942 | 10:35 PM | 🔄 | Startup embedding initialization parallelized and unblocked from bot.start |  |  |
+
+### Jul 13, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4943 | 8:03 AM | 🔵 | Recent OpenAI announcements and developments (July 8-12, 2026) |  |  |
+| #4944 | 8:04 AM | 🔵 | Recent Anthropic Claude product announcements (July 2026) |  |  |
+| #4945 | " | 🔵 | AI coding agent ecosystem developments and security threats (July 2026) |  |  |
+| #4946 | " | 🔵 | Model Context Protocol 2026-07-28 release candidate specifications |  |  |
+| #4947 | " | 🔵 | Google Gemini platform updates and workspace integrations (July 2026) |  |  |
+| #4948 | 8:05 AM | 🔵 | Apple lawsuit against OpenAI alleging systematic trade secret theft |  |  |
+| #4949 | 8:12 AM | 🔵 | Daily AI News Intelligence Pipeline with Multi-Dimensional Scoring |  |  |
+| #4950 | 8:17 AM | 🟣 | Deterministic AI News Intelligence Pipeline |  |  |
+| #4951 | 8:49 AM | 🟣 | 遊戲產業情報自動化篩選管線 (Game Industry Intelligence Pipeline) |  |  |
+
+**#S1628** Cluster AI news reports to identify duplicate coverage of the same real-world events with confidence scoring and Traditional Chinese explanations (Jul 13, 8:53 AM)
+
+**#S1629** Event clustering analysis for game industry reports - identifying which items describe the same real-world events (Jul 13, 8:53 AM)
+
+**#S1630** AI News Intelligence Analysis - Daily Digest Processing (20 items from 2026-07-12 covering OpenAI, Anthropic, Apple lawsuit) (Jul 13, 8:56 AM)
+
+**#S1631** AI news intelligence pipeline processed 19 news items into structured Traditional Chinese digest with claim verification and relevance scoring (Jul 13, 8:56 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4952 | 8:58 AM | 🟣 | Daily AI News Intelligence Pipeline |  |  |
+
+**#S1632** Bridget status command enhancement discussion and codebase architecture review regarding single-owner design pattern (Jul 13, 8:59 AM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4953 | 8:59 AM | ✅ | Merged upstream config UI features into telegram-kiro-bridge |  |  |
+
+**src/commands/status.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4954 | 1:05 PM | 🟣 | Specialist task status now uses Bot message push notifications |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4955 | " | 🔴 | Scheduler ephemeral sessions now follow /agent active backend |  |  |
+
+**src/status-push.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4956 | 1:07 PM | 🔵 | Status push notifications limited to first allowed user only |  |  |
+
+**#S1633** Fix Telegram status command failing with localhost URL entity error (Jul 13, 1:28 PM)
+
+**src/commands/status.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4957 | 1:29 PM | 🔵 | Status command architecture investigation |  |  |
+| #4958 | 1:30 PM | 🟣 | Added clickable status dashboard link to /status command |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4959 | 1:34 PM | 🔵 | Telegram status command fails with localhost URL entity error |  |  |
+
+**#S1634** Add token masking to error logs and commit security improvement (Jul 13, 1:34 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4960 | 1:35 PM | 🔵 | Telegram accepts 127.0.0.1 URLs in messages with auto-detection |  |  |
+
+**src/commands/status.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4961 | " | 🔴 | Fixed status command by using 127.0.0.1 instead of localhost |  |  |
+
+**#S1635** Add token masking to error logs and commit security improvement (Jul 13, 1:41 PM)
+
+**#S1636** Add token masking to error logs and commit security improvement (Jul 13, 1:41 PM)
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4962 | 1:42 PM | ✅ | Added node:util inspect import for error sanitization |  |  |
+| #4963 | " | 🟣 | Implemented token masking in bot error handler |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4964 | " | ✅ | Token masking implementation verified with TypeScript type checking |  |  |
+
+**src/commands/status.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4965 | " | ✅ | Staged token masking and status improvements for commit |  |  |
+| #4966 | 1:43 PM | 🟣 | Committed token masking security fix and status dashboard link restoration |  |  |
+
+**#S1637** Configure Claude agent to use Sonnet 5 model with high reasoning effort (Jul 13, 2:07 PM)
+
+**Investigated**: The acp-providers.json configuration file at G:\AI\AIMemory\config\acp-providers.json was examined and modified to update the claude agent provider settings
+
+**Learned**: Agent provider configurations support hot reload, meaning changes to acp-providers.json take effect immediately for new sessions. However, already-running sessions continue using their original configuration until the agent is reinvoked with /agent claude in Telegram
+
+**Completed**: Updated the claude agent configuration in acp-providers.json to set model: "claude-sonnet-5" and effort: "high". The configuration change is now active and will apply to future agent invocations
+
+**Next Steps**: Configuration is complete. The new model and effort settings will be used the next time the user invokes /agent claude in their Telegram chat
+
+
+Access 546k tokens of past research & decisions for just 24,086t. Use MCP search tools to access memories by ID.

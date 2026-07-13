@@ -1,0 +1,16 @@
+{
+  "name": "researcher",
+  "description": "Deep research specialist (AI strategy, knowledge management, agent design patterns)",
+  "tools": [
+    "@builtin"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.claude/skills/**/SKILL.md"
+  ],
+  "mcpServers": {}
+}

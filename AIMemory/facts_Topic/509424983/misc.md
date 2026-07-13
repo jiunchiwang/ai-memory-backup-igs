@@ -1,0 +1,2 @@
+- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
+- [f_31febf] [2026-07-13T13:25:29.289Z] 使用者把「多視角分析 + 每個發現派 skeptic 對抗驗證」的 review 流程做成固定 skill，加入日後的 skill 開發流程，會對既有 skill 原始碼重跑此流程來優化

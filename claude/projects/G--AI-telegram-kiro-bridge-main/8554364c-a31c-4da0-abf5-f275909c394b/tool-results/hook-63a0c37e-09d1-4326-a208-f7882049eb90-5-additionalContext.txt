@@ -1,0 +1,254 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 8:02am GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (24,809 tokens to read)
+- Work investment: 480,705 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jul 12, 2026
+
+**#S1610** Verify memory MCP functionality after startup fix and push commit 89ca1d6 to remote (Jul 12, 8:40 AM)
+
+**#S1611** User inquired about potential streaming display issues related to tool execution display (Jul 12, 8:42 AM)
+
+**#S1612** Diagnose Telegram bridge streaming issues where tool status messages appear slowly and incompletely (Jul 12, 8:58 AM)
+
+**#S1613** Research Telegram bot draft message jitter issue and find industry best practices for handling tool progress updates during streaming responses (Jul 12, 8:59 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4893 | 9:05 AM | 🔵 | OpenClaw implements partial and progress modes for Telegram tool streaming visualization |  |  |
+
+**#S1614** Fix Telegram bridge streaming UX issues where tool messages appear before user choice confirmation and display incompletely (Jul 12, 9:08 AM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4894 | 9:09 AM | 🔵 | Examined existing draft update mechanism in Telegram bridge |  |  |
+| #4895 | " | 🔵 | Mapped cleanup and lifecycle management in draft update flow |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4896 | 9:11 AM | 🔄 | Separated volatile status content from append-only draft rendering |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4897 | 9:12 AM | ✅ | Imported renderStatusMessage into run-prompt module |  |  |
+| #4898 | " | 🟣 | Implemented status message lifecycle management for separate volatile content channel |  |  |
+| #4899 | 9:13 AM | 🟣 | Wired status message updates into draft streaming loop |  |  |
+| #4900 | " | 🟣 | Completed status message cleanup in finally block |  |  |
+
+**scripts/check-draft-render.mjs**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4901 | " | 🔵 | Examined existing draft render test expectations |  |  |
+| #4902 | 9:14 AM | ✅ | Added renderStatusMessage import to draft render tests |  |  |
+| #4903 | " | 🟣 | Updated tests to validate separated draft and status message channels |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4904 | 9:15 AM | 🟣 | All smoke tests pass after status message channel implementation |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4905 | " | 🟣 | Committed dual-channel draft streaming implementation solving Telegram jitter |  |  |
+
+**#S1615** Verify memory MCP is working normally after previous session's fix (Jul 12, 9:16 AM)
+
+**#S1616** Self-check verification after memory MCP fix (Jul 12, 9:18 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4906 | 9:28 AM | ✅ | Pushed Telegram bridge streaming fixes to production |  |  |
+
+**#S1617** Self-check verification of system state after memory MCP fix (Jul 12, 9:30 AM)
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4907 | 9:31 AM | ✅ | Documented dual-channel streaming pattern in canonical skill |  |  |
+| #4908 | " | ✅ | Added dual-channel streaming mistakes to canonical skill reference table |  |  |
+| #4909 | 9:32 AM | ✅ | Added check-draft-render smoke test to canonical skill documentation |  |  |
+| #4910 | " | ✅ | Added draft animation jitter symptom to skill usage triggers |  |  |
+
+**#S1618** Comprehensive bridge optimization review - scanning new commits and full codebase for performance, correctness, and duplication issues (Jul 12, 9:32 AM)
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4911 | 9:32 AM | ✅ | Elevated dual-channel pattern to core architectural principle |  |  |
+| #4912 | 9:33 AM | ✅ | Committed and deployed dual-channel streaming pattern to AI-canonical repository |  |  |
+
+**src/acp-providers.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4913 | 10:05 PM | 🔵 | Bridge codebase uses synchronous file I/O extensively |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4914 | " | 🔵 | Bridge uses multiple interval-based polling timers |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4915 | " | 🔴 | Fixed memory leak in atomicJson updateJson pending write tracking |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4916 | " | 🔴 | Fixed MCP memory server crash by removing config.js dependency from ingest-ripple |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4917 | " | 🔴 | Added CONTINUE token to observerTransformer opener whitelist |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4918 | 10:06 PM | 🟣 | Implemented dual-channel streaming to fix Telegram draft animation jitter |  |  |
+| #4919 | 10:07 PM | 🔵 | Bridge optimization audit identified file I/O and polling patterns as improvement candidates |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4920 | " | 🔵 | Bridge implements bounded cache eviction patterns to prevent unbounded memory growth |  |  |
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4921 | 10:08 PM | 🔵 | Bridge code review completed with no critical optimization gaps found |  |  |
+| #4922 | " | 🔵 | Bridge dependency structure verified as clean after ingest-ripple refactor |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4923 | " | 🔵 | Bridge implements sequential enrichment pipeline with 7-stage context injection |  |  |
+
+**src/enrichment.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4924 | 10:09 PM | 🔵 | Bridge enrichment pipeline implements priority-based context budget management |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4925 | 10:10 PM | 🔵 | Bridge optimization audit completed: codebase well-architected with incremental improvement opportunities |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4926 | " | 🔵 | Bridge startup sequence initializes 9 enrichment modules with graceful degradation |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4927 | 10:11 PM | 🔵 | Bridge implements fire-and-forget logging pattern with bounded memory buffers |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4928 | " | 🔵 | Bridge implements comprehensive rate-limit handling with automatic recovery and message queueing |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4929 | 10:12 PM | 🔵 | Bridge code review completed: production-ready with mature patterns and no critical optimization gaps |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4930 | " | 🔵 | Bridge optimization audit concluded: all recent fixes verified and codebase architecture documented |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4931 | 10:13 PM | 🔵 | Bridge draft message lifecycle implements automatic cleanup via ephemeral nature |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4932 | " | 🔵 | Subagent optimization scan identified 7 high-ROI improvement opportunities in bridge codebase |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4933 | 10:14 PM | 🔵 | Bridge optimization audit completed: comprehensive review confirms production-ready codebase with 7 actionable improvements identified |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4934 | 10:15 PM | 🔵 | Bridge optimization audit final summary: production-ready with 7 incremental improvements ranked by ROI |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4935 | 10:16 PM | 🔵 | Bridge optimization audit completed with all verification checks passed |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4936 | " | 🔵 | Post-audit subagent review of recent commits identified 5 findings: 1 plausible bug, 3 cosmetic issues, 1 optimization opportunity |  |  |
+
+**src/embed-router.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4937 | 10:23 PM | 🔄 | Embedding calculation optimized with size-1 cache |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4938 | 10:25 PM | 🔴 | Status message deletion handled gracefully to prevent API retry loops |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4939 | 10:26 PM | 🔴 | Tool title fallback tightened to prevent concurrent tool call title misattribution |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4940 | 10:30 PM | 🔄 | ACP trace gated by environment variable with automatic old file cleanup |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4941 | 10:32 PM | 🔄 | Token estimation fallback deduplicated to eliminate redundant BPE encoding |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4942 | 10:35 PM | 🔄 | Startup embedding initialization parallelized and unblocked from bot.start |  |  |
+
+**#S1619** Review of bridge component for optimization opportunities, specifically examining pet functionality dependencies (Jul 12, 11:05 PM)
+
+**Investigated**: Examined pet-server.ts dependency configuration and runtime requirements. Verified current environment setup including node_modules presence and .env configuration for PET_ENABLED flag.
+
+**Learned**: The pet feature has a dependency mismatch: electron is listed in devDependencies but is spawned at runtime by pet-server.ts:128. This only causes issues when deploying with `npm install --omit=dev` AND enabling the pet feature. Current environment uses full npm install with PET_ENABLED=false, so the issue is dormant.
+
+**Completed**: Completed analysis of pet dependency configuration. Verified that current deployment is unaffected due to full dependency installation and pet feature being disabled.
+
+**Next Steps**: No immediate action required. The dependency mismatch is documented as a known issue that would only need fixing if production deployment changes to omit dev dependencies while enabling the pet feature.
+
+
+Access 481k tokens of past research & decisions for just 24,809t. Use MCP search tools to access memories by ID.

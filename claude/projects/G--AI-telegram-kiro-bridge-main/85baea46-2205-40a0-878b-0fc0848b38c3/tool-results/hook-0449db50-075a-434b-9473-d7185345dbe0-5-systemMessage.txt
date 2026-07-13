@@ -1,0 +1,179 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-13 8:11am GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (24,224 tokens to read)[0m
+[2m  Work investment: 420,271 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 94% reduction from reuse[0m
+
+[1m[36mJul 12, 2026[0m
+
+[33m#S1612[0m Diagnose Telegram bridge streaming issues where tool status messages appear slowly and incompletely (Jul 12, 8:58 AM)
+
+[33m#S1613[0m Research Telegram bot draft message jitter issue and find industry best practices for handling tool progress updates during streaming responses (Jul 12, 8:59 AM)
+
+[33m#S1614[0m Fix Telegram bridge streaming UX issues where tool messages appear before user choice confirmation and display incompletely (Jul 12, 9:08 AM)
+
+[2msrc/run-prompt.ts[0m
+  [2m#4899[0m  [2m9:13 AM[0m  🟣  Wired status message updates into draft streaming loop  
+  [2m#4900[0m           🟣  Completed status message cleanup in finally block  
+
+[2mscripts/check-draft-render.mjs[0m
+  [2m#4901[0m           🔵  Examined existing draft render test expectations  
+  [2m#4902[0m  [2m9:14 AM[0m  ✅  Added renderStatusMessage import to draft render tests  
+  [2m#4903[0m           🟣  Updated tests to validate separated draft and status message channels  
+
+[2mGeneral[0m
+  [2m#4904[0m  [2m9:15 AM[0m  🟣  All smoke tests pass after status message channel implementation  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4905[0m           🟣  Committed dual-channel draft streaming implementation solving Telegram jitter  
+
+[33m#S1615[0m Verify memory MCP is working normally after previous session's fix (Jul 12, 9:16 AM)
+
+[33m#S1616[0m Self-check verification after memory MCP fix (Jul 12, 9:18 AM)
+
+[2mGeneral[0m
+  [2m#4906[0m  [2m9:28 AM[0m  ✅  Pushed Telegram bridge streaming fixes to production  
+
+[33m#S1617[0m Self-check verification of system state after memory MCP fix (Jul 12, 9:30 AM)
+
+[2m..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md[0m
+  [2m#4907[0m  [2m9:31 AM[0m  ✅  Documented dual-channel streaming pattern in canonical skill  
+  [2m#4908[0m           ✅  Added dual-channel streaming mistakes to canonical skill reference table  
+  [2m#4909[0m  [2m9:32 AM[0m  ✅  Added check-draft-render smoke test to canonical skill documentation  
+  [2m#4910[0m           ✅  Added draft animation jitter symptom to skill usage triggers  
+
+[33m#S1618[0m Comprehensive bridge optimization review - scanning new commits and full codebase for performance, correctness, and duplication issues (Jul 12, 9:32 AM)
+
+[2m..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md[0m
+  [2m#4911[0m  [2m9:32 AM[0m  ✅  Elevated dual-channel pattern to core architectural principle  
+  [2m#4912[0m  [2m9:33 AM[0m  ✅  Committed and deployed dual-channel streaming pattern to AI-canonical repository  
+
+[2msrc/acp-providers.ts[0m
+  [2m#4913[0m  [2m10:05 PM[0m  🔵  Bridge codebase uses synchronous file I/O extensively  
+
+[2msrc/relay.ts[0m
+  [2m#4914[0m            🔵  Bridge uses multiple interval-based polling timers  
+
+[2msrc/atomicJson.ts[0m
+  [2m#4915[0m            🔴  Fixed memory leak in atomicJson updateJson pending write tracking  
+
+[2msrc/ingest-ripple.ts[0m
+  [2m#4916[0m            🔴  Fixed MCP memory server crash by removing config.js dependency from ingest-ripple  
+
+[2msrc/observerTransformer.ts[0m
+  [2m#4917[0m            🔴  Added CONTINUE token to observerTransformer opener whitelist  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4918[0m  [2m10:06 PM[0m  🟣  Implemented dual-channel streaming to fix Telegram draft animation jitter  
+  [2m#4919[0m  [2m10:07 PM[0m  🔵  Bridge optimization audit identified file I/O and polling patterns as improvement candidates  
+
+[2msrc/telegram-ui.ts[0m
+  [2m#4920[0m            🔵  Bridge implements bounded cache eviction patterns to prevent unbounded memory growth  
+
+[2msrc/facts-store.ts[0m
+  [2m#4921[0m  [2m10:08 PM[0m  🔵  Bridge code review completed with no critical optimization gaps found  
+  [2m#4922[0m            🔵  Bridge dependency structure verified as clean after ingest-ripple refactor  
+
+[2msrc/index.ts[0m
+  [2m#4923[0m            🔵  Bridge implements sequential enrichment pipeline with 7-stage context injection  
+
+[2msrc/enrichment.ts[0m
+  [2m#4924[0m  [2m10:09 PM[0m  🔵  Bridge enrichment pipeline implements priority-based context budget management  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4925[0m  [2m10:10 PM[0m  🔵  Bridge optimization audit completed: codebase well-architected with incremental improvement opportunities  
+
+[2msrc/index.ts[0m
+  [2m#4926[0m            🔵  Bridge startup sequence initializes 9 enrichment modules with graceful degradation  
+
+[2msrc/acp-trace.ts[0m
+  [2m#4927[0m  [2m10:11 PM[0m  🔵  Bridge implements fire-and-forget logging pattern with bounded memory buffers  
+
+[2msrc/bot-setup.ts[0m
+  [2m#4928[0m            🔵  Bridge implements comprehensive rate-limit handling with automatic recovery and message queueing  
+
+[2msrc/telegram-rich-renderer.ts[0m
+  [2m#4929[0m  [2m10:12 PM[0m  🔵  Bridge code review completed: production-ready with mature patterns and no critical optimization gaps  
+
+[2msrc/observerTransformer.ts[0m
+  [2m#4930[0m            🔵  Bridge optimization audit concluded: all recent fixes verified and codebase architecture documented  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4931[0m  [2m10:13 PM[0m  🔵  Bridge draft message lifecycle implements automatic cleanup via ephemeral nature  
+
+[2msrc/index.ts[0m
+  [2m#4932[0m            🔵  Subagent optimization scan identified 7 high-ROI improvement opportunities in bridge codebase  
+
+[2msrc/ingest-ripple.ts[0m
+  [2m#4933[0m  [2m10:14 PM[0m  🔵  Bridge optimization audit completed: comprehensive review confirms production-ready codebase with 7 actionable improvements identified  
+
+[2msrc/config.ts[0m
+  [2m#4934[0m  [2m10:15 PM[0m  🔵  Bridge optimization audit final summary: production-ready with 7 incremental improvements ranked by ROI  
+
+[2msrc/atomicJson.ts[0m
+  [2m#4935[0m  [2m10:16 PM[0m  🔵  Bridge optimization audit completed with all verification checks passed  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4936[0m            🔵  Post-audit subagent review of recent commits identified 5 findings: 1 plausible bug, 3 cosmetic issues, 1 optimization opportunity  
+
+[33m#S1619[0m Review of bridge component for optimization opportunities, specifically examining pet functionality dependencies (Jul 12, 10:17 PM)
+
+[2msrc/embed-router.ts[0m
+  [2m#4937[0m  [2m10:23 PM[0m  🔄  Embedding calculation optimized with size-1 cache  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4938[0m  [2m10:25 PM[0m  🔴  Status message deletion handled gracefully to prevent API retry loops  
+
+[2msrc/sessionManager.ts[0m
+  [2m#4939[0m  [2m10:26 PM[0m  🔴  Tool title fallback tightened to prevent concurrent tool call title misattribution  
+
+[2msrc/acp-trace.ts[0m
+  [2m#4940[0m  [2m10:30 PM[0m  🔄  ACP trace gated by environment variable with automatic old file cleanup  
+
+[2msrc/run-prompt.ts[0m
+  [2m#4941[0m  [2m10:32 PM[0m  🔄  Token estimation fallback deduplicated to eliminate redundant BPE encoding  
+
+[2msrc/index.ts[0m
+  [2m#4942[0m  [2m10:35 PM[0m  🔄  Startup embedding initialization parallelized and unblocked from bot.start  
+
+[33m#S1620[0m Research recent AI industry news from last 36 hours covering models, tools, and agent systems (Jul 12, 11:05 PM)
+
+[1m[36mJul 13, 2026[0m
+
+[2mGeneral[0m
+  [2m#4943[0m  [2m8:03 AM[0m  🔵  Recent OpenAI announcements and developments (July 8-12, 2026)  
+  [2m#4944[0m  [2m8:04 AM[0m  🔵  Recent Anthropic Claude product announcements (July 2026)  
+  [2m#4945[0m           🔵  AI coding agent ecosystem developments and security threats (July 2026)  
+  [2m#4946[0m           🔵  Model Context Protocol 2026-07-28 release candidate specifications  
+  [2m#4947[0m           🔵  Google Gemini platform updates and workspace integrations (July 2026)  
+  [2m#4948[0m  [2m8:05 AM[0m  🔵  Apple lawsuit against OpenAI alleging systematic trade secret theft  
+
+[33m#S1621[0m Web research: recent game engine and rendering technology news (PixiJS, Spine, Cocos, Godot, Phaser) from last 48 hours (Jul 13, 8:06 AM)
+
+[34mInvestigated:[0m Four web searches executed targeting PixiJS releases, Godot engine updates, Phaser framework news, and Spine/Cocos Creator runtime changes. Two additional web fetches performed on phaser.io/news and gamefromscratch.com to verify publication dates and find items within the 48-hour window (July 11-13, 2026).
+
+[33mLearned:[0m No articles strictly within the 48-hour window were published. The freshest available content spans July 6-10, 2026. Recent developments include: Godot 4.7-stable release (July 6), Godot 4.8 Dev1 snapshot, Phaser Game Agent gaining Box3D physics integration, PixiJS June update (v8.18.0/v8.19.0) with 500k weekly npm downloads milestone, Cocos Creator 3.8.6 with dual Spine 3.8/4.2 runtime support, and Carbon engine (Eve Online) open-sourced under MIT license.
+
+[32mCompleted:[0m Structured JSON response delivered with 4 search queries and 8 qualified candidates from diverse sources (official blogs, GameFromScratch, GitHub releases). Candidates span game-engines, rendering, animation, developer-tools, and industry categories. All URLs are public https addresses from accessible primary sources (no paywalls, login requirements, or sponsored content). Response notes the temporal constraint (48 hours) could not be met and explains the actual date range of results (July 6-10).
+
+[35mNext Steps:[0m Research request completed. JSON output delivered to user with queries and candidates arrays as specified.
+
+
+[2mAccess 420k tokens of past research & decisions for just 24,224t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

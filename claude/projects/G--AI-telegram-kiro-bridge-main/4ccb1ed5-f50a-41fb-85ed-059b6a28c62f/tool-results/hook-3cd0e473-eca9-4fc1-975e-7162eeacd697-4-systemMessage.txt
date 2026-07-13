@@ -1,0 +1,187 @@
+[1m[36m[telegram-kiro-bridge-main] recent context, 2026-07-13 9:26pm GMT+8[0m
+[90m────────────────────────────────────────────────────────────[0m
+
+[2mLegend: session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision[0m
+
+[1mColumn Key[0m
+[2m  Read: Tokens to read this observation (cost to learn it now)[0m
+[2m  Work: Tokens spent on work that produced this record ( research, building, deciding)[0m
+
+[2mContext Index: This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.[0m
+
+[2mWhen you need implementation details, rationale, or debugging context:[0m
+[2m  - Use MCP tools (search, get_observations) to fetch full observations on-demand[0m
+[2m  - Critical types ( bugfix, decision) often need detailed fetching[0m
+[2m  - Trust this index over re-reading code for past decisions and learnings[0m
+
+[1m[36mContext Economics[0m
+[2m  Loading: 50 observations (19,879 tokens to read)[0m
+[2m  Work investment: 216,097 tokens spent on research, building, and decisions[0m
+[32m  Your savings: 91% reduction from reuse[0m
+
+[1m[36mJul 13, 2026[0m
+
+[2mGeneral[0m
+  [2m#4990[0m  [2m6:50 PM[0m  🔵  Error classifier module removed from codebase but still documented  
+
+[2msrc/AI.md[0m
+  [2m#4991[0m           🔴  Removed stale error-classifier.ts reference from src/AI.md documentation  
+
+[2mdocs/pending-roadmap.html[0m
+  [2m#4993[0m  [2m7:03 PM[0m  ✅  Roadmap status updated for Rich Messages draft mode  
+
+[2msrc/relay.ts[0m
+  [2m#5009[0m  [2m7:51 PM[0m  ✅  Merged upstream relay multi-peer architecture into local fork  
+
+[2m..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5010[0m  [2m8:02 PM[0m  🔵  Portable skill authoring pattern for machine-specific paths  
+  [2m#5011[0m  [2m8:03 PM[0m  ✅  Relocated agent config files from AGENT_CONFIG_DIR to MEMORY_DIR/config  
+
+[2mGeneral[0m
+  [2m#5012[0m           ✅  Verified no remaining stale notebooklm-routing.json path references  
+  [2m#5013[0m           ✅  Synced updated portable skill authoring documentation to all CLI skill directories  
+
+[2m..\..\AI\AI-canonical\README.md[0m
+  [2m#5014[0m           🔵  Verified canonical repository changes before commit  
+
+[2m..\..\AI\AI-canonical\skills\general\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5015[0m  [2m8:04 PM[0m  ✅  Committed notebooklm-routing.json path fix to canonical skills repository  
+
+[2mGeneral[0m
+  [2m#5016[0m           ✅  Pushed canonical notebooklm-routing.json path fix to GitHub  
+
+[2m..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5017[0m           🔵  Bridge repo's default-skills projection still has outdated paths  
+
+[2m..\..\c\Users\jiunchiwang\.claude\skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5018[0m           🔵  Confirmed CLI skill directories have updated paths but bridge default-skills needs manual sync  
+
+[2mGeneral[0m
+  [2m#5019[0m  [2m8:06 PM[0m  🔵  No sync-skills automation found in bridge repository codebase  
+  [2m#5020[0m  [2m8:07 PM[0m  🔵  Git hooks configured to use .githooks directory instead of default location  
+
+[2m..\..\AI\telegram-kiro-bridge-main\.githooks\pre-commit[0m
+  [2m#5021[0m           🔵  Bridge repo has pre-commit hook that auto-syncs skills from local CLI directories  
+
+[2m..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md[0m
+  [2m#5022[0m           ✅  Synced notebooklm-routing.json path fix into bridge default-skills directory  
+
+[2m.env.example[0m
+  [2m#5023[0m  [2m8:09 PM[0m  ✅  Merged sync-attempt branch into main with multi-peer relay fixes  
+
+[33m#S1652[0m Sync telegram-kiro-bridge with upstream repository and handle related configuration updates (Jul 13, 8:10 PM)
+
+[33m#S1653[0m Skill placement decision for portable skill authoring and canonical repository structure investigation (Jul 13, 8:12 PM)
+
+[2mC:\Users\jiunchiwang\.claude\skills\vc-uof-hours\SKILL.md[0m
+  [2m#5024[0m  [2m8:13 PM[0m  ✅  vc-uof-hours skill installed to Claude skills directory  
+
+[33m#S1654[0m User uploaded vc-uof-hours.zip skill file and requested learning it, identifying configuration requirements, and testing execution (Jul 13, 8:19 PM)
+
+[2mAI-canonical-corp/README.md[0m
+  [2m#5025[0m  [2m8:19 PM[0m  🔵  AI-canonical-corp repository scope and structure documented  
+
+[33m#S1655[0m vc-uof-hours skill installation completed and local commit status confirmed (Jul 13, 8:20 PM)
+
+[2mC:\Users\jiunchiwang\.config\uof\config.json[0m
+  [2m#5026[0m  [2m8:21 PM[0m  ✅  UOF skill configuration created  
+  [2m#5027[0m  [2m8:22 PM[0m  🟣  UOF hours tracking skill successfully executed  
+
+[2m..\..\AI\AI-canonical\tools\sync.ps1[0m
+  [2m#5028[0m           🔵  Canonical skill sync mechanism uses Windows junctions  
+
+[2m..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md[0m
+  [2m#5029[0m  [2m8:23 PM[0m  ✅  vc-uof-hours skill installed to canonical corp repository  
+
+[2mC:\Users\jiunchiwang\.kiro\skills (33 junction links created)[0m
+  [2m#5030[0m           ✅  Canonical skill sync executed - 33 skills projected to CLI targets  
+
+[2mC:\Users\jiunchiwang\.config\uof\config.json[0m
+  [2m#5031[0m  [2m8:24 PM[0m  ✅  vc-uof-hours skill verified working through junction link  
+
+[33m#S1656[0m Learn vc-uof-hours skill and test UOF form automation feasibility (Jul 13, 8:36 PM)
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon.py[0m
+  [2m#5032[0m  [2m8:36 PM[0m  🟣  UOF form field reconnaissance script created  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon_out.txt[0m
+  [2m#5033[0m  [2m8:38 PM[0m  🔵  UOF form reconnaissance completed successfully  
+  [2m#5034[0m           🔵  UOF form URLs and navigation structure mapped  
+  [2m#5035[0m           🔵  Leave request form fields located in nested iframe frame[2]  
+  [2m#5036[0m           🔵  Leave request form field structure fully mapped  
+
+[33m#S1657[0m User chose P2 scope for UOF form auto-fill implementation: dry-run with screenshots, manual submission only (Jul 13, 8:39 PM)
+
+[33m#S1658[0m Adversarial multi-agent code review of vc-uof-hours tool with 5 confirmed bug fixes and formalization of review workflow into permanent skill (Jul 13, 8:50 PM)
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py[0m
+  [2m#5037[0m  [2m8:50 PM[0m  🟣  UOF overtime form reconnaissance script created  
+
+[2mGeneral[0m
+  [2m#5038[0m           ⚖️  P2 implementation plan broken into four sequential tasks  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py[0m
+  [2m#5039[0m  [2m8:51 PM[0m  🔵  Reconnaissance script execution failed with exit code 1  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon_out.txt[0m
+  [2m#5040[0m           🔵  UOF overtime form structure successfully mapped through reconnaissance  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py[0m
+  [2m#5041[0m           🔄  Refined reconnaissance script to filter form field noise  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt[0m
+  [2m#5042[0m  [2m8:52 PM[0m  🔵  Clean overtime form field mapping extracted with 89% output reduction  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py[0m
+  [2m#5043[0m           🔴  Fixed screenshot method call from frame to page object  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt[0m
+  [2m#5044[0m  [2m8:53 PM[0m  🔵  Reconnaissance script successfully completed with field mapping and screenshot  
+
+[2muploads/509424983-2026-07-13T13-11-01-vc-uof-hours.zip[0m
+  [2m#5045[0m  [2m9:12 PM[0m  🟣  Development review process formalized into reusable skill  
+
+[2mvc-uof-hours/scripts/uof_query.py[0m
+  [2m#5046[0m           🟣  Multi-agent adversarial code review workflow hardened UOF overtime query tool  
+
+[33m#S1659[0m Add skill-related pending tasks to roadmap; query bug fix and timesheet feature commits (Jul 13, 9:13 PM)
+
+[2m..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\scripts\uof_query.py[0m
+  [2m#5047[0m  [2m9:13 PM[0m  ✅  Applied adversarial review fixes to canonical uof_query.py  
+
+[2m..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md[0m
+  [2m#5048[0m           ✅  Updated SKILL.md documentation to explain prorated month target calculation  
+
+[2mC:\Users\jiunchiwang\AppData\Local\Temp\vc-uof-hours-v2\vc-uof-hours\DESIGN.md[0m
+  [2m#5049[0m           🔵  Adversarial review documentation needs merge to canonical DESIGN.md  
+
+[2m..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md[0m
+  [2m#5050[0m  [2m9:14 PM[0m  ✅  Updated canonical DESIGN.md with corrected target calculation formulas  
+  [2m#5051[0m           ✅  Merged adversarial review hardening documentation into canonical DESIGN.md  
+
+[2mGeneral[0m
+  [2m#5052[0m  [2m9:15 PM[0m  ✅  Verified merged codebase works against production UOF system  
+  [2m#5053[0m           ✅  Production validation confirms prorated month target calculation fix working  
+
+[33m#S1660[0m Learn vc-uof-hours skill, identify configuration requirements, and test execution (Jul 13, 9:23 PM)
+
+[2mdocs/pending-roadmap.html[0m
+  [2m#5054[0m  [2m9:23 PM[0m  🔵  Roadmap documentation location identified  
+
+[2m..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md[0m
+  [2m#5055[0m           ⚖️  Adversarial verification review completed for vc-uof-hours skill  
+
+[33m#S1661[0m Learn vc-uof-hours skill structure, identify configuration requirements, and prepare for execution test (Jul 13, 9:26 PM)
+
+[34mInvestigated:[0m The vc-uof-hours skill was examined in the AI-canonical-corp repository under the new skills/office/ domain. The skill queries UOF (company intranet) for overtime hours and vacation leave, with dry-run form pre-fill capabilities. Git history shows 4 commits: initial feature, dry-run form filling, 5 bug fixes from review workflow, and roadmap documentation.
+
+[33mLearned:[0m vc-uof-hours requires configuration at ~/.config/uof/config.json containing credentials for UOF access. The skill targets 24 hours monthly overtime tracking. Three development phases (P3: actual submission, P4: leave forms, P5: holiday overtime forms) are documented in roadmap with two uncertainties flagged: whether project lead is implicitly required, and whether system auto-overrides compensatory day settings.
+
+[32mCompleted:[0m Created new "office" domain in AI-canonical-corp skills directory for non-slot corporate skills. Committed roadmap additions to vc-uof-hours DESIGN.md documenting P3/P4/P5 phases and pre-implementation clarifications needed (commit 29143f0).
+
+[35mNext Steps:[0m Execute vc-uof-hours skill for first live test run to validate query functionality and verify configuration setup works correctly.
+
+
+[2mAccess 216k tokens of past research & decisions for just 19,879t. Use MCP search tools to access memories by ID.[0m
+
+View Observations Live @ http://localhost:37777

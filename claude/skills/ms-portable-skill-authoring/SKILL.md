@@ -41,7 +41,7 @@ description: 當寫 skill 會被多個 agent CLI（Kiro / Codex / Claude）或�
 - 歸檔 session → `${MEMORY_DIR}/oldSessions/`
 - 主 fact log → `${MEMORY_DIR}/facts-${USER_ID}.md`
 - Topic shard → `${MEMORY_DIR}/facts_Topic/${USER_ID}/<topic>.md`
-- NotebookLM routing table → `${AGENT_CONFIG_DIR}/notebooklm-routing.json`
+- NotebookLM routing table → `${MEMORY_DIR}/config/notebooklm-routing.json`
 
 ## 核心模式
 
@@ -85,7 +85,7 @@ Conventions: sessions are under ${MEMORY_DIR}/sessions/, archived under
 ${MEMORY_DIR}/oldSessions/, master fact log at ${MEMORY_DIR}/facts-${USER_ID}.md,
 topic shards at ${MEMORY_DIR}/facts_Topic/${USER_ID}/<topic>.md.
 Agent-wide config files (routing tables, agent configs) live under
-${AGENT_CONFIG_DIR}/ — e.g. ${AGENT_CONFIG_DIR}/notebooklm-routing.json.
+${MEMORY_DIR}/config/ — e.g. ${MEMORY_DIR}/config/notebooklm-routing.json.
 [End environment]
 ```
 
@@ -374,5 +374,5 @@ Agent 發出 `<<SKILL_PROPOSE:...>>` 前必須通過此 guardrail：
 
 - **ms-agent-long-term-memory** — `${MEMORY_DIR}` 下的 fact 檔 / shard / topics.json 設計
 - **ms-acp-protocol-limitations** — `${AGENT_CONFIG_DIR}` 各 agent 的 config 格式差異（Kiro main.json vs Codex config.toml）
-- **ms-notebooklm-routing-builder** — 用 `${AGENT_CONFIG_DIR}/notebooklm-routing.json` 的實例
+- **ms-notebooklm-routing-builder** — 用 `${MEMORY_DIR}/config/notebooklm-routing.json` 的實例
 - **memory-to-skill** — 自身就是一個跨機器 skill 的範例（Kiro + Codex 版本差異就是路徑）

@@ -1,0 +1,244 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 1:03pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (24,850 tokens to read)
+- Work investment: 552,337 tokens spent on research, building, and decisions
+- Your savings: 96% reduction from reuse
+
+### Jul 12, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4904 | 9:15 AM | 🟣 | All smoke tests pass after status message channel implementation |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4905 | " | 🟣 | Committed dual-channel draft streaming implementation solving Telegram jitter |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4906 | 9:28 AM | ✅ | Pushed Telegram bridge streaming fixes to production |  |  |
+
+**..\..\AI\AI-canonical\skills\general\ms-streaming-token-pipeline\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4907 | 9:31 AM | ✅ | Documented dual-channel streaming pattern in canonical skill |  |  |
+| #4908 | " | ✅ | Added dual-channel streaming mistakes to canonical skill reference table |  |  |
+| #4909 | 9:32 AM | ✅ | Added check-draft-render smoke test to canonical skill documentation |  |  |
+| #4910 | " | ✅ | Added draft animation jitter symptom to skill usage triggers |  |  |
+| #4911 | " | ✅ | Elevated dual-channel pattern to core architectural principle |  |  |
+| #4912 | 9:33 AM | ✅ | Committed and deployed dual-channel streaming pattern to AI-canonical repository |  |  |
+
+**src/acp-providers.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4913 | 10:05 PM | 🔵 | Bridge codebase uses synchronous file I/O extensively |  |  |
+
+**src/relay.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4914 | " | 🔵 | Bridge uses multiple interval-based polling timers |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4915 | " | 🔴 | Fixed memory leak in atomicJson updateJson pending write tracking |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4916 | " | 🔴 | Fixed MCP memory server crash by removing config.js dependency from ingest-ripple |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4917 | " | 🔴 | Added CONTINUE token to observerTransformer opener whitelist |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4918 | 10:06 PM | 🟣 | Implemented dual-channel streaming to fix Telegram draft animation jitter |  |  |
+| #4919 | 10:07 PM | 🔵 | Bridge optimization audit identified file I/O and polling patterns as improvement candidates |  |  |
+
+**src/telegram-ui.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4920 | " | 🔵 | Bridge implements bounded cache eviction patterns to prevent unbounded memory growth |  |  |
+
+**src/facts-store.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4921 | 10:08 PM | 🔵 | Bridge code review completed with no critical optimization gaps found |  |  |
+| #4922 | " | 🔵 | Bridge dependency structure verified as clean after ingest-ripple refactor |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4923 | " | 🔵 | Bridge implements sequential enrichment pipeline with 7-stage context injection |  |  |
+
+**src/enrichment.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4924 | 10:09 PM | 🔵 | Bridge enrichment pipeline implements priority-based context budget management |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4925 | 10:10 PM | 🔵 | Bridge optimization audit completed: codebase well-architected with incremental improvement opportunities |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4926 | " | 🔵 | Bridge startup sequence initializes 9 enrichment modules with graceful degradation |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4927 | 10:11 PM | 🔵 | Bridge implements fire-and-forget logging pattern with bounded memory buffers |  |  |
+
+**src/bot-setup.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4928 | " | 🔵 | Bridge implements comprehensive rate-limit handling with automatic recovery and message queueing |  |  |
+
+**src/telegram-rich-renderer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4929 | 10:12 PM | 🔵 | Bridge code review completed: production-ready with mature patterns and no critical optimization gaps |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4930 | " | 🔵 | Bridge optimization audit concluded: all recent fixes verified and codebase architecture documented |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4931 | 10:13 PM | 🔵 | Bridge draft message lifecycle implements automatic cleanup via ephemeral nature |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4932 | " | 🔵 | Subagent optimization scan identified 7 high-ROI improvement opportunities in bridge codebase |  |  |
+
+**src/ingest-ripple.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4933 | 10:14 PM | 🔵 | Bridge optimization audit completed: comprehensive review confirms production-ready codebase with 7 actionable improvements identified |  |  |
+
+**src/config.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4934 | 10:15 PM | 🔵 | Bridge optimization audit final summary: production-ready with 7 incremental improvements ranked by ROI |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4935 | 10:16 PM | 🔵 | Bridge optimization audit completed with all verification checks passed |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4936 | " | 🔵 | Post-audit subagent review of recent commits identified 5 findings: 1 plausible bug, 3 cosmetic issues, 1 optimization opportunity |  |  |
+
+**src/embed-router.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4937 | 10:23 PM | 🔄 | Embedding calculation optimized with size-1 cache |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4938 | 10:25 PM | 🔴 | Status message deletion handled gracefully to prevent API retry loops |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4939 | 10:26 PM | 🔴 | Tool title fallback tightened to prevent concurrent tool call title misattribution |  |  |
+
+**src/acp-trace.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4940 | 10:30 PM | 🔄 | ACP trace gated by environment variable with automatic old file cleanup |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4941 | 10:32 PM | 🔄 | Token estimation fallback deduplicated to eliminate redundant BPE encoding |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4942 | 10:35 PM | 🔄 | Startup embedding initialization parallelized and unblocked from bot.start |  |  |
+
+### Jul 13, 2026
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4943 | 8:03 AM | 🔵 | Recent OpenAI announcements and developments (July 8-12, 2026) |  |  |
+| #4944 | 8:04 AM | 🔵 | Recent Anthropic Claude product announcements (July 2026) |  |  |
+| #4945 | " | 🔵 | AI coding agent ecosystem developments and security threats (July 2026) |  |  |
+| #4946 | " | 🔵 | Model Context Protocol 2026-07-28 release candidate specifications |  |  |
+| #4947 | " | 🔵 | Google Gemini platform updates and workspace integrations (July 2026) |  |  |
+| #4948 | 8:05 AM | 🔵 | Apple lawsuit against OpenAI alleging systematic trade secret theft |  |  |
+
+**#S1622** Process 19 AI news items through deterministic intelligence pipeline with Traditional Chinese output (Jul 13, 8:06 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4949 | 8:12 AM | 🔵 | Daily AI News Intelligence Pipeline with Multi-Dimensional Scoring |  |  |
+| #4950 | 8:17 AM | 🟣 | Deterministic AI News Intelligence Pipeline |  |  |
+
+**#S1623** AI news intelligence pipeline analysis - 19 items from Google News MCP/ACP feed scored for relevance to AI agent, MCP, and model tracking goals (Jul 13, 8:18 AM)
+
+**#S1624** 分析 20 則 AI 新聞來源項目,產生結構化中文情報摘要與相關性評分 (Jul 13, 8:24 AM)
+
+**#S1625** Game Industry Intelligence Pipeline: Analyze 3 news items (Carbon engine, Box3D physics, Godot updates) with Traditional Chinese output (Jul 13, 8:27 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4951 | 8:49 AM | 🟣 | 遊戲產業情報自動化篩選管線 (Game Industry Intelligence Pipeline) |  |  |
+
+**#S1626** AI News Research: Recent developments in OpenAI, Anthropic, Gemini, MCP, and AI agents (72-hour window) (Jul 13, 8:50 AM)
+
+**#S1627** Analyze AI news articles for daily intelligence pipeline with Traditional Chinese output and relevance scoring against ACP bridge projects (Jul 13, 8:50 AM)
+
+**#S1628** Cluster AI news reports to identify duplicate coverage of the same real-world events with confidence scoring and Traditional Chinese explanations (Jul 13, 8:53 AM)
+
+**#S1629** Event clustering analysis for game industry reports - identifying which items describe the same real-world events (Jul 13, 8:53 AM)
+
+**#S1630** AI News Intelligence Analysis - Daily Digest Processing (20 items from 2026-07-12 covering OpenAI, Anthropic, Apple lawsuit) (Jul 13, 8:56 AM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4952 | 8:58 AM | 🟣 | Daily AI News Intelligence Pipeline |  |  |
+
+**#S1631** AI news intelligence pipeline processed 19 news items into structured Traditional Chinese digest with claim verification and relevance scoring (Jul 13, 8:59 AM)
+
+**src/status-server.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #4953 | 8:59 AM | ✅ | Merged upstream config UI features into telegram-kiro-bridge |  |  |
+
+
+Access 552k tokens of past research & decisions for just 24,850t. Use MCP search tools to access memories by ID.

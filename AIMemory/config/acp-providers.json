@@ -2,8 +2,8 @@
   "claude": {
     "command": "claude-agent-acp",
     "label": "Claude Code",
-    "model": "claude-fable-5",
-    "effort": "medium"
+    "model": "claude-sonnet-5",
+    "effort": "high"
   },
   "kiro": {
     "command": "kiro-cli acp --model claude-opus-4.6 -a --agent main",

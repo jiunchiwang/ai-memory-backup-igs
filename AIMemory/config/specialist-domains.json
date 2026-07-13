@@ -1,8 +1,110 @@
 {
-  // "harness" examples (set per domain):
-  // Kiro:   "harness": "kiro-cli acp --agent {name} -a"  (default, can omit)
-  // Codex:  "harness": "codex-acp --profile {name}"
-  // Claude: "harness": "npx @agentclientprotocol/claude-agent-acp"
-  "commonSkills": [],
-  "domains": {}
+  "defaultHarness": "kiro-cli acp --agent {name} -a",
+  "defaultModel": "claude-sonnet-4.6",
+  "defaultEffort": "high",
+  "commonSkills": [
+    "ms-kiro-strreplace-silent-fail",
+    "ms-windows-shell-exit-code-false-positive",
+    "ms-windows-shell-interactive-prompt",
+    "ms-portable-skill-authoring",
+    "writing-skills"
+  ],
+  "commonMcpServers": [
+    "memory"
+  ],
+  "domains": {
+    "slot-dev": {
+      "prefixes": [
+        "uk-"
+      ],
+      "mcpServers": [
+        "memory"
+      ],
+      "topicKeywords": [
+        "uk_917",
+        "leprechaun",
+        "uk_pirates_queen",
+        "uk_slot",
+        "uk_722",
+        "uk_739",
+        "uk_746",
+        "uk_872",
+        "eyestrike",
+        "chachacha",
+        "cocos creator",
+        "fillstrategy",
+        "ghost slot",
+        "cc.layout",
+        "wantedposter",
+        "fakereelmanager",
+        "pattern-library",
+        "firstclone",
+        "reeldevtool",
+        "mg_bgm",
+        "fg_bgm",
+        "codegen",
+        "spec-to-impl",
+        "clash of olympus",
+        "triplecointreasure",
+        "uk-917",
+        "uk 917",
+        "3 leprechauns",
+        "tri luck",
+        "triluck",
+        "uk-slot",
+        "eye_strike",
+        "clash_of_olympus",
+        "olympus",
+        "astarte",
+        "gameid",
+        "extrabet",
+        "symid",
+        "scatter",
+        "reconcilecascade",
+        "背景音樂"
+      ],
+      "wikiPages": [
+        "uk-slot",
+        "uk-917",
+        "uk-slot-pitfalls"
+      ],
+      "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
+      "model": "claude-sonnet-4.6",
+      "effort": "high"
+    },
+    "researcher": {
+      "prefixes": [],
+      "mcpServers": [
+        "memory",
+        "google"
+      ],
+      "topicKeywords": [
+        "bridge-research",
+        "ai-strategy",
+        "dev-tools"
+      ],
+      "wikiPages": [
+        "bridge-research",
+        "ai-strategy",
+        "trio-model-architecture"
+      ],
+      "inheritsAll": true,
+      "description": "Deep research specialist (AI strategy, knowledge management, agent design patterns)",
+      "model": "claude-opus-4.6",
+      "effort": "high"
+    },
+    "general": {
+      "prefixes": [],
+      "mcpServers": [
+        "memory",
+        "google"
+      ],
+      "topicKeywords": [],
+      "inheritsAll": true,
+      "skipCommonSkills": true,
+      "description": "Full-capability specialist for parallel multi-tasking (inherits all skills and MCP)",
+      "model": "claude-sonnet-4.6",
+      "effort": "high"
+    }
+  }
 }

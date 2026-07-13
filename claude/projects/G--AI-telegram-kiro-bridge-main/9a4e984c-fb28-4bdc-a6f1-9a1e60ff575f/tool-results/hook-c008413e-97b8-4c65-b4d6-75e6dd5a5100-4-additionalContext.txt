@@ -1,0 +1,262 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 11:33pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (26,047 tokens to read)
+- Work investment: 485,824 tokens spent on research, building, and decisions
+- Your savings: 95% reduction from reuse
+
+### Jul 13, 2026
+
+**uploads/509424983-2026-07-13T13-11-01-vc-uof-hours.zip**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5045 | 9:12 PM | 🟣 | Development review process formalized into reusable skill |  |  |
+
+**vc-uof-hours/scripts/uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5046 | " | 🟣 | Multi-agent adversarial code review workflow hardened UOF overtime query tool |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\scripts\uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5047 | 9:13 PM | ✅ | Applied adversarial review fixes to canonical uof_query.py |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5048 | " | ✅ | Updated SKILL.md documentation to explain prorated month target calculation |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\vc-uof-hours-v2\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5049 | " | 🔵 | Adversarial review documentation needs merge to canonical DESIGN.md |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5050 | 9:14 PM | ✅ | Updated canonical DESIGN.md with corrected target calculation formulas |  |  |
+| #5051 | " | ✅ | Merged adversarial review hardening documentation into canonical DESIGN.md |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5052 | 9:15 PM | ✅ | Verified merged codebase works against production UOF system |  |  |
+| #5053 | " | ✅ | Production validation confirms prorated month target calculation fix working |  |  |
+
+**docs/pending-roadmap.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5054 | 9:23 PM | 🔵 | Roadmap documentation location identified |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5055 | " | ⚖️ | Adversarial verification review completed for vc-uof-hours skill |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5056 | 9:27 PM | 🔵 | Adversarial verification workflows already integrated in telegram-kiro-bridge |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5057 | 9:33 PM | ⚖️ | Cross-backend quantitative self-evaluation mechanism designed for bridge |  |  |
+
+**POLICIES/preamble-frozen-snapshot.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5058 | 9:42 PM | 🔵 | Current Quality Control Mechanisms in Bridge Token System |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5059 | 9:43 PM | 🔵 | Workflow Launched to Design Numeric Self-Evaluation System |  |  |
+| #5060 | 9:44 PM | 🔵 | Working Directory and Skill Directory Architecture Discovery |  |  |
+
+**POLICIES/preamble-frozen-snapshot.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5061 | 9:45 PM | 🔵 | Architecture Exploration Completed for Self-Evaluation Design |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5062 | 9:46 PM | 🔵 | Token Protocol and Session Lifecycle Implementation Details Verified |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5063 | 9:48 PM | 🔵 | First Design Proposal: Reuse-First MVP Approach Generated |  |  |
+| #5064 | 9:49 PM | 🔵 | Second and Third Design Proposals Generated: Robustness and Simplicity Approaches |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5065 | 9:53 PM | ⚖️ | Adversarial Review Rejected Complex Self-Evaluation Designs for Honest Observability |  |  |
+
+**src/scheduler.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5066 | 9:54 PM | 🔵 | Code Context Verification and Artifact Directory Preparation for Synthesis Phase |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5067 | " | 🔵 | Preamble Construction Architecture Deep-Dive for Integration Planning |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5068 | 9:55 PM | 🔵 | Two-Phase Token Extraction Architecture Details for Self-Eval Integration |  |  |
+| #5069 | " | 🔵 | Existing Balanced-Body Token Handler Patterns for Self-Eval Implementation Reference |  |  |
+
+**src/commands/misc.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5070 | " | 🔵 | Observability Command Handler Pattern for Self-Eval Display Integration |  |  |
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5071 | 11:05 PM | ⚖️ | Cross-backend quantitative self-evaluation mechanism design |  |  |
+
+**.claude/workflows/**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5072 | 11:10 PM | 🔵 | dev-review workflow not found in project |  |  |
+| #5073 | " | 🔵 | dev-review workflow exists at user level |  |  |
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5074 | " | 🔵 | Reply token processing architecture mapped |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5075 | " | 🔵 | Preamble construction architecture mapped |  |  |
+
+**src/token-policy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5076 | 11:11 PM | 🔵 | Token execution policy architecture mapped |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5077 | " | 🔵 | Balanced-scanner token parser architecture documented |  |  |
+
+**src/atomicJson.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5078 | " | 🔵 | AtomicJson concurrency model confirmed |  |  |
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5079 | " | 🟣 | Adversarial review workflow launched for self-assessment design |  |  |
+| #5080 | 11:13 PM | 🔵 | Design spec architectural claims verified against actual code |  |  |
+
+**src/token-policy.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5081 | 11:14 PM | 🔵 | Token policy enforcement asymmetry confirmed |  |  |
+| #5082 | " | 🔵 | Delegate TokenSource type exists but never invoked in filtering |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5083 | 11:15 PM | 🔵 | GOAL_DONE_MAX_PER_MSG constant declared but never referenced |  |  |
+
+**#S1673** Final architectural verification completing historical claims validation (Jul 13, 11:15 PM)
+
+**docs/ab-token-protocol.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5084 | 11:15 PM | 🔵 | BALANCED_REASON_MAX history and buildPreambleWithBreakdown call count verified |  |  |
+
+**#S1674** Continued architectural pattern verification for implementation readiness (Jul 13, 11:15 PM)
+
+**src/run-prompt.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5085 | 11:16 PM | 🔵 | FlushOrphanTurn token consumption pattern confirmed |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5086 | " | 🔵 | PreambleBreakdown toolNotes aggregation pattern confirmed |  |  |
+
+**#S1675** Final documentation structure and note categorization verification (Jul 13, 11:16 PM)
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5087 | 11:17 PM | 🔵 | Token protocol documentation structure and note categorization pattern |  |  |
+
+**#S1676** Dev-review workflow completion with substantive findings requiring design revision (Jul 13, 11:17 PM)
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5088 | 11:18 PM | ✅ | Dev-review workflow completed with token policy architectural gap found |  |  |
+
+**#S1677** Dev-review workflow final completion with comprehensive finding consolidation (Jul 13, 11:18 PM)
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5089 | 11:19 PM | ✅ | Dev-review second phase completed confirming token-policy gap and additional BC issues |  |  |
+
+**#S1678** Dev-review workflow complete - three-phase adversarial validation with consolidated findings (Jul 13, 11:19 PM)
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5090 | 11:19 PM | ✅ | Dev-review workflow three-phase completion with consolidated HIGH severity finding |  |  |
+
+**#S1679** PRIMARY session validates dev-review findings through independent code verification (Jul 13, 11:19 PM)
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5091 | 11:21 PM | ✅ | PRIMARY session validates dev-review findings through direct code inspection |  |  |
+
+**#S1680** PRIMARY session completes formal structured verification of dev-review findings (Jul 13, 11:21 PM)
+
+**.claude-loop/artifacts/P1-design-spec.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5092 | 11:23 PM | ✅ | PRIMARY session completes formal adversarial verification of all dev-review findings |  |  |
+
+**#S1681** PRIMARY session prepares for design spec revision after verification phase (Jul 13, 11:23 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5093 | 11:23 PM | ✅ | PRIMARY session transitions from verification to revision phase |  |  |
+
+**.claude-loop/artifacts/P3-review.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5094 | 11:25 PM | ✅ | PRIMARY session creates comprehensive P3-review.md consolidating all adversarial findings |  |  |
+
+**#S1682** PRIMARY session creates formal review report P3-review.md consolidating adversarial findings (Jul 13, 11:25 PM)
+
+
+Access 486k tokens of past research & decisions for just 26,047t. Use MCP search tools to access memories by ID.

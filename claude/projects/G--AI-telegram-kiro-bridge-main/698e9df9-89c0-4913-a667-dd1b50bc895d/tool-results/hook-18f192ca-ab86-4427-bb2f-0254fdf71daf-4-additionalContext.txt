@@ -1,0 +1,266 @@
+# [telegram-kiro-bridge-main] recent context, 2026-07-13 11:04pm GMT+8
+
+**Legend:** session-request | 🔴 bugfix | 🟣 feature | 🔄 refactor | ✅ change | 🔵 discovery | ⚖️ decision
+
+**Column Key**:
+- **Read**: Tokens to read this observation (cost to learn it now)
+- **Work**: Tokens spent on work that produced this record ( research, building, deciding)
+
+**Context Index:** This semantic index (titles, types, files, tokens) is usually sufficient to understand past work.
+
+When you need implementation details, rationale, or debugging context:
+- Use MCP tools (search, get_observations) to fetch full observations on-demand
+- Critical types ( bugfix, decision) often need detailed fetching
+- Trust this index over re-reading code for past decisions and learnings
+
+**Context Economics**:
+- Loading: 50 observations (24,317 tokens to read)
+- Work investment: 231,819 tokens spent on research, building, and decisions
+- Your savings: 90% reduction from reuse
+
+### Jul 13, 2026
+
+**..\..\AI\telegram-kiro-bridge-main\.githooks\pre-commit**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5021 | 8:07 PM | 🔵 | Bridge repo has pre-commit hook that auto-syncs skills from local CLI directories |  |  |
+
+**..\..\AI\telegram-kiro-bridge-main\default-skills\ms-portable-skill-authoring\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5022 | " | ✅ | Synced notebooklm-routing.json path fix into bridge default-skills directory |  |  |
+
+**.env.example**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5023 | 8:09 PM | ✅ | Merged sync-attempt branch into main with multi-peer relay fixes |  |  |
+
+**C:\Users\jiunchiwang\.claude\skills\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5024 | 8:13 PM | ✅ | vc-uof-hours skill installed to Claude skills directory |  |  |
+
+**AI-canonical-corp/README.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5025 | 8:19 PM | 🔵 | AI-canonical-corp repository scope and structure documented |  |  |
+
+**C:\Users\jiunchiwang\.config\uof\config.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5026 | 8:21 PM | ✅ | UOF skill configuration created |  |  |
+| #5027 | 8:22 PM | 🟣 | UOF hours tracking skill successfully executed |  |  |
+
+**..\..\AI\AI-canonical\tools\sync.ps1**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5028 | " | 🔵 | Canonical skill sync mechanism uses Windows junctions |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5029 | 8:23 PM | ✅ | vc-uof-hours skill installed to canonical corp repository |  |  |
+
+**C:\Users\jiunchiwang\.kiro\skills (33 junction links created)**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5030 | " | ✅ | Canonical skill sync executed - 33 skills projected to CLI targets |  |  |
+
+**C:\Users\jiunchiwang\.config\uof\config.json**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5031 | 8:24 PM | ✅ | vc-uof-hours skill verified working through junction link |  |  |
+
+**#S1656** Learn vc-uof-hours skill and test UOF form automation feasibility (Jul 13, 8:36 PM)
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5032 | 8:36 PM | 🟣 | UOF form field reconnaissance script created |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_form_recon_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5033 | 8:38 PM | 🔵 | UOF form reconnaissance completed successfully |  |  |
+| #5034 | " | 🔵 | UOF form URLs and navigation structure mapped |  |  |
+| #5035 | " | 🔵 | Leave request form fields located in nested iframe frame[2] |  |  |
+| #5036 | " | 🔵 | Leave request form field structure fully mapped |  |  |
+
+**#S1657** User chose P2 scope for UOF form auto-fill implementation: dry-run with screenshots, manual submission only (Jul 13, 8:39 PM)
+
+**#S1658** Adversarial multi-agent code review of vc-uof-hours tool with 5 confirmed bug fixes and formalization of review workflow into permanent skill (Jul 13, 8:50 PM)
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5037 | 8:50 PM | 🟣 | UOF overtime form reconnaissance script created |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5038 | " | ⚖️ | P2 implementation plan broken into four sequential tasks |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5039 | 8:51 PM | 🔵 | Reconnaissance script execution failed with exit code 1 |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5040 | " | 🔵 | UOF overtime form structure successfully mapped through reconnaissance |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5041 | " | 🔄 | Refined reconnaissance script to filter form field noise |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5042 | 8:52 PM | 🔵 | Clean overtime form field mapping extracted with 89% output reduction |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5043 | " | 🔴 | Fixed screenshot method call from frame to page object |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\uof_overtime_recon2_out.txt**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5044 | 8:53 PM | 🔵 | Reconnaissance script successfully completed with field mapping and screenshot |  |  |
+
+**uploads/509424983-2026-07-13T13-11-01-vc-uof-hours.zip**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5045 | 9:12 PM | 🟣 | Development review process formalized into reusable skill |  |  |
+
+**vc-uof-hours/scripts/uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5046 | " | 🟣 | Multi-agent adversarial code review workflow hardened UOF overtime query tool |  |  |
+
+**#S1659** Add skill-related pending tasks to roadmap; query bug fix and timesheet feature commits (Jul 13, 9:13 PM)
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\scripts\uof_query.py**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5047 | 9:13 PM | ✅ | Applied adversarial review fixes to canonical uof_query.py |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\SKILL.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5048 | " | ✅ | Updated SKILL.md documentation to explain prorated month target calculation |  |  |
+
+**C:\Users\jiunchiwang\AppData\Local\Temp\vc-uof-hours-v2\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5049 | " | 🔵 | Adversarial review documentation needs merge to canonical DESIGN.md |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5050 | 9:14 PM | ✅ | Updated canonical DESIGN.md with corrected target calculation formulas |  |  |
+| #5051 | " | ✅ | Merged adversarial review hardening documentation into canonical DESIGN.md |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5052 | 9:15 PM | ✅ | Verified merged codebase works against production UOF system |  |  |
+| #5053 | " | ✅ | Production validation confirms prorated month target calculation fix working |  |  |
+
+**#S1660** Learn vc-uof-hours skill, identify configuration requirements, and test execution (Jul 13, 9:23 PM)
+
+**docs/pending-roadmap.html**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5054 | 9:23 PM | 🔵 | Roadmap documentation location identified |  |  |
+
+**..\..\AI\AI-canonical-corp\skills\office\vc-uof-hours\DESIGN.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5055 | " | ⚖️ | Adversarial verification review completed for vc-uof-hours skill |  |  |
+
+**#S1661** Learn vc-uof-hours skill structure, identify configuration requirements, and prepare for execution test (Jul 13, 9:25 PM)
+
+**#S1662** User requested design for quantitative scoring workflow that works across different AI models/agents in bridge system, ensuring consistent quality evaluation process (Jul 13, 9:26 PM)
+
+**CLAUDE.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5056 | 9:27 PM | 🔵 | Adversarial verification workflows already integrated in telegram-kiro-bridge |  |  |
+
+**#S1663** Self-evaluation mechanism inquiry and design proposal: Does the system currently auto-modify if score ≤95, and how to implement cross-backend self-assessment? (Jul 13, 9:30 PM)
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5057 | 9:33 PM | ⚖️ | Cross-backend quantitative self-evaluation mechanism designed for bridge |  |  |
+
+**#S1664** User asked whether the system currently has a self-evaluation mechanism that re-modifies work if the score is ≤95 points (Jul 13, 9:34 PM)
+
+**POLICIES/preamble-frozen-snapshot.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5058 | 9:42 PM | 🔵 | Current Quality Control Mechanisms in Bridge Token System |  |  |
+
+**src/index.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5059 | 9:43 PM | 🔵 | Workflow Launched to Design Numeric Self-Evaluation System |  |  |
+| #5060 | 9:44 PM | 🔵 | Working Directory and Skill Directory Architecture Discovery |  |  |
+
+**POLICIES/preamble-frozen-snapshot.md**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5061 | 9:45 PM | 🔵 | Architecture Exploration Completed for Self-Evaluation Design |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5062 | 9:46 PM | 🔵 | Token Protocol and Session Lifecycle Implementation Details Verified |  |  |
+
+**General**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5063 | 9:48 PM | 🔵 | First Design Proposal: Reuse-First MVP Approach Generated |  |  |
+| #5064 | 9:49 PM | 🔵 | Second and Third Design Proposals Generated: Robustness and Simplicity Approaches |  |  |
+
+**src/sessionManager.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5065 | 9:53 PM | ⚖️ | Adversarial Review Rejected Complex Self-Evaluation Designs for Honest Observability |  |  |
+
+**src/scheduler.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5066 | 9:54 PM | 🔵 | Code Context Verification and Artifact Directory Preparation for Synthesis Phase |  |  |
+
+**src/memory.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5067 | " | 🔵 | Preamble Construction Architecture Deep-Dive for Integration Planning |  |  |
+
+**src/observerTransformer.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5068 | 9:55 PM | 🔵 | Two-Phase Token Extraction Architecture Details for Self-Eval Integration |  |  |
+| #5069 | " | 🔵 | Existing Balanced-Body Token Handler Patterns for Self-Eval Implementation Reference |  |  |
+
+**src/commands/misc.ts**
+| ID | Time | T | Title | Read | Work |
+|----|------|---|-------|------|------|
+| #5070 | " | 🔵 | Observability Command Handler Pattern for Self-Eval Display Integration |  |  |
+
+**#S1665** Inquiry about self-evaluation mechanism and confirmation of workflow completion for design spec generation (Jul 13, 11:02 PM)
+
+**Investigated**: User asked whether the system currently implements self-evaluation logic (rework if score ≤95). Claude confirmed a workflow run status: 9 agents completed successfully with P1-design-spec.md fully generated (248 lines, 9 sections).
+
+**Learned**: The workflow system successfully executed a multi-agent design specification generation task. The completed spec includes decision summary through change log sections. Three pending decisions remain from a previous round: v1 scope definition, `/selfeval` vs `/status` command naming, and CLAUDE.md section R-2 structure.
+
+**Completed**: Workflow run completed with P1-design-spec.md delivered (248 lines covering 9 sections: decision summary, architecture, implementation details, and change logs). All 9 agents finished without errors or empty results.
+
+**Next Steps**: Awaiting user decision on three pending items: v1 scope boundaries, command naming convention for self-evaluation feature, and CLAUDE.md documentation structure approach (R-2 method).
+
+
+Access 232k tokens of past research & decisions for just 24,317t. Use MCP search tools to access memories by ID.
