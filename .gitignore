@@ -1,0 +1,3 @@
+# ACP JSON-RPC debug trace (ACP_TRACE=1) — may contain full conversation
+# content; local-only diagnostic data, not meant for version control.
+AIMemory/acp-trace/
