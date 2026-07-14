@@ -1,6 +1,6 @@
 {
   "name": "researcher",
-  "description": "深度研究與方法論 specialist（AI 策略、知識管理、agent 設計模式分析）",
+  "description": "Deep research specialist (AI strategy, knowledge management, agent design patterns)",
   "tools": [
     "@builtin",
     "@memory",

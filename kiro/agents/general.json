@@ -1,6 +1,6 @@
 {
   "name": "general",
-  "description": "完整能力 specialist，用於並行多工（繼承所有 skill 和 MCP）",
+  "description": "Full-capability specialist for parallel multi-tasking (inherits all skills and MCP)",
   "tools": [
     "@builtin",
     "@memory",

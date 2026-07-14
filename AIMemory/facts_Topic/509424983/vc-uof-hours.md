@@ -1,0 +1,1 @@
+- [f_52d1ec] [2026-07-14T02:55:14.674Z] vc-uof-hours P3 recon 完成（2026-07-14）：送出按鈕是 frame 2 的 ctl00_MasterPageRadButton13（Telerik RadButton, autoPostBack）；送出後行為是 postback → 簽核 dialog（$uof.dialog.open2, 850x500）→ dialog close；儲存（草稿）是 MasterPageRadButton1；驗證策略用 dialog close + 草稿列表少一筆；三個前置問題已全確認（無撤回、專案負責人非必填、補班不被覆蓋）

@@ -59,8 +59,7 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 | 2d | JP 飛向 COLLECT | await FlyManager | — |
 | 3 | 若有第 2 個 COLLECT → 重複 2a~2d | await | — |
 | 4 | 所有收集完成，JP 轉回文案 | 即時 | — |
-| 5 | GRAND/MEGA 彈獨立報獎面板 | await panel.close() | JP_Manager |
-| 6 | 還原壓暗 | 即時 | — |
+| 5 | 還原壓暗 | 即時 | — |
 
 ## 常見變體
 
@@ -73,7 +72,7 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 | CASH 分裂 | 一顆 CASH 分裂成 2~3 顆 | wrath_of_thunder |
 | CASH 升級 | 乘倍後金額達閾值 → 外觀升級（銅→銀→金） | 3LP |
 | 搭配神秘事件 | 停輪後第5輪逐格重轉追加更多 COLLECT，再執行收分 | 3LP（見 collect-mystery.md） |
-| 5 級 JP | Mini/Minor/Major/Mega/Grand，GRAND/MEGA 獨立報獎面板 | 3LP |
+| 5 級 JP | Mini/Minor/Major/Mega/Grand，一律轉分數收分（GRAND/MEGA 獨立報獎面板曾在早期規格出現，**6/23 修訂整個移除**——2026-07-07 檢查點 2 確認） | 3LP |
 | 雙向 Collect（第1+6輪） | COLLECT 分佈在盤面兩端（第1輪+第6輪），各自獨立收分；飛入方向相反（左→右 vs 右→左），FlyManager 需方向參數 | Eye Strike2 |
 | Burst（注入保證收分） | 第1+6輪皆 Collect 但中間 2-5 輪無 Cash 時，跳宣告→隨機注入數顆 Cash 到 2-5 輪→觸發 Collect 收分（保證該手有收分）；MG/FG 皆可 | Wrath of Thunder v2 |
 | 單輪收集器 → 特殊 Collect | Super FG 中未收 Cash 飛入該輪下方收集器，每集滿 3 顆變成「只收該輪」的特殊 Collect，下一手生效後重置 | Wrath of Thunder v2 |
@@ -82,7 +81,7 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 ## 邊界案例
 
 1. **收分順序**：帶分數 CASH 先收 → JP 後收（JP 需先轉分數）
-2. **GRAND/MEGA 獨立報獎**：不走一般收分流程，彈全螢幕面板
+2. **最高階 JP 是否有獨立報獎面板要對規格修訂記錄**：3LP 早期規格有 GRAND/MEGA 獨立面板、6/23 修訂移除（所有 JP 一律轉分數收分）——實作前確認拿到的是最新版規格，別照舊版做出多餘分支
 3. **複數 COLLECT 排隊**：第 1 個收完才換第 2 個，順序為上→下
 4. **Multiplier 交互**：作用順序 Bomb → Multiplier → Collect
 5. **FG 回 MG 時**：Collect 狀態不需要 reset（它是一次性觸發）

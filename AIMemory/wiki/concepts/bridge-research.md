@@ -2,7 +2,7 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-13
+updated: 2026-07-14
 sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_a0d9ac, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a]
 ---
 
@@ -137,6 +137,61 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 **結論**：bridge 已覆蓋全部 7 層，且超越部分包括 embedding router、Local LLM、Specialist 分身、跨機 Relay、Self-improving reflexion、Context budget discipline。借鏡成果：觸發 P1 user-profile 獨立化實作。
 
 P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 session」基礎設施但方向不同——反思升級 vs 壓縮上下文）。
+
+#### Memory Nudge（本機 LLM 中途記憶抽取，評估中 · 2026-07-14）
+
+- **來源動機**：ai_multi_agent「每 N turns spawn subprocess 回顧對話自動抽記憶」，探索改用本機 LLM（`local-llm.ts`）取代遠端呼叫
+- **現況基準**：bridge 已有更厚的防線——`onBeforeClose` 自動存 transcript + 語意去重 fact 抽取（失敗進 pending-extract queue 開機重放）、agent crash 也存 transcript 供 `/dream` 撿。中途 nudge 唯一補的真空窗是 **bridge process 本體 hard-crash/斷電**（in-memory history 全滅，事後什麼都撈不回）
+- **若做，最小可行設計**：
+  - 觸發：assistant 回覆後新增 ≥N turns → 排 90 秒 idle debounce 才真正執行（避開快速對話時搶本機模型資源，不需新旗標，靠既有 `isLlamaCppBusy()` 跳過即可）
+  - 抽取：不可直接重用 `extractLearnings()`（頭截斷 8000 字元，長 session 中途永遠看不到新內容）→ 需要增量變體：只餵「上次 nudge 後的新 turns」+ prompt 內附 EXISTING_FACTS 語意去重（`session-extract.ts` 既有 pattern 可抄）
+  - 範圍：**只寫 facts,不寫 skill-candidates**——避開跟每日 `/dream`（`dream-session-reflect.ts` 的 skill-candidates 是盲 `appendFile` 零去重）雙寫
+- **決策前置驗證**：本機小模型在「只看片段 + EXISTING_FACTS」下能否抽出乾淨不重複的 facts，未經實測前不動工
+- ⛔ **離線驗證受阻（2026-07-14）**：這台機器沒裝 llama.cpp（`http://127.0.0.1:8080/health` 連不上、`.env` 的 `LLAMACPP_START_CMD` 是空的、系統上搜不到 `llama-server` 執行檔）。使用者確認：目前沒有實際用到本機 LLM enrichment,所以沒裝。**這比 Memory Nudge 本身更前置的一個事實**——`local-llm.ts` 掛的一整組 enrichment（`extractLearnings`/`compressFactsForPreamble`/`rerankRecallHits`/`prefilterSpecialistRoute`/`classifyIntentLLM`/`suggestFactMerges`/`detectShardDuplicates`）在沒裝 llama.cpp 的機器上全部靜默 fallback 成 no-op（每個函式開頭都是 `detectLlamaCpp()` 失敗就回傳 null/[]）。Memory Nudge 建在這組基礎設施上,若基礎設施本身不是常駐服務,應該先確認「要不要裝 + 裝在哪台機器」,而非先設計 Nudge 細節
+- **狀態**：設計筆記保留,離線驗證與後續實作擱置,等基礎設施部署決策
+- **完整探索記錄**：見 2026-07-14 對話（Fable 5 agent 產出設計筆記,附程式碼行號引用）
+
+#### Improvement Harness（結構化錯誤收集，✅ 已評估 · 2026-07-14）
+
+- **來源動機**：ai_multi_agent「結構化錯誤收集（含 `fix_applied` 欄位）+ 推送到 review topic」（`improvement_harness.py`）
+- **決策：不引進這個概念**。關鍵證據：ai_multi_agent 自己的事後檢討文件（`docs/錯誤紀錄機制問題與解法.md`，2026-07-12）記錄了實際排查兩起 agent 崩潰時發現——harness 記錄的內容對診斷幾乎沒幫助,根因是**呼叫端沒把真正的診斷資訊傳進去**（timeout 事件永遠沒 `error_detail`、crash 事件的 `error_detail` 固定寫死成重試計數器）。教訓：schema 完整 ≠ 內容有用,問題在呼叫端紀律,不在基礎設施
+- **bridge 現況已預告同樣的坑**：`src/local-llm.ts` 有 9 個 silent catch（179/230/253/306/351/409/454/501/564 行，`detectShardDuplicates`/`compressFactsForPreamble`/`summarizeChunk`/`summarizeSession`/`prefilterSpecialistRoute`/`rerankRecallHits`/`suggestFactMerges`/`classifyIntentLLM`/`extractLearnings`）失敗時連 `console.warn` 都沒有——比 ai_multi_agent 的 harness 還糟（後者至少記一筆空白事件）
+- **bridge 現有機制已覆蓋 harness 的合理用途**：event schema → STATE.md 已證明能做結構化彙整；推播管道 → bridge 本身就是 Telegram 訊息機制；fix_applied（錯誤→修復留痕）→ knowhow-accumulation 的 ❌→✅ 記錄已在做，且 ai_multi_agent 自己的檢討裡這欄位從沒被提到有幫助
+- **推送路徑判斷**：bridge 單人 chat，即時推播每則 enrichment 失敗等於洗版（服務沒起來時 9 個函式常常一起掛）；`/dream` 每日批次彙整進 STATE.md（High Priority/Watch List/Noise）才是對的預設，除非是既有 health monitor 已經在管的 critical 事件（ACP process 死亡）
+- **已執行的第一步（零風險）**：9 個 silent catch 補上帶函式名與錯誤訊息的 `console.warn`，觀察 1-2 週實際 log 再決定要不要往上蓋彙整層——大機率連 STATE.md 彙整都不需要
+- **完整探索記錄**：見 2026-07-14 對話（Fable 5 agent 產出設計筆記，附 ai_multi_agent 原始碼與事後檢討文件引用）
+
+#### Workspace 結構化（每 agent knowledge/inbox/tasks.md，✅ 已評估 · 2026-07-14）
+
+- **來源動機**：ai_multi_agent 的 `AgentWorkspace`（`workspace.py`）——每個 agent 一個資料夾：`knowledge/shared`+`knowledge/private`（會/不會被中央同步匯出）、`inbox/from_central/{tasks,knowledge,market}`（中央推送、agent 讀取後 unlink）、`tasks.md` 任務看板（進行中/待辦/等待中/已完成）、`.history/` 覆寫前備份
+- **決策：整套不搬**。根因是架構前提不同，不是 bridge 機制已完美：ai_multi_agent 是「中央 daemon + 多個常駐 agent process」，workspace 是這些長駐 process 跟中央之間**持續存在的狀態**；bridge 的 specialist 是**用完即丟的 headless CLI spawn**（PARALLEL_DELEGATE/RELAY_DELEGATE 每次全新 process，做完就結束），bridge 本身就是唯一協調者
+- **四件式逐項對照**：inbox（一次性推送消費）被「spawn 時直接傳 goal prompt」結構性取代；`export_knowledge(since)` 增量同步無用武之地（沒有兩份狀態要收斂）；shared/private 分區的存在理由是「決定匯出邊界」，bridge 無匯出，動機歸零；tasks.md 看板無讀者——specialist 一次 spawn 做完，artifact 的 status 就是完成記錄，跨多次 delegation 的長期任務目前是靠主 agent 的 facts/memory + goalStore 追蹤，不該搬進 specialist workspace
+- **意外抓到的真問題（已修復）**：探索過程中查出 `RELAY_DELEGATE` 的 `id`（`run-prompt.ts:751`）與 `PARALLEL_DELEGATE` 的 `taskId`（`run-prompt.ts:776`）都未經淨化直接流進 `saveArtifact()`，拼進 artifact 檔名（`artifact.ts:92`）；`path.join` 會正規化 `..`，理論上可路徑穿越寫出 `artifacts/` 目錄外。嚴重度低（需 agent 自己被誘導吐出惡意 token），但修法便宜——已在 `artifact.ts` 對 taskId 做白名單化
+- **獨立立案但不掛在此借鏡下的技術債**：`specialist-memory.ts` 純 append-only、無分類、讀取只取尾 20 行，舊 lessons 事實上蒸發但沒有真的被清理——這是既有 Phase B+ 的技術債，跟 workspace 借鏡無關，不需要因為這次評估去抄 ai_multi_agent 的目錄式知識庫或版本化方案
+- **完整探索記錄**：見 2026-07-14 對話（Fable 5 agent 產出設計筆記，附 ai_multi_agent 原始碼引用 + bridge 端 taskId 未淨化的具體行號）
+
+#### Central 知識萃取增量匯出（縮小版：specialist lessons 升格通道，✅ 已實作 · 2026-07-14）
+
+- **來源動機**：ai_multi_agent 的 `GET /api/knowledge/export?since=...`（中央 daemon 拉每個 agent workspace 的增量知識）+ `POST /api/inbox/receive`。原始形式跟 Workspace 結構化是同一套機制的兩端，已隨該借鏡一併否決（bridge 無「中央+常駐 agent 收斂兩份狀態」的前提）
+- **但重新框定後找到真缺口**：bridge 的 4 個 specialist（slot-dev/researcher/general/video-prod）分工正交，**橫向互通價值低不值得建**；缺口是**縱向**的——`specialist-memory.ts` 抽出的 lessons 只回流自己下次 spawn 的 preamble（`readMemory()` 取最近 20 行），`/dream` 的 `session-reflect` 只掃主 session 的 `sessions/*.md`，完全不掃 `specialist-memory/*.md`。specialist 學到的教訓跟主 session 聊出來的 lessons 價值同級，卻沒有升格進主 facts/wiki 的通道，而且舊 lessons 被擠出「最近 20 行」視窗後連自己都用不到——升格是唯一保存路徑
+- **ai_multi_agent 的關鍵教訓可套用**：他們程式碼註解明講「task_assignment 不能只推進 inbox 等 agent 自己讀，實測過同一顆 LLM 面對簡單問候就是不會主動檢查，必須由程式碼保證送達」。這條教訓精確命中 bridge 現有的 pending-ingest 機制（`artifact.ts` 的 `savePendingIngest`/`listPendingIngests`，僅 researcher + 輸出 >5000 字才觸發）——目前完全依賴 preamble 底部提示 + 主 agent 自己注意到，是同一種「靠 agent 主動檢查」的不可靠模式，只是範圍窄所以還沒爆
+- **最小可行設計**：`/dream` 新增 `specialistreflect` step（獨立 step，不擴充 session-reflect，理由：dream 的 per-step `continue_on_error` 隔離 + metrics + 使用者可各別關閉）——讀 4 個 `specialist-memory/*.md`，用 `appendMemory()` 既有的行內時間戳當土砲游標（存 `.reflect-cursor.json` 記每個 specialist 上次處理到哪個時間戳，不需要 HTTP/since，因為是同一顆 process 讀本地檔），餵既有 `extractLearnings()` 本機 LLM 抽取，fact 走 `appendFactsDedup` 去重、candidate 走 `skill-candidates.md`；同一個 step 順便檢查 pending-ingest 累積 ≥3 天者，寫進 STATE.md High Priority（既有「dream High Priority 跨 ACP 入口」按鈕機制可直接複用，見上方 P1 章節），把「preamble 提示等注意」升級為「排程檢查 + 使用者一鍵轉送」
+- **風險提醒**：`specialist-memory.ts` 有 `[auto-summary]` fallback 尾巴（品質較雜），`extractLearnings` 的 confidence 過濾要能擋掉，上線後應觀察 facts 污染率
+- **實作狀態**：已完成（commit `21f12bf`）——新增 `src/commands/dream-specialist-reflect.ts`，註冊進 `index.ts` COMMAND_HANDLERS 與 `dream-config.ts` DEFAULT_STEPS（14→15 步），`check-dream.mjs` 步數斷言同步更新，24 項全過，`npx tsc --noEmit` 通過
+- **已知限制**：這台機器沒裝 llama.cpp（見上方 Memory Nudge 條目），`extractLearnings` 短期內會持續回傳 []——這個 step 上線後短期只有「游標推進」與「pending-ingest 老化檢查」會生效，facts/candidates 升格要等本機 LLM 就緒才會真的發生
+- **完整探索記錄**：見 2026-07-14 對話（Fable 5 agent 產出設計筆記）
+
+#### ask_user 同步阻塞 + timeout fallback（縮小版：goal 迴圈 ASK-aware continuation，✅ 已實作 · 2026-07-14）
+
+- **來源動機**：ai_multi_agent 的 `ask_user()`（`telegram_adapter.py:1388`）——真的 `await` 一個 Future 阻塞 agent 執行緒等使用者點按鈕，預設 300 秒逾時自動解除、訊息改顯示「已逾時」、turn 被中斷時 `_sweep_pending_asks()` 強制取消殘留問題
+- **決策：同步阻塞本體不搬**。bridge 三個 ACP backend（Kiro/Codex/Claude Agent）都是「跑一次 prompt→出結果→turn 結束」的 headless CLI 模型，沒有「暫停執行等外部訊號再恢復」的機制；為此改變整個 backend 執行模型不成比例，且 bridge 現行 fire-and-forget ASK（使用者晚點按，答案就是新一輪訊息）在一般對話下語意仍然有效，不需要 ai_multi_agent 那套 stale-callback 防護
+- **意外查證出的真缺陷**：`/goal` 迴圈的 continuation 排程（`run-prompt.ts` 4 處 `GOAL_CONTINUATION_DELAY_MS = 500`，行 1151/1584/1807/1822）**完全不看這輪有沒有 emit ASK**，500ms 後就無條件推進下一輪——agent 在 goal 迴圈裡問使用者問題，答案結構上永遠來不及，下一輪 continuation prompt 只說「continue toward the goal」，agent 只能瞎猜或重複問，燒 turn budget。一般對話下「沒人回 ASK」代價幾乎零（按鈕不會真失效，`index.ts` callback fallback 直接解析 key），但 goal 迴圈是真痛點
+- **可行性已查證**：函式作用域內已有 `asks.length`（`run-prompt.ts:1021` 診斷 log 已在用），代表「這輪有沒有問 ASK」這個布林值本來就摸得到，只是 4 個 continuation 排程點都沒有參考它——不需要新建資料流，純粹是既有資訊沒被使用
+- **最小可行設計**：goal turn 若這輪 emit 了 ASK，continuation 排程改用較長延遲（例如 10 分鐘）而非固定 500ms；使用者點按 → 既有 `[ASK:id] key` user turn 本來就會 preempt continuation，零新路徑；逾時 → continuation prompt 注入一行「使用者未回覆 ASK，請做保守假設繼續或改用非互動方式推進」——這是 ai_multi_agent「timeout 回 None、agent 自己接手善後」的 bridge 等價物
+- **次要補強（可選，二期）**：/dream 加一步「pending ASK 老化 → actionItems → STATE.md High Priority」，可直接複用 `dream-specialist-reflect.ts` 的 stale-ingests 前例；但 `AskRegistry` 是純 in-memory Map，重啟即失憶，要嘛接受此限制、要嘛加輕量持久化（已超出最小範圍）
+- **實作狀態**：已完成（commit `8e52c2e`）——新增 `GOAL_ASK_WAIT_MS`（10 分鐘）常數與外層 `turnHadAsk` 旗標（`asks` 宣告在較深巢狀區塊，continuation 排程點在外層，仿 `continueTokenFired`/`pendingRestartReason` 模式做外層旗標），只改動 `continuationPlan`（AB-7b）與 `<<CONTINUE>>` token 兩個真正的 goal continuation 排程點，刻意不動另外兩處重用同常數的無關用途（relay 摘要 debounce、WIKI_QUERY 自動觸發）；使用者按鈕回覆本來就會透過 `index.ts:846` 的 `cancelPendingContinuation` 天然 preempt，不需新路徑；逾時則在下一輪 continuation prompt 注入提示，讓 agent 自行做保守假設。`npx tsc --noEmit` 通過，`check-ab7-goal-loop.mjs` 8/8 無 regression
+- **驗證缺口（誠實記錄）**：既有測試只模擬「要不要產生 continuationPlan」的決策邏輯，不觸及 `runPrompt` 內真正的 timer 排程程式碼（需要活的 Telegram bot + ACP session 才能端到端驗證），這次沒有為此新建 mock 測試骨架——屬有意識的範圍取捨，不是遺漏
+- **完整探索記錄**：見 2026-07-14 對話（Fable 5 agent 產出設計筆記）
 
 ### Rich Messages Draft 化（✅ 2026-07-10，commit e3a3a45）
 

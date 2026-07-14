@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-09
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5]
+updated: 2026-07-15
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_228abc, f_229bcd, f_230cde, f_231def, f_232ef0, f_233f01, f_174485, f_b21c3a]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -71,6 +71,18 @@ Bridge 的 tool call 進度（`🔧 {title}` / `✅ {toolName}`，sessionManager
 - Git commit 的 `Co-Authored-By` trailer 是 **harness 模板字串**（session 啟動時定格），非 runtime model 自我宣告
 - Harness 認不得非標準 model ID（如 claude-fable-5）時 fallback 寫 `Claude Opus 4.6`——**不可當實際 model 證據**
 - 對策：專案 CLAUDE.md「開發偏好」規則——model 名以 session 環境宣告（`You are powered by...`）為準（排除關掉 attribution 因為想保留紀錄、排除 git hook 因為過重）
+
+## Advisor 顧問工具（2026-07-14）
+
+- 需三選一顯式設定：`/advisor` 指令、`settings.json` 的 `advisorModel`、或 `--advisor` CLI 旗標
+- 使用者 `~/.claude/settings.json` 已有 `"advisorModel": "fable"`
+- 組織 `availableModels` allow-list 需允許該顧問模型；使用者已在終端機執行 `/advisor` 選定 Fable 5 解除限制
+- Advisor 是綁在主 session 層級的工具，不會往下傳給 subagent
+
+## Scheduler Backend 跟隨（2026-07-13）
+
+- scheduler ephemeral session 原本固定讀 `.env` 的 `ACP_AGENT_COMMAND`，不跟隨 `/agent` 熱切換
+- 已修復（commit 85242f9）：`sessionManager.getActiveBackend(chatId)` 優先用 pinned backend，fallback `.env`
 
 ## 相關
 

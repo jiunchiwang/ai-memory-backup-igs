@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-07-13
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f]
+updated: 2026-07-15
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3]
 ---
 
 # Bridge Specialist 分身系統
@@ -54,6 +54,11 @@ Status server（port 3847）擴充為 specialist 監控面板：
 
 - `index.ts` 全域 `unhandledRejection` handler 會 `process.exit(1)`——任何同 process 的 async callback 未捕捉 throw 都會殺掉整個 bridge，新增 server/handler 必須自帶錯誤邊界
 - AIMemory artifacts 檔名 `<date>_<taskId>_<specialist>_<slug>.json` 中 taskId 可含底線，positional `split('_')` 解析必錯，須用已知欄位（specialist name）錨定 regex
+- **路徑穿越修復（2026-07-14，commit 35d489c）**：`RELAY_DELEGATE`/`PARALLEL_DELEGATE` 的 taskId 未淨化直接拼進 artifact 檔名，`path.join` 正規化 `..` 可能寫出 `artifacts/` 目錄外；已新增 `sanitizeFilenamePart` 白名單化
+
+## Specialist Reflect（/dream 步驟，2026-07-14）
+
+`specialistreflect` 是 `/dream` 的第 4 步（sessionreflect 之後），掃描 4 個 specialist 的 `specialist-memory/<name>.md`，用本機 LLM 抽取 learnings 升格進 facts/skill-candidates，同時檢查 pending-ingest 老化（>48h）寫進 High Priority 通道。已知限制：本機未裝 llama.cpp 時 learnings 永遠為 []，只有游標推進與 pending-ingest 老化檢查會生效。
 
 ## 相關
 

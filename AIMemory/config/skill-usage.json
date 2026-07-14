@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-13T20:10:59.675Z",
+  "_last_updated_at": "2026-07-14T20:14:48.199Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -15,9 +15,9 @@
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
-      "last_agent_used_at": "2026-07-12T20:02:29.882Z",
-      "use_count": 45,
-      "last_reason": "完整流程執行：掃描 9 個 session（含 55KB 大檔）、Confidence Scoring 篩選所有候選均 <0.3、比對 11 個 ms-* skill 無重疊、rationale 比對 4 處均已被 facts 覆蓋、搬移 9 檔",
+      "last_agent_used_at": "2026-07-14T20:03:17.826Z",
+      "use_count": 46,
+      "last_reason": "掃描 11 個 session 檔識別可重用模式、比對 13 個 ms-* 已安裝 skill、confidence scoring 頻率候選、搬移 session 檔到 oldSessions",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -25,9 +25,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-13T20:10:59.675Z",
-      "use_count": 39,
-      "last_reason": "wikisync + factlint + wikilint 步驟",
+      "last_agent_used_at": "2026-07-14T20:14:48.199Z",
+      "use_count": 41,
+      "last_reason": "wikilint 步驟：掃描 25 頁 updated 日期 + 比對 shard 最新 facts + 檢查 26 個檔案 vs index 一致性 + 驗證 82 個 wikilink + 修復 1 頁 stale",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -330,6 +330,16 @@
       "last_reason": null,
       "pinned": false,
       "notes": "補建 entry — skilllint 2026-07-13 發現磁碟有但 usage.json 漏追蹤",
+      "orphan": false
+    },
+    "vc-uof-hours": {
+      "created_at": "2026-07-14T03:08:57.472Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": "2026-07-14T03:08:57.472Z",
+      "use_count": 1,
+      "last_reason": "P3 送出功能設計 + recon：確認 RadButton13 觸發方式（Playwright click）、server validation 規則（時間+刷卡）、alert 攔截、簽核 dialog 流程",
+      "pinned": false,
+      "notes": null,
       "orphan": false
     }
   }

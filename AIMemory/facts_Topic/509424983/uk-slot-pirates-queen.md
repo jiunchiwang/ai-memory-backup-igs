@@ -1,0 +1,4 @@
+- [f_093bcf] [2026-05-29T12:03:17.162Z] 使用者有一個 Cocos Creator 3.6.2 老虎機專案 uk_pirates_queen 位於 G:\Cocos_Project\uk_pirates_queen，使用 Astarte Framework 和 TypeScript
+- [f_79c118] [2026-05-29T12:03:17.165Z] uk_pirates_queen 是 UK 市場的海盜女王主題 slot 遊戲，6列5行盤面，含消除連鎖、懸賞令倍率、Free Game、輪盤選獎等機制
+- [f_89a745] [2026-06-17T13:10:14.387Z] uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化
+- [f_e9bd6a] [2026-06-25T20:31:57.782Z] uk_pirates_queen 的掉落動畫（drop-out）凍結視窗回歸問題，根因是把凍結語意（m_isInDropMode）與掉落動畫 promise（m_dropAllSymbolsOutOfScreenPromise）混為一談，且直接在 StartSpin（約 L943）觸發掉落；經對抗式評選後採 MVP 最小手術方案：新增 m_isInDropMode 布林專職凍結語意、把 promise 降級為純動畫 handle、並把掉落觸發從 StartSpin 移到獨立的 TriggerDropOut() method。

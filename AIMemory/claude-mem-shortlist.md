@@ -1,5 +1,10 @@
 # claude-mem shortlist (高價值候選,英文待精選)
-> 產生:2026-07-12T20:30:02.492Z;筆數:0(上限 15);自 epoch 1783758204478
+> 產生:2026-07-13T20:30:03.214Z;筆數:6(上限 15);自 epoch 1783758204478
 > 給 AI:精選真正「跨 session 可重用」的 → 翻繁中 → 用 memory search 去重 → 提案 ≤10。一次性步驟略過。
 
-(無新的高價值觀察)
+- (decision|telegram-kiro-bridge-main|2026-07-13) Second cross-source review workflow launched for SELF_EVAL token design :: dev-review workflow launched for P1-design-spec.md (SELF_EVAL token design for telegram-kiro-bridge)
+- (decision|telegram-kiro-bridge-main|2026-07-13) Cross-backend quantitative self-evaluation mechanism design :: Current CLAUDE.md承重方法論 lacks quantitative scoring mechanism (no "≤95 points redo" logic exists)
+- (decision|telegram-kiro-bridge-main|2026-07-13) Adversarial Review Rejected Complex Self-Evaluation Designs for Honest Observability :: Six fatal flaws identified across three proposals: tsc verification can be bypassed by agents reporting low type scores, trigger conditions contradict known constraints for Kiro/Codex backends, circuit breaker integrations have unverified preconditions, no evidence backends honor self-eval instructions, unverified implementation details treated as behavior contracts, nested payload breaks flat-field conventions
+- (decision|telegram-kiro-bridge-main|2026-07-13) Cross-backend quantitative self-evaluation mechanism designed for bridge :: Scoring uses 6 dimensions totaling 100 points: Type validation (V:25), Function test (T:20), Impact analysis (I:20), Scope discipline (S:15), Completeness (C:10), Readback verification (R:10)
+- (decision|telegram-kiro-bridge-main|2026-07-13) Adversarial verification review completed for vc-uof-hours skill :: Adversarial verification conducted on 2026-07-13 using 5 perspectives with skeptic agents for each finding
+- (decision|telegram-kiro-bridge-main|2026-07-13) P2 implementation plan broken into four sequential tasks :: Task 1 performs reconnaissance to map overtime form fields (formId cd8fb94e-a539-4c7e-9762-43e87e653ced) to identify which versionFieldUC controls correspond to date, time period, hours, and reason

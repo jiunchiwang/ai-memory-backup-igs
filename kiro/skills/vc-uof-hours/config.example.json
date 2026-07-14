@@ -1,0 +1,7 @@
+{
+  "account": "你的UOF登入帳號(與登入 UOF 網站時輸入的相同)",
+  "password": "你的UOF密碼",
+  "monthly_target": 20,
+  "countable_basis": "weekday+holiday",
+  "status": "approved+pending"
+}

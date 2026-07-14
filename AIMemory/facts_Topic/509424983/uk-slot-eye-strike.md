@@ -1,0 +1,6 @@
+- [f_cea694] [2026-06-03T08:26:49.768Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_eye_strike 位於 G:\Cocos_Project\uk_slot_eye_strike，其 MultiplierManager.m_downEffectSpine 的 Idle 動畫是靜止的，已記為待優化項目（改用靜態圖+隱藏Spine省效能）
+- [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
+- [f_9322f0] [2026-06-19T02:11:08.809Z] uk_slot_eye_strike 的 GameId=658、ShortGameName=ar2es、盤面 6 列不等高（5-4-4-4-4-5）共 26 格、proto 來自 @igs-arcade-division-rd2/uk_658_eyestrike_proto
+- [f_82c757] [2026-06-19T02:11:08.816Z] uk_slot_eye_strike 有 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
+- [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
+- [f_800551] [2026-07-07T07:52:13.442Z] uk_slot_template 的 demo 流程綁 eyestrike（uk_658）proto 與 dev server（6 欄盤面）——衍生遊戲改 COL 後連該 server 必然欄數不符，轉輪驗證應走 ReelDevTool 假盤，端到端等各自真 proto

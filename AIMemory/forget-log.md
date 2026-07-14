@@ -103,3 +103,21 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_aa639e] [2026-07-13T02:23:45.380Z] [WS] completed: 新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn），index.ts 接入啟動/關閉流程，tsc 通過；重啟後 /status 應顯示 Mini App 按鈕（需有 running task）
 - [2026-07-13T20:05:54.379Z] user=509424983 query="已新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn）：bridge 啟動時 fire-and-forget spawn cloudflared" deleted=1 token=forget-273d5b67-1
     - [f_2ca7bd] [2026-07-13T02:23:57.607Z] telegram-kiro-bridge 已新增 src/status-tunnel.ts（cloudflared quick tunnel 自動 spawn）：bridge 啟動時 fire-and-forget spawn cloudflared tunnel 指向 localhost:3847，解析到 trycloudflare.com URL 後動態設 process.env.STATUS_HTTPS_URL，讓 /status 在有 running task 時顯示 Telegram Mini App 按鈕；cloudflared 沒裝或 spawn 失敗則 graceful fallback 原本行為
+- [2026-07-14T20:09:31.122Z] user=509424983 query="Rich Message streaming 升級評估（2026-07-08）：grammY 1.44" deleted=0 token=forget-a985645a-1
+
+- [2026-07-14T20:09:31.176Z] user=509424983 query="草稿串流(Path A)採三階段生命週期" deleted=1 token=forget-e715bc7c-1
+    - [f_f3dd1f] [2026-07-10T20:32:24.955Z] telegram-kiro-bridge 的 Rich Message 草稿串流(Path A)採三階段生命週期:先 sendMessageDraft 送空草稿顯示「Thinking…」,再用 sendRichMessageDraft 串流更新草稿內容,最後以 sendRichMessage 定稿;完整規格見 SPEC-draft-streaming.md。
+- [2026-07-14T20:09:31.303Z] user=509424983 query="session 移植的決策：選方案 A（只做 resume 不做 /session UI）" deleted=0 token=forget-b8b3d9e1-1
+
+- [2026-07-14T20:09:41.859Z] user=509424983 query="skill 說明裡明寫：程式碼裡完全沒有點送出鈕的路徑" deleted=1 token=forget-1cd609d4-1
+    - [f_f6476c] [2026-07-14T02:13:49.359Z] skill 說明裡明寫：程式碼裡完全沒有點送出鈕的路徑，不會、也不能自動送出申請
+- [2026-07-14T20:09:41.931Z] user=509424983 query="這是刻意的保守設計（skill 描述提到對「會產生真實外部紀錄的自動化」採保守策略）" deleted=0 token=forget-e07162af-1
+
+- [2026-07-14T20:09:42.041Z] user=509424983 query="setup-local-notebooklm-mcp.mjs 目標 CLI 有架構性錯配" deleted=0 token=forget-33490f92-1
+
+- [2026-07-14T20:09:51.059Z] user=509424983 query="cloudflared quick tunnel 在使用者網路環境下需要超過 15 秒" deleted=1 token=forget-cd7607e6-1
+    - [f_9f698d] [2026-07-13T02:39:12.918Z] cloudflared quick tunnel 在使用者網路環境下需要超過 15 秒才能取得 trycloudflare.com URL（12 秒後仍停在 Requesting new quick Tunnel），status-tunnel.ts timeout 已從 15s 改為 30s
+- [2026-07-14T20:09:51.135Z] user=509424983 query="Cloudflared Quick Tunnel 不支援 SSE" deleted=1 token=forget-5d10aa25-1
+    - [f_42843e] [2026-07-13T02:39:12.928Z] Cloudflared Quick Tunnel 不支援 SSE（Server-Sent Events）——bridge 的 /status Mini App 即時串流 endpoint（/api/status/:taskId/stream）在 quick tunnel 下不可用，需改用 polling 或升級 named tunnel
+- [2026-07-14T20:09:51.259Z] user=509424983 query="使用者機器已安裝 cloudflared 2026.7.1" deleted=1 token=forget-1b23f894-1
+    - [f_72a155] [2026-07-13T02:23:57.615Z] 使用者機器已安裝 cloudflared 2026.7.1（winget install Cloudflare.cloudflared），供 status-server Mini App HTTPS tunnel 使用

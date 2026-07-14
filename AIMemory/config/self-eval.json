@@ -1,0 +1,19 @@
+{
+  "_schema_version": 1,
+  "entries": [
+    {
+      "ts": "2026-07-14T00:53:41.550Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "tsc 零錯誤、19+22 個 smoke assertion 全過、三輪 review（self/獨立/Heavy）皆 PASS；扣分處：Kiro/Codex backend 遵守此協定與否尚未實測",
+      "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-14T03:31:21.523Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "Phase A + Phase B 核心流程實作完整且本機驗證通過（語法/plan 產出/token 防線/alert 攔截），但簽核 dialog 的真正互動因環境限制無法 e2e 測試，handle_sign_dialog 是啟發式實作未實測",
+      "belowThreshold": false
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "slot-dev",
-  "description": "UK 老虎機遊戲開發 specialist（Cocos Creator + Astarte Framework + TypeScript）",
+  "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
   "tools": [
     "@builtin",
     "@memory"
@@ -11,7 +11,13 @@
     "glob"
   ],
   "resources": [
-    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
+    "skill://C:/Users/jiunchiwang/.kiro/skills/uk-*/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/uk-slot-*/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-kiro-strreplace-silent-fail/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-windows-shell-exit-code-false-positive/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-windows-shell-interactive-prompt/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-portable-skill-authoring/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/writing-skills/SKILL.md"
   ],
   "mcpServers": {
     "memory": {

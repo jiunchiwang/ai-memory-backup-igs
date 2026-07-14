@@ -1,7 +1,5 @@
-- [f_02cb06] [2026-06-17T10:50:58.031Z] spine-viewer 插件位於 C:\Users\jiunchiwang\.CocosCreator\extensions\spine-viewer，Cocos Creator ≥3.6.2 使用
 - [f_f944d1] [2026-06-17T10:50:58.059Z] spine-viewer 的 batch scan 功能用 child_process.fork 獨立進程執行，不阻塞 Cocos 主進程
 - [f_bf6094] [2026-06-17T10:50:58.088Z] spine-viewer 的 DrawCall 計算採 CPU 模擬 PolygonBatcher 合批規則（texture identity + blend mode 斷批），不需要 WebGL context
 - [f_28e62a] [2026-06-17T10:50:58.111Z] spine-viewer 的 Triangle 計算採全 keyframe 掃描（從 animation timelines 抽取所有 frame time 取最大值）
 - [f_4b8ff5] [2026-06-17T10:50:58.151Z] spine-viewer 打包用 pack.bat 產出 spine-viewer-release.zip（含 dist + static + node_modules + package.json），對方解壓到 ~/.CocosCreator/extensions/ 即可
-- [f_c01dbd] [2026-06-17T10:50:58.161Z] spine-webgl TextureAtlas 的 texture factory callback 每次呼叫必須回傳獨立物件（含 getImage 方法），否則 DC 比對失效
 - [f_e61df4] [2026-06-17T10:50:58.181Z] 參考 Excel 格式為 5 欄：Spine檔名、Skin、Animation、Triangle數(最大)、DrawCall

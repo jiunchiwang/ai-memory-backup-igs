@@ -1,0 +1,276 @@
+// Topic classification rules for bridge preamble + list_facts.
+// Edit freely — bridge re-reads this file every ~2s, no /restart needed.
+// Schema: [{ topic: string, keywords: string[] }]
+//   - Keywords are lowercase substrings; fact text is lowercased before matching.
+//   - First matching rule wins; facts matching nothing become 'misc'.
+//   - Topic names should be short and unique (case-insensitive).
+// Last applied: 2026-07-13T20:05:17.740Z (token=topics-0a5c6765-14)
+// If the file is deleted or malformed, bridge falls back to built-in defaults.
+[
+  {
+    "topic": "uk-917",
+    "keywords": [
+      "uk_917",
+      "uk-917",
+      "uk 917",
+      "leprechaun",
+      "3 leprechauns",
+      "tri luck",
+      "triluck"
+    ]
+  },
+  {
+    "topic": "spine-viewer",
+    "keywords": [
+      "spine-viewer",
+      "spine_webgl",
+      "spine webgl",
+      "drawcall",
+      "triangle數",
+      "polygonbatcher",
+      "texture atlas",
+      "texture factory",
+      "pack.bat"
+    ]
+  },
+  {
+    "topic": "bridge-memory",
+    "keywords": [
+      "factlint",
+      "wikisync",
+      "wikilint",
+      "skilllint",
+      "/dream",
+      "dream.json",
+      "aimemory",
+      "hit-log",
+      "fact-access-log",
+      "topics.json",
+      "wiki page",
+      "wiki 頁",
+      "wiki sources",
+      "provenance",
+      "memory mcp",
+      "mcp-memory",
+      "mcp_call",
+      "robocopy",
+      "embedding router",
+      "notebooklm",
+      "backup 機制",
+      "list_facts",
+      "forgetcommit",
+      "forgetmatch",
+      "underused skill",
+      "excel-to-ai-document"
+    ]
+  },
+  {
+    "topic": "bridge-acp",
+    "keywords": [
+      "acp adapter",
+      "kiro-cli",
+      "claude-agent-acp",
+      "codex-acp",
+      "/agent",
+      "model pin",
+      "acp-providers",
+      "set_config_option",
+      "effort config",
+      "backend",
+      "acp",
+      "acp_",
+      "kiro cli 的 model",
+      "deepseek",
+      "qwen3-coder",
+      "minimax",
+      "glm-5",
+      "claude-sonnet-4",
+      "claude-opus-4",
+      "co-authored-by"
+    ]
+  },
+  {
+    "topic": "bridge-specialist",
+    "keywords": [
+      "specialist",
+      "parallel_delegate",
+      "relay_delegate",
+      "specialist-domains",
+      "specialist-memory",
+      "dashboard",
+      "token-policy",
+      "token_policy",
+      "vc-kiro-delegate"
+    ]
+  },
+  {
+    "topic": "bridge-session",
+    "keywords": [
+      "session resume",
+      "sessionstore",
+      "/session",
+      "session-archive",
+      "working-state",
+      "session/load",
+      "transcript md",
+      "transcript 儲存路徑",
+      "idle sweep",
+      "/reset"
+    ]
+  },
+  {
+    "topic": "bridge-streaming",
+    "keywords": [
+      "draft streaming",
+      "draft api",
+      "draft mode",
+      "rich message",
+      "rich_message",
+      "grammyjs",
+      "sendmessagedraft",
+      "sendrichmessage",
+      "markdownstream",
+      "429",
+      "rate limit",
+      "editnow",
+      "html 長度守衛",
+      "tail-truncation"
+    ]
+  },
+  {
+    "topic": "bridge-research",
+    "keywords": [
+      "cowart",
+      "headroom",
+      "loop-engineering",
+      "fable-advisor",
+      "claude-plugins-official",
+      "三模型",
+      "ai_multi_agent",
+      "雷蒙",
+      "harness 架構",
+      "dynamic workflows",
+      "dev-design)分四階段",
+      "confidence scoring",
+      "對抗式驗證並評分",
+      "對抗式評選"
+    ]
+  },
+  {
+    "topic": "bridge-project",
+    "keywords": [
+      "telegram-kiro-bridge",
+      "bridge 專案",
+      "bridge repo",
+      "grammy",
+      "relay-peers",
+      "relaypeers",
+      "status-server",
+      "status-push",
+      "status-tunnel",
+      "cloudflared",
+      "scheduler",
+      "pending-roadmap",
+      "readme",
+      "preamble",
+      "impact-gate",
+      "impact-analysis-guard",
+      "desktop-pet",
+      "unhandledrejection",
+      "atomicjson",
+      "tsc --noemit",
+      "merge 解衝突",
+      "smoke script",
+      "env-file",
+      "module-state",
+      "bot.catch",
+      "check-moa",
+      "writependingbypath",
+      "bridge 教訓",
+      "bridge smoke"
+    ]
+  },
+  {
+    "topic": "uk-slot",
+    "keywords": [
+      "uk_slot",
+      "uk-slot",
+      "uk_pirates_queen",
+      "uk_722",
+      "uk_739",
+      "uk_746",
+      "uk_872",
+      "eye_strike",
+      "eyestrike",
+      "chachacha",
+      "clash_of_olympus",
+      "clash of olympus",
+      "olympus",
+      "triplecointreasure",
+      "astarte",
+      "cocos creator",
+      "fillstrategy",
+      "gameid",
+      "firstclone",
+      "extrabet",
+      "wantedposter",
+      "reeldevtool",
+      "fakereelmanager",
+      "pattern-library",
+      "spec-to-impl",
+      "codegen",
+      "symid",
+      "scatter",
+      "reconcilecascade",
+      "ghost slot",
+      "cc.layout",
+      "mg_bgm",
+      "fg_bgm",
+      "背景音樂"
+    ]
+  },
+  {
+    "topic": "ai-strategy",
+    "keywords": [
+      "ai-canonical",
+      "正典",
+      "steering",
+      "closed-loop",
+      "karpathy-guardrails",
+      "disallowedtools",
+      "corpus"
+    ]
+  },
+  {
+    "topic": "dev-tools",
+    "keywords": [
+      "youtube-transcript",
+      "playwright",
+      "to_pdf",
+      "obsidian",
+      "powershell",
+      "bun runtime",
+      "notebooklm-routing",
+      "kiro agent config",
+      "tonykuo"
+    ]
+  },
+  {
+    "topic": "user-pref",
+    "keywords": [
+      "使用者偏好",
+      "commit 前先確認",
+      "commit 訊息使用中文",
+      "目錄錨點",
+      "ask:...）優先",
+      "除錯對策偏好",
+      "不做一鍵全自動"
+    ]
+  },
+  {
+    "topic": "misc",
+    "keywords": [
+      "的"
+    ]
+  }
+]

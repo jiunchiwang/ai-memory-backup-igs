@@ -1,5 +1,16 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-14(來源 shortlist 6 筆 → 精選合併後寫入 2 條)
+
+來源 project:`telegram-kiro-bridge-main`(6 筆,皆 2026-07-13 decision)。
+
+1. [合併 shortlist #2+#3 → shard bridge-acp] telegram-kiro-bridge 設計跨 backend 量化自評（SELF_EVAL token）機制時，對抗性審查否決了三個複雜方案，發現六個共通致命缺陷,可作為未來設計類似自評/評分機制的通用檢查清單:(1) tsc 型別驗證可被 agent 謊報低分繞過;(2) 觸發條件可能與 Kiro/Codex 等 backend 已知限制互相矛盾;(3) circuit breaker 整合的前提條件未經驗證;(4) 沒有證據顯示 backend 真的會遵守自評指令;(5) 未驗證的實作細節被當成行為契約使用;(6) 巢狀 payload 會破壞既有的扁平欄位慣例。
+2. [蒸餾 shortlist #4 → shard bridge-project] 當方法論缺乏量化評分機制(例如沒有「≤95 分即重做」這類邏輯)時,telegram-kiro-bridge 曾設計一套可參考的範本:跨 6 個維度、總分 100 分——型別驗證 V:25、功能測試 T:20、影響分析 I:20、範圍紀律 S:15、完整性 C:10、回讀驗證 R:10。
+
+捨棄:shortlist #1(第二次 dev-review workflow 啟動記錄)、#5(vc-uof-hours skill 對抗驗證審查完成記錄)、#6(P2 實作計畫拆四個任務)——皆為一次性任務執行紀錄,無跨 session 重用價值。
+
+去重:以 list_facts 對 AIMemory(225 筆)查詢 SELF_EVAL、自評、telegram-kiro-bridge、評分機制、circuit breaker,確認兩條皆為淨新增。未呼叫 forget。
+
 ## 2026-07-10(來源 shortlist 2 筆 → 精選後寫入 1 條)
 
 來源 project:`telegram-kiro-bridge-main`(2 筆,皆 2026-07-09 decision)。

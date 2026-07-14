@@ -1,5 +1,5 @@
 - [f_c3d198] [2026-06-19T07:55:58.294Z] 跨模型 AI 策略 v4 的核心原則:正典語料庫(canonical corpus)本身就是產品——以 markdown + git 追蹤的精煉知識為唯一真實來源(G:\AI\AI-canonical),CLI / MCP / bridge / 索引都只是部署基礎設施而非產品本體。
 - [f_7d7ffe] [2026-06-19T07:56:04.782Z] AI 產物的雲端 vs 本地儲存政策:正典 skills、steering 政策與通用文件放公開 GitHub repo(AI-canonical);session 執行日誌與框架內部狀態僅保留本地、不進版控。
-- [f_e3b009] [2026-06-19T20:31:38.098Z] 在 headless（無人值守）Claude 自動化腳本中，用 claude.exe 的 --disallowedTools 參數封鎖 mcp__memory__remember 與 mcp__memory__forget，即可強制走 proposal-only（只提案、不直接寫入記憶）工作流程，避免自動流程擅自改寫長期記憶。
+- [f_6d4701] [2026-06-27T00:45:09.031Z] memory-to-skill 正本 SKILL.md 已加入 Confidence Scoring 量化門檻（Step 2 後）：confidence = F×C（頻率×成本），≥0.5 進候選、0.3-0.49 留底觀察、<0.3 跳過；靈感來自 ECC continuous-learning-v2 的 instinct confidence scoring
 - [f_b773d9] [2026-07-10T00:12:51.631Z] uk-conventions 是 Claude Code custom command（位於 AI-canonical-corp/commands/uk-conventions.md），不是 skill——skill-usage store 的 orphan 偵測是 false positive
 - [f_8f1b99] [2026-07-13T13:25:29.277Z] 使用者的 AI-canonical-corp 新增 office domain（skills/office/），收納非 slot 領域的公司內容 skill；首個入駐的是 vc-uof-hours（查詢公司內網 UOF 加班時數/特休並可 dry-run 預填加班單，帳密設定檔 ~/.config/uof/config.json，月目標 24 小時）

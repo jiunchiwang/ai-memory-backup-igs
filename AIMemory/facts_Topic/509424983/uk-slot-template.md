@@ -1,0 +1,8 @@
+- [f_967ccc] [2026-05-29T20:06:30.567Z] 使用者有一個 Cocos Creator 3.6.2 老虎機模板專案 uk_slot_template 位於 G:\Cocos_Project\uk_slot_template，是所有 UK slot 遊戲的 fork 來源
+- [f_e8b2cf] [2026-05-29T20:06:30.570Z] uk_slot_template 支援三種轉輪玩法：Standard（傳統滾動）、Cascade（消除天降）、Tumble（快速掉落+乘倍），透過 FillStrategy 策略模式切換
+- [f_991386] [2026-06-01T12:16:45.036Z] 使用者的 uk_slot_template 團隊規範要求方法（method/function）使用大駝峰（PascalCase）命名
+- [f_500f52] [2026-07-06T20:13:27.710Z] UK slot 起新專案慣例：不用 git fork/clone（不保留模板 git history），用 git archive 從 uk_slot_template 解出→git init 全新 repo→跑 Tools_SlotSetUP/FirstClone.bat（讀根目錄 gameSetting.json）clone slotExtensions-client 到 extensions/（即 Astarte framework，獨立 repo 不進遊戲 repo）→npm install→改 GameId/盤面/FillStrategy
+- [f_7e491d] [2026-07-07T07:52:13.433Z] uk_slot_template 有 4 個本地 commit 未 push（bgm 改註解佔位、欄數陣列改 Game_Define.COL 衍生、CheckPlateInfo 欄數守衛、ReelDevTool 驅動+IDLE 閘門修復）；模板是 org 共用 repo（IGS-ARCADE-DIVISION-RD2），push 前需使用者確認
+- [f_233d31] [2026-07-07T07:52:13.462Z] 使用者的回灌工作流：在衍生遊戲修到的模板級問題（工具、守衛、寫死值）一律同步回 uk_slot_template；流程級教訓回寫 AI-canonical-corp skill 正本、專案級踩坑寫專案 AI.md、模式級修正寫 pattern-library 卡片
+- [f_4cfe4c] [2026-07-07T07:52:13.480Z] FirstClone.bat 的 ../extensions 相對於執行時 cwd——從專案根執行會 clone 到上一層，需在 Tools_SlotSetUP/ 內執行
+- [f_0376d5] [2026-07-07T20:34:51.301Z] uk slot 模板專案音訊決策：MG_Bgm 與 FG_Bgm 背景音樂引用在 template 專案中先註解掉（模板不附實際音檔），新遊戲專案需要 BGM 時再解除註解並補上音檔。

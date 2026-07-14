@@ -1,0 +1,6 @@
+- [f_4c48e6] [2026-07-09T19:00:02.528Z] 使用者有一個新遊戲專案 Clash of Olympus（諸神之戰）位於 G:\Cocos_Project\clash_of_olympus_demo，希臘神話主題、6×4 盤面 4096 Ways、基於 uk_slot_template + Astarte Framework；規格書為 G:\AI\Clash of Olympus.xlsx，最近似參考為 tripleCoinTreasure-client（三幣瑞龍）
+- [f_d03f34] [2026-07-09T19:00:02.536Z] Clash of Olympus 的 spec-to-impl 三步驟已完成（2026-07-09）：docs/spec（80圖）+ dev-spec.md（1🔴 VS Feature + 6🟡 + 8🟢）+ SPEC.md（25任務 M0a~M4）+ AI.md；下一步是 M0a 起專案，需先確認 GameId 和 Proto 狀態
+- [f_f79167] [2026-07-09T19:00:02.541Z] Clash of Olympus 唯一 🔴 新開發機制是 VS Feature（Cash乘倍 + Collect乘倍 + 多VS作用順序）；Collect Feature 和聚寶盆都是 🟡 適配（模板已有 Collect/Cash/CoinState 骨架 + pattern-library 有驗證變體）
+- [f_b20c5e] [2026-07-09T19:00:02.552Z] uk-slot-spec-to-impl 流程教訓（Clash of Olympus 實證）：agent 拿到規格書後必須先 invoke skill 從步驟0開始，不可直接提實作方案；基準永遠是 uk_slot_template 不是衍生品；步驟2必須讀 pattern-library 索引否則會重複設計已驗證模式
+- [f_593c2e] [2026-07-09T19:00:02.563Z] Clash of Olympus 規格書待確認事項（8項）：賠率表全空需機率文件、BuyBonus售價未定、FG手數未明、VS乘倍數值+2X vs X2語意、聚寶盆機率、ExtraBet規格、Proto發佈時間、GameId待分配
+- [f_c7ce92] [2026-07-09T19:00:02.568Z] 使用者有一個 Cocos Creator 老虎機專案 tripleCoinTreasure-client 位於 G:\Cocos_Project\tripleCoinTreasure-client，三幣瑞龍主題（GameId=399, ShortGameName=tct），5×3盤面，有Coin收集和三色Scatter（Tiger/Loong/Koi）機制，是 Clash of Olympus 的最近似參考
