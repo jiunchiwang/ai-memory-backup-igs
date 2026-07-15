@@ -1,0 +1,279 @@
+// Topic classification rules for bridge preamble + list_facts.
+// Edit freely — bridge re-reads this file every ~2s, no /restart needed.
+// Schema: [{ topic: string, keywords: string[] }]
+//   - Keywords are lowercase substrings; fact text is lowercased before matching.
+//   - First matching rule wins; facts matching nothing become 'misc'.
+//   - Topic names should be short and unique (case-insensitive).
+// Last applied: 2026-07-15T20:04:55.901Z (token=topics-5919470d-20)
+// If the file is deleted or malformed, bridge falls back to built-in defaults.
+[
+  {
+    "topic": "uk-slot-codegen",
+    "keywords": [
+      "codegen",
+      "spec_adapter",
+      "anchor merge",
+      "anchor_merge",
+      "probe-compare"
+    ]
+  },
+  {
+    "topic": "uk-917",
+    "keywords": [
+      "uk_917",
+      "uk-917",
+      "leprechaun",
+      "3 leprechaun"
+    ]
+  },
+  {
+    "topic": "uk-slot-clash-olympus",
+    "keywords": [
+      "clash of olympus",
+      "clash_of_olympus",
+      "諸神之戰",
+      "triplecointreasure"
+    ]
+  },
+  {
+    "topic": "uk-slot-eye-strike",
+    "keywords": [
+      "eye_strike",
+      "eyestrike",
+      "uk_658",
+      "uk_872"
+    ]
+  },
+  {
+    "topic": "uk-slot-pirates-queen",
+    "keywords": [
+      "pirates_queen",
+      "海盜女王",
+      "wantedposter",
+      "懸賞令"
+    ]
+  },
+  {
+    "topic": "uk-slot-template",
+    "keywords": [
+      "uk_slot_template",
+      "fillstrategy",
+      "reeldevtool",
+      "firstclone",
+      "gamesetting.json",
+      "slot 模板"
+    ]
+  },
+  {
+    "topic": "uk-slot",
+    "keywords": [
+      "uk_slot",
+      "slot 遊戲",
+      "老虎機",
+      "astarte",
+      "cocos_project",
+      "pattern-library",
+      "robinhood",
+      "far_west",
+      "chachacha",
+      "spec-to-impl"
+    ]
+  },
+  {
+    "topic": "bridge-streaming",
+    "keywords": [
+      "draft streaming",
+      "draft api",
+      "draft mode",
+      "sendrichmessage",
+      "sendmessagedraft",
+      "richmessage",
+      "rich message",
+      "4096",
+      "截斷優化",
+      "telegram-rich",
+      "@gramio/split"
+    ]
+  },
+  {
+    "topic": "bridge-specialist",
+    "keywords": [
+      "specialist",
+      "parallel_delegate",
+      "relay_delegate",
+      "specialist-domain",
+      "specialist-memory",
+      "moa-ref",
+      "moa 顧問",
+      "fable-advisor",
+      "status-push"
+    ]
+  },
+  {
+    "topic": "bridge-memory",
+    "keywords": [
+      "factlint",
+      "wikisync",
+      "wikilint",
+      "wiki sources",
+      "wiki page",
+      "forget",
+      "hit-log",
+      "fact-access",
+      "embedding",
+      "preamble_tail",
+      "memory_dir",
+      "facts-",
+      "topic shard",
+      "topics.json",
+      "ingest-ripple",
+      "skilllint",
+      "dream",
+      "skill-usage",
+      "state.md"
+    ]
+  },
+  {
+    "topic": "bridge-session",
+    "keywords": [
+      "session resume",
+      "session/load",
+      "sessionstore",
+      "/session",
+      "session-archive",
+      "session archive",
+      "/reset clean",
+      "/handoff",
+      "exportsession",
+      "loadarchive"
+    ]
+  },
+  {
+    "topic": "bridge-acp",
+    "keywords": [
+      "acp adapter",
+      "kiro-cli",
+      "claude-agent-acp",
+      "codex-acp",
+      "acp_model",
+      "acp_agent",
+      "acp_session",
+      "loadsession",
+      "/agent",
+      "acp-providers",
+      "claude-fable",
+      "fable-5",
+      "model pin",
+      "session/set_config",
+      "effort config",
+      "advisor",
+      "kiro cli"
+    ]
+  },
+  {
+    "topic": "bridge-research",
+    "keywords": [
+      "cowart",
+      "headroom",
+      "loop-engineering",
+      "ai_multi_agent",
+      "claude-plugins-official",
+      "memory nudge",
+      "improvement harness",
+      "workspace 結構化"
+    ]
+  },
+  {
+    "topic": "bridge-project",
+    "keywords": [
+      "telegram-kiro-bridge",
+      "bridge 專案",
+      "bridge repo",
+      "bridge fork",
+      "start.bat",
+      "psmux",
+      "status server",
+      "bot api",
+      "grammy",
+      "autoretry",
+      "self_eval",
+      "selfeval",
+      "/backup",
+      "readme",
+      "upstream",
+      "sync-skills",
+      "smoke",
+      "check-",
+      "unhandledrejection",
+      "dev-design",
+      "hook",
+      "preamble",
+      "token-policy",
+      "relay-peers"
+    ]
+  },
+  {
+    "topic": "vc-uof-hours",
+    "keywords": [
+      "uof",
+      "加班單",
+      "加班時數",
+      "overtime",
+      "uof_form"
+    ]
+  },
+  {
+    "topic": "spine-viewer",
+    "keywords": [
+      "spine-viewer",
+      "spine_webgl",
+      "spine webgl",
+      "drawcall",
+      "triangle",
+      "batch scan"
+    ]
+  },
+  {
+    "topic": "dev-tools",
+    "keywords": [
+      "youtube-transcript",
+      "playwright",
+      "to_pdf",
+      "obsidian",
+      "tsc --noemit",
+      "bun"
+    ]
+  },
+  {
+    "topic": "ai-strategy",
+    "keywords": [
+      "ai-canonical",
+      "正典",
+      "steering",
+      "正本",
+      "canonical corpus",
+      "跨模型"
+    ]
+  },
+  {
+    "topic": "user-pref",
+    "keywords": [
+      "使用者偏好",
+      "使用者決定",
+      "偏好 agent",
+      "偏好 git",
+      "保守策略",
+      "使用者選擇",
+      "使用者裁決",
+      "使用者對",
+      "使用者把"
+    ]
+  },
+  {
+    "topic": "misc",
+    "keywords": [
+      "misc",
+      "fallback"
+    ]
+  }
+]

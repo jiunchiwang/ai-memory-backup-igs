@@ -1,7 +1,5 @@
 - [f_7c41c5] [2026-06-03T12:19:51.275Z] 使用者的機器已安裝 Python youtube-transcript-api、playwright + chromium，可用於抓 YouTube 字幕和 HTML 轉 PDF
 - [f_99b243] [2026-06-03T12:19:51.310Z] 使用者產 PDF 的工作流程：HTML+CSS 排版 → Playwright headless Chromium 渲染（docs/to_pdf.py），不用 fpdf2 或 WeasyPrint
 - [f_86246b] [2026-06-09T08:29:22.331Z] 使用者的 Obsidian Vault 位於 C:\Users\jiunchiwang\OneDrive - International Games System\文件\Obsidian Vault\，內含 TypeScript 等技術筆記
-- [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
 - [f_947e7a] [2026-06-24T20:31:30.593Z] 驗證 TypeScript 介面重構或整併時，用 npx tsc --noEmit 做型別檢查；若遇到 TS6.0 的 deprecation 警告，可加 --ignoreDeprecations 6.0 抑制以聚焦真正錯誤。
 - [f_a8a12e] [2026-07-06T05:19:36.045Z] 在 bash shell 呼叫 PowerShell 時引號（單引號/$_）會被 bash 層吃掉導致 ParserError，可靠做法是把指令轉 UTF-16LE 再 base64，用 powershell -EncodedCommand 執行
-- [f_ce6c91] [2026-07-14T03:31:07.365Z] vc-uof-hours P3（加班單真正送出）已實作完成（2026-07-14）：uof_form.py 加入 --submit --token 模式；Phase A 產出 plan.json + 一次性 token；Phase B 五層安全防線全實作（CLI flag / plan+token / 使用者確認 / 欄位比對 / consumed 防重複）；Playwright click RadButton13 觸發 postback + alert 攔截驗證通過；簽核 dialog 因環境限制（無刷卡紀錄）未能實測，handle_sign_dialog 用啟發式偵測；首次真正送出時需觀察簽核 dialog 行為做微調

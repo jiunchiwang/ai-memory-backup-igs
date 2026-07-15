@@ -1,5 +1,11 @@
 - [f_456de2] [2026-06-30T11:06:51.101Z] telegram-kiro-bridge 已實作 P1 Session 歸檔/恢復機制：session 關閉時 exportSession() 寫結構化 JSON 到 session-archive-{chatId}.json（含 turns/goal/stats/recentSummary），新 session 建立時 loadArchive() + buildRestorationBlock() 注入 preamble 後自動刪除；與 working-state 互補（WS 說做什麼，archive 說上下文在哪）
 - [f_645ea3] [2026-06-30T11:06:51.120Z] telegram-kiro-bridge 已新增 /reset clean（或 /reset fresh）指令：結束 session 後額外刪除 session-archive + working-state，下次對話不帶入上次上下文；預設 /reset 行為不變（照舊歸檔）
-- [f_12d648] [2026-07-07T11:48:47.046Z] 使用者對 session 移植的決策：選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議；理由是 restart 連續性 + idle 殺 process 省記憶體最實、避免與 goal/MoA/relay 單 session 假設的互動風險
+- [f_046ffa] [2026-06-30T11:06:51.134Z] Session Archive 設計決策：因為只需最近一次 session 所以 per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；因為避免 context 爆炸所以恢復只注入 ~300 字摘要（排除全量 turn 注入因為會佔太多 budget）；turn text 截斷 2000 字
+- [f_bafa71] [2026-07-07T11:48:47.041Z] telegram-kiro-bridge 已實作 ACP session resume 方案 A（feat b6e028f + docs 72277b9，已 push origin/main）：ACP_SESSION_RESUME=true 閘控且預設 off；idle/crash/SIGINT 保留 registry 可 session/load 恢復（不重注 preamble），/reset、/agent、/restart、<<RESTART>> 走 fresh 並清 registry（shutdown 帶 clearResume 參數區分）
+- [f_86bdbb] [2026-07-07T11:48:47.056Z] session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME=true 重啟後做手動 e2e；首次啟用需觀察 replay 時序——真 adapter 若在 session/load 回應後才補送 replay update 有 token 重放風險，保守 fallback 方案在計畫檔風險 #1
+- [f_bef432] [2026-07-07T11:48:47.069Z] session resume 實作計畫與三段 review 軌跡存於 bridge repo docs/superpowers/plans/2026-07-07-acp-session-resume.md（含 BC-1~5 行為契約與 adapter 實測記錄表）
+- [f_daf156] [2026-07-07T13:26:02.669Z] session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars
 - [f_ecaf0b] [2026-07-07T15:27:35.999Z] telegram-kiro-bridge 的 SessionStore + /session 多 session 管理已於 2026-07-07 結案：手動 e2e 全過（BC-3 雙 session 暗號互切不互漏、BC-5 /reset 只清 active、BC-2 v1→v2 registry migration、BC-8 claude↔kiro 跨 backend record 互切 pin 自動連動），共 5 個 commit（8c65748→d500e48→db557cd→452ae60→22cd8d5）已 push origin/main，無待辦
+- [f_76faa7] [2026-07-07T15:27:36.008Z] telegram-kiro-bridge 的 README 已於 2026-07-07 補齊文檔並 push（commit 5233767）：/agent 熱切換、ACP_SESSION_RESUME、/session 指令與 /reset 只清 active 新語意
 - [f_42aed5] [2026-07-07T16:09:52.075Z] 使用者決定 idle sweep 靜默存檔維持現狀不加 Telegram 通知；/reset 的「Saved → sessions/xxx」訊息只在當下仍有 live session 且有歷史時才顯示，四條 transcript 儲存路徑（/reset、onBeforeClose、crash、/session park）皆正常運作
+- [f_c73099] [2026-07-14T05:16:39.182Z] 使用者對 /reset 和 /handoff 的使用場景偏好：日常用 /reset（快速清 context 重開），/handoff 保留給較大任務完成/換機器/當天收工等需要記憶留存的場景

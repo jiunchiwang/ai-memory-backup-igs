@@ -3,7 +3,7 @@ title: 使用者偏好與決策風格
 type: concept
 created: 2026-07-15
 updated: 2026-07-15
-sources: [f_af99c7, f_946c9f, f_e19358, f_be8c07, f_d29dfc, f_f95ab5, f_c73099, f_218abc]
+sources: [f_af99c7, f_946c9f, f_e19358, f_be8c07, f_d29dfc, f_c73099, f_218abc]
 ---
 
 # 使用者偏好與決策風格

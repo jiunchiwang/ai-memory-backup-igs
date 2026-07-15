@@ -95,5 +95,84 @@
     "effort": "high",
     "maxTurns": 30,
     "timeoutMs": 1800000
+  },
+  {
+    "name": "moa-ref-claude",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--model",
+        "claude-sonnet-4.6",
+        "-a"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/moa-ref-claude",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "low",
+    "maxTurns": 30,
+    "timeoutMs": 1800000
+  },
+  {
+    "name": "moa-ref-kiro",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "-a"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/moa-ref-kiro",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "low",
+    "maxTurns": 30,
+    "timeoutMs": 1800000
+  },
+  {
+    "name": "moa-ref-adversary",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--model",
+        "claude-sonnet-4.6",
+        "-a"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/moa-ref-adversary",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "low",
+    "maxTurns": 30,
+    "timeoutMs": 1800000
   }
 ]

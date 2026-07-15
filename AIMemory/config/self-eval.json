@@ -14,6 +14,27 @@
       "score": 78,
       "evidence": "Phase A + Phase B 核心流程實作完整且本機驗證通過（語法/plan 產出/token 防線/alert 攔截），但簽核 dialog 的真正互動因環境限制無法 e2e 測試，handle_sign_dialog 是啟發式實作未實測",
       "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-14T20:43:22.964Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "3 則 fact 成功刪除且 wiki sources 修正完成，但過程中誤認 f_046ffa 為目標 fact 導致多次重試和一次誤移除需修復，整體正確但效率待改善",
+      "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-15T01:25:38.042Z",
+      "chatId": 509424983,
+      "score": 62,
+      "evidence": "修改邏輯正確且有 graceful fallback，但日曆 popup selector 和刷卡時間 element ID 是推測的，未實測驗證——需連內網 headed 模式跑一次確認",
+      "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-15T01:54:21.345Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "tsc 通過；5 處 usageLine 全覆蓋；Provider interface optional 不破壞既有實作；唯一未驗證的是 runtime 行為（需實際跑 bot 看輸出）",
+      "belowThreshold": false
     }
   ]
 }

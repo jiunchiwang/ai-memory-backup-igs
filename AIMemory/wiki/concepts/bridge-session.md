@@ -3,7 +3,7 @@ title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
 updated: 2026-07-08
-sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_12d648, f_86bdbb, f_bef432, f_20ed42, f_daf156, f_ecaf0b, f_76faa7, f_42aed5]
+sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, f_daf156, f_ecaf0b, f_76faa7, f_42aed5]
 ---
 
 # Bridge Session 生命週期與多 Session 管理

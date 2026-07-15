@@ -43,5 +43,7 @@
 - ~~"slot" pattern（3 sessions）~~ — 2026-07-10 判定誤判：頻率偵測抓到的 3 次「slot」出現是查詢 codegen 修正狀態的問句（「請問我本機的uk-slot-codegen skill是否都有把之前測試的問題修正了?」），非可重用技術模式
 - ~~"fable relevance" / "背景 bug" / "bug 清單與修正" / "教訓 commit" / "commit 紀錄" / "紀錄 相關" / "fable" / "relevance" / "bug" 等 10 個 pattern（各 3 sessions）~~ — 2026-07-11 判定誤判：全部來自 bridge wiki retrieval 注入的 header `## [[fable]] (relevance 0.70) - 背景 - Bug 清單與修正 - 教訓 - Commit 紀錄 - 相關`，是 metadata 而非使用者行為模式（與 "score" 先例同類）
 
+- ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
+
 ---
-Last updated: 2026-07-11
+Last updated: 2026-07-16

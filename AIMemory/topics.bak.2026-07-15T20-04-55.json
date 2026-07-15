@@ -1,0 +1,304 @@
+// Topic classification rules for bridge preamble + list_facts.
+// Edit freely — bridge re-reads this file every ~2s, no /restart needed.
+// Schema: [{ topic: string, keywords: string[] }]
+//   - Keywords are lowercase substrings; fact text is lowercased before matching.
+//   - First matching rule wins; facts matching nothing become 'misc'.
+//   - Topic names should be short and unique (case-insensitive).
+// Last applied: 2026-07-14T20:04:58.959Z (token=topics-f2c24616-19)
+// If the file is deleted or malformed, bridge falls back to built-in defaults.
+[
+  {
+    "topic": "uk-917",
+    "keywords": [
+      "uk_917",
+      "uk-917",
+      "leprechaun",
+      "3 leprechaun"
+    ]
+  },
+  {
+    "topic": "uk-slot-codegen",
+    "keywords": [
+      "codegen",
+      "spec_adapter",
+      "anchor merge",
+      "probe"
+    ]
+  },
+  {
+    "topic": "uk-slot-clash-olympus",
+    "keywords": [
+      "clash of olympus",
+      "clash_of_olympus",
+      "諸神之戰"
+    ]
+  },
+  {
+    "topic": "uk-slot-eye-strike",
+    "keywords": [
+      "eye_strike",
+      "eyestrike",
+      "uk_658",
+      "uk_872"
+    ]
+  },
+  {
+    "topic": "uk-slot-pirates-queen",
+    "keywords": [
+      "pirates_queen",
+      "海盜女王",
+      "wantedposter",
+      "reconcilecascade"
+    ]
+  },
+  {
+    "topic": "uk-slot-template",
+    "keywords": [
+      "uk_slot_template",
+      "fillstrategy",
+      "reeldevtool",
+      "firstclone",
+      "模板專案"
+    ]
+  },
+  {
+    "topic": "uk-slot",
+    "keywords": [
+      "uk_slot",
+      "slot 遊戲",
+      "老虎機",
+      "cocos_project",
+      "astarte",
+      "uk_7",
+      "uk_8",
+      "slot_chachacha",
+      "triplecointreasure",
+      "pattern-library",
+      "spec-to-impl",
+      "slot-pitfalls",
+      "cocos creator",
+      "老虎機專案",
+      "ghost slot",
+      "spinekit"
+    ]
+  },
+  {
+    "topic": "spine-viewer",
+    "keywords": [
+      "spine-viewer",
+      "spine_webgl",
+      "spine webgl",
+      "drawcall",
+      "triangle",
+      "batch scan",
+      "spine-viewer-release"
+    ]
+  },
+  {
+    "topic": "bridge-streaming",
+    "keywords": [
+      "draft streaming",
+      "draft api",
+      "draft mode",
+      "sendrichmessage",
+      "sendmessagedraft",
+      "4096",
+      "rich message",
+      "truncat",
+      "rich markdown",
+      "richblock"
+    ]
+  },
+  {
+    "topic": "bridge-acp",
+    "keywords": [
+      "acp adapter",
+      "kiro-cli",
+      "claude-agent-acp",
+      "codex-acp",
+      "acp_model",
+      "acp_session",
+      "session/load",
+      "session resume",
+      "acp-providers",
+      "loadsession",
+      "/agent",
+      "fable-5",
+      "fable 5",
+      "claude-fable",
+      "advisormodel",
+      "advisor",
+      "model id",
+      "kiro cli",
+      "deepseek-3.2",
+      "qwen3"
+    ]
+  },
+  {
+    "topic": "bridge-memory",
+    "keywords": [
+      "factlint",
+      "wikisync",
+      "wikilint",
+      "wiki sources",
+      "wiki page",
+      "hit-log",
+      "fact-access",
+      "embedding",
+      "topic shard",
+      "topics.json",
+      "preamble_tail",
+      "memory_dir",
+      "facts-store",
+      "mcp-memory",
+      "remember()",
+      "forget",
+      "ingest-ripple",
+      "query-auto-save",
+      "preamble 大小",
+      "preamble 注入"
+    ]
+  },
+  {
+    "topic": "bridge-specialist",
+    "keywords": [
+      "specialist",
+      "parallel_delegate",
+      "relay_delegate",
+      "specialist-memory",
+      "specialist-domains",
+      "status-push",
+      "artifact",
+      "cloudflared",
+      "tunnel",
+      "mini app"
+    ]
+  },
+  {
+    "topic": "bridge-session",
+    "keywords": [
+      "sessionstore",
+      "/session",
+      "session-archive",
+      "working-state",
+      "exportsession",
+      "buildrestorationblock",
+      "session 歸檔"
+    ]
+  },
+  {
+    "topic": "bridge-project",
+    "keywords": [
+      "telegram-kiro-bridge",
+      "bridge 專案",
+      "bridge repo",
+      "start.bat",
+      "backup",
+      "readme",
+      "smoke",
+      "check-",
+      "observertransformer",
+      "run-prompt",
+      "index.ts",
+      "token-policy",
+      "self_eval",
+      "selfeval",
+      "/dream",
+      "/goal",
+      "rate-limit",
+      "429",
+      "loop state",
+      "state.md",
+      "skill lint",
+      "skillusage",
+      "gramy",
+      "grammy",
+      "bot api",
+      "telegra",
+      "bridge 教訓",
+      "bridge 架構",
+      "unhandledrejection",
+      "process.exit",
+      ".env",
+      "env-file",
+      "fork 同步",
+      "upstream",
+      "hook",
+      "pre-commit"
+    ]
+  },
+  {
+    "topic": "bridge-research",
+    "keywords": [
+      "cowart",
+      "headroom",
+      "loop-engineering",
+      "ai_multi_agent",
+      "claude-plugins-official",
+      "fable-advisor",
+      "skillsmp",
+      "memory nudge",
+      "improvement harness",
+      "workspace 結構化",
+      "dev-design",
+      "cross-check pattern",
+      "dynamic workflows"
+    ]
+  },
+  {
+    "topic": "dev-tools",
+    "keywords": [
+      "youtube-transcript",
+      "playwright",
+      "to_pdf",
+      "obsidian",
+      "bun",
+      "tsc --noemit",
+      "powershell",
+      "encodedcommand",
+      "excel-to-ai-doc"
+    ]
+  },
+  {
+    "topic": "ai-strategy",
+    "keywords": [
+      "ai-canonical",
+      "正典",
+      "steering",
+      "canonical corpus",
+      "正本",
+      "sync.ps1",
+      "投影",
+      "ai-canonical-corp"
+    ]
+  },
+  {
+    "topic": "user-pref",
+    "keywords": [
+      "使用者偏好",
+      "使用者決定",
+      "偏好 agent",
+      "偏好 git",
+      "commit 前先確認",
+      "commit 訊息使用中文",
+      "pascalcase",
+      "大駝峰",
+      "保守策略",
+      "不做一鍵全自動",
+      "報告不 crash",
+      "使用場景偏好",
+      "拆成多個小顆粒"
+    ]
+  },
+  {
+    "topic": "vc-uof-hours",
+    "keywords": [
+      "uof",
+      "加班單",
+      "加班時數",
+      "特休",
+      "radbutton",
+      "簽核 dialog"
+    ]
+  }
+]

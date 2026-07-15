@@ -1,5 +1,7 @@
 - [f_af99c8] [2026-06-02T13:30:02.300Z] 使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）
 - [f_5209cd] [2026-06-22T12:52:36.623Z] 使用者關注 Cowart（zhongerxin/cowart）專案——面向 Codex CLI 的本地 tldraw 無限畫布插件（標注→AI生圖→迭代），認為其 MCP server 當 bridge + 3 skill 極簡工作流的設計值得參考
 - [f_f1be4b] [2026-06-27T06:21:25.490Z] 使用者研究 cobusgreyling/loop-engineering（⭐2.7k）後判斷 bridge 已超越其設計（語意路由、Self-improving、跨機 Relay、Local LLM），最大借鏡價值在操作紀律（L1 先行、顯式 budget、三段式 state、attempt cap）
-- [f_0561d8] [2026-06-30T20:31:50.038Z] 可重用的多 agent 設計工作流(dev-design)分四階段:Explore 先查證實際程式碼架構 → Propose 產出 3 個互相競爭的設計方案(常會收斂到單一寫入匯流點)→ Adversarial 對抗找出致命缺陷並評分 → Synthesize 整合出最終規格;此流程能在設計初期就抓出如「多輪迴圈中 snapshot 過期(staleness)」這類隱性 bug。
+- [f_b13c42] [2026-07-07T11:48:47.027Z] 公司（IGS RD2）有一個 Python 多 agent 框架 ai_multi_agent（Telegram Forum Topic 每 Topic 一 agent、中央 daemon + MCP reply 架構），使用者 clone 於 G:\AI\Study\ai_multi_agent 供研究；與 bridge 定位互補：它往團隊/中央艦隊走，bridge 往單人深度助理 + MoA 品質走
 - [f_7cbc83] [2026-07-14T05:16:39.171Z] ai_multi_agent 研究結論（2026-07-14）：最值得借鏡的 5 項設計為 Memory Nudge（每 N turns spawn 短命 subprocess 回顧對話自動抽記憶）、Improvement Harness（結構化錯誤收集含 fix_applied 欄位+推送到 review topic）、Workspace 結構化（每 agent 有 knowledge/shared + private + inbox + tasks.md）、Central 知識萃取增量匯出（HTTP + since 游標）、ask_user 同步阻塞+timeout fallback；不適合 bridge 的：Forum Topic 路由、Central 中樞、cost_guard
+- [f_cf0946] [2026-07-14T20:31:30.852Z] 為「無長駐行程、僅一次性執行」的 headless CLI agent bridge(如 Telegram-Kiro bridge)設計架構時,不能直接套用長駐 async process 的模式(例如同步阻塞等待回覆、非同步 inbox 消費模型),因為一次性 spawn 無法 await 或暫留對話回合;架構評估應先確認目標執行模型是否相容,再決定是否套用既有模式。
+- [f_9e12bd] [2026-07-14T20:31:31.947Z] 引入結構化錯誤記錄機制(例如帶 fix_applied 欄位的 improvement harness)不一定能提升實際當機診斷能力;若事後檢討發現真正缺口是「紀律」(例如 catch block 中確實記錄錯誤內容),就應該優先補強紀律而非疊加新的基礎設施。

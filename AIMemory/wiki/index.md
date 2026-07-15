@@ -9,6 +9,8 @@
 - [[uk-slot-template]] — UK Slot 模板專案（三種 FillStrategy、起新專案慣例、回灌工作流、命名規範）
 - [[uk-slot-codegen]] — UK Slot Codegen 工具整合（定位 M0a~M1 加速器、anchor merge 限制、驗證結果、回饋修正）
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
+- [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（6×4 4096 Ways、VS Feature 🔴、spec-to-impl 完成、待確認 8 項）
+- [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固）
 - [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、harness hooks、trailer 陷阱）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
@@ -42,5 +44,5 @@
 
 ---
 
-Total pages: 25
-Last updated: 2026-07-15 (uk-slot-codegen, uk-slot-template, user-pref 新增；bridge-acp, bridge-project 更新)
+Total pages: 27
+Last updated: 2026-07-16 (uk-slot-clash-olympus, uk-slot-eye-strike 新增；bridge-project, bridge-research 更新)

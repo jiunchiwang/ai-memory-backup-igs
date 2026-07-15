@@ -26,7 +26,6 @@
         "uk_slot",
         "uk_872",
         "eyestrike",
-        "cocos creator",
         "fillstrategy",
         "ghost slot",
         "wantedposter",
@@ -41,11 +40,9 @@
         "eye_strike",
         "clash_of_olympus",
         "astarte",
-        "reconcilecascade",
         "3 leprechaun",
         "spec_adapter",
         "anchor merge",
-        "probe",
         "諸神之戰",
         "uk_658",
         "pirates_queen",
@@ -55,19 +52,27 @@
         "slot 遊戲",
         "老虎機",
         "cocos_project",
-        "uk_7",
-        "uk_8",
-        "slot_chachacha",
-        "slot-pitfalls",
-        "老虎機專案",
-        "spinekit"
+        "anchor_merge",
+        "probe-compare",
+        "懸賞令",
+        "gamesetting.json",
+        "slot 模板",
+        "robinhood",
+        "far_west",
+        "chachacha",
+        "excel-to-ai-doc",
+        "並發 gotcha",
+        "cocos 版面",
+        "promise.all"
       ],
       "wikiPages": [
         "uk-slot",
         "uk-917",
         "uk-slot-pitfalls",
         "uk-slot-template",
-        "uk-slot-codegen"
+        "uk-slot-codegen",
+        "uk-slot-clash-olympus",
+        "uk-slot-eye-strike"
       ],
       "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
       "model": "claude-sonnet-4.6",
@@ -106,6 +111,30 @@
       "description": "Full-capability specialist for parallel multi-tasking (inherits all skills and MCP)",
       "model": "claude-sonnet-4.6",
       "effort": "high"
+    },
+    "moa-ref-claude": {
+      "prefixes": [],
+      "mcpServers": [],
+      "topicKeywords": [],
+      "description": "MoA blind advisor (Claude)",
+      "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
+      "effort": "low"
+    },
+    "moa-ref-kiro": {
+      "prefixes": [],
+      "mcpServers": [],
+      "topicKeywords": [],
+      "description": "MoA blind advisor (Kiro/Bedrock)",
+      "harness": "kiro-cli acp -a",
+      "effort": "low"
+    },
+    "moa-ref-adversary": {
+      "prefixes": [],
+      "mcpServers": [],
+      "topicKeywords": [],
+      "description": "MoA devil's advocate (red-team preset)",
+      "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
+      "effort": "low"
     }
   }
 }

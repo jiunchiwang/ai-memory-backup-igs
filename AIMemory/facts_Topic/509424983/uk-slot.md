@@ -3,11 +3,11 @@
 - [f_wr4th9] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_739_wrath_of_thunder_client 位於 G:\Cocos_Project\uk_739_wrath_of_thunder_client，Wrath of Thunder 雷神主題
 - [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
 - [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
-- [f_02cb06] [2026-06-17T10:50:58.031Z] spine-viewer 插件位於 C:\Users\jiunchiwang\.CocosCreator\extensions\spine-viewer，Cocos Creator ≥3.6.2 使用
-- [f_09acc4] [2026-06-17T10:50:58.138Z] Cocos Creator 3.6 的 Editor.Message.send 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
 - [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
 - [f_e22204] [2026-06-19T02:11:08.803Z] 使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）
+- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
 - [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
+- [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
 - [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
 - [f_e84e55] [2026-07-09T19:00:02.547Z] uk-slot-spec-to-impl skill 正本已加強（AI-canonical-corp commit 14887cd）：新增步驟0前提確認checklist、步驟2前置4項checklist gate、檢查點改模板格式輸出、AI.md綁定步驟1完成時、常見錯誤新增5條流程偏離實證教訓
 - [f_8a9474] [2026-07-09T20:33:34.376Z] 記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。

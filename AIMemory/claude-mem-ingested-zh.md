@@ -1,5 +1,19 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-15(來源 shortlist 15 筆 → 精選合併後寫入 5 條)
+
+來源 project:`uk_slot_template`(9 筆,皆 2026-07-14 decision,mask expansion 整合架構 dev-design workflow)、`telegram-kiro-bridge-main`(6 筆,皆 2026-07-14 decision)。
+
+1. [來源 telegram-kiro-bridge-main → shard misc] 撰寫可攜式 skill 時,若該 skill 會被多個 agent CLI(如 Kiro、Codex、Claude)或多台機器共用,應避免在 SKILL.md 中寫死絕對路徑(例如特定磁碟機代號或使用者目錄),以免跨環境失效。
+2. [合併 shortlist ask_user timeout / workspace architecture 兩筆 → shard bridge-project] 為「無長駐行程、僅一次性執行」的 headless CLI agent bridge(如 Telegram-Kiro bridge)設計架構時,不能直接套用長駐 async process 的模式(例如同步阻塞等待回覆、非同步 inbox 消費模型),因為一次性 spawn 無法 await 或暫留對話回合;架構評估應先確認目標執行模型是否相容,再決定是否套用既有模式。
+3. [合併 shortlist improvement harness 相關兩筆 → shard bridge-research] 引入結構化錯誤記錄機制(例如帶 fix_applied 欄位的 improvement harness)不一定能提升實際當機診斷能力;若事後檢討發現真正缺口是「紀律」(例如 catch block 中確實記錄錯誤內容),就應該優先補強紀律而非疊加新的基礎設施。
+4. [蒸餾 uk_slot_template judge panel 評分紀錄 → shard bridge-research] 在 multi-agent 的 dev-design workflow 中,即使 judge panel 把某提案排名第一,該提案也可能被評為「無法照案直接實作」(例如僅 5.5/10 分),這代表評分結果本身是需要再迭代設計的訊號,不該直接採用第一名方案進入實作。
+5. [蒸餾 uk_slot_template adversarial 8 findings 紀錄 → shard bridge-research] dev-design workflow 的 Explore phase 若宣稱「現有程式缺少某項能力」(例如缺少方向感知),該宣稱有可能是錯的(該能力其實透過其他底層邏輯間接實現),因此 adversarial 驗證階段應優先檢查 Explore 階段的假設是否成立,而不是只驗證新提案本身。
+
+捨棄:uk_slot_template 的 mkdir artifacts 目錄建立記錄、workflow 啟動記錄(2筆)、7個 unknowns 清單、以及三個具體設計提案(IMaskExpander/策略介面/外部 controller)——皆為該次 mask expansion 功能的一次性執行細節或遊戲特定實作方案,無跨 session 重用價值;telegram-kiro-bridge 的「specialist knowledge backflow」單純描述問題現象未附解法,暫不收錄。
+
+去重:以 list_facts 對 AIMemory(240 筆)分別查詢 portable skill absolute path、headless bridge async spawn、improvement harness fix_applied、judge panel proposal score、explore phase adversarial verify existing mechanism,五條查詢均無匹配,確認皆為淨新增。未呼叫 forget。
+
 ## 2026-07-14(來源 shortlist 6 筆 → 精選合併後寫入 2 條)
 
 來源 project:`telegram-kiro-bridge-main`(6 筆,皆 2026-07-13 decision)。

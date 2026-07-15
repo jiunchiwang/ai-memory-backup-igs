@@ -2,7 +2,9 @@
 - [f_70542c] [2026-06-01T12:16:45.051Z] 使用者偏好 git commit 訊息使用中文
 - [f_8a4a0e] [2026-06-03T12:19:51.293Z] 使用者偏好 HTML 文件要有目錄錨點跳轉功能（點擊跳段落 + 回目錄連結）
 - [f_e0ce0f] [2026-06-24T20:31:28.200Z] 使用者偏好 git commit 前先確認：執行 commit 之前應多問幾個釐清問題並取得使用者同意，不要逕自 commit。
+- [f_0c44ff] [2026-07-06T02:55:13.600Z] 使用者對非 Claude model 的判斷：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項，qwen3-coder-next 超便宜但 experimental 穩定度未知
+- [f_be8c07] [2026-07-07T07:52:13.452Z] 使用者的除錯對策偏好：對帳/檢查類函式遇格式不符應「回報不 crash」（守衛 + error log），反對用關掉檢查或 clamp 掩蓋——理由是不用記得開回來、production 遇壞資料也不炸
 - [f_a738db] [2026-07-10T00:12:51.617Z] 使用者決定 underused skills 處理策略（2026-07-10）：刪除 skill-creator、knowhow-accumulation、non-engineer-agent-design（磁碟+store），保留 huashu-slides、dual-skill-review-loop、self-eval-prompt-pattern 繼續觀察
+- [f_31febf] [2026-07-13T13:25:29.289Z] 使用者把「多視角分析 + 每個發現派 skeptic 對抗驗證」的 review 流程做成固定 skill，加入日後的 skill 開發流程，會對既有 skill 原始碼重跑此流程來優化
 - [f_d29dfc] [2026-07-13T13:25:29.299Z] 使用者對會產生真實外部紀錄的自動化（如公司系統表單送出）採保守策略：即使技術上可行，仍選擇只做到 dry-run+截圖、手動確認後才送出，不做一鍵全自動
-- [f_f95ab5] [2026-07-14T02:13:49.369Z] 這是刻意的保守設計（skill 描述提到對「會產生真實外部紀錄的自動化」採保守策略），避免加班單這種會產生公司內部真實紀錄的動作被誤觸發送出
-- [f_c73099] [2026-07-14T05:16:39.182Z] 使用者對 /reset 和 /handoff 的使用場景偏好：日常用 /reset（快速清 context 重開），/handoff 保留給較大任務完成/換機器/當天收工等需要記憶留存的場景
+- [f_de7bc7] [2026-07-14T08:15:44.560Z] 使用者對已誤進版控的診斷資料（ai-memory-backup-igs 裡的 acp-trace）選擇的處理方式：只做 git rm --cached 移除追蹤 + 加 .gitignore 防再犯，不做 git filter-repo 歷史清除、不 force-push，接受舊 commit 歷史仍保留內容

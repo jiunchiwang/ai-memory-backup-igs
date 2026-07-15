@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-14
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_a0d9ac, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a]
+updated: 2026-07-16
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -46,6 +46,23 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 - 收錄 ~196 萬份公開 SKILL.md，格式與 bridge 完全相容
 - 但絕大多數設計給 Claude Code 本地 CLI 環境，bridge 無法直接安裝使用
 - 已實作 `/skillsearch` 指令整合 API
+
+### ai_multi_agent（IGS RD2 內部框架）
+
+- 公司 Python 多 agent 框架（Telegram Forum Topic 每 Topic 一 agent、中央 daemon + MCP reply）
+- 定位互補：它往團隊/中央艦隊走，bridge 往單人深度助理 + MoA 品質走
+- **2026-07-14 五項借鏡結論**：
+  1. Memory Nudge（每 N turns 自動抽記憶）→ 擱置（機器未裝 llama.cpp）
+  2. Improvement Harness（結構化錯誤收集）→ 不採用（真正缺口是紀律而非基礎設施）
+  3. Workspace 結構化 → 不採用（意外查出 taskId 路徑穿越漏洞，已修）
+  4. Central 知識萃取 → 縮小版採用（specialistreflect dream step，commit 21f12bf）
+  5. ask_user timeout fallback → 縮小版採用（goal ASK-aware，commit 8e52c2e）
+- 不適合 bridge 的：Forum Topic 路由、Central 中樞、cost_guard
+
+## 通用架構教訓
+
+- 為 headless CLI agent 設計架構時，不能直接套用長駐 async process 模式（同步阻塞/非同步 inbox）——一次性 spawn 無法 await，應先確認執行模型是否相容
+- 引入結構化錯誤記錄機制不一定能提升實際診斷能力；若缺口是「紀律」就應補強紀律而非疊加基礎設施
 
 ### Fable-Advisor（echo-of-machines/fable-advisor）
 

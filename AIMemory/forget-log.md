@@ -121,3 +121,39 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_42843e] [2026-07-13T02:39:12.928Z] Cloudflared Quick Tunnel 不支援 SSE（Server-Sent Events）——bridge 的 /status Mini App 即時串流 endpoint（/api/status/:taskId/stream）在 quick tunnel 下不可用，需改用 polling 或升級 named tunnel
 - [2026-07-14T20:09:51.259Z] user=509424983 query="使用者機器已安裝 cloudflared 2026.7.1" deleted=1 token=forget-1b23f894-1
     - [f_72a155] [2026-07-13T02:23:57.615Z] 使用者機器已安裝 cloudflared 2026.7.1（winget install Cloudflare.cloudflared），供 status-server Mini App HTTPS tunnel 使用
+- [2026-07-14T20:40:37.206Z] user=509424983 query="Rich Message streaming 升級評估（2026-07-08）：grammY 1.44 已完整支援 Bot API 10.1" deleted=1 token=forget-a985645a-1
+    - [f_a0d9ac] [2026-07-08T08:35:28.183Z] telegram-kiro-bridge 的 Rich Message streaming 升級評估（2026-07-08）：grammY 1.44 已完整支援 Bot API 10.1（sendRichMessage + sendRichMessageDraft type-safe）；官方 @grammyjs/stream v1.1.0 plugin 封裝 draft lifecycle（draft_id 管理 + 30 秒 heartbeat + 最終 persist）；現有 telegram-rich-renderer.ts 的實作不完整（走 editMessageText 夾帶 rich_message 參數而非真 draft API）；正確升級路線：npm install @grammyjs/stream → bot.use(stream()) → run-prompt.ts 把 push-based onUpdate 轉 async iterator 接 ctx.replyWithMarkdownStream → 預估 1.5-2 小時；主要收益是 sendRichMessageDraft 不受 editMessageText 的 429 限流、可移除 format-html.ts 的 Markdown escape 邏輯、支援原生表格/程式碼高亮/LaTeX/tg-thinking 動畫
+- [2026-07-14T20:40:37.306Z] user=509424983 query="選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議" deleted=0 token=forget-b8b3d9e1-1
+
+- [2026-07-14T20:40:37.430Z] user=509424983 query="這是刻意的保守設計（skill 描述提到對「會產生真實外部紀錄的自動化」採保守策略）" deleted=1 token=forget-e07162af-1
+    - [f_f95ab5] [2026-07-14T02:13:49.369Z] 這是刻意的保守設計（skill 描述提到對「會產生真實外部紀錄的自動化」採保守策略），避免加班單這種會產生公司內部真實紀錄的動作被誤觸發送出
+- [2026-07-14T20:40:49.123Z] user=509424983 query="選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議" deleted=0 token=forget-b8b3d9e1-1
+
+- [2026-07-14T20:41:44.442Z] user=509424983 query="選方案 A（只做 resume 不做 /session UI）" deleted=0 token=forget-b8b3d9e1-1
+
+- [2026-07-14T20:42:58.741Z] user=509424983 query="session 移植的決策：選方案 A（只做 resume 不做 /session UI）" deleted=1 token=forget-b8b3d9e1-1
+    - [f_12d648] [2026-07-07T11:48:47.046Z] 使用者對 session 移植的決策：選方案 A（只做 resume 不做 /session UI），方案 B（SessionStore+UI）等 A 跑穩再議；理由是 restart 連續性 + idle 殺 process 省記憶體最實、避免與 goal/MoA/relay 單 session 假設的互動風險
+- [2026-07-15T20:09:23.790Z] user=509424983 query="Rich Messages 升級 PoC 裁決" deleted=0 token=forget-7c4264b2-1
+
+- [2026-07-15T20:09:23.841Z] user=509424983 query="[WS] completed: ctx 統計行加上 agent/model/effort" deleted=1 token=forget-358792e8-1
+    - [f_5eeea7] [2026-07-15T01:56:01.934Z] [WS] completed: ctx 統計行加上 agent/model/effort 後綴（5 檔改動：types.ts/acp.ts/direct.ts/run-prompt.ts/index.ts/relay.ts，tsc 通過）
+- [2026-07-15T20:09:23.901Z] user=509424983 query="session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME" deleted=0 token=forget-5a757299-1
+
+- [2026-07-15T20:09:31.132Z] user=509424983 query="placeholder guard 漏排除 useDraftMode" deleted=0 token=forget-f675afca-1
+
+- [2026-07-15T20:09:37.519Z] user=509424983 query="README 已於 2026-07-07 補齊文檔並 push" deleted=0 token=forget-69547103-1
+
+- [2026-07-15T20:09:37.553Z] user=509424983 query="check-moa 壞測試待辦已完成" deleted=0 token=forget-4d6daaec-1
+
+- [2026-07-15T20:09:44.767Z] user=509424983 query="README.md 已拆分重構（2026-07-13，commit 80e847b）" deleted=0 token=forget-8871c3c4-1
+
+- [2026-07-15T20:09:44.823Z] user=509424983 query="Telegram Bot API 9.6（2026-04-03）Managed Bots" deleted=0 token=forget-12ce4b46-1
+
+- [2026-07-15T20:09:55.446Z] user=509424983 query="session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars" deleted=0 token=forget-e09f6458-1
+
+- [2026-07-15T20:09:55.495Z] user=509424983 query="疑似有功能宣稱與實作脫節：README 提到的「14類錯誤分類器" deleted=1 token=forget-79ab485f-1
+    - [f_46533c] [2026-07-13T11:39:16.117Z] telegram-kiro-bridge 疑似有功能宣稱與實作脫節：README 提到的「14類錯誤分類器（ms-error-classification）」只在 docs/SPEC-self-improving-agent.md 出現，src/ 無對應程式碼、default-skills/ 未安裝此 skill，尚未確認是否要處理
+- [2026-07-15T20:09:55.570Z] user=509424983 query="/dev-review workflow 完成後的通知沒有送達" deleted=1 token=forget-792f57a9-1
+    - [f_6f4462] [2026-07-14T01:00:58.589Z] 使用者反映 /dev-review workflow 完成後的通知沒有送達（兩次都沒收到），但審查本身有成功執行並落地 artifacts——bridge/workflow 完成通知管線疑似有問題，待查
+- [2026-07-15T20:10:01.408Z] user=509424983 query="SELF_EVAL 設計規格 P1-design-spec.md 的 CLAUDE.md 方法論小節仍欠" deleted=1 token=forget-74214b7d-1
+    - [f_f762eb] [2026-07-14T01:00:58.598Z] SELF_EVAL 設計規格 P1-design-spec.md 的 CLAUDE.md 方法論小節仍欠一次 Section 12.6 R-2 異源 cross-source review（程式碼審查已完成，文字本身的方法論審查未做），使用者尚未決定是否執行

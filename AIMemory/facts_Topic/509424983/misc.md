@@ -1,9 +1,1 @@
-- [f_c01dbd] [2026-06-17T10:50:58.161Z] spine-webgl TextureAtlas 的 texture factory callback 每次呼叫必須回傳獨立物件（含 getImage 方法），否則 DC 比對失效
-- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
-- [f_0a8153] [2026-06-27T08:00:59.524Z] 使用者確認 bridge 的自我改進優先級：Context Budget（事前紀律 + 事中熔斷）和 ASK 強制觸發規則是當前最需要的兩個 preamble 加強項
-- [f_046ffa] [2026-06-30T11:06:51.134Z] Session Archive 設計決策：因為只需最近一次 session 所以 per-chatId 單檔覆寫（排除 append-only 因為歷史有 transcript MD）；因為避免 context 爆炸所以恢復只注入 ~300 字摘要（排除全量 turn 注入因為會佔太多 budget）；turn text 截斷 2000 字
-- [f_a4464b] [2026-07-06T05:51:18.125Z] scripts/setup-local-notebooklm-mcp.mjs 目標 CLI 有架構性錯配，要安裝 NotebookLM MCP 前需先修此 script
-- [f_be8c07] [2026-07-07T07:52:13.452Z] 使用者的除錯對策偏好：對帳/檢查類函式遇格式不符應「回報不 crash」（守衛 + error log），反對用關掉檢查或 clamp 掩蓋——理由是不用記得開回來、production 遇壞資料也不炸
-- [f_8da350] [2026-07-07T08:51:39.050Z] merge 解衝突教訓：git checkout --theirs/--ours 是整檔取代，會洗掉對側已乾淨自動合併的 hunk（combined diff 不顯示乾淨 hunk）；雙邊都有改動的檔案應用 git merge-file 三方合併或 checkout -m 恢復衝突標記後只改衝突區，並逐檔 diff 兩側核對無遺失
-- [f_948bf2] [2026-07-07T11:48:47.062Z] vc-kiro-delegate 三段 review 流程實證有效：Kiro self-review 抓到 /restart 走 shutdown() 漏清 registry、獨立 reviewer 抓到 self-review 修法誤殺 SIGINT resume 場景——兩輪各抓到一個真 bug，主 agent 接手修（不叫 Kiro 修第二次）
-- [f_31febf] [2026-07-13T13:25:29.289Z] 使用者把「多視角分析 + 每個發現派 skeptic 對抗驗證」的 review 流程做成固定 skill，加入日後的 skill 開發流程，會對既有 skill 原始碼重跑此流程來優化
+- [f_484853] [2026-07-12T00:33:23.421Z] bridge 主程序跑 tsx 直吃 src，但 MCP 子行程（memory/google）三個 CLI 都吃 dist——改到 mcp-memory 的 import 鏈必須 npx tsc -p . 重建 dist 才生效，且要重啟 session 才會重新 spawn MCP

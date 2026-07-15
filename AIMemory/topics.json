@@ -4,9 +4,19 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-14T20:04:58.959Z (token=topics-f2c24616-19)
+// Last applied: 2026-07-15T20:05:43.814Z (token=topics-78db0f97-20)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
+  {
+    "topic": "uk-slot-codegen",
+    "keywords": [
+      "codegen",
+      "spec_adapter",
+      "anchor merge",
+      "anchor_merge",
+      "probe-compare"
+    ]
+  },
   {
     "topic": "uk-917",
     "keywords": [
@@ -17,20 +27,12 @@
     ]
   },
   {
-    "topic": "uk-slot-codegen",
-    "keywords": [
-      "codegen",
-      "spec_adapter",
-      "anchor merge",
-      "probe"
-    ]
-  },
-  {
     "topic": "uk-slot-clash-olympus",
     "keywords": [
       "clash of olympus",
       "clash_of_olympus",
-      "諸神之戰"
+      "諸神之戰",
+      "triplecointreasure"
     ]
   },
   {
@@ -48,7 +50,7 @@
       "pirates_queen",
       "海盜女王",
       "wantedposter",
-      "reconcilecascade"
+      "懸賞令"
     ]
   },
   {
@@ -58,6 +60,8 @@
       "fillstrategy",
       "reeldevtool",
       "firstclone",
+      "gamesetting.json",
+      "slot 模板",
       "模板專案"
     ]
   },
@@ -67,31 +71,18 @@
       "uk_slot",
       "slot 遊戲",
       "老虎機",
-      "cocos_project",
       "astarte",
-      "uk_7",
-      "uk_8",
-      "slot_chachacha",
-      "triplecointreasure",
+      "cocos_project",
       "pattern-library",
+      "robinhood",
+      "far_west",
+      "chachacha",
       "spec-to-impl",
-      "slot-pitfalls",
-      "cocos creator",
-      "老虎機專案",
+      "excel-to-ai-doc",
       "ghost slot",
-      "spinekit"
-    ]
-  },
-  {
-    "topic": "spine-viewer",
-    "keywords": [
-      "spine-viewer",
-      "spine_webgl",
-      "spine webgl",
-      "drawcall",
-      "triangle",
-      "batch scan",
-      "spine-viewer-release"
+      "並發 gotcha",
+      "cocos 版面",
+      "promise.all"
     ]
   },
   {
@@ -102,36 +93,28 @@
       "draft mode",
       "sendrichmessage",
       "sendmessagedraft",
-      "4096",
+      "richmessage",
       "rich message",
-      "truncat",
-      "rich markdown",
-      "richblock"
+      "4096",
+      "截斷優化",
+      "telegram-rich",
+      "@gramio/split"
     ]
   },
   {
-    "topic": "bridge-acp",
+    "topic": "bridge-specialist",
     "keywords": [
-      "acp adapter",
-      "kiro-cli",
-      "claude-agent-acp",
-      "codex-acp",
-      "acp_model",
-      "acp_session",
-      "session/load",
-      "session resume",
-      "acp-providers",
-      "loadsession",
-      "/agent",
-      "fable-5",
-      "fable 5",
-      "claude-fable",
-      "advisormodel",
-      "advisor",
-      "model id",
-      "kiro cli",
-      "deepseek-3.2",
-      "qwen3"
+      "specialist",
+      "parallel_delegate",
+      "relay_delegate",
+      "specialist-domain",
+      "specialist-memory",
+      "moa-ref",
+      "moa 顧問",
+      "fable-advisor",
+      "status-push",
+      "cloudflared",
+      "ngrok"
     ]
   },
   {
@@ -142,89 +125,59 @@
       "wikilint",
       "wiki sources",
       "wiki page",
+      "forget",
       "hit-log",
       "fact-access",
       "embedding",
-      "topic shard",
-      "topics.json",
       "preamble_tail",
       "memory_dir",
-      "facts-store",
-      "mcp-memory",
-      "remember()",
-      "forget",
+      "facts-",
+      "topic shard",
+      "topics.json",
       "ingest-ripple",
-      "query-auto-save",
-      "preamble 大小",
-      "preamble 注入"
-    ]
-  },
-  {
-    "topic": "bridge-specialist",
-    "keywords": [
-      "specialist",
-      "parallel_delegate",
-      "relay_delegate",
-      "specialist-memory",
-      "specialist-domains",
-      "status-push",
-      "artifact",
-      "cloudflared",
-      "tunnel",
-      "mini app"
+      "skilllint",
+      "skill-usage",
+      "state.md",
+      "notebooklm"
     ]
   },
   {
     "topic": "bridge-session",
     "keywords": [
+      "session resume",
+      "session/load",
       "sessionstore",
       "/session",
       "session-archive",
-      "working-state",
+      "session archive",
+      "/reset clean",
+      "/handoff",
       "exportsession",
-      "buildrestorationblock",
-      "session 歸檔"
+      "loadarchive"
     ]
   },
   {
-    "topic": "bridge-project",
+    "topic": "bridge-acp",
     "keywords": [
-      "telegram-kiro-bridge",
-      "bridge 專案",
-      "bridge repo",
-      "start.bat",
-      "backup",
-      "readme",
-      "smoke",
-      "check-",
-      "observertransformer",
-      "run-prompt",
-      "index.ts",
-      "token-policy",
-      "self_eval",
-      "selfeval",
-      "/dream",
-      "/goal",
-      "rate-limit",
-      "429",
-      "loop state",
-      "state.md",
-      "skill lint",
-      "skillusage",
-      "gramy",
-      "grammy",
-      "bot api",
-      "telegra",
-      "bridge 教訓",
-      "bridge 架構",
-      "unhandledrejection",
-      "process.exit",
-      ".env",
-      "env-file",
-      "fork 同步",
-      "upstream",
-      "hook",
-      "pre-commit"
+      "acp adapter",
+      "kiro-cli",
+      "claude-agent-acp",
+      "codex-acp",
+      "acp_model",
+      "acp_agent",
+      "acp_session",
+      "loadsession",
+      "/agent",
+      "acp-providers",
+      "claude-fable",
+      "fable-5",
+      "model pin",
+      "session/set_config",
+      "effort config",
+      "advisor",
+      "kiro cli",
+      "三模型分工",
+      "vc-kiro-delegate"
     ]
   },
   {
@@ -235,14 +188,70 @@
       "loop-engineering",
       "ai_multi_agent",
       "claude-plugins-official",
-      "fable-advisor",
-      "skillsmp",
       "memory nudge",
       "improvement harness",
       "workspace 結構化",
+      "dynamic workflows",
+      "headless cli agent"
+    ]
+  },
+  {
+    "topic": "bridge-project",
+    "keywords": [
+      "telegram-kiro-bridge",
+      "bridge 專案",
+      "bridge repo",
+      "bridge fork",
+      "start.bat",
+      "psmux",
+      "status server",
+      "bot api",
+      "grammy",
+      "autoretry",
+      "self_eval",
+      "selfeval",
+      "/backup",
+      "readme",
+      "upstream",
+      "sync-skills",
+      "smoke",
+      "check-",
+      "unhandledrejection",
       "dev-design",
-      "cross-check pattern",
-      "dynamic workflows"
+      "hook",
+      "preamble",
+      "token-policy",
+      "relay-peers",
+      "env-file",
+      "writependingbypath",
+      "通知沒有送達",
+      "通知管線",
+      "merge 解衝突",
+      "[ws]",
+      "ctx 統計"
+    ]
+  },
+  {
+    "topic": "vc-uof-hours",
+    "keywords": [
+      "uof",
+      "加班單",
+      "加班時數",
+      "overtime",
+      "uof_form"
+    ]
+  },
+  {
+    "topic": "spine-viewer",
+    "keywords": [
+      "spine-viewer",
+      "spine-webgl",
+      "spine_webgl",
+      "spine webgl",
+      "drawcall",
+      "triangle",
+      "batch scan",
+      "editor.message.send"
     ]
   },
   {
@@ -252,11 +261,10 @@
       "playwright",
       "to_pdf",
       "obsidian",
-      "bun",
       "tsc --noemit",
-      "powershell",
+      "bun",
       "encodedcommand",
-      "excel-to-ai-doc"
+      "powershell -encoded"
     ]
   },
   {
@@ -265,11 +273,11 @@
       "ai-canonical",
       "正典",
       "steering",
-      "canonical corpus",
       "正本",
-      "sync.ps1",
-      "投影",
-      "ai-canonical-corp"
+      "canonical corpus",
+      "跨模型",
+      "可攜式 skill",
+      "寫死絕對路徑"
     ]
   },
   {
@@ -279,26 +287,19 @@
       "使用者決定",
       "偏好 agent",
       "偏好 git",
-      "commit 前先確認",
-      "commit 訊息使用中文",
-      "pascalcase",
-      "大駝峰",
       "保守策略",
-      "不做一鍵全自動",
-      "報告不 crash",
-      "使用場景偏好",
-      "拆成多個小顆粒"
+      "使用者選擇",
+      "使用者裁決",
+      "使用者對",
+      "使用者把",
+      "除錯對策偏好"
     ]
   },
   {
-    "topic": "vc-uof-hours",
+    "topic": "misc",
     "keywords": [
-      "uof",
-      "加班單",
-      "加班時數",
-      "特休",
-      "radbutton",
-      "簽核 dialog"
+      "misc",
+      "fallback"
     ]
   }
 ]

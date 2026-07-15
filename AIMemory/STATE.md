@@ -1,26 +1,23 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-13T20:14:59.306Z
+Last run: 2026-07-14T20:18:40.859Z
 
 ## High Priority (action needed)
-（無）
+- （無待處理項目）
 
 ## Watch List (monitor)
-- wikilint：bridge-project.md 已過期，未反映 07-12～07-13 活動（scheduler 修復、第二次 upstream sync、README 拆分）
-- factlint：衰減判定暫不可用，hit-log 僅累積 3 天資料，未達 60 天門檻
-- skilllint：4 個 underused skill（dual-skill-review-loop / huashu-slides / self-eval-prompt-pattern / uk-slot-multilang-sync）
-- skilllint：vc-uof-hours 缺 skill-usage.json entry（磁碟已裝，追蹤漏記）
-- specialistreview：1 個新 specialist 建議 + 1 個 domain expansion 待評估
-- docupdate：README 與 usage-guide.html 皆仍寫「/status Mini App 監控」，該功能 07-13 已改 Bot 推送，兩份文件待同步
-
-## Processed since last run
-- SELF_EVAL R-5 訂正完成（2026-07-14）：`.claude-loop/artifacts/P1-design-spec.md` 第 3.2/4.4/BC-3 節 + 狀態列已依實測 grep 訂正「run-prompt.ts:817 主線路徑不經過 filterTransformedByPolicy」的事實。**確認：`.claude-loop/artifacts/P3-review.md`（2026-07-13 23:56，第二輪 /dev-review，verdict=needs-minor-revision）本身就是找出 R-5 的 cross-source review，且其結論明文「訂正 R-5 三處文字即可進實作，不需再開一輪」——dream 建議原文「訂正後即可進實作」正確，已採納。設計規格現已可進入實作階段。**（上一版本此處誤判需要第三輪 review，已訂正——當時未讀完 P3-review.md 全文。）
+- 零命中 topic shards（30 天內未被 recall 命中）：bridge-streaming、uk-slot-codegen、uk-slot-template、uk-slot-clash-olympus、uk-slot-eye-strike、bridge-session、uk-slot-pirates-queen、vc-uof-hours、misc
+- specialistreview 建議新增 specialist：uk-slot-codegen-specialist（10 條 codegen 踩坑 facts 集中）
+- underused skills 持續觀察中（5 個）：claude-mem-curate、dual-skill-review-loop、huashu-slides、self-eval-prompt-pattern、uk-slot-multilang-sync
+- wiki 待補頁面（下輪 wikisync）：uk-slot-eye-strike（6 facts）、uk-slot-clash-olympus（6 facts）
+- usage-guide.html 已更新（+selfeval 指令/section、+specialistreflect dream step），尚未 commit
 
 ## Noise (ignored this run)
-- sharedsync：無異動
-- dailylog：2026-07-13 日誌已產出
-- sessionreflect：今天無 session transcript，跳過
-- memorytoskill：0 個新候選，12 份 session 已歸檔至 oldSessions
-- topicreview：14 個 topic 重整完成，misc 20→2
-- wikisync：bridge-memory.md、bridge-specialist.md 更新完成
-- artifactcleanup：刪除 0 個，剩餘 5 個
-- backup：commit 2ca50bc，322 檔，63.7s 完成
+- sharedsync：無變更
+- dailylog：2026-07-14.md 已產出（24 行）
+- memorytoskill：0 個新 skill（頻率候選 "commit" score=0.24 未達門檻）
+- topicreview：19 topic 重建完成，misc 31→10
+- wikisync：新增 3 頁（uk-slot-codegen、uk-slot-template、user-pref）+ 更新 2 頁（bridge-acp、bridge-project）
+- wikilint：25 頁全健康，0 orphan，0 broken link
+- skilllint：24 健康、0 stale、0 conflict、0 orphan
+- artifactcleanup：0 個過期檔案
+- backup：commit 2ae7dc4，115 檔，20.5s

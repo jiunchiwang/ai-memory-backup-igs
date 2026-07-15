@@ -1,0 +1,25 @@
+{
+  "name": "moa-ref-kiro",
+  "description": "MoA blind advisor (Kiro/Bedrock)",
+  "tools": [
+    "@builtin",
+    "@memory"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    }
+  }
+}

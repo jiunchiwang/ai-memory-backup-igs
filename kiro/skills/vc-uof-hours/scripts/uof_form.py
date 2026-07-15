@@ -29,9 +29,14 @@ DRY_RUN_DIR = os.path.expanduser("~/.config/uof/dry_run")
 UC = {
     "category_radio": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC3_rbList_0",
     "start_date": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC6_RadDatePicker1_dateInput",
+    "start_date_popup": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC6_RadDatePicker1_popupButton",
     "start_time": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC7_DropDownList1",
     "end_date": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC9_RadDatePicker1_dateInput",
+    "end_date_popup": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC9_RadDatePicker1_popupButton",
     "end_time": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC10_DropDownList1",
+    # 刷卡時間（只讀，用於等待 AJAX 回填）
+    "clock_in": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC8_lblDisplay",
+    "clock_out": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC11_lblDisplay",
     "reason": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC12_tbxMultiLineText",
     "output": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC13_tbxMultiLineText",
     "participate_yes": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC15_rbList_0",
@@ -88,6 +93,74 @@ def verify_schema(frame):
     if missing:
         die(4, "form_layout_changed",
             hint=f"加班單欄位對不上預期（缺少：{missing}），可能表單版型變了")
+
+
+def pick_date_via_calendar(frame, date_str: str, popup_id: str, clock_id: str | None = None):
+    """
+    透過日曆 popup 選日期（觸發 onchange AJAX），而非直接 fill。
+    date_str: YYYY/MM/DD 格式。
+    popup_id: 日曆按鈕的 element ID。
+    clock_id: 刷卡時間 label ID（等 AJAX 回填用），None 則不等。
+    """
+    # 先清空 dateInput（避免殘留值干擾日曆顯示月份）
+    year, month, day = date_str.split("/")
+    day_int = int(day)
+
+    # 點日曆按鈕打開 popup
+    frame.click(f"#{popup_id}")
+    frame.page.wait_for_timeout(500)
+
+    # RadDatePicker 的 popup 日曆在 page 最上層（不在 frame 內）
+    # 找到可見的 RadCalendar popup
+    page = frame.page
+    cal_selector = ".RadCalendar:visible, .rcMain:visible"
+
+    # 等日曆出現
+    page.wait_for_selector(cal_selector, timeout=5000)
+
+    # 導航到正確的月份（先看當前顯示的月份）
+    target_ym = f"{int(year)}/{int(month)}"  # 不帶前導零
+    for _ in range(24):  # 最多翻 24 個月
+        # 取得當前日曆顯示的月份標題
+        title_el = page.locator(".rcTitle, .RadCalendarTitlebar a.rcTitle").first
+        title_text = title_el.inner_text() if title_el.is_visible() else ""
+        # 格式可能是 "2026年7月" 或 "7月 2026" 等
+        if f"{year}" in title_text and f"{int(month)}月" in title_text:
+            break
+        # 判斷需要往前還是往後
+        page.locator(".rcNext, .RadCalendarTitlebar .rcFastNext").first.click()
+        page.wait_for_timeout(300)
+
+    # 點選日期數字
+    # RadCalendar 的日期 cell: <td><a>14</a></td>，需精確匹配天數
+    day_links = page.locator(f".rcRow td a:text-is('{day_int}')")
+    # 可能有多個匹配（上月/下月灰色日期），選 rcOtherMonth 以外的
+    for i in range(day_links.count()):
+        link = day_links.nth(i)
+        parent_td = link.locator("..")
+        td_class = parent_td.get_attribute("class") or ""
+        if "rcOtherMonth" not in td_class:
+            link.click()
+            break
+    else:
+        # fallback: 直接點第一個匹配
+        if day_links.count() > 0:
+            day_links.first.click()
+
+    page.wait_for_timeout(1000)
+
+    # 等刷卡時間回填（最多 8 秒）
+    if clock_id:
+        for _ in range(16):
+            try:
+                el = frame.query_selector(f"#{clock_id}")
+                if el:
+                    text = el.inner_text().strip()
+                    if text and text != "" and "/" in text:
+                        break
+            except Exception:
+                pass
+            page.wait_for_timeout(500)
 
 
 def compute_fields_hash(fields: dict) -> str:
@@ -161,6 +234,11 @@ def fill_overtime_dryrun(args):
 
         frame.fill(f"#{UC['start_date']}", args.date)
         fields_report.append({"label": LABELS["start_date"], "value": args.date, "source": "user"})
+        # 透過日曆 popup 選日期，觸發 onchange AJAX 回填刷卡時間
+        try:
+            pick_date_via_calendar(frame, args.date, UC["start_date_popup"], UC["clock_in"])
+        except Exception:
+            pass  # fallback: fill 已塞值，刷卡時間不顯示但不影響送出
 
         try:
             frame.select_option(f"#{UC['start_time']}", label=start_time)
@@ -170,6 +248,11 @@ def fill_overtime_dryrun(args):
 
         frame.fill(f"#{UC['end_date']}", end_date)
         fields_report.append({"label": LABELS["end_date"], "value": end_date, "source": "user" if args.end_date else "derived"})
+        # 結束日期也觸發日曆 popup（回填下班刷卡時間）
+        try:
+            pick_date_via_calendar(frame, end_date, UC["end_date_popup"], UC["clock_out"])
+        except Exception:
+            pass
 
         try:
             frame.select_option(f"#{UC['end_time']}", label=end_time)
@@ -320,6 +403,10 @@ def submit_overtime(args):
         # 5. 填入所有欄位（與 Phase A 相同）
         frame.check(f"#{UC['category_radio']}")
         frame.fill(f"#{UC['start_date']}", fields["date"])
+        try:
+            pick_date_via_calendar(frame, fields["date"], UC["start_date_popup"], UC["clock_in"])
+        except Exception:
+            pass
 
         try:
             frame.select_option(f"#{UC['start_time']}", label=fields["start_time"])
@@ -327,6 +414,10 @@ def submit_overtime(args):
             die(6, "field_mismatch", detail=f"開始時間 {fields['start_time']} 不在選項裡")
 
         frame.fill(f"#{UC['end_date']}", fields["end_date"])
+        try:
+            pick_date_via_calendar(frame, fields["end_date"], UC["end_date_popup"], UC["clock_out"])
+        except Exception:
+            pass
 
         try:
             frame.select_option(f"#{UC['end_time']}", label=fields["end_time"])

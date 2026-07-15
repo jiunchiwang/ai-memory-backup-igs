@@ -3,7 +3,7 @@ title: Bridge Streaming 與訊息渲染
 type: concept
 created: 2026-07-11
 updated: 2026-07-11
-sources: [f_a0d9ac, f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef]
+sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef]
 ---
 
 # Bridge Streaming 與訊息渲染

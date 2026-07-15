@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-15
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_a0d9ac, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1]
+updated: 2026-07-16
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -55,6 +55,35 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - **/intel 情報排程**：ai + game-industry 每日 08:00、topic-ai podcast 隔天 08:00（split 策略避免早晨資訊過載）
 - **QUIET_HOURS**：靜默時段排程延遲，目前未啟用；Passive Monitor 改 cron 每日 2 次（12:00、22:00）
 - **UI 修復**：/help keyboard parse_mode 改 HTML + escHtml；「返回選單」callback data 改 `help:_back` 避免撞名
+
+## Process 管理
+
+- `start.bat`：loop 用 `npm run dev`（tsx 直跑 src），RESTART 即帶最新 code 生效
+- `start-psmux.ps1`：psmux（Windows 原生 tmux）替代方案，與 start.bat 並存。決策：psmux 不導入 bridge code，只當外層容器（排除依賴 psmux 因為增加耦合無對等收益）
+- 架構陷阱：`index.ts` 的 `unhandledRejection` handler 會 `process.exit(1)`，新增 server/handler 必須自帶錯誤邊界
+
+## SELF_EVAL 量化自評
+
+- 2026-07-14 實作完成：balanced-scanner 抽取、token-policy 白名單（main 允許、proxy/delegate 不允許）
+- 持久化：`selfEvalStore.ts`（低分閾值 60、全域上限 200 筆）
+- 對抗性審查發現六個共通致命缺陷（型別驗證可被謊報繞過、觸發條件與 backend 限制矛盾、未驗證前提等）
+
+## Upstream 同步原則（2026-07-15 實證）
+
+- 假衝突：共同祖先烘焙了 conflict markers → 採清理較完整的一方
+- 真衝突：功能路線分歧（如 Electron 開關）→ 停下問使用者
+- 不機械套用固定優先權
+
+## /goal ASK-aware 修復
+
+- 原問題：continuation 排程 500ms 後無條件推進，不看該輪有無 `<<ASK:...>>`，使用者問題形同虛設
+- 修復：新增 `GOAL_ASK_WAIT_MS=10分鐘` + `turnHadAsk` 旗標（commit 8e52c2e）
+
+## /backup acp-trace 洩漏修復
+
+- AIMemory job `excludeDirs` 原只排除 transcripts/shared，未排除 acp-trace（含完整對話內容）
+- 2026-07-09 起至少 5 次 /backup 自動 push 把診斷檔帶進 ai-memory-backup-igs
+- 修正：excludeDirs 加入 acp-trace（commit 691e7f8）；歷史不做 force-push 清除
 
 ## 已知陷阱
 
