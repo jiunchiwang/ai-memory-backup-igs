@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-15T20:12:08.217Z",
+  "_last_updated_at": "2026-07-16T20:27:45.476Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -25,9 +25,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-15T20:12:08.217Z",
-      "use_count": 44,
-      "last_reason": "wikilint 步驟：掃描 27 頁 updated 日期 vs shard、驗證 27 檔 vs index 一致性、檢查 92 個 wikilink 有效性",
+      "last_agent_used_at": "2026-07-16T20:27:45.476Z",
+      "use_count": 47,
+      "last_reason": "wikilint 步驟：掃描 29 頁 updated vs shard、驗證 29 檔與 index 一致性、檢查 17 個唯一 wikilink 有效性、修復 5 頁 stale、發現並記錄 bridge-acp.md 待清理的假 sources ID",
       "pinned": false,
       "notes": null,
       "orphan": false

@@ -1,5 +1,24 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-17(來源 shortlist 2 筆 → 精選合併後寫入 0 條)
+
+來源 project:`telegram-kiro-bridge-main`(2 筆,皆 2026-07-16 decision,igs-uof 合併同事唯讀設計時保留個人加班單填寫擴充)。
+
+精選:兩筆合併為同一決策(保留 uof_form.py 個人擴充 + 於 DESIGN.md 記載理由),視為同一件事的兩個面向。
+
+去重:以 list_facts 查詢 igs-uof、個人擴充、唯讀,發現 AIMemory 已存在完全對應的既有記憶——「使用者決定 igs-uof 保留原 vc-uof-hours 的加班單 dry-run 填寫功能(uof_form.py),標註為『個人擴充,非公司共享唯讀範圍』——同事的 v2 設計原本已排除寫入操作;若要把 skill 整包分享給同事需重新評估是否移除該檔案」。判定為完全重複,**未寫入任何新記憶**。未呼叫 forget。
+
+## 2026-07-16(來源 shortlist 5 筆 → 精選合併後寫入 2 條)
+
+來源 project:`uk_slot_template`(4 筆,皆 2026-07-15 decision,MaskExpand/board visibility 架構)、`telegram-kiro-bridge-main`(1 筆,2026-07-15 decision)。
+
+1. [合併 shortlist MaskExpand multi-mask / mask expansion revert / SetVisibleSymbolCountOverride 三筆 → shard uk-slot-template] uk_slot_template 專案:MaskExpand 元件需支援多重遮罩(multi-mask),而非僅單一遮罩;此設計曾因疑慮被使用者還原一次,後續於 IMaskExpandHost 介面新增 SetVisibleSymbolCountOverride() 方法(IMaskExpander.ts),用以橋接本地與遠端架構的可見符號數量覆寫機制。
+2. [蒸餾 shortlist server-side partial board visibility 一筆 → shard uk-slot-template] uk_slot_template 專案的架構策略:Server 端只送出玩家可見的盤面資料(例如 5x6),而非完整盤面尺寸(例如 7x6),其餘部分由客戶端做前處理。
+
+捨棄:telegram-kiro-bridge-main 的「status 指令合併衝突以 git checkout --theirs 採用上游版本」——屬一次性合併衝突解決紀錄,無跨 session 重用價值。
+
+去重:以 list_facts 對 AIMemory(247 筆)查詢 MaskExpand、board visibility,均無匹配,確認兩條皆為淨新增。未呼叫 forget。
+
 ## 2026-07-15(來源 shortlist 15 筆 → 精選合併後寫入 5 條)
 
 來源 project:`uk_slot_template`(9 筆,皆 2026-07-14 decision,mask expansion 整合架構 dev-design workflow)、`telegram-kiro-bridge-main`(6 筆,皆 2026-07-14 decision)。

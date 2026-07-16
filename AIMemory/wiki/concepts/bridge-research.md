@@ -234,3 +234,14 @@ P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 sessio
   - SONA 自學回饋（confidence threshold 自動拒絕低信心輸出）
   - Batch 工具並行（單次回應 4-6 tool call）
   - Per-task complexity scoring 做成本路由
+
+### AgEnD Terminal（suzuke/agend-terminal，2026-07-16）
+
+- Rust 寫的多 agent PTY 編排工具：用 `fleet.yaml` 集中宣告整個 agent 團隊（backend/角色/工作目錄）
+- 5 種 backend：Claude Code、Codex、Kiro、OpenCode、Antigravity CLI——全部走 **PTY 驅動**（把 CLI 當終端機模擬打字），不直接呼叫 LLM API，模型認證/呼叫是各 CLI 自己的事
+- 29 個 MCP 協調工具做 agent-to-agent **雙向** send/inbox/task，比 bridge 現有 RELAY_DELEGATE/PARALLEL_DELEGATE 的單向委派更接近真正 swarm 協作
+- Git worktree 自動隔離：每個 agent 各自 worktree；bridge 的 PARALLEL_DELEGATE 目前只靠「避免多任務改同一檔案」的口頭約定，非結構性隔離
+- Windows 支援已查證非空談：`Cargo.toml` 有明確 `[target.'cfg(windows)']` 區塊（`windows-sys` + `junction` 避開需要管理員權限的目錄連結），PTY 層用跨平台的 `portable-pty`
+- 成熟度：20 星、pre-alpha（核心功能 beta 穩定）、v0.10.0（2026-07）、2846 commits 活躍維護、11 open issues
+- **借鏡候選（未決）**：agent-to-agent inbox/task 協定（若未來要讓 specialist 互相委派而非只有主 agent 單向派工）、per-task git worktree 隔離（強化 PARALLEL_DELEGATE 的檔案衝突防護）
+- **決策**：暫不採用，列 watchlist——專案規模尚小（20 星、剛出 v0.10.0），先觀察成熟度

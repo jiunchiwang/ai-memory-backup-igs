@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-07-13
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_a8bb58, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d]
+updated: 2026-07-17
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_a8bb58, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd]
 ---
 
 # Bridge 記憶與維運系統
@@ -23,7 +23,7 @@ sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, 
 
 ## /dream 夜間維運
 
-每日凌晨 04:00 自動執行 14 步：memorytoskill → topicreview → wikisync → factlint → wikilint → skilllint → specialistreview → artifactcleanup → docupdate → backup → restart 等。`dream.json` 位於 `~/.kiro/dream.json`（fork 比 upstream 多 docupdate 一步），不依賴 bridge 內建 DEFAULT_STEPS fallback。維運結果寫 `STATE.md`（三層：High Priority / Watch List / Noise）。
+每日凌晨 04:00 自動執行 14 步：memorytoskill → topicreview → wikisync → factlint → wikilint → skilllint → specialistreview → artifactcleanup → docupdate → backup → restart 等。`dream.json` 讀取路徑優先序：`MEMORY_DIR/config/dream.json`（目前不存在）→ 退回 `~/.kiro/dream.json`（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback。每步 `cmd` 字串須存在於 `index.ts` 的 `COMMAND_HANDLERS` map 才會被執行，否則判定「未知指令已跳過」但不中斷其餘步驟（`continue_on_error` 預設 true）。維運結果寫 `STATE.md`（三層：High Priority / Watch List / Noise）。
 
 ## Topic 分類系統
 

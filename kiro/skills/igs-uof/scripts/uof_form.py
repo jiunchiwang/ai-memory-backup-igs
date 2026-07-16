@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-填寫 UOF 加班單表單。
+填寫 UOF 加班單表單（個人擴充功能，非公司共享唯讀範圍的一部分——見 DESIGN.md）。
 
 Phase A（dry-run，預設）：填好欄位、截圖、產出 plan.json + 一次性 token。不點送出。
 Phase B（--submit）：讀 plan、重新填表、逐欄位比對、點送出、處理簽核 dialog、驗證。
@@ -20,12 +20,13 @@ Phase B（--submit）：讀 plan、重新填表、逐欄位比對、點送出、
 import argparse, sys, os, json, datetime, re, hashlib, secrets
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from playwright.sync_api import sync_playwright
-from uof_query import die, load_config, resolve_credentials, login, BASE
+import uof_client
+from uof_client import die, load_config, BASE
 
 OVERTIME_FORM = "WKF/FormUse/PersonalBox/ApplyFormList.aspx?fillFormDirectly=true&formId=cd8fb94e-a539-4c7e-9762-43e87e653ced"
 DRY_RUN_DIR = os.path.expanduser("~/.config/uof/dry_run")
 
-# 加班單欄位（2026-07-13 recon 確認）
+# 加班單欄位（2026-07-13 recon 確認；2026-07-16 recon 更新 clock_in/clock_out 控制項）
 UC = {
     "category_radio": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC3_rbList_0",
     "start_date": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC6_RadDatePicker1_dateInput",
@@ -34,9 +35,9 @@ UC = {
     "end_date": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC9_RadDatePicker1_dateInput",
     "end_date_popup": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC9_RadDatePicker1_popupButton",
     "end_time": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC10_DropDownList1",
-    # 刷卡時間（只讀，用於等待 AJAX 回填）
-    "clock_in": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC8_lblDisplay",
-    "clock_out": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC11_lblDisplay",
+    # 刷卡時間（只讀文字框，用於等待 AJAX 回填；2026-07-16 recon 確認控制項為 tbxSignleLineText，非 lblDisplay）
+    "clock_in": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC8_tbxSignleLineText",
+    "clock_out": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC11_tbxSignleLineText",
     "reason": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC12_tbxMultiLineText",
     "output": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC13_tbxMultiLineText",
     "participate_yes": "ctl00_ContentPlaceHolder1_VersionFieldCollectionUsingUC1_versionFieldUC15_rbList_0",
@@ -100,41 +101,29 @@ def pick_date_via_calendar(frame, date_str: str, popup_id: str, clock_id: str | 
     透過日曆 popup 選日期（觸發 onchange AJAX），而非直接 fill。
     date_str: YYYY/MM/DD 格式。
     popup_id: 日曆按鈕的 element ID。
-    clock_id: 刷卡時間 label ID（等 AJAX 回填用），None 則不等。
+    clock_id: 刷卡時間欄位 ID（等 AJAX 回填用），None 則不等。
     """
-    # 先清空 dateInput（避免殘留值干擾日曆顯示月份）
     year, month, day = date_str.split("/")
     day_int = int(day)
 
-    # 點日曆按鈕打開 popup
     frame.click(f"#{popup_id}")
     frame.page.wait_for_timeout(500)
 
     # RadDatePicker 的 popup 日曆在 page 最上層（不在 frame 內）
-    # 找到可見的 RadCalendar popup
     page = frame.page
     cal_selector = ".RadCalendar:visible, .rcMain:visible"
-
-    # 等日曆出現
     page.wait_for_selector(cal_selector, timeout=5000)
 
-    # 導航到正確的月份（先看當前顯示的月份）
-    target_ym = f"{int(year)}/{int(month)}"  # 不帶前導零
     for _ in range(24):  # 最多翻 24 個月
-        # 取得當前日曆顯示的月份標題
         title_el = page.locator(".rcTitle, .RadCalendarTitlebar a.rcTitle").first
         title_text = title_el.inner_text() if title_el.is_visible() else ""
-        # 格式可能是 "2026年7月" 或 "7月 2026" 等
         if f"{year}" in title_text and f"{int(month)}月" in title_text:
             break
-        # 判斷需要往前還是往後
         page.locator(".rcNext, .RadCalendarTitlebar .rcFastNext").first.click()
         page.wait_for_timeout(300)
 
-    # 點選日期數字
     # RadCalendar 的日期 cell: <td><a>14</a></td>，需精確匹配天數
     day_links = page.locator(f".rcRow td a:text-is('{day_int}')")
-    # 可能有多個匹配（上月/下月灰色日期），選 rcOtherMonth 以外的
     for i in range(day_links.count()):
         link = day_links.nth(i)
         parent_td = link.locator("..")
@@ -143,7 +132,6 @@ def pick_date_via_calendar(frame, date_str: str, popup_id: str, clock_id: str | 
             link.click()
             break
     else:
-        # fallback: 直接點第一個匹配
         if day_links.count() > 0:
             day_links.first.click()
 
@@ -155,7 +143,8 @@ def pick_date_via_calendar(frame, date_str: str, popup_id: str, clock_id: str | 
             try:
                 el = frame.query_selector(f"#{clock_id}")
                 if el:
-                    text = el.inner_text().strip()
+                    tag = el.evaluate("e => e.tagName")
+                    text = (el.input_value() if tag == "INPUT" else el.inner_text()).strip()
                     if text and text != "" and "/" in text:
                         break
             except Exception:
@@ -190,7 +179,6 @@ def save_plan(plan: dict, plan_path: str):
 
 def fill_overtime_dryrun(args):
     cfg = load_config()
-    acct, pw = resolve_credentials(cfg)
 
     start_time = args.start
     end_time = args.end or (add_minutes_snap15(args.start, round(args.hours * 60)) if args.hours else args.end)
@@ -202,22 +190,7 @@ def fill_overtime_dryrun(args):
     warnings = []
 
     with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch(headless=not args.headed)
-        except Exception as e:
-            die(5, "browser_launch_failed", detail=str(e))
-        ctx = browser.new_context(locale="zh-TW", viewport={"width": 1600, "height": 1600})
-        page = ctx.new_page()
-
-        try:
-            login(page, acct, pw)
-        except SystemExit:
-            raise
-        except Exception as e:
-            msg = str(e)
-            if "ERR_NAME_NOT_RESOLVED" in msg or "ERR_CONNECTION" in msg or "ERR_ADDRESS_UNREACHABLE" in msg or "Timeout" in msg:
-                die(2, "unreachable", hint="連不到 http://uof，請確認已連上公司內網 / VPN", detail=msg)
-            die(5, "login_error", detail=msg)
+        browser, ctx, page, mode = uof_client.open_uof(p, cfg, headed=args.headed, fresh_login=args.fresh_login)
 
         page.goto(BASE + OVERTIME_FORM, wait_until="networkidle", timeout=40000)
         page.wait_for_timeout(5000)
@@ -339,6 +312,7 @@ def fill_overtime_dryrun(args):
         },
         "warnings": warnings,
         "screenshot": screenshot_path,
+        "params": {"session": mode},
     }
     print(json.dumps(result, ensure_ascii=False, indent=1))
 
@@ -366,29 +340,13 @@ def submit_overtime(args):
 
     fields = plan["fields"]
     cfg = load_config()
-    acct, pw = resolve_credentials(cfg)
 
     with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch(headless=not args.headed)
-        except Exception as e:
-            die(5, "browser_launch_failed", detail=str(e))
-        ctx = browser.new_context(locale="zh-TW", viewport={"width": 1600, "height": 1600})
-        page = ctx.new_page()
+        browser, ctx, page, mode = uof_client.open_uof(p, cfg, headed=args.headed, fresh_login=args.fresh_login)
 
         # 攔截 JS alert（server validation 失敗時會跳 alert）
         dialog_messages = []
         page.on("dialog", lambda d: (dialog_messages.append(d.message), d.accept()))
-
-        try:
-            login(page, acct, pw)
-        except SystemExit:
-            raise
-        except Exception as e:
-            msg = str(e)
-            if "ERR_NAME_NOT_RESOLVED" in msg or "ERR_CONNECTION" in msg or "ERR_ADDRESS_UNREACHABLE" in msg or "Timeout" in msg:
-                die(2, "unreachable", hint="連不到 http://uof", detail=msg)
-            die(5, "login_error", detail=msg)
 
         # 4. 開表單
         page.goto(BASE + OVERTIME_FORM, wait_until="networkidle", timeout=40000)
@@ -492,6 +450,7 @@ def submit_overtime(args):
         "verification": {
             "screenshot": verify_screenshot,
         },
+        "params": {"session": mode},
     }
     print(json.dumps(result, ensure_ascii=False, indent=1))
 
@@ -521,32 +480,26 @@ def verify_fields_match(frame, fields: dict) -> list:
     """回讀表單欄位，與 plan 比對。回傳不一致清單（空=全部一致）。"""
     mismatches = []
 
-    # 開始日期
     actual = frame.input_value(f"#{UC['start_date']}")
     if actual != fields["date"]:
         mismatches.append({"field": "start_date", "expected": fields["date"], "actual": actual})
 
-    # 開始時間
     actual = frame.evaluate(f"() => document.getElementById('{UC['start_time']}').value")
     if actual != fields["start_time"]:
         mismatches.append({"field": "start_time", "expected": fields["start_time"], "actual": actual})
 
-    # 結束日期
     actual = frame.input_value(f"#{UC['end_date']}")
     if actual != fields["end_date"]:
         mismatches.append({"field": "end_date", "expected": fields["end_date"], "actual": actual})
 
-    # 結束時間
     actual = frame.evaluate(f"() => document.getElementById('{UC['end_time']}').value")
     if actual != fields["end_time"]:
         mismatches.append({"field": "end_time", "expected": fields["end_time"], "actual": actual})
 
-    # 事由
     actual = frame.input_value(f"#{UC['reason']}")
     if actual != fields["reason"]:
         mismatches.append({"field": "reason", "expected": fields["reason"], "actual": actual})
 
-    # 工作產出
     actual = frame.input_value(f"#{UC['output']}")
     if actual != fields["output"]:
         mismatches.append({"field": "output", "expected": fields["output"], "actual": actual})
@@ -564,7 +517,6 @@ def handle_sign_dialog(page, form_frame) -> dict:
     - actionMode 變成 "Send" → 送出成功
     - 什麼都沒變 → 狀態不明
     """
-    # 先檢查 actionMode
     try:
         mode = form_frame.evaluate(
             "() => document.getElementById('ctl00_ContentPlaceHolder1_hiddenActionMode')?.value || 'Init'")
@@ -572,11 +524,8 @@ def handle_sign_dialog(page, form_frame) -> dict:
         mode = "frame_detached"
 
     if mode == "Send":
-        # actionMode 變 Send 但簽核 dialog 可能已經開了
-        # 等更長時間讓 dialog 出現
         page.wait_for_timeout(5000)
 
-    # 找新出現的 frame（可能是簽核 dialog）
     new_frames = []
     for i, fr in enumerate(page.frames):
         try:
@@ -587,10 +536,8 @@ def handle_sign_dialog(page, form_frame) -> dict:
             continue
 
     if new_frames:
-        # 找到簽核 dialog frame，嘗試找確認按鈕
         for idx, sign_frame, url in new_frames:
             try:
-                # WKF 簽核頁面通常有「送出」或「確定」RadButton
                 confirm_btn = (
                     sign_frame.locator("text=送出").first or
                     sign_frame.locator("text=確定").first or
@@ -603,10 +550,8 @@ def handle_sign_dialog(page, form_frame) -> dict:
             except Exception:
                 continue
 
-        # 有簽核 frame 但找不到按鈕
         return {"status": "success", "detail": "簽核 dialog 偵測到但無法自動確認，請手動完成簽核"}
 
-    # 沒有新 frame — 檢查外層是否有新 RadWindow
     try:
         new_wins = page.evaluate("""() => {
             const wins = document.querySelectorAll('.RadWindow');
@@ -620,18 +565,16 @@ def handle_sign_dialog(page, form_frame) -> dict:
     except Exception:
         pass
 
-    # 如果 actionMode 變了，也算成功（有些情況 dialog 已經自動關閉）
     if mode in ("Send", "frame_detached"):
         return {"status": "success", "detail": "actionMode=Send，表單可能已成功送出"}
 
-    # 什麼跡象都沒有 → 狀態不明
     return {"status": "unknown", "detail": "無法確認送出是否成功，請到 UOF 個人申請箱確認"}
 
 
 # ─── CLI 入口 ──────────────────────────────────────────────────────
 
 def main():
-    ap = argparse.ArgumentParser(description="UOF 加班單填單工具")
+    ap = argparse.ArgumentParser(description="UOF 加班單填單工具（個人擴充功能）")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     ot = sub.add_parser("overtime", help="加班單（dry-run 或 submit）")
@@ -646,6 +589,7 @@ def main():
     ot.add_argument("--makeup", choices=["yes", "no"], help="是否調為補班（預設 no）")
     ot.add_argument("--project-owner", help="專案負責人")
     ot.add_argument("--headed", action="store_true", help="有頭模式")
+    ot.add_argument("--fresh-login", action="store_true", help="忽略既有 session，強制重新登入")
     # P3 submit
     ot.add_argument("--submit", action="store_true", help="Phase B：真正送出（需搭配 --token）")
     ot.add_argument("--token", help="Phase A 產出的一次性 token")

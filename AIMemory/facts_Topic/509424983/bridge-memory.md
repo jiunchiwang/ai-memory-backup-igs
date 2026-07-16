@@ -28,4 +28,4 @@
 - [f_e737a7] [2026-07-12T00:04:25.930Z] wiki sources 保護 fact 的處理更新（2026-07-12）：對 factlint 判定的 trivia fact，若 wiki 引用僅是 frontmatter sources 溯源清單（內容已蒸餾進 wiki 頁），可先從該 wiki 頁 sources 移除該 fact id 再刪，避免留 dangling ref——是「provenance 不可刪」政策的例外操作
 - [f_b7367a] [2026-07-12T00:19:03.944Z] telegram-kiro-bridge 教訓：任何會被 mcp-memory 子行程載入的模組禁止 import config.js——config 模組層就 required(TELEGRAM_BOT_TOKEN)，而 acpClient.buildSpawnEnv 刻意把該 token 置空防 409，import 即炸導致 memory MCP 啟動即死（Karpathy P0 的 ingest-ripple 引入此鏈，2026-07-12 改用 facts-store 的 resolveMemoryDir() 修復）；MEMORY_DIR 解析一律用 resolveMemoryDir()
 - [f_de06cc] [2026-07-12T23:22:38.497Z] factlint actionable ratio 4.7（>3.0 警告閾值）為已知設計取捨——因為 87%+ facts 被 wiki sources 保護不可刪（provenance 追溯用途），結構性不可能降到 3.0 以下；未來 factlint 遇到此警告應跳過不報，除非 wiki-unprotected facts 本身有新問題
-- [f_169cb4] [2026-07-13T12:11:37.930Z] AI-canonical 的 ms-portable-skill-authoring skill 正本已修正 notebooklm-routing.json 過時路徑引用（從 ${AGENT_CONFIG_DIR} 改為 ${MEMORY_DIR}/config/，commit e29fafc）
+- [f_77ddbd] [2026-07-16T13:14:06.519Z] telegram-kiro-bridge 的 dream.json 實際讀取路徑優先序為 MEMORY_DIR/config/dream.json（目前不存在）→ 退回 ~/.kiro/dream.json（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback

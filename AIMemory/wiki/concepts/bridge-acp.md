@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-15
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_228abc, f_229bcd, f_230cde, f_231def, f_232ef0, f_233f01, f_174485, f_b21c3a]
+updated: 2026-07-17
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_228abc, f_229bcd, f_230cde, f_231def, f_232ef0, f_233f01, f_174485, f_b21c3a, f_a1ecf7]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -83,6 +83,10 @@ Bridge 的 tool call 進度（`🔧 {title}` / `✅ {toolName}`，sessionManager
 
 - scheduler ephemeral session 原本固定讀 `.env` 的 `ACP_AGENT_COMMAND`，不跟隨 `/agent` 熱切換
 - 已修復（commit 85242f9）：`sessionManager.getActiveBackend(chatId)` 優先用 pinned backend，fallback `.env`
+
+## Upstream 同步（2026-07-16）
+
+merge 進 MCP-first action domain 基礎建設（main `0a3c551` → `199e30a`），細節與衝突處理原則見 [[bridge-project]]。
 
 ## 相關
 

@@ -2,8 +2,8 @@
 title: UK Slot Codegen 工具整合
 type: concept
 created: 2026-07-15
-updated: 2026-07-15
-sources: [f_154d5e, f_6a5a42, f_157c38, f_158d62, f_159e83, f_160f94, f_162ab6, f_163bc7, f_164cd8, f_191ab2]
+updated: 2026-07-17
+sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_81ef45, f_ac9912, f_98e336, f_1b276f, f_6fe390]
 ---
 
 # UK Slot Codegen 工具整合

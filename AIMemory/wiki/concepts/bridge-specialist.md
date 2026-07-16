@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-07-15
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3]
+updated: 2026-07-16
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_a8bb58, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_48b44d]
 ---
 
 # Bridge Specialist 分身系統
@@ -12,15 +12,25 @@ sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, 
 
 ## 分身配置
 
-`specialist-domains.json` 配置 3 個分身（2026-06-24 建立，model 2026-07-01 更新）：
+`specialist-domains.json` 配置 3 個分身（2026-06-24 建立，**2026-07-13 改為品質優先方案**，全部 `effort: high`）：
 
-- **slot-dev**：UK 老虎機開發（claude-sonnet-4.6，memory MCP）
-- **researcher**：深度研究 / AI 策略（claude-sonnet-4.6，memory + google MCP）
-- **general**：完整能力並行多工（inheritsAll，claude-sonnet-4.6，memory + google MCP）
+- **slot-dev**：UK 老虎機開發（claude-sonnet-4.6，memory MCP，skill prefix 隔離 `uk-slot-`/`slot-`/`uk-`/`pq3-`/`cocos-` + topicKeywords + wikiPages）
+- **researcher**：深度研究 / AI 策略（**claude-opus-4.6**，memory + google MCP，`inheritsAll` 全繼承）
+- **general**：完整能力並行多工（`inheritsAll`，claude-sonnet-4.6，memory + google MCP）
 
-設計決策：不建 bridge-dev specialist——主 agent 工作目錄就是 bridge repo，bridge-dev 是降級冗餘。
+`commonSkills` 含 5 項基礎防護 skill、`commonMcpServers` 含 memory。設計決策：不建 bridge-dev specialist——主 agent 工作目錄就是 bridge repo，bridge-dev 是降級冗餘。
 
-互動模式兩種：`SPECIALIST_PROXY`（即時對話，使用者訊息直送 specialist 直到 /back）、`PARALLEL_DELEGATE`（背景並行任務，結果一次注入主 session）。歷史產出存 `${MEMORY_DIR}/artifacts/`（結構化 JSON）。
+互動模式兩種：`SPECIALIST_PROXY`（即時對話，使用者訊息直送 specialist 直到 /back）、`PARALLEL_DELEGATE`（背景並行任務，結果一次注入主 session）。歷史產出存 `${MEMORY_DIR}/artifacts/`（結構化 JSON）。持久記憶由 `src/specialist-memory.ts` 實作（`extractLessons`/`appendMemory`/`readMemory`/`onSpecialistDone`），掛在 `artifact.ts` 的 `saveArtifact`（status=done 時 fire-and-forget，因 specialist 完成不是 tool call 事件，不適用 PostToolHook registry）；記憶檔存 `${MEMORY_DIR}/specialist-memory/<name>.md`，上限 20 條。
+
+⚠️ **model 無法動態指定**：spawn 時 model 已由 `defaultModel` pin 住，prompt 裡要求換 model 無效；`PARALLEL_DELEGATE` 的 prompt 含 `>>` 或多行會被 bridge token parser 截斷導致任務靜默未 spawn，model benchmark 類需求改走 `kiro-cli chat --model` 獨立 session 執行。
+
+## MoA 顧問系統（2026-07-15）
+
+`specialist-domains.json` 新增 3 個 `moa-ref-*` domain（`effort: low`、`mcpServers` 空、`prefixes` 空），對應 `preamble.md` 建於 `specialists/moa-ref-*/`：
+
+- `moa-ref-claude`（claude-sonnet-4.6）、`moa-ref-kiro`（kiro 預設模型）、`moa-ref-adversary`（claude-sonnet-4.6）
+
+先前 `moa-presets.json` 引用的顧問名只是空殼、無法 spawn，此次補齊後 `/moa` 指令可正常運作。ctx 統計行已同步加上 agent/model/effort 後綴（格式「· agent/model/effort」），specialist proxy 則顯示 specialist name。
 
 ## Token 執行權限層（2026-07-07，commit 028a5ea）
 
@@ -59,6 +69,13 @@ Status server（port 3847）擴充為 specialist 監控面板：
 ## Specialist Reflect（/dream 步驟，2026-07-14）
 
 `specialistreflect` 是 `/dream` 的第 4 步（sessionreflect 之後），掃描 4 個 specialist 的 `specialist-memory/<name>.md`，用本機 LLM 抽取 learnings 升格進 facts/skill-candidates，同時檢查 pending-ingest 老化（>48h）寫進 High Priority 通道。已知限制：本機未裝 llama.cpp 時 learnings 永遠為 []，只有游標推進與 pending-ingest 老化檢查會生效。
+
+## 延伸筆記
+
+- Steering 架構：`closed-loop-system.md`（完整閉環）與 `karpathy-guardrails.md`（精簡 4 原則）共存而非合併——前者用於主 agent 長 session，後者用於 specialist/delegation/短任務場景
+- 研究侯智薰（雷蒙）AI Agent 7 層 Harness 架構後確認 bridge 已覆蓋全部 7 層，超越部分含 Specialist 分身、跨機 Relay、Self-improving reflexion
+- Telegram Bot API 9.6 Managed Bots（`getManagedBotToken`/`replaceManagedBotToken`）適合未來 specialist 自動產生獨立 bot 身份，目前未採用
+- 2026-07-16 啟用的 `bridge-actions` MCP（`delegate`/`parallel_delegate` 工具）取代舊 `RELAY_DELEGATE`/`PARALLEL_DELEGATE` 裸 token，詳見 [[bridge-project]]
 
 ## 相關
 

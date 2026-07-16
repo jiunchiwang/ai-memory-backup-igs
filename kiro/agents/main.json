@@ -3,7 +3,8 @@
   "tools": [
     "@builtin",
     "@memory",
-    "@google"
+    "@google",
+    "@bridge-actions"
   ],
   "mcpServers": {
     "memory": {
@@ -17,6 +18,13 @@
       "command": "node",
       "args": [
         "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
+      ],
+      "disabled": false
+    },
+    "bridge-actions": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-actions.js"
       ],
       "disabled": false
     }

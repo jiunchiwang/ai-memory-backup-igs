@@ -26,6 +26,7 @@
 - [f_88d3a1] [2026-07-10T16:07:35.398Z] check-preamble.mjs 量測陷阱：facts 為空時 memory block header 不渲染，indexOf 找不到導致 fixed core 計算涵蓋整份 preamble（實測 7783 vs 真實 facts 的 5884）；實際 script 用真實 facts 跑不受影響，但空 facts 環境跑到 ceiling FAIL 時先想到這個
 - [f_f44d46] [2026-07-11T08:33:32.149Z] bridge 教訓：修 writePendingByPath 這類共用 module-state 洩漏時要同類掃描同檔所有寫入端——commit 173591a 只修 atomicWriteJson 漏了 updateJson，自檢才補上
 - [f_b1e2ca] [2026-07-12T00:04:25.981Z] telegram-kiro-bridge 的 start.bat 每輪 loop 用 npm run dev（tsx 直跑 src），所以 <<RESTART>>（bridge exit(1) 後 supervisor 重生）即帶最新 src 程式碼生效，不需先 build dist
+- [f_484853] [2026-07-12T00:33:23.421Z] bridge 主程序跑 tsx 直吃 src，但 MCP 子行程（memory/google）三個 CLI 都吃 dist——改到 mcp-memory 的 import 鏈必須 npx tsc -p . 重建 dist 才生效，且要重啟 session 才會重新 spawn MCP
 - [f_cc8fd5] [2026-07-13T11:39:16.104Z] 使用者偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個（2026-07-13 對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit）
 - [f_f144ad] [2026-07-13T12:11:37.909Z] telegram-kiro-bridge 已於 2026-07-13 同步 upstream（redkilin）relay 多 peer 系統（relay-peers.json + src/relayPeers.ts，commit fa2b9f4 已 push origin/main），取代本地未實際使用的 RELAY_PEER_USERNAMES/resolvePeerUsername 機制
 - [f_28e17b] [2026-07-13T12:11:37.924Z] telegram-kiro-bridge repo 設定 core.hooksPath=.githooks，pre-commit 會自動執行 scripts/sync-skills-to-repo.mjs，把 default-skills/ 內容從本機 skill 目錄（~/.claude/skills 等，取最新 mtime）覆蓋同步回 repo——改 default-skills 前需注意可能被此 hook 覆蓋
@@ -42,3 +43,10 @@
 - [f_4c12ce] [2026-07-15T12:27:41.797Z] 使用者確認的合併衝突處理原則（2026-07-15 實證）：若共同祖先本身意外把未解決的合併標記（conflict markers）烘焙進歷史造成假衝突，應採用清理較完整的一方（不論本地或 upstream），而非機械套用固定優先權；真正的功能路線分歧（如 Electron 開關）才需要停下來問使用者決定
 - [f_651a0d] [2026-07-15T12:27:41.801Z] 使用者有一個未進版的本地腳本 start-psmux.ps1（psmux Windows 開發啟動器），與 upstream 新增的 docs/SPEC-psmux-dev-launcher.md 規劃概念相同但尚未整合比對
 - [f_e72b07] [2026-07-15T20:02:12.094Z] 因為 bridge 已有完整 lifecycle 管理（start.bat loop + <<RESTART>> token + grammY autoRetry）所以決定 psmux 不導入 bridge code，只當外層容器使用（排除讓 bridge 依賴 psmux 因為會增加耦合且無對等收益）；start-psmux.ps1 與 start.bat 並存，各用各的場景
+- [f_ea9657] [2026-07-16T04:07:10.823Z] 使用者確認的另一種合併衝突處理慣例（2026-07-16）：AI.md/README.md 這類「本地已把細節搬到子文件（如 src/AI.md、docs/setup-agents.md）」vs「upstream 就地擴充原檔內容」的結構性衝突，應保留本地 pointer 結構、把 upstream 新增內容手動補進對應子文件，而非整段改用 upstream 版本
+- [f_d878ad] [2026-07-16T09:36:02.389Z] telegram-kiro-bridge 的 README.md 已於 2026-07-16 補上 bridge-actions MCP 說明（功能一覽新增一行 + 深入文件索引新增 docs/SPEC-token-mcp-migration.md 連結），修正原本 README 只提 memory/Google API MCP 而漏列新啟用 bridge-actions 的文件落差
+- [f_e1f99f] [2026-07-16T13:13:25.950Z] [WS] task: 把 claude-mem-curate 精選流程接成 /dream 第 14 步，讓每日 04:00 自動觸發（原本只能手動觸發）
+- [f_9b9689] [2026-07-16T13:13:27.920Z] [WS] completed: 已新增 handleClaudeMemCurate（src/commands/dream.ts，仿 docupdate 的 meta-prompt 模式）、註冊進 COMMAND_HANDLERS（src/index.ts）、在 C:\Users\jiunchiwang\.kiro\dream.json 插入 claudememcurate 步驟（memorytoskill 之後、topicreview 之前）；tsc --noEmit 過、npm run build 過、check-dream.mjs 24 項 smoke test 全過、手動 load 實際 dream.json 確認 14 步解析正確無 warning
+- [f_e2d60b] [2026-07-16T13:13:35.726Z] [WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效，然後詢問使用者是否要 git commit 這次 claudememcurate 改動（只 add src/commands/dream.ts + src/index.ts，不要連帶 commit README.md 既有改動）
+- [f_e547d2] [2026-07-16T13:14:06.507Z] telegram-kiro-bridge 已於 2026-07-16 把 claude-mem-curate 精選流程接成 /dream 第 14 步（新增 handleClaudeMemCurate handler 於 src/commands/dream.ts，仿 handleDocUpdate 的 meta-prompt 模式，並註冊進 index.ts 的 COMMAND_HANDLERS），插在 memorytoskill 之後、topicreview 之前，使其從純手動觸發變成每日 04:00 自動執行
+- [f_6e3e02] [2026-07-16T13:14:06.530Z] telegram-kiro-bridge 的 dream.json 每個 step 的 cmd 字串必須存在於 index.ts 的 COMMAND_HANDLERS map 中才能被 /dream 執行，否則會被判定為「未知指令已跳過」但不會中斷其餘步驟（continue_on_error 預設 true）

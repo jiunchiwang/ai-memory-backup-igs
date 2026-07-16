@@ -2,8 +2,8 @@
 type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
-updated: 2026-07-05
-sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae]
+updated: 2026-07-17
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -42,6 +42,8 @@ G:\AI\AI-canonical\          ← 正本（source of truth）
 3. `git commit && git push`
 
 詳見 `steering/skill-workflow.md`。直接改 `~/.kiro/skills/` 無效（是 junction，會被下次 sync 覆蓋）。
+
+撰寫可攜式 skill 時，若該 skill 會被多個 agent CLI（Kiro、Codex、Claude）或多台機器共用，應避免在 SKILL.md 中寫死絕對路徑（例如特定磁碟機代號或使用者目錄），以免跨環境失效。
 
 ## 安全機制
 

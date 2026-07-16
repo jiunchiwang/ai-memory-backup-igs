@@ -54,6 +54,14 @@
           "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
         ],
         "disabled": false
+      },
+      {
+        "name": "bridge-actions",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-actions.js"
+        ],
+        "disabled": false
       }
     ],
     "model": "claude-opus-4.6",
@@ -87,6 +95,14 @@
         "command": "node",
         "args": [
           "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-google.js"
+        ],
+        "disabled": false
+      },
+      {
+        "name": "bridge-actions",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-actions.js"
         ],
         "disabled": false
       }

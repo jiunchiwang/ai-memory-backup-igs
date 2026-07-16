@@ -9,3 +9,4 @@
 - [f_76faa7] [2026-07-07T15:27:36.008Z] telegram-kiro-bridge 的 README 已於 2026-07-07 補齊文檔並 push（commit 5233767）：/agent 熱切換、ACP_SESSION_RESUME、/session 指令與 /reset 只清 active 新語意
 - [f_42aed5] [2026-07-07T16:09:52.075Z] 使用者決定 idle sweep 靜默存檔維持現狀不加 Telegram 通知；/reset 的「Saved → sessions/xxx」訊息只在當下仍有 live session 且有歷史時才顯示，四條 transcript 儲存路徑（/reset、onBeforeClose、crash、/session park）皆正常運作
 - [f_c73099] [2026-07-14T05:16:39.182Z] 使用者對 /reset 和 /handoff 的使用場景偏好：日常用 /reset（快速清 context 重開），/handoff 保留給較大任務完成/換機器/當天收工等需要記憶留存的場景
+- [f_6420f5] [2026-07-16T03:56:32.124Z] vc-uof-hours skill 已於 2026-07-16 改名擴充為 igs-uof（正本 G:\AI\AI-canonical-corp\skills\office\igs-uof\），合併同事版新增 attendance/leave/todo/whois 唯讀查詢子命令 + uof_client.py 共用登入/session 持久化，取代原本各自登入的 uof_query.py，已 commit+push（c20f6d5）

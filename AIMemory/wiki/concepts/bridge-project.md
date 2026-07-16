@@ -3,7 +3,7 @@ title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
 updated: 2026-07-16
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1]
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -68,11 +68,22 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - 持久化：`selfEvalStore.ts`（低分閾值 60、全域上限 200 筆）
 - 對抗性審查發現六個共通致命缺陷（型別驗證可被謊報繞過、觸發條件與 backend 限制矛盾、未驗證前提等）
 
-## Upstream 同步原則（2026-07-15 實證）
+## Upstream 同步紀錄與原則
 
-- 假衝突：共同祖先烘焙了 conflict markers → 採清理較完整的一方
-- 真衝突：功能路線分歧（如 Electron 開關）→ 停下問使用者
-- 不機械套用固定優先權
+- **2026-07-15**：merge 19 個 upstream commit（Rich Telegram replies 統一、MoA rich replies、psmux 開發啟動器規劃、背景通知修復等）+ 1 個本地 ctx 統計後綴 commit，push `691e7f8..0a3c551`；`status.ts` 的 Electron 桌面監控視窗路線衝突採用 upstream 版（推翻先前移除 Electron 改純 Bot 推送的決定）
+- **2026-07-16**：merge MCP-first action domain 基礎建設（`agent-actions.ts`/`agent-action-runtime.ts`/`agent-action-metrics.ts`/`mcp-actions.ts`）+ skill sync hook 改為 opt-in（`postinstall` 不再自動設定 `core.hooksPath`）+ legacy action id 消毒修規，`main` 從 `0a3c551` 更新到 `199e30a`
+- **衝突處理原則（實證，2026-07-15/16 累計兩種模式）**：
+  - 假衝突（共同祖先烘焙了 conflict markers）→ 採清理較完整的一方，不機械套用固定優先權
+  - 真衝突（功能路線分歧，如 Electron 開關）→ 停下問使用者決定
+  - 結構性衝突（本地已把細節搬到子文件如 `src/AI.md`/`docs/setup-agents.md` vs upstream 就地擴充原檔）→ 保留本地 pointer 結構，把 upstream 新增內容手動補進對應子文件，而非整段改用 upstream 版本
+
+## bridge-actions MCP（2026-07-16）
+
+`bridge-actions` MCP server 提供 6 個 action 工具：`ask`/`schedule`/`delegate`/`parallel_delegate`/`send_file`/`relay_file`，取代舊的裸文字 token 協定（`<<ASK:...>>` 等仍保留作 fallback）。同步進來時功能旗標雖預設開但未接線（`dist/mcp-actions.js` 未 build、agent config 未註冊）；經確認後執行 `npm run build` + `node scripts/setup-mcp.mjs`，已寫入 `~/.claude/settings.json`、`~/.claude.json`、`~/.kiro/agents/main.json`、`~/.codex/config.toml`。⚠️ MCP server 於 session 建立時 spawn，不可熱插拔，需重啟受影響 session 才會生效。README.md 已同步補上說明。
+
+## claude-mem-curate → /dream 第 14 步（2026-07-16）
+
+原本只能手動觸發或 agent 主動提醒，新增 `handleClaudeMemCurate` handler（`src/commands/dream.ts`，仿 `handleDocUpdate` 的 meta-prompt 模式）並註冊進 `COMMAND_HANDLERS`，`dream.json` 插入 `claudememcurate` 步驟（`memorytoskill` 之後、`topicreview` 之前），使精選流程從純手動變成每日 04:00 自動執行。⚠️ `dream.json` 每步 `cmd` 字串必須存在於 `COMMAND_HANDLERS` map 中才會被執行，否則判定「未知指令已跳過」但不中斷其餘步驟（`continue_on_error` 預設 true）。
 
 ## /goal ASK-aware 修復
 
@@ -90,6 +101,17 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - Smoke test 環境隔離：bridge session 內跑 `scripts/check-*.mjs` 會假失敗（繼承空 env 蓋掉 dotenv），跑前 `env -u`（保留 MEMORY_DIR）
 - `check-preamble.mjs`：facts 為空時 memory block header 不渲染，fixed core 計算會涵蓋整份 preamble
 - `RELAY_DELEGATE` tool note 只在 `config.relay` 開啟且 `relay-peers.json` 存在時注入（目前生產不含）
+- **主程序 vs MCP 子行程的執行方式不同**：bridge 主程序跑 `tsx` 直吃 `src`，但 MCP 子行程（memory/google）三個 CLI 都吃 `dist`——改到 `mcp-memory` 的 import 鏈必須 `npx tsc -p .` 重建 `dist` 才生效，且要重啟 session 才會重新 spawn MCP
+- `TokenSource.main` 是宣告但未被任何呼叫點套用的死政策（R-5 訂正發現）：`filterTransformedByPolicy()` 只被 `relay.ts` 與 `index.ts` 的 proxy 路徑呼叫，`run-prompt.ts` 主線完全不經過它，main 路徑實際靠 `TOKEN_POLICY.main` 全開放語意直接信任
+- 修 `writePendingByPath` 這類共用 module-state 洩漏時要同類掃描同檔所有寫入端（commit 173591a 曾只修 `atomicWriteJson` 漏了 `updateJson`）
+
+## 開發環境筆記
+
+- `node --env-file` 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 `.env` 改動要用顯式變數覆蓋模擬重啟後行為
+- 使用者機器已安裝 Bun runtime（`~/.bun/bin`），claude-mem plugin 的 hooks 依賴它執行，不可刪除
+- Git commit 訊息的 Co-Authored-By model 名以 session 環境宣告的實際 model 為準；偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個
+- repo 設定 `core.hooksPath=.githooks`，pre-commit 自動跑 `scripts/sync-skills-to-repo.mjs` 把 `default-skills/` 從本機 skill 目錄覆蓋同步回 repo——改 `default-skills` 前需注意可能被此 hook 覆蓋
+- 2026-07-13 已同步 upstream relay 多 peer 系統（`relay-peers.json` + `src/relayPeers.ts`），取代本地未實際使用的 `RELAY_PEER_USERNAMES` 機制
 
 ## Context 壓縮（Headroom 評估）
 
@@ -98,6 +120,8 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 ## 設計原則
 
 Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊；保持差異化優勢（語意路由 + topic shard + embed-router）。Conversation Summarizer 已由 upstream `archiveSummaryEnabled` 覆蓋，不再獨立追蹤。
+
+`dev-design` 多 agent 設計工作流分四階段（Explore → Propose → Adversarial → Synthesize）：即使 judge panel 把某提案排名第一，該提案仍可能被評為「無法照案直接實作」；Explore 階段宣稱「現有程式缺少某項能力」也可能是錯的（該能力其實透過其他底層邏輯間接實現）——adversarial 驗證應優先檢查 Explore 階段的假設本身，而非只驗證新提案。
 
 ## 相關工具
 

@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-07-08
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350]
+updated: 2026-07-17
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f]
 ---
 
 # 開發工具與環境設定
@@ -56,6 +56,10 @@ npx tsc --noEmit
 ### Bash 呼叫 PowerShell（引號陷阱）
 
 在 bash shell 呼叫 PowerShell 時，引號（單引號 / `$_`）會被 bash 層吃掉導致 ParserError。可靠做法：把指令轉 UTF-16LE 再 base64，用 `powershell -EncodedCommand <base64>` 執行。heredoc 傳 PowerShell 也有同類格式問題，替代方案是先寫暫存 script 檔再執行。
+
+### gh CLI 未登入
+
+此台機器的 `gh` CLI 尚未執行 `gh auth login`／未設 `GH_TOKEN`，研究 GitHub repo 時 `gh repo view` 等指令會直接失敗，需改用 WebFetch 抓取頁面。
 
 ## 文件產出
 

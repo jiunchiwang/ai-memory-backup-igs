@@ -2,8 +2,8 @@
 title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
-updated: 2026-07-08
-sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, f_daf156, f_ecaf0b, f_76faa7, f_42aed5]
+updated: 2026-07-17
+sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, f_daf156, f_ecaf0b, f_76faa7, f_42aed5, f_c73099]
 ---
 
 # Bridge Session 生命週期與多 Session 管理
@@ -32,6 +32,10 @@ sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, 
 ## Transcript 儲存路徑（四條，皆正常）
 
 `/reset`、onBeforeClose（idle sweep/restart/shutdown）、crash（onUnexpectedExit）、`/session` park。idle sweep 為**靜默存檔**（只寫 console log，使用者決定不加 Telegram 通知）；`Saved → sessions/xxx` 訊息只在 `/reset` 當下仍有 live session 且有歷史時顯示。
+
+## 使用場景偏好
+
+日常用 `/reset`（快速清 context 重開）；`/handoff` 保留給較大任務完成、換機器、當天收工等需要記憶留存的場景。
 
 ## 風險備忘
 

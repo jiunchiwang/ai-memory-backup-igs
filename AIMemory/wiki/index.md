@@ -24,10 +24,12 @@
 - [[ai-strategy]] — 跨模型 AI 策略（正典語料庫架構、投影分發、headless 安全機制）
 - [[user-pref]] — 使用者偏好與決策風格（ASK 優先、Git 紀律、自動化保守策略、除錯對策）
 - [[skill-and-eval]] — Skill 評估與管理（方法論整合、工具評估決策）[歷史頁面，topic 已併入其他分類]
+- [[igs-uof]] — IGS-UOF 加班單自動化（原 vc-uof-hours 改名擴充、加班單送出五層防線、刷卡時間 onchange 踩坑）
 
 ## Lessons
 
 - [[uk-slot-pitfalls]] — UK Slot 踩坑經驗（Layout 退場重排、Promise.all race condition、ghost slot 雙佔位）
+- [[bridge-pitfalls]] — Telegram-Kiro-Bridge 踩坑經驗（dotenv 繼承、merge 整檔取代、unhandledRejection、draft TTL、grammY Proxy）
 
 ## Tasks
 
@@ -44,5 +46,5 @@
 
 ---
 
-Total pages: 27
-Last updated: 2026-07-16 (uk-slot-clash-olympus, uk-slot-eye-strike 新增；bridge-project, bridge-research 更新)
+Total pages: 29
+Last updated: 2026-07-16（igs-uof 新增；bridge-project/bridge-specialist/uk-slot-template ripple 更新）

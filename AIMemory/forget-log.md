@@ -157,3 +157,13 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_6f4462] [2026-07-14T01:00:58.589Z] 使用者反映 /dev-review workflow 完成後的通知沒有送達（兩次都沒收到），但審查本身有成功執行並落地 artifacts——bridge/workflow 完成通知管線疑似有問題，待查
 - [2026-07-15T20:10:01.408Z] user=509424983 query="SELF_EVAL 設計規格 P1-design-spec.md 的 CLAUDE.md 方法論小節仍欠" deleted=1 token=forget-74214b7d-1
     - [f_f762eb] [2026-07-14T01:00:58.598Z] SELF_EVAL 設計規格 P1-design-spec.md 的 CLAUDE.md 方法論小節仍欠一次 Section 12.6 R-2 異源 cross-source review（程式碼審查已完成，文字本身的方法論審查未做），使用者尚未決定是否執行
+- [2026-07-16T20:05:14.971Z] user=509424983 query="刷卡時間欄位回填是綁在日期選擇器的 onchange 事件上" deleted=1 token=forget-8b0fec3a-1
+    - [f_35a6e8] [2026-07-16T20:05:01.345Z] 因為 UOF 表單的刷卡時間欄位回填是綁在日期選擇器的 onchange 事件上，直接用 JavaScript/frame.fill 塞值不會觸發 AJAX 查詢，所以 uof_form.py 改成先 fill 塞值保底、再點日曆 icon 選日期觸發真正 onchange（排除純用 fill 因為刷卡時間欄位會保持空白，且加了 try/except fallback 避免日曆 DOM selector 猜錯時整個腳本失敗）
+- [2026-07-16T20:08:06.822Z] user=509424983 query="因為 UOF 表單的刷卡時間欄位回填是綁在日期選擇器的 onchange 事件上，直接用 JavaScript/frame.fill" deleted=1 token=forget-c72eeeeb-1
+    - [f_35a6e8] [2026-07-16T20:05:21.272Z] 因為 UOF 表單的刷卡時間欄位回填是綁在日期選擇器的 onchange 事件上，直接用 JavaScript/frame.fill 塞值不會觸發 AJAX 查詢，所以 uof_form.py 改成先 fill 塞值保底、再點日曆 icon 選日期觸發真正 onchange（排除純用 fill 因為刷卡時間欄位會保持空白，且加了 try/except fallback 避免日曆 DOM selector 猜錯時整個腳本失敗）
+- [2026-07-16T20:20:53.088Z] user=509424983 query="notebooklm-routing.json 過時路徑引用（從 ${AGENT_CONFIG_DIR} 改為 ${MEMORY_DIR}/config/，commit e29fafc）" deleted=1 token=forget-4a1b5230-1
+    - [f_169cb4] [2026-07-13T12:11:37.930Z] AI-canonical 的 ms-portable-skill-authoring skill 正本已修正 notebooklm-routing.json 過時路徑引用（從 ${AGENT_CONFIG_DIR} 改為 ${MEMORY_DIR}/config/，commit e29fafc）
+- [2026-07-16T20:20:54.279Z] user=509424983 query="uk-slot-pitfalls wiki 已回灌 5 條 codegen 來源踩坑" deleted=0 token=forget-9afe0f39-1
+
+- [2026-07-16T20:21:14.791Z] user=509424983 query="先前「5 項仍未修屬同事責任」的狀態已過時" deleted=0 token=forget-a15f78a4-1
+
