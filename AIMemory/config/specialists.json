@@ -190,5 +190,40 @@
     "effort": "low",
     "maxTurns": 30,
     "timeoutMs": 1800000
+  },
+  {
+    "name": "bridge-dev",
+    "harness": {
+      "command": "kiro-cli",
+      "args": [
+        "acp",
+        "--agent",
+        "bridge-dev",
+        "-a"
+      ]
+    },
+    "cwd": "${BRIDGE_DIR}/specialists/bridge-dev",
+    "mcpServers": [
+      {
+        "name": "memory",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+        ],
+        "disabled": false
+      },
+      {
+        "name": "bridge-actions",
+        "command": "node",
+        "args": [
+          "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-actions.js"
+        ],
+        "disabled": false
+      }
+    ],
+    "model": "claude-sonnet-4.6",
+    "effort": "high",
+    "maxTurns": 30,
+    "timeoutMs": 1800000
   }
 ]

@@ -3,7 +3,7 @@ type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
 updated: 2026-07-17
-sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692]
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -89,6 +89,10 @@ C = min(平均消耗 turn 數 / 10, 1.0)
 ## Junction 即時反映
 
 AI-canonical-corp 的 slot skill（如 `uk-slot-pattern-library`）透過 Windows junction 直接指向正本目錄，改正本即時反映到 `~/.kiro/skills/`，不需額外跑 `sync.ps1`。這讓 corp（slot 專屬）的 skill 開發比通用 skill 更直覺——改完就生效。
+
+## MCP-First 邊界說明（2026-07-17）
+
+正本三份 skill（`ms-agent-scheduled-prompts`、`ms-agent-text-token-signaling`、`ms-telegram-ask-button-protocol`）已更新統一邊界規則：bridge-managed session 優先呼叫 `bridge-actions` MCP tool，只有明確回報 unavailable 才退回文字 token 協定；validation/policy 錯誤須修參數，不可用文字 token 繞過（commit d6853e2，未 push）。此規則反映 [[bridge-project]] 的 `bridge-actions` MCP 上線後，正本文件需同步更新消費端行為的慣例。
 
 ## 相關
 

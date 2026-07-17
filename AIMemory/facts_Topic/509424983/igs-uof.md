@@ -3,3 +3,4 @@
 - [f_ce6c91] [2026-07-14T03:31:07.365Z] vc-uof-hours P3（加班單真正送出）已實作完成（2026-07-14）：uof_form.py 加入 --submit --token 模式；Phase A 產出 plan.json + 一次性 token；Phase B 五層安全防線全實作（CLI flag / plan+token / 使用者確認 / 欄位比對 / consumed 防重複）；Playwright click RadButton13 觸發 postback + alert 攔截驗證通過；簽核 dialog 因環境限制（無刷卡紀錄）未能實測，handle_sign_dialog 用啟發式偵測；首次真正送出時需觀察簽核 dialog 行為做微調
 - [f_c76741] [2026-07-15T01:19:58.386Z] uof_form.py overtime 的已知問題：直接用 JS 填日期欄不會觸發 onchange，導致刷卡時間欄空白；正確做法是點日曆按鈕選日期（觸發 AJAX 查刷卡）→ 等刷卡時間出現 → 再填其他欄位
 - [f_16d690] [2026-07-16T03:56:32.137Z] 使用者決定 igs-uof 保留原 vc-uof-hours 的加班單 dry-run 填寫功能（uof_form.py），標註為「個人擴充，非公司共享唯讀範圍」——同事的 v2 設計原本已排除寫入操作；若要把 skill 整包分享給同事需重新評估是否移除該檔案
+- [f_02e1bb] [2026-07-17T01:30:04.249Z] uof_form.py overtime 的 submit 流程會把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為 submit_rejected——實際上第一次 headless submit 就已經成功送出（BAE260706086 於 09:27 申請），腳本需修正確認彈窗處理邏輯

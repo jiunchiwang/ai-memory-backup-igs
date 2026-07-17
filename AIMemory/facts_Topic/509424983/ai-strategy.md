@@ -2,3 +2,4 @@
 - [f_7d7ffe] [2026-06-19T07:56:04.782Z] AI 產物的雲端 vs 本地儲存政策:正典 skills、steering 政策與通用文件放公開 GitHub repo(AI-canonical);session 執行日誌與框架內部狀態僅保留本地、不進版控。
 - [f_6d4701] [2026-06-27T00:45:09.031Z] memory-to-skill 正本 SKILL.md 已加入 Confidence Scoring 量化門檻（Step 2 後）：confidence = F×C（頻率×成本），≥0.5 進候選、0.3-0.49 留底觀察、<0.3 跳過；靈感來自 ECC continuous-learning-v2 的 instinct confidence scoring
 - [f_f92692] [2026-07-14T20:31:29.740Z] 撰寫可攜式 skill 時,若該 skill 會被多個 agent CLI(如 Kiro、Codex、Claude)或多台機器共用,應避免在 SKILL.md 中寫死絕對路徑(例如特定磁碟機代號或使用者目錄),以免跨環境失效。
+- [f_fd8698] [2026-07-17T11:06:27.372Z] AI-canonical 正本三份 skill（ms-agent-scheduled-prompts、ms-agent-text-token-signaling、ms-telegram-ask-button-protocol）已更新為 MCP-first 邊界說明：bridge-managed session 優先呼叫 bridge-actions MCP tool，只有明確回報 unavailable 才退回文字 token；validation/policy 錯誤須修參數不可用 token 繞過（commit d6853e2，未 push）

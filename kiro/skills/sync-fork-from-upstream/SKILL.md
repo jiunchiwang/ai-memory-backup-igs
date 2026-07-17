@@ -1,6 +1,6 @@
 ---
 name: sync-fork-from-upstream
-description: 當使用者要把自己的 fork / 下游倉庫同步到原專案（upstream）的最新更新時使用。觸發語包含「同步原專案」「拿上游更新」「sync upstream」「更新原專案」「原本的倉庫有更新怎麼拉」。涵蓋一次性 upstream remote 設定、半自動同步流程（fetch → 拋棄式分支試合併 → 型別檢查 → 停在衝突/失敗、絕不自動 push）、以及 fork 與 upstream 無共同歷史時的「重新接血脈」做法。
+description: 當使用者要把自己的 fork / 下游倉庫同步到原專案（upstream）的最新更新時使用。觸發語包含「同步原專案」「拿上游更新」「sync upstream」「更新原專案」「原本的倉庫有更新怎麼拉」。涵蓋一次性 upstream remote 設定、半自動同步流程（fetch → 拋棄式分支試合併 → 型別檢查 → 停在衝突/失敗 → push 前獨立覆核閘 → 絕不自動 push）、以及 fork 與 upstream 無共同歷史時的「重新接血脈」做法。
 ---
 
 # 同步 fork ← upstream（半自動、停在衝突）
@@ -66,8 +66,9 @@ git merge-base main upstream/main   # 印不出 sha = NO COMMON ANCESTOR
    ```
 4. 過時 / 與上游撞車的重構 commit 該**跳過**（`git cherry-pick --skip`）而非硬套 —
    見下方「衝突判斷」。
-5. 型別檢查通過、實測 OK 後才改名取代 main + `git push --force-with-lease`。
-   舊 main 先 `git branch -m main main-old-backup` 留底。
+5. 型別檢查通過、實測 OK,**且過下方半自動流程 step 6 的獨立覆核閘**（force-push 是
+   全流程破壞性最高、最難回退的一步,更需要異源覆核）後,才改名取代 main +
+   `git push --force-with-lease`。舊 main 先 `git branch -m main main-old-backup` 留底。
 
 ## 半自動同步流程（情況 A，或重新接血脈之後）
 
@@ -92,27 +93,57 @@ git merge-base main upstream/main   # 印不出 sha = NO COMMON ANCESTOR
    - **不要在同步腳本裡跑 `npm install`**:相依很少在同步間變動,且常觸發有副作用的
      postinstall。若合併帶進新相依,tsc 會以 `Cannot find module` 明確報出,屆時再手動
      `npm install`。
-5. 全綠後**先給人看摘要、實測功能**,確認 OK 才發佈:
+   - **lockfile 善後**:上述手動 `npm install` 產生的 `package-lock.json` 變動要
+     **單獨一個 chore commit**(例:`chore: npm install lockfile normalization after
+     upstream sync`),不要和 merge commit 混在一起——分開才看得出「哪些改動來自上游、
+     哪些只是本地依賴善後」,回溯與 revert 都乾淨。
+5. 全綠後**先給人看摘要、實測功能**,確認 OK。**此時仍在 `sync-attempt`,main 一直沒動。**
+6. **覆核閘（在 `sync-attempt` 上、合回 main 之前,不可略過）**:push 是唯一對外、難
+   回退的一步。**刻意在合回前覆核**——缺陷直接在這條拋棄式分支上修、重審,main 全程
+   不碰(守住「絕不直接動 main」);且 diff 基準就是 main、天然存在,不必事先記 sha。
+   派**獨立 context 的覆核者**對 sync 結果做對抗式審查(衝突解得對不對、有沒有回退
+   上游新功能、本地功能有沒有被合掉):
+   - **diff 基準**:`git diff main HEAD`(本次合併相對舊 main 的全部改動)搭配
+     `git diff upstream/main HEAD`(合併結果 vs 上游的殘差 = 你的本地增補全集,看
+     「本地功能有沒有被合掉」最精準),再加衝突檔逐檔看。
+   - **覆核者優先序(異源 > 同源,三級分明、不可混為等價)**:
+     ① **異源 model**(例如 Fable5)**優先** — 打破同源盲點(同源自審漏看率高)。
+     ② 異源不可用 → 退化用**同 model 新乾淨 context**,回報標「同源異 context」。
+     ③ 都沒有 → 至少**人工**逐檔 diff + 實測關鍵路徑,回報標「單源自審」。
+   - 覆核出 high/medium 缺陷 → **在 `sync-attempt` 上修完、回到本步重審**,過關才進下一步。
+7. 覆核過關才合回 main + 發佈(`--ff-only` 保證合回不引入任何新內容):
    ```bash
    git switch main
    git merge --ff-only sync-attempt
    git push origin main
    git branch -d sync-attempt
    ```
-6. 失敗 / 衝突未解時，main 完全沒動、沒 push;放棄就:
+8. 失敗 / 衝突未解時，main 完全沒動、沒 push;放棄就:
    ```bash
    git merge --abort 2>/dev/null; git switch main; git branch -D sync-attempt
    ```
 
+> **Windows 註**:PowerShell / cmd 下 `git fetch` / `clone` / `merge` 常因 stderr 帶
+> 進度條或 notice 被 shell 判成 exit 1 假失敗——別憑退出碼就當同步失敗,以實際
+> `git status` / ahead-behind 為準。詳見 skill `ms-windows-shell-exit-code-false-positive`。
+
 ## 衝突判斷（這是不能自動化的部分）
 
-逐檔看衝突。常見兩類:
+逐檔看衝突。常見三類:
 
 - **雙方各自新增**（例如各自往同一個陣列加一筆）→ 兩邊都保留。
 - **你的重構 vs 上游在同處的演進撞車** → 通常**該採用上游版、跳過你的重構**。
   典型訊號:你的 commit 是「把 inline 邏輯抽成共享函式」,但上游保留 inline 並
   在上面長出新功能(新欄位 / 新流程)。硬套你的舊重構會**回退上游的新功能**。
   這種 commit 用 `git cherry-pick --skip`;需要的話事後在上游新結構上手動補回你要的小行為改變。
+- **結構性文件衝突**(`CLAUDE.md` / `AI.md` / `README.md` 這類:本地加了 pointer 或
+  段落,上游改了文件結構)→ **不是二選一**,而是「採上游新結構 + 補回本地增補」。
+  典型:本地在 `README` 留一行指向 `POLICIES/`,上游重寫了 README 架構 → 採用上游
+  新架構,再把本地那行 pointer 補回去;本地增補的實質內容則移進對應子文件
+  (如 `AI.md` / `POLICIES/*.md`),避免根文件膨脹。文件衝突別當 code 衝突硬挑一邊。
+  **但這只適用「本地是在上游文件上做增補」**;若本地已把該文件**整份改寫**成不同的
+  政策文件(fork 的文件路線與上游分家),「採上游新結構」等於丟掉本地文件 → 這屬語意
+  取捨,回到本節末的原則**停下來問人**,別預設採上游。
 
 遇到需要取捨的語意衝突,**停下來向使用者說明選項**,不要替他猜。
 

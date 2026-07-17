@@ -1,24 +1,21 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-15T20:14:18.048Z
+Last run: 2026-07-16T20:32:34.560Z
 
 ## High Priority (action needed)
-- ✅ 升格候選：已完成 → wiki/lessons/bridge-pitfalls.md（11 條教訓，2026-07-16）
-- ✅ Repo 膨脹 ratio=5.2：已確認為 facts-as-source + wiki-as-derived 雙層架構的預期行為，wiki-reference 保護是設計取捨非問題
-- ✅ specialistreview：分析完成，結論：不新增 specialist（bridge-* 主 agent 自用、spine-viewer/vc-uof 量不足）；slot-dev topicKeywords 擴展 +8（maskexpand/multi-mask/imaskexpander/cascade/tumble/回灌/slotextensions/wrath_of_thunder）（2026-07-16）
+- （無）
+
+## Resolved this session (2026-07-16)
+- skilllint：`vc-uof-hours` → `igs-uof` entry 已改名合併（use_count/歷史沿用）
+- skilllint：`igs-uof`、`uk-slot-logo-localization` 兩個資料夾的 skill-usage entry 已補建
+- specialistreview：使用者確認建立 bridge-dev specialist（覆蓋 7 個 bridge-* topics/175 facts）。已加入 specialist-domains.json domain 定義，並執行 syncAllSpecialists() 生成 specialists.json entry、agents/bridge-dev.json、specialists/bridge-dev/{preamble.md, AGENTS.md, CLAUDE.md}
 
 ## Watch List (monitor)
-- session 檔搬移未完成（bridge 進程鎖定，下次 restart 後重試）
-- 4 個 underused skill 持續觀察中：dual-skill-review-loop / huashu-slides / self-eval-prompt-pattern / uk-slot-multilang-sync
-- 衰減判定不可用（hit-log 僅 5 天數據，不足 60 天門檻）
-- bridge-acp shard 有 07-15 新 fact（modelInfo getter）但 wiki 頁面已由 bridge-project 覆蓋，不需獨立更新
+- wikilint：`bridge-acp.md` 的 sources 欄位仍有一批疑似編造的假 fact ID（如 f_228abc 系列），尚未清理
+- factlint：uk-slot-codegen 升格候選（3 條踩坑 fact）已判定不需開新頁，僅供追蹤
 
 ## Noise (ignored this run)
-- dailylog 2026-07-15 已寫入（18 行）
-- topicreview：20 topic，misc 1 則（降 90%）
-- wikisync：新增 2 頁（clash-olympus、eye-strike）+ ripple 更新 2 頁（bridge-project、bridge-research）
-- factlint：刪 4 條、0 矛盾、wiki-reference 保護 8 條確認不重試
-- wikilint：27 頁全健康、0 孤兒、0 斷連
-- skilllint：28 健康、0 stale、0 conflict、0 orphan
-- usage-guide.html 已是最新
-- backup commit 5d97372（84 檔）
-- artifactcleanup 刪 0 個
+- sharedsync、dailylog、memorytoskill、claudememcurate、topicreview、wikisync、factlint、wikilint、skilllint、docupdate、artifactcleanup、backup 皆正常完成
+- topicreview 過程中自行發現並修正一則重複 fact（已解決）
+- claudememcurate 5 筆候選全數判定重複，無新增
+- artifactcleanup 刪除 1 個舊 artifact，剩餘 4 個
+- backup 成功（commit 5cb0b82，94 檔）

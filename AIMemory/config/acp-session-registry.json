@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "0c4f0db0",
+      "activeId": "d558c9ec",
       "sessions": [
         {
-          "id": "0c4f0db0",
-          "name": "自檢一下",
-          "createdAt": 1784213768726,
-          "sessionId": "7c1b7bed-40ce-4e2b-a394-403dae259e8e",
+          "id": "d558c9ec",
+          "name": "請產出 2026-07-17 的 daily l",
+          "createdAt": 1784318415908,
+          "sessionId": "851c14f8-73ab-4207-aefa-8b544bddefcf",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1784213768714
+          "savedAt": 1784318415901
         }
       ]
     }

@@ -12,7 +12,6 @@
 - [f_166fd1] [2026-07-06T20:36:15.296Z] telegram-kiro-bridge 的 gate hook 決策已反轉：專案記憶文件 decision-no-gate-hook.md 改名為 decision-gate-hook-minimal.md，改採最小版 gate hook；CLAUDE.md Section 7 的完整 impact-analysis-guard PreToolUse hooks 維持不部署，此決策文件用於防止未來重複提案
 - [f_36e49d] [2026-07-06T22:56:52.248Z] 使用者對 preamble 大小的取捨判斷：佔 context 5-6% 可接受但到警戒線就削減；優先砍 facts tail 與 guideline 區塊（排除 wiki 索引瘦身與維持現狀），理由是舊 facts 有 topic index + list_facts 補位
 - [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
-- [f_eb9ddd] [2026-07-07T00:32:54.720Z] 使用者機器已安裝 Bun runtime（C:\Users\jiunchiwang\.bun\bin，含 bun.exe/bunx.exe），claude-mem plugin 的 hooks 依賴它執行，不可刪除
 - [f_d61c50] [2026-07-07T08:51:39.037Z] bridge repo 的 remote 配置：origin=jiunchiwang/telegram-kiro-bridge、upstream=redkilin/telegram-kiro-bridge，https URL 皆嵌使用者名避免 GCM 帳號視窗
 - [f_8da350] [2026-07-07T08:51:39.050Z] merge 解衝突教訓：git checkout --theirs/--ours 是整檔取代，會洗掉對側已乾淨自動合併的 hunk（combined diff 不顯示乾淨 hunk）；雙邊都有改動的檔案應用 git merge-file 三方合併或 checkout -m 恢復衝突標記後只改衝突區，並逐檔 diff 兩側核對無遺失
 - [f_1e4cda] [2026-07-07T09:28:41.792Z] telegram-kiro-bridge 已實作 Telegram reply/quote context 注入（commit 1346519）：message handler 讀 reply_to_message（含 caption）與 Bot API 7.0 partial quote，組 [Reply context] 區塊（標注引用對象、截 500 字）前置於 promptText；連動把 negation reflexion 偵測改用原始 text 開頭比對；需重啟 bridge 生效
@@ -46,7 +45,9 @@
 - [f_ea9657] [2026-07-16T04:07:10.823Z] 使用者確認的另一種合併衝突處理慣例（2026-07-16）：AI.md/README.md 這類「本地已把細節搬到子文件（如 src/AI.md、docs/setup-agents.md）」vs「upstream 就地擴充原檔內容」的結構性衝突，應保留本地 pointer 結構、把 upstream 新增內容手動補進對應子文件，而非整段改用 upstream 版本
 - [f_d878ad] [2026-07-16T09:36:02.389Z] telegram-kiro-bridge 的 README.md 已於 2026-07-16 補上 bridge-actions MCP 說明（功能一覽新增一行 + 深入文件索引新增 docs/SPEC-token-mcp-migration.md 連結），修正原本 README 只提 memory/Google API MCP 而漏列新啟用 bridge-actions 的文件落差
 - [f_e1f99f] [2026-07-16T13:13:25.950Z] [WS] task: 把 claude-mem-curate 精選流程接成 /dream 第 14 步，讓每日 04:00 自動觸發（原本只能手動觸發）
-- [f_9b9689] [2026-07-16T13:13:27.920Z] [WS] completed: 已新增 handleClaudeMemCurate（src/commands/dream.ts，仿 docupdate 的 meta-prompt 模式）、註冊進 COMMAND_HANDLERS（src/index.ts）、在 C:\Users\jiunchiwang\.kiro\dream.json 插入 claudememcurate 步驟（memorytoskill 之後、topicreview 之前）；tsc --noEmit 過、npm run build 過、check-dream.mjs 24 項 smoke test 全過、手動 load 實際 dream.json 確認 14 步解析正確無 warning
 - [f_e2d60b] [2026-07-16T13:13:35.726Z] [WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效，然後詢問使用者是否要 git commit 這次 claudememcurate 改動（只 add src/commands/dream.ts + src/index.ts，不要連帶 commit README.md 既有改動）
 - [f_e547d2] [2026-07-16T13:14:06.507Z] telegram-kiro-bridge 已於 2026-07-16 把 claude-mem-curate 精選流程接成 /dream 第 14 步（新增 handleClaudeMemCurate handler 於 src/commands/dream.ts，仿 handleDocUpdate 的 meta-prompt 模式，並註冊進 index.ts 的 COMMAND_HANDLERS），插在 memorytoskill 之後、topicreview 之前，使其從純手動觸發變成每日 04:00 自動執行
 - [f_6e3e02] [2026-07-16T13:14:06.530Z] telegram-kiro-bridge 的 dream.json 每個 step 的 cmd 字串必須存在於 index.ts 的 COMMAND_HANDLERS map 中才能被 /dream 執行，否則會被判定為「未知指令已跳過」但不會中斷其餘步驟（continue_on_error 預設 true）
+- [f_e7bcdd] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP 說明章節（6 個 action tool），修正 HTML 落後於 README 的文件缺漏
+- [f_1b2fd1] [2026-07-16T23:36:54.848Z] telegram-kiro-bridge 新增 src/turn-lint.ts（2026-07-17）：機械檢查回覆結尾語言/ASK按鈕違規（問句無ASK、CJK本文卻英文收尾），掛在 run-prompt.ts 的 turn 收尾處，只 console.warn 不擋訊息不改文字——根因是 Fable5 診斷「收尾提議句繞過規則檢查、只有 model-independent 機械層才治本」
+- [f_6de90c] [2026-07-17T20:05:18.008Z] telegram-kiro-bridge 的 turn-lint 因為判斷邏輯是啟發式正則（問句/語言比例判斷），容易對 code block、反問句等正常內容產生 false positive，所以選擇只 console.warn 觀察（定位同 SELF_EVAL），排除直接攔截或自動改寫回覆——避免誤傷正常訊息

@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-07-16T20:27:45.476Z",
+  "_last_updated_at": "2026-07-17T20:14:25.287Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -25,9 +25,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-16T20:27:45.476Z",
-      "use_count": 47,
-      "last_reason": "wikilint 步驟：掃描 29 頁 updated vs shard、驗證 29 檔與 index 一致性、檢查 17 個唯一 wikilink 有效性、修復 5 頁 stale、發現並記錄 bridge-acp.md 待清理的假 sources ID",
+      "last_agent_used_at": "2026-07-17T20:14:25.287Z",
+      "use_count": 48,
+      "last_reason": "wikisync 步驟：2 頁更新（bridge-project ripple + ai-strategy 分類連動）+ 1 頁核對已涵蓋（dev-tools）+ 0 新建（uk-slot-pirates-queen 未達門檻）+ index 同步 + 5 個 query 候選評估跳過",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -332,14 +332,24 @@
       "notes": "補建 entry — skilllint 2026-07-13 發現磁碟有但 usage.json 漏追蹤",
       "orphan": false
     },
-    "vc-uof-hours": {
+    "igs-uof": {
       "created_at": "2026-07-14T03:08:57.472Z",
       "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-07-15T01:25:38.035Z",
-      "use_count": 5,
-      "last_reason": "修正日期填入方式改用日曆 popup 觸發 onchange AJAX",
+      "last_agent_used_at": "2026-07-17T00:57:15.097Z",
+      "use_count": 6,
+      "last_reason": "使用者要求填加班單，觸發加班單預填流程",
       "pinned": false,
-      "notes": null,
+      "notes": "重命名自 vc-uof-hours（2026-07-16 資料夾改名擴充為 igs-uof，合併同事查詢類子命令），use_count/歷史沿用舊 entry",
+      "orphan": false
+    },
+    "uk-slot-logo-localization": {
+      "created_at": "2026-07-14T16:10:20.000Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "last_reason": null,
+      "pinned": false,
+      "notes": "補建 entry — skilllint 2026-07-16 發現磁碟有但 usage.json 漏追蹤",
       "orphan": false
     }
   }

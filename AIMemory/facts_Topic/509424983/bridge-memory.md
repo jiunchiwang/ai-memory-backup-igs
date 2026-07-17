@@ -29,3 +29,5 @@
 - [f_b7367a] [2026-07-12T00:19:03.944Z] telegram-kiro-bridge 教訓：任何會被 mcp-memory 子行程載入的模組禁止 import config.js——config 模組層就 required(TELEGRAM_BOT_TOKEN)，而 acpClient.buildSpawnEnv 刻意把該 token 置空防 409，import 即炸導致 memory MCP 啟動即死（Karpathy P0 的 ingest-ripple 引入此鏈，2026-07-12 改用 facts-store 的 resolveMemoryDir() 修復）；MEMORY_DIR 解析一律用 resolveMemoryDir()
 - [f_de06cc] [2026-07-12T23:22:38.497Z] factlint actionable ratio 4.7（>3.0 警告閾值）為已知設計取捨——因為 87%+ facts 被 wiki sources 保護不可刪（provenance 追溯用途），結構性不可能降到 3.0 以下；未來 factlint 遇到此警告應跳過不報，除非 wiki-unprotected facts 本身有新問題
 - [f_77ddbd] [2026-07-16T13:14:06.519Z] telegram-kiro-bridge 的 dream.json 實際讀取路徑優先序為 MEMORY_DIR/config/dream.json（目前不存在）→ 退回 ~/.kiro/dream.json（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback
+- [f_437274] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向已改名的資料夾 igs-uof，且 igs-uof、uk-slot-logo-localization 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建
+- [f_5e81d2] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 wiki 頁 bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID（如 f_228abc 系列）尚未清理，是已知的 wiki-reference 保護部分失效風險，待下輪 wikilint/factlint 處理

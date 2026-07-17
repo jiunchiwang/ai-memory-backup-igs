@@ -47,4 +47,4 @@
 ---
 
 Total pages: 29
-Last updated: 2026-07-16（igs-uof 新增；bridge-project/bridge-specialist/uk-slot-template ripple 更新）
+Last updated: 2026-07-17（bridge-project 補 turn-lint + bridge-actions 文件同步；ai-strategy 補 MCP-first 邊界說明 ripple 更新）

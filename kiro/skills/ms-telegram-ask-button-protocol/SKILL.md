@@ -1,17 +1,23 @@
 ---
 name: ms-telegram-ask-button-protocol
-description: Use when emitting <<ASK:...>> for Telegram bridge buttons, or when an ASK token renders verbatim. Label soft cap 20 chars; >20 SHALL use numbered body list with short labels. See SKILL.md for limits.
+description: Use when requesting Telegram bridge choice buttons, or when an ASK action is rejected or renders verbatim.
 ---
 
 # Telegram Bridge `<<ASK>>` Button Protocol
 
 ## Overview
 
-The bridge strips `<<ASK:...>>` from the reply and renders an **inline keyboard** attached to the final message. Tapping a button posts `[ASK:<question_id>] <key>` back as a new user turn.
+In a bridge-managed session, call `bridge-actions.ask` first. The bridge validates the structured request and attaches an **inline keyboard** at final-turn commit. Only when the MCP tool explicitly reports unavailable should the agent emit the legacy text token; tapping either form posts `[ASK:<question_id>] <key>` back as a new user turn.
 
 **Iron rule:** If any validation fails, the bridge leaves the **whole token verbatim** in the user's chat — broken tokens are visible, not silently dropped. Self-check every token before sending.
 
-## Token Shape
+**Fallback boundary:** A normal MCP validation error means fix the request. Do not switch to the token to bypass validation. The token remains a permanent compatibility path for local LLMs, MoA/reference agents, and adapters without the built-in MCP.
+
+## Preferred MCP Shape
+
+Call `bridge-actions.ask` with a question id, structured options, and at most one recommended option. It returns a structured accepted/rejected/unavailable result, permits one ASK per active turn, and attaches the keyboard only at final reply. For portability use the stricter legacy id/key charset below even though MCP currently accepts a wider id charset. Never emit MCP ASK and token together; if both appear, legacy wins and MCP ASK is discarded.
+
+## Legacy Token Shape
 
 ```
 <<ASK:question_id|key1=label1|*key2=label2|...|keyN=labelN>>
@@ -137,6 +143,9 @@ The bridge masks everything inside code regions, so that token is documentation 
 **Asking a free-form question with ASK.**
 Wrong: ASK for "which filename should I use?" with 3 guesses. The user's real answer is probably none of them. Ask in prose.
 
+**把 token ID 驗證和內部 actionId 正規化混為一談。**
+ASK 的 `question_id` 通過 `[a-zA-Z0-9_-]{1,32}`，只證明文字協定可解析；host 若再把 turn／message 資訊組成 actionId，仍須在建立 action 前獨立 sanitize 非法字元並套長度上限。邊界 regression 應直接餵「含空白、冒號、斜線、超長」的內部 actionId；一般合法 ASK 的 live callback 不能取代這項測試。
+
 ## Red Flags — Stop and Re-check
 
 - 任何 label **超過 20 字** → **必改編號清單**（見 §Long Option Descriptions）
@@ -158,6 +167,7 @@ Wrong: ASK for "which filename should I use?" with 3 guesses. The user's real an
 | `*` recommended markers | ≤ 1 effective |
 | Token placement | Single line, outside code fences |
 | Callback format | `[ASK:<question_id>] <key>` |
+| Preferred transport | `bridge-actions.ask`; token only after explicit unavailable |
 
 ## Real-World Impact
 

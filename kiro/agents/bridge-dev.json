@@ -1,0 +1,37 @@
+{
+  "name": "bridge-dev",
+  "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
+  "tools": [
+    "@builtin",
+    "@memory",
+    "@bridge-actions"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-kiro-strreplace-silent-fail/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-windows-shell-exit-code-false-positive/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-windows-shell-interactive-prompt/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/ms-portable-skill-authoring/SKILL.md",
+    "skill://C:/Users/jiunchiwang/.kiro/skills/writing-skills/SKILL.md"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    },
+    "bridge-actions": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-actions.js"
+      ],
+      "disabled": false
+    }
+  }
+}
