@@ -1,5 +1,29 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-19(來源 shortlist 2 筆，同一份未清空的 shortlist → 精選後寫入 1 條)
+
+來源 project：`telegram-kiro-bridge-main`（同 2026-07-18 那批候選，shortlist 檔自 2026-07-17T20:30:02 起未變動）。
+
+- 候選 1（turn-lint warn-only 策略理由）：`list_facts` 查核仍是重複 → 丟，判定與 2026-07-18 一致。
+- 候選 2（獨立 Fable5 review 核可 merge 推送 origin）：**推翻 2026-07-18 的「一次性過程紀錄」判定**。核對 `git log --grep="Fable5"` 發現該做法已在至少 4 個獨立 commit 中出現（`04cc0bc` 訊息明確寫「Fable5 push 前覆核」），確認是跨 session 反覆使用的專案慣例而非單次紀錄 → 改寫為繁中 fact 並 `remember()` 寫入 `bridge-project` shard：
+  > 「telegram-kiro-bridge 完成 merge/sync 後、push 到 origin 前，會先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端」
+
+結果：**新增 1 條**。未呼叫 forget。
+
+## 2026-07-18(來源 shortlist 2 筆 → 精選後寫入 0 條)
+
+來源 project:`telegram-kiro-bridge-main`(2 筆,皆 2026-07-17 decision)。
+
+候選:
+1. turn-lint warn-only 策略理由(啟發式正則做問句/語言比例判斷)。
+2. 獨立 Fable 5 review 核可 merge 推送 origin。
+
+判定:
+- 候選 1 **重複**:AIMemory 已存在幾乎逐字對應的既有記憶「telegram-kiro-bridge 的 turn-lint 因為判斷邏輯是啟發式正則(問句/語言比例判斷),容易對 code block、反問句等正常內容產生 false positive,所以選擇只 console.warn 觀察」→ 丟。
+- 候選 2 **一次性過程紀錄**:單次 merge 的獨立審查核可 log,非跨 session 可重用決策/做法 → 丟。
+
+結果:**未寫入任何新記憶**。未呼叫 forget。
+
 ## 2026-07-17(來源 shortlist 2 筆 → 精選合併後寫入 0 條)
 
 來源 project:`telegram-kiro-bridge-main`(2 筆,皆 2026-07-16 decision,igs-uof 合併同事唯讀設計時保留個人加班單填寫擴充)。

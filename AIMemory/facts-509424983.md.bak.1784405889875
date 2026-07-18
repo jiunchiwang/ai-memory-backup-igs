@@ -262,6 +262,7 @@
 - [f_77ddbd] [2026-07-16T13:14:06.519Z] telegram-kiro-bridge 的 dream.json 實際讀取路徑優先序為 MEMORY_DIR/config/dream.json（目前不存在）→ 退回 ~/.kiro/dream.json（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback
 - [f_6e3e02] [2026-07-16T13:14:06.530Z] telegram-kiro-bridge 的 dream.json 每個 step 的 cmd 字串必須存在於 index.ts 的 COMMAND_HANDLERS map 中才能被 /dream 執行，否則會被判定為「未知指令已跳過」但不會中斷其餘步驟（continue_on_error 預設 true）
 - [f_437274] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向已改名的資料夾 igs-uof，且 igs-uof、uk-slot-logo-localization 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建
+- [f_5e81d2] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 wiki 頁 bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID（如 f_228abc 系列）尚未清理，是已知的 wiki-reference 保護部分失效風險，待下輪 wikilint/factlint 處理
 - [f_e7bcdd] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP 說明章節（6 個 action tool），修正 HTML 落後於 README 的文件缺漏
 - [f_1b2fd1] [2026-07-16T23:36:54.848Z] telegram-kiro-bridge 新增 src/turn-lint.ts（2026-07-17）：機械檢查回覆結尾語言/ASK按鈕違規（問句無ASK、CJK本文卻英文收尾），掛在 run-prompt.ts 的 turn 收尾處，只 console.warn 不擋訊息不改文字——根因是 Fable5 診斷「收尾提議句繞過規則檢查、只有 model-independent 機械層才治本」
 - [f_bd5b93] [2026-07-16T23:36:54.848Z] 使用者實測出呼叫 Claude Fable 5 做一次性獨立審查的輕量方法：`claude -p --model fable "prompt"`（不透過 specialist/domain 機制註冊），比建立臨時 specialist domain 更適合單次第二意見診斷

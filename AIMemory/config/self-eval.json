@@ -42,6 +42,13 @@
       "score": 85,
       "evidence": "純文件新增，內容已核對剛驗證過的六個工具名稱與 SPEC 文件實際路徑（用 Grep 確認過），未跑型別檢查因為改動不涉及程式碼；扣分點是沒有重新 read 整份 README 確認排版無誤，僅信任 Edit 工具回傳成功",
       "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-17T20:34:58.975Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "型別檢查(tsc --noEmit)與build皆過；根因交叉比對events.jsonl實際時間戳與session transcript驗證，非猜測；修復範圍限定在觀測層3檔案，未動未驗證的ACP底層；唯一未驗證的是「wikilint/skilllint/docupdate是否真的走prompt-already-in-progress路徑」屬合理推論但非直接證據確認",
+      "belowThreshold": false
     }
   ]
 }

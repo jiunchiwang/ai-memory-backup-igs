@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-07-16
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_a8bb58, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_48b44d]
+updated: 2026-07-19
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_a8bb58, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_48b44d, f_bd5b93]
 ---
 
 # Bridge Specialist 分身系統
@@ -69,6 +69,10 @@ Status server（port 3847）擴充為 specialist 監控面板：
 ## Specialist Reflect（/dream 步驟，2026-07-14）
 
 `specialistreflect` 是 `/dream` 的第 4 步（sessionreflect 之後），掃描 4 個 specialist 的 `specialist-memory/<name>.md`，用本機 LLM 抽取 learnings 升格進 facts/skill-candidates，同時檢查 pending-ingest 老化（>48h）寫進 High Priority 通道。已知限制：本機未裝 llama.cpp 時 learnings 永遠為 []，只有游標推進與 pending-ingest 老化檢查會生效。
+
+## 輕量獨立審查：不透過 specialist 機制
+
+實測出呼叫 Claude Fable 5 做一次性獨立審查（如 merge 前覆核）的輕量方法：`claude -p --model fable "prompt"`，不透過 specialist/domain 機制註冊。比建立臨時 specialist domain 更適合單次第二意見診斷——省去 `specialist-domains.json` 配置與 preamble 建置成本。實際應用見 [[bridge-project]] 的「Push 前安全機制」。
 
 ## 延伸筆記
 

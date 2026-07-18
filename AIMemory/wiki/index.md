@@ -43,8 +43,9 @@
 - [[trio-model-architecture]] — 三模型協作架構評析（借鏡點、疑點、與 bridge 差異）
 - [[embedding-router]] — 為何 doctor 報 Embedding router 未就緒（根因、影響面、解耦修復）
 - [[modelcontextprotocol-typescript-sdk-mcp-typescript-sdk-v-a1aded4e]] — MCP TypeScript SDK v2 正式進入 beta（2026-07-28 規範、套件拆分、任意 schema 庫、stateless core）
+- [[specialist]] — 什麼情況下會自動使用 specialist（SPECIALIST_PROXY vs PARALLEL_DELEGATE 觸發條件、bridge-dev specialist 不採納理由）
 
 ---
 
-Total pages: 29
-Last updated: 2026-07-17（bridge-project 補 turn-lint + bridge-actions 文件同步；ai-strategy 補 MCP-first 邊界說明 ripple 更新）
+Total pages: 30
+Last updated: 2026-07-19（bridge-project 補 dream turn 失敗誤報修復 + push 前 Fable5 覆核慣例；新增 specialist query 頁）

@@ -13,9 +13,9 @@
   - 代表 session: 2026-06-27 /skillsearch 自檢（找到 5 個問題並修正）
   - 觀察點：如果對更多 skill/command 做自檢且每次都有固定 checklist，可升格
 
-- [ ] **dream-report-action** | count=2 | score=0.16 | 太低，繼續觀察
-  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）
-  - 觀察點：若 dream 報告格式穩定且處理流程可模板化
+- [ ] **dream-report-action** | count=3 | score=0.20 | 太低，繼續觀察
+  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）、2026-07-17T20-40 處理建議（factlint/wikilint/skilllint/docupdate 靜默失敗診斷：_lastTurnFailed 旗標 + sharedsync 吞錯誤修復）
+  - 觀察點：若 dream 報告格式穩定且處理流程可模板化；第 3 次已展現固定骨架（讀 STATE.md High Priority → 逐項因果鏈分析 → 修復 → commit → 清空 STATE.md 項目），再出現一次可考慮升格
 
 - [x] **external-repo-absorption-methodology** | count=5 | score=0.80 | **已升格為 ms-external-repo-absorption (2026-07-10)**
   - 正本：`AI-canonical/skills/general/ms-external-repo-absorption/SKILL.md`
@@ -46,4 +46,4 @@
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
 ---
-Last updated: 2026-07-16
+Last updated: 2026-07-19

@@ -51,3 +51,5 @@
 - [f_e7bcdd] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP 說明章節（6 個 action tool），修正 HTML 落後於 README 的文件缺漏
 - [f_1b2fd1] [2026-07-16T23:36:54.848Z] telegram-kiro-bridge 新增 src/turn-lint.ts（2026-07-17）：機械檢查回覆結尾語言/ASK按鈕違規（問句無ASK、CJK本文卻英文收尾），掛在 run-prompt.ts 的 turn 收尾處，只 console.warn 不擋訊息不改文字——根因是 Fable5 診斷「收尾提議句繞過規則檢查、只有 model-independent 機械層才治本」
 - [f_6de90c] [2026-07-17T20:05:18.008Z] telegram-kiro-bridge 的 turn-lint 因為判斷邏輯是啟發式正則（問句/語言比例判斷），容易對 code block、反問句等正常內容產生 false positive，所以選擇只 console.warn 觀察（定位同 SELF_EVAL），排除直接攔截或自動改寫回覆——避免誤傷正常訊息
+- [f_332dae] [2026-07-17T20:41:27.331Z] telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據
+- [f_e272f0] [2026-07-18T20:04:35.477Z] telegram-kiro-bridge 完成 merge/sync 後、push 到 origin 前，會先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端

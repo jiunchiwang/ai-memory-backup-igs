@@ -2,8 +2,8 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-07-16
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690]
+updated: 2026-07-19
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb]
 ---
 
 # IGS-UOF 加班單自動化
@@ -27,6 +27,8 @@ sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690]
 ## 已知踩坑
 
 ⚠️ **刷卡時間欄位不會自動回填**：直接用 JS/`frame.fill` 填日期欄不會觸發 `onchange` 事件，導致刷卡時間欄空白。正確做法是點日曆按鈕選日期（觸發 AJAX 查刷卡）→ 等刷卡時間出現 → 再填其他欄位；`fill` 塞值當保底 fallback，防日曆 DOM selector 猜錯時整個腳本失敗。
+
+⚠️ **二次確認彈窗誤判為送出失敗**（2026-07-17）：`uof_form.py` 的 submit 流程會把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為 `submit_rejected`——實際上第一次 headless submit 就已經成功送出（實測案例 BAE260706086 於 09:27 申請成功，腳本卻回報失敗）。腳本需修正確認彈窗處理邏輯，目前尚未修復。
 
 ## 相關
 

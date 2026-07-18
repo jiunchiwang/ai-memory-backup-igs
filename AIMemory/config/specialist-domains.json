@@ -215,7 +215,8 @@
         "bridge-streaming",
         "bridge-research",
         "bridge-pitfalls",
-        "embedding-router"
+        "embedding-router",
+        "specialist"
       ],
       "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
       "model": "claude-sonnet-4.6",

@@ -167,3 +167,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-07-16T20:21:14.791Z] user=509424983 query="先前「5 項仍未修屬同事責任」的狀態已過時" deleted=0 token=forget-a15f78a4-1
 
+- [2026-07-18T20:18:09.912Z] user=509424983 query="bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID" deleted=1 token=forget-b8820631-1
+    - [f_5e81d2] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 wiki 頁 bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID（如 f_228abc 系列）尚未清理，是已知的 wiki-reference 保護部分失效風險，待下輪 wikilint/factlint 處理
