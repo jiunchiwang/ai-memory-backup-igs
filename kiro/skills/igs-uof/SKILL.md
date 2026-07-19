@@ -124,6 +124,8 @@ Phase B 輸出 `{"mode": "submitted", "status": "success|rejected|unknown", ...}
 | `rejected` | server 拒絕（detail 含原因） | 看 detail 修正後重新 dry-run |
 | `unknown` | 無法判定（超時/頁面異常） | 到 UOF 個人申請箱確認 |
 
+⚠️ **已知誤判 bug**：`submit_rejected` 有時是腳本把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為拒絕，實際上第一次 submit 可能已經送出成功。收到 `rejected` 時**先到 UOF 個人申請箱確認是否已送出**，確認未送出才重新 dry-run，避免重複申請。
+
 ### 填單專屬錯誤
 
 | error | 對使用者說 |

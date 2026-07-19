@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-19
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0]
+updated: 2026-07-20
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_a3ef7e, f_235eef, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_411672, f_810445, f_ff0915, f_4835ec]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -85,7 +85,7 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 
 ## claude-mem-curate → /dream 第 14 步（2026-07-16）
 
-原本只能手動觸發或 agent 主動提醒，新增 `handleClaudeMemCurate` handler（`src/commands/dream.ts`，仿 `handleDocUpdate` 的 meta-prompt 模式）並註冊進 `COMMAND_HANDLERS`，`dream.json` 插入 `claudememcurate` 步驟（`memorytoskill` 之後、`topicreview` 之前），使精選流程從純手動變成每日 04:00 自動執行。⚠️ `dream.json` 每步 `cmd` 字串必須存在於 `COMMAND_HANDLERS` map 中才會被執行，否則判定「未知指令已跳過」但不中斷其餘步驟（`continue_on_error` 預設 true）。
+原本只能手動觸發或 agent 主動提醒，新增 `handleClaudeMemCurate` handler（`src/commands/dream.ts`，仿 `handleDocUpdate` 的 meta-prompt 模式）並註冊進 `COMMAND_HANDLERS`，`dream.json` 插入 `claudememcurate` 步驟（`memorytoskill` 之後、`topicreview` 之前），使精選流程從純手動變成每日 04:00 自動執行。⚠️ `dream.json` 每步 `cmd` 字串必須存在於 `COMMAND_HANDLERS` map 中才會被執行，否則判定「未知指令已跳過」但不中斷其餘步驟（`continue_on_error` 預設 true）。2026-07-19 補修 SKILL_USED 追蹤缺口：該步驟 meta-prompt 原未要求輸出 `<<SKILL_USED:...>>`，導致 `skill-usage.json` 的 `use_count` 恆為零（統計口徑缺口非真低使用），已補上第 8 步指示。
 
 ## /goal ASK-aware 修復
 
@@ -115,6 +115,21 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 ## Push 前安全機制：獨立 Fable5 覆核
 
 完成 merge/sync 後、push 到 origin 前，慣例是先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push，避免有問題的合併直接推上遠端。已在至少 4 個 commit 中實際採用（如 `04cc0bc` 訊息明確標註「Fable5 push 前覆核」），是跨多次 merge 反覆使用的專案慣例，非單次紀錄。輕量呼叫方式見 [[bridge-acp]]（`claude -p --model fable`，不透過 specialist/domain 機制註冊）。
+
+## 共享知識庫同步（/sharedsync，2026-07-19）
+
+`/sharedsync` 是 fork 自 upstream 的跨機知識庫雙向同步機制（`G:\AI\AIMemory\shared\`），與單向的 `/backup` 分離（`backup.ts` 刻意排除 `shared/` 防重複備份）。2026-07-18 dream run 報 `/sharedsync` 失敗（`not a git repository`），排查後發現兩層真因：
+
+- **不是缺 repo**：`docs/SPEC-relay-workspace.md` 提到的 `redkilin/ai-shared-knowledge` 是 **upstream 作者 tonykuo 自己的私人跨機知識庫**（隨 fork 一起被拉進來的文件），與使用者無關、本來就無權限（404 正常），「建自己的 remote」這步從沒替使用者做過
+- **真正卡 push 的是憑證帳號不匹配**：本機 Windows Credential Manager 對 generic `https://github.com` 快取的是 `igs-jiunchiwang` 帳號，與新 repo 所屬的 `jiunchiwang` 對不上——把 remote URL 改嵌 `https://jiunchiwang@github.com/...` 配對到另一組已快取憑證後 push/pull 正常，不需重新登入或 token
+
+修復：新建私有 repo `jiunchiwang/ai-shared-knowledge`、`git init` + 初始 commit（保留原有 intel-learning 筆記）+ push，`/sharedsync` 已驗證正常。
+
+## 暖機期訊息處理（warmup，2026-07-19）
+
+啟動階段（specialist sync、llama 等待、`scheduleStore.load`、goal-resume 等慢速操作）尚未就緒時收到的 Telegram 訊息，過去可能遺失或在半初始化狀態被處理。經 `dev-design` judge-panel 選定 **MVP-first 方案**（72 分，勝過 robustness-first 54 / simplicity-first 40，並嫁接後兩者關鍵設計）：新增 `warmup.ts` 模組，用 `coreReady` 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay。
+
+可重用 trade-off：**`fetchReady`（runner 已在 poll、訊息不會遺失）與 `coreReady`（訊息→agent 處理路徑完全安全）是兩個獨立就緒層**，長輪詢 bot 若有慢速啟動階段應把這兩層分開處理。
 
 ## 已知陷阱
 

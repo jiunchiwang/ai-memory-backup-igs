@@ -1,5 +1,26 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-20(第二批;來源 shortlist 1 筆 → 精選後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main`（1 筆 2026-07-19 decision）。
+
+- 唯一候選：Fable5 review 核准 commit `b3eb670` 修正、PUSH-VERDICT: GO，驗證 relay mode 的 relayReplyTo 現會跳過 line 1121 commit 區塊、讓 relayDelegateTokens 送達 line 1279 headless loop。
+- 判定：綁定特定 commit hash 與行號（1121、1279）的一次性審查判決，屬過程紀錄，無跨 session 可重用價值 → 依「丟一次性步驟／單檔瑣碎改動」規則丟棄。
+- 選取階段即淘汰，故無需去重、無 `remember` 呼叫。
+
+結果：**新增 0 條**。未呼叫 forget。
+
+## 2026-07-20(來源 shortlist 5 筆 → 精選合併後寫入 2 條)
+
+來源 project：`telegram-kiro-bridge-main`（5 筆皆 2026-07-17 decision，全屬同一主題：暖機佇列架構的 dev-design workflow 產物，該功能已合併 commit 0149d82）。
+
+- 5 條候選同主題，依「同主題合併」處理：candidate 5（multi-agent design workflow launched wf_ae97cee1）為純過程紀錄 → 丟；candidate 1（judge-panel 判決）+ 2/3/4（三個競爭方案細節）合併為 2 條耐久知識。
+- `list_facts` 查核「暖機」「warmup」「coreReady」皆無現存 fact → 非重複，寫入 `bridge-project` shard：
+  > 1.「telegram-kiro-bridge 的暖機期訊息處理最終採 MVP-first 方案（warmup.ts：coreReady 旗標 + FIFO 佇列暫存原始 grammy Update，就緒後 replay），judge-panel 72 分勝過 robustness-first 54 / simplicity-first 40，並嫁接後兩者關鍵設計」
+  > 2.「暖機佇列可重用 trade-off：fetchReady（runner 已在 poll、訊息不遺失）vs coreReady（訊息→agent 路徑完全安全）是兩個獨立就緒層，長輪詢 bot 有慢速啟動階段時應分開處理」
+
+結果：**新增 2 條**。未呼叫 forget。
+
 ## 2026-07-19(來源 shortlist 2 筆，同一份未清空的 shortlist → 精選後寫入 1 條)
 
 來源 project：`telegram-kiro-bridge-main`（同 2026-07-18 那批候選，shortlist 檔自 2026-07-17T20:30:02 起未變動）。

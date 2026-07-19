@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "f28791e9",
+      "activeId": "5d164128",
       "sessions": [
         {
-          "id": "f28791e9",
-          "name": "請使用 `memory-to-skill` sk",
-          "createdAt": 1784331028882,
-          "sessionId": "b8633a00-cb7e-4c84-bd29-175d9bee780c",
+          "id": "5d164128",
+          "name": "[Memory recall — dynamic",
+          "createdAt": 1784464961509,
+          "sessionId": "51216fe5-d6e1-4ad4-af5b-399ed9bd79f0",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1784331028871
+          "savedAt": 1784471368972
         }
       ]
     }

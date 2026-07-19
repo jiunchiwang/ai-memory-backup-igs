@@ -169,3 +169,11 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-07-18T20:18:09.912Z] user=509424983 query="bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID" deleted=1 token=forget-b8820631-1
     - [f_5e81d2] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 wiki 頁 bridge-acp.md 的 sources 欄位仍混有一批疑似編造的假 fact ID（如 f_228abc 系列）尚未清理，是已知的 wiki-reference 保護部分失效風險，待下輪 wikilint/factlint 處理
+- [2026-07-19T20:20:59.112Z] user=509424983 query="表格未反映已知的二次確認彈窗誤判 bug" deleted=1 token=forget-ec646cc9-1
+    - [f_824a2a] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 igs-uof SKILL.md「填單專屬錯誤」表格未反映已知的二次確認彈窗誤判 bug（f_02e1bb），submit_rejected 狀態可能誤導使用者以為加班單未送出而重複操作，待補充說明
+- [2026-07-19T20:21:05.008Z] user=509424983 query="SKILL.md 已補上 submit_rejected 誤判二次確認彈窗的說明" deleted=1 token=forget-2d75dd5a-1
+    - [f_ac807a] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 igs-uof SKILL.md 已補上 submit_rejected 誤判二次確認彈窗的說明（先前待辦已完成）
+- [2026-07-19T20:21:49.518Z] user=509424983 query="統計永遠零筆——是統計口徑缺口非真低使用率，待修正 meta-prompt" deleted=1 token=forget-1f12c8ee-1
+    - [f_6cd081] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 claude-mem-curate 已接成 /dream 第 14 步每日自動執行，但因該步驟 meta-prompt 未要求輸出 <<SKILL_USED:...>>，導致 skill-usage.json 的 use_count 統計永遠零筆——是統計口徑缺口非真低使用率，待修正 meta-prompt
+- [2026-07-19T20:22:30.054Z] user=509424983 query="git status 顯示 src 兩檔改動尚未 commit，README.md 另有既有未提交改動（不相關，勿混）" deleted=0 token=forget-4c8e291f-1
+

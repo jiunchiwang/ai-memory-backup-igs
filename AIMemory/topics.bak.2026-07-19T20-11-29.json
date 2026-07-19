@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-19T20:11:29.069Z (token=topics-8e04d1ab-20)
+// Last applied: 2026-07-18T20:07:49.642Z (token=topics-7eacde2d-20)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -289,10 +289,7 @@
       "bridge-actions",
       "claude-mem-curate",
       "claudememcurate",
-      "tsx 直吃",
-      "暖機",
-      "warmup",
-      "coreready"
+      "tsx 直吃"
     ]
   },
   {

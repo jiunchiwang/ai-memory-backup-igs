@@ -270,6 +270,8 @@
 - [f_6de90c] [2026-07-17T20:05:18.008Z] telegram-kiro-bridge 的 turn-lint 因為判斷邏輯是啟發式正則（問句/語言比例判斷），容易對 code block、反問句等正常內容產生 false positive，所以選擇只 console.warn 觀察（定位同 SELF_EVAL），排除直接攔截或自動改寫回覆——避免誤傷正常訊息
 - [f_332dae] [2026-07-17T20:41:27.331Z] telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據
 - [f_e272f0] [2026-07-18T20:04:35.477Z] telegram-kiro-bridge 完成 merge/sync 後、push 到 origin 前，會先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端
+- [f_6cd081] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 claude-mem-curate 已接成 /dream 第 14 步每日自動執行，但因該步驟 meta-prompt 未要求輸出 <<SKILL_USED:...>>，導致 skill-usage.json 的 use_count 統計永遠零筆——是統計口徑缺口非真低使用率，待修正 meta-prompt
+- [f_824a2a] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 igs-uof SKILL.md「填單專屬錯誤」表格未反映已知的二次確認彈窗誤判 bug（f_02e1bb），submit_rejected 狀態可能誤導使用者以為加班單未送出而重複操作，待補充說明
 - [f_a3ef7e] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 memory-to-skill / knowhow-accumulation / claude-mem-curate 三個 skill 觸發語境（回顧過去對話抽取可重用模式）高度重疊，雖輸出產物不同但易造成選用混淆；knowhow-accumulation 自建立以來 use_count 仍為 0
 - [f_b91398] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 /dream 步驟文件（README/usage-guide.html）與本機實際 ~/.kiro/dream.json 不一致：文件寫的 sessionreflect/specialistreflect 步驟並未出現在本機設定檔，實際存在的 claudememcurate/docupdate 步驟兩份文件都未記錄，待對齊
 - [f_235eef] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的共享知識庫（Shared Knowledge）目錄於 2026-07-18 dream run 出現 /sharedsync 失敗：git status --porcelain 回報 not a git repository，需確認路徑設定或 .git 是否遺失
@@ -277,6 +279,7 @@
 - [f_dff56f] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 主機（jiunchiwang）的 Windows Credential Manager 對 GitHub 快取兩組不同帳號憑證：generic https://github.com 對應 igs-jiunchiwang、https://jiunchiwang@github.com 對應 jiunchiwang，跨帳號 git 操作需注意 remote URL 要嵌對帳號名才能配對到正確快取憑證
 - [f_cd57ae] [2026-07-19T09:11:28.458Z] 使用者已建立新的 GitHub private repo jiunchiwang/ai-shared-knowledge，並接上本機 G:\AI\AIMemory\shared\ 供 telegram-kiro-bridge /sharedsync 使用（取代先前誤以為要接的 upstream 作者 redkilin 私人 repo）
 - [f_b56b60] [2026-07-19T09:11:28.458Z] 已確認 redkilin/ai-shared-knowledge 是 upstream 專案作者 tonykuo 自己的私人跨機知識庫 repo，與使用者的 fork 無關，使用者本來就無權限也不該嘗試接取
+- [f_ac807a] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 igs-uof SKILL.md 已補上 submit_rejected 誤判二次確認彈窗的說明（先前待辦已完成）
 - [f_411672] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 claude-mem-curate SKILL_USED 追蹤缺口已修復（dream.ts meta-prompt 補上第 8 步指示），/dream 每日執行後 use_count 統計會正確累計
 - [f_810445] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 /sharedsync 功能已修復並驗證可正常 push/pull（先前 not a git repository 的問題已解決）
 - [f_ff0915] [2026-07-19T20:08:36.741Z] telegram-kiro-bridge 的暖機期訊息處理最終採 MVP-first 方案（新增 warmup.ts：coreReady 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay），此方案在 dev-design judge-panel 得 72 分，勝過 robustness-first（54 分）與 simplicity-first（40 分），並嫁接後兩者的關鍵設計

@@ -204,7 +204,10 @@
         "bridge-actions",
         "claude-mem-curate",
         "claudememcurate",
-        "tsx 直吃"
+        "tsx 直吃",
+        "暖機",
+        "warmup",
+        "coreready"
       ],
       "wikiPages": [
         "bridge-project",

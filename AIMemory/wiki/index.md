@@ -48,4 +48,4 @@
 ---
 
 Total pages: 30
-Last updated: 2026-07-19（bridge-project 補 dream turn 失敗誤報修復 + push 前 Fable5 覆核慣例；新增 specialist query 頁）
+Last updated: 2026-07-20（bridge-project 補「共享知識庫同步 /sharedsync」+「暖機期訊息處理 warmup」兩章節、claude-mem SKILL_USED 修復註，sources +10；5 個 query 候選全跳過）
