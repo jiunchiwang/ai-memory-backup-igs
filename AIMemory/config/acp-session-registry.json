@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "5d164128",
+      "activeId": "7dbc41e5",
       "sessions": [
         {
-          "id": "5d164128",
-          "name": "[Memory recall — dynamic",
-          "createdAt": 1784464961509,
-          "sessionId": "51216fe5-d6e1-4ad4-af5b-399ed9bd79f0",
+          "id": "7dbc41e5",
+          "name": "請處理以下 dream 維運產出的 High P",
+          "createdAt": 1784493546271,
+          "sessionId": "0a2ea5c5-870f-4214-8fc0-1cb9b8aa6b99",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1784471368972
+          "savedAt": 1784493546246
         }
       ]
     }

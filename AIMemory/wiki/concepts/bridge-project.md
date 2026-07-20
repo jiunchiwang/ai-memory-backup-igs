@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-20
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_a3ef7e, f_235eef, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_411672, f_810445, f_ff0915, f_4835ec]
+updated: 2026-07-21
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_a3ef7e, f_235eef, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_411672, f_810445, f_ff0915, f_4835ec, f_a4eb9f]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -130,6 +130,12 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 啟動階段（specialist sync、llama 等待、`scheduleStore.load`、goal-resume 等慢速操作）尚未就緒時收到的 Telegram 訊息，過去可能遺失或在半初始化狀態被處理。經 `dev-design` judge-panel 選定 **MVP-first 方案**（72 分，勝過 robustness-first 54 / simplicity-first 40，並嫁接後兩者關鍵設計）：新增 `warmup.ts` 模組，用 `coreReady` 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay。
 
 可重用 trade-off：**`fetchReady`（runner 已在 poll、訊息不會遺失）與 `coreReady`（訊息→agent 處理路徑完全安全）是兩個獨立就緒層**，長輪詢 bot 若有慢速啟動階段應把這兩層分開處理。
+
+## GitHub PAT 洩漏事件與 /backup 修復（2026-07-19~20）
+
+2026-07-19 起 `/backup` 被 GitHub push protection 擋下：使用者先前貼在對話中的 GitHub PAT（`ghp_` token）洩漏進 `AIMemory/events.jsonl`（約 7868-7873 行）與 `oldSessions/session-509424983-2026-07-19T09-10-45.md:268`，需清除該 secret 才能恢復自動備份。教訓：對話中貼的真實密鑰會落地 `events.jsonl` 與 session transcript，不應在對話中貼 token。
+
+後續已修復並驗證：查證確認該 secret 只存在於本機**尚未 push** 的 backup commit（GitHub push protection 在推到 remote 前即擋下，實際未外洩到 GitHub）；用通用 regex pattern（而非逐字打出 secret 本身，避免驗證指令又被 bridge 自己的事件記錄器重新記進 log）清除 `events.jsonl`/`observations.jsonl`/兩份 `oldSessions/*.md` 中的殘留，amend backup repo 的 commit 並成功 push。使用者已被提醒去 GitHub 撤銷該 token。
 
 ## 已知陷阱
 

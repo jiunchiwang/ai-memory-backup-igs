@@ -48,4 +48,4 @@
 ---
 
 Total pages: 30
-Last updated: 2026-07-20（bridge-project 補「共享知識庫同步 /sharedsync」+「暖機期訊息處理 warmup」兩章節、claude-mem SKILL_USED 修復註，sources +10；5 個 query 候選全跳過）
+Last updated: 2026-07-21（wikilint：user-pref 補 3 條缺漏 fact + 矛盾註記，sources +3；bridge-research 超過 200 行待拆分）
