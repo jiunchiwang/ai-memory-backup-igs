@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-21T20:23:00.717Z (token=topics-d119a2f0-21)
+// Last applied: 2026-07-20T20:07:27.122Z (token=topics-8e04d1ab-20)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -83,22 +83,6 @@
       "並發 gotcha",
       "cocos 版面",
       "promise.all"
-    ]
-  },
-  {
-    "topic": "bridge-upstream-sync",
-    "keywords": [
-      "同步 upstream",
-      "合併 upstream",
-      "upstream 同步",
-      "上游 commit",
-      "fork 獨有功能",
-      "fork 同步",
-      "merge 解衝突",
-      "checkout --theirs",
-      "remote 配置",
-      "合併衝突",
-      "覆核合併"
     ]
   },
   {
@@ -193,8 +177,7 @@
       "advisor",
       "kiro cli",
       "三模型分工",
-      "vc-kiro-delegate",
-      "model override"
+      "vc-kiro-delegate"
     ]
   },
   {
@@ -300,6 +283,7 @@
       "writependingbypath",
       "通知沒有送達",
       "通知管線",
+      "merge 解衝突",
       "[ws]",
       "ctx 統計",
       "bridge-actions",

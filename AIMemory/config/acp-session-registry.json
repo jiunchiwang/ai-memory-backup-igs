@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "7dbc41e5",
+      "activeId": "3c931842",
       "sessions": [
         {
-          "id": "7dbc41e5",
+          "id": "3c931842",
           "name": "請處理以下 dream 維運產出的 High P",
-          "createdAt": 1784493546271,
-          "sessionId": "0a2ea5c5-870f-4214-8fc0-1cb9b8aa6b99",
+          "createdAt": 1784579246316,
+          "sessionId": "7da94ba7-1918-4903-a5c2-3b8b33af476d",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1784493546246
+          "savedAt": 1784579246292
         }
       ]
     }

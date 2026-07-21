@@ -1,25 +1,25 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-19T20:36:20.385Z
+Last run: 2026-07-20T20:24:29.278Z
 
 ## High Priority (action needed)
-- ⚠️ 使用者貼過的 ghp_ token 可能仍有效，請立即去 GitHub Settings → Developer settings → Personal access tokens 撤銷（sharedsync 已不需要它，且它是卡住 /backup 的洩漏源）
-- Fable5 F-1~F-4 修正已 commit（f902aa7/b3eb670/d3c0bab）但仍未 push——igs-jiunchiwang 帳號的 git push 卡在 git-credential-manager 互動式驗證（無 GUI 環境下會 hang），需使用者在有 GUI 的終端機手動跑一次 `git push` 完成一次性登入，之後應該會快取
+- — 無（2 項本輪已查證處理完畢，詳見下方 Noise）
 
 ## Watch List (monitor)
-- /dream 步驟文件（README/HTML）與實際 ~/.kiro/dream.json 不一致（文件寫 sessionreflect，實際跑 claudememcurate/docupdate，fact f_b91398）
-- skill 觸發語境重疊：memory-to-skill / knowhow-accumulation / claude-mem-curate，knowhow-accumulation use_count 仍 0
-- 4 個長期零使用 skill（huashu-slides / self-eval-prompt-pattern / dual-skill-review-loop / uk-slot-multilang-sync）可詢問是否保留
-- 新增 skill 候選 windows-git-credential-multi-account（score 0.20，追蹤中）
-- specialistreview 本輪 1 個 domain expansion 自動套用，留意 specialist 覆蓋範圍變化
-- factlint 衰減判定可用但 hit-log 僅 9 天，需約 2026-09-09 才有首批 60 天候選
-- repo 膨脹 ratio 5.0（已知設計取捨，wiki 保護結構性不可達 3.0，不追加行動）
+- factlint 標記 3 條瑣碎/疑似過時 fact 受 wiki 保護未刪（dev-tools 冗餘 1 條、bridge-session 措辭過時 2 條，對應 wiki 頁內容仍準確不受影響）
+- wiki/concepts/bridge-research.md 已達 247 行，超過 200 行 schema 上限，待拆分
+- skilllint：5 個 underused skill（huashu-slides / dual-skill-review-loop / self-eval-prompt-pattern / uk-slot-multilang-sync / ui-ux-pro-max）
+- uk-slot-extrabet / uk-slot-fake-reel-manager / uk-slot-state-machine 3 個 skill 即將跨過 30 天 underused 門檻
+- skill 觸發語境重疊（memory-to-skill / knowhow-accumulation / claude-mem-curate），knowhow-accumulation use_count 仍 0（已知使用者明確保留）
+- windows-git-credential-multi-account 候選追蹤中（count=2, score=0.20，本輪未新增）
+- factlint 衰減判定可用但 hit-log 僅約 10 天，需約 2026-09-09 才有首批候選
 
 ## Noise (ignored this run)
-- sharedsync 無更新、dailylog 已寫、topicreview 無變動、artifactcleanup 刪 0（剩 4）
-- memorytoskill：0 新建/更新 skill、1 候選追蹤、4 檔搬 oldSessions
-- claudememcurate：寫入 2 條暖機架構 fact
-- factlint：刪 3 條過時/瑣碎 fact（igs-uof ×2 + bridge-memory ×1）
-- wikisync：更新 bridge-project（新增共享知識庫同步 + 暖機兩章節）
-- wikilint：0 孤兒 / 0 斷連 / 0 stale
-- skilllint：0 orphan，前次 igs-uof stale 已修復
-- docupdate：文件已是最新，無需更新
+- dailylog「(no output)」已查證非真失敗：該輪 /dream 為非 04:00 例行的臨時執行，跑到 dailylog 步驟時當日 session 檔尚未落地（20:25:42 才關閉存檔），handleDailyLog 正確判定「無 session 記錄」並跳過，只是跳過訊息走 ctx.reply 未寫進 buffer，被回報管線誤記；已修 src/commands/dream.ts 讓該分支回傳結構化 DreamStepResult
+- uk_slot_template 4 個未 push commit 已查證：分支現況 up to date with origin/main，4 個 commit 均已在 origin/main 上，問題已解決；已更新過時 fact
+- sharedsync 無更新、topicreview 無變動、docupdate 文件已最新、specialistreview 0 新建議
+- memorytoskill：0 新建/更新，候選未新增
+- claudememcurate：0 新增（唯一候選判定為過程紀錄丟棄）
+- wikisync：bridge-project 補 1 條 fact
+- artifactcleanup：清 4 個剩 0 個
+- backup：commit 480e05d，22 檔案成功（確認先前 PAT 洩漏問題已修復生效）
+- skilllint：0 orphan，f_a738db 矛盾已解開（3 個 skill 保留決策確認為使用者 2026-07-11 撤回原刪除決定）

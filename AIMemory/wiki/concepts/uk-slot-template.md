@@ -2,8 +2,8 @@
 title: UK Slot 模板專案
 type: concept
 created: 2026-07-15
-updated: 2026-07-16
-sources: [f_967ccc, f_e8b2cf, f_991386, f_500f52, f_7e491d, f_233d31, f_4cfe4c, f_0376d5, f_8b54ac, f_6a6988]
+updated: 2026-07-22
+sources: [f_967ccc, f_e8b2cf, f_991386, f_500f52, f_7e491d, f_233d31, f_4cfe4c, f_0376d5, f_8b54ac, f_6a6988, f_d54fd8]
 ---
 
 # UK Slot 模板專案
@@ -38,8 +38,9 @@ git archive → git init 全新 repo
 
 ## 待處理
 
-- 4 個本地 commit 未 push（org 共用 repo IGS-ARCADE-DIVISION-RD2，push 前需使用者確認）
 - demo 流程綁 eyestrike proto（6 欄盤面）——衍生遊戲改 COL 後轉輪驗證應走 ReelDevTool 假盤
+
+> ✅ 先前記錄的「4 個本地 commit 未 push」已於 2026-07-22 查證解決：分支現況 `up to date with origin/main`，4 個 commit（bgm 改註解佔位、欄數陣列改 Game_Define.COL 衍生、CheckPlateInfo 欄數守衛、ReelDevTool 驅動+IDLE 閘門修復）均已在 origin/main 上。
 
 ## 架構決策（2026-07-15）
 

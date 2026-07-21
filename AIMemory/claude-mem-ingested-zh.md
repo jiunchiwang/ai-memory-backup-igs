@@ -1,5 +1,35 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-22(第二批;來源 shortlist 3 筆 → 精選 + 去重後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main`（shortlist 2026-07-21T20:30 產出，3 筆 decision 候選）。
+
+- 候選 1（Claude Max 5x Model Allocation Strategy，`.claudedocs/model-allocation-max5x.md`）：`list_facts` 查「Max 5x」命中既有 fact，2026-07-21 已寫入 `bridge-acp` shard → **完全重複**，丟棄。
+- 候選 2（Secret redaction 必須用正則避免透過 event logging 自我重複污染）：`list_facts` 查「events.jsonl」命中既有 fact（`ghp_[A-Za-z0-9]{30,40}` 通用正則、自我重複污染迴圈），內容完全對應 → **完全重複**，丟棄。
+- 候選 3（AI News Intelligence Pipeline 繁中輸出的主題設定：OpenAI/Anthropic/Gemini/AI models/Coding Agent/MCP/ACP/Data2Story）：屬單一 pipeline 的一次性設定快照，非跨 session 可重用之架構決策/pattern/trade-off → 依「丟一次性步驟」規則於選取階段淘汰。
+
+結果：**新增 0 條**。未呼叫 forget。
+
+## 2026-07-22(來源 shortlist 1 筆,同一份未清空的 shortlist → 精選後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main`（同 2026-07-21 那批候選，shortlist 檔自 2026-07-20T20:30:05 起未變動，仍是同一筆 Model allocation strategy 候選）。
+
+- 候選（Model allocation strategy for Claude Max 5x quota optimization）：`list_facts` 查核「Max 5x」「model-allocation-max5x」「Sonnet 級還是 Opus 級」皆命中既有 fact——2026-07-21 已將此候選拆成 2 條寫入（`bridge-acp` shard 的核心分配策略 + `misc` shard 的快速判準/workflow model override 提醒），內容完全對應 → 判定**完全重複**，丟棄。
+
+結果：**新增 0 條**。未呼叫 forget。
+
+## 2026-07-21(來源 shortlist 1 筆 → 精選合併後寫入 2 條)
+
+來源 project：`telegram-kiro-bridge-main`（1 筆 2026-07-20 decision：Model allocation strategy for Claude Max 5x quota optimization，產物 `.claudedocs/model-allocation-max5x.md`）。
+
+- 唯一候選為跨 session 可重用的模型分配策略（架構決策 + trade-off + 決策判準），非一次性步驟 → 保留。
+- `list_facts` 查核「Claude Max 5x 模型分配」「Kiro 委派 Opus quota」「模型分配」皆無現存 fact，「Kiro」shard 內既有 fact 只涉 specialist-domains.json 個別 model 選擇，與此配額分配策略不重複 → 非重複。
+- 依「同主題合併」拆成 2 條耐久知識並 `remember()`：
+  > 1.「Claude Max 5x 模型分配策略：Opus 只留給高認知決策、≥2k token 實作委派 Kiro、Haiku 機械操作、Sonnet 協調；配額受全模型週上限 + Sonnet 專屬週上限兩道牆，且跨 Claude.ai/Code/Cowork 共用」（寫入 `bridge-acp` shard）
+  > 2.「模型分配快速判準：自問『這錯誤是 Sonnet 級還是 Opus 級』——可重跑錯誤降級委派、會污染下游決策的錯誤才用 Opus；Workflow/subagent 必須顯式指定 model override 否則配額爆掉」（寫入 `misc` shard）
+
+結果：**新增 2 條**。未呼叫 forget。
+
 ## 2026-07-20(第二批;來源 shortlist 1 筆 → 精選後寫入 0 條)
 
 來源 project：`telegram-kiro-bridge-main`（1 筆 2026-07-19 decision）。

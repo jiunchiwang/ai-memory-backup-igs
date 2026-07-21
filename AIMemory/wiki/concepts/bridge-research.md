@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-16
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a]
+updated: 2026-07-22
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2]
 ---
 
 # Bridge 改善研究與 Roadmap

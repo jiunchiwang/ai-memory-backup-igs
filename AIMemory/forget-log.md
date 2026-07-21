@@ -177,3 +177,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_6cd081] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 claude-mem-curate 已接成 /dream 第 14 步每日自動執行，但因該步驟 meta-prompt 未要求輸出 <<SKILL_USED:...>>，導致 skill-usage.json 的 use_count 統計永遠零筆——是統計口徑缺口非真低使用率，待修正 meta-prompt
 - [2026-07-19T20:22:30.054Z] user=509424983 query="git status 顯示 src 兩檔改動尚未 commit，README.md 另有既有未提交改動（不相關，勿混）" deleted=0 token=forget-4c8e291f-1
 
+- [2026-07-20T23:25:58.358Z] user=509424983 query="uk_slot_template 有 4 個本地 commit 未 push" deleted=0 token=forget-254aa623-1
+

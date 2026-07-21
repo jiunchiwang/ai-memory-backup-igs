@@ -2,8 +2,8 @@
 type: concept
 title: Spine Viewer 插件
 created: 2026-06-23
-updated: 2026-06-23
-sources: [f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_4b8ff5, f_c01dbd, f_e61df4]
+updated: 2026-07-22
+sources: [f_02cb06, f_f944d1, f_bf6094, f_28e62a, f_4b8ff5, f_c01dbd, f_e61df4, f_09acc4]
 ---
 
 # Spine Viewer 插件

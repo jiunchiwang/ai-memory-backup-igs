@@ -2,13 +2,13 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-07-19
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb]
+updated: 2026-07-22
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5]
 ---
 
 # IGS-UOF 加班單自動化
 
-`igs-uof`（原 `vc-uof-hours`，2026-07-16 改名擴充）是查詢公司內網 UOF（U-Office Force）加班時數/特休、並可 dry-run 預填/送出加班單的 skill，正本位於 `AI-canonical-corp/skills/office/igs-uof`。屬 [[ai-strategy]] 正典語料庫下 office domain 首個入駐 skill。
+`igs-uof`（原 `vc-uof-hours`，2026-07-16 改名擴充）是查詢公司內網 UOF（U-Office Force）加班時數/特休、並可 dry-run 預填/送出加班單的 skill，正本位於 `AI-canonical-corp/skills/office/igs-uof`。屬 [[ai-strategy]] 正典語料庫下 office domain 首個入駐 skill。改名擴充時合併了同事版新增的 `attendance`/`leave`/`todo`/`whois` 唯讀查詢子命令，並新增 `uof_client.py` 共用登入/session 持久化，取代原本各自登入的 `uof_query.py`（commit `c20f6d5`）。
 
 ## 定位與範圍
 

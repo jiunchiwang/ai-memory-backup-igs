@@ -207,7 +207,18 @@
         "tsx 直吃",
         "暖機",
         "warmup",
-        "coreready"
+        "coreready",
+        "同步 upstream",
+        "合併 upstream",
+        "upstream 同步",
+        "上游 commit",
+        "fork 獨有功能",
+        "fork 同步",
+        "checkout --theirs",
+        "remote 配置",
+        "合併衝突",
+        "覆核合併",
+        "model override"
       ],
       "wikiPages": [
         "bridge-project",
@@ -219,7 +230,8 @@
         "bridge-research",
         "bridge-pitfalls",
         "embedding-router",
-        "specialist"
+        "specialist",
+        "bridge-upstream-sync"
       ],
       "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
       "model": "claude-sonnet-4.6",

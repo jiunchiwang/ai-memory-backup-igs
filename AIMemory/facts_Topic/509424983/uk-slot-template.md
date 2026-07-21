@@ -8,3 +8,4 @@
 - [f_0376d5] [2026-07-07T20:34:51.301Z] uk slot 模板專案音訊決策：MG_Bgm 與 FG_Bgm 背景音樂引用在 template 專案中先註解掉（模板不附實際音檔），新遊戲專案需要 BGM 時再解除註解並補上音檔。
 - [f_8b54ac] [2026-07-15T20:30:52.291Z] uk_slot_template 專案:MaskExpand 元件需支援多重遮罩(multi-mask),而非僅單一遮罩;此設計曾因疑慮被使用者還原一次,後續於 IMaskExpandHost 介面新增 SetVisibleSymbolCountOverride() 方法(IMaskExpander.ts),用以橋接本地與遠端架構的可見符號數量覆寫機制。
 - [f_6a6988] [2026-07-15T20:30:54.145Z] uk_slot_template 專案的架構策略:Server 端只送出玩家可見的盤面資料(例如 5x6),而非完整盤面尺寸(例如 7x6),其餘部分由客戶端做前處理。
+- [f_d54fd8] [2026-07-20T23:26:05.433Z] uk_slot_template 先前提及的 4 個本地未 push commit（bgm 改註解佔位、欄數陣列改 Game_Define.COL 衍生、CheckPlateInfo 欄數守衛、ReelDevTool 驅動+IDLE 閘門修復）已全數確認在 origin/main 上，分支狀態為 up to date with origin/main，此問題已解決

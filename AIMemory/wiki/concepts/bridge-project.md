@@ -2,7 +2,7 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-21
+updated: 2026-07-22
 sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e1f99f, f_9b9689, f_e2d60b, f_e547d2, f_6e3e02, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_a3ef7e, f_235eef, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_411672, f_810445, f_ff0915, f_4835ec, f_a4eb9f]
 ---
 
@@ -20,6 +20,7 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - [[bridge-acp]] — ACP adapter 切換、model pin、harness hooks。目前走 `claude-agent-acp` + pin `claude-fable-5`（2026-07-06 起）
 - [[bridge-streaming]] — Draft API 三階段 lifecycle、4096 截斷、429 限流、Rich Messages
 - [[bridge-research]] — 研究方向與外部借鏡、roadmap
+- [[bridge-upstream-sync]] — Fork 同步策略、合併衝突處理原則、push 前 Fable5 覆核（2026-07-21 拆出）
 
 ## 文件與教學
 
@@ -32,9 +33,7 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 
 - `start.bat` 開機自動啟動（`shell:startup`），process 退出後 loop 3 秒自動重來
 - 多機器部署：本機 G: 磁碟（`MEMORY_DIR=G:\AI\AIMemory`），原開發機 F: 磁碟；`.env` 必須正確設 `MEMORY_DIR`、`BACKUP_REPO_DIR`，否則 /dream 全部失敗
-- Git：upstream `redkilin/telegram-kiro-bridge`、fork `jiunchiwang/telegram-kiro-bridge`（origin）
-- Fork sync 策略：merge（非 rebase），upstream 架構為主、手動保留 fork 獨有功能。2026-07-09 upstream 已把 fork 功能 port 回上游，之後衝突面大幅縮小
-- 同步教訓：`git checkout --theirs/--ours` 是整檔取代，會洗掉對側已乾淨自動合併的 hunk——雙邊都有改動的檔案應用 `git merge-file` 三方合併並逐檔核對
+- Git：upstream `redkilin/telegram-kiro-bridge`、fork `jiunchiwang/telegram-kiro-bridge`（origin）；fork 同步策略與合併衝突處理原則見 [[bridge-upstream-sync]]
 - 兩份 upstream SPEC 為 draft 未實作（acp-hot-swap、moa-provider），與 NotebookLM 修復並列暫緩待辦
 
 ## 訊息排版
@@ -67,15 +66,6 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - 2026-07-14 實作完成：balanced-scanner 抽取、token-policy 白名單（main 允許、proxy/delegate 不允許）
 - 持久化：`selfEvalStore.ts`（低分閾值 60、全域上限 200 筆）
 - 對抗性審查發現六個共通致命缺陷（型別驗證可被謊報繞過、觸發條件與 backend 限制矛盾、未驗證前提等）
-
-## Upstream 同步紀錄與原則
-
-- **2026-07-15**：merge 19 個 upstream commit（Rich Telegram replies 統一、MoA rich replies、psmux 開發啟動器規劃、背景通知修復等）+ 1 個本地 ctx 統計後綴 commit，push `691e7f8..0a3c551`；`status.ts` 的 Electron 桌面監控視窗路線衝突採用 upstream 版（推翻先前移除 Electron 改純 Bot 推送的決定）
-- **2026-07-16**：merge MCP-first action domain 基礎建設（`agent-actions.ts`/`agent-action-runtime.ts`/`agent-action-metrics.ts`/`mcp-actions.ts`）+ skill sync hook 改為 opt-in（`postinstall` 不再自動設定 `core.hooksPath`）+ legacy action id 消毒修規，`main` 從 `0a3c551` 更新到 `199e30a`
-- **衝突處理原則（實證，2026-07-15/16 累計兩種模式）**：
-  - 假衝突（共同祖先烘焙了 conflict markers）→ 採清理較完整的一方，不機械套用固定優先權
-  - 真衝突（功能路線分歧，如 Electron 開關）→ 停下問使用者決定
-  - 結構性衝突（本地已把細節搬到子文件如 `src/AI.md`/`docs/setup-agents.md` vs upstream 就地擴充原檔）→ 保留本地 pointer 結構，把 upstream 新增內容手動補進對應子文件，而非整段改用 upstream 版本
 
 ## bridge-actions MCP（2026-07-16）
 
@@ -112,9 +102,9 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 
 修復（commit `de0b7e2`，觀測層，3 個檔案）：`sessionManager.ts` 新增 `_lastTurnFailed` 旗標並在 `resetTurn()` 重置、`run-prompt.ts` 的錯誤路徑寫入此旗標、`dream.ts` 讀取旗標讓真正失敗的步驟顯示 ❌ 而非 `(no output)`；同時修好 `handleSharedSync` 吞錯誤（回覆錯誤訊息但未回傳 `DreamStepResult`）的既有 bug。涵蓋全部 9 個走 `runPrompt` 的 dream 步驟，ACP 行程本身是否會卡死屬底層穩定性問題，未動。
 
-## Push 前安全機制：獨立 Fable5 覆核
+## Push 前安全機制
 
-完成 merge/sync 後、push 到 origin 前，慣例是先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push，避免有問題的合併直接推上遠端。已在至少 4 個 commit 中實際採用（如 `04cc0bc` 訊息明確標註「Fable5 push 前覆核」），是跨多次 merge 反覆使用的專案慣例，非單次紀錄。輕量呼叫方式見 [[bridge-acp]]（`claude -p --model fable`，不透過 specialist/domain 機制註冊）。
+完成 merge/sync 後、push 到 origin 前的獨立 Fable5 覆核慣例見 [[bridge-upstream-sync]]；已在至少 4 個 commit 中實際採用（如 `04cc0bc` 訊息明確標註「Fable5 push 前覆核」），是跨多次 merge 反覆使用的專案慣例，非單次紀錄。輕量呼叫方式見 [[bridge-acp]]（`claude -p --model fable`，不透過 specialist/domain 機制註冊）。
 
 ## 共享知識庫同步（/sharedsync，2026-07-19）
 

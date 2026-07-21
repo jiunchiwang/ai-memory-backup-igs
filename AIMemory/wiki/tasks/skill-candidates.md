@@ -37,10 +37,10 @@
   - 代表 session: 2026-07-07T11-48（session resume `b6e028f`）、2026-07-07T16-09（token-policy `028a5ea`）
   - 觀察點：第 3 次委派仍走同流程且再抓到 bug 就固化；屆時 **append 到 vc-kiro-delegate**（同域：委派品質保證），不新建
 
-- [ ] **windows-git-credential-multi-account** | count=2 | score=0.20 | 太低，繼續觀察
+- [ ] **windows-git-credential-multi-account** | count=3 | score=0.30 | 留底觀察
   - Pattern：git push/fetch 對某帳號的 repo 卡住/逾時（連 `GIT_TERMINAL_PROMPT=0` 也逾時而非快速失敗），但 push 平常能用——根因是 Windows Credential Manager 對 generic `https://github.com` 快取的是「另一個」帳號，與目標 repo 擁有者帳號不符；修法是把 remote URL 改嵌正確帳號（`https://<account>@github.com/...`）配對到另一組已快取憑證，不需重新登入或給 token
-  - 代表 session: 2026-07-19T09-10（/sharedsync 建 `jiunchiwang/ai-shared-knowledge` 修復：generic→`igs-jiunchiwang` vs 新 repo→`jiunchiwang`，改嵌帳號後 push/pull 正常）、2026-07-19T13-37（Fable5 commit push 卡住逾時，remote 嵌 `igs-jiunchiwang`，疑同源未確認）
-  - 觀察點：若第 3~5 次出現且沉澱出固定診斷步驟（`GIT_TERMINAL_PROMPT=0` 快速失敗判別、`git credential` 帳號比對、remote URL 帳號嵌入），可升格；屆時評估 append 到 `ms-windows-shell-exit-code-false-positive`（同域 Windows git 誤報）或獨立
+  - 代表 session: 2026-07-19T09-10（/sharedsync 建 `jiunchiwang/ai-shared-knowledge` 修復：generic→`igs-jiunchiwang` vs 新 repo→`jiunchiwang`，改嵌帳號後 push/pull 正常）、2026-07-19T13-37（Fable5 commit push 卡住逾時，remote 嵌 `igs-jiunchiwang`，疑同源未確認）、2026-07-20T20-25（bridge repo `igs-jiunchiwang` 帳號 push F-1~F-4 卡在互動式 git-credential-manager 驗證/疑似瀏覽器 OAuth，非互動 session 無法完成，兩次卡住皆手動清掉 hung process，未能在該 session 內解決，需使用者自行在一般終端機跑一次 `git push` 完成登入快取）
+  - 觀察點：若第 4~5 次出現且沉澱出固定診斷步驟（`GIT_TERMINAL_PROMPT=0` 快速失敗判別、`git credential` 帳號比對、remote URL 帳號嵌入），可升格；屆時評估 append 到 `ms-windows-shell-exit-code-false-positive`（同域 Windows git 誤報）或獨立。本次 3rd 案例症狀略有分歧（互動式 OAuth 掛起 vs 純帳號快取不符），升格前需先確認是否同一根因或需拆成兩個 pattern
   - 現有覆蓋：fact f_dff56f（兩組帳號憑證快取對應關係）
 
 ## 誤判紀錄（防重複偵測）
@@ -52,4 +52,4 @@
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
 ---
-Last updated: 2026-07-20
+Last updated: 2026-07-22

@@ -1,0 +1,1 @@
+- [f_cba34c] [2026-07-21T20:06:03.271Z] 因為 bridge session 會把每個 bash 指令逐字記進 events.jsonl（包含指令參數本身），導致用 grep 打出洩漏 secret 的字面值來驗證是否清乾淨時，該驗證指令本身又把 secret 重新記回 events.jsonl（自我重複污染迴圈），所以清理已洩漏 secret 時改用通用正則（如 ghp_[A-Za-z0-9]{30,40}）取代逐字打出 secret 本身來搜尋/驗證（排除直接 grep 字面值，因為每次驗證都會再洩漏一次）

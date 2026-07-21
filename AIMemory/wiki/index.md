@@ -18,6 +18,7 @@
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
 - [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft）
+- [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
 - [[dev-tools]] — 開發工具與環境設定（Python/Playwright/TypeScript、機器路徑、工作流程）
 - [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
 - [[spine-viewer]] — Spine Viewer 插件（Cocos Creator 編輯器擴充，批次掃描 DrawCall/Triangle 效能報告）
@@ -47,5 +48,5 @@
 
 ---
 
-Total pages: 30
-Last updated: 2026-07-21（wikilint：user-pref 補 3 條缺漏 fact + 矛盾註記，sources +3；bridge-research 超過 200 行待拆分）
+Total pages: 31
+Last updated: 2026-07-22（wikisync：新建 bridge-upstream-sync（拆自 bridge-project/bridge-acp，12 facts）；bridge-memory 補 9 條、bridge-acp 補 10 條未同步 fact；bridge-project 同步刪減重複段落；5 個 Query Auto-save 候選（ASK 按鈕點擊/短操作觸發）皆判定非實質問答跳過；bridge-research 超過 200 行待拆分（未處理，範圍外））

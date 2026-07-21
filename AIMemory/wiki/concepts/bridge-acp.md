@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-19
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7]
+updated: 2026-07-21
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -16,6 +16,8 @@ sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, 
 - `.env`：`ACP_AGENT_COMMAND=claude-agent-acp` + `ACP_MODEL=claude-fable-5`（effort medium）
 - Model 由 bridge 在 `session/new` 後透過 `session/set_config_option` pin——**claude-agent-acp 的 CLI `--model` flag 在 ACP 模式無效**
 - 歷史配置（~2026-07-06 前）：`kiro-cli acp --model claude-opus-4.6 -a`
+- `ACP_SESSION_RESUME=true` 已於 2026-07-07 啟用（`.env:39`）：idle/crash/SIGINT 保留 registry 可 `session/load` 恢復
+- `claude-agent-acp` **不支援** `effort` config option——`session/set_config_option` 設 effort 會回 `-32603 Unknown config option`，bridge 已 graceful ignore，屬已知限制非故障（model pin 本身正常）
 
 ### Fable 5 安全分類器問題（2026-07-08）
 
@@ -27,7 +29,10 @@ sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, 
 
 - `/agent <key>` 熱切換 ACP backend（自動交接對話摘要、跨 restart 持久化）；設定檔 `${MEMORY_DIR}/config/acp-providers.json`，**每次 `/agent` 即時重讀、不用重啟 bridge**
 - 檔案缺失時 fallback 為 `.env` 單一 agent；`/agent init` 顯式建立範本——seed 自 `.env` 當前 agent（保證至少一筆語意正確）+ 另兩個 backend scaffold，既有檔一律不覆蓋（排除啟動自動 seed 因為靜默寫檔違反「不逕自動作」偏好）
+- 實際三個 backend 配置：`claude`（claude-agent-acp，pin claude-fable-5/medium）、`kiro`（kiro-cli acp --model claude-opus-4.6 -a --agent main，手動加了 model pin 與 --agent main）、`codex`（npx @zed-industries/codex-acp，auth 未解可能切換失敗）
 - codex-acp 的 initialize 回 -32000（需 auth，2026-07-07 實測未解），切換可能失敗
+- ACP adapter `loadSession` capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定
+- 使用者要求 bridge 的機制設計必須跨 ACP adapter 適用（Kiro/Codex/Claude 都要生效）——因此偏好走 bridge preamble/prompt 路徑，排除 CLAUDE.md/AGENTS.md/steering 這類單一 CLI 的載入機制
 
 ## Tool Call Title 顯示差異（非 bug）
 
@@ -66,6 +71,8 @@ Bridge 的 tool call 進度（`🔧 {title}` / `✅ {toolName}`，sessionManager
 
 委派 Kiro 實作後的品質鏈：① Kiro `--resume` self-review ② 獨立新 session Kiro 冷讀 git diff ③ 主 agent heavy review（親跑 tsc + smoke + BC 對照）。2026-07-07 兩輪實戰各抓到一個 self-review 漏掉的真 bug（`/restart` 走 shutdown() 漏清 registry、self-review 修法誤殺 SIGINT resume 場景）；抓到後由主 agent 接手修，不叫 Kiro 修第二次。
 
+**2026-07-14 委派實證教訓**：`kiro-cli` 的 prompt 走命令列參數有長度上限（37KB 會炸 `Argument list too long`），長 spec 應寫成檔案讓 Kiro 自己讀路徑；獨立 reviewer 這輪抓到 3 個真問題（多餘空行、`listRecent` 死碼、`/selfeval` 漏登記 `COMMAND_SPECS`），同樣由主 agent 接手修不叫 Kiro 修第二次。
+
 ## Co-Authored-By Trailer 陷阱
 
 - Git commit 的 `Co-Authored-By` trailer 是 **harness 模板字串**（session 啟動時定格），非 runtime model 自我宣告
@@ -86,9 +93,22 @@ Bridge 的 tool call 進度（`🔧 {title}` / `✅ {toolName}`，sessionManager
 
 ## Upstream 同步（2026-07-16）
 
-merge 進 MCP-first action domain 基礎建設（main `0a3c551` → `199e30a`），細節與衝突處理原則見 [[bridge-project]]。
+merge 進 MCP-first action domain 基礎建設（main `0a3c551` → `199e30a`），細節與衝突處理原則見 [[bridge-upstream-sync]]。
+
+## Claude Max 5x 模型分配策略（2026-07-20）
+
+記於 `.claudedocs/model-allocation-max5x.md`：
+
+- Opus 是最稀缺配額，只留給高認知決策（架構、最終審查、難 debug、對抗驗證）
+- 所有 ≥2k token 的實作產出委派給不限量的 Kiro CLI；Haiku 處理機械/批次操作；Sonnet 負責協調
+- 配額同時受「全模型每週上限」與「Sonnet 專屬每週上限」兩道牆限制，且跨 Claude.ai chat / Claude Code / Cowork 共用
+- **快速判準**：自問「這個錯誤是 Sonnet 級還是 Opus 級」——可重跑、重做成本低的錯誤就降級委派，會污染下游決策（架構、事實、記憶）的錯誤才值得動用 Opus
+- Workflow / subagent 必須顯式指定 model override，否則沿用預設 model 會造成配額爆掉
+
+**三模型分工提案（2026-07-06）已評估暫緩**：Fable 5 當 orchestrator（約 10% tokens）、Codex 5.5 當 executor（約 60%）、Gemini 3.1 Pro 當 reviewer（約 15%）——決定不採用，避免未來重複提案。
 
 ## 相關
 
 - [[bridge-project]] — Bridge 本體架構與功能
+- [[bridge-upstream-sync]] — Fork 同步與合併衝突處理
 - [[dev-tools]] — 機器環境與 CLI 工具
