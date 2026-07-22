@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "3c931842",
+      "activeId": "f312025a",
       "sessions": [
         {
-          "id": "3c931842",
-          "name": "請處理以下 dream 維運產出的 High P",
-          "createdAt": 1784579246316,
-          "sessionId": "7da94ba7-1918-4903-a5c2-3b8b33af476d",
+          "id": "f312025a",
+          "name": "請產出 2026-07-22 的 daily l",
+          "createdAt": 1784725227631,
+          "sessionId": "56da6b0c-b9cd-4613-97f3-e2d0b9a049cc",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1784579246292
+          "savedAt": 1784725227493
         }
       ]
     }

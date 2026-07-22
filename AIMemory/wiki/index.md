@@ -16,6 +16,7 @@
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
+- [[bridge-dream]] — Bridge Dream 例行維運框架（dream.json 執行機制、claude-mem-curate 接入、turn 誤報「(no output)」兩種根因；2026-07-22 從 bridge-project 拆出）
 - [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft）
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
@@ -45,8 +46,9 @@
 - [[embedding-router]] — 為何 doctor 報 Embedding router 未就緒（根因、影響面、解耦修復）
 - [[modelcontextprotocol-typescript-sdk-mcp-typescript-sdk-v-a1aded4e]] — MCP TypeScript SDK v2 正式進入 beta（2026-07-28 規範、套件拆分、任意 schema 庫、stateless core）
 - [[specialist]] — 什麼情況下會自動使用 specialist（SPECIALIST_PROXY vs PARALLEL_DELEGATE 觸發條件、bridge-dev specialist 不採納理由）
+- [[agent-claude-opus46]] — 懸案：`/agent claude` 切回後 model 仍是 Opus 4.6 而非 pin 的 Fable 5（settings watcher 覆蓋 set_config_option，未解決）
 
 ---
 
-Total pages: 31
-Last updated: 2026-07-22（wikisync：新建 bridge-upstream-sync（拆自 bridge-project/bridge-acp，12 facts）；bridge-memory 補 9 條、bridge-acp 補 10 條未同步 fact；bridge-project 同步刪減重複段落；5 個 Query Auto-save 候選（ASK 按鈕點擊/短操作觸發）皆判定非實質問答跳過；bridge-research 超過 200 行待拆分（未處理，範圍外））
+Total pages: 33
+Last updated: 2026-07-23（wikilint：修復 2 個 stale 頁面——`bridge-session.md` 的 cosmetic「待補」措辭經 git log 查證已於同日 commit 55b3628 處理，改標✅並附證據；`bridge-project.md` 補上 GitHub PAT 洩漏 2026-07-22 二次復發的 git amend + reflog expire + gc 清理技巧，sources +1（f_b8922f）。0 孤兒頁面、0 斷連 wikilink，其餘 31 頁健康）

@@ -179,3 +179,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-07-20T23:25:58.358Z] user=509424983 query="uk_slot_template 有 4 個本地 commit 未 push" deleted=0 token=forget-254aa623-1
 
+- [2026-07-22T20:17:20.910Z] user=509424983 query="handleDailyLog 在「今日無 session 記錄」分支原本直接用 ctx.reply()" deleted=1 token=forget-4131a0cc-1
+    - [f_a18e55] [2026-07-22T20:16:48.619Z] 因為 dream.ts 的 stepResults 只認 session.buffer 差異或結構化回傳值來判斷 summary，而 handleDailyLog 在「今日無 session 記錄」分支原本直接用 ctx.reply() 回覆（不寫入 buffer），導致該步驟被誤記成 (no output) 並被後續蒸餾誤判為 High Priority 失敗，所以把該分支改為回傳結構化 DreamStepResult（排除同時修改 session.get 失敗分支，因為本次未觸發、屬範圍外）

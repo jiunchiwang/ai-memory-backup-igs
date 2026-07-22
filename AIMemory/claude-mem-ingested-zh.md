@@ -1,5 +1,17 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-23(第三批;同一份未清空的 shortlist,3 筆候選 → 精選 + 去重後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main`（shortlist 檔仍是 2026-07-21T20:30:17 產出的同一批 3 筆候選，未被上游清空/重置，內容與前次 07-22 第二批完全相同）。
+
+- 候選 1（Claude Max 5x Model Allocation Strategy）：`list_facts` 查「Max 5x」命中既有 fact（`bridge-acp` shard）→ **完全重複**，丟棄。
+- 候選 2（Secret redaction 必須用正則避免透過 event logging 自我重複污染）：`list_facts` 查「events.jsonl」命中既有 fact（通用正則、自我重複污染迴圈）→ **完全重複**，丟棄。
+- 候選 3（AI News Intelligence Pipeline 繁中輸出的主題設定：OpenAI/Anthropic/Gemini/AI models/Coding Agent/MCP/ACP/Data2Story）：屬單一 pipeline 的一次性主題設定快照，非跨 session 可重用之架構決策/pattern/trade-off → 於選取階段淘汰（結論與前次一致）。
+
+結果：**新增 0 條**。未呼叫 forget。
+
+附註（非本任務範圍）：`claude-mem-shortlist.md` 連續第 3 輪未被上游清空，同一批候選重複出現——建議之後找時間查上游產生/清空 shortlist 的機制。
+
 ## 2026-07-22(第二批;來源 shortlist 3 筆 → 精選 + 去重後寫入 0 條)
 
 來源 project：`telegram-kiro-bridge-main`（shortlist 2026-07-21T20:30 產出，3 筆 decision 候選）。

@@ -1,0 +1,7 @@
+- [f_e1f99f] [2026-07-16T13:13:25.950Z] [WS] task: 把 claude-mem-curate 精選流程接成 /dream 第 14 步，讓每日 04:00 自動觸發（原本只能手動觸發）
+- [f_e2d60b] [2026-07-16T13:13:35.726Z] [WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效，然後詢問使用者是否要 git commit 這次 claudememcurate 改動（只 add src/commands/dream.ts + src/index.ts，不要連帶 commit README.md 既有改動）
+- [f_e547d2] [2026-07-16T13:14:06.507Z] telegram-kiro-bridge 已於 2026-07-16 把 claude-mem-curate 精選流程接成 /dream 第 14 步（新增 handleClaudeMemCurate handler 於 src/commands/dream.ts，仿 handleDocUpdate 的 meta-prompt 模式，並註冊進 index.ts 的 COMMAND_HANDLERS），插在 memorytoskill 之後、topicreview 之前，使其從純手動觸發變成每日 04:00 自動執行
+- [f_6e3e02] [2026-07-16T13:14:06.530Z] telegram-kiro-bridge 的 dream.json 每個 step 的 cmd 字串必須存在於 index.ts 的 COMMAND_HANDLERS map 中才能被 /dream 執行，否則會被判定為「未知指令已跳過」但不會中斷其餘步驟（continue_on_error 預設 true）
+- [f_a3ef7e] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 memory-to-skill / knowhow-accumulation / claude-mem-curate 三個 skill 觸發語境（回顧過去對話抽取可重用模式）高度重疊，雖輸出產物不同但易造成選用混淆；knowhow-accumulation 自建立以來 use_count 仍為 0
+- [f_411672] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 claude-mem-curate SKILL_USED 追蹤缺口已修復（dream.ts meta-prompt 補上第 8 步指示），/dream 每日執行後 use_count 統計會正確累計
+- [f_a18e55] [2026-07-22T20:17:55.912Z] 因為 dream.ts 的 stepResults 只認 session.buffer 差異或結構化回傳值來判斷 summary，而 handleDailyLog 在「今日無 session 記錄」分支原本直接用 ctx.reply() 回覆（不寫入 buffer），導致該步驟被誤記成 (no output) 並被後續蒸餾誤判為 High Priority 失敗，所以把該分支改為回傳結構化 DreamStepResult（排除同時修改 session.get 失敗分支，因為本次未觸發、屬範圍外）

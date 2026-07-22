@@ -2,7 +2,7 @@
 title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
-updated: 2026-07-17
+updated: 2026-07-23
 sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, f_daf156, f_ecaf0b, f_76faa7, f_42aed5, f_c73099]
 ---
 
@@ -22,7 +22,7 @@ sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_86bdbb, f_bef432, f_20ed42, 
 - **選型理由**：只做 resume 不做 UI——restart 連續性 + idle 殺 process 省記憶體最實、避免與 goal/MoA/relay 單 session 假設互動（方案 B SessionStore+UI 等 A 跑穩再議 → 實際同日完成，見下）
 - 生產機已於 2026-07-07 啟用並通過手動 e2e（context 暗號驗證）
 - 實作計畫與三段 review 軌跡：bridge repo `docs/superpowers/plans/2026-07-07-acp-session-resume.md`（BC-1~5 + adapter 實測表）
-- 已知 cosmetic：resume 後 `/context` 顯示 preamble 0 chars
+- ✅ **cosmetic 已處理**（commit `55b3628`，2026-07-07 同日）：resume 後 `/context`/`/usage` 的 preamble breakdown 顯示 0 tok 是刻意的（preamble 凍在原 agent session 內、bridge 本 process 未重注），非 bug——`ChatSession` 加 `resumed` flag，UI 顯示層加註說明而非假造舊數字。舊版 fact（f_daf156）措辭停在「待補」，已於 2026-07-23 factlint 查證過時
 
 ## SessionStore + /session 多 Session 管理（同日結案）
 

@@ -49,6 +49,13 @@
       "score": 85,
       "evidence": "型別檢查(tsc --noEmit)與build皆過；根因交叉比對events.jsonl實際時間戳與session transcript驗證，非猜測；修復範圍限定在觀測層3檔案，未動未驗證的ACP底層；唯一未驗證的是「wikilint/skilllint/docupdate是否真的走prompt-already-in-progress路徑」屬合理推論但非直接證據確認",
       "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-21T22:11:38.394Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "已對 AIMemory 源檔與備份 repo 兩處分別 grep 驗證 secret 移除、REDACTED 標記存在，且 git push 回傳明確 ref-update 成功訊息確認遠端狀態；扣分點是背景 gc 尚未確認完成（非阻塞性清理，不影響 backup 恢復）",
+      "belowThreshold": false
     }
   ]
 }

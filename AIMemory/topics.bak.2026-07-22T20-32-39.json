@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-22T20:32:40.047Z (token=topics-3f3a4ac2-22)
+// Last applied: 2026-07-21T20:23:00.717Z (token=topics-d119a2f0-21)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -270,18 +270,6 @@
     ]
   },
   {
-    "topic": "bridge-dream",
-    "keywords": [
-      "dream.json",
-      "handledailylog",
-      "claude-mem-curate",
-      "claudememcurate",
-      "command_handlers",
-      "loop state",
-      "dream high priority"
-    ]
-  },
-  {
     "topic": "bridge-project",
     "keywords": [
       "telegram-kiro-bridge",
@@ -315,6 +303,8 @@
       "[ws]",
       "ctx 統計",
       "bridge-actions",
+      "claude-mem-curate",
+      "claudememcurate",
       "tsx 直吃",
       "暖機",
       "warmup",

@@ -218,7 +218,12 @@
         "remote 配置",
         "合併衝突",
         "覆核合併",
-        "model override"
+        "model override",
+        "dream.json",
+        "handledailylog",
+        "command_handlers",
+        "loop state",
+        "dream high priority"
       ],
       "wikiPages": [
         "bridge-project",
@@ -231,7 +236,8 @@
         "bridge-pitfalls",
         "embedding-router",
         "specialist",
-        "bridge-upstream-sync"
+        "bridge-upstream-sync",
+        "bridge-dream"
       ],
       "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
       "model": "claude-sonnet-4.6",
