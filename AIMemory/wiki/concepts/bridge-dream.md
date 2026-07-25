@@ -2,8 +2,8 @@
 title: Bridge Dream 例行維運框架
 type: concept
 created: 2026-07-16
-updated: 2026-07-22
-sources: [f_e1f99f, f_e2d60b, f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55]
+updated: 2026-07-25
+sources: [f_e1f99f, f_e2d60b, f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3]
 ---
 
 # Bridge Dream 例行維運框架
@@ -32,6 +32,10 @@ sources: [f_e1f99f, f_e2d60b, f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55]
 ### 根因 B：dailylog 合法跳過被誤判（2026-07-22 修復）
 
 `dream.ts` 的 stepResults 只認 `session.buffer` 差異或結構化回傳值來判斷 summary。`handleDailyLog` 在「今日無 session 記錄」分支原本直接用 `ctx.reply()` 回覆（不寫入 buffer），導致該步驟被誤記成 `(no output)` 並被後續蒸餾誤判為 High Priority 失敗——但這其實是合法跳過（非例行 04:00 執行時，當日 session 檔案可能尚未落地）。修復：該分支改為回傳結構化 `DreamStepResult`（排除同時修改 `session.get` 失敗分支，因為未觸發、屬範圍外）。
+
+## claude-mem-shortlist 未清空問題（待查）
+
+`claude-mem-shortlist.md` 已知問題：同一批候選連續 3 輪 `claude-mem-curate` 執行都未被上游清空，導致重複判定同一批重複候選，屬上游產生/清空 shortlist 機制的 bug。**2026-07-25 更新**：本輪 `claude-mem-curate` 執行時 shortlist 已改版更新（新產生時間戳、不同內容），問題本身已不再出現，上游清空機制看起來已恢復正常；保留此節作為復發時的參考記錄。
 
 ## 已知混淆：skill 觸發語境重疊
 

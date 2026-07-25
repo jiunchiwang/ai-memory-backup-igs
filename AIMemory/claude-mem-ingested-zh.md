@@ -1,5 +1,16 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-25(第四批;shortlist 已改版更新,2 筆候選 → 精選 + 去重後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main` + `system32`（shortlist 產生時間 2026-07-22T20:30:24.953Z，內容與前三批不同——**上游已重新產生 shortlist**，不再是同一批 3 筆候選卡住不清空的狀況）。
+
+- 候選 1（Secret verification anti-pollution pattern，`telegram-kiro-bridge-main`）：`list_facts` 查「events.jsonl」命中既有 fact（bash 指令逐字記進 events.jsonl → 驗證時字面值 grep 會自我重複污染 → 改用通用正則 `ghp_[A-Za-z0-9]{30,40}`）→ **完全重複**，丟棄。
+- 候選 2（Memory Curation AUTO Mode Completed: Zero New Facts Ingested，`system32`）：內容是「上一輪精選跑完、0 條新增」的過程性執行紀錄，非架構決策/gotcha/pattern/trade-off → 於選取階段淘汰。
+
+結果：**新增 0 條**。未呼叫 forget。
+
+附註：先前追蹤的「shortlist 連續 3 輪未清空」問題本輪已不再出現，上游機制看起來已恢復正常清空/重製。
+
 ## 2026-07-23(第三批;同一份未清空的 shortlist,3 筆候選 → 精選 + 去重後寫入 0 條)
 
 來源 project：`telegram-kiro-bridge-main`（shortlist 檔仍是 2026-07-21T20:30:17 產出的同一批 3 筆候選，未被上游清空/重置，內容與前次 07-22 第二批完全相同）。

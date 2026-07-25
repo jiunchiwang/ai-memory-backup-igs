@@ -5,3 +5,4 @@
 - [f_a3ef7e] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 memory-to-skill / knowhow-accumulation / claude-mem-curate 三個 skill 觸發語境（回顧過去對話抽取可重用模式）高度重疊，雖輸出產物不同但易造成選用混淆；knowhow-accumulation 自建立以來 use_count 仍為 0
 - [f_411672] [2026-07-19T09:11:28.458Z] telegram-kiro-bridge 的 claude-mem-curate SKILL_USED 追蹤缺口已修復（dream.ts meta-prompt 補上第 8 步指示），/dream 每日執行後 use_count 統計會正確累計
 - [f_a18e55] [2026-07-22T20:17:55.912Z] 因為 dream.ts 的 stepResults 只認 session.buffer 差異或結構化回傳值來判斷 summary，而 handleDailyLog 在「今日無 session 記錄」分支原本直接用 ctx.reply() 回覆（不寫入 buffer），導致該步驟被誤記成 (no output) 並被後續蒸餾誤判為 High Priority 失敗，所以把該分支改為回傳結構化 DreamStepResult（排除同時修改 session.get 失敗分支，因為本次未觸發、屬範圍外）
+- [f_071df3] [2026-07-22T21:49:00.863Z] telegram-kiro-bridge 的 claude-mem-shortlist.md 有已知問題：同一批候選連續 3 輪 claude-mem-curate 執行都未被上游清空，導致重複判定同一批重複候選，屬上游產生/清空 shortlist 機制的 bug 待查
