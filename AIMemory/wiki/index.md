@@ -51,4 +51,4 @@
 ---
 
 Total pages: 33
-Last updated: 2026-07-25（wikisync：`bridge-dream.md` 補上 claude-mem-shortlist 未清空問題章節（含 2026-07-25 已恢復正常的追記），sources +1（f_071df3）；其餘 21 個 ≥5-facts topic 皆已有對應頁，無新建。5 個 Query Auto-save 候選（askmodel-plan-chk/query-mrf2v4d2/model/askstatusui-fix-all/askstatusui-commit-both）判定皆為 ASK 按鈕回呼值或瑣碎狀態確認，非綜合性回答，全數跳過並標記 processed）
+Last updated: 2026-07-25（同日第二次 wikisync：facts 自上輪以來僅減 1 條（bridge-memory factlint 刪除瑣碎 fact，非 wiki-protected），無新內容，21 個 ≥5-facts topic 皆維持現狀無需更新。5 個 Query Auto-save 候選（askzombie3-keep/askcommit3-yes/memory-recall-.../query-mrfpsogb/askwikisplit-plan）皆為 ASK 按鈕回呼值或例行自檢狀態，非綜合性回答，全數跳過並標記 processed）

@@ -157,3 +157,14 @@
 {"ts":"2026-07-25T02:09:00.279Z","q":"events.jsonl","hits":3}
 {"ts":"2026-07-25T02:11:41.764Z","q":"bridge-dream","hits":8}
 {"ts":"2026-07-25T02:11:42.581Z","q":"bridge-session","hits":13}
+{"ts":"2026-07-25T20:02:48.552Z","q":"events.jsonl","hits":3}
+{"ts":"2026-07-25T20:07:01.423Z","q":"bridge-upstream-sync","hits":12}
+{"ts":"2026-07-25T20:07:02.350Z","q":"uk-slot-codegen","hits":12}
+{"ts":"2026-07-25T20:07:03.279Z","q":"bridge-streaming","hits":11}
+{"ts":"2026-07-25T20:07:04.208Z","q":"bridge-dream","hits":8}
+{"ts":"2026-07-25T20:07:05.203Z","q":"uk-slot-clash-olympus","hits":6}
+{"ts":"2026-07-25T20:07:06.127Z","q":"uk-slot-eye-strike","hits":6}
+{"ts":"2026-07-25T20:07:07.152Z","q":"uk-slot-pirates-queen","hits":4}
+{"ts":"2026-07-25T20:07:08.190Z","q":"misc","hits":1}
+{"ts":"2026-07-25T20:07:09.114Z","q":"bridge-project","hits":52}
+{"ts":"2026-07-25T20:07:10.288Z","q":"bridge-acp","hits":24}
