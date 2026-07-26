@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-22
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f]
+updated: 2026-07-26
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_b283c9, f_30e280]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -106,6 +106,12 @@ merge 進 MCP-first action domain 基礎建設（main `0a3c551` → `199e30a`）
 - Workflow / subagent 必須顯式指定 model override，否則沿用預設 model 會造成配額爆掉
 
 **三模型分工提案（2026-07-06）已評估暫緩**：Fable 5 當 orchestrator（約 10% tokens）、Codex 5.5 當 executor（約 60%）、Gemini 3.1 Pro 當 reviewer（約 15%）——決定不採用，避免未來重複提案。
+
+## Kiro CLI 登入狀態檢查（2026-07-26）
+
+- 主機 kiro-cli（2.13.0，路徑 `C:\Users\jiunchiwang\AppData\Local\Kiro-Cli\kiro-cli.exe`）於 2026-07-26 檢查時處於**未登入**狀態（`kiro-cli whoami` 回報 `Not logged in`）
+- headless 環境執行 `kiro-cli chat --list-models` 會卡在「Opening auth portal」無窮重試迴圈（無瀏覽器完成 OAuth）——需使用者手動互動式 `kiro-cli login` 重新登入才能恢復，此狀態下 `vc-kiro-delegate` 委派功能也不可用
+- `kiro-cli chat` 有 `--list-models` 旗標可查詢可用 model 清單（另有 `--format plain/json/json-pretty` 控制輸出格式），但需登入狀態才能實際回傳結果
 
 ## 相關
 

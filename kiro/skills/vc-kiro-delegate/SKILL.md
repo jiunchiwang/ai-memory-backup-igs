@@ -1,11 +1,11 @@
 ---
 name: vc-kiro-delegate
-description: 將實作任務委派給 Kiro CLI（headless mode + claude-opus-4.6）執行，把主 agent 的 Claude Max 5x 配額（5 小時 message cap）保留給協調與決策，把實作丟給 Kiro 的不限量訂閱算力。Claude Code 負責預估、規劃、light review；Kiro 負責具體實作與第一輪 self-review。當用戶說「用 kiro 做」「交給 kiro」「省 token」「叫 kiro 寫」時務必使用此 skill；當主 agent 自己評估某個任務「預估會花 2k+ tokens」時也要主動委派 — 例如新增函式、寫測試、重構函式、實作模組。即使用戶沒明說「kiro」，只要預估產出規模 ≥2k tokens，就主動委派並在訊息中告知預估值。
+description: 將實作任務委派給 Kiro CLI（headless mode + claude-opus-4.5）執行，把主 agent 的 Claude Max 5x 配額（5 小時 message cap）保留給協調與決策，把實作丟給 Kiro 的不限量訂閱算力。Claude Code 負責預估、規劃、light review；Kiro 負責具體實作與第一輪 self-review。當用戶說「用 kiro 做」「交給 kiro」「省 token」「叫 kiro 寫」時務必使用此 skill；當主 agent 自己評估某個任務「預估會花 2k+ tokens」時也要主動委派 — 例如新增函式、寫測試、重構函式、實作模組。即使用戶沒明說「kiro」，只要預估產出規模 ≥2k tokens，就主動委派並在訊息中告知預估值。
 ---
 
 # Kiro Delegate
 
-把適合的工作委派給 `kiro-cli`（headless mode、Opus 4.6 模型），自己留下需要全局 context 的工作。
+把適合的工作委派給 `kiro-cli`（headless mode、Opus 4.5 模型），自己留下需要全局 context 的工作。
 
 ---
 
@@ -79,7 +79,7 @@ description: 將實作任務委派給 Kiro CLI（headless mode + claude-opus-4.6
 **每次委派前，必須在用戶可見的訊息中明說：**
 
 > 預估這個任務 ~**Xk** tokens（自己做的話），按你的偏好應委派。
-> 請 kiro-cli 用 **claude-opus-4.6** 執行：[一句話描述任務]
+> 請 kiro-cli 用 **claude-opus-4.5** 執行：[一句話描述任務]
 
 **宣告之後，立即執行以下指令記錄委派意圖**（把 `{任務摘要}` 換成一句話描述）：
 
@@ -131,14 +131,19 @@ type hint 風格（Google style）。
 ### Step 3：第一次委派（新 session）
 
 ```bash
-kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.6 "<完整 prompt>"
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 "<完整 prompt>"
 ```
 
 注意事項：
 
 - `--no-interactive`：避免任何 hang 在輸入提示
 - `--trust-all-tools`：避免 hang 在權限詢問。如果任務敏感（例如不希望 Kiro 跑任意 bash），改用 `--trust-tools=fs_read,fs_write,execute_bash` 等明確列舉
-- `--model claude-opus-4.6`：固定用最強的（用戶要求）
+- `--model claude-opus-4.5`：固定用最強的（用戶要求）。⚠️ Kiro 的可用 model
+  清單會變動 —— 2026-07-26 `claude-opus-4.6` 被下架，寫死它的指令全部
+  `exit 1`（`error: Model 'claude-opus-4.6' does not exist`），委派整條路斷掉
+  且不會有明顯的告警。委派失敗且訊息提到 model 時，先跑
+  `kiro-cli chat --no-interactive --model <任意值> ""` 看它印出的 available
+  models 清單，再更新本 skill 與 `kiro-cli settings chat.defaultModel`
 - prompt 用雙引號包起來，內部的雙引號要 escape 或改用 here-doc
 - **Windows 注意**：PATH 上同時有 `kiro`（Amazon Kiro IDE，開 GUI 視窗，無 headless 支援）和 `kiro-cli`（headless CLI，這才是本 skill 要用的）。一律用 `kiro-cli`，不要用 `kiro`
 
@@ -152,7 +157,7 @@ PROMPT=$(cat <<'EOF'
 邊界：...
 EOF
 )
-kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.6 "$PROMPT"
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 "$PROMPT"
 ```
 
 執行完後 stdout 會顯示 Kiro 的回覆與工具使用。檔案修改已直接落地。
@@ -162,7 +167,7 @@ kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.6 "$PROMP
 Self-review 必須在同一個 session，否則 Kiro 不知道剛才改了什麼。用 `--resume` 接最近一次 session（不需要 parse session_id）：
 
 ```bash
-kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.6 --resume "<self-review prompt>"
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 --resume "<self-review prompt>"
 ```
 
 **Self-review prompt 模板：**
@@ -209,7 +214,7 @@ PROMPT=$(cat <<'EOF'
 EOF
 )
 
-kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.6 "$PROMPT"
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 "$PROMPT"
 ```
 
 **重要**：

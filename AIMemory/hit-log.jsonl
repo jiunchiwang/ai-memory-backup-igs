@@ -640,3 +640,6 @@
 {"ts":"2026-07-25T13:54:44.440Z","type":"fact","key":"bridge-research","source":"memory-recall"}
 {"ts":"2026-07-25T13:54:44.440Z","type":"skill","key":"vc-kiro-delegate","source":"skill-routing"}
 {"ts":"2026-07-25T13:54:44.440Z","type":"skill","key":"memory-to-skill","source":"skill-routing"}
+{"ts":"2026-07-26T07:08:31.624Z","type":"fact","key":"bridge-research","source":"memory-recall"}
+{"ts":"2026-07-26T07:08:31.624Z","type":"fact","key":"bridge-acp","source":"memory-recall"}
+{"ts":"2026-07-26T07:08:31.624Z","type":"fact","key":"bridge-project","source":"memory-recall"}

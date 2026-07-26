@@ -51,4 +51,4 @@
 ---
 
 Total pages: 33
-Last updated: 2026-07-25（同日第二次 wikisync：facts 自上輪以來僅減 1 條（bridge-memory factlint 刪除瑣碎 fact，非 wiki-protected），無新內容，21 個 ≥5-facts topic 皆維持現狀無需更新。5 個 Query Auto-save 候選（askzombie3-keep/askcommit3-yes/memory-recall-.../query-mrfpsogb/askwikisplit-plan）皆為 ASK 按鈕回呼值或例行自檢狀態，非綜合性回答，全數跳過並標記 processed）
+Last updated: 2026-07-26（facts 自上輪以來新增 3 條：[[bridge-project]] +1（CI 把關決策）、[[bridge-acp]] +2（Kiro CLI 未登入狀態、--list-models 旗標），兩頁已更新內容+bump updated+補 sources；其餘 19 個 ≥5-facts topic 無變動。5 個 Query Auto-save 候選（askwikisplit2-full/askselfcheck-fix-all/query-mrg41hq8/query-mrghbflv/askfix-memory-mcp-a）皆為 ASK 按鈕回呼值或例行狀態摘要，非綜合性回答，全數跳過並標記 processed）

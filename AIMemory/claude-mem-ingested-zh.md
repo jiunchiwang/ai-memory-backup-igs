@@ -1,5 +1,14 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-26(第二批;同日重跑,shortlist 未變 → 精選 + 去重後寫入 0 條)
+
+來源 project：`telegram-kiro-bridge-main`（shortlist 產生時間仍是 2026-07-25T20:30:02.611Z，與本日第一批（見下方「## 2026-07-26」條目）完全相同的 2 筆候選——上游 shortlist 自第一批以來未再產生新內容）。
+
+- 候選 1（CI gate via pre-push hook, GitHub Actions deferred）：`list_facts` 查「pre-push hook」命中既有 fact（本日第一批已寫入 `bridge-project` shard）→ **完全重複**，丟棄。
+- 候選 2（Claude Max 5x Model Allocation Policy Established）：`list_facts` 查「model-allocation-max5x」命中既有 fact（`bridge-acp` shard 的核心分配策略）→ **完全重複**，丟棄。
+
+結果：**新增 0 條**。未呼叫 forget。
+
 ## 2026-07-25(第五批;同日重跑,shortlist 未變 → 精選 + 去重後寫入 0 條)
 
 來源 project：`telegram-kiro-bridge-main` + `system32`（shortlist 產生時間仍是 2026-07-22T20:30:24.953Z，與本日第四批完全相同的 2 筆候選——上游 shortlist 自第四批以來未再產生新內容）。
@@ -279,3 +288,15 @@
 來源 shortlist:4 筆候選(皆 telegram-kiro-bridge,2026-07-11)。精選後寫入 1 筆,丟棄 3 筆一次性任務建立紀錄(Task #10/#12/#15)。
 
 1. skilllint 於 2026-07-11 將 knowhow-accumulation、non-engineer-agent-design、skill-creator 三個 skill 標記為殭屍(zombie)skill,但經評估後決定保留不刪;日後 skilllint 再標記這三個 skill 時應視為已知豁免,不需重複提案刪除(來源:telegram-kiro-bridge)
+
+## 2026-07-26
+
+來源 shortlist：2 筆候選（產生於 2026-07-25T20:30Z）
+
+寫入 1 條：
+
+- (telegram-kiro-bridge) CI 把關決策（2026-07-25）：測試把關靠本機 pre-push hook 執行，GitHub Actions 暫緩導入；`.github/workflows/ci.yml` 雖已寫好並在本機驗證通過（86/86 測試），但刻意保留為未追蹤檔案不進版控——未來看到該檔案未 commit 屬預期狀態，不是遺漏。→ shard: bridge-project
+
+丟棄 1 條：
+
+- (telegram-kiro-bridge) Claude Max 5x 模型分配政策建立 → 去重丟棄，AIMemory 已有等價 fact（model-allocation-max5x 策略條目）
