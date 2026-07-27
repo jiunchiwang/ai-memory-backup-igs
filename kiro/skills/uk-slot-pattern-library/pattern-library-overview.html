@@ -21,6 +21,7 @@ h3{font-size:1rem;color:var(--muted);margin:1.2rem 0 .5rem}
 .badge-high{background:var(--green);color:#000}
 .badge-mid{background:var(--yellow);color:#000}
 .badge-base{background:var(--muted);color:#fff}
+.badge-spec{background:var(--orange);color:#000}
 .badge-new{background:var(--purple);color:#fff}
 .tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.7rem;background:var(--surface2);color:var(--muted);margin-right:4px}
 .detail{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.85rem}
@@ -46,20 +47,21 @@ code{background:var(--surface2);padding:1px 4px;border-radius:3px;font-size:.8re
 </head>
 <body>
 <h1>🎰 UK Slot Pattern Library</h1>
-<p class="subtitle">路線 C 翻譯層的 grounding — 從規格書映射 Feature 到程式實作的模式庫<br>15 張模式卡片 · 7 個參考專案 · 點擊卡片展開詳細資訊</p>
+<p class="subtitle">路線 C 翻譯層的 grounding — 從規格書映射 Feature 到程式實作的模式庫<br>25 張模式卡片 · 12 個參考專案 · 點擊卡片展開詳細資訊</p>
 
 <div class="stats">
-<div class="stat-box"><div class="stat-num">15</div><div class="stat-label">模式卡片</div></div>
-<div class="stat-box"><div class="stat-num">7</div><div class="stat-label">參考專案</div></div>
+<div class="stat-box"><div class="stat-num">25</div><div class="stat-label">模式卡片</div></div>
+<div class="stat-box"><div class="stat-num">12</div><div class="stat-label">參考專案</div></div>
 <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">卡片 Section</div></div>
-<div class="stat-box"><div class="stat-num">3LP</div><div class="stat-label">最新驗證</div></div>
+<div class="stat-box"><div class="stat-num">LGS</div><div class="stat-label">最新驗證</div></div>
 </div>
 
 <div class="legend">
 <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> 高頻</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div> 中頻</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div> ⚠️ 僅規格推導，無實作驗證</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div> 基礎</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> 新增</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> 本批新增（LGS）</div>
 </div>
 
 <h2>📋 使用流程</h2>
@@ -119,7 +121,7 @@ AWARD（線獎對獎 + BigWin 報獎）→ ROUND_SHOW_END → CHECK_STATE
 <em>PlusBonusSpin</em> / <em>FgNewFeature</em> / ENTER_FREE / LEAVE_FREE / ROUND_END → IDLE</div>
 
 <p style="color:var(--muted);margin-top:3rem;font-size:.75rem;text-align:center">
-Generated 2026-06-25 · uk-slot-pattern-library · 15 patterns · AI-canonical-corp
+Updated 2026-07-27 · uk-slot-pattern-library · 25 patterns · AI-canonical-corp
 </p>
 
 <script>
@@ -166,13 +168,13 @@ const patterns = [
  state:"EnterRespin → RespinSpin loop → LeaveRespin",
  variants:["整列鎖定","單格鎖定","多類型 RespinType","+1 SPIN 非鎖定型（3LP）"],
  edges:["全盤鎖定需立即結束","FG 內觸發需正確巢狀回 FG","Respin 期間 UI 禁用"]},
-{id:8,name:"NearMiss 聽牌",freq:"high",refs:["eye_strike","template","3LP"],
+{id:8,name:"NearMiss 聽牌",freq:"high",refs:["eye_strike","uk_slot_template","3LP"],
  desc:"Server 判定接近大獎，client 在停輪做減速/震動演出增強緊張感",
  identify:["「聽牌」「NearWin」","「接近大獎但未中」","「特殊減速/震動」"],
  state:"不需獨立 State — SpinState 停輪內嵌處理",
  variants:["COLLECT 聽牌（第5輪）","CASH 聽牌（第1~4輪）","大獎預告 BigWin Announcement（3LP）"],
  edges:["turbo/skip 時需縮短演出","NearMiss + 實際中獎重疊","大獎預告+NearMiss 同手串接"]},
-{id:9,name:"FakeReelManager",freq:"high",refs:["eye_strike","722","746","3LP"],
+{id:9,name:"FakeReelManager",freq:"high",refs:["eye_strike","722 robinhood","746 far_west","3LP"],
  desc:"管理假轉輪帶，依 BetMode 切換不同帶組（Normal/ExtraBet/BuyBonus）",
  identify:["「投注模式切換轉輪帶」","「FakeReel」","「BetMode」"],
  state:"不需獨立 State — 在 SpinState 前由 Manager 切帶",
@@ -184,7 +186,7 @@ const patterns = [
  state:"不需獨立 State — ExtraBetComponent + UI 跳窗",
  variants:["單倍率單步驟","多倍率兩步驟跳窗"],
  edges:["與 BuyBonus 互斥","Unshow/Replay 還原","FakeReel 帶切換同步"]},
-{id:11,name:"Buy Bonus",freq:"high",refs:["框架 CommonBuyBonus","tct","722","3LP"],
+{id:11,name:"Buy Bonus",freq:"high",refs:["框架 CommonBuyBonus","tct","722 robinhood","3LP"],
  desc:"玩家付費直接跳過 BaseGame 進入 FreeGame",
  identify:["「購買 Bonus」「Buy Feature」","「付費直接進入 FG」"],
  state:"不需獨立 State — IDLE 彈面板 → WaitRes → EnterFree",
@@ -202,13 +204,73 @@ const patterns = [
  state:"不需獨立 State — PlateShowState 內嵌揭示動畫",
  variants:["轉為 CASH/JP（eye_strike）","轉為一般符號","server-only 自動轉換（無動畫）"],
  edges:["揭示在對獎前完成","RecoverSpinAck 需用轉換後結果","與 Collect 互動順序"]},
-{id:14,name:"COLLECT 神秘事件",freq:"mid",refs:["3LP"],badge:"new",
+{id:14,name:"COLLECT 神秘事件",freq:"mid",refs:["3LP"],
  desc:"停輪後第5輪逐格重轉，追加更多 COLLECT 符號",
  identify:["「停輪後觸發神秘事件」","「第5輪一格一格重轉」","「轉出更多 COLLECT」"],
  state:"CollectMysteryState（獨立 State）",
  variants:["MG 門檻較高","FG 門檻較低","與 BombEvent(停輪後)互斥"],
  edges:["已有 COLLECT 格跳過不轉","新增 COLLECT 需被後續 CollectFeature 識別","turbo 需加速版","與 BombEvent 時序互斥"]},
-{id:15,name:"Template 骨架",freq:"base",refs:["uk_slot_template"],
+{id:15,name:"Feature Wheel（功能轉輪）",freq:"spec",refs:["Eye Strike2"],
+ desc:"WHEEL 符號觸發隨機停輪，停在哪個功能就跑哪條後續流程鏈（非玩家選擇）",
+ identify:["「WHEEL 符號」觸發功能轉輪","轉輪上有多種不同功能（轉換/乘倍/升級/FG）","「根據 WHEEL 數量決定轉幾次」","MG/FG 版本功能項不同"],
+ state:"FeatureWheelState（獨立 State）→ 依結果派發到各功能 State",
+ variants:["需要 COLLECT 才觸發（MG）vs 直接觸發（FG）","功能項固定 vs FG 可解鎖（換成 GRAND JP）","轉輪分區固定 vs server 控權重","單輪盤 vs 多圈輪盤"],
+ edges:["多 WHEEL：各轉一次→結果合併→按固定排序執行","轉出 FG 功能時其他功能先做完才進 FG","FG 轉到 GRAND 不走 Collect，直接彈報獎","同格被轉換+乘倍同時標記：先轉換再乘倍","MG 有 WHEEL 但無 COLLECT → 不觸發"]},
+{id:16,name:"Symbol Transform（符號轉換）",freq:"spec",refs:["Eye Strike2"],
+ desc:"標記格子 → 盤面所有相同符號轉成 CASH（或 CASH 升級成 Mystery），通常帶一次重轉",
+ identify:["「符號轉換」「Transmute」「一般符號→CASH」","「標記格子，盤面上所有相同符號被轉換」","「CASH→Mystery 升級」"],
+ state:"SymbolTransformState（獨立）或嵌入 FeatureShowState 的 switch",
+ variants:["全盤同符號轉換 vs 僅標記格轉換","轉換後重轉 vs 不重轉","單向（Normal→CASH）vs 雙向（CASH→Mystery）","FG 中標記跨 spin 保留"],
+ edges:["標記格上是特殊符號 → 不轉換不擴散","CASH 升級的作用時機在重轉之後","複合排序：符號轉換排在乘倍之前","同格多重標記以排序靠前者先作用","目的與 wild-transform 不同：這是產 CASH 給 Collect 收，不是替代對獎"]},
+{id:17,name:"Persistent Grid Effect（格子效果持續）",freq:"spec",refs:["Eye Strike2"],
+ desc:"多種格子效果（轉換/乘倍/升級）共用一套跨 spin 持續系統，累積到 FG 結束才清",
+ identify:["「效果保留直到 FG 結束」","「已被標記的格子下一手自動作用」","格子右下角有常駐視覺標記（圖示區分類型）"],
+ state:"不需獨立 State，但要有明確作用時機（ApplyPersistentEffects）",
+ variants:["乘倍累加（×2+×3=×5）","單一效果 vs 多效果共存於同格","有 COLLECT 才作用 vs 每 spin 作用","轉換覆蓋、乘倍疊加","高倍格子換色框"],
+ edges:["無 COLLECT 時效果保留但不觸發","疊加上限需確認規格（如 ×99）","最後一 spin 效果先作用→結算→才清除","Super FG 與一般 FG 共用同一套系統","重轉出的新 CASH 落在標記格 → 立即適用不等下一 spin"]},
+{id:18,name:"VS Feature（對決乘倍）",freq:"spec",refs:["Clash of Olympus"],
+ desc:"單顆符號帶兩端候選倍率，靠對決演出隨機選出勝方，再把勝出倍率施加到該輪或全盤",
+ identify:["「VS」「對決」「兩端不同倍數」","「對決動畫隨機決定勝出倍數」","「收分時 CASH 金額乘上勝出倍數」","「VS 符號擴展至該輪滿盤」後才作用"],
+ state:"VSFeatureState（獨立），作用時機在對線獎之後、Collect Feature 之前",
+ variants:["VS Cash（只乘該輪）","VS Collect（乘全盤 Cash/JP）","一般 VS（同輪加成）","兩端對應主題角色，勝方換不同美術","結果 server 預決定，client 只播動畫"],
+ edges:["觸發條件嚴格：同輪同時有 VS + Collect/Cash/JP 才演","多 VS 順序：Cash VS(左→右自第2輪) → Collect VS(左→右自第1輪) → 乘全盤 → 才收分","每輪最多 1 個 VS","JP 先轉分數 → 套 VS 倍率 → 再被收走","重連直接顯示勝出結果，不重播對決","勝方為 server 資料，不可本地重抽"]},
+{id:19,name:"MAX WIN（最大獎上限）",freq:"mid",refs:["Clash of Olympus","LGS"],
+ desc:"橫切機制：累計贏分達上限時封頂、跳提示、強制結束 FG。client 只讀旗標不算數值",
+ identify:["「MAX WIN」「最大獎」「贏分上限」「封頂」","「達上限強制結束免費遊戲」","「報獎分數只給剩餘差值」"],
+ state:"不需獨立 State（LGS 用極薄的 CheckMaxFlagState 只做跳提示 + 分支）",
+ variants:["達標封頂給差值 vs 全額給付但仍強制結束","僅 FG 適用 vs MG+FG 都算","提示後強制結束 vs 僅提示"],
+ edges:["差值必須在本手所有贏分加總後才算，不可逐項提前封頂","跨來源贏分（線獎/Collect/聚寶盆）都計入","server 為判定權威，client 不可本地 compare","狀態轉移必須寫在 msgbox callback 內","MG/FG 的下一站不同，兩條分支都要改","封頂當手要抑制「還有 N 手」類演出","重連不重播提示面板"]},
+{id:20,name:"Progression Unlock（進度解鎖/地圖）",freq:"spec",refs:["Wrath of Thunder v2"],
+ desc:"長線 meta 機制：持久計數器跨過階段門檻 → 依序啟用後續玩法，達頂改變遊戲型態",
+ identify:["「累積 N 個 {符號} 解鎖 {玩法}」「依序解鎖」","「地圖 / 進度條 / 解鎖樹」推進","玩法不是一開始全開，隨長線累積逐步啟用"],
+ state:"不需獨立 State，是橫切狀態層；每手結算後檢查門檻並設 feature flag",
+ variants:["MG 解鎖玩法 vs Super 模式解鎖強化","線性門檻 vs 分支樹","解鎖即永久 vs session 內重置","達頂改變型態（一般 FG 升級為 Super FG）","計數來源：Collect 數 / Scatter 數 / 特定符號"],
+ edges:["計數器必須 server 權威 + 重連還原，client 不可本地累加","同一手可能一次跨多個門檻，需依序播不可吞","解鎖與觸發要解耦：解鎖只是啟用可觸發","MG 與 FG 是否共用進度需確認（Wrath 為獨立兩套）","解鎖附帶的 +局數/擴張要在下一手前生效"]},
+{id:21,name:"Global Multiplier（全局/Wild 乘倍）",freq:"spec",refs:["Wrath of Thunder v2"],
+ desc:"倍率作用對象是整手/整局贏分而非單一格子；分累積型（Bonus Multiplier）與符號型（Wild 自帶倍率）兩子型",
+ identify:["「該局所有贏分乘上累積倍數」","「FG 結束倍數歸 1」","「Wild 自帶 x2/x3/x5，連線時該手贏分乘上 Wild 倍率」"],
+ state:"不需獨立 State，嵌在 AwardState 計分階段",
+ variants:["累積型（跨 spin 累加、結束歸 1）","符號型（Wild 僅參與連線時乘）","兩型共存（作用順序需定義）","多 Wild 相乘 vs 相加","只增不減 vs 中途可重置"],
+ edges:["乘的是整手/整局贏分，不是逐格（別誤用 multiplier-grid 邏輯）","順序：Wild 乘倍（手內）→ 全局 Bonus Multiplier（局係數）","FG 結束務必 reset 否則污染下次","Collect/JP 轉分後的金額才套全局倍率","套完所有倍率的最終金額才比對 MAX WIN","帶倍 Wild 沒形成連線則不作用"]},
+{id:22,name:"Hold &amp; Win（鎖定收集器 + 局數重置）",freq:"mid",refs:["LGS"],badge:"new",
+ desc:"收集器鎖在中央輪，CASH 每手被吸走累加；有新符號落下就把剩餘手數重置回 3",
+ identify:["「進入 N 局，每次有新符號落下重置回 N」","「收集符號固定不動」","「結束時收集器累計金額一次結算」","Link &amp; Win / Hold &amp; Spin / Cash Collect FG"],
+ state:"不新增 State，靠 RoundQueue 陣列 + IsInFG 驅動每一手",
+ variants:["鎖收集器（LGS）vs 鎖 CASH（傳統 Hold&amp;Spin）","收集器在中央輪 / 頭尾輪","重置手數 N = 3 或 5"],
+ edges:["鎖定要設 SlotReels + EffectPlate 兩層","離開 FG 要 SetSymbolLock(null) 解鎖","觸發手的收集延後到 ENTER_FREE","remain==3 不等於「這手有新符號」","MaxFlag 同手不播重置動畫"]},
+{id:23,name:"蓄能容器（Pot/等級）+ 滿級投放",freq:"mid",refs:["LGS"],badge:"new",
+ desc:"CASH 飛進容器累積等級（client 端 5% 隨機、存 localStorage）；server 給 PotSymbols 時強制升滿並把符號丟回盤面",
+ identify:["「現金符號被角色/容器吸走」","「等級滿時把符號丟回盤面」","「等級保留到下次遊玩」","「等級不影響中獎結果」"],
+ state:"新增 POT_THROW，插在 SPIN 與收集判定之間",
+ variants:["本地隨機升級 + server 投放（LGS）","server 給 meter 值","等級決定投放數量（此時屬 progression-unlock）","投放內容可含 COLLECT/BONUS"],
+ edges:["Pos 是扁平索引且可能缺欄，要 ?? 0","假升級也要等收集動畫","投放後必須 UpdatePlate","Demo/Replay 要存還原等級","IsLockRotation 兩條分支都要釋放"]},
+{id:24,name:"Unshow 斷線復原",freq:"base",refs:["LGS","框架 commonGameManager"],badge:"new",
+ desc:"橫切機制：框架給管線，每個遊戲自己寫還原內容。MG 整手重播 / FG 重建中斷點畫面，兩條路徑完全不同",
+ identify:["「演出未播完就離線，下次回到中斷點」","「重連跳提示，按確定接續」","「獎金遊戲中斷線需還原盤面/鎖定/累計金額/剩餘手數」"],
+ state:"UNSHOW_PREPARE → msgbox → SPIN（FG 路徑清 HasUnshow，MG 路徑留給 StartSpin 補播）",
+ variants:["MG 整手重播","FG 續播（重建上一手畫面）","只還原 UI 狀態（純線獎機台）","Replay 復盤共用還原清單"],
+ edges:["Round 要指向前一手（unshowStartRound-1）","ForceSetExtraBet 必須在盤面重建前","還原一律用 PlateSymbolLog 不是 PlateSymbol","COLLECT_EX 累計值要對半拆","兩個 HasUnshow 旗標都要清","新增 Feature 時最容易忘記補還原"]},
+{id:25,name:"Template 骨架",freq:"base",refs:["uk_slot_template"],
  desc:"基礎 State Machine + API Surface，所有衍生遊戲以此為起點",
  identify:["新專案建立時","需要確認框架提供哪些 State"],
  state:"18 States（4 Framework + 14 GAMEVIEW_STATE）",
@@ -218,8 +280,13 @@ const patterns = [
 
 const grid = document.querySelector('.grid');
 patterns.forEach(p => {
-  const freqClass = p.freq==='high'?'badge-high':p.freq==='mid'?'badge-mid':'badge-base';
-  const freqLabel = p.freq==='high'?'高頻':p.freq==='mid'?'中頻':'基礎';
+  const FREQ = {
+    high: ['badge-high','高頻'],
+    mid:  ['badge-mid','中頻'],
+    spec: ['badge-spec','⚠️ 規格推導'],
+    base: ['badge-base','基礎'],
+  };
+  const [freqClass, freqLabel] = FREQ[p.freq] || FREQ.base;
   const newBadge = p.badge==='new'?'<span class="badge badge-new">NEW</span>':'';
   const card = document.createElement('div');
   card.className = 'card';

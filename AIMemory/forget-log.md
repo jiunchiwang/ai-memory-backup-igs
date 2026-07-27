@@ -183,3 +183,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_a18e55] [2026-07-22T20:16:48.619Z] 因為 dream.ts 的 stepResults 只認 session.buffer 差異或結構化回傳值來判斷 summary，而 handleDailyLog 在「今日無 session 記錄」分支原本直接用 ctx.reply() 回覆（不寫入 buffer），導致該步驟被誤記成 (no output) 並被後續蒸餾誤判為 High Priority 失敗，所以把該分支改為回傳結構化 DreamStepResult（排除同時修改 session.get 失敗分支，因為本次未觸發、屬範圍外）
 - [2026-07-25T02:19:00.225Z] user=509424983 query="topics.json 從 21 個增至 22 個" deleted=1 token=forget-e1d3cfe9-1
     - [f_ae3a52] [2026-07-22T21:49:00.863Z] telegram-kiro-bridge 於 2026-07-22 新增 bridge-dream topic（從 bridge-project 拆出）：涵蓋 /dream 排程框架本身（dream.json 執行機制、claude-mem-curate 接入沿革），topics.json 從 21 個增至 22 個
+- [2026-07-27T05:59:02.679Z] user=509424983 query="Not logged in" deleted=0 token=forget-32df4c3b-1
+

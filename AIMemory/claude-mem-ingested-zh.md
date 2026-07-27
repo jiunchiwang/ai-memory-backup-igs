@@ -300,3 +300,18 @@
 丟棄 1 條：
 
 - (telegram-kiro-bridge) Claude Max 5x 模型分配政策建立 → 去重丟棄，AIMemory 已有等價 fact（model-allocation-max5x 策略條目）
+
+## 2026-07-27（AUTO）
+
+來源 shortlist：3 筆候選（產生於 2026-07-26T20:30Z，皆 telegram-kiro-bridge）
+
+寫入 2 條（shard: telegram-kiro-bridge）：
+
+- 背景通知 flakiness 於 2026-07-26 經量測推翻 race condition 假設：sleep 縮到 2s、turn 長 31.9s 時通知仍固定在 turn 結束後 +3.0s 才到、未併入該 turn——可重用判準「調延遲後時間差不變就不是競態」，修復方向改從通知投遞路徑下手。
+- 2026-07-26 派 Fable 5 subagent 對 commit afb9d8e 做對抗性覆核（37 次工具呼叫、587 秒），抓出「接受 protobufjs 依賴」原始論證的關鍵推理缺陷——印證異源模型對抗覆核可打破同源自審天花板，值得對高風險第三方依賴決策常態化。
+
+丟棄 1 條：
+
+- 「為 self-evaluation 修正建立 feature branch（fix/self-eval-streaming-leak-and-threshold）」→ 一次性流程紀錄，無跨 session 重用價值。
+
+備註：本輪兩條均先以 `list_facts` 查詢（對抗審查／protobufjs／Fable／通知／flaky／競態）確認無既有等價 fact，才寫入；未呼叫 forget。

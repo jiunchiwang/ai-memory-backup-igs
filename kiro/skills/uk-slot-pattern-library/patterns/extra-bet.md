@@ -92,6 +92,18 @@ enum FakeReelBetMode {
 | A. 單倍率單步驟 | Mul[1] 一種 | false | 無 | eye_strike |
 | B. 多倍率兩步驟 | Mul[1..n] 多種 | true | ExtraBetWindow 選卡 | 多倍率機台 |
 | 無動畫簡化版 | 任意 | 任意 | 任意 | 小型專案（跳過 EffectManager） |
+| C. EX 專屬符號（`_EX` skin + 獨立 symbol id） | Mul[1] 一種 | false | 無 | LGS |
+
+### 變體 C：EX 影響玩法本體（LGS）
+
+LGS 的 ExtraBet 不只換倍率，還換掉**符號本身**：
+
+- 符號 enum 有 `COLLECT` 與 `COLLECT_EX` 兩個獨立 id；spine skin 加 `_EX` 後綴（`CashSymbolSpine.SetSymbol(symbol, extra)`）
+- `SwitchReel(extra)` 切換整組 spriteFrame 清單（`m_symbolExSpriteFrames`）＋ 換位置偏移表（`EX_REEL_POSITION_OFFSET`）
+- **一顆 `COLLECT_EX` = 兩個收集槽**：`CollectSymbolSpine.GetCollectWorldPosition()` 在有兩個 value label 時回傳 `[left, right]`（±44px），同一顆 CASH 要飛兩趟分別 `AddValue(num, 0/1)`
+- 所有讀盤面判「是不是收集符號」的地方都必須寫成 `symbol == COLLECT || symbol == COLLECT_EX`——LGS 的 `SetSymbolLock` / `SetCollectIdle` / `CollectJP` / `UnshowRecover` 全都成對判斷
+
+> ⚠️ 這種變體下，ExtraBet 不是「純參數」而是**玩法分支**。每新增一處讀收集符號的邏輯，就多一個漏判 `_EX` 的機會。
 
 ## 邊界案例
 
@@ -101,6 +113,10 @@ enum FakeReelBetMode {
 4. **與 BuyBonus 互斥**：啟用 BuyBonus 時須關閉 ExtraBet、禁用按鈕；反之亦然。`CheckCanUseBtn()` 已排除 `IsBuyBonus`
 5. **ShowExtra=false 時的 gating**：server 可能不提供 ExtraBet，GameView 各入口方法（ShowExtraBet / RestoreExtraBetState / FirstShowBar）需 early return
 6. **FG 期間 ExtraBet 狀態保留**：進 FreeGame 隱藏 UI 但不清除 `m_isExtra`；離開 FG 後 UI 恢復時需正確反映當前狀態（開或關）
+7. **`SwitchReel` 與 `ClearAllEffect` 的順序（變體 C）**：LGS 註記「`SlotReels.SwitchReel` 要在 `EffectPlate.ClearAllEffect()` 之後執行，不然 label 會被開啟」——清場與換盤的先後有實際 side effect
+8. **EX 累計值的 unshow 還原要對半拆（變體 C）**：`Collected[row]` 是兩槽總和，還原時 `÷2` 分別灌進 index 0/1（見 unshow-recover.md）
+9. **`ForceSetExtraBet` 不播動畫**：unshow / replay 路徑用 force 版（`isForce=true`）直接 `SwitchReel`，跳過宣告動畫；正常玩家操作才 `await ExDeclare.Play()`
+10. **Replay 一律關 ExtraBet**：LGS 的 `GameRecover()` 無條件 `ForceSetExtraBet(false)`——復盤有自己的 `Define.REPLAY_EXTRA` 旗標在 `WaitResState` 決定，別讓上一手的狀態殘留
 
 ## 常見錯誤
 
@@ -109,3 +125,4 @@ enum FakeReelBetMode {
 3. **❌ triggerCb 結束前就發 Spin**：callback 是 async，動畫播完前玩家按 Spin = 用舊盤面計算 → 押注金額與視覺不一致
 4. **❌ ShowExtra=false 時沒 early return**：server 不提供 ExtraBet 的場景（ShowExtra=false），各入口函式沒 guard → null reference crash
 5. **❌ ExtraBet + BuyBonus 沒互斥**：兩者同時啟用會導致 FeatureBetValue 與 ExtraBet Mul 衝突 → 發送非法 bet 值
+6. **❌ 判特殊符號時漏掉 `_EX` 變體（變體 C）**：`symbol == COLLECT` 少寫 `|| symbol == COLLECT_EX` → ExtraBet 開啟時該符號完全不被辨識（不鎖定、不收分、不還原）。這是變體 C 最高頻的 bug，且**只在 ExtraBet ON 時才會重現**

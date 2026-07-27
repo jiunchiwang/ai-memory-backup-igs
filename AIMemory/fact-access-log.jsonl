@@ -174,3 +174,19 @@
 {"ts":"2026-07-26T20:04:42.994Z","q":"model-allocation-max5x","hits":1}
 {"ts":"2026-07-26T20:07:58.026Z","q":"bridge-project","hits":53}
 {"ts":"2026-07-26T20:08:00.368Z","q":"bridge-acp","hits":26}
+{"ts":"2026-07-26T20:31:02.006Z","q":"telegram-kiro-bridge","hits":95}
+{"ts":"2026-07-26T20:31:10.420Z","q":"Fable","hits":11}
+{"ts":"2026-07-26T20:31:12.055Z","q":"通知","hits":3}
+{"ts":"2026-07-26T20:31:21.053Z","q":"競態","hits":1}
+{"ts":"2026-07-27T20:04:27.088Z","q":"race condition","hits":2}
+{"ts":"2026-07-27T20:04:28.325Z","q":"protobufjs","hits":1}
+{"ts":"2026-07-27T20:07:25.472Z","q":"bridge-acp","hits":28}
+{"ts":"2026-07-27T20:07:26.738Z","q":"bridge-research","hits":10}
+{"ts":"2026-07-27T20:12:27.416Z","q":"bridge-upstream-sync","hits":12}
+{"ts":"2026-07-27T20:12:29.210Z","q":"uk-slot-codegen","hits":12}
+{"ts":"2026-07-27T20:12:31.788Z","q":"bridge-streaming","hits":11}
+{"ts":"2026-07-27T20:12:34.666Z","q":"uk-slot-clash-olympus","hits":6}
+{"ts":"2026-07-27T20:12:36.506Z","q":"uk-slot-eye-strike","hits":6}
+{"ts":"2026-07-27T20:12:37.687Z","q":"uk-slot-pirates-queen","hits":4}
+{"ts":"2026-07-27T20:12:38.936Z","q":"misc","hits":1}
+{"ts":"2026-07-27T20:12:40.232Z","q":"bridge-project","hits":55}

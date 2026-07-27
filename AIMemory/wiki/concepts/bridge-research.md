@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-22
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2]
+updated: 2026-07-27
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2, f_1da3ad, f_4e5ad0]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -245,3 +245,11 @@ P2 候選：週度反思迴圈（與 Conversation Summarizer 共享「掃 sessio
 - 成熟度：20 星、pre-alpha（核心功能 beta 穩定）、v0.10.0（2026-07）、2846 commits 活躍維護、11 open issues
 - **借鏡候選（未決）**：agent-to-agent inbox/task 協定（若未來要讓 specialist 互相委派而非只有主 agent 單向派工）、per-task git worktree 隔離（強化 PARALLEL_DELEGATE 的檔案衝突防護）
 - **決策**：暫不採用，列 watchlist——專案規模尚小（20 星、剛出 v0.10.0），先觀察成熟度
+
+### spine-animation-ai（GenielabsOpenSource/spine-animation-ai，2026-07-27）
+
+- AI-powered Spine 2D 骨骼動畫自動化工具（Claude skill）：從分離部位 PNG 自動定位（SIFT+RANSAC）、建 bone hierarchy、產動畫預設（idle/walk/run/attack）、輸出 skeleton.json + atlas + HTML5 預覽；另有 Gemini 角色拆分與 Reskin Studio 風格重繪功能；PolyForm NC 授權（非商用免費，公司專案商用不可直接沿用程式碼）
+- **「自包含 Skill」打包機制**（最大借鏡點）：`SKILL.template.md` 放 prose + `<!-- EMBED:scripts/xxx.py -->` 佔位符 → `build_skill.py` 正則找佔位符、把腳本內容包成 `<details>` 折疊塊注入 → 輸出完整自包含 `SKILL.md`（使用者貼進 Claude Projects 即可用，Claude 自己寫 scripts 到磁碟再執行）；GitHub Actions 自動 rebuild 確保 template 與 SKILL.md 同步
+- **適用場景**：單一用途、需要腳本、不常更新的 skill；**不適用**：頻繁更新的腳本（每次改都要 rebuild）、多 skill 共用腳本（內嵌會重複）
+- **與 [[ai-strategy]] 的關聯**：AI-canonical 的可攜式 skill 機制走 `${MEMORY_DIR}` 等環境變數注入，此模式走完全自包含腳本內嵌，兩者定位不同、可視情況擇一
+- **決策**：僅列為可借鏡的參考模式，未排入實作 roadmap（若未來要 pilot，`excel-to-ai-doc` 是候選對象）

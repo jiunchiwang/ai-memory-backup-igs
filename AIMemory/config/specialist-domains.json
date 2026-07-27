@@ -223,7 +223,8 @@
         "handledailylog",
         "command_handlers",
         "loop state",
-        "dream high priority"
+        "dream high priority",
+        "spine-animation"
       ],
       "wikiPages": [
         "bridge-project",

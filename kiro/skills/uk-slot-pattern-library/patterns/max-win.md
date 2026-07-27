@@ -15,10 +15,34 @@
 | 專案 | 機制 | 特殊點 |
 |------|------|--------|
 | Clash of Olympus（規格） | MAX WIN | 達上限跳提示、強制結束 FG、報獎只給差值 |
+| leprechaunsGoldStreak（LGS，**實碼**） | MaxFlag | server 每手給 `MaxFlag` 旗標；client 只負責跳提示 + 分支，完全不算數值 |
 
 ### 核心檔案（規劃中）
 - `Manager/MaxWinManager.ts` 或併入結算流程 — 每手結算前檢查累計贏分 + 本手贏分是否超上限
 - `GameState/RoundEndState.ts` / `AwardState.ts` → 達標時切入 MAX WIN 提示 + 強制結束分支
+
+### 核心檔案（LGS 實作）
+- `GameState/CheckMaxFlagState.ts` — **獨立一個極薄的 State**，只做「有旗標就跳 msgbox、沒有就直接轉」
+- `GameState/CheckState.ts` — `Round >= len-1 || maxFlag` → LEAVE_FREE（強制結束 FG）
+- `GameState/CheckCollectState.ts` — `remain == 3 && !maxFlag` 才播計數器重置（封頂當手不誤導玩家）
+
+**LGS 的 client 端做法（最小實作，值得抄）**：
+
+```typescript
+let maxFlag = SpinAck.RoundQueue[ Round ].MaxFlag;
+if ( maxFlag ) {
+    msgBoxManager.ShowMessageBox( MSGBOX_MAX_REWARD, MSGBOX_TITLE_SYSTEM_INFO, () => {
+        // 一定要在 msgbox 的 callback 裡才轉狀態
+        stateManager.NextState( IsInFG ? ROUND_SHOW_END : AWARD );
+    } );
+} else {
+    stateManager.NextState( IsInFG ? ROUND_SHOW_END : AWARD );
+}
+```
+
+client 端不做任何數值計算（`CheckMaxFlagState` 只讀旗標跳提示）——這部分有實碼佐證。
+
+> ⚠️ **「client 拿到的 `RoundWin` / `CollectWin` 已是封頂後的值」是推論，非實證**：LGS 的 `FeatureAck.ts` 假資料全程沒有 `MaxFlag` 為真的樣本，client 端也沒有任何能證明數值已封頂的程式碼。實作前請向 server 端確認。
 
 ## State 映射
 
@@ -79,6 +103,9 @@ interface MaxWinData {
 5. **與乘倍/VS 交互**：乘倍、VS 勝出倍率作用後的最終金額才拿去比對上限
 6. **斷線重連**：若上一手已觸發 MAX WIN 結束，重連需直接呈現結算後狀態，不重播提示
 7. **MG 單手達標**：若 MG 單手贏分即超上限（罕見），同樣走封頂 + 提示流程
+8. **狀態轉移必須在 msgbox callback 內**：`ShowMessageBox` 不 block，把 `NextState()` 寫在 if 外面 = 提示還沒關就往下跑，玩家看到面板背後的畫面已經在動
+9. **MG / FG 的下一站不同**：LGS 為 MG→`AWARD`（還要報獎）、FG→`ROUND_SHOW_END`（收集器統一在 LEAVE_FREE 結算）。兩條分支在「有旗標」與「無旗標」路徑都要寫，容易只改一邊
+10. **封頂旗標會壓抑其他演出**：LGS 用 `!maxFlag` 抑制「FG 局數重置回 3」的動畫。任何「告訴玩家還有後續」的演出，在封頂當手都要重新檢查是否該播
 
 ## 常見錯誤
 
@@ -87,3 +114,5 @@ interface MaxWinData {
 3. **❌ 達標後沒強制結束 FG**：規格明示達上限無視剩餘手數直接結算；忘了 = FG 繼續跑但贏分不再增加（UI 混亂）
 4. **❌ 不含 Collect 贏分就比對上限**：所有類型贏分（線獎 + Collect + 聚寶盆）都計入上限判斷；漏了 Collect = 可能超額給付
 5. **❌ 重連時重播 MAX WIN 提示面板**：若上手已觸發結束，重連後應直接呈現結算後狀態——重播面板 = 玩家誤以為又贏了一次
+6. **❌ `NextState()` 寫在 msgbox callback 外**：提示面板還開著，背後流程已經跑到下一手
+7. **❌ 封頂當手照播「還有 N 手」的演出**：計數器重置、剩餘手數提示等在 `maxFlag` 為真時都該抑制

@@ -15,6 +15,7 @@
 | uk_slot_eye_strike | 高 | Collect 收 Cash/JP，搭配 MagicPot 能量等級(0~3) 與 Multiplier（**無** Basic/Boost/Multi/Chain 分級——已對程式碼覆驗，eye_strike 不存在此 4 型，勿誤植） |
 | uk_739_wrath_of_thunder | 高 | 4 種 Collect（Basic/Boost/Multi/Chain），分裂 CASH（2顆/3顆）——**4 型升級唯一來源** |
 | tripleCoinTreasure | 中 | FG 單格 Respin 收集 |
+| leprechaunsGoldStreak（LGS） | 高 | 收集器在**中央輪 col 2**、逐 row 各自累加（`Collected[row]`）、EX 版一顆兩槽、FG 鎖定累積到末局結算（見 hold-and-win-lock.md） |
 
 ### 核心檔案（eye_strike）
 - `GameView.ts` → OnRecvSpinAck 解析 CollectResult
@@ -77,6 +78,10 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 | Burst（注入保證收分） | 第1+6輪皆 Collect 但中間 2-5 輪無 Cash 時，跳宣告→隨機注入數顆 Cash 到 2-5 輪→觸發 Collect 收分（保證該手有收分）；MG/FG 皆可 | Wrath of Thunder v2 |
 | 單輪收集器 → 特殊 Collect | Super FG 中未收 Cash 飛入該輪下方收集器，每集滿 3 顆變成「只收該輪」的特殊 Collect，下一手生效後重置 | Wrath of Thunder v2 |
 | 升級版解鎖門檻 | Boost/Multi/Chain 等型需累積 Collect 數依序解鎖（解鎖層見 progression-unlock.md） | wrath_of_thunder |
+| 中央輪收集器（逐 row 獨立） | COLLECT 固定在 col 2，**每個 row 是一個獨立收集器**，各自累加成 `Collected[row]`；全盤 CASH 對每個收集器各飛一次 | LGS |
+| EX 雙槽收集器 | ExtraBet 開啟時一顆 COLLECT_EX 有**兩個收集點**，同一顆 CASH 要飛兩趟（間隔 0.3s）分別加值 | LGS |
+| 累積型收集（不當手結算） | MG 當手收完即報獎；FG 則逐手累加進鎖定的收集器，**末局才用 `CollectWin` 一次結算** | LGS |
+| JP 兩段式收集 | JP 先播 `JPDeclare`（全屏遮罩 + 骨骼終點綁定盤面中心）→ 盤上 JP `PlayChange()` 換成數字 → 再飛進收集器 | LGS |
 
 ## 邊界案例
 
@@ -89,6 +94,10 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 7. **JP 文案還原時機**：所有 COLLECT 收完後 JP 符號才從分數文案還原回 JP 名稱（3LP 規格明確要求）
 8. **Burst 與一般 Collect 的觸發互斥/優先序**：Burst 是「兩端 Collect + 中間無 Cash」的特例分支，需先判 Burst 再走一般收分，別讓「無 Cash 不觸發」把 Burst 也擋掉（Wrath of Thunder v2）
 9. **升級型 Collect 的加成順序**：Boost（加 Cash/分數）→ Multi（乘倍）→ Chain（注入再收）各自有作用時機，且 Chain 符號可再被 Boost/Multi 加成；多型同手需定義固定順序（Wrath of Thunder v2）
+10. **收集終點座標不可預存**：`GetCollectWorldPosition()` 每次都要重取——直橫轉（rotation）會改變世界座標，預存的終點會讓飛行動畫歪掉（LGS 程式碼有明確註解）
+11. **「最後一顆才關閉盤面符號」**：CASH 要飛到**每一個**收集器（多收集器時飛多趟），只有 `isLast` 那一趟結束才把盤上的 CASH 關掉；提早關 = 後面的收集器沒東西可飛
+12. **收集起飛與角色/容器收集是兩回事**：LGS 停輪時 CASH 先飛進 Pot（`PotCollect`，MG 限定，見 pot-meter-throw.md），收集器的收分是**另一段**（`CollectCashSymbol`）。同一顆符號在不同階段有兩種飛行目標，別混為一談
+13. **壓黑分靜態/動態兩種**：收集器（精靈）用 spine 的動態壓黑 `SetDark()`，CASH 用「關演出層 node、開底層 sprite」的靜態壓黑。`hasCollectWin` 為 true 時 CASH 已被收走消失，**不能再開靜態**（LGS `SetSpecialSymbolDark` 的 guard）
 
 ## 常見錯誤
 
@@ -97,3 +106,7 @@ enum JPType { Mini, Minor, Major, Mega, Grand }
 3. **❌ 忽略 Multiplier 作用時機**：Bomb → Multiplier → Collect 是固定順序；在 Multiplier 之前就收分 = 少算倍率
 4. **❌ 複數 COLLECT 不排隊**：多個 COLLECT 必須逐一收完再換下一個（上→下）；並行會導致飛行目標錯誤 + 分數累加錯
 5. **❌ FG 結束後沒清 Collect 暫存**：Collect 是一次性觸發不需 reset，但如果把 collectPositions 存在 Manager 而非 State 局部 → 下次 FG 可能髒讀
+6. **❌ 預存收集器世界座標**：直橫轉後座標失效，飛行終點會歪到畫面外；每顆都要重新 `GetCollectWorldPosition()`
+7. **❌ 多收集器時只飛一趟**：N 個收集器就是 N 趟飛行、N 次 `AddValue()`；只飛一趟 = 其他收集器永遠是 0
+8. **❌ EX 雙槽把總額塞進單一槽**：`AddValue(num, index)` 的 `index` 對應槽位；unshow 還原時 `Collected[row]` 是兩槽總和，要 `÷2` 分別灌（見 unshow-recover.md）
+9. **❌ 用 `PlateSymbol` 跑收集流程**：收集要讀 `PlateSymbolLog`（投放/變身後的最終盤面），用停輪盤面會漏掉本手新加入的符號（見 unshow-recover.md 附錄）

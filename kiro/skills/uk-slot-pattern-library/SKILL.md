@@ -35,16 +35,16 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 
 | # | 模式 | 檔案 | 參考專案 | 頻率 | 驗證 |
 |---|------|------|---------|------|------|
-| 1 | Collect Feature | patterns/collect-feature.md | eye_strike, wrath_of_thunder, 3LP | 高 | ✅ |
+| 1 | Collect Feature | patterns/collect-feature.md | eye_strike, wrath_of_thunder, 3LP, LGS | 高 | ✅ |
 | 2 | Scatter 蒐集觸發 | patterns/scatter-collect.md | eye_strike (MagicPot), 3LP | 高 | ✅ |
 | 3 | 盤面擴展 (Expand) | patterns/expand-reel.md | wrath_of_thunder | 中 | ✅ |
 | 4 | Multiplier 格子 | patterns/multiplier-grid.md | eye_strike | 中 | ✅ |
 | 5 | Bomb 爆炸 | patterns/bomb-feature.md | chachacha, eye_strike | 中 | ✅ |
 | 6 | BonusGame Pick | patterns/bonus-game-pick.md | 722 robinhood, 746 far_west | 高 | ✅ |
 | 7 | Respin | patterns/respin.md | eye_strike, 746 far_west, 3LP | 高 | ✅ |
-| 8 | NearMiss 聽牌 | patterns/near-miss.md | eye_strike, 3LP | 高 | ✅ |
+| 8 | NearMiss 聽牌 | patterns/near-miss.md | eye_strike, 3LP, LGS | 高 | ✅ |
 | 9 | FakeReelManager | patterns/fake-reel-manager.md | eye_strike, 722, 746 | 高 | ✅ |
-| 10 | ExtraBet | patterns/extra-bet.md | eye_strike | 中 | ✅ |
+| 10 | ExtraBet | patterns/extra-bet.md | eye_strike, LGS | 中 | ✅ |
 | 11 | Buy Bonus | patterns/buy-bonus.md | 框架 CommonBuyBonus, 722, tct, 3LP | 高 | ✅ |
 | 12 | Wild 變身 | patterns/wild-transform.md | 722 robinhood, 746 far_west | 中 | ✅ |
 | 13 | Mystery 符號 | patterns/mystery-symbol.md | eye_strike, 746 far_west, wrath_of_thunder | 高 | ✅ |
@@ -53,12 +53,25 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 | 16 | Symbol Transform | patterns/symbol-transform.md | Eye Strike2 | 低 | ⚠️ |
 | 17 | Persistent Grid Effect | patterns/persistent-grid-effect.md | Eye Strike2 | 低 | ⚠️ |
 | 18 | VS Feature（對決乘倍） | patterns/vs-feature.md | Clash of Olympus | 低 | ⚠️ |
-| 19 | MAX WIN（最大獎上限） | patterns/max-win.md | Clash of Olympus | 低 | ⚠️ |
+| 19 | MAX WIN（最大獎上限） | patterns/max-win.md | Clash of Olympus（規格）, LGS（實碼） | 中 | ✅ |
 | 20 | Progression Unlock（進度解鎖/地圖） | patterns/progression-unlock.md | Wrath of Thunder v2 | 低 | ⚠️ |
 | 21 | Global Multiplier（全局/Wild 乘倍） | patterns/global-multiplier.md | Wrath of Thunder v2 | 低 | ⚠️ |
-| 22 | Template 骨架 | template/state-machine.md | uk_slot_template | 基礎 | ✅ |
+| 22 | Hold & Win（鎖定收集器 + 局數重置） | patterns/hold-and-win-lock.md | LGS | 中 | ✅ |
+| 23 | 蓄能容器（Pot/等級）+ 滿級投放 | patterns/pot-meter-throw.md | LGS | 中 | ✅ |
+| 24 | Unshow 斷線復原 | patterns/unshow-recover.md | LGS, 框架 commonGameManager | 基礎 | ✅ |
+| 25 | Template 骨架 | template/state-machine.md | uk_slot_template | 基礎 | ✅ |
 
 > **驗證欄說明**：✅ = 有實際專案程式碼佐證；⚠️ = 僅從規格書推導，尚未經過實作驗證
+> **LGS** = `leprechaunsGoldStreak-client`（Cocos 專案，Cash Collect + Hold&Win 型）
+> **#19 MAX WIN 的驗證分層**：client 端旗標流程有 LGS 實碼佐證；「報獎差值封頂」仍只有 Clash of Olympus 規格來源
+
+### 橫切機制（不是單一 Feature，設計任何 Feature 時都要一併考慮）
+
+| 機制 | 位置 | 為什麼容易漏 |
+|------|------|------------|
+| MAX WIN 封頂 | patterns/max-win.md | 每種贏分來源都要計入上限 |
+| Unshow 斷線復原 | patterns/unshow-recover.md | 只有拔網線才會發現；新 Feature 幾乎必忘 |
+| 盤面雙軌 `PlateSymbol` vs `PlateSymbolLog` | patterns/unshow-recover.md 附錄 | 用錯不會報錯，只會少收/少算 |
 
 ## 模式卡片格式規範
 

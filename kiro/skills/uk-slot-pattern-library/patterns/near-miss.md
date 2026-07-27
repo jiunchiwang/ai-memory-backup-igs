@@ -70,6 +70,39 @@ enum NearMissSeverity {
 | 漸進式 | 多列連續聽牌 | 每列加強震動幅度 | — |
 | 靜默式 | 僅音效變化 | 無視覺震動，純聽覺暗示 | — |
 | 大獎預告（BigWin Announcement） | 旋轉中觸發 | 非停輪差一格，而是「預告即將大獎」的全屏動畫 | 3LP F09 |
+| 預告 + 先揭曉關鍵符號（Omen） | 收 ack 當下 | 全屏預告動畫 → **收集符號先落定** → 其餘輪走長 NearWin | LGS |
+| 堆疊連線假轉（LineOmen） | 停輪過程 | 非大獎預告，是「讓某符號在旋轉中看起來一直堆疊」的機率性假轉 | LGS |
+
+### 預告子變體：Omen（LGS）
+
+與 3LP 的 BigWin Announcement 同族，但**先揭曉一部分結果再拉長剩下的期待**：
+
+| Step | 動作 |
+|------|------|
+| 1 | `OnRecvSpinAck` 收到完整結果，判定是否 Omen |
+| 2 | `await OmenSpine.Play()` 全屏預告動畫 + `Omen_Start` 音效 |
+| 3 | 中央輪的 COLLECT 逐 row **直接播停輪特效落定**（`ReelStopEffect` + `Collect_Stop`） |
+| 4 | `SetPlateInfo(plate, plateNum, isOmen=true)`：其餘 1/2/4/5 輪切成 NearWin 模式（3 秒慢停、多轉 5 圈、換 `NEARWIN_SPIN_ORDER` 停輪順序） |
+| 5 | 假轉符號權重也跟著換（`GetRandomSymbol(col, isNearWin, isOmen)` 提高特殊符號出現率） |
+
+**觸發條件（LGS 實作，client 端從完整 ack 推導）**：
+
+> 🔒 下段含專案調校數值（倍率門檻、觸發機率）。此庫若要外流出 corp 範圍，這裡是第一個該抽換成佔位符的地方。
+
+```typescript
+// 條件一：進 BG 且盤面夠豐富        條件二：收分夠大
+if ( isBonus && hasBonusSymbol && collectCount > 0 && cashCount >= 4 ||
+     isCollect && ( collectCount >= 2 && totalRate >= 15 || totalRate >= 30 ) )
+{
+    // 30 倍以上 100% 觸發，其餘擲 50%
+    if ( Define.HAS_REPLAY || totalRate >= 30 || Math.random() < 0.5 ) {
+        isOmen = true;
+        await this.ShowOmen( plate );
+    }
+}
+```
+
+> ⚠️ **這不牴觸「client 不該自行判斷 NearMiss」**：client 是拿**已到手的完整結果 ack** 反推該不該演，不是猜結果。分界在於——用 `SpinAck` 全量資料決定演出強度 = 可以；用「目前停了幾輪、差幾個符號」即時推算 = 不行（會與 server 結果不同步）。但 `Math.random()` 這種**純 client 隨機的演出分歧**會讓同一手在 replay 時表現不一致，LGS 用 `Define.HAS_REPLAY` 強制為 true 來繞開。
 
 ### 大獎預告子變體（3LP F09）
 
@@ -87,6 +120,10 @@ enum NearMissSeverity {
 5. **AutoPlay 期間觸發**：仍需播放完整演出（不可跳過），但不阻塞下一輪 auto spin 啟動超過合理時間
 6. **多列同時 NearMiss**：需定義優先級，通常取最後一列（張力最高）為主演出列
 7. **大獎預告 + NearMiss 同手（3LP）**：BigWin Announcement 在旋轉中播完後才進停輪流程，若停輪又有 NearMiss 需正確串接（先預告→再聽牌停輪）
+8. **預告手要禁用快停（LGS）**：`if (m_isHardStop && !isOmen)` ——預告已經是「保證好事」的演出，讓玩家切停會把鋪陳砍掉。turbo 旗標本身不清除，只是這一手不套用
+9. **預告與其他假轉演出互斥**：LGS 在 `isOmen` 為真時**不做**堆疊連線假轉（`SetLineOmen`）；兩種假轉同時作用會互搶符號權重
+10. **client 端隨機造成 replay 不一致**：`Math.random() < 0.5` 的演出分歧在復盤時會變成另一種表現。LGS 用 `Define.HAS_REPLAY` 短路成必定觸發；任何 client 隨機的演出分歧都要想好 replay 怎麼辦
+11. **預告動畫是 `await`，期間不可收下一手**：`OnRecvSpinAck` 內 `await ShowOmen()` 會拖住整個 ack 處理；此時若 autoplay 又送出 spin request，狀態機會錯亂
 
 ## 常見錯誤
 

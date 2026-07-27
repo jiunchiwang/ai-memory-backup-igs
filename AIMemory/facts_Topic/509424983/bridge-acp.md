@@ -24,3 +24,5 @@
 - [f_ab8e2f] [2026-07-20T20:32:08.256Z] 模型分配的快速判準是自問「這個錯誤是 Sonnet 級還是 Opus 級」——可重跑、重做成本低的錯誤就降級委派，會污染下游決策（架構、事實、記憶）的錯誤才值得動用 Opus；另外 Workflow / subagent 必須顯式指定 model override，否則沿用預設 model 會造成配額爆掉。
 - [f_b283c9] [2026-07-26T12:27:52.448Z] telegram-kiro-bridge 主機的 kiro-cli（2.13.0，路徑 C:\Users\jiunchiwang\AppData\Local\Kiro-Cli\kiro-cli.exe）於 2026-07-26 檢查時處於未登入狀態（kiro-cli whoami 回報 Not logged in），headless 執行 kiro-cli chat --list-models 會卡在「Opening auth portal」無窮重試迴圈，需使用者手動互動式 kiro-cli login 重新登入才能恢復（含 vc-kiro-delegate 委派功能）
 - [f_30e280] [2026-07-26T12:27:52.448Z] kiro-cli chat 有 --list-models 旗標可查詢可用 model 清單（另有 --format plain/json/json-pretty 控制輸出格式），但需登入狀態才能實際回傳結果
+- [f_244bfd] [2026-07-27T03:40:56.029Z] Kiro CLI 已移除 claude-opus-4.6 model，只剩 claude-opus-4.5 可用（2026-07-27 確認）
+- [f_aad37e] [2026-07-27T05:59:07.840Z] kiro-cli 登入狀態已於 2026-07-27 恢復正常，vc-kiro-delegate 委派功能可用（覆蓋 2026-07-26 的未登入記錄）

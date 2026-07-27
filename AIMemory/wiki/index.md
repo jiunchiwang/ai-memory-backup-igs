@@ -11,14 +11,14 @@
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
 - [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（6×4 4096 Ways、VS Feature 🔴、spec-to-impl 完成、待確認 8 項）
 - [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範）
-- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固）
-- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、harness hooks、trailer 陷阱）
+- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核）
+- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、harness hooks、trailer 陷阱、claude-opus-4.6 移除、kiro-cli 登入狀態）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
 - [[bridge-dream]] — Bridge Dream 例行維運框架（dream.json 執行機制、claude-mem-curate 接入、turn 誤報「(no output)」兩種根因、claude-mem-shortlist 未清空問題；2026-07-22 從 bridge-project 拆出）
 - [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控）
-- [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft）
+- [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft、spine-animation-ai 自包含 Skill 打包機制）
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
 - [[dev-tools]] — 開發工具與環境設定（Python/Playwright/TypeScript、機器路徑、工作流程）
 - [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
@@ -51,4 +51,4 @@
 ---
 
 Total pages: 33
-Last updated: 2026-07-26（facts 自上輪以來新增 3 條：[[bridge-project]] +1（CI 把關決策）、[[bridge-acp]] +2（Kiro CLI 未登入狀態、--list-models 旗標），兩頁已更新內容+bump updated+補 sources；其餘 19 個 ≥5-facts topic 無變動。5 個 Query Auto-save 候選（askwikisplit2-full/askselfcheck-fix-all/query-mrg41hq8/query-mrghbflv/askfix-memory-mcp-a）皆為 ASK 按鈕回呼值或例行狀態摘要，非綜合性回答，全數跳過並標記 processed）
+Last updated: 2026-07-27（wikisync：[[bridge-acp]] +2、[[bridge-research]] +2 補新內容+sources；wikilint 追加發現 [[bridge-project]] 有 2 條 2026-07-26 新 facts 未被內容反映（雖 updated 日期同天但敘事未涵蓋），已補「背景通知與對抗覆核」小節並 bump sources；其餘 29 頁本輪健康無異動）

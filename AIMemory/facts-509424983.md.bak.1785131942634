@@ -298,4 +298,3 @@
 - [f_4e5ad0] [2026-07-27T03:20:30.031Z] spine-animation-ai 的「自包含 Skill」打包機制：SKILL.template.md 放 prose + `&lt;!-- EMBED:scripts/xxx.py --&gt;` 佔位符 → build_skill.py 正則找佔位符、把腳本內容包成 `&lt;details&gt;` 折疊塊注入 → 輸出完整 SKILL.md（使用者貼進 Claude Projects 即可用，Claude 自己寫 scripts 到磁碟再執行）；GitHub Actions 自動 rebuild 確保同步；適合單一用途需腳本的 skill，不適合頻繁更新或多 skill 共用腳本的場景
 - [f_1da3ad] [2026-07-27T03:20:30.038Z] GenielabsOpenSource/spine-animation-ai 是 AI-powered Spine 2D 骨骼動畫自動化工具（Claude skill）：從分離部位 PNG 自動定位（SIFT+RANSAC）、建 bone hierarchy、產動畫預設（idle/walk/run/attack）、輸出 skeleton.json + atlas + HTML5 預覽；另有 Gemini 角色拆分（整圖→部位）和 Reskin Studio（風格重繪）功能；PolyForm NC 授權（非商用免費）
 - [f_244bfd] [2026-07-27T03:40:56.029Z] Kiro CLI 已移除 claude-opus-4.6 model，只剩 claude-opus-4.5 可用（2026-07-27 確認）
-- [f_aad37e] [2026-07-27T05:59:07.840Z] kiro-cli 登入狀態已於 2026-07-27 恢復正常，vc-kiro-delegate 委派功能可用（覆蓋 2026-07-26 的未登入記錄）
