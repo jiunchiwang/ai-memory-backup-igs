@@ -2,8 +2,8 @@
 title: Bridge Streaming 與訊息渲染
 type: concept
 created: 2026-07-11
-updated: 2026-07-11
-sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef]
+updated: 2026-07-29
+sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef, f_562fe5]
 ---
 
 # Bridge Streaming 與訊息渲染
@@ -100,6 +100,14 @@ grammY 和 Telegraf 都**沒有**內建 message splitter。`@gramio/split` 是�
 - `「sendRichMessageDraft 不受 429 限流」是誤解`：draft 幀可跳過不丟資料，但 final `sendRichMessage` 照樣受限流
 - grammY 的 `api.raw` 是 Proxy — `typeof method !== 'function'` 做能力偵測是死碼，不支援偵測要靠 catch API 錯誤
 - `@grammyjs/stream` 的 append-only 不等於 API 限制 — 查 Bot API spec 是關鍵轉折
+
+## Expandable Blockquote 支援（Roadmap）
+
+Telegram Bot API 7.3+ 支援 `expandable_blockquote` entity。研究結論（2026-07-28）：
+
+- **HTML path**（`format-html.ts`）：需識別 `>...\|\|` 結尾語法並輸出 `<blockquote expandable>`，約 ~10 行改動
+- **Rich Message path**：可能天然支援 MarkdownV2 的 `||` 語法，或可改用 `<details>` 標籤（有 summary 標題更強）
+- 待實測 Rich Markdown 是否認 `||` 語法後再決定實作方案
 
 ## 相關
 

@@ -20,6 +20,7 @@
 - [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft、spine-animation-ai 自包含 Skill 打包機制）
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
+- [[bridge-roadmap]] — Bridge 開發 Roadmap（Pending / In Progress 追蹤，2026-07-28 建立）
 - [[dev-tools]] — 開發工具與環境設定（Python/Playwright/TypeScript、機器路徑、工作流程）
 - [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
 - [[spine-viewer]] — Spine Viewer 插件（Cocos Creator 編輯器擴充，批次掃描 DrawCall/Triangle 效能報告）
@@ -50,5 +51,5 @@
 
 ---
 
-Total pages: 33
-Last updated: 2026-07-27（wikisync：[[bridge-acp]] +2、[[bridge-research]] +2 補新內容+sources；wikilint 追加發現 [[bridge-project]] 有 2 條 2026-07-26 新 facts 未被內容反映（雖 updated 日期同天但敘事未涵蓋），已補「背景通知與對抗覆核」小節並 bump sources；其餘 29 頁本輪健康無異動）
+Total pages: 34
+Last updated: 2026-07-29（wikilint：補 [[bridge-roadmap]] 孤兒頁入 index；wikisync：[[bridge-streaming]] +1、[[bridge-acp]] +1）

@@ -185,3 +185,25 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_ae3a52] [2026-07-22T21:49:00.863Z] telegram-kiro-bridge 於 2026-07-22 新增 bridge-dream topic（從 bridge-project 拆出）：涵蓋 /dream 排程框架本身（dream.json 執行機制、claude-mem-curate 接入沿革），topics.json 從 21 個增至 22 個
 - [2026-07-27T05:59:02.679Z] user=509424983 query="Not logged in" deleted=0 token=forget-32df4c3b-1
 
+- [2026-07-28T20:08:18.292Z] user=509424983 query="[WS] task: 把 claude-mem-curate 精選流程接成" deleted=0 token=forget-77531c79-1
+
+- [2026-07-28T20:08:18.463Z] user=509424983 query="[WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效" deleted=0 token=forget-e81aebb2-1
+
+- [2026-07-28T20:08:18.614Z] user=509424983 query="session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME" deleted=0 token=forget-5a757299-1
+
+- [2026-07-28T20:08:25.360Z] user=509424983 query="session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars" deleted=0 token=forget-e09f6458-1
+
+- [2026-07-28T20:08:25.487Z] user=509424983 query="[WS] key_refs: 改動檔案 src/commands/dream.ts" deleted=0 token=forget-4c8e291f-1
+
+- [2026-07-28T20:08:25.751Z] user=509424983 query="[WS] completed: 已新增 handleClaudeMemCurate" deleted=0 token=forget-a4cf51ac-1
+
+- [2026-07-28T20:08:34.604Z] user=509424983 query="dream 步驟文件（README/usage-guide.html）與本機實際" deleted=1 token=forget-275f901a-1
+    - [f_b91398] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 /dream 步驟文件（README/usage-guide.html）與本機實際 ~/.kiro/dream.json 不一致：文件寫的 sessionreflect/specialistreflect 步驟並未出現在本機設定檔，實際存在的 claudememcurate/docupdate 步驟兩份文件都未記錄，待對齊
+- [2026-07-28T20:08:34.816Z] user=509424983 query="uk_slot_template 先前提及的 4 個本地未 push commit" deleted=0 token=forget-8bba4cc9-1
+
+- [2026-07-28T20:08:45.739Z] user=509424983 query="共享知識庫（Shared Knowledge）目錄於 2026-07-18 dream run 出現 /sharedsync 失敗" deleted=0 token=forget-63e91a91-1
+
+- [2026-07-28T20:08:45.846Z] user=509424983 query="skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向" deleted=0 token=forget-ef9823f2-1
+
+- [2026-07-28T20:08:50.229Z] user=509424983 query="2026-07-26 檢查時處於未登入狀態" deleted=0 token=forget-32df4c3b-1
+

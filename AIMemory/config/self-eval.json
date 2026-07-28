@@ -56,6 +56,18 @@
       "score": 90,
       "evidence": "已對 AIMemory 源檔與備份 repo 兩處分別 grep 驗證 secret 移除、REDACTED 標記存在，且 git push 回傳明確 ref-update 成功訊息確認遠端狀態；扣分點是背景 gc 尚未確認完成（非阻塞性清理，不影響 backup 恢復）",
       "belowThreshold": false
+    },
+    {
+      "ts": "2026-07-28T10:13:55.323Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "strReplace 成功替換 1 處，grep 確認磁碟內容正確含 urIN，位置字母序正確；唯一未驗證的是 junction 是否即時反映但這是已知機制"
+    },
+    {
+      "ts": "2026-07-28T10:15:55.642Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "24 檔複製成功（exit 0）、ls 驗證 26 個 png 全在、cn 未動、meta 未動、urIN 新建確認存在"
     }
   ]
 }

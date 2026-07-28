@@ -22,7 +22,7 @@ UK 老虎機專案的 logo 圖多語系複製。每個專案的 `assets/game/Tex
 `assets/game/Text/logo/` 下實際出現過的語系代碼（不含 cn/en）：
 
 ```
-bn da de es frFR grGR hi id it jp ko mm ms nl pt ro ruRU se ta th trTR tw vn
+bn da de es frFR grGR hi id it jp ko mm ms nl pt ro ruRU se ta th trTR tw urIN vn
 ```
 
 這份清單不是寫死的規格，是「已知曾經需要過的語系」的參考基準；

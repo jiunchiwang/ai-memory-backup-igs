@@ -1,6 +1,6 @@
 {
   "defaultHarness": "kiro-cli acp --agent {name} -a",
-  "defaultModel": "claude-sonnet-4.6",
+  "defaultModel": "claude-opus-4.6",
   "defaultEffort": "high",
   "commonSkills": [
     "ms-kiro-strreplace-silent-fail",
@@ -63,7 +63,9 @@
         "excel-to-ai-doc",
         "並發 gotcha",
         "cocos 版面",
-        "promise.all"
+        "promise.all",
+        "logo-localization",
+        "知識庫的"
       ],
       "wikiPages": [
         "uk-slot",
@@ -224,7 +226,16 @@
         "command_handlers",
         "loop state",
         "dream high priority",
-        "spine-animation"
+        "spine-animation",
+        "backport",
+        "expandable blockquote",
+        "format-html",
+        "blockquote expandable",
+        "settingsources",
+        "serena mcp",
+        "mcp 繼承",
+        "paulsha",
+        "conventions"
       ],
       "wikiPages": [
         "bridge-project",
@@ -238,7 +249,8 @@
         "embedding-router",
         "specialist",
         "bridge-upstream-sync",
-        "bridge-dream"
+        "bridge-dream",
+        "bridge-roadmap"
       ],
       "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
       "model": "claude-sonnet-4.6",

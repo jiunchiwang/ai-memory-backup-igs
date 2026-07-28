@@ -26,3 +26,4 @@
 - [f_30e280] [2026-07-26T12:27:52.448Z] kiro-cli chat 有 --list-models 旗標可查詢可用 model 清單（另有 --format plain/json/json-pretty 控制輸出格式），但需登入狀態才能實際回傳結果
 - [f_244bfd] [2026-07-27T03:40:56.029Z] Kiro CLI 已移除 claude-opus-4.6 model，只剩 claude-opus-4.5 可用（2026-07-27 確認）
 - [f_aad37e] [2026-07-27T05:59:07.840Z] kiro-cli 登入狀態已於 2026-07-27 恢復正常，vc-kiro-delegate 委派功能可用（覆蓋 2026-07-26 的未登入記錄）
+- [f_5c5722] [2026-07-27T20:32:00.206Z] 降低 agent session 啟動延遲的低風險手段：serena MCP 原以 uvx 直接從 git 安裝，每次啟動都要重抓；改為預先 uv tool install 到本機再引用，實測每個 session 省下約 10-11 秒且不需改任何程式碼，屬於零風險、可優先執行的最佳化（相對於需要架構設計的 MCP 繼承限縮）。

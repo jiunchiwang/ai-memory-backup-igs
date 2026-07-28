@@ -315,3 +315,23 @@
 - 「為 self-evaluation 修正建立 feature branch（fix/self-eval-streaming-leak-and-threshold）」→ 一次性流程紀錄，無跨 session 重用價值。
 
 備註：本輪兩條均先以 `list_facts` 查詢（對抗審查／protobufjs／Fable／通知／flaky／競態）確認無既有等價 fact，才寫入；未呼叫 forget。
+
+## 2026-07-28（AUTO）
+
+來源 shortlist：12 筆候選（產生於 2026-07-27T20:30Z，皆 telegram-kiro-bridge-main）
+
+寫入 4 條：
+
+- 2026-07-27 把「異源模型對抗覆核」從高風險依賴決策擴大為常態做法，新驗證兩用途：push 前派獨立 Fable5 審查分支抓出測試斷言過弱；知識萃取 commit（pattern library c4922b3）由 Fable5 對照真實專案原始碼（leprechaunsGoldStreak-client，41 檔約 7800 行）逐項查證。指令須明寫「找缺陷而非讚美」。→ shard: uk-917
+- upstream 同步陷阱：redkilin 會選擇性 backport 本 fork 修正但以英文註解重寫並改名識別字，造成「內容等價、文字不同」的 add/add 假衝突；處理原則為比較兩側完整度保留較完整一方（實測本地測試基建較完整，四檔以 git checkout --ours 保留），而非機械沿用固定優先權。→ shard: bridge-upstream-sync
+- MCP 繼承最佳化（settingSources 限縮為 ['project'] 或 []，session/new 由 19 行程降到 3）決定暫緩：單純限縮會砍掉 specialist 需要的能力繼承，須先做保留能力前提下的架構設計，不可當純效能參數調整。→ shard: bridge-specialist
+- 降低 session 啟動延遲的低風險手段：serena MCP 由 uvx 直接從 git 安裝改為預先 uv tool install 到本機，實測每 session 省約 10-11 秒且零程式碼改動，優先度高於需架構設計的 MCP 繼承限縮。→ shard: misc
+
+丟棄 8 條：
+
+- 「UK 助理 knowledge integration strategy」4 筆（同主題重複紀錄）→ 內容僅止於「使用者建立 UK 助理 specialist 以整合 UK Slot 知識」的規劃階段陳述，無實際決策內容可重用，全數丟棄。
+- 「獨立 code review 抓出測試斷言弱點」「pattern library commit 經 Fable5 覆核」「對抗式 review 驗證 merge 正確性」3 筆 → 已合併為上方第 1 條。
+- 「以 git checkout --ours 解 add/add 衝突保留本地測試基建」→ 已合併為上方第 2 條。
+- 「MCP 繼承最佳化暫緩」原為 2 筆重複 → 已合併為上方第 3 條。
+
+備註：四條均先以 `list_facts` 查詢（對抗／upstream／MCP／serena／backport／uvx／settingSources／UK助理）確認無既有等價 fact 才寫入。既有記憶已含 #007「單一視角自審盲點需異源 skeptic」與 2026-07-26 protobufjs 覆核事件，本次第 1 條保留的是「新增的兩種套用場景 + 指令措辭要求」增量。未呼叫 forget。

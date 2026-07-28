@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "242aed17",
+      "activeId": "4da8477c",
       "sessions": [
         {
-          "id": "242aed17",
-          "name": "[Skill routing — these s",
-          "createdAt": 1785162370651,
-          "sessionId": "e46a0512-7de2-46f2-a1dd-186314e85d27",
-          "backendKey": "claude",
-          "agentCommand": "claude-agent-acp",
+          "id": "4da8477c",
+          "name": "請產出 2026-07-28 的 daily l",
+          "createdAt": 1785268813926,
+          "sessionId": "80f48c23-4621-449e-9167-3e5173624119",
+          "backendKey": "kiro",
+          "agentCommand": "kiro-cli",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1785162370644
+          "savedAt": 1785268813922
         }
       ]
     }

@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-28T20:04:55.336Z (token=topics-e259abb5-22)
+// Last applied: 2026-07-27T20:06:44.570Z (token=topics-adcdd8c7-22)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -82,9 +82,7 @@
       "ghost slot",
       "並發 gotcha",
       "cocos 版面",
-      "promise.all",
-      "logo-localization",
-      "知識庫的"
+      "promise.all"
     ]
   },
   {
@@ -100,8 +98,7 @@
       "checkout --theirs",
       "remote 配置",
       "合併衝突",
-      "覆核合併",
-      "backport"
+      "覆核合併"
     ]
   },
   {
@@ -117,10 +114,7 @@
       "4096",
       "截斷優化",
       "telegram-rich",
-      "@gramio/split",
-      "expandable blockquote",
-      "format-html",
-      "blockquote expandable"
+      "@gramio/split"
     ]
   },
   {
@@ -200,10 +194,7 @@
       "kiro cli",
       "三模型分工",
       "vc-kiro-delegate",
-      "model override",
-      "settingsources",
-      "serena mcp",
-      "mcp 繼承"
+      "model override"
     ]
   },
   {
@@ -222,9 +213,7 @@
       "agend-terminal",
       "agend_terminal",
       "suzuke",
-      "spine-animation",
-      "paulsha",
-      "conventions"
+      "spine-animation"
     ]
   },
   {

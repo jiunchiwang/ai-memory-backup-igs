@@ -11,3 +11,8 @@
 - [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
 - [f_e84e55] [2026-07-09T19:00:02.547Z] uk-slot-spec-to-impl skill 正本已加強（AI-canonical-corp commit 14887cd）：新增步驟0前提確認checklist、步驟2前置4項checklist gate、檢查點改模板格式輸出、AI.md綁定步驟1完成時、常見錯誤新增5條流程偏離實證教訓
 - [f_8a9474] [2026-07-09T20:33:34.376Z] 記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。
+- [f_437274] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向已改名的資料夾 igs-uof，且 igs-uof、uk-slot-logo-localization 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建
+- [f_e68c39] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 E 區（通用機制模式庫）決策：全角色統一使用索引版（pattern 名稱 + 一句話描述），不塞 pattern-library 完整 158KB 內容
+- [f_165cc0] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 D 區（Astarte Framework API）決策：只寫概要層（class + 生命週期 + 事件列表），不進到 method 簽名
+- [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
+- [f_f82ff1] [2026-07-28T11:03:56.028Z] uk-slot-logo-localization skill 的標準語系代碼清單已新增 urIN（烏爾都語印度），總計 24 個語系（不含 cn/en）
