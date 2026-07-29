@@ -5,4 +5,4 @@
 - [f_a8a12e] [2026-07-06T05:19:36.045Z] 在 bash shell 呼叫 PowerShell 時引號（單引號/$_）會被 bash 層吃掉導致 ParserError，可靠做法是把指令轉 UTF-16LE 再 base64，用 powershell -EncodedCommand 執行
 - [f_eb9ddd] [2026-07-07T00:32:54.720Z] 使用者機器已安裝 Bun runtime（C:\Users\jiunchiwang\.bun\bin，含 bun.exe/bunx.exe），claude-mem plugin 的 hooks 依賴它執行，不可刪除
 - [f_af2a3f] [2026-07-16T09:36:02.404Z] 使用者這台機器的 gh CLI 尚未執行 gh auth login／未設 GH_TOKEN，研究 GitHub repo 時 gh repo view 等指令會直接失敗，需改用 WebFetch 抓取
-- [f_9b9689] [2026-07-16T13:13:27.920Z] [WS] completed: 已新增 handleClaudeMemCurate（src/commands/dream.ts，仿 docupdate 的 meta-prompt 模式）、註冊進 COMMAND_HANDLERS（src/index.ts）、在 C:\Users\jiunchiwang\.kiro\dream.json 插入 claudememcurate 步驟（memorytoskill 之後、topicreview 之前）；tsc --noEmit 過、npm run build 過、check-dream.mjs 24 項 smoke test 全過、手動 load 實際 dream.json 確認 14 步解析正確無 warning
+- [f_cb572a] [2026-07-29T08:29:16.673Z] telegram-kiro-bridge 的 npm run smoke 依賴 dist/ 編譯產物，但 tsc --noEmit 不會寫檔——改完 src 後要跑 smoke 前必須先用 tsc -p . 重新編譯，否則會用過期 dist 跑出假失敗（2026-07-29 sync-upstream 實測）

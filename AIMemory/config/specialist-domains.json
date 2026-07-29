@@ -1,6 +1,6 @@
 {
   "defaultHarness": "kiro-cli acp --agent {name} -a",
-  "defaultModel": "claude-opus-4.6",
+  "defaultModel": "claude-opus-4.5",
   "defaultEffort": "high",
   "commonSkills": [
     "ms-kiro-strreplace-silent-fail",
@@ -14,11 +14,12 @@
   ],
   "domains": {
     "slot-dev": {
+      "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
+      "harness": "claude-agent-acp",
+      "model": "claude-sonnet-5",
+      "effort": "high",
       "prefixes": [
         "uk-"
-      ],
-      "mcpServers": [
-        "memory"
       ],
       "topicKeywords": [
         "uk_917",
@@ -76,17 +77,15 @@
         "uk-slot-clash-olympus",
         "uk-slot-eye-strike"
       ],
-      "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
-      "model": "claude-sonnet-4.6",
-      "effort": "high"
+      "mcpServers": [
+        "memory"
+      ]
     },
     "bridge-dev": {
+      "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
+      "effort": "high",
       "prefixes": [
         "bridge-"
-      ],
-      "mcpServers": [
-        "memory",
-        "bridge-actions"
       ],
       "topicKeywords": [
         "draft streaming",
@@ -235,7 +234,11 @@
         "serena mcp",
         "mcp 繼承",
         "paulsha",
-        "conventions"
+        "conventions",
+        "規格驅動",
+        "sdd",
+        "events.jsonl",
+        "secret 清理"
       ],
       "wikiPages": [
         "bridge-project",
@@ -252,16 +255,15 @@
         "bridge-dream",
         "bridge-roadmap"
       ],
-      "description": "telegram-kiro-bridge 專案自身開發特化 specialist（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統）",
-      "model": "claude-sonnet-4.6",
-      "effort": "high"
-    },
-    "researcher": {
-      "prefixes": [],
       "mcpServers": [
         "memory",
-        "google"
-      ],
+        "bridge-actions"
+      ]
+    },
+    "researcher": {
+      "description": "Deep research specialist (AI strategy, knowledge management, agent design patterns)",
+      "effort": "high",
+      "prefixes": [],
       "topicKeywords": [
         "bridge-research",
         "ai-strategy",
@@ -272,47 +274,47 @@
         "ai-strategy",
         "trio-model-architecture"
       ],
-      "inheritsAll": true,
-      "description": "Deep research specialist (AI strategy, knowledge management, agent design patterns)",
-      "model": "claude-opus-4.6",
-      "effort": "high"
-    },
-    "general": {
-      "prefixes": [],
       "mcpServers": [
         "memory",
         "google"
       ],
-      "topicKeywords": [],
-      "inheritsAll": true,
-      "skipCommonSkills": true,
+      "inheritsAll": true
+    },
+    "general": {
       "description": "Full-capability specialist for parallel multi-tasking (inherits all skills and MCP)",
-      "model": "claude-sonnet-4.6",
-      "effort": "high"
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [
+        "memory",
+        "google"
+      ],
+      "inheritsAll": true,
+      "skipCommonSkills": true
     },
     "moa-ref-claude": {
-      "prefixes": [],
-      "mcpServers": [],
-      "topicKeywords": [],
       "description": "MoA blind advisor (Claude)",
       "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
-      "effort": "low"
+      "effort": "low",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": []
     },
     "moa-ref-kiro": {
-      "prefixes": [],
-      "mcpServers": [],
-      "topicKeywords": [],
       "description": "MoA blind advisor (Kiro/Bedrock)",
       "harness": "kiro-cli acp -a",
-      "effort": "low"
+      "effort": "low",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": []
     },
     "moa-ref-adversary": {
-      "prefixes": [],
-      "mcpServers": [],
-      "topicKeywords": [],
       "description": "MoA devil's advocate (red-team preset)",
       "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
-      "effort": "low"
+      "effort": "low",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": []
     }
   }
 }

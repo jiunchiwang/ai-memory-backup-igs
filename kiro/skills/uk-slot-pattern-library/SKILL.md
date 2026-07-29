@@ -48,7 +48,7 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 | 11 | Buy Bonus | patterns/buy-bonus.md | 框架 CommonBuyBonus, 722, tct, 3LP | 高 | ✅ |
 | 12 | Wild 變身 | patterns/wild-transform.md | 722 robinhood, 746 far_west | 中 | ✅ |
 | 13 | Mystery 符號 | patterns/mystery-symbol.md | eye_strike, 746 far_west, wrath_of_thunder | 高 | ✅ |
-| 14 | COLLECT 神秘事件 | patterns/collect-mystery.md | 3LP | 中 | ✅ |
+| 14 | COLLECT 神秘事件 | patterns/collect-mystery.md | 3LP | 中 | ⚠️ |
 | 15 | Feature Wheel | patterns/feature-wheel.md | Eye Strike2 | 低 | ⚠️ |
 | 16 | Symbol Transform | patterns/symbol-transform.md | Eye Strike2 | 低 | ⚠️ |
 | 17 | Persistent Grid Effect | patterns/persistent-grid-effect.md | Eye Strike2 | 低 | ⚠️ |
@@ -64,6 +64,7 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 > **驗證欄說明**：✅ = 有實際專案程式碼佐證；⚠️ = 僅從規格書推導，尚未經過實作驗證
 > **LGS** = `leprechaunsGoldStreak-client`（Cocos 專案，Cash Collect + Hold&Win 型）
 > **#19 MAX WIN 的驗證分層**：client 端旗標流程有 LGS 實碼佐證；「報獎差值封頂」仍只有 Clash of Olympus 規格來源
+> **#14 COLLECT 神秘事件更正（2026-07-29）**：原標 ✅，經核對卡片內文（參考實作標「3 Leprechaun's Pots（規格）」、核心檔案標「規劃中」、門檻「具體值待機率文件」）確認 3LP 從未實作，已改標 ⚠️。往後若要改回 ✅，需先在卡片本文補上實際專案與檔案佐證，不可只改本表。
 
 ### 橫切機制（不是單一 Feature，設計任何 Feature 時都要一併考慮）
 

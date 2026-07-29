@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-07-17
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f]
+updated: 2026-07-30
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a]
 ---
 
 # 開發工具與環境設定
@@ -44,6 +44,10 @@ npx tsc --noEmit
 ```
 
 遇到 TS6.0 deprecation 警告時加 `--ignoreDeprecations 6.0` 抑制。
+
+### Smoke Test 依賴 dist/ 編譯產物
+
+`npm run smoke` 跑的是 `dist/` 下的編譯產物，但 `tsc --noEmit` 不會寫檔——改完 `src/` 後要跑 smoke 前必須先用 `tsc -p .` 重新編譯，否則會用過期 `dist/` 跑出假失敗。
 
 ### node --env-file 不覆蓋既有變數
 

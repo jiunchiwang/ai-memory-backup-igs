@@ -207,3 +207,23 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-07-28T20:08:50.229Z] user=509424983 query="2026-07-26 檢查時處於未登入狀態" deleted=0 token=forget-32df4c3b-1
 
+- [2026-07-28T22:06:14.980Z] user=509424983 query="[WS] task: 把 claude-mem-curate 精選流程接成 /dream 第 14 步" deleted=1 token=forget-77531c79-1
+    - [f_e1f99f] [2026-07-16T13:13:25.950Z] [WS] task: 把 claude-mem-curate 精選流程接成 /dream 第 14 步，讓每日 04:00 自動觸發（原本只能手動觸發）
+- [2026-07-28T22:06:15.063Z] user=509424983 query="[WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效" deleted=1 token=forget-e81aebb2-1
+    - [f_e2d60b] [2026-07-16T13:13:35.726Z] [WS] next_action: 重啟後確認 bridge 正常啟動且新 dist 生效，然後詢問使用者是否要 git commit 這次 claudememcurate 改動（只 add src/commands/dream.ts + src/index.ts，不要連帶 commit README.md 既有改動）
+- [2026-07-28T22:06:15.196Z] user=509424983 query="session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME=true" deleted=1 token=forget-5a757299-1
+    - [f_86bdbb] [2026-07-07T11:48:47.056Z] session resume 待辦：生產 bridge .env 加 ACP_SESSION_RESUME=true 重啟後做手動 e2e；首次啟用需觀察 replay 時序——真 adapter 若在 session/load 回應後才補送 replay update 有 token 重放風險，保守 fallback 方案在計畫檔風險 #1
+- [2026-07-28T22:06:15.345Z] user=509424983 query="session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars" deleted=0 token=forget-e09f6458-1
+
+- [2026-07-28T22:06:31.921Z] user=509424983 query="session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars" deleted=1 token=forget-e09f6458-1
+    - [f_daf156] [2026-07-07T13:26:02.669Z] session resume 已知 cosmetic 待補：resume 後 /context 顯示 preamble 0 chars
+- [2026-07-28T22:06:40.961Z] user=509424983 query="[WS] completed: 已新增 handleClaudeMemCurate" deleted=1 token=forget-a4cf51ac-1
+    - [f_9b9689] [2026-07-16T13:13:27.920Z] [WS] completed: 已新增 handleClaudeMemCurate（src/commands/dream.ts，仿 docupdate 的 meta-prompt 模式）、註冊進 COMMAND_HANDLERS（src/index.ts）、在 C:\Users\jiunchiwang\.kiro\dream.json 插入 claudememcurate 步驟（memorytoskill 之後、topicreview 之前）；tsc --noEmit 過、npm run build 過、check-dream.mjs 24 項 smoke test 全過、手動 load 實際 dream.json 確認 14 步解析正確無 warning
+- [2026-07-28T22:06:41.007Z] user=509424983 query="共享知識庫（Shared Knowledge）目錄於 2026-07-18 dream run 出現 /sharedsync 失敗" deleted=1 token=forget-63e91a91-1
+    - [f_235eef] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的共享知識庫（Shared Knowledge）目錄於 2026-07-18 dream run 出現 /sharedsync 失敗：git status --porcelain 回報 not a git repository，需確認路徑設定或 .git 是否遺失
+- [2026-07-28T22:06:41.100Z] user=509424983 query="[WS] key_refs: 改動檔案 src/commands/dream.ts" deleted=1 token=forget-4c8e291f-1
+    - [f_48b44d] [2026-07-16T13:13:34.612Z] [WS] key_refs: 改動檔案 src/commands/dream.ts、src/index.ts、~/.kiro/dream.json（14 步：sharedsync→dailylog→memorytoskill→claudememcurate→topicreview→wikisync→factlint→wikilint→skilllint→docupdate→specialistreview→artifactcleanup→backup→restart）；git status 顯示 src 兩檔改動尚未 commit，README.md 另有既有未提交改動（不相關，勿混）
+- [2026-07-28T22:06:45.197Z] user=509424983 query="2026-07-26 檢查時處於未登入狀態" deleted=1 token=forget-32df4c3b-1
+    - [f_b283c9] [2026-07-26T12:27:52.448Z] telegram-kiro-bridge 主機的 kiro-cli（2.13.0，路徑 C:\Users\jiunchiwang\AppData\Local\Kiro-Cli\kiro-cli.exe）於 2026-07-26 檢查時處於未登入狀態（kiro-cli whoami 回報 Not logged in），headless 執行 kiro-cli chat --list-models 會卡在「Opening auth portal」無窮重試迴圈，需使用者手動互動式 kiro-cli login 重新登入才能恢復（含 vc-kiro-delegate 委派功能）
+- [2026-07-29T20:06:34.817Z] user=509424983 query="kiro-cli 登入狀態已於 2026-07-27 恢復正常" deleted=0 token=forget-0761a95e-1
+

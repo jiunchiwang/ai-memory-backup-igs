@@ -30,3 +30,4 @@
 - [f_de06cc] [2026-07-12T23:22:38.497Z] factlint actionable ratio 4.7（>3.0 警告閾值）為已知設計取捨——因為 87%+ facts 被 wiki sources 保護不可刪（provenance 追溯用途），結構性不可能降到 3.0 以下；未來 factlint 遇到此警告應跳過不報，除非 wiki-unprotected facts 本身有新問題
 - [f_77ddbd] [2026-07-16T13:14:06.519Z] telegram-kiro-bridge 的 dream.json 實際讀取路徑優先序為 MEMORY_DIR/config/dream.json（目前不存在）→ 退回 ~/.kiro/dream.json（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback
 - [f_6f6762] [2026-07-28T14:08:12.989Z] 使用者決定 bridge roadmap 放 wiki page（G:\AI\AIMemory\wiki\concepts\bridge-roadmap.md），理由是跟現有 wiki 系統整合、preamble 可見、wikilint 自動維護，排除散落在 facts 用 [Roadmap] 前綴（無優先級/狀態追蹤）和獨立 AIMemory/roadmap.md（不在 wiki 維運體系內）
+- [f_d742a1] [2026-07-28T20:32:05.511Z] telegram-kiro-bridge 於 2026-07-28 為「UK 助理知識包」定案交付架構：採快照式(snapshot)蒸餾檔案 + headless agent CLI 直接讀取，刻意不引入向量資料庫與 embedding 層；配套三層把關為敏感資料過濾(禁止公司 raw code 外流)、明確的知識更新工作流、以及交付前驗證。可作為「小規模領域知識問答機器人」的預設架構——RAG 基礎設施的維運成本通常高於快照重生成的成本。

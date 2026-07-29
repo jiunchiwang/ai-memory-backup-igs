@@ -8,7 +8,7 @@
   "kiro": {
     "command": "kiro-cli acp --model claude-opus-4.5 -a --agent main",
     "label": "Kiro CLI",
-    "model": "claude-opus-4.6",
+    "model": "claude-opus-4.5",
     "effort": "high"
   },
   "codex": {

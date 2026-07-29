@@ -68,6 +68,24 @@
       "chatId": 509424983,
       "score": 92,
       "evidence": "24 檔複製成功（exit 0）、ls 驗證 26 個 png 全在、cn 未動、meta 未動、urIN 新建確認存在"
+    },
+    {
+      "ts": "2026-07-28T22:07:24.575Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "8 條 fact 全數刪除驗證（forget 回報成功）、wiki sources 引用移除後 grep 驗證無殘留、STATE.md 寫入後 read-back 確認正確。唯一小波折是 cosmetic fact 被內文 ID 引用保護需改寫，但最終完成。"
+    },
+    {
+      "ts": "2026-07-29T03:06:32.326Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "讀 .env/configRegistry/acpClient 三處一手碼確認 pin 機制；結論錨在 harness 宣告×.env×code path 三方交叉，反例通過；未撈到本 session stderr 實證那行故不給更高"
+    },
+    {
+      "ts": "2026-07-29T03:12:01.777Z",
+      "chatId": 509424983,
+      "score": 95,
+      "evidence": "實跑 check-acp-model-effort 對 opus-5 得到 adapter 明確 reject 訊息(Invalid value for config option model),經驗性確認 pin 失敗+fallback;並修正先前「opus-5 不存在」的 stale 斷言為「adapter id 白名單不認此字串」"
     }
   ]
 }

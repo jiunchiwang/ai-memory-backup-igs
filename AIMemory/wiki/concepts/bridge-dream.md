@@ -3,7 +3,7 @@ title: Bridge Dream 例行維運框架
 type: concept
 created: 2026-07-16
 updated: 2026-07-25
-sources: [f_e1f99f, f_e2d60b, f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3]
+sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3]
 ---
 
 # Bridge Dream 例行維運框架

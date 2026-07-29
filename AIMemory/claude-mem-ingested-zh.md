@@ -335,3 +335,18 @@
 - 「MCP 繼承最佳化暫緩」原為 2 筆重複 → 已合併為上方第 3 條。
 
 備註：四條均先以 `list_facts` 查詢（對抗／upstream／MCP／serena／backport／uvx／settingSources／UK助理）確認無既有等價 fact 才寫入。既有記憶已含 #007「單一視角自審盲點需異源 skeptic」與 2026-07-26 protobufjs 覆核事件，本次第 1 條保留的是「新增的兩種套用場景 + 指令措辭要求」增量。未呼叫 forget。
+
+## 2026-07-29(來源:telegram-kiro-bridge-main,shortlist 9 筆 → 寫入 2 筆)
+
+- 【bridge-memory】telegram-kiro-bridge 於 2026-07-28 為「UK 助理知識包」定案交付架構:採快照式(snapshot)蒸餾檔案 + headless agent CLI 直接讀取,刻意不引入向量資料庫與 embedding 層;配套三層把關為敏感資料過濾(禁止公司 raw code 外流)、明確的知識更新工作流、以及交付前驗證。可作為「小規模領域知識問答機器人」的預設架構——RAG 基礎設施的維運成本通常高於快照重生成的成本。
+  - 合併自 shortlist 3 筆:snapshot-based delivery、Design Specification、Multi-layer validation strategy
+- 【misc】規格驅動開發(SDD)流程的兩個結構性補強(2026-07-28 於 UK 助理知識包專案定案):(1) 以「調查現況」作為 Phase 1 開場——先盤點既有資料來源與載入機制,再進設計,避免憑空假設前提;(2) 在交付使用者審查前插入一道「規格自審」品質閘,機械化檢查未填的佔位符、內部矛盾、範圍蔓延、以及模糊未定義的敘述。此閘擋掉的是「人工審查時最浪費來回的低階瑕疵」,與異源對抗覆核互補而非取代。
+  - 合併自 shortlist 2 筆:Quality Gate (Phase 6 spec self-audit)、Phased Approach (Phase 1 survey)
+
+**捨棄 7 筆**:
+- Adversarial Verification of Self-Modified Warning Embeddings —— 與既有「異源模型對抗覆核常態化」記憶高度重疊,僅屬同一做法的再一次套用
+- UK knowledge pack execution plan read / Progress tracking ledger established —— 一次性執行步驟與進度檔建立,非可重用知識
+- Knowledge pack scope excludes five Notion UK categories —— 專案專屬範圍設定,跨 session 無重用價值
+- 其餘同主題重複條目已併入上列 2 筆
+
+去重方式:list_facts 查詢 knowledge pack / 知識包 / 向量 / 自審 / 佔位符 / 品質閘 / 敏感資料 / UK 助理,現存 312 筆中除「自審」命中既有對抗覆核系列外無衝突。未呼叫 forget。
