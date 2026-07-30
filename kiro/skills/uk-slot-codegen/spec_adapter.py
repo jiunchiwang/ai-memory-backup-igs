@@ -354,7 +354,7 @@ def parse_symbol_table(ws: Worksheet, spec: ParsedSpec) -> None:
     # data rows start 2 rows after the "編號 | 系統命名 | SYMBOL樣式 | ..." header
     current_side = ""  # 一般 / 特殊 / Server用 (sticky between rows)
     for r_idx, row in enumerate(
-        ws.iter_rows(min_row=start_row + 1, max_row=start_row + 80, max_col=10, values_only=True),
+        ws.iter_rows(min_row=start_row + 1, max_row=start_row + 150, max_col=10, values_only=True),
         start=start_row + 1,
     ):
         cells = [_s(c) for c in row]
@@ -436,8 +436,12 @@ def parse_cheat_keys(ws: Worksheet, spec: ParsedSpec) -> None:
 
 def parse_audio(ws: Worksheet, spec: ParsedSpec) -> None:
     """Walk 音樂音效規格表. Each section header row has col B = section name
-    and col C = 'LOOP'. Data rows have col A = index number."""
+    and col C = 'LOOP'. Data rows have col A = index number.
+    
+    Fallback: if 'LOOP' pattern not found, try layout-B style detection
+    (header row with '編號'/'流水號' in col A)."""
     current_section = ""
+    found_any = False
     for r_idx, row in enumerate(
         ws.iter_rows(min_row=1, max_row=200, max_col=10, values_only=True),
         start=1,
@@ -449,6 +453,7 @@ def parse_audio(ws: Worksheet, spec: ParsedSpec) -> None:
         # Section header detection: col B looks like a name, col C == 'LOOP'
         if col_c == "LOOP" and col_b and col_a == "":
             current_section = col_b
+            found_any = True
             continue
 
         # skip pure header rows
@@ -459,9 +464,77 @@ def parse_audio(ws: Worksheet, spec: ParsedSpec) -> None:
         # 檔名 col_g: allow multi-line (the xlsx sometimes stuffs 3 names separated by \n)
         filenames = [fn.strip() for fn in col_g.replace("\r", "").split("\n") if fn.strip()]
         for fn in filenames:
+            found_any = True
             spec.audio_clips.append(
                 AudioClip(section=current_section or "未分類", item_zh=col_b, filename=fn, note=note_col)
             )
+
+    # Fallback: if primary LOOP-based detection found nothing, try layout-B style
+    # (header row with '編號'/'流水號' in col A, '檔名' somewhere in header).
+    if not found_any:
+        _parse_audio_fallback(ws, spec)
+
+
+def _parse_audio_fallback(ws: Worksheet, spec: ParsedSpec) -> None:
+    """Fallback audio parser: find header row with '編號'/'流水號'/'No' in col A,
+    then locate '檔名'/'File' column dynamically."""
+    header_row = None
+    filename_col = -1
+    item_col = 1  # default: col B
+    for r_idx, row in enumerate(ws.iter_rows(min_row=1, max_row=30, max_col=15, values_only=True), 1):
+        cells = [_s(c) for c in row]
+        # Check multiple candidate header labels
+        if cells[0] in ("編號", "流水號", "No", "No."):
+            header_row = r_idx
+            for ci, c in enumerate(cells):
+                if "檔名" in c or "file" in c.lower():
+                    filename_col = ci
+                if c in ("品項", "運用場景", "項目", "說明"):
+                    item_col = ci
+            break
+        # Also try col B or C as the header marker
+        for ci in range(min(5, len(cells))):
+            if cells[ci] in ("編號", "流水號"):
+                header_row = r_idx
+                for ci2, c in enumerate(cells):
+                    if "檔名" in c or "file" in c.lower():
+                        filename_col = ci2
+                    if c in ("品項", "運用場景", "項目", "說明"):
+                        item_col = ci2
+                break
+        if header_row:
+            break
+
+    if header_row is None or filename_col < 0:
+        spec.warnings.append("audio: 找不到音效表 header（嘗試 '編號'/'流水號'/'LOOP' 皆未匹配）")
+        return
+
+    current_section = ""
+    for row in ws.iter_rows(min_row=header_row + 1, max_row=300, max_col=15, values_only=True):
+        cells = [_s(c) for c in row[:15]]
+        col_a = cells[0]
+        col_item = cells[item_col] if item_col < len(cells) else ""
+        col_fn = cells[filename_col] if filename_col < len(cells) else ""
+
+        # Section header: col A empty, col_item has section name, no filename
+        if not col_a and col_item and not col_fn:
+            current_section = col_item
+            continue
+
+        # Data row: col A is numeric or col_fn has a filename
+        if not col_fn:
+            continue
+        if not re.fullmatch(r"\d+", col_a) and not col_fn.endswith((".m4a", ".mp3", ".wav", ".ogg")):
+            continue
+
+        filenames = [fn.strip() for fn in col_fn.replace("\r", "").split("\n") if fn.strip()]
+        for fn in filenames:
+            spec.audio_clips.append(AudioClip(
+                section=current_section or "未分類",
+                item_zh=col_item,
+                filename=fn,
+                note="",
+            ))
 
 
 # ---------------------------------------------------------------------------
@@ -552,8 +625,8 @@ def derive_feature_flags(spec: ParsedSpec) -> None:
     if has_scatter_symbol or has_fg_audio:
         spec.has_free_game = True
 
-    # HAS_JACKPOT: audio contains Grand, cheat has GRAND/JP keyword,
-    # OR symbol table has JP_ prefixed symbols (symbol-based JP like COLLECT 收分)
+    # HAS_JACKPOT: audio contains Grand, or any cheat has GRAND/JP keyword,
+    # or symbol table has JP-prefixed symbols (symbol-based jackpot like JP_Mini/JP_Grand)
     has_jp_audio = any(
         "Grand" in c.item_zh or "Grand" in c.filename or "Grand" in c.note
         for c in spec.audio_clips
@@ -562,8 +635,8 @@ def derive_feature_flags(spec: ParsedSpec) -> None:
         "JP" in ck.effect.upper() or "GRAND" in ck.effect.upper() for ck in spec.cheat_keys
     )
     has_jp_symbol = any(
-        s.display.upper().startswith("JP_") or s.enum_name.upper().startswith("JP")
-        or "JACKPOT" in s.display.upper()
+        s.enum_name.upper().startswith("JP") or "JACKPOT" in s.enum_name.upper()
+        or s.display.upper().startswith("JP") or "JACKPOT" in s.display.upper()
         for s in spec.symbols
     )
     if has_jp_audio or has_jp_cheat or has_jp_symbol:
@@ -675,6 +748,9 @@ def emit_markdown(spec: ParsedSpec) -> str:
     if not spec.symbols:
         lines.append("⚠ 未解析到任何符號，請檢查原 xlsx 的『■Symbol賠付表』區塊。")
     else:
+        # Sort by SymID (index column from ODDS table) to ensure enum order
+        # matches proto definition — parse order may differ due to category grouping.
+        spec.symbols.sort(key=lambda s: s.index)
         lines.append("| 列舉名稱 | 原命名 | 類型 | 說明 | 備註 |")
         lines.append("|---|---|---|---|---|")
         for s in spec.symbols:
@@ -1219,6 +1295,121 @@ def parse_layout_c(ws: Worksheet, spec: ParsedSpec) -> None:
 
 
 # ---------------------------------------------------------------------------
+# ODDS table SymID reindex (Layout B post-processing)
+# ---------------------------------------------------------------------------
+
+
+def _reindex_from_odds_table(ws: Worksheet, spec: ParsedSpec) -> None:
+    """Find 'ODDS表' section in the overview sheet, extract SymID column,
+    and override symbol indices. Also adds missing server-only symbols."""
+    # Find ODDS table header row (contains '符號' and 'SymID')
+    odds_start = None
+    symid_col = None
+    name_col = None
+    for r_idx, row in enumerate(
+        ws.iter_rows(min_row=1, max_row=200, max_col=10, values_only=True), 1
+    ):
+        cells = [_s(c) for c in row]
+        if "SymID" in cells and "符號" in cells:
+            odds_start = r_idx
+            symid_col = cells.index("SymID")
+            name_col = cells.index("符號")
+            break
+
+    if odds_start is None:
+        return  # No ODDS table found, keep existing indices
+
+    # Read ODDS table: build name→SymID mapping
+    odds_map: dict[str, int] = {}  # normalized_name → SymID
+    auto_id = 0
+    for row in ws.iter_rows(
+        min_row=odds_start + 1, max_row=odds_start + 80, max_col=10, values_only=True
+    ):
+        cells = [_s(c) for c in row] + [""] * 10
+        sym_name = cells[name_col].split("\n")[0].strip()
+        sym_id_str = cells[symid_col].strip()
+        if not sym_name:
+            continue
+        # Stop at next section header or empty block
+        if sym_name.startswith("■") or sym_name.startswith("參考"):
+            break
+        if sym_id_str and re.fullmatch(r"\d+", sym_id_str):
+            sym_id = int(sym_id_str)
+        else:
+            # First entry (e.g. WILD) often has no explicit ID → infer as 0
+            sym_id = auto_id
+        odds_map[_normalize_sym_name(sym_name)] = sym_id
+        auto_id = sym_id + 1
+
+    if not odds_map:
+        return
+
+    # Match existing symbols to ODDS table and override idx
+    matched = set()
+    for s in spec.symbols:
+        # Scatter symbols use positional matching below (name mismatch is common:
+        # symbol sheet uses color names like SCATTER_Green, ODDS uses function names
+        # like SCATTER_Expand). Skip name matching entirely for scatter category.
+        if s.category == "scatter":
+            continue
+
+        # Try multiple match strategies: display name, enum name, raw display
+        candidates = [
+            _normalize_sym_name(s.display.split("(")[0].strip()),
+            _normalize_sym_name(s.display.split("\n")[0].strip()),
+            _normalize_sym_name(s.enum_name),
+            _normalize_sym_name(s.raw_enum_name),
+        ]
+        # Also try the part after the first ( — e.g. "COLLECT (COLLECT\n(收集))" → "COLLECT"
+        if "(" in s.display:
+            inner = s.display.split("(")[1].split(")")[0].strip()
+            candidates.append(_normalize_sym_name(inner))
+
+        for cand in candidates:
+            if cand in odds_map:
+                s.index = odds_map[cand]
+                matched.add(cand)
+                break
+
+    # Positional fallback for scatter symbols: match by position within their
+    # respective groups. Symbol sheet scatters (e.g. Green/Blue/Red/Super) align
+    # positionally with ODDS table scatters (e.g. Expand/Multi/Bomb/Super).
+    # Exclude the generic "scatter" entry (usually server-use, high idx like 25).
+    symbol_sheet_scatters = [s for s in spec.symbols if s.category == "scatter"]
+    # ODDS scatter entries: those with "scatter" in name AND a suffix (not bare "scatter")
+    odds_scatter_entries = [(name, idx) for name, idx in sorted(odds_map.items(), key=lambda x: x[1])
+                           if "scatter" in name and name != "scatter" and name not in matched]
+    for sym, (odds_name, odds_idx) in zip(symbol_sheet_scatters, odds_scatter_entries):
+        sym.index = odds_idx
+        matched.add(odds_name)
+
+    # Add missing symbols from ODDS table (server-only, FEATURE, Blank, etc.)
+    existing_indices = {s.index for s in spec.symbols}
+    for name, idx in odds_map.items():
+        if name not in matched and idx not in existing_indices:
+            category = "special"
+            if "feature" in name:
+                category = "special"
+            elif "blank" in name:
+                category = "special"
+            elif "scatter" in name:
+                category = "scatter"
+            enum_name = _resolve_enum_name(f"Symbol_{idx:02d}", name.upper())
+            spec.symbols.append(SymbolRow(
+                index=idx, enum_name=enum_name, raw_enum_name=f"Symbol_{idx:02d}",
+                display=name, category=category, server_only=True,
+            ))
+
+    # Sort by SymID
+    spec.symbols.sort(key=lambda s: s.index)
+
+
+def _normalize_sym_name(name: str) -> str:
+    """Normalize symbol name for fuzzy matching: lowercase, strip underscores/spaces/parens."""
+    return re.sub(r"[\s_\-()（）]", "", name).lower()
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -1275,6 +1466,11 @@ def run(xlsx_path: Path, out_path: Path) -> int:
                 _parse_inline_symbols(wb[overview_sheet], spec)
             if not spec.symbols:
                 spec.warnings.append("缺少圖騰設計 sheet")
+
+        # Post-process: if overview sheet has ODDS table with numeric SymID,
+        # use it to override the idx from the symbol sheet (which may be auto-increment).
+        if spec.symbols and overview_sheet:
+            _reindex_from_odds_table(wb[overview_sheet], spec)
 
         # Audio: try multiple possible names
         audio_sheet = None
@@ -1342,12 +1538,6 @@ def run(xlsx_path: Path, out_path: Path) -> int:
 
     # Performance-flow hint scan (does NOT parse; only records presence + size)
     scan_performance_hints(wb, spec)
-
-    # Sort symbols by their SymID (index) so enum order matches ODDS table.
-    # xlsx 內符號列可能不按 SymID 排列（如 WILD 排在中段），不排序會導致
-    # enum idx 與 server proto 不對齊。
-    if spec.symbols:
-        spec.symbols.sort(key=lambda s: s.index)
 
     # Fallback: derive game name from filename if not parsed
     if not spec.project.name_zh and not spec.project.name_en:

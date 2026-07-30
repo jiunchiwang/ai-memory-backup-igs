@@ -4,3 +4,8 @@
 - [f_c76741] [2026-07-15T01:19:58.386Z] uof_form.py overtime 的已知問題：直接用 JS 填日期欄不會觸發 onchange，導致刷卡時間欄空白；正確做法是點日曆按鈕選日期（觸發 AJAX 查刷卡）→ 等刷卡時間出現 → 再填其他欄位
 - [f_16d690] [2026-07-16T03:56:32.137Z] 使用者決定 igs-uof 保留原 vc-uof-hours 的加班單 dry-run 填寫功能（uof_form.py），標註為「個人擴充，非公司共享唯讀範圍」——同事的 v2 設計原本已排除寫入操作；若要把 skill 整包分享給同事需重新評估是否移除該檔案
 - [f_02e1bb] [2026-07-17T01:30:04.249Z] uof_form.py overtime 的 submit 流程會把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為 submit_rejected——實際上第一次 headless submit 就已經成功送出（BAE260706086 於 09:27 申請），腳本需修正確認彈窗處理邏輯
+- [f_40460d] [2026-07-30T13:27:05.145Z] 公司內網 UOF（http://uof → https://hq.igs.com.tw/UOF/）於 2026-07-30 前後新增 Cloudflare 反機器人驗證（AntiBotCheck.aspx + Turnstile），headless Playwright 無法通過，導致 igs-uof skill 的所有查詢子命令（hours/attendance/leave/todo/whois）全數失效
+- [f_cd9df4] [2026-07-30T13:27:05.145Z] igs-uof skill 的 uof_client.py 登入與首頁導航 timeout 已從 20s 改為 60s（正本 G:\AI\AI-canonical-corp\skills\office\igs-uof\，2026-07-30 尚未進 git）；UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded
+- [f_d0b4fc] [2026-07-30T13:27:05.145Z] 診斷 igs-uof 失敗時不可信任其 unreachable 錯誤訊息：uof_client.py 的 _is_net_error() 把 Playwright Timeout 也歸類為網路錯誤，實際網路多半正常，應先確認是否被 AntiBotCheck 擋住
+- [f_c64ef5] [2026-07-30T13:27:05.145Z] 使用者對 UOF 反機器人驗證的處理選擇：不做規避驗證的工程（stealth 參數／指紋偽裝），2026-07-30 遇到時選擇自己上網頁手動查加班時數，未採用 --headed 手動過驗證的路徑
+- [f_ecd35a] [2026-07-30T13:27:05.145Z] UOF 加班時數查詢位置：差勤 → 加班統計查詢（Project/BAE/Stats_Search.aspx），設日期區間並勾選簽核狀態「同意」+「簽核中」，看底部平日／假日合計

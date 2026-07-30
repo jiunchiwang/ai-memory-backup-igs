@@ -104,7 +104,7 @@ def _safe_visible(page, sel):
 
 
 def login(page, acct, pw):
-    page.goto(BASE + "Login.aspx", wait_until="domcontentloaded", timeout=20000)
+    page.goto(BASE + "Login.aspx", wait_until="domcontentloaded", timeout=60000)
     page.fill("#txtAccount", acct)
     page.fill("#txtPwd", pw)
     page.click("#btnSubmit")
@@ -146,7 +146,7 @@ def _is_net_error(msg):
 
 def _goto_home_ok(page):
     """開首頁驗證 session 是否有效；被導回 Login.aspx 即失效。"""
-    page.goto(BASE + "Homepage.aspx", wait_until="domcontentloaded", timeout=20000)
+    page.goto(BASE + "Homepage.aspx", wait_until="domcontentloaded", timeout=60000)
     page.wait_for_timeout(800)
     return "login.aspx" not in page.url.lower()
 

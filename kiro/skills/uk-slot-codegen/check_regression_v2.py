@@ -9,7 +9,7 @@ Usage:
     py check_regression_v2.py --spec <Game_Spec.md> --client <client-root>
     py check_regression_v2.py --all   # runs all 3 known fixtures
 
-Exit codes: 0=PASS, 1=FAIL, 2=usage error, 3=path missing
+Exit codes: 0=PASS/WARN, 1=FAIL or required evidence SKIP, 2=usage error, 3=path missing
 """
 from __future__ import annotations
 import argparse, re, sys, json
@@ -23,14 +23,33 @@ from pathlib import Path
 def parse_game_spec(text: str) -> dict:
     """Extract key values from Game_Spec.md."""
     spec = {}
+    def find_number(label: str) -> int | None:
+        match = re.search(
+            rf"(?<![A-Za-z0-9_])(?:\*\*)?{label}(?:\*\*)?\s*[:=]\s*(\d+)",
+            text,
+            re.IGNORECASE,
+        )
+        return int(match.group(1)) if match else None
+
     # COL/ROW
-    m = re.search(r"COL\s*[:=]\s*(\d+)", text)
-    if m: spec["COL"] = int(m.group(1))
-    m = re.search(r"(?:MAX_)?ROW\s*[:=]\s*(\d+)", text)
-    if m: spec["ROW"] = int(m.group(1))
-    # BoardLayout (format: 5x4x4x4x4x5)
-    m = re.search(r"BoardLayout\s*[:=]\s*([\dx]+)", text)
-    if m: spec["BoardLayout"] = m.group(1)
+    col = find_number("COL")
+    if col is not None: spec["COL"] = col
+    row = find_number("ROW")
+    if row is not None: spec["ROW"] = row
+    # BoardLayout supports ASCII/Unicode separators and multiple named modes,
+    # e.g. 3×3×3×3×3（MG）/ 5×5×5×5×5（FG EXPAND）.
+    m = re.search(
+        r"(?:\*\*)?BoardLayout(?:\*\*)?\s*[:=]\s*([^\r\n]+)",
+        text,
+        re.IGNORECASE,
+    )
+    if m:
+        layouts = []
+        for encoded in re.findall(r"\d+(?:\s*[x×]\s*\d+)+", m.group(1), re.IGNORECASE):
+            layouts.append([int(value) for value in re.split(r"\s*[x×]\s*", encoded)])
+        if layouts:
+            spec["BoardLayouts"] = layouts
+            spec["BoardLayout"] = "x".join(map(str, layouts[0]))
     # ROW_CONFIG (format: [5,4,4,4,4,5])
     if "BoardLayout" not in spec:
         m = re.search(r"ROW_CONFIG\s*[:=]\s*\[([^\]]+)\]", text)
@@ -38,24 +57,45 @@ def parse_game_spec(text: str) -> dict:
             nums = [x.strip() for x in m.group(1).split(",") if x.strip().isdigit()]
             if nums:
                 spec["BoardLayout"] = "x".join(nums)
+                spec["BoardLayouts"] = [[int(value) for value in nums]]
     # FULL_PLATE_NUM
-    m = re.search(r"FULL_PLATE_NUM\s*[:=]\s*(\d+)", text)
-    if m: spec["FULL_PLATE_NUM"] = int(m.group(1))
+    full_plate_num = find_number("FULL_PLATE_NUM")
+    if full_plate_num is not None: spec["FULL_PLATE_NUM"] = full_plate_num
     # If no FULL_PLATE_NUM but have BoardLayout, compute it
     if "FULL_PLATE_NUM" not in spec and "BoardLayout" in spec:
         rows = [int(x) for x in spec["BoardLayout"].split("x")]
         spec["FULL_PLATE_NUM"] = sum(rows)
-    # Symbols - count lines in Symbol table
-    sym_section = re.search(r"##\s*(?:\d+\.\s*)?Symbol.*?\n(.*?)(?=\n##|\Z)", text, re.DOTALL | re.IGNORECASE)
+    # Symbols - preserve SymID and exclude rows explicitly marked server_only
+    # from the client contract. Server-only IDs belong to the protocol/spec but
+    # do not need a client enum member or SymbolEffect prefab.
+    sym_section = re.search(
+        r"##\s*(?:\d+\.\s*)?(?:Symbol|圖騰).*?\n(.*?)(?=\n##|\Z)",
+        text,
+        re.DOTALL | re.IGNORECASE,
+    )
     if sym_section:
-        rows = re.findall(r"^\|\s*\d+\s*\|", sym_section.group(1), re.MULTILINE)
-        if rows: spec["symbol_count"] = len(rows)
-    # Also try: count rows in any table under "圖騰" section
-    if "symbol_count" not in spec:
-        sym_section = re.search(r"##\s*(?:\d+\.\s*)?(?:Symbol|圖騰).*?\n(.*?)(?=\n##|\Z)", text, re.DOTALL)
-        if sym_section:
-            rows = re.findall(r"^\|\s*\d+\s*\|", sym_section.group(1), re.MULTILINE)
-            if rows: spec["symbol_count"] = len(rows)
+        symbols = []
+        for line in sym_section.group(1).splitlines():
+            if not re.match(r"^\|\s*\d+\s*\|", line):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if len(cells) < 2:
+                continue
+            sym_id = int(cells[0])
+            marker_text = " ".join(cells[2:])
+            server_only = bool(
+                re.search(r"server[_\s-]*only|server\s*用|伺服器", marker_text, re.IGNORECASE)
+            )
+            symbols.append({"id": sym_id, "name": cells[1], "server_only": server_only})
+        if symbols:
+            client_symbols = [symbol for symbol in symbols if not symbol["server_only"]]
+            spec["symbols"] = symbols
+            spec["symbol_ids"] = [symbol["id"] for symbol in client_symbols]
+            spec["server_only_symbol_ids"] = [
+                symbol["id"] for symbol in symbols if symbol["server_only"]
+            ]
+            spec["symbol_count"] = len(client_symbols)
+            spec["total_symbol_count"] = len(symbols)
     # PayMode
     m = re.search(r"PayMode\s*[:=]\s*(\w+)", text)
     if m: spec["PayMode"] = m.group(1)
@@ -88,19 +128,31 @@ def parse_client_game_define(client: Path) -> dict:
     m = re.search(r"static\s+MAX_ROW\s*=\s*(\d+)", text)
     if m: result["MAX_ROW"] = int(m.group(1))
 
-    # Symbol enum count
+    # Symbol enum members and their numeric TypeScript enum values.
     em = re.search(r"export\s+enum\s+Symbol\s*\{([^}]+)\}", text, re.DOTALL)
     if em:
         body = em.group(1)
-        count = 0
+        symbols = []
+        next_value = 0
         for line in body.splitlines():
             s = line.strip()
             if not s or s.startswith("//") or s.startswith("/*") or s.startswith("*"):
                 continue
             token = s.rstrip(",").split("//")[0].strip()
-            if token and re.match(r"^[A-Za-z_]\w*(\s*=\s*\d+)?$", token):
-                count += 1
-        result["symbol_count"] = count
+            member = re.match(r"^([A-Za-z_]\w*)(?:\s*=\s*(-?\d+))?$", token)
+            if not member:
+                continue
+            if member.group(2) is not None:
+                next_value = int(member.group(2))
+            symbols.append({"name": member.group(1), "id": next_value})
+            next_value += 1
+        result["symbols"] = symbols
+        result["symbol_ids"] = [symbol["id"] for symbol in symbols]
+        result["symbol_count"] = len(symbols)
+
+    m = re.search(r"static\s+SYMBOL_COUNT\s*=\s*(\d+)", text)
+    if m:
+        result["SYMBOL_COUNT"] = int(m.group(1))
 
     # ROW_CONFIG
     m = re.search(r"static\s+ROW_CONFIG\s*=\s*\[([^\]]+)\]", text)
@@ -124,6 +176,11 @@ def parse_client_slot_reels(client: Path) -> dict:
     if m:
         items = [x.strip() for x in m.group(1).split(",") if x.strip()]
         result["NORMAL_COLUMNS_len"] = len(items)
+    elif re.search(
+        r"NORMAL_COLUMNS\s*=\s*Array\.from\s*\(\s*\{\s*length\s*:\s*Game_Define\.COL\s*\}",
+        text,
+    ):
+        result["NORMAL_COLUMNS_from_col"] = True
 
     # m_reelMasks vs m_reelMask
     if "m_reelMasks" in text:
@@ -202,13 +259,42 @@ def check_col_row(spec: dict, client_gd: dict) -> CheckResult:
 
 
 def check_symbol_count(spec: dict, client_gd: dict) -> CheckResult:
-    """Verify symbol enum count."""
+    """Verify the client Symbol enum against non-server-only spec SymIDs."""
     expected = spec.get("symbol_count")
     actual = client_gd.get("symbol_count")
     if expected is None:
         return CheckResult("symbol_count", "SKIP", "spec has no symbol table")
     if actual is None:
         return CheckResult("symbol_count", "SKIP", "client has no Symbol enum")
+    expected_ids = spec.get("symbol_ids")
+    actual_ids = client_gd.get("symbol_ids")
+    if expected_ids is not None and actual_ids is not None:
+        issues = []
+        missing = sorted(set(expected_ids) - set(actual_ids))
+        unexpected = sorted(set(actual_ids) - set(expected_ids))
+        symbol_names = {symbol["id"]: symbol["name"] for symbol in spec.get("symbols", [])}
+        if missing:
+            labels = ", ".join(f"{sym_id} ({symbol_names.get(sym_id, '?')})" for sym_id in missing)
+            issues.append(f"missing client SymID: {labels}")
+        if unexpected:
+            issues.append(f"unexpected client SymID: {', '.join(map(str, unexpected))}")
+        if len(actual_ids) != len(set(actual_ids)):
+            issues.append(f"duplicate client SymID values: {actual_ids}")
+
+        declared_count = client_gd.get("SYMBOL_COUNT")
+        if declared_count is not None and declared_count != actual:
+            issues.append(f"SYMBOL_COUNT={declared_count}, but enum has {actual} members")
+
+        if issues:
+            return CheckResult("symbol_count", "FAIL", f"{len(issues)} symbol contract mismatch", issues)
+        server_only = spec.get("server_only_symbol_ids", [])
+        return CheckResult(
+            "symbol_count",
+            "PASS",
+            f"client IDs={actual_ids}; server-only excluded={server_only}",
+        )
+
+    # Backward-compatible fallback for legacy spec formats without SymID rows.
     if actual >= expected:
         return CheckResult("symbol_count", "PASS", f"client={actual} >= spec={expected}")
     return CheckResult("symbol_count", "FAIL", f"client={actual} < spec={expected} (missing symbols)")
@@ -218,7 +304,11 @@ def check_normal_columns(spec: dict, client_sr: dict) -> CheckResult:
     """Verify NORMAL_COLUMNS length = COL."""
     col = spec.get("COL")
     nc_len = client_sr.get("NORMAL_COLUMNS_len")
-    if col is None or nc_len is None:
+    if col is None:
+        return CheckResult("normal_columns", "SKIP", "cannot get COL or NORMAL_COLUMNS")
+    if client_sr.get("NORMAL_COLUMNS_from_col"):
+        return CheckResult("normal_columns", "PASS", "NORMAL_COLUMNS derived from Game_Define.COL")
+    if nc_len is None:
         return CheckResult("normal_columns", "SKIP", "cannot get COL or NORMAL_COLUMNS")
     if col == nc_len:
         return CheckResult("normal_columns", "PASS", f"NORMAL_COLUMNS.length={nc_len} = COL")
@@ -227,28 +317,50 @@ def check_normal_columns(spec: dict, client_sr: dict) -> CheckResult:
 
 def check_variable_board(spec: dict, client_gd: dict, client_sr: dict, client_prefab: dict) -> CheckResult:
     """Verify variable board layout handling."""
-    board = spec.get("BoardLayout")
-    if not board:
+    layouts = spec.get("BoardLayouts")
+    if not layouts and spec.get("BoardLayout"):
+        layouts = [[int(value) for value in spec["BoardLayout"].split("x")]]
+    if not layouts:
         return CheckResult("variable_board", "SKIP", "spec has no BoardLayout")
 
-    rows = [int(x) for x in board.split("x")]
-    is_variable = len(set(rows)) > 1
+    board = " / ".join("x".join(map(str, layout)) for layout in layouts)
+    issues = []
+    col = spec.get("COL")
+    if col is not None:
+        bad_lengths = [layout for layout in layouts if len(layout) != col]
+        if bad_lengths:
+            issues.append(f"BoardLayout column count != COL={col}: {bad_lengths}")
 
-    if not is_variable:
+    base_row = spec.get("ROW")
+    if base_row is not None and any(value != base_row for value in layouts[0]):
+        issues.append(f"base BoardLayout={layouts[0]} does not match ROW={base_row}")
+
+    max_row = client_gd.get("MAX_ROW")
+    expected_max_row = max(max(layout) for layout in layouts)
+    if max_row is not None and max_row != expected_max_row:
+        issues.append(f"MAX_ROW={max_row}, BoardLayouts max={expected_max_row}")
+
+    has_per_column_variation = any(len(set(layout)) > 1 for layout in layouts)
+
+    if not has_per_column_variation:
+        if issues:
+            return CheckResult("variable_board", "FAIL", f"uniform board {board}: {len(issues)} issues", issues)
         if client_sr.get("mask_type") == "single":
-            return CheckResult("variable_board", "PASS", f"equal-width {board}, single Mask ok")
+            label = "multi-mode uniform" if len(layouts) > 1 else "uniform"
+            return CheckResult("variable_board", "PASS", f"{label} layouts {board}, single Mask ok")
         elif client_sr.get("mask_type") == "array":
-            return CheckResult("variable_board", "PASS", f"equal-width {board}, array Mask ok")
+            label = "multi-mode uniform" if len(layouts) > 1 else "uniform"
+            return CheckResult("variable_board", "PASS", f"{label} layouts {board}, array Mask ok")
         return CheckResult("variable_board", "SKIP", "cannot determine mask type")
 
     # Variable board — must have per-column mask
-    issues = []
     if client_sr.get("mask_type") != "array":
         issues.append("SlotReels should use m_reelMasks[], actual uses m_reelMask single ref")
     if not client_sr.get("has_reel_mask_columns"):
         issues.append("SlotReels missing REEL_MASK_COLUMNS mapping")
 
     # Check ROW_CONFIG
+    rows = layouts[0]
     row_config = client_gd.get("ROW_CONFIG")
     if row_config:
         if row_config != rows:
@@ -307,9 +419,14 @@ def print_results(label: str, results: list[CheckResult]) -> bool:
         print(f"  {icon} {r.name}: {r.message}")
         for d in r.details:
             print(f"       {d}")
-        if r.status == "FAIL":
+        if r.status in {"FAIL", "SKIP"}:
             any_fail = True
     return any_fail
+
+
+def has_blocking_results(results: list[CheckResult]) -> bool:
+    """Required regression evidence may PASS or WARN; FAIL/SKIP blocks finalize."""
+    return any(result.status in {"FAIL", "SKIP"} for result in results)
 
 
 def main(argv: list[str] | None = None) -> int:

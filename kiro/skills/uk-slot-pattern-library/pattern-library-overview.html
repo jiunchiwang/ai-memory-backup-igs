@@ -47,11 +47,11 @@ code{background:var(--surface2);padding:1px 4px;border-radius:3px;font-size:.8re
 </head>
 <body>
 <h1>🎰 UK Slot Pattern Library</h1>
-<p class="subtitle">路線 C 翻譯層的 grounding — 從規格書映射 Feature 到程式實作的模式庫<br>25 張模式卡片 · 12 個參考專案 · 點擊卡片展開詳細資訊</p>
+<p class="subtitle">路線 C 翻譯層的 grounding — 從規格書映射 Feature 到程式實作的模式庫<br>26 張模式卡片 · 13 個參考專案 · 點擊卡片展開詳細資訊</p>
 
 <div class="stats">
-<div class="stat-box"><div class="stat-num">25</div><div class="stat-label">模式卡片</div></div>
-<div class="stat-box"><div class="stat-num">12</div><div class="stat-label">參考專案</div></div>
+<div class="stat-box"><div class="stat-num">26</div><div class="stat-label">模式卡片</div></div>
+<div class="stat-box"><div class="stat-num">13</div><div class="stat-label">參考專案</div></div>
 <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">卡片 Section</div></div>
 <div class="stat-box"><div class="stat-num">LGS</div><div class="stat-label">最新驗證</div></div>
 </div>
@@ -275,7 +275,13 @@ const patterns = [
  identify:["新專案建立時","需要確認框架提供哪些 State"],
  state:"18 States（4 Framework + 14 GAMEVIEW_STATE）",
  variants:["Standard SpinMode","Cascade SpinMode","Tumble SpinMode"],
- edges:["Framework State 不可改","GAMEVIEW_STATE 可擴展","CheckState 是路由器核心"]}
+ edges:["Framework State 不可改","GAMEVIEW_STATE 可擴展","CheckState 是路由器核心"]},
+{id:26,name:"RT 凍幀報獎（RenderTexture 蓋幀）",freq:"mid",refs:["uk_pirates_queen","746 far_west"],badge:"new",
+ desc:"橫切機制：報獎期間把整個畫面渲成 RenderTexture 貼上去，再把底下實體節點關掉省效能。不是存檔截圖，沒有 readPixels",
+ identify:["「報獎/進退 FG 期間顯示整個遊戲畫面當背景」","報獎面板一跳出來就掉幀","要在演出期間停掉轉輪/角色/背景 spine 的更新"],
+ state:"不新增 State；各 State 自己 dispatch AWARD_IN_RT / AWARD_OUT_RT，RTCtrl 單點收斂",
+ variants:["RT_EVENT enum 放 RTCtrl.ts（pirates_queen）vs 放 Game_Define.ts（far_west）","防閃三步 sprite 先關後開（pirates_queen）vs RTRoot 一次開（far_west）","報獎中轉螢幕：IsLockRotation 早退守衛 vs 強制退出 RT"],
+ edges:["新專案抄 pirates_queen 版，far_west 版有 6 個已修缺陷","OnDestroy 大駝峰＝死碼，引擎回呼必須小寫 onDestroy","接線在 targetOverrides 不在 propertyOverrides，看到 null 別以為沒接","m_hideNodes 漏填不會報錯只是省不到效能","RT 相機要抄主相機 orthoHeight，否則比例不對","Init 每次 new RT 必須釋放上一輪，否則 canvas-resize 反覆觸發就洩漏","只發 IN 沒發 OUT 會永久卡凍幀"]}
 ];
 
 const grid = document.querySelector('.grid');

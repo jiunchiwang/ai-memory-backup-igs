@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "331c3e30",
+      "activeId": "8bc738ef",
       "sessions": [
         {
-          "id": "331c3e30",
-          "name": "[Memory recall — dynamic",
-          "createdAt": 1785314506815,
-          "sessionId": "486b0510-0b35-4ce8-aaf0-5ba3b08f9f14",
+          "id": "8bc738ef",
+          "name": "請產出 2026-07-30 的 daily l",
+          "createdAt": 1785428241697,
+          "sessionId": "c64366c6-9f01-4c29-91d6-085c87071420",
           "backendKey": "kiro",
           "agentCommand": "kiro-cli",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1785314506812
+          "savedAt": 1785428241691
         }
       ]
     }

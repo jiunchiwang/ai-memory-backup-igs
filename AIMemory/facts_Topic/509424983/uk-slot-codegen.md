@@ -10,3 +10,4 @@
 - [f_98e336] [2026-07-09T11:41:35.473Z] 使用者決定 uk-slot-codegen 不需抽出整合成獨立 skill——自有 skill 體系已自包含（spec-to-impl + pattern-library + state-machine/extrabet/fake-reel/multilang + excel-to-ai-doc + uk-slot-pitfalls），codegen 保留原樣當「偶爾借用的 M0a~M1 加速器」即可
 - [f_1b276f] [2026-07-09T11:41:35.480Z] uk-slot-pattern-library 是完全自包含的純知識庫（零硬編碼路徑、零執行依賴、專案名稱僅資訊性引用），uk-slot-codegen 則有硬依賴本地/遠端專案（E:\UK\uk_slot_template 等絕對路徑 + git clone）——兩者設計定位根本不同
 - [f_6fe390] [2026-07-10T15:54:46.749Z] AIMemory artifacts 檔名格式 <date>_<taskId>_<specialist>_<slug>.json 中 taskId 本身可含底線（如 pt_codegen_probe），positional split('_') 解析必錯，須用已知欄位（specialist name）錨定 regex
+- [f_561bf0] [2026-07-30T16:17:09.612Z] Cocos prefab 的跨 prefab instance 元件引用存在 cc.TargetOverrideInfo（targetOverrides）而非 propertyOverrides，直接讀 prefab 會看到欄位是 null 而誤判功能沒接好（uk_pirates_queen 的 RTCtrl 五條接線在 MainGame.prefab idx 2889/2892/3018/3021/3024）；這也是 uk-slot-codegen「CompPrefabInfo.fileId 禁改」的下游後果——fileId 一動這些接線全斷成執行期 crash

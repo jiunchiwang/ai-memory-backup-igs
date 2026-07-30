@@ -1,6 +1,6 @@
 # Codegen Flow
 
-**⚠️ 關鍵規則：收到 codegen 委派後，必須一口氣從 Step 0 跑到 Step 5（Report）完畢才停。禁止中途暫停等待使用者說「繼續」。若 context 不夠用 <<CONTINUE>> 自動延續。**
+**⚠️ 關鍵規則：收到 codegen 委派後，必須一口氣從 Pre-A 跑到 Step 5（Report）完畢才停。標準 codegen 的完成邊界是無頭編譯驗證；禁止啟動、等待或呼叫 Cocos Editor。禁止中途暫停等待使用者說「繼續」。若 context 不夠用 <<CONTINUE>> 自動延續。**
 
 每步只讀「📖 讀取」欄位列出的檔案。每步結束跑對應 gate。
 
@@ -10,10 +10,13 @@
 
 | Step | 名稱 | 需 Editor | 可跳過 |
 |------|------|-----------|--------|
+| Pre-0 | 前提確認 | ❌ | ❌ |
+| Pre-A | 規格轉換 (excel-to-ai-doc) | ❌ | 條件（docs/spec/ 已存在時跳） |
+| Pre-B | 差異分類 + dev-spec | ❌ | 條件（dev-spec.md 已存在時跳） |
 | 0 | Preflight | ❌ | ❌ |
 | 0.0 | Template Copy | ❌ | 條件（目標非空時跳） |
 | 0.1 | Extensions Clone | ❌ | ❌ |
-| 1 | Spec Ingestion | ❌ | ❌ |
+| 1 | Spec Ingestion (adapter) | ❌ | ❌ |
 | 1.5 | Spec Traceability | ❌ | ❌ |
 | 2 | Summary Generation | ❌ | ❌ |
 | 3.1 | Game_Define | ❌ | ❌ |
@@ -21,17 +24,129 @@
 | 3.3 | Proto | ❌ | ❌ |
 | 3.4 | Mock Server | ❌ | ❌ |
 | 3.5 | Reel Module | ❌ | ❌ |
-| 3.6 | State Machine files | ❌ | ❌ |
+| 3.6 | Scaffold（State files + Common + Directory，合併原 3.6/3.8/3.9） | ❌ | ❌ |
 | 3.7 | Audio | ❌ | ❌ |
-| 3.8 | Common | ❌ | ❌ |
-| 3.9 | Directory & Prefab | ❌ | ❌ |
 | 3.10 | Feature Code | ❌ | ❌ |
 | H1 | Feature Prefab | ❌ | ❌ |
 | H2 | Symbol PNG | ❌ | ❌ |
-
 | H4 | Art Manifest | ❌ | ❌ |
-| 4 | Validation | ✅ | ⚠️ 可跳 |
+| 4a | Headless Compile Validation | ❌ | ❌ |
 | 5 | Report | ❌ | ❌ |
+
+---
+
+## Mode / Input 執行矩陣
+
+| Mode | xlsx | markdown | 生成碼改寫 |
+|------|------|----------|--------------|
+| new | Pre-A/B → Step 0~5 | 複製 markdown 為 `scratch/Game_Spec.md` → Pre-B → Step 0~5 | 允許 |
+| update | 重跑 ingestion/summary，再按 anchor merge 到 Step 5 | 同左 | 只改 CODEGEN anchor／差異追加 |
+| validate | 若有新 spec 先重建 `Game_Spec.md`，再跑 Step 0 → 4a → 5 | 複製為 `Game_Spec.md`，再跑 Step 0 → 4a → 5 | **禁止** |
+
+`validate` 模式不執行 Pre-B、Step 0.0/0.1、Step 2~H4；若未提供新 spec，必須使用 target 現有的 `scratch/Game_Spec.md`，不得偷用其他專案 fixture。
+
+---
+
+## Pre-0: 前提確認
+
+📖 無（只確認參數）
+
+收到委派後第一件事，**填完才能進 Pre-A**。不停等使用者，但未填的欄位要在 Step 5 Report
+的「人工檢查點待確認」區塊列出來。
+
+```
+- [ ] 規格書路徑：________________
+- [ ] 專案輸出目錄：________________
+- [ ] uk_slot_template 來源：遠端 clone / 本地 archive ________________
+- [ ] 最近似衍生品（僅供 code review 參考）：________________（無則留空）
+- [ ] Proto 狀態：已發佈 ________________ / ⏳ 未發佈（走 proto stub，見 _milestones.md）
+```
+
+> ⚠️ **差異分析的基準永遠是 `uk_slot_template`，不是衍生品。**
+> 拿衍生品當基準會把「衍生品已實作的遊戲特有功能」誤判成 🟢，導致 Pre-B 分類錯誤與
+> 工作量低估（2026-07-09 Clash of Olympus 實證：模板本來就有 Collect/Cash/CoinState，
+> 因為只看衍生品而誤判為 🔴）。衍生品只用於 code review 參考，不影響 🟢/🟡/🔴 判定。
+
+**驗證**：`spec_path` 與 `target_path` 已確定；proto 狀態已標記
+
+---
+
+## Pre-A: 規格轉換 (excel-to-ai-doc)
+
+📖 `${SKILL_DIR}/excel-to-ai-doc/SKILL.md`
+
+**跳過條件**：`<target>/docs/spec/markdown/` 已有 .md 檔案
+
+用 excel-to-ai-doc 把 xlsx 轉成 AI 可讀結構。產出是整個 pipeline 的 **ground truth**。
+
+```powershell
+$env:PYTHONUTF8='1'
+py "${SKILL_DIR}/excel-to-ai-doc/scripts/convert.py" "<spec_path>" "<target>/docs/spec"
+```
+
+**輸出**：`<target>/docs/spec/markdown/<stem>.md` + `images/` + `metadata.json`
+
+> 🔍 **檢查點 1（請使用者過目）**：Codegen 不停等確認即可繼續，但**必須逐項輸出下列
+> 格式並收進 Step 5 Report**，不可只寫「看起來沒問題」：
+>
+> ```
+> - 圖片：共 {N} 張。比對工作表數量，漏抽風險：{有/無}
+> - 賠付表數值：{有完整數值 / 部分空白需機率文件 / 全空}
+> - 關鍵玩法圖對應章節：
+>   - {章節名} → {圖片 cell 位置} {對/缺}
+> ```
+
+Pre-A 完成後**立即建立 `<target>/AI.md`**（照 `uk-slot-project-docs` 慣例），填入已知的
+專案 meta、盤面佈局、Symbol 列表；後續每個 Step 增量更新。越早建越有用——留到 M0a
+之後才建，前面幾步的發現就沒地方落。
+
+**驗證**：`<target>/docs/spec/markdown/` 至少有一個 .md 檔案，且 `<target>/AI.md` 存在
+
+---
+
+## Pre-B: 差異分類 + dev-spec
+
+📖 `<target>/docs/spec/markdown/<stem>.md`（Pre-A 產出，含關鍵玩法圖片）
+📖 `<template>/assets/Script/Game_Define.ts`（**模板現碼**：Symbol enum + GameState enum）
+📖 `${SKILL_DIR}/uk-slot-pattern-library/SKILL.md`（模式索引）
+📖 `${SKILL_DIR}/uk-slot-pattern-library/patterns/`（按需讀取對應模式卡片）
+
+⚠️ **必讀模板 `Game_Define.ts` 再分類**。不讀就分類是「模板已有的符號/State 被標成 🔴」
+的直接成因（見檢查點 2 常見錯誤）——分類基準是模板現碼，不是印象也不是衍生品。
+
+**跳過條件**：`<target>/docs/dev-spec.md` 已存在
+
+讀規格書 raw markdown，對照 pattern-library 的模式卡片，產出差異開發規格。
+
+### 功能分類表
+
+規格書每個功能標一類：
+
+| 分類 | 意義 | dev-spec 裡要寫的 |
+|------|------|------------------|
+| 🟢 模板已有 | Standard/Cascade/Tumble、基本 UI 等 | 只列設定值 |
+| 🟡 有既成模式 | pattern-library 裡有卡片的（ExtraBet、FakeReel 等） | 標對應 pattern 名 |
+| 🔴 本作特有 | 新機制（如能量收集、輪盤選獎） | 附一段迷你設計 |
+
+🔴 清單就是真正的工作量所在。
+
+### proto 映射表
+
+功能 ↔ proto 欄位對照。**proto 未發佈時**：整表標 ⏳，每項記錄「假設的資料形狀」。
+
+**輸出**：`<target>/docs/dev-spec.md`
+
+> 🔍 **檢查點 2（請使用者過目）**：同樣不停等，但**必須逐項輸出下列格式並收進 Step 5
+> Report**：
+>
+> ```
+> - 🔴 清單完整性：共 {N} 項，有無遺漏？
+> - 分類正確性：有無 🟡 應為 🔴、或 🔴 應為 🟡 的？
+>   （常見錯誤：模板已有的符號/State 被標成 🔴）
+> - Proto 假設合理性：{合理 / 需調整項目}
+> ```
+
+**驗證**：`<target>/docs/dev-spec.md` 存在且含 🟢🟡🔴 分類表
 
 ---
 
@@ -40,7 +155,7 @@
 📖 無（只用 shell/read 偵測）
 
 1. 檢查 `.codegen-checkpoint.json` → 存在則恢復
-2. 檢查 `assets/Script/` → 決定 mode（new/update/validate）
+2. mode 判定優先順序：使用者明確指定 `validate` → 否則目標空為 `new` → 已有 `assets/Script/` 為 `update`；`validate` 不得由檔案系統自動推測
 3. 檢查 spec 副檔名 → 決定 ingestion 策略
 4. 寫初始 checkpoint
 
@@ -66,7 +181,7 @@ Remove-Item "<target>\.git" -Recurse -Force
 
 ---
 
-## Step 0.1: Extensions Clone
+## Step 0.1: Extensions Sync
 
 📖 `<target>/gameSetting.json`
 
@@ -74,24 +189,35 @@ Remove-Item "<target>\.git" -Recurse -Force
 
 **repo URL 來源規則**：讀 `<target>/gameSetting.json` → 取 `extensions[0].git` 欄位值作為 repo URL。若該欄位不存在，使用 `git@github.com:IGS-ARCADE-DIVISION-RD2/uk_slot_template_extensions.git`。
 
-```powershell
-git clone <repo_url> "<target>/extensions"
-```
+分流是強制的：
+
+- `<target>/extensions/.git` 存在：在該 repo 執行 `git pull --ff-only`
+- `extensions` 不存在：`git clone <repo_url> "<target>/extensions"`
+- `extensions` 存在但不是 git repo：停止並報告，不得覆蓋
 
 **驗證**：`_gates.md` §0
 
 ---
 
-## Step 1: Spec Ingestion
+## Step 1: Spec Ingestion (adapter)
 
 📖 `${SKILL_DIR}/uk-slot-codegen/spec_adapter.py`（xlsx 時）
+
+Pre-A 已產出 `docs/spec/`（ground truth），本步產出唯一的 `scratch/Game_Spec.md`。
 
 ```powershell
 $env:PYTHONIOENCODING='utf-8'
 py "${SKILL_DIR}/uk-slot-codegen/spec_adapter.py" <spec_path> <target>/scratch/Game_Spec.md
 ```
 
+- `.xlsx`：執行上述 adapter
+- `.md`：以 filesystem copy 將輸入複製為 `<target>/scratch/Game_Spec.md`；Gate 若解不出 COL/ROW/Symbol/BoardLayout 必須失敗，不得 SKIP 完成
+
 **輸出**：`<target>/scratch/Game_Spec.md`
+
+> 注意：adapter 的 Symbol idx 已從 ODDS 表 reindex 校正，但仍以 Pre-A 的 raw markdown 為最終權威。
+> Step 2 產出 Summary 時若發現 adapter 順序與 ODDS 表不一致，以 ODDS 表為準。
+
 **驗證**：`_gates.md` §1
 
 ---
@@ -104,17 +230,32 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_adapter.py" <spec_path> <target>/scratch/G
 py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch/Game_Spec.md
 ```
 
+`tag-spec` 可重跑且必須保持既有 ID 穩定；表格 header 不得配置 ID。ID prefix 僅是歷史 chapter 編號，不代表 ownership，後續 scope 以 section title、欄位內容與 provenance 判定。
+
+`SymbolWidth`、`SymbolHeight`、`SeparateLineWidth`、`MIDDLE_PLATE_INDEX` 若只是依 `_api-ref.md` 補入，scope 必須是 `inferred default`，不得冒充原始規格或阻擋 gate。只有原始 xlsx 明確提供值時，才在該行加 `[SOURCE:xlsx]`，提升為 codegen-owned contract。
+
 **驗證**：`_gates.md` §1.5
 
 ---
 
 ## Step 2: Summary Generation
 
-📖 `<target>/scratch/Game_Spec.md`
+📖 `<target>/scratch/Game_Spec.md`（adapter 結構化輸出，快速參考）
+📖 `<target>/docs/spec/markdown/<stem>.md`（excel-to-ai-doc raw，ground truth）
 
 1. 解析 Game_Spec 產出 7 章節 Summary
 2. 辨識 SpinMode（4 條優先規則）
-3. 產出 `Game_Summary_File.md`
+3. **Symbol 排序校正**：從 raw markdown 找「ODDS表」區塊，讀取 SymID 欄數字。
+   非 `server_only` 項目的 SymID 是 `enum Symbol` 的 client 契約；若 adapter 的
+   Game_Spec 中 Symbol idx 與 ODDS 表 SymID 不一致，**以 ODDS 表為準**。
+4. 產出 `Game_Summary_File.md`
+
+**SymID 校正規則**：
+- ODDS 表通常在「2. 基本規格」sheet 內，raw markdown 中搜尋「ODDS表」或「SymID」關鍵字定位
+- 第一個 Symbol（通常 WILD）若無 SymID 數字，則為 idx=0
+- 後續 Symbol 依 SymID 欄遞增排列
+- ODDS 表有但 adapter 漏掉的 Symbol（如 FEATURE、Blank、server 用）須補入 Summary；
+  server 用項目必須另列並標 `server_only`，不得計入 Client Symbol Count
 
 **SpinMode 判定**：
 1. 明確標示「Tumble/Cascade/消除/掉落」→ dropEntry
@@ -131,11 +272,12 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 
 📖 本步讀：`_api-ref.md` §Game_Define + `_pitfalls.md` §3.1 + Game_Summary_File
 
-1. 替換 `enum Symbol`（符號清單）
+1. 替換 `enum Symbol`（只含非 `server_only` 符號，保留 ODDS 表原始 SymID）；
+   `server_only` 只保留在 Summary／protocol 契約，不得放進 `Game_Define.Symbol`、
+   `SYMBOL_COUNT`、SymbolEffect prefab 或 Symbol PNG 需求
 2. 替換 COL/ROW/FULL_PLATE_NUM/MAX_ROW
-3. 替換 AudioClips block
-4. 替換/增減 enum GAMEVIEW_STATE
-5. 設定 SCATTER_SYMBOL / NEARWIN_COLLECT_COUNT
+3. 替換/增減 enum GAMEVIEW_STATE
+4. 設定 SCATTER_SYMBOL / NEARWIN_COLLECT_COUNT
    - `SCATTER_SYMBOL`：**只放規格書標示為 Scatter 的那一顆**（觸發 FG / NearWin 的符號），用 `Symbol.XXX` enum member
    - Feature Symbol（如 Expand/Multiplier/Bomb/Collect 等特殊功能符號）**不是 Scatter**，不放進 `SCATTER_SYMBOL`——它們各自在 Feature State 裡處理
 6. **3.1.1**：修正 SlotReels.ts 中 `Symbol.A` / `Symbol.Ten` 硬編碼引用
@@ -168,20 +310,31 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 1. 確定 namespace（如 `ar2lpProto`，取遊戲 short name）
 2. 複製 template 的 `assets/Script/Test/` 下的 proto .js + .d.ts
 3. 全文 replace 舊 namespace → 新 namespace（js + d.ts）
-4. 更新 package.json（移除舊 proto npm 依賴）
-5. 替換所有 .ts 中 proto import 為 `import protocol from "./Test/<ns>Proto.js"`
-6. `npm install`
+4. 更新 package.json（移除舊 proto npm 依賴；`devDependencies.typescript` 固定為已驗證版本 `5.9.3`）
+5. 只建／更新 `assets/Script/Proto.ts` 單一間接點；其他 .ts 一律維持 `./Proto`
+6. 若 package.json 有變更才執行 `npm install`
 
-> ⚠️ **本地慣例覆蓋（見 SKILL.md「與 uk-slot-spec-to-impl 的分工」）**：步驟 5 不改
-> 所有 .ts——只建 `assets/Script/Proto.ts` 單一間接點
-> （`import protocol from "./Test/<ns>Proto.js"; export default protocol;`），
-> 其他 .ts 一律 `import protocol from "./Proto"`。換 proto 時只動 Proto.ts 一處
-> （uk_917 實證：全案直接 import 換 proto 要動幾十個檔案）。
+`compile-proto.js` 是舊的精簡產生器，禁止用於 Step 3.3；需自產 proto stub 時使用 `_milestones.md` 的標準 pbjs + pbts 路徑。
 
-**import 格式**：`import protocol from "./Test/xxxProto.js"`（default import + 帶 .js）
+**Proto.ts 固定格式**（runtime 與 type namespace 必須分流）：
+```ts
+import protocol from "./Test/<ns>Proto.js";
+export type { <ns> } from "./Test/<ns>Proto.js";
+export default protocol;
+```
+
+消費端固定格式：
+```ts
+import protocol from "./Proto";          // runtime：protocol.<ns>.GameInfoData
+import type { <ns> } from "./Proto";      // type：<ns>.IRoundInfo
+```
+
+禁止 `export * from "./Test/<ns>Proto.js"` 取代 default export；Cocos 載入 CJS protobuf 時會使 runtime `protocol.<ns>` 變成 undefined。也禁止把 default import 當 namespace type（`protocol.<ns>.IRoundInfo`），會觸發 TS2503。
+
+**import 格式**：底層 proto 必須是 `import protocol from "./Test/xxxProto.js"`（default import + 帶 .js）
 **d.ts 格式**：末尾必須有 `declare const protocol: { <ns>: typeof <ns> }; export default protocol;`
 
-**輸出**：`<target>/assets/Script/Test/<ns>.js` + `.d.ts`
+**輸出**：`<target>/assets/Script/Test/<ns>Proto.js` + `<ns>Proto.d.ts` + `assets/Script/Proto.ts`
 **驗證**：`_gates.md` §3.3
 
 ---
@@ -192,8 +345,8 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 
 1. Game_Define 加 `USE_MOCK_SERVER` + `MOCK_MODE`
 2. GameView.OnCommand 加 Mock 攔截
-3. 寫 `GenerateMockSpinAck()`（4 mode：normal/freegame/bigwin/nearwin）
-4. 寫 `InitMockKeyboard()`（Cocos input 系統，熱鍵 1~4）
+3. 寫 `GenerateMockSpinAck()`（至少包含 normal/freegame/bigwin/nearwin/symboleffect；遊戲需要時追加 collect/jackpot）
+4. 寫 `InitMockKeyboard()`（Cocos input 系統；固定 `5=symboleffect`，既有 jackpot 移至 `7`）
 5. **必須取消以下 template 註解**（否則 FG/消除流程斷裂）：
    - `OnRecvSpinAck` 中 `this.IsGoingToFree = true`（FG 觸發）
    - `CheckState` 中 FG 離場判斷 `CurPlateIndex >= RoundQueue.length - 1`
@@ -203,7 +356,12 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
    - 每個 IRoundInfo 必須包含 `RoundWin`（bigwin 給高值如 50000，normal 給 random）
    - NearWin mock 的符號必須是 `Game_Define.SCATTER_SYMBOL` 的值（不是 CASH/WILD）
    - `GenerateMockSpinAck` 回傳的 ISpinAck 必須包含 `TotalWin`
-   - 建議 mock 物件加 type annotation（`const roundInfo: protocol.xxx.IRoundInfo = {...}`）讓 TS 攔缺欄位
+   - Mock 使用到的欄位必須也存在於 placeholder `.d.ts` 與 runtime `.js`；`PlateQueue`、`WinLineIndex` 是 codegen 假資料契約，不可為了消除型別錯誤刪除
+   - `GenerateMockSpinAck` 必須填 `TotalWin`、`Bet`；FG mock 另填 `FreeGameRound`。報獎效果若讀 `EliminatePos`，則 `IAwardData`／`AwardData` 與 runtime default 也必須保留該欄位
+   - 實體 cell 依目前 `ReelLayoutConfig` 建立；外部 position 固定以 MAX_ROW 編碼。`columnAlignment` 同時控制可視窗：top 起始 0、center 起始 `floor((MAX_ROW-ROW)/2)`、bottom 起始 `MAX_ROW-ROW`
+   - `MAX_ROW > ROW` 時仍只產生一個 `standard`：`targetSymbolCount=MAX_ROW`、`visibleSymbolCount=ROW`；`columnAlignment:'center'` 的 MG 可視起始 row 為 `floor((MAX_ROW-ROW)/2)`，往上擴張沿用同一組實體 cell
+   - `symboleffect` mock 必須依 standard 的 `columnAlignment` 計算第一個可視 row；bottom 對齊 5×3 範例使用 `EliminatePos: [2, 7, 12]`；按鍵固定為 `5`
+   - mock 物件加 type annotation（`const roundInfo: <ns>.IRoundInfo = {...}`）讓 TS 攔缺欄位；`<ns>` 必須由 `import type` 引入，不可寫成 `protocol.<ns>.IRoundInfo`
 
 **輸出**：Game_Define.ts + GameView.ts
 **驗證**：`_gates.md` §3.4
@@ -215,11 +373,15 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 📖 本步讀：`_api-ref.md` §SlotReels + `_pitfalls.md` §3.5 + Game_Summary_File
 📖 若可變盤面：額外讀 `_api-ref.md` §附錄：可變盤面
 
-1. 同步 6 處硬編碼（COL/ROW/FULL_PLATE_NUM/MAX_ROW/NORMAL_COLUMNS/ReelConfig）
+1. 同步 COL/ROW/FULL_PLATE_NUM/MAX_ROW/NORMAL_COLUMNS，並由 ROW/MAX_ROW 產生單一 standard ReelConfig
 2. 修正 m_reelPositionOffset 長度
 3. SpinMode 專屬（dropEntry: SHOW_COLUMNS=1 + MIDDLE_PLATE_INDEX=0）
-4. GameView.LoadSymbol 初始化（SetLayoutConfig/CreateSymbol/SetSpinMode/SetEntryStrategy）
-5. Prefab Mask contentSize（公式計算）
+4. GameView.LoadSymbol 初始化：Tumble 必須是 `.dropEntry` + `SpinMode.Tumble` + `TumbleFillStrategy` + `DropEntryStrategy`
+5. Prefab Mask contentSize（自動修正）：
+   ```powershell
+   $env:PYTHONIOENCODING='utf-8'
+   py ${SKILL_DIR}/uk-slot-codegen/fix_mask_size.py <target>
+   ```
 6. 可變盤面 → per-column Mask 結構
 
 **輸出**：Game_Define.ts + SlotReels.ts + SlotPlate_MG.prefab
@@ -246,7 +408,7 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 
 📖 本步讀：`_pitfalls.md` §3.7 + Game_Summary_File
 
-1. 替換 AudioManager 音效清單（FileName 與 Game_Define.AudioClips 完全一致）
+1. 替換 `AudioManager.AudioClips` 音效清單（key / FileName / `.m4a` 檔名大小寫完全一致）
 2. 產生 placeholder .m4a（ffmpeg 靜音 0.1s）
 3. Case-aware rename（Windows 兩步）
 4. 確認逐一比對（不只比數量）
@@ -277,7 +439,9 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 EnterFreeState/LeaveFreeState 加 Spine 呼叫。
 
 ### 3.10.7 MockServer 擴充
-根據 FEATURES flags 擴充新 mode + 熱鍵（5=jackpot, 6=respin）。
+根據 FEATURES flags 擴充新 mode + 熱鍵。**熱鍵配置以 Step 3.4 為準**
+（`5=symboleffect`、`7=jackpot`，`_gates.md` §3.4 驗 `DIGIT_5`/`DIGIT_7`）；
+新 feature 往 `6`、`8` 之後排，不可佔用 5/7。
 
 ### 3.10.8 未覆蓋 Feature 偵測
 偵測 game-specific 機制（砲彈/瞄準/重轉等）→ 報告不實作。
@@ -295,6 +459,9 @@ EnterFreeState/LeaveFreeState 加 Spine 呼叫。
 
 1. 確認 `assets/game/Spine/` 下 6 組都存在（clone 帶來的）
 2. 複製 SymbolEffectPrefab × SYMBOL_COUNT 份（各設 m_symbolId）
+3. 執行 `py bind_symbol_effect_prefabs.py <target>`：同步 `SymbolEffect.png`／atlas／Spine JSON bounds與attachment／母版／各 Prefab 為 178×178；保留 `BaseSpine → sp.Skeleton`，另外在 root 加上 `SymbolSpine → BaseSpine`、寫入對應 `m_symbolId`，並依 SymID 順序把各 UUID 寫入 `EffectPlate.prefab.m_symbolEffectPrefabs`
+
+此綁定步驟可重跑，且 update mode 即使跳過 Prefab 複製，也必須在 finalize 前執行一次，以修復新增 Symbol 或既有空陣列。
 
 **驗證**：`_gates.md` §H1
 
@@ -319,16 +486,40 @@ EnterFreeState/LeaveFreeState 加 Spine 呼叫。
 
 ---
 
-## Step 4: Runtime Validation（需 Editor）
+## Step 4a: Compile Verification（不需 Editor）
 
 📖 無
 
-1. editor_ping
-2. scene_open MainGame.scene
-3. preview_start → 等 10 秒檢查 console
-4. Spine placeholder 綁定（4.2）
+```powershell
+$env:PYTHONIOENCODING='utf-8'
+py ${SKILL_DIR}/uk-slot-codegen/ensure_ts_bom.py <target>
+py ${SKILL_DIR}/uk-slot-codegen/verify_compile.py <target>
+```
 
-Editor 離線 → 跳過。
+先對 `assets/Script`、`assets/game/Script`、`tests` 補齊 UTF-8 BOM，再跑靜態契約與真正的 TypeScript compiler。BOM 工具可重複執行，不會重複加 BOM；遇到非 UTF-8 檔案會停止而不是盲目改寫。Compiler 解析順序：target local `node_modules/typescript/bin/tsc` → `TSC_PATH` → 經 `--version` 驗證的 PATH `tsc`；禁止用可能下載錯誤同名套件的裸 `npx tsc`。
+
+`assets/Script`、`assets/game/Script`、`tests` diagnostics 是 blocker；Cocos／extension 既有 declaration error 分開計數，不可掩蓋專案錯誤。FAIL 時必須修正再繼續。常見錯誤：
+- proto .js 缺 `var $util = protobuf.util;` 宣告
+- import 相對路徑指向不存在的檔案
+- JS 語法錯誤
+- target 沒有 TypeScript dependency 且 `TSC_PATH`／PATH 也無有效 compiler
+
+**驗證**：exit code 0 = PASS
+
+---
+
+## Post-E: Editor / Runtime Validation（不屬於標準 codegen）
+
+📖 無
+
+標準 codegen 與背景分身任務不執行本階段，也不得因本階段阻塞 Step 5。需要時由使用者另行啟動 Editor 後手動驗證：
+
+1. 開啟 `MainGame.scene`
+2. 啟動 Preview 並檢查 console
+3. 確認 Spine placeholder / SkeletonData 綁定
+4. 確認 Prefab、Mask contentSize 與實際美術素材
+
+上述項目一律由 Step 5 寫入「後續未完成工項」，不得宣告為已驗證。
 
 ---
 
@@ -336,12 +527,19 @@ Editor 離線 → 跳過。
 
 📖 無（彙整結果）
 
-1. 彙整所有步驟狀態
-2. 跑 spec_traceability check-coverage
-3. 跑 check_regression_v2
-4. **Prefab 綁定檢測**：若盤面非 5×3 標準（Mask contentSize 被改過）或有 template 外新增 Spine → report 加 `⚠️ 手動：開 Cocos Editor 執行 Prefab 綁定（SkeletonData uuid + Mask contentSize 確認）`
-5. 寫 `<target>/scratch/codegen-report.md`
-6. 清除 checkpoint
+1. 跑 `py ${SKILL_DIR}/uk-slot-codegen/gate_runner.py --step prefinalize --target <target>`，保留 JSON 結果；此 gate 同時寫出 `<target>/scratch/codegen-traceability.json`。regression `FAIL/SKIP` 與 codegen-owned evidence 缺失都是 blocker；inferred defaults 顯示 verified／needs review，deferred M2+ 只列入統計，兩者都不阻擋
+2. 不論 prefinalize PASS/FAIL 都寫 `<target>/scratch/codegen-report.md`，作為交接與診斷記錄；必須包含以下區塊：
+   - `## 無頭階段完成項目`：生成內容與已通過的 gate
+   - `## Gate 結果`：編譯、regression，以及 traceability 的 `codegen X/Y`、`inferred defaults A/B verified`、`deferred M2+ N`；codegen 未覆蓋時逐項列 ID
+   - `## 後續未完成工項`：每項使用 `- [ ]`，寫明原因、目標檔案/場景與驗收方式
+   - `## 人工檢查點待確認`：把 Pre-0 未填欄位、檢查點 1、檢查點 2 的逐項輸出原樣貼進來，
+     每項 `- [ ]`。這是 codegen 不停等使用者的代價，**不可省略**——省了就等於檢查點沒發生
+   - `## 已知風險`：無法由無頭階段證明的行為
+3. 「後續未完成工項」至少列出 Runtime/Preview 驗證、Prefab/Spine 綁定、實際美術音效替換，以及 manifest 中的 deferred M2+／Step 3.10.8 偵測到但未實作的 game-specific feature；不適用時要寫明排除依據
+4. 跑 `py ${SKILL_DIR}/uk-slot-codegen/gate_runner.py --step finalize --target <target>` 驗證所有必要 Gate + report schema
+5. **只有 finalize `all_pass=true` 才能清除 checkpoint 與宣告 codegen 完成**
+
+硬性規則：report 是診斷產物，可在 Gate 失敗時產生；checkpoint 與「完成」狀態只由 finalize 決定。Editor / Preview 未執行不是 blocker，但必須如實列入後續未完成工項。
 
 **驗證**：`_gates.md` §5
 
@@ -395,7 +593,7 @@ Editor 離線 → 跳過。
 | 3.7 Audio | 覆寫 | **差異追加**（新音效加入、舊的保留） |
 | 3.10 Feature | 執行 | **增量**（新 Feature 加入、既有不刪） |
 | H1-H4 | 執行 | **跳過**（prefab/PNG 已存在） |
-| 4 Validation | 執行 | 執行 |
+| 4a Headless Compile Validation | 執行 | 執行 |
 | 5 Report | 執行 | 執行 |
 
 **Anchor Merge 規則**（語法以 `anchor_merge.py` 為準）：

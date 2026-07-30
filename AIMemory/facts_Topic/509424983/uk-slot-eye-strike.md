@@ -4,3 +4,8 @@
 - [f_82c757] [2026-06-19T02:11:08.816Z] uk_slot_eye_strike 有 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
 - [f_800551] [2026-07-07T07:52:13.442Z] uk_slot_template 的 demo 流程綁 eyestrike（uk_658）proto 與 dev server（6 欄盤面）——衍生遊戲改 COL 後連該 server 必然欄數不符，轉輪驗證應走 ReelDevTool 假盤，端到端等各自真 proto
+- [f_564bea] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的轉輪燈光壓暗設計決策（2026-07-30）：逐側判斷門檻下沉到 ReelUIManager.SetReelLightDark()（方案 A），只在 dark===true 時檢查 m_reelLightStates、該側沒亮就不壓；還原路徑刻意不設此門檻，否則熄燈後燈光永遠回不到亮色（排除方案 B 加 onlyIfShowing 旗標、方案 C 開 public getter，因為狀態擁有者是 ReelUIManager，判斷放內部才符合封裝慣例）
+- [f_b9aeb7] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的 FeatureWheelShowState 燈光壓暗與還原分工：壓暗由使用者這邊實作（已完成，掛在 spotlight 那批 SetAllSymbolsDark(true) 同一拍），RESTORE_LIGHT_REEL 的還原時機與實作由同事決定並處理
+- [f_391f10] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的 Collect 收分有三個執行點且橫跨多個 State：ScatterShowState.ts:124（一般手，在 FEATURE_WHEEL_SHOW 之前）、FeatureResultShowState.ts:62（⑧收分演出）、FeatureResultShowState.ts:252（⑤收分飛行）——談「收分之後」的時機時必須先釐清是哪一個，否則會做出時序不可能的需求
+- [f_73dbc7] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的轉輪兩側燈光（第1輪 LEFT / 第6輪 RIGHT）只在該輪落到 Collect 符號時才亮（SlotReels.ts:694/734），且 ReelUIManager 的壓暗（DARK_LIGHT_REEL，RGB 120）與熄燈（HIDE_LIGHT_*_REEL，收掉 spine）是兩套獨立狀態機制，m_reelLightStates 與 m_reelLightDarkStates 分開記錄
+- [f_6c587f] [2026-07-30T09:09:30.045Z] Cocos Creator 專案在編輯器外跑 tsc --noEmit 會產出大量來自引擎 cc.d.ts 與 astarte framework 宣告的既有錯誤（uk_872_eyestrike2_client 實測 509 行），驗證自己的改動時應過濾只看 assets/Script 底下的錯誤，不能用總錯誤數當通過標準

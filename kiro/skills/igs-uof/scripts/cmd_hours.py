@@ -36,7 +36,7 @@ def month_range(year, mo):
 
 def overtime_range(page, sdate, edate, status_idx):
     """查加班統計某區間，回 dict(weekday, holiday, makeup, records)。"""
-    page.goto(BASE + OT_STAT, wait_until="networkidle", timeout=30000)
+    page.goto(BASE + OT_STAT, wait_until="networkidle", timeout=60000)
     page.wait_for_timeout(900)
     if "login.aspx" in page.url.lower():
         raise SessionExpired()
@@ -95,7 +95,7 @@ def shape_ot(raw, basis):
 
 
 def annual_leave(page):
-    page.goto(BASE + LEAVE_FORM, wait_until="networkidle", timeout=40000)
+    page.goto(BASE + LEAVE_FORM, wait_until="networkidle", timeout=60000)
     page.wait_for_timeout(5000)
     if "login.aspx" in page.url.lower():
         raise SessionExpired()

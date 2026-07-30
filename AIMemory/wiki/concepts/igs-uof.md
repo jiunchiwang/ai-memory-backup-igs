@@ -2,8 +2,8 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-07-22
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5]
+updated: 2026-07-31
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_cf4a82, f_9b3d71, f_e8c5f0, f_a2d693]
 ---
 
 # IGS-UOF 加班單自動化
@@ -29,6 +29,27 @@ sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5]
 ⚠️ **刷卡時間欄位不會自動回填**：直接用 JS/`frame.fill` 填日期欄不會觸發 `onchange` 事件，導致刷卡時間欄空白。正確做法是點日曆按鈕選日期（觸發 AJAX 查刷卡）→ 等刷卡時間出現 → 再填其他欄位；`fill` 塞值當保底 fallback，防日曆 DOM selector 猜錯時整個腳本失敗。
 
 ⚠️ **二次確認彈窗誤判為送出失敗**（2026-07-17）：`uof_form.py` 的 submit 流程會把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為 `submit_rejected`——實際上第一次 headless submit 就已經成功送出（實測案例 BAE260706086 於 09:27 申請成功，腳本卻回報失敗）。腳本需修正確認彈窗處理邏輯，目前尚未修復。
+
+## ⛔ Cloudflare 反機器人驗證（2026-07-30）
+
+公司內網 UOF（`http://uof` → `https://hq.igs.com.tw/UOF/`）於 2026-07-30 前後新增 Cloudflare 反機器人驗證（`AntiBotCheck.aspx` + Turnstile），headless Playwright 無法通過，導致 igs-uof skill 的**所有查詢子命令**（`hours`/`attendance`/`leave`/`todo`/`whois`）**全數失效**。
+
+### 處置決策
+
+使用者選擇**不做規避驗證的工程**（stealth 參數／指紋偽裝），遇到時自行上網頁手動查加班時數。
+
+### 診斷注意事項
+
+- `uof_client.py` 的 `_is_net_error()` 把 Playwright Timeout 也歸類為網路錯誤——**不可信任其 unreachable 錯誤訊息**
+- 實際網路多半正常，應先確認是否被 AntiBotCheck 擋住
+
+### 手動查詢路徑
+
+加班時數：差勤 → 加班統計查詢（`Project/BAE/Stats_Search.aspx`），設日期區間並勾選簽核狀態「同意」+「簽核中」，看底部平日／假日合計。
+
+### 其他調整
+
+- `uof_client.py` 登入與首頁導航 timeout 已從 20s 改為 60s（UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded）
 
 ## 相關
 

@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-29T20:03:42.709Z (token=topics-897f0f20-22)
+// Last applied: 2026-07-30T20:04:53.938Z (token=topics-5061c2ed-22)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -50,7 +50,9 @@
       "pirates_queen",
       "海盜女王",
       "wantedposter",
-      "懸賞令"
+      "懸賞令",
+      "rtctrl",
+      "rt 凍幀"
     ]
   },
   {
@@ -84,7 +86,8 @@
       "cocos 版面",
       "promise.all",
       "logo-localization",
-      "知識庫的"
+      "知識庫的",
+      "targetoverrides"
     ]
   },
   {
@@ -193,6 +196,7 @@
       "acp-providers",
       "claude-fable",
       "fable-5",
+      "fable5",
       "model pin",
       "session/set_config",
       "effort config",
@@ -203,7 +207,10 @@
       "model override",
       "settingsources",
       "serena mcp",
-      "mcp 繼承"
+      "mcp 繼承",
+      "異源覆核",
+      "對抗覆核",
+      "獨立覆核"
     ]
   },
   {
@@ -238,7 +245,9 @@
       "overtime",
       "uof_form",
       "vc-uof-hours",
-      "igs-uof"
+      "igs-uof",
+      "cloudflare 反機器人",
+      "antibot"
     ]
   },
   {

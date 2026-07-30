@@ -1,5 +1,22 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-07-30(AUTO 模式;4 筆候選 → 精選 + 合併 + 去重後寫入 2 條)
+
+來源 project：`telegram-kiro-bridge-main`（shortlist 產生時間 2026-07-29T20:30:02.527Z，4 筆候選）。
+
+淘汰紀錄：
+
+- 候選 1（Pre-push fact-checking review process for documentation updates）：`list_facts` 查「覆核」命中既有多條 fact——已涵蓋「push 前派獨立 Fable5 agent 審查分支」與「知識萃取類 commit 由 Fable5 對照真實原始碼逐項查證」；本次只是把同一做法套到 docs/roadmap HTML vs wiki 來源 → **實質重複**，丟棄。
+- 候選 2（Kiro as primary implementation, Codex as fallback）：`list_facts` 查「委派」命中既有 Claude Max 5x 模型分配策略 fact（≥2k token 實作一律委派 Kiro）→ **實質重複**，丟棄。
+- 候選 3+4（ACP adapter model 回報異質性 / model 身分注入架構）：**同主題合併**後寫入 2 條（去重時確認既有 fact 只涵蓋 claude-agent-acp 單一 adapter 的 probe 手法與注入位置，未涵蓋「三 adapter 回報形狀不同」與「實際 vs 請求值分欄保存」）。
+
+實際寫入（皆 `bridge-acp` shard）：
+
+1. 三個 ACP adapter 在 session/new 回報 model 的結構各不相同，因此「這個 session 實際跑什麼 model」的查證邏輯不能寫成單一通用解析——各 adapter 的回報形狀差異已記錄在 bridge 的 acp-model-report-shapes.md，新增或換 adapter 時須先實測其回報形狀再接線（2026-07-29）。
+2. 處理「請求的 model 與實際生效的 model 可能不一致」時採用的架構是：AcpClient 用私有 `_sessionConfig` 欄位保存 adapter 回報的實際 model/effort，與呼叫端請求的 `opts.acpModel` 分開存放，讓靜默降級被記成事實而非回音請求值；model 身分注入排在 `initialize()` 之後、preamble 注入之前，因此不違反 preamble 凍結快照政策（2026-07-29）。
+
+結果：**新增 2 條**。未呼叫 forget。
+
 ## 2026-07-26(第二批;同日重跑,shortlist 未變 → 精選 + 去重後寫入 0 條)
 
 來源 project：`telegram-kiro-bridge-main`（shortlist 產生時間仍是 2026-07-25T20:30:02.611Z，與本日第一批（見下方「## 2026-07-26」條目）完全相同的 2 筆候選——上游 shortlist 自第一批以來未再產生新內容）。

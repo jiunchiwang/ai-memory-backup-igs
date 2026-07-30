@@ -66,7 +66,10 @@
         "cocos 版面",
         "promise.all",
         "logo-localization",
-        "知識庫的"
+        "知識庫的",
+        "rtctrl",
+        "rt 凍幀",
+        "targetoverrides"
       ],
       "wikiPages": [
         "uk-slot",
@@ -238,7 +241,11 @@
         "規格驅動",
         "sdd",
         "events.jsonl",
-        "secret 清理"
+        "secret 清理",
+        "fable5",
+        "異源覆核",
+        "對抗覆核",
+        "獨立覆核"
       ],
       "wikiPages": [
         "bridge-project",

@@ -16,3 +16,6 @@
 - [f_165cc0] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 D 區（Astarte Framework API）決策：只寫概要層（class + 生命週期 + 事件列表），不進到 method 簽名
 - [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
 - [f_f82ff1] [2026-07-28T11:03:56.028Z] uk-slot-logo-localization skill 的標準語系代碼清單已新增 urIN（烏爾都語印度），總計 24 個語系（不含 cn/en）
+- [f_2d697b] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的卡片新增流程需同步三處否則資料不一致：patterns/xxx.md 卡片本體、SKILL.md 索引表（+ 橫切機制表）、pattern-library-overview.html 的內嵌 PATTERNS JS 陣列與兩處寫死計數（line 50 subtitle 與 line 53-54 stat-box，只改 subtitle 會造成同頁自我矛盾）
+- [f_4b088c] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的 overview.html 參考專案計數慣例是「PATTERNS 陣列 unique refs 扣掉『框架 xxx』條目、不去重 wrath 的兩種寫法」（2026-07-30 用 git show 舊檔重算驗證與舊 subtitle 精確吻合）
+- [f_4b2a6c] [2026-07-30T16:17:09.612Z] 異源覆核在「文件層自我一致性」（數字沒回頭同步、枚舉半途而廢、同頁多處寫死計數只改一處）上最有價值，這類問題同源自審結構上抓不到——因為自審驗的是「我改的那處對不對」而非「還有沒有別處」（2026-07-30 pattern-library #26 實證）

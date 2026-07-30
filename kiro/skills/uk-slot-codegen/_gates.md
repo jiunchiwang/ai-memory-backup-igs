@@ -26,8 +26,8 @@ Test-Path "<target>/scratch/Game_Spec.md"           # 非空
 ## §1.5 Spec Traceability
 
 ```powershell
-Select-String -Path "<target>/scratch/Game_Spec.md" -Pattern "\[SPEC:" | Measure-Object
-# Count > 0
+py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" check-coverage --spec "<target>/scratch/Game_Spec.md" --client "<target>"
+# codegen-owned 全部有 value/path evidence；inferred defaults 與 deferred M2+ 僅列統計
 ```
 
 ---
@@ -49,8 +49,12 @@ Select-String -Path "<target>/scratch/Game_Summary_File.md" -Pattern "SpinMode"
 Select-String -Path "<target>/assets/Script/Game_Define.ts" -Pattern "SYMBOL_COUNT\s*=\s*\d+"
 # 若無輸出 → 未完成
 
-# Symbol enum member 數量 = SYMBOL_COUNT 值
-# 手動核對即可
+# Symbol enum 的 ID 集合 = Game_Spec 中所有非 server_only SymID
+# server_only 只屬於 server/protocol，不計入 client enum、SYMBOL_COUNT 或 prefab 數量
+py ${SKILL_DIR}/uk-slot-codegen/check_regression_v2.py --spec "<target>/scratch/Game_Spec.md" --client "<target>"
+# symbol_count 必須 PASS；輸出會列 client IDs 與排除的 server-only IDs
+
+# Symbol enum member 數量 = SYMBOL_COUNT 值（由同一 regression 自動驗證）
 ```
 
 ---
@@ -105,11 +109,19 @@ Select-String -Path "<target>/assets/Script/Test/*.js" -Pattern "CColumn" -Conte
 Select-String -Path "<target>/assets/Script/Test/*.js" -Pattern "SpinAck.decode"
 # ≥1，且函式體應含 reader.uint32() 或 $Reader 呼叫
 
-# import 格式驗證
-Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern 'import protocol from'
-# 必須有輸出（default import）
-Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern '\.js"'
-# 必須有輸出（帶 .js 副檔名）
+# Proto.ts bridge 格式驗證（不要直接檢查 GameView 的底層 .js import）
+Select-String -Path "<target>/assets/Script/Proto.ts" -Pattern 'import protocol from ".*\.js"'
+# ≥1（default runtime import + .js）
+Select-String -Path "<target>/assets/Script/Proto.ts" -Pattern 'export default protocol'
+# ≥1（保留 CJS runtime object）
+Select-String -Path "<target>/assets/Script/Proto.ts" -Pattern 'export type \{ <NEW_NS> \}'
+# ≥1（namespace type export）
+Select-String -Path "<target>/assets/Script/Proto.ts" -Pattern 'export \*'
+# 必須為 0（export * 不能取代 default runtime export）
+
+# 自動契約 gate：runtime namespace/constructor + Mock 欄位與 placeholder 一致
+py ${SKILL_DIR}/uk-slot-codegen/verify_compile.py <target>
+# exit code 0 = PASS
 ```
 
 ---
@@ -139,6 +151,14 @@ Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "FreePlateSymb
 # Mock IRoundInfo 欄位完整性：RoundWin 必須存在（缺失→NaN→報獎跳過）
 Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "RoundWin"
 # ≥2（mock 賦值 + AwardState 讀取）
+
+# Symbol Effect cheat：5=symboleffect，固定三格中獎假資料；jackpot 保留到 7
+Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "case 'symboleffect'"
+# 外部 ID 固定採 MAX_ROW；5×3 第一排依 columnAlignment 為 top [0,5,10]、center [1,6,11]、bottom [2,7,12]。
+Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "DIGIT_5" -Context 0,3 |
+  Select-String -Pattern "symboleffect"
+Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "DIGIT_7" -Context 0,3 |
+  Select-String -Pattern "jackpot"
 
 # NearWin mock 符號一致性：必須用 SCATTER_SYMBOL 的值（不是 CASH/WILD）
 # 確認 nearwin 分支的 Symbol 賦值包含 Game_Define 中定義的 Scatter enum 值
@@ -173,15 +193,14 @@ Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "REEL_LAYOUT_P
 
 # === 以下僅 SpinMode = dropEntry 時驗證 ===
 Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "SetEntryStrategy\s*\(\s*new\s+DropEntryStrategy"
-Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "SetSpinMode\s*\(\s*SpinMode\.Cascade"
+Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "SetSpinMode\s*\(\s*SpinMode\.Tumble"
 Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "TumbleFillStrategy"
 Select-String -Path "<target>/assets/Script/GameView.ts" -Pattern "DropEntryStrategy"
 # 以上 4 條若任一為空 → 策略未啟用
 
-# Mask contentSize 驗證
-# 計算: w = COL * SymbolWidth + (COL-1) * SeparateLineWidth
-#        h = ROW * SymbolHeight
-# grep prefab 確認值正確
+# Mask contentSize 驗證（自動修正 + 驗證）
+py ${SKILL_DIR}/uk-slot-codegen/fix_mask_size.py <target>
+# 輸出 "OK" 或 "DONE" 代表通過；"ERROR" 代表 Game_Define 缺常數
 Select-String -Path "<target>/assets/game/Prefab/Reel/SlotPlate_MG.prefab" -Pattern '"_contentSize"' -Context 0,2
 ```
 
@@ -267,6 +286,14 @@ Select-String -Path "<target>/assets/Script/GameState/AwardState.ts" -Pattern "G
 # SymbolEffectPrefab 複製數量 = SYMBOL_COUNT
 $prefabs = Get-ChildItem "<target>/assets/game/Prefab/Reel/SymbolEffect" -Filter "*.prefab" | Measure-Object
 # Count >= SYMBOL_COUNT
+
+# Texture、atlas、母版與各 Prefab UITransform 必須為 178x178；另驗 UUID、SymbolSpine 與 m_symbolId
+py "${SKILL_DIR}/uk-slot-codegen/bind_symbol_effect_prefabs.py" "<target>" --check
+
+# 實體 cell 依目前 ReelLayoutConfig 建立；外部 position 固定採 MAX_ROW，向上擴張的小盤面以 bottom alignment 映射。
+# MAX_ROW > ROW 時，standard 必須用 targetSymbolCount=MAX_ROW、visibleSymbolCount=ROW；center 對齊的可視起始 row 為 floor((MAX_ROW-ROW)/2)，不得另造 expanded preset 或 boardRowAlignment。
+# EffectPlate 使用 SlotReels 的 position 轉換 API 與目前 SingleCell 世界座標，禁止 ±SymbolHeight 補償。
+py "${SKILL_DIR}/uk-slot-codegen/gate_runner.py" --step H1 --target "<target>"
 ```
 
 ---
@@ -299,6 +326,10 @@ Test-Path "<target>/ART_ASSET_MANIFEST.md"
 ## §BOM 通用 Encoding Gate（每步結束後附加執行）
 
 ```powershell
+# 先自動補齊 codegen-owned TypeScript BOM
+py ${SKILL_DIR}/uk-slot-codegen/ensure_ts_bom.py "<target>"
+# exit code 0；可重複執行
+
 # 驗證所有 codegen 產出/修改的 .ts 檔案保留 UTF-8 BOM（EF BB BF）
 # BOM 遺失 → Cocos Babel parser 報 InvalidEscapeSequenceTemplate → __unresolved_X runtime error
 $tsFiles = Get-ChildItem "<target>/assets/Script" -Recurse -Filter "*.ts"
@@ -322,10 +353,10 @@ See also: `_pitfalls.md` §通用 Encoding
 ```powershell
 Test-Path "<target>/scratch/codegen-report.md"
 
-# 通殺 gate：TypeScript 型別檢查（攔截 undefined / import error / 簽名不符）
-# 需 target 有 tsconfig.json（template 自帶）
-npx tsc --noEmit --project "<target>/tsconfig.json" 2>&1
-# exit code 0 = 通過；非 0 = 有型別錯誤，列出錯誤後停止
+# 先產生診斷 report，再跑最終 gate
+py ${SKILL_DIR}/uk-slot-codegen/gate_runner.py --step finalize --target "<target>"
+# all_pass=true 才能清 checkpoint 或宣告完成
+# codegen traceability missing、regression FAIL/SKIP、compile/proto/report schema 失敗都必須停止；inferred defaults／deferred M2+ 不阻擋
 ```
 
 See also: `_pitfalls.md` §通用

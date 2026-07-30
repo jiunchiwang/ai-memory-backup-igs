@@ -227,3 +227,13 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_b283c9] [2026-07-26T12:27:52.448Z] telegram-kiro-bridge 主機的 kiro-cli（2.13.0，路徑 C:\Users\jiunchiwang\AppData\Local\Kiro-Cli\kiro-cli.exe）於 2026-07-26 檢查時處於未登入狀態（kiro-cli whoami 回報 Not logged in），headless 執行 kiro-cli chat --list-models 會卡在「Opening auth portal」無窮重試迴圈，需使用者手動互動式 kiro-cli login 重新登入才能恢復（含 vc-kiro-delegate 委派功能）
 - [2026-07-29T20:06:34.817Z] user=509424983 query="kiro-cli 登入狀態已於 2026-07-27 恢復正常" deleted=0 token=forget-0761a95e-1
 
+- [2026-07-30T20:10:30.172Z] user=509424983 query="P3 recon 完成" deleted=0 token=forget-6c93085e-1
+
+- [2026-07-30T20:10:34.324Z] user=509424983 query="check-moa 壞測試待辦已完成" deleted=0 token=forget-4d6daaec-1
+
+- [2026-07-30T20:10:39.592Z] user=509424983 query="已確認 redkilin/ai-shared-knowledge 是 upstream 專案作者" deleted=0 token=forget-12317354-1
+
+- [2026-07-30T20:10:43.935Z] user=509424983 query="使用者已建立新的 GitHub private repo jiunchiwang/ai-shared-knowledge" deleted=0 token=forget-08d8a036-1
+
+- [2026-07-30T20:10:48.860Z] user=509424983 query="Clash of Olympus 的 spec-to-impl 三步驟已完成" deleted=0 token=forget-d589d5ba-1
+

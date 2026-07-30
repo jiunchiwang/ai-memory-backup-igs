@@ -86,6 +86,42 @@
       "chatId": 509424983,
       "score": 95,
       "evidence": "實跑 check-acp-model-effort 對 opus-5 得到 adapter 明確 reject 訊息(Invalid value for config option model),經驗性確認 pin 失敗+fallback;並修正先前「opus-5 不存在」的 stale 斷言為「adapter id 白名單不認此字串」"
+    },
+    {
+      "ts": "2026-07-29T23:42:18.303Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "正本已改、STATE.md 已更新、grep 驗證通過；環境變數尚未在 bridge 注入機制定義，屬後續整合項"
+    },
+    {
+      "ts": "2026-07-30T08:17:40.303Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "tsc 過且 assets/Script 零錯誤、呼叫者已 grep 窮舉（SetReelLightDark 3 個全在同檔、Manual 0 呼叫者）、改動範圍限於需求且回讀驗證過；但未跑實機畫面驗證壓暗視覺效果，且 tsc 基線噪音大無法做前後對照"
+    },
+    {
+      "ts": "2026-07-30T13:10:29.380Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "根因經實測確認（AntiBotCheck 重導 + Turnstile 懸置請求 + checkbox 缺席三項證據），但修復未完成：--headed 能否通過驗證尚未實測，使用者原始問題（7月加班時數）仍未取得答案；保留的 timeout 改動已驗證登入路徑通過，撤回的部分未再跑一次確認無副作用"
+    },
+    {
+      "ts": "2026-07-30T14:04:26.250Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "純讀碼調查未改任何檔案；RTCtrl.ts 全文讀過、呼叫端用 grep 窮舉、prefab 接線用 JSON 解析驗到 targetOverrides 實際指向 PerfGroup/Camera_RT 與 Node，路徑與行號皆逐一核對過；未實際跑遊戲驗證運行時行為"
+    },
+    {
+      "ts": "2026-07-30T14:30:45.738Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "新增 1 檔 + 改 2 檔；三處數字用 python 交叉核對一致、內嵌 JS 陣列用 node 實際 parse 通過、junction 投影已確認、臨時檔已清；OnDestroy 死碼與 targetOverrides 兩個關鍵主張都有反例檢查（grep framework 無該鉤子、其餘檔案用小寫）；未做的是沒在 Cocos 編輯器實跑 far_west 驗證事件洩漏的實際後果"
+    },
+    {
+      "ts": "2026-07-30T14:52:32.685Z",
+      "chatId": 509424983,
+      "score": 91,
+      "evidence": "3 條成立的 finding 逐條自己重現後才改（F1 用 grep 確認 stat-box、F3 用 grep 確認兩處數字、F4 讀 GameView.ts:2305-2343 與 Common.ts:255-275 原始碼確認 5 個寫入點）；F2 用 git show 取 41e11b4 舊檔重算 refs 才駁回，不是憑印象；修完重驗 4 處寫死計數已一致、node 重新 parse 陣列 26 張通過、臨時檔已清；未做的是沒在 Cocos 編輯器實跑驗證 BigHintShake 清鎖的災害路徑，該條在卡片中是依碼推導的時序風險而非實測重現"
     }
   ]
 }

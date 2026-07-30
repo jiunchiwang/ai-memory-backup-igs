@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-07-11
-sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_d03f34, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_7e491d, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42]
+updated: 2026-07-31
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_d03f34, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_7e491d, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_d42a81, f_e7f3c2, f_a9b64d, f_c83ef1, f_f5d920, f_b6c47a, f_91e5d8]
 ---
 
 # UK Slot 老虎機專案群
@@ -126,6 +126,30 @@ Clash of Olympus 實作過程暴露 5 個流程偏離，已回饋改善 skill �
 - `AI-canonical-corp` 的 slot skill（如 `uk-slot-pattern-library`）透過 **junction** 直接指向正本目錄，改正本即時反映到 `~/.kiro/skills/`，不需額外跑 `sync.ps1`
 - `uk-conventions` 是 Claude Code **custom command**（`/uk-conventions`），不是 skill
 
+### uk-slot-pattern-library 維護要點
+
+**新增卡片需同步三處**，否則資料不一致：
+1. `patterns/xxx.md` — 卡片本體
+2. `SKILL.md` — 索引表（+ 橫切機制表）
+3. `pattern-library-overview.html` — 內嵌 `PATTERNS` JS 陣列與**兩處寫死計數**（line 50 subtitle 與 line 53-54 stat-box）
+
+**overview.html 參考專案計數慣例**：`PATTERNS` 陣列 unique refs 扣掉「框架 xxx」條目、不去重 wrath 的兩種寫法（2026-07-30 用 `git show` 舊檔重算驗證與舊 subtitle 精確吻合）
+
+### uk-slot-logo-localization 語系清單
+
+標準語系代碼共 24 個（不含 cn/en）：
+- 2026-07-29 新增：`urIN`（烏爾都語印度）
+
+## 公司 AI 知識庫設計決策
+
+UK 助理知識包專案（2026-07-28）定案的資料分區策略：
+
+| 區域 | 決策 | 理由 |
+|------|------|------|
+| **B 區**（規格書結構） | 寫常見模式，非固定規範 | 每案 sheet 命名不同 |
+| **D 區**（Astarte Framework API） | 只寫概要層（class + 生命週期 + 事件列表） | 不進到 method 簽名，避免過度細節 |
+| **E 區**（通用機制模式庫） | 全角色統一用索引版 | pattern 名稱 + 一句話描述，不塞 158KB 完整 pattern-library |
+
 ## 錯誤紀錄分類法
 
 記錄 AI 反覆失誤時，分成兩類：
@@ -136,6 +160,16 @@ Clash of Olympus 實作過程暴露 5 個流程偏離，已回饋改善 skill �
 | **技術錯誤** | 實作層面失誤（型別/邏輯/命名寫錯） | 測試 / 檢查 |
 
 兩類根因不同，分開列並各附 session 實證。此分類法可推廣到任何 skill 或 knowhow 庫。
+
+## 異源覆核在文件層的價值（2026-07-30）
+
+異源覆核在「文件層自我一致性」上最有價值——這類問題同源自審結構上抓不到：
+
+- **數字沒回頭同步**：overview.html 新增 pattern 卡片後忘記改 subtitle 計數
+- **枚舉半途而廢**：列舉清單只改一半
+- **同頁多處寫死計數只改一處**：line 50 改了 line 53-54 忘改
+
+自審驗的是「我改的那處對不對」而非「還有沒有別處」，pattern-library #26 卡片實證此類問題需異源覆核才能可靠抓出。
 
 ## 重要設計模式
 

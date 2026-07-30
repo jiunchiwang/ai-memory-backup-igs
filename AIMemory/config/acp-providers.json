@@ -2,7 +2,7 @@
   "claude": {
     "command": "claude-agent-acp",
     "label": "Claude Code",
-    "model": "claude-sonnet-5",
+    "model": "opus[1m]",
     "effort": "high"
   },
   "kiro": {

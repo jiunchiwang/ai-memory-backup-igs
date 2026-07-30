@@ -2,8 +2,8 @@
 title: Eye Strike 系列
 type: concept
 created: 2026-07-16
-updated: 2026-07-17
-sources: [f_cea694, f_3y3s2k, f_9322f0, f_82c757, f_0b3520, f_800551]
+updated: 2026-07-31
+sources: [f_cea694, f_3y3s2k, f_9322f0, f_82c757, f_0b3520, f_800551, f_d9e4a1, f_b7c382, f_e5f910, f_c4d7b2, f_a8f6c3]
 ---
 
 # Eye Strike 系列
@@ -38,6 +38,34 @@ UK 市場的眼睛打擊主題老虎機系列，含第一代 Eye Strike（uk_slo
 ## 第二代 — uk_872_eyestrike2_client
 
 - 架構規範：Spine 動畫一律透過 **SpineKit** 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件
+
+### 轉輪燈光壓暗設計決策（2026-07-30）
+
+逐側判斷門檻下沉到 `ReelUIManager.SetReelLightDark()`（方案 A），只在 `dark===true` 時檢查 `m_reelLightStates`、該側沒亮就不壓；還原路徑刻意不設此門檻，否則熄燈後燈光永遠回不到亮色。
+
+- 轉輪兩側燈光（第1輪 LEFT / 第6輪 RIGHT）只在該輪落到 Collect 符號時才亮（`SlotReels.ts:694/734`）
+- `ReelUIManager` 的壓暗（`DARK_LIGHT_REEL`，RGB 120）與熄燈（`HIDE_LIGHT_*_REEL`，收掉 spine）是兩套獨立狀態機制
+- `m_reelLightStates` 與 `m_reelLightDarkStates` 分開記錄
+
+### FeatureWheelShowState 燈光分工
+
+壓暗由使用者實作（掛在 spotlight 那批 `SetAllSymbolsDark(true)` 同一拍），`RESTORE_LIGHT_REEL` 的還原時機與實作由同事決定處理。
+
+### Collect 收分執行點
+
+⚠️ Collect 收分有**三個執行點**且橫跨多個 State：
+
+| 執行點 | 位置 | 時機 |
+|--------|------|------|
+| 一般手 | `ScatterShowState.ts:124` | `FEATURE_WHEEL_SHOW` 之前 |
+| ⑧收分演出 | `FeatureResultShowState.ts:62` | — |
+| ⑤收分飛行 | `FeatureResultShowState.ts:252` | — |
+
+談「收分之後」的時機時必須先釐清是哪一個，否則會做出時序不可能的需求。
+
+### tsc 驗證注意
+
+Cocos Creator 專案在編輯器外跑 `tsc --noEmit` 會產出大量來自引擎 `cc.d.ts` 與 astarte framework 宣告的既有錯誤（uk_872 實測 509 行）。驗證自己的改動時應過濾只看 `assets/Script` 底下的錯誤，不能用總錯誤數當通過標準。
 
 ## 與模板的關係
 

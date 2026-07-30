@@ -24,11 +24,11 @@ interface ColumnConfig {
 
 ### SpinMode Preset 組合
 
-| Mode | ReelLayoutConfig | SpinMode | EntryStrategy | 狀態機路由 |
-|------|-----------------|----------|---------------|-----------|
-| Standard | `.standard`(plateCount=3) | Standard | null | SPIN→EFFECT_START→SCATTER_SHOW→AWARD |
-| Cascade | `.standard`(plateCount=3) | Cascade | null | SPIN→EFFECT_START→EXPLODE↔MATCHING_PATCH_UP→AWARD |
-| Tumble | `.dropEntry`(plateCount=1) | Tumble | DropEntryStrategy | SPIN(掉落)→EFFECT_START→EXPLODE↔MATCHING_PATCH_UP→AWARD |
+| Mode | ReelLayoutConfig | SpinMode | FillStrategy | EntryStrategy | 狀態機路由 |
+|------|-----------------|----------|--------------|---------------|-----------|
+| Standard | `.standard`(plateCount=3) | Standard | null | null | SPIN→EFFECT_START→SCATTER_SHOW→AWARD |
+| Cascade | `.standard`(plateCount=3) | Cascade | CascadeFillStrategy | null | SPIN→EFFECT_START→EXPLODE↔MATCHING_PATCH_UP→AWARD |
+| Tumble | `.dropEntry`(plateCount=1) | Tumble | TumbleFillStrategy | DropEntryStrategy | SPIN(掉落)→EFFECT_START→EXPLODE↔MATCHING_PATCH_UP→AWARD |
 
 ### GameView.LoadSymbol 初始化範例
 
@@ -40,7 +40,7 @@ this.SlotReels?.CreateSymbol();
 // Tumble/DropEntry
 this.m_slotReels?.SetLayoutConfig(REEL_LAYOUT_PRESETS.dropEntry);
 this.SlotReels?.CreateSymbol();
-this.m_slotReels?.SetSpinMode(SpinMode.Cascade, new CascadeFillStrategy());
+this.m_slotReels?.SetSpinMode(SpinMode.Tumble, new TumbleFillStrategy());
 this.m_slotReels?.SetEntryStrategy(new DropEntryStrategy());
 ```
 
@@ -49,9 +49,9 @@ this.m_slotReels?.SetEntryStrategy(new DropEntryStrategy());
 | # | 檔案 | 位置 | 值 |
 |---|------|------|---|
 | 1 | Game_Define.ts | `static COL` | 規格列數 |
-| 2 | Game_Define.ts | `static ROW` | 規格行數（可變盤面取 max） |
+| 2 | Game_Define.ts | `static ROW` | 初始／MG 行數 |
 | 3 | Game_Define.ts | `static FULL_PLATE_NUM` | 各列 row 加總 |
-| 4 | Game_Define.ts | `static MAX_ROW` | = ROW |
+| 4 | Game_Define.ts | `static MAX_ROW` | 所有 BoardLayout 的最大行數；無擴版時 = ROW |
 | 5 | SlotReels.ts | `NORMAL_COLUMNS` | 長度=COL 的 index 陣列 |
 | 6 | SlotReels.ts | `ReelSystemConfig.columns` | COL 個 ColumnConfig |
 | 7 | SlotReels.ts | `m_reelPositionOffset` | COL 個 v3(0,0) |
@@ -74,7 +74,8 @@ height = ROW × SymbolHeight
 
 ### BoardLayout 解析
 
-- 等寬（`3x3x3x3x3`）：每列 visibleSymbolCount = ROW
+- 等寬（`3x3x3x3x3`）：standard 每列 target/visible = ROW
+- 多模式等寬（MG `3x3x3x3x3`、FG `5x5x5x5x5`）：standard 建立 MAX_ROW 個實體 cell、MG 以 ROW 控制可見數；FG 往上擴張沿用同一盤面，外部 ID 固定以 MAX_ROW 編碼
 - 可變（`5x4x4x4x4x5`）：按順序拆分，ROW = max，FULL_PLATE_NUM = sum
 
 ---
@@ -100,9 +101,10 @@ export class Game_Define {
 
   enum Symbol { Wild=0, Scatter=1, H1=2, ... }
   enum GAMEVIEW_STATE { WAIT_READY, PLATE_SHOW, ... }
-  static AudioClips = { MG_BGM: "MG_BGM", ... };
 }
 ```
+
+Audio key 與 FileName 定義在 `AudioManager.AudioClips`，不屬於 `Game_Define`。
 
 ---
 
@@ -140,8 +142,9 @@ interface IPlateQueue { EliminatePos: number[]; MainPlateSymbol: ICColumn[]; }
 | 2 | freegame | RoundQueue≥2 + FreePlateSymbol非空 + NextFeverGameType=1 |
 | 3 | bigwin | RoundWin=大額（超過 PlateEftOdds[2]×bet） |
 | 4 | nearwin | 盤面固定 2 顆 Scatter |
-| 5 | jackpot（有 JP 時） | Cash 符號 + FeaturePosQueue |
-| 6 | respin（有 Respin 時） | NextFeverGameType=2 |
+| 5 | symboleffect | 固定三格中獎，依初始 Layout position 編碼 |
+| 6 | collect | Cash + Collect |
+| 7 | jackpot（有 JP 時） | Cash + JP + Collect |
 
 ---
 

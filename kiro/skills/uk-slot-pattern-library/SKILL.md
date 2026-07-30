@@ -1,4 +1,6 @@
 ---
+name: uk-slot-pattern-library
+description: Use when mapping a UK slot game specification feature to an existing implementation pattern, state, manager, or validated reference project.
 type: skill
 domain: slot
 created: 2026-06-25
@@ -60,6 +62,7 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 | 23 | 蓄能容器（Pot/等級）+ 滿級投放 | patterns/pot-meter-throw.md | LGS | 中 | ✅ |
 | 24 | Unshow 斷線復原 | patterns/unshow-recover.md | LGS, 框架 commonGameManager | 基礎 | ✅ |
 | 25 | Template 骨架 | template/state-machine.md | uk_slot_template | 基礎 | ✅ |
+| 26 | RT 凍幀報獎（RenderTexture 蓋幀） | patterns/rt-freeze-award.md | uk_pirates_queen, 746 far_west | 中 | ✅ |
 
 > **驗證欄說明**：✅ = 有實際專案程式碼佐證；⚠️ = 僅從規格書推導，尚未經過實作驗證
 > **LGS** = `leprechaunsGoldStreak-client`（Cocos 專案，Cash Collect + Hold&Win 型）
@@ -73,6 +76,7 @@ UK 老虎機衍生模式庫。路線 C 翻譯層的 grounding：當 AI 拿到一
 | MAX WIN 封頂 | patterns/max-win.md | 每種贏分來源都要計入上限 |
 | Unshow 斷線復原 | patterns/unshow-recover.md | 只有拔網線才會發現；新 Feature 幾乎必忘 |
 | 盤面雙軌 `PlateSymbol` vs `PlateSymbolLog` | patterns/unshow-recover.md 附錄 | 用錯不會報錯，只會少收/少算 |
+| RT 凍幀的 IN/OUT 配對 | patterns/rt-freeze-award.md | IN/OUT 不必在同一 State（FG 是跨 State 配對）；新增報獎類 State 漏發 OUT 會永久卡凍幀，且畫面「看起來正常只是不動」 |
 
 ## 模式卡片格式規範
 
