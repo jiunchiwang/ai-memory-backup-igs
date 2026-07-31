@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-07-30
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a]
+updated: 2026-08-01
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a]
 ---
 
 # 開發工具與環境設定
@@ -65,6 +65,26 @@ npx tsc --noEmit
 
 此台機器的 `gh` CLI 尚未執行 `gh auth login`／未設 `GH_TOKEN`，研究 GitHub repo 時 `gh repo view` 等指令會直接失敗，需改用 WebFetch 抓取頁面。
 
+### 多行 git commit message（heredoc vs here-string）
+
+在 **Bash tool** 裡寫多行 commit message 必須用 **bash heredoc**，不可用 PowerShell 的 here-string `@'...'@`——後者會讓首行多一個 `@` **吃掉整個 subject**、末行也留一個 `@`，而且 `git commit` 照樣成功、不報任何錯（2026-07-31 實證，得 `--amend` 修正）。
+
+```bash
+git commit -m "$(cat <<'EOF'
+subject line
+body...
+EOF
+)"
+```
+
+反過來也成立：PowerShell tool 裡才用 `@'...'@`，且結尾 `'@` 必須頂格在第 0 欄。兩個 shell 各有自己的語法，別跨用。
+
 ## 文件產出
 
 - `docs/typescript-guide.html` — TypeScript 教學手冊 HTML 版（深色主題、左側目錄、語法高亮），來源為 Obsidian Vault 的 `typescript-guide_Claude.md`
+
+## 相關
+
+- [[bridge-smoke-gate]] — `tsc --noEmit` / `tsc -p .` 在 bridge 的把關鏈裡各自的角色
+- [[bridge-project]] — bridge 專案的開發環境筆記
+- [[user-pref]] — Git commit 相關的使用者紀律

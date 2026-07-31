@@ -237,3 +237,26 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-07-30T20:10:48.860Z] user=509424983 query="Clash of Olympus 的 spec-to-impl 三步驟已完成" deleted=0 token=forget-d589d5ba-1
 
+- [2026-07-30T22:17:10.211Z] user=509424983 query="uk_917 開發進度（2026-07-07）：M0a 起專案完成且驗收通過" deleted=0 token=forget-3edbab99-1
+
+- [2026-07-30T22:17:10.451Z] user=509424983 query="Clash of Olympus 的 spec-to-impl 三步驟已完成（2026-07-09）" deleted=0 token=forget-d589d5ba-1
+
+- [2026-07-30T22:17:10.698Z] user=509424983 query="2026-07-11 已完成 bridge-project wiki 頁拆分" deleted=0 token=forget-fb896823-1
+
+- [2026-07-30T22:18:11.140Z] user=509424983 query="uk_917 開發進度（2026-07-07）：M0a 起專案完成且驗收通過" deleted=1 token=forget-3edbab99-1
+    - [f_7a309c] [2026-07-07T07:52:13.393Z] uk_917 開發進度（2026-07-07）：M0a 起專案完成且驗收通過（ReelDevTool 5 欄假盤驗轉輪），dev-spec.md + SPEC.md 已產出，repo 全本地無 remote；ShortGameName 未定（scene 佔位 ar2es，等 M0b）、機率文件 {} 值未拿到
+- [2026-07-30T22:18:11.348Z] user=509424983 query="Clash of Olympus 的 spec-to-impl 三步驟已完成（2026-07-09）" deleted=1 token=forget-d589d5ba-1
+    - [f_d03f34] [2026-07-09T19:00:02.536Z] Clash of Olympus 的 spec-to-impl 三步驟已完成（2026-07-09）：docs/spec（80圖）+ dev-spec.md（1🔴 VS Feature + 6🟡 + 8🟢）+ SPEC.md（25任務 M0a~M4）+ AI.md；下一步是 M0a 起專案，需先確認 GameId 和 Proto 狀態
+- [2026-07-30T22:18:11.597Z] user=509424983 query="2026-07-11 已完成 bridge-project wiki 頁拆分" deleted=1 token=forget-fb896823-1
+    - [f_a8bb58] [2026-07-11T03:19:33.619Z] 2026-07-11 已完成 bridge-project wiki 頁拆分：新建 bridge-memory（記憶與維運，78 行）與 bridge-specialist（分身系統，54 行）兩頁，主頁從 277 行縮到 80 行（含 6 子頁索引）；topics.json 新增 bridge-memory（34 keyword）與 bridge-specialist（14 keyword）規則插在 bridge-project 之前，既有 shard 實體重分等下次 topicreview
+- [2026-07-31T06:25:17.676Z] user=509424983 query="run-prompt 的 finally 來不及跑，所以每次 restart 都會留孤兒" deleted=1 token=forget-41a43287-1
+    - [f_878f84] [2026-07-31T06:09:00.728Z] status bubble 孤兒的真正主要來源是 /restart 與 <<RESTART>>（session-extract.ts 的 process.exit），不是 SIGKILL——<<RESTART>> 由 agent 在 turn 進行中發出，run-prompt 的 finally 來不及跑，所以每次 restart 都會留孤兒；原先把它判成「硬殺才會發生的邊角」是錯的，是 grep 全庫 process.exit 逐條分析才挖出來
+- [2026-07-31T20:35:07.029Z] user=509424983 query="[WS]" deleted=8 token=forget-e8e2786e-8
+    - [f_8fd601] [2026-07-31T10:58:18.766Z] [WS] task: 診斷 draft streaming 症狀「工具的訊息變化時，原本的對話會消失再從頭重跑」的根因（2026-07-31 未結案）
+    - [f_1674f1] [2026-07-31T10:58:21.299Z] [WS] completed: 已加 opt-in draft 診斷層（新增 src/draft-diag.ts + config.tgDraftDiag + status-channel.ts 的 onApiCall 注入 + run-prompt.ts 6 個觀測點 + .gitignore 加 logs/），tsc exit 0、fast tier 93/93 過、check-draft-streaming 12 支過，.env:238 已設 TG_DRAFT_DIAG=1；這批尚未 commit
+    - [f_0cacc3] [2026-07-31T10:58:28.686Z] [WS] blocked: 根因未定案，卡在需要 runtime log 才能判別 H1（status bubble 的 editMessageText 也會清掉 live draft）vs H2（draft ~30s TTL 在長工具/rate limit 期間過期）——兩者在 Bot API 回傳值上都是「成功」，官方文件查不到 editMessageText 是否清 draft
+    - [f_b6ff51] [2026-07-31T10:58:32.116Z] [WS] key_refs: 診斷輸出 logs/draft-diag.jsonl（欄位 seq/at/ms/event/sinceLastMs/reason）；候選修法在 src/run-prompt.ts 的 editNowInner——目前順序是 trySendDraft 然後 statusChannel.update()，若 H1 成立就把 update() 移到 trySendDraft 之前讓 draft 永遠是最後動作；判別法：status.edit 後緊跟重播=H1，draft.send 的 sinceLastMs>30000=H2
+    - [f_aeeea3] [2026-07-31T10:58:38.960Z] [WS] next_action: 重啟後請使用者做幾輪「含多次工具呼叫」的對話觸發重播，然後讀 logs/draft-diag.jsonl，比對 status.edit 與 draft.send 的時序交錯定案 H1 或 H2，再改；診斷完要把 .env 的 TG_DRAFT_DIAG 關回 0
+    - [f_91d132] [2026-07-31T11:31:53.673Z] [WS] task: 驗證 draft streaming 修法（commit 4276f08）是否真的消滅「工具訊息變化時，已串完的回覆整段消失再從頭重播」
+    - [f_cacf97] [2026-07-31T11:32:03.630Z] [WS] completed: draft 重播根因已用 logs/draft-diag.jsonl 定案為 H1（status bubble 的 editMessageText 也會清掉 live draft），消去法排除 H2/限流/降級/lateCreate；修法 A 已實作並 commit 4276f08（status-channel 的 update() 改回傳「是否發出過 chat 層寫入」、run-prompt 把 status.update() 移到 draft 送出之前、送出條件加 || statusWrote、補送幀記 reason:"status-restore"）；tsc 零診斷、fast tier 93/93、4 種突變逐一驗證新斷言有效
+    - [f_44e77d] [2026-07-31T11:32:05.904Z] [WS] next_action: 重啟後做幾輪「含多次工具呼叫」的對話，然後讀 logs/draft-diag.jsonl 找 reason:"status-restore" 幀 —— 有該幀且症狀消失=修法成立；有該幀但症狀仍在=H1 錯需換方向（這是刻意設計的否證條件）；同時確認沒有 draft.skip reason=rateLimit（修法會增加 API 呼叫量）。驗完把 .env 的 TG_DRAFT_DIAG 關回 0，push 前先派 Fable5 覆核 4276f08

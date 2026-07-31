@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-30T20:04:53.938Z (token=topics-5061c2ed-22)
+// Last applied: 2026-07-31T20:22:24.460Z (token=topics-9d1be37f-24)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -113,6 +113,12 @@
       "draft streaming",
       "draft api",
       "draft mode",
+      "draft 模式",
+      "live draft",
+      "status-channel",
+      "status 訊息",
+      "draft-diag",
+      "keepalive",
       "sendrichmessage",
       "sendmessagedraft",
       "richmessage",
@@ -210,7 +216,8 @@
       "mcp 繼承",
       "異源覆核",
       "對抗覆核",
-      "獨立覆核"
+      "獨立覆核",
+      "覆核 agent"
     ]
   },
   {
@@ -276,7 +283,9 @@
       "powershell -encoded",
       "gh cli",
       "gh auth login",
-      "whois"
+      "whois",
+      "heredoc",
+      "here-string"
     ]
   },
   {
@@ -305,6 +314,36 @@
     ]
   },
   {
+    "topic": "verification-diagnosis",
+    "keywords": [
+      "恆真",
+      "突變測試",
+      "mutation test",
+      "實驗設計",
+      "陽性對照",
+      "診斷證據",
+      "放行閘",
+      "race 縫",
+      "純觀測欄位",
+      "transcript 重播",
+      "上界斷言",
+      "可觀測量"
+    ]
+  },
+  {
+    "topic": "bridge-smoke-gate",
+    "keywords": [
+      "smoke",
+      "pre-push",
+      "githooks",
+      "hookspath",
+      "ci.yml",
+      "dist/",
+      "fast tier",
+      "支數"
+    ]
+  },
+  {
     "topic": "bridge-project",
     "keywords": [
       "telegram-kiro-bridge",
@@ -323,7 +362,6 @@
       "readme",
       "upstream",
       "sync-skills",
-      "smoke",
       "check-",
       "unhandledrejection",
       "dev-design",
@@ -343,6 +381,9 @@
       "warmup",
       "coreready",
       "events.jsonl",
+      "doc-facts",
+      "event-log",
+      "docupdate",
       "secret 清理"
     ]
   },

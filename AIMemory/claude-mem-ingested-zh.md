@@ -1,5 +1,33 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-08-01(AUTO 模式;12 筆候選 → 精選 + 去重後寫入 1 條)
+
+來源 project：`telegram-kiro-bridge-main`（10 筆）+ `uk_917_leprechauns_pots_client`（1 筆）+ 2026-07-30 殘留 2 筆（shortlist 產生時間 2026-07-31T20:30:02.427Z，共 12 筆候選）。
+
+精選階段直接淘汰（一次性過程紀錄，非跨 session 可重用）：
+
+- 候選 4（Ghost Draft Fix Commit Strategy Decision）：內容是「建了一個 ASK action 詢問 F1 回歸測試範圍」→ 單次互動事件。
+- 候選 6（User choice point: scope of fixes to apply before push）：單次選擇點。
+- 候選 9（Chose status_first approach to fix streaming restart issue）：單次修法選擇；其技術結論已由既有 `status-channel` shard 的 4276f08 fact 涵蓋。
+
+去重階段淘汰（`list_facts` 命中既有 fact，實質重複）：
+
+- 候選 1（probe-* vs check-* 命名慣例）：查「probe」命中既有 fact，已完整記載「smoke runner 用 readdirSync 以 `check-*` 前綴自動發現，有真實副作用的探針刻意命名 `probe-draft-clearing.mjs` 並預設 dry-run、要 `--go`」→ **完全重複**。
+- 候選 2+5（Fable5 push 前獨立對抗覆核 / checklist 精煉）：查「Fable」命中 22 條，含 2026-07-30、2026-07-31 的多輪覆核紀律與「檢查清單式 prompt 也能抓到 medium 缺陷」精煉條目 → **完全重複**。
+- 候選 3（await gap opens finalize race）：查「await」命中既有 fact「在原本全同步的路徑中插入一個 await 就等於自己開了 finalize/cancel race 縫（2026-07-31 bridge F1 實證）」→ **完全重複**。
+- 候選 7（status-channel.ts 零 import 硬約束）：查「status-channel」命中既有 fact，已載明零 import 原因（check-draft-streaming.mjs 單獨 transpile 成 data-URL module 載入）→ **完全重複**。
+- 候選 8（順序型承重不變式的契約測試）：查「契約」命中既有 fact「模組契約測試（fake api 記錄 send/edit/delete）＋來源順序斷言＋mutation test 三件套」→ **完全重複**。
+- 候選 11（Documentation sync fact-sourcing architecture）：查「Fable」命中既有 fact「doc-facts.ts 從 regex 撕原始碼重構為直接 import TypeScript 模組（COMMAND_SPECS/DEFAULT_STEPS/EVENT_TYPES）」→ **完全重複**。
+- 候選 12（Vacuous assertion identification pattern）：查「vacuous assertion」命中既有 fact（含 truncateBotCommandDescription 276 字元實例）→ **完全重複**。
+
+實際寫入（`uk-slot` shard）：
+
+1. UK 老虎機要讓純邏輯能在 Cocos 編輯器外（ts-node）單獨測試，必須把運算層設計成 CC-free 的獨立模組：Game_Define.ts 本身 import 'cc' 與 astarte-framework，任何 import 它的模組在 ts-node 下都載不起來，所以像 bomb 事件結果計算這類純運算應抽成不依賴 cc / Game_Define 的一層（2026-07-31 uk_917_leprechauns_pots_client 實證）。此為可載入性問題，與「tsc --noEmit 要過濾只看 assets/Script 錯誤」的編譯期問題不同。
+
+結果：**新增 1 條**。未呼叫 forget。
+
+備註：本批 12 筆中有 7 筆是**完全重複**，比例明顯高於前幾批——原因是 2026-07-31 的 bridge draft/status race 工作在當下已直接寫入 AIMemory，claude-mem 只是同一批工作的第二次抽取。若此模式延續，可考慮把 shortlist 產生器的起始 epoch 對齊上次 ingest 時間以減少重複候選。
+
 ## 2026-07-30(AUTO 模式;4 筆候選 → 精選 + 合併 + 去重後寫入 2 條)
 
 來源 project：`telegram-kiro-bridge-main`（shortlist 產生時間 2026-07-29T20:30:02.527Z，4 筆候選）。
@@ -367,3 +395,40 @@
 - 其餘同主題重複條目已併入上列 2 筆
 
 去重方式:list_facts 查詢 knowledge pack / 知識包 / 向量 / 自審 / 佔位符 / 品質閘 / 敏感資料 / UK 助理,現存 312 筆中除「自審」命中既有對抗覆核系列外無衝突。未呼叫 forget。
+
+## 2026-07-31(來源:telegram-kiro-bridge-main + uk_917_leprechauns_pots_client,shortlist 14 筆 → 寫入 6 筆)
+
+- 【uk-slot】UK 老虎機事件 gate 的重入防護應查下游狀態而非另設旗標:pre-stop gate 是否已執行改用 BombBoard.HasEventBombs() 這類「已註冊結果」查詢判斷,狀態源唯一,unshow/replay 還原時才不會與實際盤面脫節。
+  - 來源:Replay prevention mechanism using BombBoard state check
+- 【uk-slot】UK 老虎機 unshow/replay 還原的時序保真原則:原始事件的觸發時機必須原樣保留(during-spin 觸發的 BOMB 不可為了實作方便降級成 after-stop),否則還原畫面與原始 spin 表現不一致。
+  - 來源:BOMB event timing and adapter contract decisions confirmed
+- 【misc】診斷證據必須在 restart/recovery 邊界失效:recovery 之後若沿用 pre-recovery 的 API error 記錄,真正的 post-recovery 卡死會誤用陳舊錯誤當根因而誤診,因此 recovery 時要主動清除舊錯誤證據。
+  - 來源:Review recommendation: do not push until MEDIUM bug fixed(該 MEDIUM bug 的本質)
+- 【misc】重現 restart 後的視窗溢出/狀態殘留類 bug,最有效的手法是拿真實 transcript 重播(real transcript replay),比造合成輸入更容易踩到真實邊界條件。
+  - 來源:Documented window overflow bug discovery and fix in SPEC Progress section
+- 【dev-tools】skill bundle 大幅更新的標準流程:先把未提交檔 commit 建立 restore point → 依差異分三類處理(整包替換/回填缺漏/選擇性合併)→ 被取代的舊 skill 轉成 deprecation pointer 並移除其觸發關鍵字避免撞名搶觸發 → 獨立審查通過才 push。
+  - 合併自 shortlist 3 筆:Create Restore Point Before Skill Bundle Update、Three-Phase Skill Update Strategy、Complete Update Workflow(Deprecation, Validation, Independent Review)
+- 【misc】依賴套件大版本升級的放行閘應是機械驗證而非主觀判斷:先 grep 全部 .ts/.mjs 確認零 import 指向已移除的模組(例如 MCP SDK 的 HTTP/SSE transport),零命中才放行 push。
+  - 來源:Independent review cleared MCP SDK upgrade for push with zero blocking issues
+
+**捨棄 8 筆**:
+- Fable5 independent review caught documentation inconsistencies after push —— 與既有「`claude -p --model fable` 做一次性獨立審查」記憶重疊,僅屬同一做法的再一次套用
+- BOMB event feature design specification completed —— 專案階段性進度紀錄,非可重用知識
+- Bomb Event Placement Ignores Underlying Wheel —— 單一遊戲的機制細節,跨專案無重用價值
+- Structured 6-phase development workflow established for CLOVER BOMB —— 一次性任務拆解,且既有記憶已含 spec-to-impl/codegen 流程規範
+- Restoration work delegated to colleague —— 一次性協作安排
+- Dimming effect conditional logic for round-based lighting —— 敘述過於單薄,無法自足成 fact
+- 其餘同主題重複條目已併入上列第 5 條
+
+去重方式:list_facts 查詢 bomb / unshow / recovery / skill / deprecation / transcript / 獨立審查 / 升級,現存 335 筆中除「skill」與「獨立審查」命中既有系列(已據此捨棄 Fable5 那筆)外無衝突。未呼叫 forget。
+
+## 2026-08-01(AUTO;同一份未清空的 shortlist 14 筆重掃 → 寫入 0 條)
+
+shortlist 檔頭仍是「產生:2026-07-30T20:30:02.058Z;筆數:14(上限 15);自 epoch 1785321085374」,內容與上方 2026-07-31 那批**逐條相同**——ingest 之後 shortlist 沒有被清空、epoch cursor 也沒前進,所以同一批被重掃一次。
+
+- 14 筆全部命中既有處置:**6 筆已於 2026-07-31 寫入**、**8 筆已判定捨棄**。
+- 抽查驗證:以 list_facts 查 `after-stop`,確認「UK 老虎機 unshow/replay 還原的時序保真原則」那條**確實存在於 fact store**(不只記在本 log)。其 shard 是 uk-slot 而非 uk-917,查 uk-917 shard 會漏掉。
+- 本輪先獨立精選、後才發現重複,兩輪結論一致:#4(during-spin 時機不可降級)值得存、#5 的 stale pre-recovery evidence 是真 gotcha、#11/#12/#13 應合併成一條 skill bundle 流程、其餘屬一次性紀錄/專案進度。故不改動既有寫入。
+- 未呼叫 remember、未呼叫 forget。
+
+⚠️ 待處理(非本輪能修):shortlist 未清空會讓每次 curate 空轉重掃同一批。本檔已有 07-22、07-23、07-25×2、07-26 共 5 次同類紀錄,本次是第 6 次。根治要在**產生端**於 ingest 後清檔或推進 epoch cursor,curate 這一側無法自救。

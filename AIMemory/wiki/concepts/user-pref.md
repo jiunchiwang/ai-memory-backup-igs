@@ -2,8 +2,8 @@
 title: 使用者偏好與決策風格
 type: concept
 created: 2026-07-15
-updated: 2026-07-22
-sources: [f_af99c7, f_946c9f, f_e19358, f_be8c07, f_d29dfc, f_c73099, f_218abc, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_8a4a0e, f_e0ce0f, f_a738db]
+updated: 2026-08-01
+sources: [f_af99c7, f_946c9f, f_e19358, f_be8c07, f_d29dfc, f_c73099, f_218abc, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_8a4a0e, f_e0ce0f, f_a738db, f_99e9ba, f_ebe025, f_9d9c71]
 ---
 
 # 使用者偏好與決策風格
@@ -50,6 +50,12 @@ sources: [f_af99c7, f_946c9f, f_e19358, f_be8c07, f_d29dfc, f_c73099, f_218abc, 
 ## 誤進版控處理慣例
 
 對已誤進版控的診斷資料（如 `ai-memory-backup-igs` 裡的 `acp-trace`）：只做 `git rm --cached` 移除追蹤 + 加 `.gitignore` 防再犯，不做 `git filter-repo` 歷史清除、不 force-push，接受舊 commit 歷史仍保留內容。
+
+## 驗證與診斷的偏好（2026-07-31 新增）
+
+- **要「可否證條件」而不是「已修好」的宣稱**：承重改動上線時要同時定義出**什麼觀測結果代表原假設是錯的**。實例：draft H1 修法的判讀表把「`status-restore` 幀存在但症狀仍在」明確標成「假設錯、需換方向」，而不是只列成功條件。
+- **重建撞牆時選「改看真實資料」而不是再猜一輪**：raw API 八臂探針全負後，選擇加內容快照 + 等症狀自然發生再 diff 出事的前後兩幀；明確排除「先停等下次重播再處理」與「順便把強制補送拿掉」兩個選項。
+- **記憶去留的判準**：含技術實作細節（selector、防線設計、API 行為）的進度記錄值得保留；純日期綁定的進度快照與歷史拆分記錄可刪。詳見 [[bridge-memory]]。
 
 ## 相關
 

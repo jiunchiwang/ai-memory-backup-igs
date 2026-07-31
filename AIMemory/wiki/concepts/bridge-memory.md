@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-07-21
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_a8bb58, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274]
+updated: 2026-08-01
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f]
 ---
 
 # Bridge 記憶與維運系統
@@ -98,6 +98,26 @@ fact recall 恆 0 的根因：fact embedding 從未被算（facts 195 vs embeddi
 - 備份 repo：`G:\AI\ai-memory-backup-igs`，remote `https://github.com/jiunchiwang/ai-memory-backup-igs.git`（branch: master）
 - `/backup` 指令：robocopy AIMemory + agent 設定目錄到 repo → git push
 - 每日 /dream 自動觸發
+
+## 瑣碎 fact 的審核判準（2026-07-30 使用者逐條裁決）
+
+wiki-reference 保護會讓 factlint 想刪的 fact 刪不掉，於是「哪些真的該刪」需要人的判準。實際裁決結果：
+
+| 類型 | 處置 | 理由 |
+|---|---|---|
+| 純進度快照（日期綁定、wiki 頁已有同等彙整版） | **刪** | 資訊已被 wiki 取代，例如「M0a 完成」「三步驟已完成」「wiki 頁拆分記錄」 |
+| 標題寫「完成」但內含技術細節（按鈕 selector、五層防線設計、API 行為） | **留** | 有持久參考價值，不因「完成」字樣而瑣碎 |
+
+要真的刪掉受保護的 fact，流程是**先從相關 wiki 頁的 `sources:` frontmatter 移除該 fact id 解除保護，再 `forget()`**。但 2026-07-08 裁決是「接受保護、不解除引用」——所以這條流程是例外手段，不是常規。
+
+### `[WS]` working-state facts 應主動清理（2026-08-01 實證）
+
+`<<RESTART>>` 前寫入的 `[WS] task/completed/blocked/key_refs/next_action` 是**設計上的過渡性筆記**，restart 完成後就沒有價值，而且會出現兩種害處：
+
+1. 持續佔用 preamble 的 memory recall 額度（每輪都被召回）
+2. 若當時的結論後來被推翻，它們會把**已否證的結論**餵回未來的 session
+
+2026-08-01 一次清掉 8 條（bridge-streaming 的 draft 診斷 WS 組，其中 3 條主張的 H1 根因已被實測推翻）。判準：`[WS]` 前綴 + 對應工作已結束 + 未被任何 wiki 頁 `sources` 引用 → 可直接 `forget()`。
 
 ## 相關
 

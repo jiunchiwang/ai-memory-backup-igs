@@ -31,3 +31,5 @@
 - [f_77ddbd] [2026-07-16T13:14:06.519Z] telegram-kiro-bridge 的 dream.json 實際讀取路徑優先序為 MEMORY_DIR/config/dream.json（目前不存在）→ 退回 ~/.kiro/dream.json（此機器實際生效檔）→ 內建 DEFAULT_STEPS fallback
 - [f_6f6762] [2026-07-28T14:08:12.989Z] 使用者決定 bridge roadmap 放 wiki page（G:\AI\AIMemory\wiki\concepts\bridge-roadmap.md），理由是跟現有 wiki 系統整合、preamble 可見、wikilint 自動維護，排除散落在 facts 用 [Roadmap] 前綴（無優先級/狀態追蹤）和獨立 AIMemory/roadmap.md（不在 wiki 維運體系內）
 - [f_d742a1] [2026-07-28T20:32:05.511Z] telegram-kiro-bridge 於 2026-07-28 為「UK 助理知識包」定案交付架構：採快照式(snapshot)蒸餾檔案 + headless agent CLI 直接讀取，刻意不引入向量資料庫與 embedding 層；配套三層把關為敏感資料過濾(禁止公司 raw code 外流)、明確的知識更新工作流、以及交付前驗證。可作為「小規模領域知識問答機器人」的預設架構——RAG 基礎設施的維運成本通常高於快照重生成的成本。
+- [f_a8b737] [2026-07-30T22:22:40.029Z] 清理被 wiki-reference 保護的瑣碎 facts 的標準流程：先從相關 wiki 頁面的 sources frontmatter 移除 fact id 解除保護，再呼叫 forget 刪除 fact
+- [f_9a349f] [2026-07-31T20:13:18.775Z] factlint 審核被 wiki-reference 保護的瑣碎 facts 時的判準（2026-07-30 使用者逐條裁決）：純進度快照（日期綁定、wiki 頁已有同等彙整版）選擇刪除，而標題雖寫「完成」但內含技術細節（按鈕 selector、五層安全防線設計）者保留——因為前者資訊已被 wiki 取代、後者有持久參考價值。

@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-07-30
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88]
+updated: 2026-08-01
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -22,6 +22,23 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - [[bridge-research]] — 研究方向與外部借鏡、roadmap
 - [[bridge-upstream-sync]] — Fork 同步策略、合併衝突處理原則、push 前 Fable5 覆核（2026-07-21 拆出）
 - [[bridge-dream]] — /dream 例行維運框架本身（dream.json 機制、claude-mem-curate 接入、turn 誤報「(no output)」兩種根因；2026-07-22 拆出）
+- [[bridge-smoke-gate]] — 測試閘門與建置（tsc/smoke tier/pre-push、環境隔離假失敗、計數同步儀式、CI 決策；2026-08-01 拆出）
+- [[verification-diagnosis]] — 跨專案的驗證／診斷方法論（恆真斷言、突變測試、實驗設計原則；2026-08-01 從 misc 拆出）
+
+## 文件事實來源改為原始碼（2026-07-31）
+
+`/docupdate` 原本的設計是「讀 README 當比對基準去修 `docs/usage-guide.html`」——**拿產出物當事實來源**，形成自我回歸迴圈：README 自己會過期，於是那次同步依過期 README **刪掉了 HTML 裡真實存在的 `specialistreflect` 步驟**並把 Dream 步驟數從 15 改成 13。兩份文件互相一致但都錯。
+
+修法（commits `d8bf64a` → `6e47af6` → `7e75990`）：
+
+- **新增 `src/doc-facts.ts`** — bridge 自己從原始碼機械枚舉事實並算差集，agent 只負責寫文字：指令 48 個（`bot-setup.ts` COMMAND_SPECS）／Dream 步驟 15 步含順序（`dream-config.ts` DEFAULT_STEPS）／事件型別 20 種（`event-log.ts` EVENT_TYPES）
+- **三個防呆**：下界斷言（regex 與結構脫鉤時 throw，避免「永遠成功、永遠什麼都不做」）／只加不減（文件多出來的另列「可疑」供人判斷）／別名正規化
+- **後續重構**：`doc-facts.ts` 從 regex 撕原始碼改成**直接 import 模組**（Fable 5 覆核建議，減少平行實作脫鉤）；為此 `event-log.ts` 改寫成 `const array + type 推導`（`EVENT_TYPES` 可 runtime 枚舉、`EventType` 從陣列推導）
+- **`scripts/check-doc-sync.mjs`** 成為 pre-push 閘門 → 見 [[bridge-smoke-gate]]
+
+順帶抓到的同類問題：`check-bot-command-descriptions.mjs` 的斷言是恆真的（見 [[verification-diagnosis]]），導致 `/dream` 的 Telegram desc 276 字元被靜默截斷、步數寫錯（10 vs 實際 15）卻測試全綠。
+
+> `.claudedocs/` 在 `.gitignore` 內 —— `問題追蹤.md` 是**刻意不進版控**的本機記錄檔，升格條目寫進磁碟即生效（CLAUDE.md Section 6a 讀的就是本機檔），不應用 `git add -f` 硬塞進版控。
 
 ## 文件與教學
 

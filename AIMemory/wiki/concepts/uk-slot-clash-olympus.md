@@ -3,7 +3,7 @@ title: Clash of Olympus（諸神之戰）
 type: concept
 created: 2026-07-16
 updated: 2026-07-17
-sources: [f_4c48e6, f_d03f34, f_f79167, f_b20c5e, f_593c2e, f_c7ce92]
+sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92]
 ---
 
 # Clash of Olympus（諸神之戰）

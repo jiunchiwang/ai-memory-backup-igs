@@ -13,9 +13,9 @@
   - 代表 session: 2026-06-27 /skillsearch 自檢（找到 5 個問題並修正）
   - 觀察點：如果對更多 skill/command 做自檢且每次都有固定 checklist，可升格
 
-- [ ] **dream-report-action** | count=3 | score=0.20 | 太低，繼續觀察
-  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）、2026-07-17T20-40 處理建議（factlint/wikilint/skilllint/docupdate 靜默失敗診斷：_lastTurnFailed 旗標 + sharedsync 吞錯誤修復）
-  - 觀察點：若 dream 報告格式穩定且處理流程可模板化；第 3 次已展現固定骨架（讀 STATE.md High Priority → 逐項因果鏈分析 → 修復 → commit → 清空 STATE.md 項目），再出現一次可考慮升格
+- [ ] **dream-report-action** | count=4 | score=0.28 | 仍低於 0.3，繼續觀察
+  - 代表 session: 2026-06-26 dream 建議處理（orphan清理 + backup + dream.json）、2026-07-06T22-30 處理建議（skill-usage store 合併 + 幽靈 skill 補實體 + STATE.md 入口 A+D）、2026-07-17T20-40 處理建議（factlint/wikilint/skilllint/docupdate 靜默失敗診斷：_lastTurnFailed 旗標 + sharedsync 吞錯誤修復）、2026-07-30T22-22 處理建議（skill-usage 加 deprecated + factlint wiki-reference 保護 5 條逐條審核）
+  - 觀察點：固定骨架已穩定 4 次（讀 STATE.md High Priority → 逐項因果鏈分析 → 處理 → 更新/清空 STATE.md 項目），但每次消耗 turn 數都很低（C≈0.35）所以分數上不來。**判定：即使再出現也不新建 skill** —— 流程綁 bridge 的 STATE.md / dream.json，屆時 append 到 `ms-wiki-knowledge-base`（同域：bridge 記憶維運）
 
 - [x] **external-repo-absorption-methodology** | count=5 | score=0.80 | **已升格為 ms-external-repo-absorption (2026-07-10)**
   - 正本：`AI-canonical/skills/general/ms-external-repo-absorption/SKILL.md`
@@ -43,6 +43,21 @@
   - 觀察點：若第 4~5 次出現且沉澱出固定診斷步驟（`GIT_TERMINAL_PROMPT=0` 快速失敗判別、`git credential` 帳號比對、remote URL 帳號嵌入），可升格；屆時評估 append 到 `ms-windows-shell-exit-code-false-positive`（同域 Windows git 誤報）或獨立。本次 3rd 案例症狀略有分歧（互動式 OAuth 掛起 vs 純帳號快取不符），升格前需先確認是否同一根因或需拆成兩個 pattern
   - 現有覆蓋：fact f_dff56f（兩組帳號憑證快取對應關係）
 
+- [ ] **blackbox-probe-experiment-design** | count=2 | score=0.35 | 留底觀察
+  - Pattern：對「文件查不到、回傳值一律成功」的黑箱行為（client 端渲染、API 副作用）設計多臂探針實驗。三條已付代價的設計原則：① 陰性結果必須有**有效的陽性對照**才可解讀（對照失效時陰性結果零資訊量）② 設計觀測前先確認要問的 observable 跟使用者報的症狀是同一件事（問「是否消失」但症狀是「消失再重播」→ 全白測）③ 症狀若是內容相依的，就不能把「內容型態」固定不變去變其他軸
+  - 代表 session: 2026-07-26（背景通知 flakiness：「調整等待延遲後時間差不變，就不是競態」的量測判準）、2026-07-31T13-46（draft 重播八臂探針全負，含上述三條各踩一次；`scripts/probe-draft-clearing.mjs`）
+  - 觀察點：第 3 次做黑箱多臂探針就升格；屆時內容已足夠（探針命名隔離 `probe-*` vs `check-*`、判讀表要含「實驗無效」那一列、每臂必須帶非恆真基準段）
+  - 現有覆蓋：facts（八臂結果、實驗設計三教訓、TTL 35s 實測）+ `ms-streaming-token-pipeline`「已推翻的前提」節（該次實驗的結論，非方法論）
+
+- [x] **vacuous-test-gate** | count=6 | score=0.58 | **已升格為 ms-vacuous-test-gate (2026-08-01)**
+  - 正本：`AI-canonical/skills/general/ms-vacuous-test-gate/SKILL.md`
+  - 6 個實例（皆 2026-07-31，跨 6 個 session）：恆真斷言（truncate 後驗上限）、計數閘門硬寫期望值（且加閘門本身改變該數字）、彙總 throw 是死碼、錨點切到下一條 exit 而放過、測試 resolver 被覆蓋靠 1.5s 逾時放生仍全綠、runner 只印 ok 所以通過不證明斷言跑到
+
+- [x] **cross-model-adversarial-review** | count=8 | score=0.87 | **已升格為 ms-cross-model-adversarial-review (2026-08-01)**
+  - 正本：`AI-canonical/skills/general/ms-cross-model-adversarial-review/SKILL.md`
+  - 代表 session: 2026-07-18（merge 安全）、07-26（protobufjs 論證缺陷，37 tool calls/587s）、07-29（5 孤兒 import + 1 死碼，tsc 全綠抓不到）、07-30（4 條中 3 成立 1 駁回）、07-31 五輪（00-48 一輪 5 條、07-41 三輪 10 條、13-46 一輪 F1 await race）
+  - 與既有候選 `kiro-delegate-three-stage-review` 的分界：後者是**委派實作後**的三段 QA（append 到 vc-kiro-delegate），本 skill 是**push 前**的異源對抗覆核紀律，兩者不合併
+
 ## 誤判紀錄（防重複偵測）
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
@@ -52,4 +67,4 @@
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
 ---
-Last updated: 2026-07-22
+Last updated: 2026-08-01

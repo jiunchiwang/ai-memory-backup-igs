@@ -28,6 +28,8 @@
 - [[user-pref]] — 使用者偏好與決策風格（ASK 優先、Git 紀律、自動化保守策略、除錯對策）
 - [[skill-and-eval]] — Skill 評估與管理（方法論整合、工具評估決策）[歷史頁面，topic 已併入其他分類]
 - [[igs-uof]] — IGS-UOF 加班單自動化（原 vc-uof-hours 改名擴充、加班單送出五層防線、刷卡時間 onchange 踩坑）
+- [[bridge-smoke-gate]] — Bridge 測試閘門與建置（tsc/smoke tier/pre-push 三層、dist≠跑著的碼、環境隔離假失敗、計數同步儀式、probe-* 命名隔離、CI 決策；2026-08-01 從 bridge-project 拆出）
+- [[verification-diagnosis]] — 驗證與診斷方法論（綠燈假象五型與突變測試、診斷實驗三原則、證據的 recovery 邊界、純觀測欄位、await 縫開 race、同源自審天花板；2026-08-01 從 misc 拆出）
 
 ## Lessons
 
@@ -51,5 +53,5 @@
 
 ---
 
-Total pages: 34
-Last updated: 2026-07-31（wikilint：[[igs-uof]] +Cloudflare、[[uk-slot-eye-strike]] +5 facts）
+Total pages: 36
+Last updated: 2026-08-01（wikisync：新增 [[bridge-smoke-gate]]、[[verification-diagnosis]]；更新 [[bridge-streaming]]／[[bridge-project]]／[[uk-slot]]。wikilint：修 [[bridge-acp]] 過時 backend 配置、補 [[bridge-memory]]／[[user-pref]]／[[uk-917]]／[[dev-tools]]，dev-tools 補上缺失的 wikilink）

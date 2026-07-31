@@ -1,7 +1,6 @@
 - [f_4e8237] [2026-05-29T12:03:17.153Z] 使用者有一個 telegram-kiro-bridge 專案位於 G:\AI\telegram-kiro-bridge-main，含 desktop-pet Electron 桌面寵物功能
 - [f_d21a12] [2026-05-29T20:06:30.574Z] 使用者的 AIMemory 系統位於 G:\AI\AIMemory，含 facts、topics、wiki、dailylog、sessions 等子結構，由 telegram-kiro-bridge 的 /dream 每日凌晨 04:00 自動維運
 - [f_5b7f6a] [2026-06-19T08:57:00.701Z] telegram-kiro-bridge 美化方案選用 HTML 而非 MarkdownV2（因為 agent 輸出常含 _ * [ ] 等字元，MarkdownV2 跳脫規則太嚴格會導致大量 400 error；HTML 只需 escape <>&）
-- [f_5871a8] [2026-06-24T09:09:27.586Z] 此台機器的 Kiro agent config 路徑為 C:\Users\jiunchiwang\.kiro（非舊機器 C:\Users\tonykuo\.kiro），smoke test 中硬寫的 tonykuo 路徑需注意
 - [f_5bd2fc] [2026-06-27T00:45:09.018Z] SkillsMP 上的 196 萬份 skill 絕大多數設計給 Claude Code 本地 CLI 環境（依賴 PostToolUse hooks、.claude/ 目錄、memory_remember API），bridge 的 ACP+Telegram 架構無法直接安裝使用，但可借鏡概念融入現有機制
 - [f_0a8153] [2026-06-27T08:00:59.524Z] 使用者確認 bridge 的自我改進優先級：Context Budget（事前紀律 + 事中熔斷）和 ASK 強制觸發規則是當前最需要的兩個 preamble 加強項
 - [f_69884b] [2026-06-30T20:31:46.234Z] AI 長期警戒模式清單(來自 telegram-kiro-bridge 的 問題追蹤.md,設計階段架構師必讀):#001 未經查證就宣稱某物存在、#002 把「存在」與「路由/接線」混為一談、#003 單一來源就推斷結論、#004 忽略字面上的明確證據、#005 把共享值私有化(shared-value privatization)、#006 行數預算過度樂觀、#007 單一視角自審的盲點(需異源 skeptic 才能打破)。可作為設計/審查時的對抗檢查清單。
@@ -15,7 +14,6 @@
 - [f_1e4cda] [2026-07-07T09:28:41.792Z] telegram-kiro-bridge 已實作 Telegram reply/quote context 注入（commit 1346519）：message handler 讀 reply_to_message（含 caption）與 Bot API 7.0 partial quote，組 [Reply context] 區塊（標注引用對象、截 500 字）前置於 promptText；連動把 negation reflexion 偵測改用原始 text 開頭比對；需重啟 bridge 生效
 - [f_9c5954] [2026-07-07T13:00:14.437Z] bridge 的錯誤無檔案落地：bot.catch 只 console.error、start.bat 無 stdout 重導向，歷史錯誤證據僅存在 console 視窗 scrollback（找 Bot error: 或 [rate-limit] 關鍵字）
 - [f_1867ae] [2026-07-08T14:03:20.386Z] grammY 的 api.raw 是 Proxy，任意 method 名都回傳 callable——用 typeof method !== 'function' 做能力偵測對真 grammY API 是死碼，真正的不支援偵測要靠 catch API 錯誤
-- [f_50951c] [2026-07-09T02:31:07.080Z] G:\AI\telegram-kiro-bridge-main 的 .env 實際含完整 TELEGRAM_BOT_TOKEN（46字元，非空值）——先前「sanitized 版需加 dummy」的記錄已過時；smoke 假失敗真因是 bridge spawn 的 agent session 繼承空值環境變數（TELEGRAM_BOT_TOKEN="" 等），dotenv 不覆蓋既有 env 導致 config required() throw
 - [f_3bc9f5] [2026-07-10T00:12:51.628Z] telegram-kiro-bridge 送 .md 檔給 Telegram 時改用 .txt 顯示名（InputFile 第二參數），解決 Telegram in-app viewer 對 .md UTF-8 偵測不可靠導致中文亂碼的問題（commit 8a2df86）
 - [f_131cef] [2026-07-10T11:14:51.695Z] telegram-kiro-bridge 已修復 draft TTL 過期訊息消失問題（commit 75a5428）：editNow() 中 trySendDraft() 失敗且無 placeholder 時，用 sendMessage 建 placeholder 並降級為 placeholder 模式（useDraftMode=false, draftId=0），防止 rate limit 期間 draft 30s TTL 過期導致訊息從使用者畫面消失
 - [f_0e5446] [2026-07-10T15:54:46.744Z] bridge 架構陷阱：index.ts 的全域 unhandledRejection handler 會 process.exit(1)，任何同 process 的 async callback（如 HTTP handler）未捕捉的 throw 都會殺掉整個 bridge——新增 server/handler 必須自帶錯誤邊界
@@ -24,7 +22,6 @@
 - [f_b1e2ca] [2026-07-12T00:04:25.981Z] telegram-kiro-bridge 的 start.bat 每輪 loop 用 npm run dev（tsx 直跑 src），所以 <<RESTART>>（bridge exit(1) 後 supervisor 重生）即帶最新 src 程式碼生效，不需先 build dist
 - [f_484853] [2026-07-12T00:33:23.421Z] bridge 主程序跑 tsx 直吃 src，但 MCP 子行程（memory/google）三個 CLI 都吃 dist——改到 mcp-memory 的 import 鏈必須 npx tsc -p . 重建 dist 才生效，且要重啟 session 才會重新 spawn MCP
 - [f_cc8fd5] [2026-07-13T11:39:16.104Z] 使用者偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個（2026-07-13 對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit）
-- [f_28e17b] [2026-07-13T12:11:37.924Z] telegram-kiro-bridge repo 設定 core.hooksPath=.githooks，pre-commit 會自動執行 scripts/sync-skills-to-repo.mjs，把 default-skills/ 內容從本機 skill 目錄（~/.claude/skills 等，取最新 mtime）覆蓋同步回 repo——改 default-skills 前需注意可能被此 hook 覆蓋
 - [f_f16f7b] [2026-07-13T20:31:21.495Z] telegram-kiro-bridge 設計跨 backend 量化自評（SELF_EVAL token）機制時，對抗性審查否決了三個複雜方案，發現六個共通致命缺陷，可作為未來設計類似自評/評分機制的通用檢查清單：(1) tsc 型別驗證可被 agent 謊報低分繞過；(2) 觸發條件可能與 Kiro/Codex 等 backend 已知限制互相矛盾；(3) circuit breaker 整合的前提條件未經驗證；(4) 沒有證據顯示 backend 真的會遵守自評指令；(5) 未驗證的實作細節被當成行為契約使用；(6) 巢狀 payload 會破壞既有的扁平欄位慣例。
 - [f_d6b17c] [2026-07-13T20:31:23.526Z] 當方法論缺乏量化評分機制（例如沒有「≤95 分即重做」這類邏輯）時，telegram-kiro-bridge 曾設計一套可參考的範本：跨 6 個維度、總分 100 分——型別驗證 V:25、功能測試 T:20、影響分析 I:20、範圍紀律 S:15、完整性 C:10、回讀驗證 R:10。
 - [f_9f9b1f] [2026-07-14T01:00:58.580Z] 使用者對 SELF_EVAL 查詢介面的決策：選新增獨立 /selfeval 指令，排除併入既有 /status 擴充
@@ -49,7 +46,10 @@
 - [f_a4eb9f] [2026-07-19T20:38:15.671Z] telegram-kiro-bridge 的 /backup 於 2026-07-19 起被 GitHub push protection 擋下無法備份：使用者先前貼在對話的 GitHub PAT（ghp_ token）洩漏進 AIMemory/events.jsonl（約 7868-7873 行）與 oldSessions 的 session transcript（session-509424983-2026-07-19T09-10-45.md:268），需先移除該 secret 或走 GitHub unblock URL 才能恢復自動備份——教訓是對話中貼的真實密鑰會落地 events.jsonl 與 transcript，不應在對話貼 token
 - [f_cba34c] [2026-07-21T20:06:03.271Z] 因為 bridge session 會把每個 bash 指令逐字記進 events.jsonl（包含指令參數本身），導致用 grep 打出洩漏 secret 的字面值來驗證是否清乾淨時，該驗證指令本身又把 secret 重新記回 events.jsonl（自我重複污染迴圈），所以清理已洩漏 secret 時改用通用正則（如 ghp_[A-Za-z0-9]{30,40}）取代逐字打出 secret 本身來搜尋/驗證（排除直接 grep 字面值，因為每次驗證都會再洩漏一次）
 - [f_b8922f] [2026-07-22T00:33:16.662Z] telegram-kiro-bridge 清理已洩漏 secret 的 git 技巧：若含 secret 的 commit 尚未推送到遠端（GitHub push protection 已在推送前擋下），可安全用 git commit --amend 改寫該 commit 內容移除 secret，再用 git reflog expire --expire=now --expire-unreachable=now --all + git gc --prune=now 徹底清除本地磁碟上的殘留 commit 物件
-- [f_da3d5b] [2026-07-25T20:30:44.650Z] telegram-kiro-bridge 的 CI 把關決策（2026-07-25）：測試把關靠本機 pre-push hook 執行，GitHub Actions 暫緩導入；.github/workflows/ci.yml 雖已寫好並在本機驗證通過（86/86 測試），但刻意保留為未追蹤檔案不進版控——未來看到該檔案未 commit 屬預期狀態，不是遺漏。
 - [f_877531] [2026-07-26T20:31:35.219Z] telegram-kiro-bridge 的背景通知不穩定（flakiness）問題於 2026-07-26 經量測推翻原本的 race condition 假設：把 sleep 縮到 2s、turn 長度 31.9s 時，通知仍固定在 turn 結束後 +3.0s 才到、未被併入該 turn——可重用判準是「調整等待延遲後時間差不變，就不是競態」，修復方向須改從通知投遞路徑下手而非繼續調延遲。
 - [f_b01fe2] [2026-07-29T03:58:22.954Z] 查證「ACP session 實際跑什麼 model」的唯一可靠法是 raw JSON-RPC probe：spawn adapter → initialize → session/new → 讀回傳 configOptions 裡 id==="model" 的 currentValue（options[].description 開頭即真名如 "Opus 5 with 1M context"）；scripts/check-acp-model-effort.mjs 只驗 pin 成不成功、不告訴你實際在跑什麼
 - [f_84dd82] [2026-07-29T20:31:39.514Z] 處理「請求的 model 與實際生效的 model 可能不一致」時採用的架構是：AcpClient 用私有 _sessionConfig 欄位保存 adapter 回報的實際 model/effort，與呼叫端請求的 opts.acpModel 分開存放，讓靜默降級被記成事實而非回音請求值；model 身分注入排在 initialize() 之後、preamble 注入之前，因此不違反 preamble 凍結快照政策（2026-07-29）
+- [f_5302c0] [2026-07-31T03:52:33.947Z] doc-facts.ts 從 regex 撕原始碼重構為直接 import TypeScript 模組（COMMAND_SPECS/DEFAULT_STEPS/EVENT_TYPES），減少「平行實作」的脫鉤風險（2026-07-31，Fable 5 review 建議）
+- [f_3fb62a] [2026-07-31T03:52:33.947Z] event-log.ts 已改寫成 const array + type 推導模式：EVENT_TYPES 陣列可在 runtime 枚舉，EventType 從該陣列推導（2026-07-31）
+- [f_10387c] [2026-07-31T07:42:01.614Z] telegram-kiro-bridge 的 .claudedocs/ 在 .gitignore 內，問題追蹤.md 是刻意不進版控的本機記錄檔——升格條目寫進磁碟即生效（CLAUDE.md Section 6a 讀本機檔），不應用 git add -f 硬塞進版控
+- [f_bb1fcf] [2026-07-31T13:46:56.962Z] telegram-kiro-bridge 的 draft 重播八臂探針（scripts/probe-draft-clearing.mjs，三模式：三臂 / --ttl / --frames / --md）全部重現不出症狀：editMessageText 不清、sendMessage 不清、TTL 不到、同內容重送不重播、內容變短不重播、append 平順、純散文不重播、code fence 開闔不重播；markdown 表格那一臂無效（Telegram 原生不支援表格，永遠不會有半成品→成形的重排）

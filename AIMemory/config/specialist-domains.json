@@ -245,7 +245,24 @@
         "fable5",
         "異源覆核",
         "對抗覆核",
-        "獨立覆核"
+        "獨立覆核",
+        "draft 模式",
+        "live draft",
+        "status-channel",
+        "status 訊息",
+        "draft-diag",
+        "keepalive",
+        "覆核 agent",
+        "pre-push",
+        "githooks",
+        "hookspath",
+        "ci.yml",
+        "dist/",
+        "fast tier",
+        "支數",
+        "doc-facts",
+        "event-log",
+        "docupdate"
       ],
       "wikiPages": [
         "bridge-project",
@@ -260,7 +277,8 @@
         "specialist",
         "bridge-upstream-sync",
         "bridge-dream",
-        "bridge-roadmap"
+        "bridge-roadmap",
+        "bridge-smoke-gate"
       ],
       "mcpServers": [
         "memory",

@@ -6,3 +6,5 @@
 - [f_eb9ddd] [2026-07-07T00:32:54.720Z] 使用者機器已安裝 Bun runtime（C:\Users\jiunchiwang\.bun\bin，含 bun.exe/bunx.exe），claude-mem plugin 的 hooks 依賴它執行，不可刪除
 - [f_af2a3f] [2026-07-16T09:36:02.404Z] 使用者這台機器的 gh CLI 尚未執行 gh auth login／未設 GH_TOKEN，研究 GitHub repo 時 gh repo view 等指令會直接失敗，需改用 WebFetch 抓取
 - [f_cb572a] [2026-07-29T08:29:16.673Z] telegram-kiro-bridge 的 npm run smoke 依賴 dist/ 編譯產物，但 tsc --noEmit 不會寫檔——改完 src 後要跑 smoke 前必須先用 tsc -p . 重新編譯，否則會用過期 dist 跑出假失敗（2026-07-29 sync-upstream 實測）
+- [f_ab7e0a] [2026-07-30T20:31:49.767Z] skill bundle 大幅更新的標準流程：先把未提交檔 commit 建立 restore point → 依差異分三類處理（整包替換／回填缺漏／選擇性合併）→ 被取代的舊 skill 轉成 deprecation pointer 並移除其觸發關鍵字避免撞名搶觸發 → 獨立審查通過才 push。
+- [f_9bb794] [2026-07-31T11:33:09.321Z] 在 Bash tool 裡寫多行 git commit message 必須用 bash heredoc，不可用 PowerShell here-string（@'...'@）—— 後者會讓首行多一個 @ 吃掉整個 subject、末行也留一個 @，且 git commit 會照樣成功不報錯（2026-07-31 實證，需 amend 修正）

@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-07-31
-sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_d03f34, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_7e491d, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_d42a81, f_e7f3c2, f_a9b64d, f_c83ef1, f_f5d920, f_b6c47a, f_91e5d8]
+updated: 2026-08-01
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_7e491d, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_d42a81, f_e7f3c2, f_a9b64d, f_c83ef1, f_f5d920, f_b6c47a, f_91e5d8, f_4367fb, f_189848]
 ---
 
 # UK Slot 老虎機專案群
@@ -170,6 +170,15 @@ UK 助理知識包專案（2026-07-28）定案的資料分區策略：
 - **同頁多處寫死計數只改一處**：line 50 改了 line 53-54 忘改
 
 自審驗的是「我改的那處對不對」而非「還有沒有別處」，pattern-library #26 卡片實證此類問題需異源覆核才能可靠抓出。
+
+## 事件還原（unshow / replay）兩條通則（2026-07-30，uk_917 BOMB event 實證）
+
+這兩條是設計任何「事件疊加在盤面上」的 feature 時都會踩到的，不限 uk_917：
+
+1. **重入防護要查下游狀態，不要另設旗標。** pre-stop gate 是否已執行，改用 `BombBoard.HasEventBombs()` 這類「已註冊結果」的查詢來判斷——狀態源唯一，unshow/replay 還原時才不會與實際盤面脫節。另設一個 `m_hasRun` 旗標的話，還原路徑一定有一條忘記重設。
+2. **時序保真：原始事件的觸發時機必須原樣保留。** during-spin 觸發的 BOMB **不可**為了實作方便降級成 after-stop，否則還原畫面與原始 spin 的表現不一致。
+
+詳細的 feature 輪廓見 [[uk-917]]。
 
 ## 重要設計模式
 

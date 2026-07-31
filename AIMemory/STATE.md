@@ -1,30 +1,30 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-07-30T04:13:27.900Z
+Last run: 2026-07-31T06:17:00+08:00
 
 ## High Priority (action needed)
 （無）
 
-## Resolved (2026-07-30)
-- ✅ Repo 膨脹警告：total=313, ratio=4.6 — 已確認為 wiki-reference 保護的設計取捨，非可操作項目
-- ✅ uk-slot-codegen skill stale：已改用 `${UK_SLOT_ROOT}` 環境變數（正本 AI-canonical-corp）
+## Resolved (2026-07-31)
+- ✅ uk-slot-spec-to-impl：skill-usage.json 已加 `deprecated: true` + notes
+- ✅ factlint wiki-reference 保護：使用者審核後刪除 3 條純進度 facts（f_7a309c、f_d03f34、f_a8bb58），保留 2 條含技術細節的（f_52d1ec、f_ce6c91）
 
 ## Watch List (monitor)
-- 🟡 衰減判定不可用：hit-log fact entries 僅 19 天（2026-07-11 起），未滿 60 天閾值
-- 🟡 零命中區 shard（6 個）：bridge-streaming、bridge-upstream-sync、uk-slot-codegen、uk-slot-clash-olympus、uk-slot-eye-strike、uk-slot-pirates-queen
-- 🟡 Underused skills（9 個，非 pinned）：ms-external-repo-absorption、ui-ux-pro-max、dual-skill-review-loop、huashu-slides、self-eval-prompt-pattern、uk-slot-multilang-sync、uk-slot-codegen、uk-slot-logo-localization
-- 🟡 huashu-slides 43+ 天未用且 use_count=0，考慮移除
+- 零命中區 topics（30 天未被 embedding recall）：bridge-upstream-sync, uk-slot-codegen, bridge-streaming, uk-slot-eye-strike, uk-slot-pirates-queen, uk-slot-clash-olympus
+- Underused skills（從未使用）：dual-skill-review-loop, huashu-slides, self-eval-prompt-pattern, uk-slot-multilang-sync, ms-external-repo-absorption
+- Underused skills（>30 天未用）：ui-ux-pro-max (44d), uk-slot-extrabet (36d)
+- skill-candidates 待觀察：kiro-delegate-three-stage-review（Fable5 覆核流程）
+- UOF 查詢被 Cloudflare 反機器人驗證阻擋（已記錄 wiki）
 
 ## Noise (ignored this run)
-- ✅ sharedsync：無更新
-- ✅ dailylog：9 session → dailylog/2026-07-29.md
-- ✅ memorytoskill：0 候選、0 新 rationale、11 session 搬移完成
-- ✅ claudememcurate：9 筆候選全數查重命中既有 fact，0 寫入
-- ✅ topicreview：22 topic、misc=2、無變動
-- ✅ wikisync：0 新頁、bridge-memory 5 條 ripple 已涵蓋
-- ✅ factlint：0 刪除、0 矛盾、1 wiki-reference 保護攔截
-- ✅ wikilint：31 健康、3 stale 已更新（dev-tools、bridge-specialist、bridge-project）、0 孤兒、0 斷連
-- ✅ skilllint：21 健康、13 pinned、0 orphan、0 conflict
-- ✅ docupdate：usage-guide.html 與 README.md 同步，無需更新
-- ✅ specialistreview：0 新 specialist 建議
-- ✅ artifactcleanup：0 刪除
-- ✅ backup：commit 05ea307，64 檔案
+- sharedsync ✅ 無更新
+- dailylog ✅ 8 sessions 摘要完成
+- memorytoskill ✅ 0 新建/更新 skill
+- claudememcurate ✅ 4 候選查重後 0 新增
+- topicreview ✅ 335 facts、22 topics、misc=0
+- wikisync ✅ bridge-acp +8 facts、uk-slot +7 facts
+- wikilint ✅ 32 健康頁、2 stale 已更新（igs-uof、uk-slot-eye-strike）
+- skilllint ✅ 21 健康、13 pinned
+- docupdate ✅ usage-guide.html +6 指令同步
+- specialistreview ✅ 0 新 specialist、2 domain expansion 已套用
+- artifactcleanup ✅ 刪 0、剩 1
+- backup ✅ commit 6144725

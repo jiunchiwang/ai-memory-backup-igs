@@ -325,12 +325,34 @@ Draft（append-only）        Status 訊息（可自由 mutate）
 ```
 
 **四個實作陷阱**：
-1. **sendMessage 會清掉 live draft**（draft 除了 ~30s TTL，「chat 收到任何一般訊息」也立即清除）→ status 訊息**建立**後同 tick 用同 draftId 重送最新內容恢復（edit 不會清 draft，只有建立那次要補）。
+1. **draft 的存活條件比想像的寬**（2026-07-31 raw API 實測，見下節「已推翻的前提」）：`sendMessage` 與 `editMessageText` **都不會**清掉 live draft，TTL 實測約 35 秒。歷史上這裡寫過「一般訊息會清掉 draft，所以 status 訊息建立後要同 tick 補送」——那條**前提未成立**。補送本身無害（多一次 API 呼叫），但不要把它當成必要修法，更不要用它解釋重播症狀。
 2. **draft identical check 不可短路 status 更新**：tool 完成但 body 沒新字時，draft 內容不變、status 有變——兩通道各自判斷 identical，不能共用一個 early return。
 3. **draft 降級 placeholder 時先刪 status 訊息**：placeholder 路徑的 renderReply 自帶 tool 行，不刪會雙份顯示。
 4. **status 建立的 await 期間 turn 可能 finalize**：await 後補查 `turnFinalized`，是則立刻刪掉剛建立的訊息，避免殘留。
 
 **規則**：draft 通道裡的每一幀都必須是前一幀的字首延伸（恆定 header 除外，它從第一幀就在）。任何會原地變動的內容——進度指示、狀態 emoji、計時——一律走可自由 edit 的一般訊息通道。
+
+### 已推翻的前提（2026-07-31 raw Bot API 八臂實測）
+
+症狀「已串完的回覆整段消失再從頭重播」曾被歸因為「其他 chat 寫入清掉 draft」。用獨立探針（直接打 Bot API、不經 bridge、每臂送完刻意靜候不補送）逐一測，**這些歸因全部不成立**：
+
+| 受測行為 | 實測結果 |
+|---|---|
+| `editMessageText` 編輯其他訊息 | draft 不消失、不重跑動畫 |
+| `sendMessage` 送新的一般訊息 | draft 不消失、不重跑動畫（**推翻本 skill 舊版寫的「一般訊息會清掉 live draft」**）|
+| 靜候不動（單臂測 TTL） | 約 **35 秒**才消失（程式碼註解常寫的「~30s」偏保守但方向正確）|
+| 同內容重送（keepalive sentinel 繞過 identical check 的實際行為） | 不重播 |
+| 新幀比舊幀短 | 不重播 |
+| 純散文 append / code fence 開闔 | 平順，不重播 |
+| markdown 表格逐行成形 | **此臂無效**——Telegram 原生不支援 markdown 表格，永遠不會有「半成品→成形」的重排 |
+
+三個必須記住的操作事實：
+
+1. **live draft 渲染在訊息區**（跟一般回覆串流同一位置），不是輸入框。設計觀測實驗前先確認這件事，否則整組觀測都在問錯地方。
+2. **keepalive 的實際週期會退化成名義值的兩倍**：`setInterval` 跑固定 10s 網格，但每次送出把 `lastSentAt` 推到網格後約 0.8s，下一個 tick 看到 9.2s < 10s 就走了**不落 log** 的 tooSoon 早退 → 實際 20s。在 35s TTL 下仍安全，但空窗比設計值長一倍，且這條早退不落 log 所以查不到。
+3. **根因仍未定案**。八臂全負代表「用 raw API 重建的路徑都重現不出症狀」，不代表症狀不存在。下一步不是再加一臂猜，而是在生產側落**每幀完整內容快照**，等症狀自然發生後 diff 出事的前後兩幀。
+
+⚠️ 讀到這節的人請不要再基於「某個 chat 寫入清掉了 draft」去設計修法——那條因果鏈已經被實測切斷，而依它做的修法（把 status 寫入排在 draft 之前、內容沒變也強制補送）目前**既未被證明有效也未被證明有害**，多出來的只有 API 呼叫量。
 
 ## Balanced scanner（free-form reason 必用）
 
@@ -415,7 +437,8 @@ Smoke 跑 `dist/observerTransformer.js` 不是 `src/`。這條沒做的話會誤
 | streaming edit 函式 async 卻無 in-flight 鎖，靠節流時間戳防並發 | 時間戳只在成功後更新 → 失敗期間閘門全開；用 coalescing latch（in-flight + pending flag）保證同時最多一個，`isCancelled` 接 `turnFinalized`（見坑 5） |
 | 降級分支「檢查 `!placeholder` → await 建新訊息」無再檢查 | TOCTOU：await 期間別的呼叫也過了檢查；latch 序列化 + await 後補 `turnFinalized` / `placeholder` 再檢查 |
 | tool 進度行 / thinking preview 放進 draft 幀（即使排在 body 後） | Draft 動畫是官方規格的純 append-only；mutable 內容走獨立靜音訊息 + editMessageText 原地更新（見坑 6 雙通道拆分） |
-| status 訊息 sendMessage 後 draft 消失沒處理 | 一般訊息會清掉 live draft；status **建立**後同 tick 重送 draft（edit 不會清，只有建立要補） |
+| 假設「chat 收到一般訊息就會清掉 live draft」並依它設計修法 | 2026-07-31 實測：`sendMessage` / `editMessageText` 都不清 draft，TTL 約 35s（見「已推翻的前提」）；補送 draft 無害但不是必要修法 |
+| 把 draft 相關症狀的因果鏈建立在未實測的 API 行為上 | 這類前提在 Bot API 回傳值上一律「成功」、官方文件也查不到；要嘛實測，要嘛在註解裡標明是推論 |
 | draft 通道與 status 通道共用一個 identical-check early return | tool 完成但 body 沒新字 → draft 不變、status 有變；兩通道各自判斷 |
 | replyHeader（「我選擇了：X」等）只在 final render 拼上 | Streaming 幀（draft + placeholder edit）都要帶；header 恆定前綴不破壞 append-only，且要計入 4096 長度預算 |
 | tool 行顯示 adapter 原文（整條 Bash 命令），或 title 固定在 tool_call 起始那刻 | 顯示層只取 title 第一個詞（工具種類）+ 秒數；`tool_call_update` 帶 title 時回寫 timeline entry（adapter 常在參數 stream 完才補完整 title） |

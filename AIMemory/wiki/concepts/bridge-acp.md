@@ -2,7 +2,7 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-07-31
+updated: 2026-08-01
 sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872]
 ---
 
@@ -43,7 +43,8 @@ sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, 
 
 - `/agent <key>` 熱切換 ACP backend（自動交接對話摘要、跨 restart 持久化）；設定檔 `${MEMORY_DIR}/config/acp-providers.json`，**每次 `/agent` 即時重讀、不用重啟 bridge**
 - 檔案缺失時 fallback 為 `.env` 單一 agent；`/agent init` 顯式建立範本——seed 自 `.env` 當前 agent（保證至少一筆語意正確）+ 另兩個 backend scaffold，既有檔一律不覆蓋（排除啟動自動 seed 因為靜默寫檔違反「不逕自動作」偏好）
-- 實際三個 backend 配置：`claude`（claude-agent-acp，pin claude-fable-5/medium）、`kiro`（kiro-cli acp --model claude-opus-4.6 -a --agent main，手動加了 model pin 與 --agent main）、`codex`（npx @zed-industries/codex-acp，auth 未解可能切換失敗）
+- 實際三個 backend 配置（**2026-08-01 對照 `config/acp-providers.json` 實檔更正**）：`claude`（claude-agent-acp，pin `opus[1m]` / effort high）、`kiro`（`kiro-cli acp --model claude-opus-4.5 -a --agent main`，model `claude-opus-4.5` / high）、`codex`（`npx @zed-industries/codex-acp`，無 model 欄位，auth 未解可能切換失敗）
+  - 舊版本頁面此處寫 `claude-fable-5/medium` 與 `claude-opus-4.6`，兩者都已被取代（fable-5 於 2026-07-29 換成 `opus[1m]`；`claude-opus-4.6` 於 2026-07-27 被 Kiro CLI 移除）。此行曾與本頁上方「目前配置」自相矛盾
 - codex-acp 的 initialize 回 -32000（需 auth，2026-07-07 實測未解），切換可能失敗
 - ACP adapter `loadSession` capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定
 - 使用者要求 bridge 的機制設計必須跨 ACP adapter 適用（Kiro/Codex/Claude 都要生效）——因此偏好走 bridge preamble/prompt 路徑，排除 CLAUDE.md/AGENTS.md/steering 這類單一 CLI 的載入機制

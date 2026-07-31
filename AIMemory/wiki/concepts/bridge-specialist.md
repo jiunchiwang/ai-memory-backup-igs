@@ -3,7 +3,7 @@ title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
 updated: 2026-07-30
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_a8bb58, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4]
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4]
 ---
 
 # Bridge Specialist 分身系統

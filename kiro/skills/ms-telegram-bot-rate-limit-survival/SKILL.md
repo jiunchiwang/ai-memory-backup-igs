@@ -192,6 +192,7 @@ async function editNow(content: string) {
 | 錯誤 | 修正 |
 |---|---|
 | `STREAM_EDIT_INTERVAL_MS=1200` | 正式環境至少 2500ms；每 2 秒 editMessage 才安全 |
+| 節流時間戳（`lastEditAt`）只在**某一條**寫入路徑成功後才更新 | 那條路徑沒走到時節流靜默失效。實例（bridge 2026-07-31）：`lastEditAt` 只在 draft 送出成功後設，於「只有工具狀態在變、沒有新文字」的階段完全不更新 → 該階段的 status `editMessageText` 以 chunk 頻率連發，1200ms 節流形同不存在。**凡是 chat 層寫入都要更新同一個節流時間戳**，不分是哪一條路徑；診斷時看的是「這個時段實際發出幾次 API」而不是設定值 |
 | 連發分段訊息沒 pacing | 每則中間 sleep 1100ms（≤ 1 msg/sec 留 10% 餘裕） |
 | `autoRetry({ maxDelaySeconds: 30 })` | 設 120，才吸收得住累積懲罰；小於 60 幾乎一定會撞拋錯 |
 | 限流期間繼續送訊息（包括錯誤通知） | 任何送出都會延長冷靜期 — freeze 住，靠 recovery timer 補 |
