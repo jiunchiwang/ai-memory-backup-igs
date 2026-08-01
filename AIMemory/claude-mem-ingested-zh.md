@@ -432,3 +432,10 @@ shortlist 檔頭仍是「產生:2026-07-30T20:30:02.058Z;筆數:14(上限 15);�
 - 未呼叫 remember、未呼叫 forget。
 
 ⚠️ 待處理(非本輪能修):shortlist 未清空會讓每次 curate 空轉重掃同一批。本檔已有 07-22、07-23、07-25×2、07-26 共 5 次同類紀錄,本次是第 6 次。根治要在**產生端**於 ingest 後清檔或推進 epoch cursor,curate 這一側無法自救。
+
+
+## 2026-08-02 (claude-mem AUTO)
+來源 shortlist: 產生 2026-08-01T20:05:24.319Z, 13 筆, epoch 1785528817871
+精選: 1 條（其餘 12 條與既有 fact 重疊或為過程紀錄）
+
+1. telegram-kiro-bridge 的 draft streaming 拒絕採用 grammY stream plugin 的「Plan E」策略（draft 逼近上限時 finalize 再開新 draft 接續），因為 finalize 後舊 draft 仍會「幽靈並存」若干秒——client 在同一 chat 看到兩個 draft 泡泡會導致動畫行為不可預測。選用的方案是頭部凍結：到上限後只顯示尾端 N 字，讓最終訊息帶完整文字。

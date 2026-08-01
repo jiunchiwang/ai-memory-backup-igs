@@ -43,11 +43,10 @@
   - 觀察點：若第 4~5 次出現且沉澱出固定診斷步驟（`GIT_TERMINAL_PROMPT=0` 快速失敗判別、`git credential` 帳號比對、remote URL 帳號嵌入），可升格；屆時評估 append 到 `ms-windows-shell-exit-code-false-positive`（同域 Windows git 誤報）或獨立。本次 3rd 案例症狀略有分歧（互動式 OAuth 掛起 vs 純帳號快取不符），升格前需先確認是否同一根因或需拆成兩個 pattern
   - 現有覆蓋：fact f_dff56f（兩組帳號憑證快取對應關係）
 
-- [ ] **blackbox-probe-experiment-design** | count=2 | score=0.35 | 留底觀察
-  - Pattern：對「文件查不到、回傳值一律成功」的黑箱行為（client 端渲染、API 副作用）設計多臂探針實驗。三條已付代價的設計原則：① 陰性結果必須有**有效的陽性對照**才可解讀（對照失效時陰性結果零資訊量）② 設計觀測前先確認要問的 observable 跟使用者報的症狀是同一件事（問「是否消失」但症狀是「消失再重播」→ 全白測）③ 症狀若是內容相依的，就不能把「內容型態」固定不變去變其他軸
-  - 代表 session: 2026-07-26（背景通知 flakiness：「調整等待延遲後時間差不變，就不是競態」的量測判準）、2026-07-31T13-46（draft 重播八臂探針全負，含上述三條各踩一次；`scripts/probe-draft-clearing.mjs`）
-  - 觀察點：第 3 次做黑箱多臂探針就升格；屆時內容已足夠（探針命名隔離 `probe-*` vs `check-*`、判讀表要含「實驗無效」那一列、每臂必須帶非恆真基準段）
-  - 現有覆蓋：facts（八臂結果、實驗設計三教訓、TTL 35s 實測）+ `ms-streaming-token-pipeline`「已推翻的前提」節（該次實驗的結論，非方法論）
+- [x] **blackbox-probe-experiment-design** | count=3 | score=0.36 | **已升格為 ms-blackbox-probe-experiment-design (2026-08-01)**
+  - 正本：`AI-canonical/skills/general/ms-blackbox-probe-experiment-design/SKILL.md`
+  - 代表 session: 2026-07-26（背景通知 flakiness）、2026-07-31T13-46（draft 八臂全負）、2026-08-01T15-33（draft 2×2 探針設計：發現「20s 同內容重送」這格沒測過、ttl2 四臂測 append-only 重打閾值）
+  - 內容：三條設計原則（陽性對照必須有效、observable 對齊症狀、內容相依時不可固定內容）、探針結構模板、2×2 矩陣覆蓋檢查、`probe-*` vs `check-*` 命名隔離
 
 - [x] **vacuous-test-gate** | count=6 | score=0.58 | **已升格為 ms-vacuous-test-gate (2026-08-01)**
   - 正本：`AI-canonical/skills/general/ms-vacuous-test-gate/SKILL.md`

@@ -3,7 +3,7 @@ title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
 updated: 2026-08-01
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f]
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs]
 ---
 
 # Bridge 記憶與維運系統
@@ -61,6 +61,10 @@ Factlint ratio 3.0 目標在 87%+ wiki-protection 下結構性不可達，已接
 命中有兩套 log：`fact-access-log.jsonl` 只在 agent 手動呼叫 `list_facts` 時寫入（06-26 後幾乎停寫，`trackAccess` 保留為 write-only 殘留），`hit-log.jsonl` 由 embedding 語意召回自動寫入，factlint 衰減檢查統一讀 `hit-log.jsonl`（commit f1a4e01）。2026-07-08 前 hit-log fact/wiki 零命中是假性的——根因是 `logHit` 只在 `enrichment.ts`（僅 specialist 走）呼叫，主 turn 的 `index.ts` inline 複製版漏了這行；修復（commit 540325b）後 factlint 衰減判斷應以 2026-07-08 為起算點，之前的空窗不代表真的零召回。
 
 Preamble 大小取捨：佔 context 5-6% 可接受，到警戒線才削減；優先砍 facts tail 與 guideline 區塊（不動 wiki 索引），理由是舊 facts 有 topic index + `list_facts` 補位。實例：`MEMORY_PREAMBLE_TAIL` 已從 15 砍到 10（commit 3885a8b，.env 與 .env.example 同步改，preamble 預估 12.9k → 11.7k chars，需重啟生效）；排除砍到 5，因為 facts 爆發式寫入會斷跨日工作連續性（embedding 召回按語意不按時間近撈，補不了）。
+
+### hit-log 衰減判定的觀測期間限制（2026-08-01 補充）
+
+`hit-log.jsonl` 最早的 `type:"fact"` 命中是 **2026-07-11**。因此 factlint 的「60 天未命中」衰減判定在 **2026-09-09 之前都屬觀測期間不足**，不該產出衰減候選。超過半數的 facts 建檔早於 07-11，對它們來說 60 天衰減根本還沒開始計時。
 
 ## Skill Lint
 

@@ -11,3 +11,5 @@
 - [f_1b276f] [2026-07-09T11:41:35.480Z] uk-slot-pattern-library 是完全自包含的純知識庫（零硬編碼路徑、零執行依賴、專案名稱僅資訊性引用），uk-slot-codegen 則有硬依賴本地/遠端專案（E:\UK\uk_slot_template 等絕對路徑 + git clone）——兩者設計定位根本不同
 - [f_6fe390] [2026-07-10T15:54:46.749Z] AIMemory artifacts 檔名格式 <date>_<taskId>_<specialist>_<slug>.json 中 taskId 本身可含底線（如 pt_codegen_probe），positional split('_') 解析必錯，須用已知欄位（specialist name）錨定 regex
 - [f_561bf0] [2026-07-30T16:17:09.612Z] Cocos prefab 的跨 prefab instance 元件引用存在 cc.TargetOverrideInfo（targetOverrides）而非 propertyOverrides，直接讀 prefab 會看到欄位是 null 而誤判功能沒接好（uk_pirates_queen 的 RTCtrl 五條接線在 MainGame.prefab idx 2889/2892/3018/3021/3024）；這也是 uk-slot-codegen「CompPrefabInfo.fileId 禁改」的下游後果——fileId 一動這些接線全斷成執行期 crash
+- [f_5b3a77] [2026-07-31T20:47:31.616Z] 使用者的 skill 升格流程有重複發生的缺口：新建 skill 常忘記在 skill-usage.json 補 entry（2026-07-13 uk-slot-codegen、2026-07-16 uk-slot-logo-localization、2026-08-01 兩支新 skill 已是第 3 次），建議在升格流程加自動補 entry 步驟
+- [f_0db6f9] [2026-07-31T20:47:31.616Z] skill-usage.json 的 use_count 只在 agent 主動輸出 <<SKILL_USED:...>> 時累加，因此 0 往往是回報缺口而非真的沒用（uk-slot-codegen 顯示 0 卻是 slot 開發主入口）——修好回報覆蓋率之前不可用 use_count 當刪除 skill 的依據

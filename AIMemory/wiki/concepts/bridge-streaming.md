@@ -3,7 +3,7 @@ title: Bridge Streaming 與訊息渲染
 type: concept
 created: 2026-07-11
 updated: 2026-08-01
-sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef, f_562fe5, f_867564, f_20c975, f_6551d6, f_7c00f6, f_a9f3cf, f_6f02c7, f_585d7f]
+sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef, f_562fe5, f_867564, f_20c975, f_6551d6, f_7c00f6, f_a9f3cf, f_6f02c7, f_585d7f, f_b613db, f_bd068e, f_7c4048, f_7cb6e0, f_plan_e]
 ---
 
 # Bridge Streaming 與訊息渲染
@@ -86,9 +86,32 @@ Rate limit 期間 draft TTL 會過期，訊息從使用者畫面消失。修復�
 
 `run-prompt.ts:991` 的前置 guard 漏排除 `useDraftMode`，draft mode 時 `placeholder` 故意為 undefined 卻觸發 throw。修正：加 `&& !useDraftMode` 條件。
 
-## 2026-07-31 draft 重播診斷（根因未定案）
+## 2026-07-31~08-01 draft 重播診斷（根因已定案）
 
 症狀（使用者報）：**「工具的訊息變化時，原本的對話會消失再從頭重跑」**——已串完的回覆整段消失、打字動畫從 0 重播。長回覆（1075 字）明顯，短回覆（37 字）幾乎看不出來。
+
+### 根因定案（2026-08-01 四個 commit）
+
+探針八臂全負後改讀生產 frames log，定位出**四個獨立根因**全部與「chat 層其他訊息干擾」無關：
+
+| Commit | 根因 | 修法 |
+|---|---|---|
+| `b613dba` | `renderDraftReply` 在 body 尾端寫 `▍` 游標——每幀結尾都變，破壞 Draft API 的 **append-only 視覺優化** | 移除游標（draft 本身有原生動畫） |
+| `bd068e1` | `cutPendingTokenTail` 用「縮回式」砍正在串的 token（先送完整內容再 substr 回退）——client 視為內容變短 → 重排 | 改「扣留式」：`pendingToken` 不送，等下一 chunk 接上再一起送 |
+| `7c40488` | 長回覆超過約 3870 字時 **頭部凍結**——新內容明明在 append 卻被視為「整段換掉」 | `renderDraftReply` 偵測 body 長度 > 3800 時改 tail-only 渲染（只送最後 N chars + 原生省略） |
+| `7cb6e02` | keepalive 每 20s 重送**同內容**（10s interval + tooSoon skip 雙倍）→ Telegram 收到同文字重送視為 replace 而非 noop → 整段重打 | keepalive 加 identical-content skip：`lastDraftContent === content` 時不送 |
+
+四個都是 bridge 自己造成的 replace 語意，非 Telegram 端問題。推翻了 07-31 的 H1（editMessageText 清 draft）與 H2（TTL 過期）。
+
+### Plan E 拒絕（2026-08-01 #420）
+
+**決策**：不採用 `@grammyjs/stream` plugin。理由：
+
+- 該 plugin 的 `finalize()` + 新 `draft()` 順序會讓兩個 draft 在使用者 chat 裡短暫並存（0.5~1s），產生**幽靈重播**的視覺
+- 經過 A~D 四輪探索後確認 Raw Draft API 的行為已被摸透，繼續用 rebuild-replace 路徑可控度較高
+- 無法改寫 plugin 原始碼（npm 套件），只能繞不能修
+
+Plan E 前的 A~D：A 熱切 status 建立、B keepalive 縮短（API 量暴增）、C 把 tool/thinking 折回 draft（UI 變動大）、D 單純等 frames log。
 
 ### 兩批修法與它們的現況
 
@@ -133,9 +156,9 @@ Rate limit 期間 draft TTL 會過期，訊息從使用者畫面消失。修復�
 
 ⚠️ **兩種事件的時間戳語意刻意不對稱**：`status.edit` 記在 `await editMessageText` **之前**（`status-channel.ts:252`，註解寫明「動作發出的時刻才是因」），`draft.send` 記在 `await` **之後**。所以同一個 tick 在 log 裡會長成 `draft.send` 排在 `status.edit` 之前，**看起來像順序反了**——判斷順序必須讀碼，不能只讀 log 序號。
 
-### 下一步
+### 診斷結語
 
-停止用 raw API 重建，改看真實生產資料：等級 2 已裝好，等症狀自然發生後 diff 出事的前後兩幀。也要接受一個可能：症狀或許是 client 端排版行為，那在碰不到的層，抓到幀也只能繞不能修。
+「等級 2 frames log」最終抓到真兇——不是 client 端、也不是 Telegram 的 draft 規則，是 bridge 自己的四個獨立 code path 各自造成「內容看起來變了」。八臂 raw API 探針全負是正確結果：raw API 本身沒問題，問題在 bridge 對它的使用方式。
 
 ## 業界 Streaming 策略比較
 

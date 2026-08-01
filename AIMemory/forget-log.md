@@ -260,3 +260,11 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
     - [f_91d132] [2026-07-31T11:31:53.673Z] [WS] task: 驗證 draft streaming 修法（commit 4276f08）是否真的消滅「工具訊息變化時，已串完的回覆整段消失再從頭重播」
     - [f_cacf97] [2026-07-31T11:32:03.630Z] [WS] completed: draft 重播根因已用 logs/draft-diag.jsonl 定案為 H1（status bubble 的 editMessageText 也會清掉 live draft），消去法排除 H2/限流/降級/lateCreate；修法 A 已實作並 commit 4276f08（status-channel 的 update() 改回傳「是否發出過 chat 層寫入」、run-prompt 把 status.update() 移到 draft 送出之前、送出條件加 || statusWrote、補送幀記 reason:"status-restore"）；tsc 零診斷、fast tier 93/93、4 種突變逐一驗證新斷言有效
     - [f_44e77d] [2026-07-31T11:32:05.904Z] [WS] next_action: 重啟後做幾輪「含多次工具呼叫」的對話，然後讀 logs/draft-diag.jsonl 找 reason:"status-restore" 幀 —— 有該幀且症狀消失=修法成立；有該幀但症狀仍在=H1 錯需換方向（這是刻意設計的否證條件）；同時確認沒有 draft.skip reason=rateLimit（修法會增加 API 呼叫量）。驗完把 .env 的 TG_DRAFT_DIAG 關回 0，push 前先派 Fable5 覆核 4276f08
+- [2026-07-31T21:24:28.748Z] user=509424983 query="真因是兩個 consumer 搶同一個 watermark" deleted=1 token=forget-473d580a-1
+    - [f_32d759] [2026-07-31T21:02:18.933Z] AIMemory 的 claude-mem curate 反覆「空轉重掃同一批」（07-22 起 6 次）根因不是 shortlist 未清空：產生端 G:\AI\AI-canonical\tools\ingest-claude-mem.mjs 本來就覆寫檔案並推進 watermark，真因是兩個 consumer 搶同一個 watermark——daily-claudemem.ps1（排程）是 extractor+curate 成對，而 bridge /dream 的 /claudememcurate（src/commands/dream.ts:484）只 curate 不跑 extractor，因此永遠讀到排程那輪已處理完的殘檔。另：同一 live session 當場 remember() 過的內容會再變成 claude-mem decision 觀察，curate 去重後寫 0 是結構性正常而非故障。
+- [2026-08-01T20:12:51.476Z] user=509424983 query="wiki 新增兩頁 concepts/verification-diagnosis.md" deleted=1 token=forget-3e603940-1
+    - [f_2d800f] [2026-07-31T20:47:31.616Z] wiki 新增兩頁 concepts/verification-diagnosis.md 與 concepts/bridge-smoke-gate.md（2026-08-01），index.md Total pages 34→36
+- [2026-08-01T20:12:51.571Z] user=509424983 query="先前「5 項仍未修屬同事責任」的狀態已過時" deleted=0 token=forget-a15f78a4-1
+
+- [2026-08-01T20:13:07.840Z] user=509424983 query="此問題已解決" deleted=0 token=forget-8bba4cc9-1
+

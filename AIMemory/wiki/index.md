@@ -54,4 +54,4 @@
 ---
 
 Total pages: 36
-Last updated: 2026-08-01（wikisync：新增 [[bridge-smoke-gate]]、[[verification-diagnosis]]；更新 [[bridge-streaming]]／[[bridge-project]]／[[uk-slot]]。wikilint：修 [[bridge-acp]] 過時 backend 配置、補 [[bridge-memory]]／[[user-pref]]／[[uk-917]]／[[dev-tools]]，dev-tools 補上缺失的 wikilink）
+Last updated: 2026-08-01（wikisync：更新 [[bridge-streaming]] 追加 draft 重播根因定案四個 commit + Plan E 拒絕、[[bridge-memory]] 追加 hit-log 衰減觀測期限、[[verification-diagnosis]] 追加 2×2 交集盲點與 Git Bash /tmp 陷阱）

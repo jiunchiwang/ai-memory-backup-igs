@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-07-31T20:22:24.460Z (token=topics-9d1be37f-24)
+// Last applied: 2026-08-01T20:07:27.792Z (token=topics-6605f643-24)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -129,7 +129,12 @@
       "@gramio/split",
       "expandable blockquote",
       "format-html",
-      "blockquote expandable"
+      "blockquote expandable",
+      "plan e",
+      "ghost draft",
+      "grammy stream",
+      "頭部凍結",
+      "append-only"
     ]
   },
   {
@@ -327,7 +332,8 @@
       "純觀測欄位",
       "transcript 重播",
       "上界斷言",
-      "可觀測量"
+      "可觀測量",
+      "2×2"
     ]
   },
   {
