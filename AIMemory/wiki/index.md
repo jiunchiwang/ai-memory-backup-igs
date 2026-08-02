@@ -55,4 +55,4 @@
 ---
 
 Total pages: 37
-Last updated: 2026-08-02（wikisync：更新 [[bridge-acp]] 追加 ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、claude-sonnet-5 合法性驗證、異源覆核紀律擴充；更新 [[bridge-dream]] 追加 per-backend model 設計、confabulation 教訓定案；新增 [[uk-slot-pirates-queen]] 海盜女王專案頁）
+Last updated: 2026-08-02（wikilint：修正 [[bridge-project]] 過時的 noUnusedLocals 陳述 + 補 impact-gate hook 批次觸發行為；更新 [[bridge-smoke-gate]] 追加 noUnusedLocals 閘門；更新 [[bridge-acp]] 追加 advisor 工具說明與覆核者成本分級）

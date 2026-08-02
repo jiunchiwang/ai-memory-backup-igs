@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-01
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e]
+updated: 2026-08-02
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b]
 ---
 
 # Bridge 測試閘門與建置
@@ -54,6 +54,12 @@ runner 用 `readdirSync` 以 `check-*` 前綴**自動發現**腳本 → 新增�
 
 - ✅ **硬計數**（支數、指令數、事件型別數）→ 納入機械檢查，但期望值必須當場向 `run-smoke-suite.mjs --list` 取得，**零硬寫**
 - ❌ **耗時** → 不納入。run-to-run 約 8% 變異（2026-07-31 full tier 實測 260.7s / 274.1s / 249.9s），納入會變成每次跑都可能紅的雜訊閘；耗時只寫進文件並**標註量測日期**
+
+## noUnusedLocals 閘門（2026-08-02 新增）
+
+`tsconfig.json` 已開啟 `"noUnusedLocals": true`（commit 134aebe），一次性清掉 22 檔共 72 處未讀取宣告（64 個未用 import + 8 個 local）。開之前孤兒 import／死碼只有異源獨立覆核（如 Fable5）或手動 grep 才抓得到（2026-07-29 sync-upstream 覆核實測，抓到 5 個孤兒 import + 1 個死碼函式）——這條舊記錄已過時，現在型別系統會直接擋。
+
+`noUnusedParameters` 刻意**不開**：11 處多為 callback 佔位參數，開了會逼人補 `_` 前綴。這項調整也讓 push 前異源覆核的成本分級（見 [[bridge-acp]]）第一條規則落地：「孤兒 import／死碼不派人，交給型別系統」。
 
 ## 為既有 smoke 腳本加單例狀態的陷阱
 

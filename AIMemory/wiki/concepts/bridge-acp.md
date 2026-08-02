@@ -3,7 +3,7 @@ title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
 updated: 2026-08-02
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6]
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -96,6 +96,28 @@ repo 自己的 BC-13 fixture（`FAKE_ACP_MODELS_SHAPE=1` + `FAKE_ACP_CONFIG_OPTI
 ### 可重用教訓（2026-08-01）
 
 兩份清單分別用「字串陣列」與「regex」表達同一個集合時，衍生自同一個 NAMES 常數並不足以保證等價——裸型 token（RESTART/CONTINUE）是在 regex 那邊手寫的，衍生機制蓋不到。
+
+### Advisor 工具 vs 異源覆核（2026-08-02 新增）
+
+Claude Code 的 `advisor` 是 server-side tool：零參數、呼叫時整段對話逐字稿自動轉發、回傳 `advisor_tool_result` content block（與 `web_search` 同族）。Gating 條件為 `advisorModel` 設定 + 僅第一方帳號（Bedrock/Vertex 不行）+ 顧問模型的 `advisor_rank` 必須 ≥ 主模型（Haiku 4.5=1、Sonnet 4.6=2、Sonnet 5／Opus 4.6=3、Opus 4.7/4.8/Opus 5=4、Fable 5=5），關閉用 `CLAUDE_CODE_DISABLE_ADVISOR_TOOL`。
+
+**不能取代 push 前異源覆核**：
+1. 它的視野等於主 agent 的視野，讀不到你沒讀過的檔案，無法「自己讀原始碼而不信敘事」
+2. 對象是「這場對話」不是「這個 commit」，跨 session 改動缺席
+3. 它是模型自主 opt-in，不是 gate（覆核紀律是 hard requirement）
+
+價值在時間軸另一端（設計決策前／卡住時），與 push 覆核互補，不是替代。
+
+### 覆核者選型（成本分級，2026-08-02 新增）
+
+Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1.7x、**Fable 5 = 3.3x**、Haiku 4.5 ≈ 0.3x。覆核者是 agentic 的（工具迴圈讀進去的碼全算 input），模型選型的成本差會被放大。
+
+分級規則（已寫進 `ms-cross-model-adversarial-review` 正本）：
+- 孤兒 import／死碼 → **不派人**，交給型別系統（見 [[bridge-smoke-gate]] 的 noUnusedLocals 閘門）
+- 敘事比對、恆真斷言 → Sonnet 級
+- 不變式／論證推理／時序 race → 最強模型（Fable 5）
+
+判準：**改動有沒有碰承重路徑**。
 
 ## vc-kiro-delegate 三段 Review
 

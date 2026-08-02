@@ -2,7 +2,7 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-07-27
+updated: 2026-08-02
 sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2, f_1da3ad, f_4e5ad0]
 ---
 
@@ -26,8 +26,19 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
 
 ### Headroom（headroomlabs-ai/headroom）
 
-- 整合優先級：方案 A（MCP server 掛給 agent）> 方案 D > 方案 C
+- 整合優先級：方案 A（MCP server 掛給 agent）> 方案 D（`headroom learn` 獨立跑）> 方案 C（library 整合）
 - 排除 proxy wrap（Kiro CLI 不吃 ANTHROPIC_BASE_URL）
+
+**2026-08-02 重研究（v0.33.0）**：
+
+- **改名**：`chopratejas/headroom` → `headroomlabs-ai/headroom`（CHANGELOG compare 連結定位：0.27.0 / 6-22 仍舊名，0.28.0 / 6-29 起新名）。舊 URL redirect；PyPI metadata 未跟上仍指舊名
+- 節奏 1–2 週一版（0.24→0.33 兩個月十版）；README 出現 "Headroom for teams" 託管方案
+- 四方案結論**不變**：`headroom wrap` 支援 15+ CLI（Claude Code / Codex / Copilot / OpenCode / Cline / Goose / Kimi…）但**無 Kiro**，全份 CHANGELOG `kiro`、`acp` 命中皆 0 → 排除 proxy 仍成立
+- 新增軸：output token reduction（`HEADROOM_OUTPUT_SHAPER=1`，verbosity steering + effort routing，proxy-only）、cross-agent memory、cost-aware model routing（Unreleased）、0.33 把 CodeCompressor/Kompress 移植 Rust
+- ⚠️ **方案 A 延後**：兩個命中 bridge 的缺陷修正都還在 Unreleased（0.33.0 沒有）——
+  1. `headroom mcp serve` orphan（#2185/#1761）：client SIGKILL 後 stdio server 卡在 stdin reader、被 reparent 常駐，每個死 session 釘住一個 Python interpreter + tree-sitter grammars。bridge 每 ACP session 已 spawn 19 個 MCP 進程且 kill 是常態 → 等於加一條洩漏源
+  2. prefix-cache lineage 撞號（#2085）：無 `x-headroom-session-id` 時 fallback id = hash(model + system prompt)，CC 主 session 與其平行 subagent 全撞同一 tracker → 回報 ~4.4x cache-creation 膨脹、**2.5–3x 淨成本上升**。省 token 工具在 fan-out 拓樸下反而更貴（bridge 的 PARALLEL_DELEGATE / workflow 命中此條件）
+- ∴ 評估時機推到 0.34.0；中間最低風險仍是方案 D，但它寫 `CLAUDE.local.md` 與自家 learning-log／問題追蹤重疊，須先定正本
 
 ### Loop Engineering（cobusgreyling/loop-engineering ⭐2.7k）
 

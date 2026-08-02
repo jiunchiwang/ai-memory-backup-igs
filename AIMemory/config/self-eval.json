@@ -548,6 +548,30 @@
       "chatId": 509424983,
       "score": 90,
       "evidence": "已 push 並確認 origin/main 同步；pre-push hook 獨立跑 build + fast tier 93/93。兩輪異源覆核共 12 條 findings 逐條自行重現，含用 dist 突變實證 codex 確實會收到 set_config_option。不給更高：完整 /dream 端到端未實跑，最後一個 commit 未經覆核"
+    },
+    {
+      "ts": "2026-08-02T06:13:17.686Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "repo 轉移、版本日期、release 節奏、kiro/acp 零命中都由 PyPI JSON 與本地 CHANGELOG 原文直接驗證；兩個缺陷引用自 CHANGELOG Unreleased 原文。star 數僅單一頁面來源（API 被 rate limit）已標註未驗證，故未給更高分。"
+    },
+    {
+      "ts": "2026-08-02T06:18:12.320Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "wiki 兩處編輯用 grep 讀回驗證（第 32-35 行內容正確、檔案 266 行未截斷）；3 條 remember 皆回報 appended 到指定 shard；內容全部來自本輪一手查證（PyPI JSON、本地 CHANGELOG 原文、README），無新增未驗證主張。"
+    },
+    {
+      "ts": "2026-08-02T09:39:46.839Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "結論建立在直接讀 CLI binary 的 advisor 系統提示（輸入範圍、opt-in 觸發）與三筆有日期的覆核實證（孤兒 import／敘事回音／命中率 6-7 成）對照，非印象；「advisor 無 agentic loop」一項是推論已標註，未實測"
+    },
+    {
+      "ts": "2026-08-02T13:53:21.259Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "codex-acp handshake 由 scripts/probe-codex-acp.mjs 實測復現，-32000 出處與 authMethods 三選項為原始 JSON-RPC 回應直接讀出；codex CLI 0.146.0 已裝並驗版本；bridge 三處認證路徑為讀碼確認未改動。扣分因為端到端（登入完成 → session/new 成功）尚未驗證，等 device auth 回來才算完"
     }
   ]
 }

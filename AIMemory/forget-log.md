@@ -290,3 +290,15 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-02T05:42:17.055Z] user=509424983 query="/sharedsync 功能已修復並驗證可正常 push/pull" deleted=0 token=forget-11058436-1
 
+- [2026-08-02T20:18:23.340Z] user=509424983 query="docs/SPEC-token-mcp-migration.md 連結" deleted=0 token=forget-c76825be-1
+
+- [2026-08-02T20:18:26.843Z] user=509424983 query="usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP 說明章節" deleted=0 token=forget-910f49eb-1
+
+- [2026-08-02T20:18:33.022Z] user=509424983 query="已於 2026-07-19 補上 /refresh-routing 指令的別名" deleted=0 token=forget-26debaf2-1
+
+- [2026-08-02T20:18:40.981Z] user=509424983 query="先前 not a git repository 的問題已解決" deleted=0 token=forget-11058436-1
+
+- [2026-08-02T20:18:47.185Z] user=509424983 query="vc-kiro-delegate 委派功能可用（覆蓋 2026-07-26 的未登入記錄）" deleted=0 token=forget-0761a95e-1
+
+- [2026-08-02T20:18:57.595Z] user=509424983 query="merge 19 個上游 commit" deleted=0 token=forget-68fff6d1-1
+
