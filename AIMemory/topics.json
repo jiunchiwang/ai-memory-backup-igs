@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-01T20:07:27.792Z (token=topics-6605f643-24)
+// Last applied: 2026-08-02T05:35:38.152Z (token=topics-dce8fbf7-24)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -134,7 +134,10 @@
       "ghost draft",
       "grammy stream",
       "頭部凍結",
-      "append-only"
+      "append-only",
+      "status bubble",
+      "drain",
+      "draining"
     ]
   },
   {
@@ -193,6 +196,22 @@
     ]
   },
   {
+    "topic": "bridge-dream",
+    "keywords": [
+      "dream.json",
+      "handledailylog",
+      "claude-mem-curate",
+      "claudememcurate",
+      "command_handlers",
+      "loop state",
+      "dream high priority",
+      "dream model",
+      "models 表",
+      "per-backend",
+      "顯式還原"
+    ]
+  },
+  {
     "topic": "bridge-acp",
     "keywords": [
       "acp adapter",
@@ -222,7 +241,10 @@
       "異源覆核",
       "對抗覆核",
       "獨立覆核",
-      "覆核 agent"
+      "覆核 agent",
+      "displaymodel",
+      "models 形狀",
+      "雙形狀"
     ]
   },
   {
@@ -307,18 +329,6 @@
     ]
   },
   {
-    "topic": "bridge-dream",
-    "keywords": [
-      "dream.json",
-      "handledailylog",
-      "claude-mem-curate",
-      "claudememcurate",
-      "command_handlers",
-      "loop state",
-      "dream high priority"
-    ]
-  },
-  {
     "topic": "verification-diagnosis",
     "keywords": [
       "恆真",
@@ -333,7 +343,12 @@
       "transcript 重播",
       "上界斷言",
       "可觀測量",
-      "2×2"
+      "2×2",
+      "探針",
+      "probe",
+      "重建式",
+      "payload diff",
+      "全負"
     ]
   },
   {
@@ -346,7 +361,10 @@
       "ci.yml",
       "dist/",
       "fast tier",
-      "支數"
+      "支數",
+      "check-bot-command",
+      "desc 基線",
+      "截斷"
     ]
   },
   {
@@ -405,7 +423,9 @@
       "使用者裁決",
       "使用者對",
       "使用者把",
-      "除錯對策偏好"
+      "除錯對策偏好",
+      "未追蹤檔案",
+      "異源覆核紀律"
     ]
   },
   {

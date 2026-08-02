@@ -1,17 +1,5 @@
 # claude-mem shortlist (高價值候選,英文待精選)
-> 產生:2026-08-01T20:05:24.319Z;筆數:13(上限 15);自 epoch 1785528817871
+> 產生:2026-08-01T20:30:03.091Z;筆數:0(上限 15);自 epoch 1785570559110
 > 給 AI:精選真正「跨 session 可重用」的 → 翻繁中 → 用 memory search 去重 → 提案 ≤10。一次性步驟略過。
 
-- (decision|telegram-kiro-bridge-main|2026-08-01) Why bounded lookahead belongs to cut, not to the shared anchor function :: cutPendingTokenTail() receives raw buffer before any transformations
-- (decision|telegram-kiro-bridge-main|2026-08-01) MAX_PENDING_TOKEN_SPAN set at 2.4x payload contract (1200 chars) with accepted residual risk :: BALANCED_REASON_MAX=500 is payload contract for reason/evidence fields in tokens
-- (decision|telegram-kiro-bridge-main|2026-08-01) Rejected grammY stream "Plan E" (finalize + new draft) due to ghost draft coexistence :: grammY stream plugin's "Plan E" strategy: finalize current draft when approaching limit, then open new draft for continuation
-- (decision|telegram-kiro-bridge-main|2026-08-01) Second round external review (F-A/F-B/F-C) - confirms push safety with narrow edge cases documented :: Second round review by independent Fable5 agent completed 732s execution, 26 bash commands, 164819 tokens
-- (decision|telegram-kiro-bridge-main|2026-08-01) Fuzz violations traced to malformed token sequences violating protocol contract :: Case 1 violation: `<<CONTINUE:<<RESTART` recognized at i=20, `<<RESTARTS` not recognized at i=21 when 'S' added
-- (decision|telegram-kiro-bridge-main|2026-08-01) Parent commit comparison confirms F1/F2 gaps were structural, not missing functionality :: Parent commit hideTrailingUnterminatedToken: inline regex scan, 14 lines of logic duplicated with cut's needs
-- (decision|telegram-kiro-bridge-main|2026-08-01) Complete git diff examination validates F1-F5 fix implementation quality :: observerTransformer.ts diff shows shared lastUnterminatedOpener() with 16-line warning about cut⊇hide invariant
-- (decision|telegram-kiro-bridge-main|2026-08-01) Documented structural invariant for draft token cutoff: cut must be superset of hide :: Structural invariant documented: cut's held-back set must be superset of hide's shrink set, else shrink-back behavior leaks through and replay returns
-- (decision|telegram-kiro-bridge-main|2026-08-01) Documented Fable5 adversarial review findings as post-push follow-up work :: F1 medium: TOKEN_OPENERS missing "<<CONTINUE:" causes divergence when token completes, one-line fix available
-- (decision|telegram-kiro-bridge-main|2026-08-01) Pushed draft streaming fixes despite confirmed F1/F2 edge case bugs :: Pushed commits 00149a6 (instrumentation), b613dba (cursor fix), bd068e1 (token cutoff) to origin main
-- (decision|telegram-kiro-bridge-main|2026-08-01) Token hold-back fix validated via two-arm deterministic probe :: scripts/probe-draft-token-append.mjs simulates character-by-character draft streaming through render pipeline
-- (decision|telegram-kiro-bridge-main|2026-07-31) Updated STATE.md with root cause reversal: shortlist re-scanning was AI confabulation not system fault :: STATE.md updated to overturn both original diagnosis ("shortlist not clearing") and intermediate diagnosis ("two consumers competing for watermark")
-- (decision|telegram-kiro-bridge-main|2026-07-31) Dispatched cross-model adversarial review of skills commit using Claude Fable 5 :: Cross-model review dispatched to Claude Fable 5 targeting commit 06681d1 with explicit instruction to read source code rather than trust commit messages or documentation
+(無新的高價值觀察)

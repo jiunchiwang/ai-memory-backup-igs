@@ -2,168 +2,132 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-01
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872]
+updated: 2026-08-02
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6]
 ---
 
 # Bridge ACP 與 Model 配置
 
 [[bridge-project]] 透過 ACP（JSON-RPC over stdio）接上 agent CLI。本頁涵蓋 ACP adapter 切換、model 配置與 pin 機制、harness hook 行為——這些知識跨 adapter 有效，換 CLI 時特別需要。
 
-## 目前配置（2026-07-30 更新）
+## 目前配置（2026-08-02 更新）
 
 - 主 session model：`opus[1m]`（Opus 5 1M context 變體）
 - `.env`：`ACP_AGENT_COMMAND=claude-agent-acp` + `ACP_MODEL=opus[1m]`
 - `/agent claude` backend model pin：`opus[1m]`（effort high）— 設定檔 `${MEMORY_DIR}/config/acp-providers.json`
-- **重要更新（2026-07-29）**：`.env ACP_MODEL` 從無效值 `claude-opus-5` 改為 `opus[1m]`，同時將 `@agentclientprotocol/claude-agent-acp` 從 0.59.0 升到 0.63.0（SDK 0.3.207→0.3.220）才讓 `opus[1m]` 正確解析成 Opus 5 (1M)——此更新推翻舊配置「claude-fable-5」
+- **重要更新（2026-07-29）**：`.env ACP_MODEL` 從無效值 `claude-opus-5` 改為 `opus[1m]`，同時將 `@agentclientprotocol/claude-agent-acp` 從 0.59.0 升到 0.63.0（SDK 0.3.207→0.3.220）才讓 `opus[1m]` 正確解析成 Opus 5 (1M)
 - Model 由 bridge 在 `session/new` 後透過 `session/set_config_option` pin——**claude-agent-acp 的 CLI `--model` flag 在 ACP 模式無效**
-- 歷史配置：`claude-fable-5[1m]`（~2026-07-29 前）→ `kiro-cli acp --model claude-opus-4.6 -a`（~2026-07-06 前）
-- `ACP_SESSION_RESUME=true` 已於 2026-07-07 啟用（`.env:39`）：idle/crash/SIGINT 保留 registry 可 `session/load` 恢復
-- `claude-agent-acp` **不支援** `effort` config option——`session/set_config_option` 設 effort 會回 `-32603 Unknown config option`，bridge 已 graceful ignore，屬已知限制非故障（model pin 本身正常）
-
-### Fable 5 安全分類器問題（2026-07-08）
-
-- Fable 5 恢復存取後（7/1 出口管制解除），新安全分類器 false positive 率高——正常 coding/debugging 請求被誤擋，Anthropic 已承認
-- 透過 `claude-agent-acp` ACP 路徑會直接拋 `-32603 Internal error`（Usage Policy violation），**不會 fallback 到 Opus 4.8**
-- 使用者決定先觀望不換 model；備選：`claude-opus-4-8`（最穩定）或 `claude-sonnet-4-6`
+- `ACP_SESSION_RESUME=true` 已於 2026-07-07 啟用
+- `claude-agent-acp` **不支援** `effort` config option——設 effort 會回 `-32603 Unknown config option`，bridge 已 graceful ignore
 
 ### ACP Model 別名與 Adapter SDK 關係（2026-07-29 事故教訓）
 
-- **ACP model 別名/id 的有效性由 claude-agent-acp adapter 釘死的 SDK 版本決定**——不是 Anthropic 發布新 model 就能用，必須升 adapter 才拿得到
-- **靜默降級陷阱**：pin 被 adapter reject 時 `applyModelEffort()` 會 by-design 靜默降級到帳號預設 model，不會有任何錯誤浮到 Telegram（2026-07-29 `opus-5` 事故根因）
-- **依賴文件保存期限**：`docs/dependency-security.md` 原寫「升到 0.62.0 也沒用」，2026-07-29 升 0.63.0 直接證偽——此類寫死版本的悲觀結論應標日期並定期複驗
+- **ACP model 別名/id 的有效性由 claude-agent-acp adapter 釘死的 SDK 版本決定**——必須升 adapter 才拿得到新 model
+- **靜默降級陷阱**：pin 被 adapter reject 時 `applyModelEffort()` 會 by-design 靜默降級到帳號預設 model，不會有任何錯誤浮到 Telegram
+- **依賴文件保存期限**：此類寫死版本的悲觀結論應標日期並定期複驗
+
+### ACP Adapter 能力偵測陷阱（2026-08-02 新增）
+
+codex-acp 同時公告 `models` 形狀**與** `configOptions` 裡 `id="model"` 的條目，所以「有沒有 model config option」不能拿來判別「這個 adapter 能不能在 session 期間換 model」——用它會讓 bridge 真的對 CLI-arg adapter 送出 `set_config_option`。
+
+**正確判別式**：
+1. `models` 區塊是否出現過（kiro/codex 有、claude-agent-acp 沒有）
+2. 要在 `availableModels` membership 驗證**之前**就 latch，因為回音了假 model 的 kiro 一樣是 CLI-arg adapter
+
+repo 自己的 BC-13 fixture（`FAKE_ACP_MODELS_SHAPE=1` + `FAKE_ACP_CONFIG_OPTIONS=1` 同時開）就是這個雙形狀的證據。
+
+### AcpBackendDef model vs displayModel 語意差異（2026-08-02 新增）
+
+`AcpBackendDef` 有 `model` 與 `displayModel` 兩個欄位且語意不對稱：
+- `applyModelEffortToCommand` 只在 claude 分支回傳 `acpModel`
+- 所以 kiro/codex 的 `model` 恆為 `undefined`，只有 `displayModel` 有值
+- 實跑確認：kiro `model=undefined`、`displayModel=claude-opus-4.5`
+- **要比對「這個 backend 現在跑什麼」必須用 `displayModel`**，用 `model` 對 CLI-arg adapter 恆不命中
 
 ### Agent 無法自知 Model 的結構性問題
 
-- **問題**：bridge 的 claude-agent-acp agent 結構上無法得知自己實際在跑哪個 model——SDK 不注入「You are powered by the model named X」到 agent context（grep 0.3.207/0.3.220 皆 0 hit），被問只能猜
-- **修法**：在 `sessionManager.create()` 於 `initialize()` 後、preamble 注入前追加一行實際 model（不違反 preamble-frozen-snapshot）
-- **回報形狀差異**：三個 ACP adapter 在 `session/new` 回報 model 的結構各不相同（已記錄在 `acp-model-report-shapes.md`），「這個 session 實際跑什麼 model」的查證邏輯不能寫成單一通用解析
+- SDK 不注入「You are powered by the model named X」到 agent context，被問只能猜
+- 修法：在 `sessionManager.create()` 於 `initialize()` 後、preamble 注入前追加一行實際 model
+- 三個 ACP adapter 在 `session/new` 回報 model 的結構各不相同（記錄在 `acp-model-report-shapes.md`）
 
-## /agent 熱切換與多 Backend 設定檔（2026-07-07）
+### claude-agent-acp 合法 model id（2026-08-02 驗證）
 
-- `/agent <key>` 熱切換 ACP backend（自動交接對話摘要、跨 restart 持久化）；設定檔 `${MEMORY_DIR}/config/acp-providers.json`，**每次 `/agent` 即時重讀、不用重啟 bridge**
-- 檔案缺失時 fallback 為 `.env` 單一 agent；`/agent init` 顯式建立範本——seed 自 `.env` 當前 agent（保證至少一筆語意正確）+ 另兩個 backend scaffold，既有檔一律不覆蓋（排除啟動自動 seed 因為靜默寫檔違反「不逕自動作」偏好）
-- 實際三個 backend 配置（**2026-08-01 對照 `config/acp-providers.json` 實檔更正**）：`claude`（claude-agent-acp，pin `opus[1m]` / effort high）、`kiro`（`kiro-cli acp --model claude-opus-4.5 -a --agent main`，model `claude-opus-4.5` / high）、`codex`（`npx @zed-industries/codex-acp`，無 model 欄位，auth 未解可能切換失敗）
-  - 舊版本頁面此處寫 `claude-fable-5/medium` 與 `claude-opus-4.6`，兩者都已被取代（fable-5 於 2026-07-29 換成 `opus[1m]`；`claude-opus-4.6` 於 2026-07-27 被 Kiro CLI 移除）。此行曾與本頁上方「目前配置」自相矛盾
-- codex-acp 的 initialize 回 -32000（需 auth，2026-07-07 實測未解），切換可能失敗
-- ACP adapter `loadSession` capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定
-- 使用者要求 bridge 的機制設計必須跨 ACP adapter 適用（Kiro/Codex/Claude 都要生效）——因此偏好走 bridge preamble/prompt 路徑，排除 CLAUDE.md/AGENTS.md/steering 這類單一 CLI 的載入機制
+以 `scripts/check-acp-model-effort.mjs` 實際 spawn adapter 驗證：
+- `claude-sonnet-5` 是合法 model id，adapter 會原樣回報
+- 同 adapter 公告的合法值含：`default` / `opus[1m]` / `sonnet`
 
-## Tool Call Title 顯示差異（非 bug）
+## /agent 熱切換與多 Backend 設定檔
 
-Bridge 的 tool call 進度（`🔧 {title}` / `✅ {toolName}`，sessionManager 渲染）用的是 **adapter 回報的 title**：claude-agent-acp 對 shell 執行類一律回泛用名「Terminal」，kiro-cli acp 的 title 較具描述性——切 backend 後顯示風格不同屬正常。
+- `/agent <key>` 熱切換 ACP backend，設定檔 `${MEMORY_DIR}/config/acp-providers.json`，**每次 `/agent` 即時重讀**
+- 三個 backend 配置（2026-08-01 對照實檔更正）：
+  - `claude`：claude-agent-acp，pin `opus[1m]` / effort high
+  - `kiro`：`kiro-cli acp --model claude-opus-4.5 -a --agent main`
+  - `codex`：`npx @zed-industries/codex-acp`，auth 未解可能失敗
 
-## ACP Adapter 設定檔差異（互不通用）
+## Kiro CLI Model 生態
+
+- **短名格式**：`claude-sonnet-4.6`、`claude-opus-4.5`（非完整 API model ID）
+- **Claude 系**：auto / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5
+- **注意**：`claude-opus-4.6` 已於 2026-07-27 被 Kiro CLI 移除
+- **非 Claude 系（2026-07）**：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5/m2.1、glm-5
+
+## 異源對抗覆核紀律（常態化實踐）
+
+### 核心原則
+
+異源模型對抗覆核能打破同源自審天花板，已常態化套用於高風險決策。
+
+### 覆核紀律（2026-08-02 最新版）
+
+1. **開放授權不給檢查清單**：讓覆核者自己探索
+2. **讀原始碼而非信 commit message**
+3. **多輪連續覆核要換新 context**：修法常是上一位覆核者提出的建議，讓他覆核自己的提案等於同源自審
+4. **第二輪起刻意不告知前一輪結論**：避免錨定
+5. **收斂條件**：第二輪若回報無 high/medium 即視為收斂可 push
+6. **誠實交代**：覆核者的可 push 判斷是針對它看過的那個 commit，之後的修正 commit 未經覆核
+7. **授權回報「已收斂」**：避免覆核者為交差硬湊 finding
+
+### 價值實證
+
+- 2026-07-26：Fable 5 對 commit afb9d8e 做覆核（37 次工具呼叫、587 秒），抓出 protobufjs 依賴論證的關鍵推理缺陷
+- 2026-07-31：抓到「commit message / 註解 / AI.md 三處共用同一個錯誤因果敘事」——教訓：寫「因為 X 所以要 Y」前必須讀到 X 的實際時序
+- 2026-08-01：Fable5 覆核抓出 cutPendingTokenTail 的結構性不變式缺陷（TOKEN_OPENERS 缺 `<<CONTINUE:`）
+
+### 可重用教訓（2026-08-01）
+
+兩份清單分別用「字串陣列」與「regex」表達同一個集合時，衍生自同一個 NAMES 常數並不足以保證等價——裸型 token（RESTART/CONTINUE）是在 regex 那邊手寫的，衍生機制蓋不到。
+
+## vc-kiro-delegate 三段 Review
+
+委派 Kiro 實作後的品質鏈：① Kiro self-review ② 獨立新 session 冷讀 git diff ③ 主 agent heavy review。
+
+**2026-07-14 教訓**：`kiro-cli` 的 prompt 走命令列參數有長度上限（37KB 會炸 `Argument list too long`），長 spec 應寫成檔案讓 Kiro 自己讀路徑。
+
+## Claude Max 5x 模型分配策略
+
+- Opus 只留給高認知決策（架構、最終審查、難 debug、對抗驗證）
+- ≥2k token 的實作產出委派 Kiro CLI
+- **快速判準**：自問「這個錯誤是 Sonnet 級還是 Opus 級」
+- Workflow / subagent 必須顯式指定 model override
+
+## Skill 新增（2026-08-01）
+
+- `ms-vacuous-test-gate`（綠燈假象五型 + 突變測試，score 0.58）
+- `ms-cross-model-adversarial-review`（push 前異源對抗覆核紀律，score 0.87）
+
+已投影到 `~/.claude/skills` 與 `~/.kiro/skills`。
+
+## ACP Adapter 設定檔差異
 
 | Adapter | 讀取的設定檔 |
 |---|---|
 | Kiro CLI | `AGENTS.md` + `~/.kiro/steering/` |
 | Codex | `AGENTS.md` |
-| Claude Agent（claude-agent-acp） | `CLAUDE.md`（全域 + 專案，原生自動載入） |
-
-切換 adapter 時，靠另一家設定檔承載的規範會**靜默漏接**——這是跨 CLI 的結構性 gap（追蹤中：skill-candidates 的 agent-cli-config-hook-portability）。
-
-## Harness Hooks（Claude 路徑）
-
-- **impact-gate**：`.claude/hooks/impact-gate.mjs` + `settings.local.json` 註冊 PreToolUse。每 session 每檔首次 Edit/Write exit 2 要求輸出因果鏈、重試放行、只閘專案內檔案、fail-open。決策為 Claude-only 最小版（排除跨 CLI 投影因為成本/價值不成比例，切回 Kiro 時閘門消失屬接受的設計）
-- **Hooks 快照**：Claude Code hooks 在 session 啟動時定格，settings 新增的 hook 要下次新 session 才生效；hook 機制在 claude-agent-acp（ACP 路徑）下有效
-- **Bridge 的 tool-hooks.ts 不是閘門**：PostToolUse、fire-and-forget、僅 direct provider 路徑（tool-loop.ts）生效——走任何 ACP 時不會 fire，不能當阻擋式機制
-
-## Kiro CLI Model 生態
-
-- **短名格式**：`claude-sonnet-4.6`、`claude-opus-4.6`（非完整 API model ID）
-- **Claude 系**：auto / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5（`claude-opus-4.6` 已於 2026-07-27 確認被 Kiro CLI 移除，僅剩 `claude-opus-4.5`；bridge 專案內殘留引用已批次修正 9 檔 14 處，commit `2bb09de`）
-- **非 Claude 系（2026-07）**：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5（0.25x, 196K）、minimax-m2.1（0.15x, 196K）、glm-5（0.5x, 200K）
-- **判斷**：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項；qwen3-coder-next 超便宜但 experimental 穩定度未知
-
-## Specialist Model Pin 與 Benchmark
-
-- `specialist-domains.json` 的 `defaultModel` 在 spawn 時 pin 住 model——**parallel delegate 無法動態指定 model**，prompt 裡要求換 model 無效
-- PARALLEL_DELEGATE 的 prompt 含 `>>`（或多行）會被 token parser 截斷導致任務**靜默未 spawn**
-- ∴ Model benchmark 正確做法：`kiro-cli chat --model <name> --no-interactive -a "prompt"` 獨立 session（`--model` 在 chat 子命令下，非頂層 flag；排除建臨時 specialist domain 因為對一次性測試過重）
-
-## vc-kiro-delegate 三段 Review（實證有效）
-
-委派 Kiro 實作後的品質鏈：① Kiro `--resume` self-review ② 獨立新 session Kiro 冷讀 git diff ③ 主 agent heavy review（親跑 tsc + smoke + BC 對照）。2026-07-07 兩輪實戰各抓到一個 self-review 漏掉的真 bug（`/restart` 走 shutdown() 漏清 registry、self-review 修法誤殺 SIGINT resume 場景）；抓到後由主 agent 接手修，不叫 Kiro 修第二次。
-
-**2026-07-14 委派實證教訓**：`kiro-cli` 的 prompt 走命令列參數有長度上限（37KB 會炸 `Argument list too long`），長 spec 應寫成檔案讓 Kiro 自己讀路徑；獨立 reviewer 這輪抓到 3 個真問題（多餘空行、`listRecent` 死碼、`/selfeval` 漏登記 `COMMAND_SPECS`），同樣由主 agent 接手修不叫 Kiro 修第二次。
-
-## 異源對抗覆核（常態化價值）
-
-### Fable 5 對抗覆核實證（2026-07-26）
-
-派 Fable 5 subagent 對 commit `afb9d8e` 做對抗性覆核（37 次工具呼叫、歷時 587 秒），抓出「接受 protobufjs 依賴」的原始論證存在關鍵推理缺陷——**異源模型對抗覆核能打破同源自審天花板**，值得對高風險的第三方依賴決策常態化套用。
-
-### Fable5 覆核紀律（2026-07-30）
-
-- 覆核設定：「給開放授權不給檢查清單」——讓覆核者自己探索，而非逐項打勾
-- 覆核方法：要求讀原始碼而非信 commit message
-- 結論處置：每條 finding 須**自己重現後才動手**——實測 4 條中 3 成立 1 駁回，且有 1 條連覆核者也枚舉不全
-- 意義：覆核結論不可照單全收，驗證是主 agent 的責任
-
-## Co-Authored-By Trailer 陷阱
-
-- Git commit 的 `Co-Authored-By` trailer 是 **harness 模板字串**（session 啟動時定格），非 runtime model 自我宣告
-- Harness 認不得非標準 model ID（如 claude-fable-5）時 fallback 寫 `Claude Opus 4.6`——**不可當實際 model 證據**
-- 對策：專案 CLAUDE.md「開發偏好」規則——model 名以 session 環境宣告（`You are powered by...`）為準（排除關掉 attribution 因為想保留紀錄、排除 git hook 因為過重）
-
-## Advisor 顧問工具（2026-07-14）
-
-- 需三選一顯式設定：`/advisor` 指令、`settings.json` 的 `advisorModel`、或 `--advisor` CLI 旗標
-- 使用者 `~/.claude/settings.json` 已有 `"advisorModel": "fable"`
-- 組織 `availableModels` allow-list 需允許該顧問模型；使用者已在終端機執行 `/advisor` 選定 Fable 5 解除限制
-- Advisor 是綁在主 session 層級的工具，不會往下傳給 subagent
-
-## Scheduler Backend 跟隨（2026-07-13）
-
-- scheduler ephemeral session 原本固定讀 `.env` 的 `ACP_AGENT_COMMAND`，不跟隨 `/agent` 熱切換
-- 已修復（commit 85242f9）：`sessionManager.getActiveBackend(chatId)` 優先用 pinned backend，fallback `.env`
-
-## Upstream 同步（2026-07-16）
-
-merge 進 MCP-first action domain 基礎建設（main `0a3c551` → `199e30a`），細節與衝突處理原則見 [[bridge-upstream-sync]]。
-
-## Claude Max 5x 模型分配策略（2026-07-20）
-
-記於 `.claudedocs/model-allocation-max5x.md`：
-
-- Opus 是最稀缺配額，只留給高認知決策（架構、最終審查、難 debug、對抗驗證）
-- 所有 ≥2k token 的實作產出委派給不限量的 Kiro CLI；Haiku 處理機械/批次操作；Sonnet 負責協調
-- 配額同時受「全模型每週上限」與「Sonnet 專屬每週上限」兩道牆限制，且跨 Claude.ai chat / Claude Code / Cowork 共用
-- **快速判準**：自問「這個錯誤是 Sonnet 級還是 Opus 級」——可重跑、重做成本低的錯誤就降級委派，會污染下游決策（架構、事實、記憶）的錯誤才值得動用 Opus
-- Workflow / subagent 必須顯式指定 model override，否則沿用預設 model 會造成配額爆掉
-
-**三模型分工提案（2026-07-06）已評估暫緩**：Fable 5 當 orchestrator（約 10% tokens）、Codex 5.5 當 executor（約 60%）、Gemini 3.1 Pro 當 reviewer（約 15%）——決定不採用，避免未來重複提案。
-
-## Kiro CLI 登入狀態檢查（2026-07-26 → 2026-07-27 已恢復）
-
-- 主機 kiro-cli（2.13.0，路徑 `C:\Users\jiunchiwang\AppData\Local\Kiro-Cli\kiro-cli.exe`）於 2026-07-26 檢查時曾處於**未登入**狀態（`kiro-cli whoami` 回報 `Not logged in`）
-- headless 環境執行 `kiro-cli chat --list-models` 會卡在「Opening auth portal」無窮重試迴圈（無瀏覽器完成 OAuth）——當時需使用者手動互動式 `kiro-cli login` 重新登入才能恢復
-- `kiro-cli chat` 有 `--list-models` 旗標可查詢可用 model 清單（另有 `--format plain/json/json-pretty` 控制輸出格式），但需登入狀態才能實際回傳結果
-- **2026-07-27 狀態更新**：登入狀態已恢復正常，`vc-kiro-delegate` 委派功能可正常使用（覆蓋上述 2026-07-26 的未登入記錄）
-
-## Session 啟動延遲最佳化
-
-- **serena MCP**：原以 `uvx` 直接從 git 安裝，每次啟動都重抓；改為預先 `uv tool install` 到本機再引用，每個 session 省 ~10-11 秒，零程式碼改動、零風險
-- **MCP 繼承限縮**（暫緩）：把 `settingSources` 限縮為 `['project']` 或 `[]` 可讓 `session/new` 從 spawn 19 個行程降到 3 個，但會連帶砍掉 specialist 需要的能力繼承——此項要動必須先做「保留能力前提下的架構設計」，不可當純效能調整
-
-## 規格驅動開發(SDD)流程補強（2026-07-28）
-
-於 UK 助理知識包專案定案的兩個結構性補強：
-
-1. **調查現況作為 Phase 1 開場**：先盤點既有資料來源與載入機制，再進設計，避免憑空假設前提
-2. **規格自審品質閘**：在交付使用者審查前插入機械化檢查——未填佔位符、內部矛盾、範圍蔓延、模糊未定義敘述
-
-此閘擋掉的是「人工審查時最浪費來回的低階瑕疵」，與異源對抗覆核互補而非取代。
-
-## tsconfig 靜態檢查盲點（2026-07-29）
-
-- bridge 的 `tsconfig` 未開 `noUnusedLocals`，`tsc` 全綠不代表沒有孤兒 import／死碼
-- 此類問題需要異源獨立覆核（如 Fable5）或手動 grep 才抓得到——2026-07-29 sync-upstream 覆核實測抓到 5 個孤兒 import + 1 個死碼函式
+| Claude Agent | `CLAUDE.md`（全域 + 專案） |
 
 ## 相關
 
 - [[bridge-project]] — Bridge 本體架構與功能
 - [[bridge-upstream-sync]] — Fork 同步與合併衝突處理
-- [[dev-tools]] — 機器環境與 CLI 工具
-- [[agent-claude-opus46]] — 懸案：`/agent claude` 切回後 model 仍是 Opus 4.6 而非 pin 的 Fable 5（settings watcher 覆蓋 set_config_option，未解決）
+- [[bridge-dream]] — Dream 例行維運框架（per-backend model 設定）
+- [[verification-diagnosis]] — 覆核的驗證方法論

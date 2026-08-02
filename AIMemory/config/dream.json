@@ -1,0 +1,6 @@
+{
+  "models": {
+    "claude": "claude-sonnet-5",
+    "kiro": "claude-opus-4.5"
+  }
+}

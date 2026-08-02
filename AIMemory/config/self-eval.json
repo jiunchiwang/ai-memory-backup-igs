@@ -506,6 +506,48 @@
       "chatId": 509424983,
       "score": 85,
       "evidence": "修法已完成型別檢查、93/93 smoke 與三條斷言的突變驗證；未宣稱症狀已消失（尚未重啟、無生產觀測），並先寫死三種判讀含兩種否證結果。記憶三條均為跨 session 可重用事實"
+    },
+    {
+      "ts": "2026-08-02T00:11:09.494Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "topics.json keywords 更新、rebuild 確認 misc 歸零、STATE.md 更新並 read-back 驗證；膨脹警告無法透過刪 facts 解決是正確判斷"
+    },
+    {
+      "ts": "2026-08-02T00:39:09.103Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "純分析未改碼；五點差異各有 code 行號佐證（acp-adapter-config.ts:70-136 / dream.ts:97-117 / acpClient.ts:862-929 / agent.ts:126），但「上一輪方案原文」只看到截斷開頭，故用「大概率沒有」而非斷言"
+    },
+    {
+      "ts": "2026-08-02T00:53:07.770Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "讀了 acp-providers.json 與確認 dream.json 不存在，delta 表基於實際檔案內容；kiro/claude 的 model 套用機制差異前一輪已核對 code。未實作、未跑型別檢查，故不給更高"
+    },
+    {
+      "ts": "2026-08-02T01:46:44.663Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "tsc 乾淨、fast tier 93/93、check-acp-model-effort 單獨過；新斷言以三個突變驗證非恆真；claude-sonnet-5 經真實 adapter 實測；loadDream 實跑確認設定檔生效。未給更高是因為完整 /dream 端到端未執行，且還原邏輯有已知的未捕捉例外殘留窗口"
+    },
+    {
+      "ts": "2026-08-02T01:49:04.680Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "commit 已落地並以 git log 確認；提交前跑過 tsc + fast tier 93/93 + check-acp-model-effort，新斷言經三個突變證實非恆真。維持 88 不上調：完整 /dream 端到端仍未執行，還原邏輯的未捕捉例外殘留窗口也還在"
+    },
+    {
+      "ts": "2026-08-02T02:37:30.573Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "兩輪異源覆核，8+4 條 findings 逐條自行重現（含用 dist 突變把舊 gate 還原、實證 codex 確實會收到 set_config_option），覆核者的窮舉宣稱（fast tier 涵蓋範圍、displayModel 欄位語義）我獨立驗過；tsc 乾淨、完整 96/96 於 7d4eba8、fast 93/93 於 HEAD。未給更高：完整 /dream 端到端仍未實跑，且最後一個 commit 未經覆核"
+    },
+    {
+      "ts": "2026-08-02T02:43:37.312Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "已 push 並確認 origin/main 同步；pre-push hook 獨立跑 build + fast tier 93/93。兩輪異源覆核共 12 條 findings 逐條自行重現，含用 dist 突變實證 codex 確實會收到 set_config_option。不給更高：完整 /dream 端到端未實跑，最後一個 commit 未經覆核"
     }
   ]
 }

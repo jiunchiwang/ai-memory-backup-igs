@@ -78,7 +78,8 @@
         "uk-slot-template",
         "uk-slot-codegen",
         "uk-slot-clash-olympus",
-        "uk-slot-eye-strike"
+        "uk-slot-eye-strike",
+        "uk-slot-pirates-queen"
       ],
       "mcpServers": [
         "memory"
@@ -267,7 +268,20 @@
         "ghost draft",
         "grammy stream",
         "頭部凍結",
-        "append-only"
+        "append-only",
+        "status bubble",
+        "drain",
+        "draining",
+        "dream model",
+        "models 表",
+        "per-backend",
+        "顯式還原",
+        "displaymodel",
+        "models 形狀",
+        "雙形狀",
+        "check-bot-command",
+        "desc 基線",
+        "截斷"
       ],
       "wikiPages": [
         "bridge-project",

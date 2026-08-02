@@ -268,3 +268,25 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-01T20:13:07.840Z] user=509424983 query="此問題已解決" deleted=0 token=forget-8bba4cc9-1
 
+- [2026-08-02T01:36:36.874Z] user=509424983 query="便宜的 Gemini/DeepSeek/local" deleted=1 token=forget-79173d10-1
+    - [f_69d516] [2026-08-02T00:33:50.805Z] 使用者想要 /dream 指令能指定執行時用的 model，而非一律用當前 session 的 model（場景：日常對話用 Opus、/dream 用便宜的 Gemini/DeepSeek/local）
+- [2026-08-02T05:41:28.368Z] user=509424983 query="[WS] task: telegram-kiro-bridge draft 重播第二成因" deleted=1 token=forget-41b37769-1
+    - [f_bebd71] [2026-08-01T02:05:04.551Z] [WS] task: telegram-kiro-bridge draft 重播第二成因（token 隱藏縮回）已修復並 commit bd068e1，正在重啟 bridge 讓修復生效
+- [2026-08-02T05:41:37.113Z] user=509424983 query="Telegram live draft 的兩條硬規則（bridge 實證 2026-07-31）" deleted=1 token=forget-9cd8c795-1
+    - [f_a8b21e] [2026-07-31T05:18:03.742Z] Telegram live draft 的兩條硬規則（bridge 實證 2026-07-31）：任何一般訊息送進該 chat 就會立即清掉 live draft，且 client 的 draft 更新動畫是「長度差」語意（只淡入尾端新增字元）——前一幀狀態一失去或內容在頭部插入，就只能整段重播。設計 draft streaming 時任何 sendMessage 的時機都要當成 draft 的破壞點來排程。
+- [2026-08-02T05:41:41.342Z] user=509424983 query="2026-07-13 同步 upstream（redkilin）relay 多 peer 系統" deleted=0 token=forget-190ad517-1
+
+- [2026-08-02T05:41:45.845Z] user=509424983 query="2026-07-15 完成一次 upstream（redkilin/telegram-kiro-bridge）同步：merge 19 個上游" deleted=0 token=forget-68fff6d1-1
+
+- [2026-08-02T05:41:49.971Z] user=509424983 query="2026-07-16 完成一次 upstream 同步：merge 進 MCP-first action domain" deleted=0 token=forget-ff3132c1-1
+
+- [2026-08-02T05:41:55.707Z] user=509424983 query="docs/usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP 說明章節" deleted=0 token=forget-910f49eb-1
+
+- [2026-08-02T05:42:00.709Z] user=509424983 query="docs/usage-guide.html 已於 2026-07-19 補上 /refresh-routing 指令的別名" deleted=0 token=forget-26debaf2-1
+
+- [2026-08-02T05:42:07.090Z] user=509424983 query="kiro-cli 登入狀態已於 2026-07-27 恢復正常" deleted=0 token=forget-0761a95e-1
+
+- [2026-08-02T05:42:11.516Z] user=509424983 query="README.md 已於 2026-07-16 補上 bridge-actions MCP 說明" deleted=0 token=forget-c76825be-1
+
+- [2026-08-02T05:42:17.055Z] user=509424983 query="/sharedsync 功能已修復並驗證可正常 push/pull" deleted=0 token=forget-11058436-1
+
