@@ -302,3 +302,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-02T20:18:57.595Z] user=509424983 query="merge 19 個上游 commit" deleted=0 token=forget-68fff6d1-1
 
+- [2026-08-04T20:07:47.585Z] user=509424983 query="claude-mem-shortlist.md 有已知問題" deleted=0 token=forget-47ff8f22-1
+

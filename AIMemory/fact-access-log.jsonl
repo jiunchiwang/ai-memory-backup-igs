@@ -346,3 +346,22 @@
 {"ts":"2026-08-02T20:13:45.546Z","q":"bridge-acp","hits":55}
 {"ts":"2026-08-02T20:13:52.456Z","q":"bridge-streaming","hits":37}
 {"ts":"2026-08-02T20:14:01.243Z","q":"bridge-memory","hits":37}
+{"ts":"2026-08-02T20:26:34.736Z","q":"bridge-research","hits":15}
+{"ts":"2026-08-02T20:31:57.342Z","q":"adversarial","hits":4}
+{"ts":"2026-08-02T20:32:10.714Z","q":"dream","hits":17}
+{"ts":"2026-08-02T20:32:42.832Z","q":"覆核","hits":23}
+{"ts":"2026-08-02T20:32:48.675Z","q":"commit message","hits":5}
+{"ts":"2026-08-04T20:01:46.985Z","q":"capability","hits":2}
+{"ts":"2026-08-04T20:01:47.003Z","q":"qm","hits":1}
+{"ts":"2026-08-04T20:01:53.945Z","q":"stdio","hits":2}
+{"ts":"2026-08-04T20:04:42.970Z","q":"bridge-acp","hits":55}
+{"ts":"2026-08-04T20:06:10.129Z","q":"verification-diagnosis","hits":19}
+{"ts":"2026-08-04T20:06:10.129Z","q":"bridge-smoke-gate","hits":9}
+{"ts":"2026-08-04T20:06:10.130Z","q":"uk-slot-codegen","hits":15}
+{"ts":"2026-08-04T20:06:10.130Z","q":"bridge-upstream-sync","hits":13}
+{"ts":"2026-08-04T20:06:10.132Z","q":"uk-slot-clash-olympus","hits":5}
+{"ts":"2026-08-04T20:07:29.034Z","q":"bridge-dream","hits":10}
+{"ts":"2026-08-04T20:07:29.039Z","q":"user-pref","hits":13}
+{"ts":"2026-08-04T20:07:54.535Z","q":"zombie","hits":1}
+{"ts":"2026-08-04T20:09:17.810Z","q":"uk-slot-template","hits":11}
+{"ts":"2026-08-04T20:09:17.815Z","q":"ai-strategy","hits":9}

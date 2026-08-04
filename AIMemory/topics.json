@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-02T05:35:38.152Z (token=topics-dce8fbf7-24)
+// Last applied: 2026-08-04T20:03:46.769Z (token=topics-74c67502-24)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -87,7 +87,8 @@
       "promise.all",
       "logo-localization",
       "知識庫的",
-      "targetoverrides"
+      "targetoverrides",
+      "pascalcase"
     ]
   },
   {
@@ -137,7 +138,10 @@
       "append-only",
       "status bubble",
       "drain",
-      "draining"
+      "draining",
+      "cutpendingtokentail",
+      "游標修復",
+      "token 扣留"
     ]
   },
   {
@@ -244,7 +248,12 @@
       "覆核 agent",
       "displaymodel",
       "models 形狀",
-      "雙形狀"
+      "雙形狀",
+      "pricing tier",
+      "tier_",
+      "advisor_rank",
+      "stdio json-rpc",
+      "http server mode"
     ]
   },
   {
@@ -267,7 +276,10 @@
       "paulsha",
       "conventions",
       "規格驅動",
-      "sdd"
+      "sdd",
+      "yc-software/qm",
+      "harness 抽象",
+      "capability set"
     ]
   },
   {
@@ -312,7 +324,10 @@
       "gh auth login",
       "whois",
       "heredoc",
-      "here-string"
+      "here-string",
+      "edit 工具",
+      "replace_all",
+      "上下文定位"
     ]
   },
   {
@@ -364,7 +379,8 @@
       "支數",
       "check-bot-command",
       "desc 基線",
-      "截斷"
+      "截斷",
+      "nounusedlocals"
     ]
   },
   {
@@ -408,7 +424,8 @@
       "doc-facts",
       "event-log",
       "docupdate",
-      "secret 清理"
+      "secret 清理",
+      "impact-gate"
     ]
   },
   {

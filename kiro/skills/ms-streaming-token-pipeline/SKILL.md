@@ -1,6 +1,6 @@
 ---
 name: ms-streaming-token-pipeline
-description: Use when a Telegram/Slack bot streams text via mid-turn edits plus a final render. Both paths must share one transform, or ASK buttons drop, half-tokens leak, and rate-limit recovery overwrites it.
+description: Use when a Telegram/Slack bridge leaks raw tokens, drops ASK buttons, or renders differently across streaming, final, proxy-entry, and proxy-follow-up replies. All paths must share one transform.
 ---
 
 # Streaming Token Pipeline（streaming + final render 雙路共用 transform）
@@ -9,15 +9,23 @@ description: Use when a Telegram/Slack bot streams text via mid-turn edits plus 
 
 Agent bridge 的文字 token 協定（見 `ms-agent-text-token-signaling`）面對一個架構問題：**streaming 階段**（agent 還在寫字，bridge 每 N ms editMessageText 把 placeholder 更新成目前 buffer）跟 **final render 階段**（agent end_turn、bridge 拿完整 buffer 抽 token 執行 side effect + 最終 editMessageText）都要處理 token，又不能行為不一致。
 
-踩過的六組坑：
+踩過的八組坑：
 1. **Double-strip**：streaming 用 `transform()` 把 token 剝光，final render 再在 `ab7.text` 上跑 legacy extract → 剝空的 text 裡找不到 token → ASK keyboard 消失
 2. **半截 token 洩漏**：agent 還在寫 `<<GOAL_DONE:...` 還沒 close，placeholder 顯示 opener 字面，使用者看到 `<<GOAL_DONE:aa996f9 streaming hide 驗證`
 3. **Rate-limit recovery 蓋掉 final render**：429 期間 final edit fail，recovery listener 用 streaming render 再蓋一次 placeholder，蓋到「streaming 幀」版本，鍵盤丟失
 4. **ACP agent 純文字 turn token 被吞**：Kiro CLI 在無 tool calls 的 turn 過濾掉 `<<...>>` pattern，final render 的 `session.buffer` 不含 token；需 streaming capture fallback
 5. **editNow 無並發互斥狂發相同訊息**：streaming edit 函式被 onUpdate（每 chunk）fire-and-forget 觸發、節流時間戳只在成功後更新——送出開始失敗後閘門全開，並發呼叫在「draft 失敗 → `!placeholder` → `await sendMessage`」的 TOCTOU 窗口各自建立新訊息，1-2 秒冒出十幾則相同內容
 6. **Mutable 內容混進 draft 幀，動畫抖動**：Telegram draft 更新動畫是官方規格的純 append-only 模型（淡入 `max(0, strlen(new)-strlen(prev))` 個尾端字元、無 mid-text 更新語意），tool 進度行的 emoji 翻轉（⚙️→✅）、秒數插入、`slice(-5)` 視窗滑動、body 追加推擠 statusTail 全是 mid-text 變動 → 使用者看到文字跳動、tool 行殘缺、已顯示文字倒退。「volatile 區排在 body 後」只能緩解不能根治
+7. **Proxy 入口漂移**：進入 proxy 的第一輪與後續 proxy 訊息走不同 call site；第一輪漏跑 transform 時，只有第一則回覆會洩漏 raw token
+8. **Context shim 缺方法讓注入回合傳檔全壞**：specialist／parallel-delegate／proxy 結果注入主 session 時餵給 runPrompt 的是 duck-typed shim，只實作 `reply`——SEND_FILE 走的 `replyWithDocument` 全炸，且失敗只 `console.warn` 所以使用者零感知
 
 核心原則：**streaming 與 final render 共用同一條 `transform()` pipeline（single source of truth），UX 保護函式（hide unterminated、剝 token）放在 pipeline 最下游一次做完；final render 直接讀 `ab7.text` 和 `ab7.askTokens`，下游不重新 extract；用 `turnFinalized` latch 讓 recovery listener 看到就 no-op；streaming edit 函式用 coalescing latch 保證同時最多一個 in-flight；edit fail 時先 `sendMessage(text, {reply_markup})` 保 keyboard，再退到 queue；draft 幀只放 append-only 內容（恆定 header + body），tool/thinking 等 mutable 內容走獨立 status 訊息通道**。
+
+## MCP-first 邊界
+
+`bridge-actions` 已提供 `ask`、`schedule`、`delegate`、`parallel_delegate`、`send_file`、`relay_file`。Bridge-managed agent 必須先呼叫對應 MCP tool；只有 tool 明確回報 `unavailable` 才使用 legacy token。Validation 或 policy rejection 要修正輸入，不可用 token 繞過。
+
+Streaming transform 仍要保留 legacy parser，因為本地 LLM、未掛 MCP 的 adapter、fallback turn，以及 `GOAL_DONE`／`SKILL_USED`／`RESTART` 等 token-only 控制訊號仍會走文字管線。MCP action 與 legacy token 必須正規化到同一 action domain、共用 validation、policy 與 idempotency。
 
 ## 何時使用
 
@@ -35,6 +43,7 @@ Agent bridge 的文字 token 協定（見 `ms-agent-text-token-signaling`）面�
 - 沒有 streaming（一次送完整訊息）— 直接 regex extract 就好
 - 協定只有一種 token（單純 regex）— balanced scanner 還不值得
 - 用 function calling / tool use API 做 side effect — 不用 text token
+- 只有 MCP action、完全沒有 token-only 控制訊號或 legacy adapter — 可不啟用文字 token parser；混合環境仍需保留 fallback pipeline
 
 ## 架構：single pipeline
 
@@ -72,7 +81,7 @@ Agent bridge 的文字 token 協定（見 `ms-agent-text-token-signaling`）面�
 
 一條 pipeline，兩個消費者；streaming 只消費 `r.text`，final render 消費所有欄位。不要在下游 re-run extract。
 
-## 六組坑與修法
+## 八組坑與修法
 
 ### 坑 1：Double-strip（ASK 按鈕消失）
 
@@ -357,6 +366,71 @@ Draft（append-only）        Status 訊息（可自由 mutate）
 
 ⚠️ 讀到這節的人請不要再基於「某個 chat 寫入清掉了 draft」去設計修法——那條因果鏈已經被實測切斷，而依它做的修法（把 status 寫入排在 draft 之前、內容沒變也強制補送）目前**既未被證明有效也未被證明有害**，多出來的只有 API 呼叫量。
 
+### 坑 7：Proxy 進場輪與後續輪走不同收尾
+
+**症狀**：specialist proxy 的第一則回覆顯示 `<<ASK>>`／`<<SEND_FILE>>` 原文，後續訊息卻能正常生按鈕或傳檔；streaming 期間也可能短暫閃出 token。
+
+**根因**：proxy 通常有兩個入口：
+
+- 主 agent 解析 `SPECIALIST_PROXY` 後立即取得的「進場輪」
+- `isProxyActive` 後，使用者直接送給 specialist 的「後續輪」
+
+若兩處各自 inline finalize，容易只在後續輪呼叫 `transformReplyTokens()`，進場輪則只做 `stripMemoryTokens()`。此外 specialist 是獨立 process，可能沒有 bridge-actions credential；文字 token fallback 不能因主 agent 已 MCP-first 就被省略。
+
+**修法**：抽出共用 seam，兩個入口都呼叫；路徑特有的退出狀態留在 call site。
+
+```ts
+const display = stripProxyForStream(rawChunk, parsers);
+const final = await finalizeProxyReply({
+  raw: finalText,
+  parsers,
+  policy: "proxy",
+});
+
+// path-specific：只處理 proxy 生命週期，不重做 transform
+if (final.proxyDone) await exitProxyMode();
+```
+
+共用 helper 至少負責：
+
+1. streaming token strip 與半截 token 隱藏
+2. final transform、policy、ASK keyboard、send-file／sticker side effects
+3. footer 與 rich/plain fallback
+
+**驗證**：同一組 token fixture 必須分別送進「進場輪」與「後續輪」，斷言兩者的顯示文字、ASK、附件與 sticker action 完全一致。
+
+### 坑 8：Context shim 缺方法，讓所有注入回合的傳檔全壞
+
+**症狀**：文字與 ASK 按鈕都正常，但同一回合的傳檔炸 `ctx.replyWithDocument is not a function`。
+只發生在 specialist／parallel-delegate／proxy 結果**注入**主 session 的回合；使用者直接發訊息時正常。
+
+**根因**：這些路徑餵給 `runPrompt` 的不是真 grammy `Context`，而是手寫的 duck-typed shim
+（`makeMetaCtx` 等）。shim 只實作了 `reply`，沒有 `replyWithPhoto`／`replyWithDocument`——
+而 SEND_FILE 的 side effect 走 `sendFilesByPaths` 正好只用後者。實測有 **11 個 shim 同病**，
+也就是**每一個 meta／relay／parallel-delegate 注入回合的傳檔都是壞的**，不是單點。
+
+**修法：修共用消費端，不要補 N 個 shim。** 補 11 處的話，第 12 個 shim 出現時會再犯。
+先掃描確認全部 shim 的**共同能力**再挑 API 層級：
+
+```ts
+// 實測：14 個 shim 全都有 chat，13 個有 api（唯一沒有的那個剛好有 replyWithDocument）
+const canApi = typeof (ctx as any)?.api?.sendDocument === "function" && ctx.chat?.id;
+if (canApi) await ctx.api.sendDocument(ctx.chat.id, new InputFile(p));
+else await ctx.replyWithDocument(new InputFile(p));   // fallback，行為不變
+```
+
+`replyWithX` 在 grammy 預設不帶 `reply_to_message_id`，與 `api.sendX(chatId, …)` 目標一致，
+無語意漂移。**一處修好全部 shim，且一個 shim 都不用碰。**
+
+**規則**：duck-typed context shim 是 TypeScript 型別檢查照樣會過的漏洞
+（缺的方法只在 runtime 才炸）。當 N 個 shim 缺同一個方法時，正解是讓**共用消費端**
+降到所有 shim 都具備的 API 層級 + fallback，而不是逐個補齊 shim。
+
+**連帶紀律**：`sendFilesByPaths` 原本三處 `continue` + 一處 `catch` 吞掉全部失敗、
+只寫 `console.warn`，四個呼叫端沒一個讀回傳值——所以這個 bug 存在期間**使用者完全無感知**。
+回傳型別要改成 `{ sent, failures[] }` 並在呼叫端接上失敗回報（對稱既有的
+`reportRelayFileFailure` 慣例）。**沒有失敗回報的傳檔路徑，等於沒有傳檔路徑。**
+
 ## Balanced scanner（free-form reason 必用）
 
 GOAL_DONE / SKILL_USED / RESTART 的 reason 欄位是 free-form 自然語言，agent 可能在 reason 裡寫：
@@ -418,8 +492,9 @@ Smoke 跑 `dist/observerTransformer.js` 不是 `src/`。這條沒做的話會誤
 | `check-ab7-goal-loop` | final render 用 ab7.text + ab7.askTokens 不重 extract |
 | `check-editnow-race` | editNow 並發互斥：10 並發只建 1 則 placeholder、trailing 補跑最新內容、finalize 後不補跑 |
 | `check-draft-render` | draft 幀純淨（不含 tool/thinking）、tools/thinking 變動後幀逐字相同、status 訊息內容、replyHeader 恆定前綴、markdown 原文、截斷保尾 |
+| `check-proxy-rich-stream` | proxy 進場輪與後續輪共用 transform，token／rich reply 行為一致 |
 
-每次動 observerTransformer.ts 或 index.ts 的 final render 路徑，都跑完這幾支。
+每次動 observerTransformer.ts、index.ts final render 或 proxy 收尾路徑，都跑完這幾支。
 
 ## Common Mistakes
 
@@ -445,6 +520,10 @@ Smoke 跑 `dist/observerTransformer.js` 不是 `src/`。這條沒做的話會誤
 | draft 通道與 status 通道共用一個 identical-check early return | tool 完成但 body 沒新字 → draft 不變、status 有變；兩通道各自判斷 |
 | replyHeader（「我選擇了：X」等）只在 final render 拼上 | Streaming 幀（draft + placeholder edit）都要帶；header 恆定前綴不破壞 append-only，且要計入 4096 長度預算 |
 | tool 行顯示 adapter 原文（整條 Bash 命令），或 title 固定在 tool_call 起始那刻 | 顯示層只取 title 第一個詞（工具種類）+ 秒數；`tool_call_update` 帶 title 時回寫 timeline entry（adapter 常在參數 stream 完才補完整 title） |
+| Proxy 進場輪只做 `stripMemoryTokens`，後續輪才做 transform | 抽出 `stripProxyForStream`／`finalizeProxyReply` 共用 seam；兩個入口用同一 fixture 驗證 |
+| 傳檔函式直接用 `ctx.replyWithDocument` | duck-typed shim 只有 `reply`；改走 `ctx.api.sendDocument(chat.id)` + fallback，一處覆蓋全部 shim |
+| N 個 shim 缺同一個方法就逐個補 | 修共用消費端降到全 shim 共有的 API 層級；補 N 處會被第 N+1 個 shim 破功 |
+| 傳檔失敗只 `console.warn` + `continue` | 回傳 `{ sent, failures[] }`，呼叫端接上失敗回報；否則使用者與 agent 都零感知 |
 
 ## 相關
 

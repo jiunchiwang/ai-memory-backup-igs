@@ -9,7 +9,7 @@ description: Use when requesting Telegram bridge choice buttons, or when an ASK 
 
 In a bridge-managed session, call `bridge-actions.ask` first. The bridge validates the structured request and attaches an **inline keyboard** at final-turn commit. Only when the MCP tool explicitly reports unavailable should the agent emit the legacy text token; tapping either form posts `[ASK:<question_id>] <key>` back as a new user turn.
 
-**Iron rule:** If any validation fails, the bridge leaves the **whole token verbatim** in the user's chat — broken tokens are visible, not silently dropped. Self-check every token before sending.
+**Iron rule:** A rejected MCP request must be corrected and retried as MCP; token fallback is allowed only for an explicit `unavailable` result. If legacy-token validation fails, the bridge leaves the **whole token verbatim** in the user's chat — broken tokens are visible, not silently dropped.
 
 **Fallback boundary:** A normal MCP validation error means fix the request. Do not switch to the token to bypass validation. The token remains a permanent compatibility path for local LLMs, MoA/reference agents, and adapters without the built-in MCP.
 

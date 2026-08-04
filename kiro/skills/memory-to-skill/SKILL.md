@@ -9,7 +9,7 @@ description: 當使用者要求「檢視 session 資料夾並把內容整理成 
 
 把 `${MEMORY_DIR}/sessions/` 資料夾裡的對話記錄掃過一遍，抽出可重用的技術/模式/參考，寫成符合 writing-skills 規範的 SKILL.md，**先比對已安裝的 `ms-` skill、有重疊就 append/rewrite 而不是新建**，最後把處理過的 session 檔搬到 `${MEMORY_DIR}/oldSessions/`。
 
-核心原則：**事後整理（retrospective），不是 TDD；但產出必須符合 writing-skills 的格式規範；絕不重複建立已存在的 skill。**
+核心原則：**事後整理提供真實失敗證據，但不豁免驗證；產出必須符合 writing-skills，且絕不重複建立已存在的 skill。**
 
 ### 路徑變數（重要）
 
@@ -46,7 +46,7 @@ writing-skills 要求 **「No skill without a failing test first」**（TDD-for-
 | 驗證 | 用 subagent pressure scenario 做 RED → GREEN | 以「已在真實對話中被反覆使用」作為事後驗證 |
 | 適合的 skill 類型 | discipline-enforcing、technique | reference、已證實的 pattern |
 
-產出仍必須符合 writing-skills 的**格式**（YAML frontmatter、`Use when...` description、sections 結構）。差別在於「測試」這一關用「這個 pattern 是否在 session 中反覆出現並解決了真實問題」來取代 pressure scenario。
+Session 中的原始失敗與修復可作為 RED baseline 證據，避免重演一個已發生的失敗；但仍要依 skill 類型做至少一個 retrieval／application／pressure scenario 驗證 GREEN。若當前環境禁止 subagent，必須明確標記「靜態驗證完成、行為驗證待補」，不可宣稱已完整部署。Frontmatter 與章節仍須符合 writing-skills。
 
 ## 完整流程
 
@@ -290,4 +290,4 @@ Windows cmd 的 `mkdir` + `&&` 連鎖常有 exit code 1 的問題，**用 PowerS
 ## 相關
 
 - **writing-skills** — skill 撰寫的格式與 TDD 方法論（本 skill 遵守其格式，但用 retrospective 取代 TDD）
-- **ms-agent-long-term-memory** — sessions/ 資料夾的來源，是 agent 長期記憶系統的 archive 層
+- **Bridge 的長期記憶系統** — `${MEMORY_DIR}/sessions/` 的來源與 archive 層；規格見 bridge 的 `docs/memory-system.md` 與 `src/memory.ts`

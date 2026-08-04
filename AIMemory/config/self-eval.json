@@ -572,6 +572,12 @@
       "chatId": 509424983,
       "score": 82,
       "evidence": "codex-acp handshake 由 scripts/probe-codex-acp.mjs 實測復現，-32000 出處與 authMethods 三選項為原始 JSON-RPC 回應直接讀出；codex CLI 0.146.0 已裝並驗版本；bridge 三處認證路徑為讀碼確認未改動。扣分因為端到端（登入完成 → session/new 成功）尚未驗證，等 device auth 回來才算完"
+    },
+    {
+      "ts": "2026-08-03T15:10:56.371Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "tsc 通過；邏輯正確（ACP 時讀 verifiedModelInfo，有值才覆蓋 fallback）；但未實際跑 runtime 驗證 /model 輸出"
     }
   ]
 }

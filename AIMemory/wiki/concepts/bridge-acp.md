@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-02
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c]
+updated: 2026-08-05
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_440]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -138,6 +138,23 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 - `ms-cross-model-adversarial-review`（push 前異源對抗覆核紀律，score 0.87）
 
 已投影到 `~/.claude/skills` 與 `~/.kiro/skills`。
+
+## 為何選擇 stdio JSON-RPC（2026-08-04 QM 研究決策）
+
+Bridge 選擇 stdio JSON-RPC 而非 HTTP server mode 與底層 agent CLI 通訊：
+
+**場景評估**：
+- 單一 Telegram chat 對應單一 ACP session（不需多 client）
+- Streaming 已靠 ACP 的 `session/update` notification 解決
+- 沒有跨機器需求（relay 是另一個 bot 不是連同一個 CLI）
+
+**成本/收益分析**：
+- 成本高：要處理 port 分配、改寫整個 `acpClient.ts`
+- 收益低：無對應使用場景
+
+**排除 HTTP server mode 的額外理由**：
+- `kiro-cli` 根本沒有 `serve` subcommand
+- QM 用 HTTP 是為了支援併發 abort+steer+prompt 與 tool bridging 回打場景，bridge 都用不到
 
 ## ACP Adapter 設定檔差異
 

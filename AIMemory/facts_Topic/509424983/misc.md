@@ -1,2 +1,0 @@
-- [f_8e6494] [2026-08-02T13:31:37.803Z] Claude 模型的相對單價（catalog pricing tier，tier_A_B = $A/M input、$B/M output）：Sonnet 5 = tier_3_15（1x）、Opus 5 = tier_5_25（1.7x）、Fable 5 = tier_10_50（3.3x）、Haiku 4.5 = haiku_45；因為覆核者是 agentic 的（工具迴圈讀進去的碼全算 input），模型選型的成本差會被放大
-- [f_129738] [2026-08-02T13:31:37.803Z] 在 Edit 工具做整行刪除或改解構名時，若目標字串在同檔重複出現（如 relay.ts 的 const { runPrompt, sessions } = deps() 全檔 9 個相同字串），必須用上下文定位而非 replace_all，否則會誤改其他 8 處——tsc 只標出未使用的那一處，行號才是唯一可靠依據

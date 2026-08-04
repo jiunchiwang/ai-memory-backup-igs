@@ -116,3 +116,34 @@ py -c "print(open('file.md','rb').read()[:4])"
 # 如果是 b'\xff\xfe' 就是 UTF-16 LE，修復：
 py -c "p='file.md'; open(p,'w',encoding='utf-8',newline='\n').write(open(p,encoding='utf-16-le').read())"
 ```
+
+## Agent shell 沒有可見桌面 — GUI 驗證這條路不通
+
+Bridge／ACP spawn 出來的 agent shell **沒有可見桌面**。在裡面跑 PowerShell 建 GUI 視窗
+（WinForms `Form.Show()` + `DoEvents` 迴圈）**跑得完但不會渲染**，截圖看不到任何東西。
+實測連續兩次都失敗（背景與前景各一次），不是時序問題。
+
+∴ 要驗證視窗類行為（z-order、置頂、焦點）**不要靠開一個測試 GUI 當競爭者**，
+改用 Win32 P/Invoke **直接量測**目標視窗：
+
+| 要驗的事 | 量測方式 |
+|---|---|
+| 是否 topmost | `GetWindowLong(hwnd, GWL_EXSTYLE)` 讀 `WS_EX_TOPMOST` |
+| 在 z-order 第幾 | `GetTopWindow` + `GetWindow(..., GW_HWNDNEXT)` 走鏈算 rank |
+| 被壓下去會不會自己回來 | `SetWindowPos` 人為設 `HWND_NOTOPMOST` + `HWND_BOTTOM`，等一個週期再重讀 |
+
+這種「人為破壞 → 等 → 重讀」的量測比開競爭視窗更強：它直接證明**修復機制本身**有效，
+而不只是證明「目前看起來在最上面」。
+
+## 兩個會讓測試自己產生污染的陷阱
+
+**① `$pid` 是 PowerShell 唯讀自動變數**（指 shell 自己的 PID）。寫 `$pid = ...` 會失敗，
+而且錯誤訊息不會直接說「唯讀」——測試腳本裡的變數要改名（`$targetPid` 等）。
+
+**② bash 的 `. ./.env` 會把 Windows 路徑的反斜線當跳脫吃掉。** 實測
+`F:\AI\AIMemory` 被載成 `F:AIAIMemory`，程式接著在**錯誤路徑建了檔案**
+（`<repo>/AIAIMemory/sticker-map.json`）。要載 `.env` 給 Node 測試時：
+
+- 優先讓程式自己走 `dotenv/config`，不要在 shell 層 source。
+- 必須在 shell 注入時，逐個顯式傳 `KEY=value` 或用 PowerShell `$env:KEY = 'F:\AI\...'`（單引號）。
+- 跑完**檢查有沒有誤建目錄**——這類污染很安靜，且正本完好會讓你以為沒事。

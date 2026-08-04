@@ -1,0 +1,36 @@
+{
+  "id": "review_model_fix",
+  "specialist": "general",
+  "task": "## 任務：獨立覆核 /model 指令修改\n\n### 目標\n對 src/commands/model.ts 的近期修改做獨立程式碼審查。這是異源覆核——你要自己讀原始碼，不要信任任何 commit message 或敘事。\n\n### 背景\n問題：/model 指令在 ACP provider 時顯示硬編碼的 'claude-sonnet-4 via Bedrock'，但實際 session 可能跑不同模型（如 claude-opus-4.5）。\n修復意圖：從 session 的 AcpProvider 取得 verifiedModelInfo 顯示實際模型。\n\n### 你要做的事\n1. 讀取 src/commands/model.ts 完整內容\n2. 讀取 src/provider/acp.ts 確認 verifiedModelInfo 是什麼、何時設定\n3. 檢查以下面向：\n   - 修改是否正確解決問題？\n   - 有沒有 edge case 沒處理（session 不存在、client 不是 AcpProvider、verifiedModelInfo 為空）？\n   - 型別安全？\n   - 有沒有引入新問題？\n   - 切換模型時的顯示訊息是否一致（用靜態還是動態值）？\n\n### 驗收條件\n輸出結構化報告，每個 finding 標 HIGH / MEDIUM / LOW / INFO：\n- HIGH：會導致 runtime error 或邏輯錯誤\n- MEDIUM：潛在問題或不一致\n- LOW：風格或次要改善\n- INFO：觀察但不需行動\n\n最後給一句「可 push」或「建議修正後再 push」的結論。",
+  "created": "2026-08-03T15:20:03.092Z",
+  "status": "done",
+  "summary": "獨立覆核 /model 指令修改，確認正確從 AcpProvider.verifiedModelInfo 取得實際模型，edge cases 已處理，結論可 push",
+  "outputs": [
+    {
+      "type": "finding",
+      "content": "[INFO] verifiedModelInfo 與 modelInfo 區分設計正確，前者是 adapter 回報的實際值、後者含 fallback"
+    },
+    {
+      "type": "finding",
+      "content": "[INFO] sessionConfig 在 session/new、session/load、session/set_config_option 後設定，時機正確"
+    },
+    {
+      "type": "finding",
+      "content": "[LOW] 切換訊息使用靜態值是合理的（切換時新 session 尚未建立）"
+    },
+    {
+      "type": "finding",
+      "content": "[MEDIUM] getModelDisplay 的型別依賴 deps 推導，若未來型別改變可能靜默失效，但目前可接受"
+    },
+    {
+      "type": "finding",
+      "content": "[INFO] Edge cases（session 不存在、client 非 AcpProvider、verifiedModelInfo 為空、effort 為空）皆有處理"
+    }
+  ],
+  "files_modified": [],
+  "tags": [
+    "code-review",
+    "acp",
+    "model-command"
+  ]
+}

@@ -14,7 +14,7 @@ description: 當需要為 LLM agent bridge（Telegram bot、Slack bot、CLI UI�
 ## 何時使用
 
 - 做 Telegram / Slack / IRC bot 想加「30 分鐘後提醒我」「每天 09:00 早安」
-- 想讓 agent 自己在回覆裡建排程（例如使用者說「一小時後叫我」，agent 嵌 `<<SCHEDULE:1h|...>>`）
+- 想讓 agent 自己建排程（優先呼叫 `bridge-actions.schedule`；只有 tool 明確回報 unavailable 時才嵌 `<<SCHEDULE:1h|...>>`）
 - 想讓排程觸發時執行 bridge 指令（例如每天凌晨 `/restart` 清 context）
 - 已經有 long-term memory / facts 機制，不想另外做向量 DB 或 cron daemon
 
@@ -513,7 +513,7 @@ daily 03:00 /goal 10 依序執行夜間例行
 daily 03:00 /nightlyroutine
 ```
 
-### 配置路徑：`${AGENT_CONFIG_DIR}/nightly-routine.json`
+### 配置路徑：`${MEMORY_DIR}/config/dream.json`
 
 Hardcode 內容不彈性（使用者要改順序/加步驟就得改 code），走 JSON 檔：
 
@@ -768,6 +768,6 @@ Agent turn 2 開頭就看到「上次為何重啟」，不會又觸發同樣條�
 ## 相關
 
 - **ms-agent-text-token-signaling** — `<<SCHEDULE:...>>` token 是該協定的一個實例；ASK 按鈕用在 /schedule wizard；fail-open + budget 設計
-- **ms-agent-long-term-memory** — 同樣檔案式持久化思路；排程 store 與 facts 放在同一個 `MEMORY_DIR`
+- **Bridge 的長期記憶系統** — 同樣的檔案式持久化思路；排程 store 與 facts 同在 `${MEMORY_DIR}`。見 bridge 的 `docs/memory-system.md`
 - **ms-acp-protocol-limitations** — ephemeral AcpClient 同 session ACP client 用法；排程觸發時新開一條才不擠使用者當下的 session
 - **ms-streaming-token-pipeline** — 排程觸發 runPrompt 類 handler 的 streaming 行為細節

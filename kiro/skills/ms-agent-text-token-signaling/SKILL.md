@@ -17,6 +17,11 @@ Bridge 內建 `bridge-actions` 提供六個高錯誤率動作：`ask`、`schedul
 
 兩條入口會正規化到同一 action domain、共用 validation/policy/idempotency 與 handler。執行時序依 action 類型而異：`schedule` 等 immediate action 可在 tool call 當下 commit；需要 final assistant context 的 deferred action 在 turn final drain。Legacy token 則在 final buffer 解析後執行。
 
+`send_file`／`relay_file` 回傳 `accepted, state=queued` 只表示「驗證通過並放入
+本 turn queue」，**不表示 Telegram 已送達**。真正傳送在 final drain；只有
+handler 完成才是 delivered，finalize 失敗仍可能沒有附件。Agent 可說「已排入
+本輪附件」，不可把 queued 當成外部交付完成的證據。
+
 `GOAL_DONE`、`SKILL_USED`、`RESTART`、`STICKER`、`WIKI_QUERY`、`SKILL_PROPOSE` 等仍是 token-only 控制訊號；本地 LLM、MoA/reference agent、未掛 MCP adapter 也繼續使用完整 token fallback。
 
 ## 何時使用
@@ -107,7 +112,11 @@ async function finalize(ctx: Context, finalBuffer: string) {
 
 如果不在 streaming 時剝，使用者會看著 token 一字一字出現（`<<SEND_FIL...` → `<<SEND_FILE:F...`）。又醜又令人困惑。剝除讓 streaming UX 保持乾淨。
 
-## 教 Agent 用 Token
+## 教 fallback-only Agent 用 Token
+
+以下 preamble 片段只提供給沒有 `bridge-actions`、或對應 tool 已明確回報
+`unavailable` 的 agent。Bridge-managed agent 不可因 validation/rejection
+改走 token。
 
 Agent 要知道 token 存在、也要知道什麼時候用。把這段注入**session preamble**（或 system prompt）：
 
@@ -116,7 +125,8 @@ Agent 要知道 token 存在、也要知道什麼時候用。把這段注入**se
 要把檔案送到使用者的 Telegram 聊天室時，在你的回覆中加入 token：
 `<<SEND_FILE:<絕對路徑>>>`
 bridge 會在訊息送出前移除 token，並把該檔案以 Telegram file 附上
-（圖片 ≤10MB 走 photo，其餘走 document）。
+（`.png` 固定走 document；其他支援的圖片副檔名在 ≤10MB 時先嘗試
+photo，Telegram 拒絕則 fallback document；其餘走 document）。
 路徑必須位於允許的根目錄（TG_SEND_ROOTS 或 ACP_SESSION_CWD）底下。
 可同時出現多個 token。
 
@@ -166,6 +176,8 @@ if (!isUnderAllowedRoot(path, config.allowedRoots)) {
 | Token 太簡單（`[FILE]`、`{path}`） | 會跟一般文字撞；用 `<<PREFIX:...>>` |
 | 只在 stream 結束才剝除 | Streaming 時 token 閃爍；每次 render 都要剝 |
 | 路徑沒去重 | 同一個 token 出現兩次就傳兩次 |
+| 把 MCP `state=queued` 回覆成「已送達」 | queued 只表示進 turn queue；final drain／handler 成功後才是 delivered |
+| 假設所有 ≤10MB 圖片都走 photo | `.png` 固定 document；其他支援格式才嘗試 photo，失敗再 fallback |
 | 每個壞 token 都回錯誤給使用者 | Server 端 log、使用者端默默丟掉 |
 | 跳過白名單 | Agent 可以拿到磁碟上任何檔案 — 要把 token 當不可信輸入 |
 | Preamble 沒寫說明 | Agent 永遠不會產生 token；然後你在想為什麼「沒作用」 |
@@ -213,6 +225,10 @@ agent 加了 <<SEND_FILE:...>> → bridge 傳該檔（並過白名單）
 直接拔乾淨，比留開關更清爽。
 
 ## 進階變形 1：互動式 Token（ASK 按鈕）
+
+Bridge-managed agent 先呼叫 `bridge-actions.ask`；以下 token 協定只在該
+tool 明確回報 `unavailable` 時使用。Validation/rejection 必須修參數，
+不可 fallback。
 
 `SEND_FILE` 是「單向 side effect」— agent 嵌 token、bridge 執行、結束。但**互動式**的情境（agent 要使用者做選擇）需要雙向迴路：token 要在使用者端渲染成 UI 元素（inline keyboard），**按下後 bridge 再注入一則 user turn 回送 agent**。
 
@@ -393,6 +409,10 @@ Bridge callback 注入時有兩個選擇：
 - agent 下一則回覆若要 reference 這選擇，有明確文字可以引用
 
 ## 進階變形 2：時間觸發 Token（SCHEDULE）
+
+Bridge-managed agent 先呼叫 `bridge-actions.schedule`；以下 token 協定只在
+該 tool 明確回報 `unavailable` 時使用。Validation/rejection 必須修參數，
+不可 fallback。
 
 另一類常見需求：agent 在回覆裡安排「N 時間後／每天／每週／cron 時點」把某個 prompt 送回 agent 或執行 bridge 指令。
 
@@ -659,4 +679,4 @@ agent 每次 session 開頭第一 turn 才看得到 preamble，使用規則（�
 - **ms-windows-path-prefix-check** — 檔案路徑 token 依賴的白名單實作
 - **ms-agent-scheduled-prompts** — `<<SCHEDULE:...>>` token 的完整實作（store / scheduler / recurrence / bridge command dispatch）
 - **ms-streaming-token-pipeline** — balanced scanner 在 streaming / final render 雙路的完整實作與 smoke 設計
-- **ms-agent-long-term-memory** — agent-emit fact 與 agent-emit token 是類似思路（agent 自律 + 兜底機制）
+- **Bridge 的長期記憶系統** — agent-emit fact 與 agent-emit token 是類似思路（agent 自律 + 兜底機制）。見 bridge 的 `docs/memory-system.md` 與 `src/mcp-memory.ts`

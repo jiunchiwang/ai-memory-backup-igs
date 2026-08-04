@@ -55,4 +55,4 @@
 ---
 
 Total pages: 37
-Last updated: 2026-08-02（wikilint：修正 [[bridge-project]] 過時的 noUnusedLocals 陳述 + 補 impact-gate hook 批次觸發行為；更新 [[bridge-smoke-gate]] 追加 noUnusedLocals 閘門；更新 [[bridge-acp]] 追加 advisor 工具說明與覆核者成本分級）
+Last updated: 2026-08-05（wikisync：更新 [[bridge-acp]] 新增 stdio JSON-RPC 選擇決策）

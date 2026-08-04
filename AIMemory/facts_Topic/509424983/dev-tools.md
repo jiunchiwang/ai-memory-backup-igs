@@ -9,3 +9,4 @@
 - [f_ab7e0a] [2026-07-30T20:31:49.767Z] skill bundle 大幅更新的標準流程：先把未提交檔 commit 建立 restore point → 依差異分三類處理（整包替換／回填缺漏／選擇性合併）→ 被取代的舊 skill 轉成 deprecation pointer 並移除其觸發關鍵字避免撞名搶觸發 → 獨立審查通過才 push。
 - [f_9bb794] [2026-07-31T11:33:09.321Z] 在 Bash tool 裡寫多行 git commit message 必須用 bash heredoc，不可用 PowerShell here-string（@'...'@）—— 後者會讓首行多一個 @ 吃掉整個 subject、末行也留一個 @，且 git commit 會照樣成功不報錯（2026-07-31 實證，需 amend 修正）
 - [f_8d5086] [2026-08-01T11:41:26.023Z] 在 Bash tool 用 heredoc 跑 Python/寫檔時，字串裡的 `\n` 仍可能被展開成真換行而破壞產出的原始碼（2026-08-01 telegram-kiro-bridge 連續踩兩次，一次寫壞 TypeScript 註解、一次寫壞測試字串字面值導致 SyntaxError）；修復時改用 `chr(10)` / `chr(92)+'n'` 這類不含跳脫字元的構造方式。
+- [f_129738] [2026-08-02T13:31:37.803Z] 在 Edit 工具做整行刪除或改解構名時，若目標字串在同檔重複出現（如 relay.ts 的 const { runPrompt, sessions } = deps() 全檔 9 個相同字串），必須用上下文定位而非 replace_all，否則會誤改其他 8 處——tsc 只標出未使用的那一處，行號才是唯一可靠依據

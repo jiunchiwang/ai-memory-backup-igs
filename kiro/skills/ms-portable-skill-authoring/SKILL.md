@@ -7,13 +7,21 @@ description: 當寫 skill 會被多個 agent CLI（Kiro / Codex / Claude）或�
 
 ## 概述
 
-同一份 SKILL.md 常常要在多台機器、多個 agent CLI 下重用：Kiro 在 `C:\Users\alice\.kiro\skills\`，Codex 在 `C:\Users\bob\.codex\skills\`，Claude 在 `~/.claude/skills/`；memory 目錄也各自不同。如果 SKILL.md 寫死 `F:\AI\AIMemory\facts-123.md`，搬過去就壞。
+同一份 SKILL.md 常常要在多台機器、多個 agent CLI 下重用：Kiro 在
+`~/.kiro/skills/`，Codex 在 `~/.codex/skills/`，Claude 在
+`~/.claude/skills/`。這些是 agent 看見的入口，不代表內容一定各自複製；
+目前 Bridge 以 Kiro skills 為 canonical source，Claude 整個 skills root
+junction 到 Kiro，Codex 則逐 skill junction、保留自己的 `.system`。跨機器時
+memory 根目錄仍可能不同。如果 SKILL.md 寫死
+`F:\AI\AIMemory\facts-123.md`，搬過去就壞。
 
-解法：**bridge 啟動時偵測環境，把路徑注入成變數（`${MEMORY_DIR}`、`${SKILL_DIR}`、`${AGENT_CONFIG_DIR}`、`${USER_ID}`），skill 只引用變數不引用實值**。
+解法：**bridge 啟動時偵測環境，把路徑注入成變數（`${MEMORY_DIR}`、
+`${SKILL_DIR}`、`${AGENT_CONFIG_DIR}`、`${USER_ID}`），skill 只引用變數
+不引用實值；fact CRUD 一律引用 Memory MCP，不引用底層 fact 路徑。**
 
 ## 何時使用
 
-- 寫 / 改 `ms-*` skill、特別是涉及讀寫 memory 檔、skill 檔、agent config 檔
+- 寫 / 改 `ms-*` skill、特別是涉及 memory 操作、skill 檔、agent config 檔
 - 設計要部署到多台機器的 bridge / memory system
 - 支援多個 ACP agent（Kiro + Codex + Claude）同時讀同一份 skill 集
 - SKILL.md 裡出現 `F:\`、`C:\Users\xxx\`、`~/.kiro`、`~/.codex` 之類的絕對路徑
@@ -30,18 +38,52 @@ description: 當寫 skill 會被多個 agent CLI（Kiro / Codex / Claude）或�
 
 | 變數 | 意義 | Kiro 典型值 | Codex 典型值 | Claude 典型值 |
 |---|---|---|---|---|
-| `${MEMORY_DIR}` | 長期記憶根目錄（facts 主 log + shard + schedules） | `F:\AI\AIMemory` | `F:\AI_Codex\AIMemory` | `F:\AI_Claude\AIMemory` |
-| `${SKILL_DIR}` | 目前 agent 的 skill 根（= `AGENT_CONFIG_DIR/skills`） | `C:\Users\tonykuo\.kiro\skills` | `C:\Users\user\.codex\skills` | `~/.claude/skills` |
-| `${AGENT_CONFIG_DIR}` | agent CLI 的 config 家目錄（routing table、agent config） | `C:\Users\tonykuo\.kiro` | `C:\Users\user\.codex` | `~/.claude` |
-| `${USER_ID}` | Telegram / 使用者 ID，fact 檔命名用 | `763055942` | 同左 | 同左 |
+| `${MEMORY_DIR}` | Bridge 共用長期記憶根目錄（facts 主 log + shard + schedules） | `F:\AI\AIMemory` | `F:\AI\AIMemory` | `F:\AI\AIMemory` |
+| `${SKILL_DIR}` | 目前 agent 看見的 skill root（可為 junction） | `C:\Users\tonykuo\.kiro\skills` | `C:\Users\tonykuo\.codex\skills` | `C:\Users\tonykuo\.claude\skills` |
+| `${AGENT_CONFIG_DIR}` | agent CLI 自己的 config 家目錄 | `C:\Users\tonykuo\.kiro` | `C:\Users\tonykuo\.codex` | `C:\Users\tonykuo\.claude` |
+| `${USER_ID}` | Telegram / 使用者 ID；供非 MCP 檔名或顯示範圍使用 | `763055942` | 同左 | 同左 |
+
+重點：同一台 Bridge 的 Kiro／Codex／Claude 預設共用 `${MEMORY_DIR}`；
+不要根據 agent 名稱自行拼出 `AI_Codex` 或 `AI_Claude`。跨機器差異只信
+Environment preamble 的實值。
+
+`${...}` 是 SKILL.md 裡的 bridge-resolved notation，不保證同名 OS
+environment variable 存在。執行 script 前要取用 preamble 已提供的實值；
+任一必要值缺失或格式不合法時停止並回報，不從 cwd、home 或 agent 名稱猜。
 
 也有**衍生慣例**（不是變數但要記）：
 
 - Session 檔 → `${MEMORY_DIR}/sessions/`
 - 歸檔 session → `${MEMORY_DIR}/oldSessions/`
-- 主 fact log → `${MEMORY_DIR}/facts-${USER_ID}.md`
-- Topic shard → `${MEMORY_DIR}/facts_Topic/${USER_ID}/<topic>.md`
+- 主 fact log → `${MEMORY_DIR}/facts-${USER_ID}.md`（memory service 內部格式）
+- Topic shard → `${MEMORY_DIR}/facts_Topic/${USER_ID}/<topic>.md`（內部索引）
 - NotebookLM routing table → `${MEMORY_DIR}/config/notebooklm-routing.json`
+
+### Fact CRUD 是工具邊界，不是路徑可攜問題
+
+看到上述 fact 路徑只可用於解釋架構或修改 memory server 本身。Agent 的正式
+查詢／新增／刪除不得用 shell、read/write tool 或自製 script 直接操作
+`facts-*.md`／topic shard；跨機器的正確可攜介面是：
+
+```text
+list_facts({ query, tail? })
+remember({ text, topic? })
+forget({ query, confirm? })
+```
+
+`confirm` 是第一次 `forget({ query })` 在多筆命中時回傳的**不透明字串
+token**；第二次必須傳相同 query 與原 token。不得傳 `true`／`false`，
+也不得自行生成 token。Memory MCP 自動綁定目前使用者，不要加未定義的
+`userId`。
+
+Topic 維護同樣走 `propose_topics()` → `apply_topics(...)`。MCP unavailable
+時停止 mutation 並回報，不可 fallback 成直接改檔。完整邊界以 memory server
+的 tool description 為準（bridge 的 `src/mcp-memory.ts`，另見
+`docs/memory-system.md`）——那是唯一會跟著實作一起改的來源。
+
+`apply_topics` 的現行 shape 為
+`apply_topics({ topics: [{ topic, keywords }], expectedToken? })`；必須在
+同一 turn 先拿 fresh proposal，不可發明 `proposalId`／revision 欄位。
 
 ## 核心模式
 
@@ -63,13 +105,68 @@ description: 當寫 skill 會被多個 agent CLI（Kiro / Codex / Claude）或�
 ## Step 1 — 掃描 sessions
 先跑 `ls ${MEMORY_DIR}/sessions/*.md`，挑大的先讀。
 實際值從本 session preamble 的 `[Environment]` 區塊讀：
-  MEMORY_DIR=F:\AI\AIMemory（Kiro）或 F:\AI_Codex\AIMemory（Codex）。
+  同一台 Bridge 的 Kiro／Codex／Claude 通常都是
+  MEMORY_DIR=F:\AI\AIMemory；另一台機器仍以該 session 注入值為準。
 
 ## Step 2 — 比對既有 skill
 讀 `${SKILL_DIR}/ms-*/SKILL.md` 的 frontmatter。
 ```
 
+### 現行 skill 共用拓撲
+
+**⚠️ 這一節是環境事實，會漂移。動它之前先實測，不要照抄別台機器的描述。**
+（2026-08-04 實測；判別法：`readlink -f ~/.kiro/skills` 看 root 是不是 junction，
+再 `readlink -f ~/.kiro/skills/<name>` 看個別 skill 指向哪。）
+
+```
+<canonical-repo>/skills/<domain>/<name>/    ← 正本（獨立的 git repo）
+        ├── ~/.kiro/skills/<name>           逐 skill junction
+        ├── ~/.claude/skills/<name>         逐 skill junction
+        └── ~/.codex/skills/<name>          ⚠️ 實體複製，不是 junction
+
+~/.codex/skills/.system/<name>/             Codex 內建，獨立保留
+```
+
+- **三個 CLI 的 `skills/` root 都是實體目錄**，junction 發生在**個別 skill** 這一層。
+  root 不是 junction，所以「把整個 root 指過去」的心智模型是錯的。
+- **正本不在任何一個 `~/.<cli>/skills` 底下**，而在獨立的 canonical repo；
+  投影由該 repo 的 sync 工具建立。改 skill 一律改正本，改投影會被下次 sync 覆蓋。
+- **Codex 那份是複製不是 junction ⇒ 會漂移。** 這是目前的已知缺口：改完正本後
+  Kiro/Claude 立即反映，Codex 要另外刷新（bridge 的
+  `scripts/refresh-codex-skill-links.mjs`）。懷疑漂移時直接 `diff` 正本與
+  `~/.codex/skills/<name>/SKILL.md`。
+- Codex 不能把整個 `skills/` junction 掉，否則會覆蓋 `.system`——這也是它只能
+  逐 skill 處理的原因。
+- 跨 CLI 共用的 `skill-usage.json` 掃描必須合併 `.kiro/.codex/.claude`
+  三個 roots 與各自 `.system`，同名去重；只掃目前 `${SKILL_DIR}` 會製造
+  orphan false positive。
+- 不要把三個入口誤當成三份需要各自維護的 copy——但也不要反過來假設它們**必然**
+  同步：上面那條 Codex 的例外就是反例。
+
 ## Bridge 端怎麼實作注入（給會改 bridge 的人）
+
+### Skill Body 建議結構（三段式）
+
+較長的 skill（10+ 條知識點）建議按 **使用時機** 分三段，幫 agent 在正確階段參考正確內容：
+
+```markdown
+## Techniques
+- 什麼有效 / 什麼會壞 → agent 規劃時參考
+- 範例：「target encoding helps high-cardinality categoricals」
+
+## Commitment Priors
+- 碰到時要先驗證再 commit 的高影響設計選擇 → prototype 階段參考
+- 範例：「ordinal vs classification 有 2.7x score spread，必須 prototype 兩者」
+
+## Refinement Hints
+- 微調旋鈕優先順序 → 迭代改進階段參考
+- 範例：「先調 LR schedule → 再試 augmentation → 最後改 architecture」
+```
+
+短 skill（< 10 條）不用強制三段式，保持 flat 即可。
+詳見 `writing-skills/SKILL.md` 的「Content Organization: Three Knowledge Tiers」一節。
+
+---
 
 一、在 `buildPreamble` 塞一段 Environment block：
 
@@ -84,8 +181,9 @@ not hard-coded values. This lets the same SKILL.md work on multiple machines.
 Conventions: sessions are under ${MEMORY_DIR}/sessions/, archived under
 ${MEMORY_DIR}/oldSessions/, master fact log at ${MEMORY_DIR}/facts-${USER_ID}.md,
 topic shards at ${MEMORY_DIR}/facts_Topic/${USER_ID}/<topic>.md.
-Agent-wide config files (routing tables, agent configs) live under
-${MEMORY_DIR}/config/ — e.g. ${MEMORY_DIR}/config/notebooklm-routing.json.
+Bridge-shared memory routing data may live under ${MEMORY_DIR}/config/ —
+e.g. ${MEMORY_DIR}/config/notebooklm-routing.json. Agent CLI-native config
+lives under ${AGENT_CONFIG_DIR}/.
 [End environment]
 ```
 
@@ -125,20 +223,29 @@ function detectAgentConfigDir(): string {
 ## 寫 skill 時的具體守則
 
 1. **SKILL.md 的 YAML frontmatter `description`** 可以用 `${AGENT_CONFIG_DIR}` 這類變數，不要寫 `~/.kiro`
-2. **程式碼範例裡**的檔路徑用變數：`read ${MEMORY_DIR}/facts-${USER_ID}.md`
-3. **指令範例**寫兩行：一行帶變數（canonical）、一行帶 Kiro 典型值（方便 human eyeball）
-4. **教學性反例、背景說明**保持絕對路徑沒關係——那是說故事不是指令
-5. 寫完後做一次 `grep` 自我審查：
+2. **Fact 範例只用 Memory MCP**：查詢用 `list_facts`、新增用 `remember`、
+   刪除用 `forget`；不要展示直接操作 master log／shard 的 production 指令
+3. **其他檔案的程式碼範例**用變數，例如
+   `${MEMORY_DIR}/sessions/`、`${AGENT_CONFIG_DIR}/config.toml`
+4. **路徑指令範例**可寫兩行：一行帶變數（canonical）、一行帶 Kiro 典型值
+   （方便 human eyeball）；fact CRUD 不適用此例外
+5. **教學性反例、背景說明**保持絕對路徑沒關係——那是說故事不是指令
+6. 寫完後用 dedicated search（如 `rg`）做兩種自我審查：
 
    ```
-   grep -E '(F:\\AI|C:\\Users\\[^\\]+\\\.kiro|C:\\Users\\[^\\]+\\\.codex|~/\.kiro|~/\.codex)' SKILL.md
+   rg -n '(F:\\AI|C:\\Users\\[^\\]+\\\.kiro|C:\\Users\\[^\\]+\\\.codex|~/\.kiro|~/\.codex)' SKILL.md
+   rg -n '(read|write|append|grep|sed|replace|edit).*(facts-|facts_Topic)' SKILL.md
    ```
 
-   命中的地方檢查是不是真的該抽變數
+   第一種命中檢查是否該抽變數；第二種命中只能是明確標示的反例或
+   memory-server 內部實作，不得是 agent 操作步驟
 
 ## 跨 agent Policy 共用：three-stub pattern
 
-SKILL.md 是 **agent-specific**（寫進 `${SKILL_DIR}` 下，各 agent 各自一份）。但有些規則是**三邊通用 + bridge 層級**（例如「preamble frozen-snapshot policy」「Windows shell safety」），該放 repo root 而非 skills 目錄：
+SKILL.md 有 **agent-specific 的發現入口**，但目前 user skills 由 Kiro
+canonical source 透過 junction 共用，不是各 agent 各維護一份 copy。另有些
+規則是**三邊通用 + bridge 層級**（例如「preamble frozen-snapshot policy」
+「Windows shell safety」），該放 repo root 而非 skills 目錄：
 
 - 給 bridge 開發者 + 三種 agent（Kiro / Codex / Claude）都看得到
 - 改一次三邊同步
@@ -273,8 +380,8 @@ repo root (`POLICIES/`) to reach Codex and Claude users via clone.
 第一次出現 `${MEMORY_DIR}` / `${SKILL_DIR}` / `${AGENT_CONFIG_DIR}` 時加一行：
 
 ```markdown
-（實值由 bridge 的 Environment preamble 注入。Kiro 常見 `F:\AI\AIMemory`、
-Codex 常見 `F:\AI_Codex\AIMemory`。）
+（實值由 bridge 的 Environment preamble 注入；同一台 Bridge 的不同 agent
+通常共用一個 `${MEMORY_DIR}`，跨機器才可能不同。）
 ```
 
 這樣沒 context 的讀者（或另一個 agent 拿 SKILL.md 當 reference）也能自己找到實值。
@@ -287,6 +394,8 @@ Codex 常見 `F:\AI_Codex\AIMemory`。）
 - [ ] 第一次出現 `${MEMORY_DIR}` / `${SKILL_DIR}` / `${AGENT_CONFIG_DIR}` / `${USER_ID}` 時有一行短註解「實值由 bridge Environment preamble 注入」
 - [ ] 指令範例用變數，旁邊可附 typical value 當注釋
 - [ ] 絕對路徑只出現在「反例」「故事背景」「範例踩坑記錄」
+- [ ] fact CRUD 範例只使用 `list_facts`／`remember`／`forget`，沒有直接
+  操作 `facts-*.md` 或 shard
 - [ ] 在 Kiro 跑過一次 smoke、在 Codex 機器跑一次、在 Claude 機器跑一次（至少其中兩個）
 - [ ] 如果規則涉及「所有 agent 都要遵守」層級，放 `POLICIES/` 而不是 `${SKILL_DIR}/ms-*/SKILL.md`
 
@@ -298,15 +407,15 @@ Codex 常見 `F:\AI_Codex\AIMemory`。）
 
 ```powershell
 # 用 Kiro 這台當 ground truth；其他機器跑同樣 pattern 換掉前綴
-grep -r "C:\\\\Users\\\\tonykuo\\\\" "${SKILL_DIR}" --include=SKILL.md
-grep -r "F:\\\\AI\\\\AIMemory" "${SKILL_DIR}" --include=SKILL.md
+rg -n 'C:\\\\Users\\\\tonykuo\\\\' "${SKILL_DIR}" -g SKILL.md
+rg -n 'F:\\\\AI\\\\AIMemory' "${SKILL_DIR}" -g SKILL.md
 ```
 
 **分辨合法 vs 違規**：
 
 | 命中情境 | 合法 / 違規 |
 |---|---|
-| 對照表的一格（`\| ... \| F:\AI\AIMemory \| F:\AI_Codex\AIMemory \|`） | ✅ 合法（這就是對照表的目的） |
+| 變數對照表的典型值欄 | ✅ 合法（這就是對照表的目的） |
 | `description: ... 避免把 F:\AI\AIMemory ...` 反例說明 | ✅ 合法（教學性反例） |
 | 範例輸出（`ok: appended to F:\AI\AIMemory\facts-xxx.md`） | ✅ 合法（那是 tool log，不是 skill 指令） |
 | **指令範例寫死 `py C:\Users\tonykuo\.kiro\skills\<skill>\...`** | ❌ **違規** — 改 `${SKILL_DIR}/<skill>/...` |
@@ -321,7 +430,7 @@ grep -r "F:\\\\AI\\\\AIMemory" "${SKILL_DIR}" --include=SKILL.md
 | `slot-art-manifest-validator` | L35, L45, L48 同型 | 同上 |
 | `uk-slot-spec-adapter` | L35 同型 | 同上 |
 
-共 4 支 skill、9 個違規行。這份清單**會隨時間過期**，每次進入這個 TODO section 前先重新跑第一步的 `grep` 驗證。
+共 4 支 skill、9 個違規行。這份清單**會隨時間過期**，每次進入這個 TODO section 前先重新跑第一步的 `rg` 驗證。
 
 ### 三、修法 template（before → after）
 
@@ -347,9 +456,12 @@ py ${SKILL_DIR}/slot-codegen-anchor-merge/anchor_merge.py --new <expected.ts> <o
 | 錯誤 | 修正 |
 |---|---|
 | SKILL.md 到處寫 `F:\AI\AIMemory\...` | 全部改 `${MEMORY_DIR}/...`，在開頭列變數 → 典型值對照表 |
+| 把 `read ${MEMORY_DIR}/facts-${USER_ID}.md` 當 production 範例 | 路徑變數不能取代 CRUD 邊界；改用 `list_facts` |
+| Memory MCP unavailable 就直接改 master log／shard | 停止 fact mutation 並回報；不可 fallback |
 | 寫 `~/.kiro/skills` 當 skill 目錄 | 改 `${SKILL_DIR}`（= `${AGENT_CONFIG_DIR}/skills`） |
-| 把 routing table、agent config 放 `${MEMORY_DIR}` | 那是 agent 層的東西，應該 `${AGENT_CONFIG_DIR}` |
-| 在 Codex 機器直接複製 Kiro 的 skill 檔但沒有 bridge 支援環境 preamble | 先在 bridge 加 `detectAgentConfigDir`，再 sync skill 過去 |
+| 把 agent CLI config 放 `${MEMORY_DIR}` | 改放 `${AGENT_CONFIG_DIR}`；只有 NotebookLM routing 等 bridge-shared memory data 留在 `${MEMORY_DIR}/config` |
+| Kiro／Codex／Claude 各自複製同一支 skill，內容逐漸漂移 | Kiro 作 canonical；Claude root junction，Codex 逐 skill junction 並保留 `.system` |
+| 只掃目前 `${SKILL_DIR}` 就判 registry orphan | 合併三個 agent roots 與各自 `.system`，同名去重 |
 | heuristic 判 agent 只看 `command` 字串 | 加 env override 當逃生口（`AGENT_CONFIG_DIR=...`） |
 | 新機器沒 `.kiro/`、`.codex/` 任一目錄，heuristic fallback 失敗 | fallback 失敗就 throw + 提示使用者設 env；不要假設一個預設值 |
 | 把 `MEMORY_DIR` 和 `AGENT_CONFIG_DIR` 混用（例如記憶檔塞進 `~/.kiro`） | 明確職責切分：bridge 的資料 → MEMORY_DIR；agent CLI 的 config → AGENT_CONFIG_DIR |
@@ -362,9 +474,12 @@ py ${SKILL_DIR}/slot-codegen-anchor-merge/anchor_merge.py --new <expected.ts> <o
 
 Agent 發出 `<<SKILL_PROPOSE:...>>` 前必須通過此 guardrail：
 
-1. **計數**：grep dailylog + facts，計算該 pattern 出現幾次（相似 keyword / 相同操作流程）
+1. **計數**：dailylog 用 dedicated search；memory facts 用
+   `list_facts({ query })`，不得直接搜尋 master log／shard。合併兩邊結果計算
+   pattern 次數（相似 keyword / 相同操作流程）
 2. **門檻**：
-   - < 3 次 → **不 propose**。改為 `remember("pattern: <描述> 出現 N 次")` 留底
+   - < 3 次 → **不 propose**。用 Memory MCP
+     `remember({ text: "pattern: <描述> 出現 N 次" })` 留底
    - ≥ 3 次 → 允許 propose
 3. **reason 裡附計數**：`reason` 欄位須包含「出現 N 次」佐證，例如 `"dailylog 出現 4 次 + facts 2 條相關"`
 
@@ -372,7 +487,9 @@ Agent 發出 `<<SKILL_PROPOSE:...>>` 前必須通過此 guardrail：
 
 ## 相關
 
-- **ms-agent-long-term-memory** — `${MEMORY_DIR}` 下的 fact 檔 / shard / topics.json 設計
+- **Memory MCP 的 fact CRUD 邊界與 `${MEMORY_DIR}` 內部儲存設計** — 以 bridge 的
+  `src/mcp-memory.ts`（tool description 就是規格）與 `docs/memory-system.md` 為準。
+  ⚠️ 不要引 `ms-agent-long-term-memory`：本正本沒有這支 skill。
 - **ms-acp-protocol-limitations** — `${AGENT_CONFIG_DIR}` 各 agent 的 config 格式差異（Kiro main.json vs Codex config.toml）
 - **ms-notebooklm-routing-builder** — 用 `${MEMORY_DIR}/config/notebooklm-routing.json` 的實例
 - **memory-to-skill** — 自身就是一個跨機器 skill 的範例（Kiro + Codex 版本差異就是路徑）

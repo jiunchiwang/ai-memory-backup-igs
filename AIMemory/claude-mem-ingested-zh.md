@@ -439,3 +439,23 @@ shortlist 檔頭仍是「產生:2026-07-30T20:30:02.058Z;筆數:14(上限 15);�
 精選: 1 條（其餘 12 條與既有 fact 重疊或為過程紀錄）
 
 1. telegram-kiro-bridge 的 draft streaming 拒絕採用 grammY stream plugin 的「Plan E」策略（draft 逼近上限時 finalize 再開新 draft 接續），因為 finalize 後舊 draft 仍會「幽靈並存」若干秒——client 在同一 chat 看到兩個 draft 泡泡會導致動畫行為不可預測。選用的方案是頭部凍結：到上限後只顯示尾端 N 字，讓最終訊息帶完整文字。
+
+## 2026-08-03 (claude-mem AUTO;寫入 0 條)
+
+來源 shortlist 檔頭（原文照貼，與 caller 傳入的 header 逐項一致）:
+`> 產生:2026-08-02T20:30:08.729Z;筆數:8(上限 15);自 epoch 1785570559110`
+
+**這是全新一批**（epoch 1785570559110 > 上一輪 1785528817871，8 筆內容與 2026-08-02 那批 13 筆不同），**不是同批重掃**。全 8 筆皆為 telegram-kiro-bridge，主題集中在「/dream per-backend model 設定」與「異源對抗覆核」——這兩件事都是同一場 coding session 當下就直接 remember 進 AIMemory 的，因此在 claude-mem observation 這一側原封再出現一次，重疊率高屬預期，非產生端故障。
+
+**8 筆全數捨棄，逐條對應到已存在的 fact：**
+
+1. `Cost-tiered reviewer selection for cross-model adversarial review` → 撞「使用者的異源覆核紀律於 2026-08-02 新增成本分級（寫進 AI-canonical 正本 ms-cross-model-adversarial-review，commit d8d74c6 已 push）：孤兒 import／死碼交給型別系統、敘事比對用 Sonnet 級、只有不變式／論證推理／時序 race 才用 Fable 5」。既有 fact 更完整（含判準與 commit）。
+2. `Second adversarial review approved commit 7d4eba8 ... clean context, not trusting commit message claims` → 撞兩條：「異源覆核紀律再擴充（2026-08-02）：第一輪修正產生的新 commit 要再派第二輪、換新 agent 不告知前一輪結論、無 high/medium 即收斂」＋「Fable5 push 前獨立覆核紀律要求它讀原始碼而非信 commit message」。
+3. `Adversarial code review completed for commit f986406` → 單次執行紀錄，無可重用內容；其方法論已由第 2 條那組 fact 覆蓋。
+4. `Dream models uses per-backend explicit restoration to avoid subprocess churn` → 撞「dream.json models 表選擇『per-backend + 顯式還原』而非 per-step model：三個 ACP adapter 的 model 生效路徑不同——claude 走 session/set_config_option、kiro(--model) 與 codex(-c model=) 綁 CLI 啟動參數，per-step 等於 15 步換 15 次 agent 並打斷 session.buffer 判定」。既有 fact 含機制細節。
+5. `Clarified /dream model requirement is per-backend, not provider switching` → 撞「/dream model 需求（2026-08-02 使用者澄清）：要 per-backend 而非 per-step，也不是換 provider；kiro 跑 claude-opus-4.5、claude 跑 sonnet 5、codex 保留條目」。
+6. `/dream 工作流模型還原策略三選項（方案 A 顯式還原為推薦）` → 與第 4 條同一決策，既有 fact 已記載最終選定的顯式還原及「不能靠最後一步 restart」的理由。
+7. `Multi-Agent Model Assignment 策略：Kiro agent 指定 opus-4.5` → 撞「已建立 G:\AI\AIMemory\config\dream.json，內容只有 models 表 {"claude":"claude-sonnet-5","kiro":"claude-opus-4.5"}，刻意不列 steps」。
+8. `Dream per-step model configuration architecture decision pending（ASK id=dreammodel）` → 待決狀態的過程快照，已被第 4／5 條的定案 fact 取代。
+
+去重方式:list_facts 查詢 `adversarial` / `dream` / `覆核` / `commit message`（現存 437 筆）。未呼叫 remember、未呼叫 forget。

@@ -9,7 +9,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 **Writing skills IS Test-Driven Development applied to process documentation.**
 
-**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude Code, `~/.agents/skills/` for Codex)** 
+**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude Code, `~/.codex/skills/` for Codex)** 
 
 You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
 
@@ -68,6 +68,71 @@ Way of thinking about problems (flatten-with-flags, test-invariants)
 
 ### Reference
 API docs, syntax guides, tool documentation (office docs)
+
+## Content Organization: Three Knowledge Tiers
+
+Within a skill's body, organize knowledge into three distinct tiers based on
+*when* the agent should reference them. This mirrors how HASTE (arXiv:2606.30911)
+separates skills by usage stage — it prevents "dump everything" dilution.
+
+### Techniques
+**What worked / what broke.** Factual experience knowledge.
+Agent references these during **planning and proposal** phases.
+
+```markdown
+## Techniques
+- Target encoding helps high-cardinality categoricals in tree models
+- Ensembling a strong model with a weaker one can degrade performance
+- Shadow nodes must sync opacity/scale with their parent label animation
+```
+
+### Commitment Priors
+**High-variance design choices that need evidence before committing.**
+Agent references these during **prototype / initial design** phases.
+These say "STOP and verify before locking in this decision."
+
+```markdown
+## Commitment Priors
+- Model architecture choice (ordinal vs classification) has 2.7x score spread
+  → always prototype both before committing
+- Choosing between tween-based and Spine-based animation: measure perf on
+  target device first, don't assume
+- File format choice (JSON vs SQLite) — profile actual access patterns
+```
+
+### Refinement Hints
+**Which knobs to tune, in what order, when iterating.**
+Agent references these during **optimization / fine-tuning** phases.
+
+```markdown
+## Refinement Hints
+- First try: learning rate schedule (highest acceptance rate)
+- Then: data augmentation (moderate acceptance)
+- Last: architecture tweaks (low acceptance, high cost)
+- For Cocos tween: check easing curve before changing duration
+```
+
+### When to use tiers
+
+| Situation | Use tier |
+|-----------|----------|
+| Writing a new skill from scratch | Include all three if applicable |
+| Skill is purely a reference/API doc | Skip tiers (use Quick Reference instead) |
+| Skill has < 5 entries total | Don't force the structure — keep it flat |
+| Existing skill getting large (> 30 bullets) | Refactor into tiers for clarity |
+
+**Not mandatory for short skills.** The three-tier structure is most valuable
+for skills that accumulate 10+ entries over time. Short, focused skills
+(like API references or single-technique guides) should stay flat.
+
+### Tier assignment heuristic
+
+Ask: "When would an agent need this information?"
+- Planning what approach to take → **Technique**
+- Deciding between two designs → **Commitment Prior**
+- Already committed, making it better → **Refinement Hint**
+
+---
 
 ## Directory Structure
 
@@ -606,14 +671,17 @@ A portable Python script ships alongside this SKILL.md:
 
 ```bash
 # Default: reads SKILL_DIR from env var or auto-detects ~/.kiro/skills etc.
-py ${SKILL_DIR}/writing-skills/audit_descriptions.py
+py -X utf8 ${SKILL_DIR}/writing-skills/audit_descriptions.py
 
 # Only show warnings (> 200 chars)
-py ${SKILL_DIR}/writing-skills/audit_descriptions.py --only-warn
+py -X utf8 ${SKILL_DIR}/writing-skills/audit_descriptions.py --only-warn
 
 # Machine-readable
-py ${SKILL_DIR}/writing-skills/audit_descriptions.py --json
+py -X utf8 ${SKILL_DIR}/writing-skills/audit_descriptions.py --json
 ```
+
+Windows 的預設主控台可能使用 CP950；description 或範例含 `≥`、emoji、
+CJK 字元時，未指定 `-X utf8` 可能觸發 `UnicodeEncodeError`。
 
 Exit codes: 0 (all ≤ 200 chars) / 1 (warnings present) / 2 (usage error).
 
@@ -670,7 +738,7 @@ names, file paths, config knobs), it's too long. Move that to the body.
 - Don't do a standalone "fix all descriptions" sprint
 - Fix only when you're already editing that skill for another reason
 - Reason: changing description invalidates any existing topic-shard mapping
-  (see ms-agent-long-term-memory); batch changes force `propose_topics` /
+  (see the bridge memory system: `docs/memory-system.md`); batch changes force `propose_topics` /
   `apply_topics` rebuild across the whole memory system
 
 ## Skill Creation Checklist (TDD Adapted)

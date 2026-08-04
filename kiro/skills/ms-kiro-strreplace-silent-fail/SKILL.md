@@ -170,4 +170,4 @@ Build 失敗：error TS2304: Cannot find name 'newFunction'.
 ## 相關
 
 - **writing-skills** — 寫 skill 時本 skill 是必遵守的工程紀律
-- **ms-agent-long-term-memory** — memory-to-skill 流程涉及大量 skill 檔案改動，特別容易踩
+- **memory-to-skill** — 該流程涉及大量 skill 檔案改動，特別容易踩本 skill 這個坑

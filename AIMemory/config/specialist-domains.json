@@ -69,7 +69,8 @@
         "知識庫的",
         "rtctrl",
         "rt 凍幀",
-        "targetoverrides"
+        "targetoverrides",
+        "pascalcase"
       ],
       "wikiPages": [
         "uk-slot",
@@ -281,7 +282,20 @@
         "雙形狀",
         "check-bot-command",
         "desc 基線",
-        "截斷"
+        "截斷",
+        "cutpendingtokentail",
+        "游標修復",
+        "token 扣留",
+        "pricing tier",
+        "tier_",
+        "advisor_rank",
+        "stdio json-rpc",
+        "http server mode",
+        "yc-software/qm",
+        "harness 抽象",
+        "capability set",
+        "nounusedlocals",
+        "impact-gate"
       ],
       "wikiPages": [
         "bridge-project",
