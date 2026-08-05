@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-04T20:03:46.769Z (token=topics-74c67502-24)
+// Last applied: 2026-08-05T20:16:16.682Z (token=topics-6a7c7805-30)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -64,7 +64,21 @@
       "firstclone",
       "gamesetting.json",
       "slot 模板",
-      "模板專案"
+      "模板專案",
+      "maskexpand"
+    ]
+  },
+  {
+    "topic": "spine-viewer",
+    "keywords": [
+      "spine-viewer",
+      "spine-webgl",
+      "spine_webgl",
+      "spine webgl",
+      "drawcall",
+      "triangle",
+      "batch scan",
+      "editor.message.send"
     ]
   },
   {
@@ -88,7 +102,9 @@
       "logo-localization",
       "知識庫的",
       "targetoverrides",
-      "pascalcase"
+      "pascalcase",
+      "leprechaunsgoldstreak",
+      "gamestrings"
     ]
   },
   {
@@ -105,7 +121,8 @@
       "remote 配置",
       "合併衝突",
       "覆核合併",
-      "backport"
+      "backport",
+      "add/add 假衝突"
     ]
   },
   {
@@ -141,7 +158,10 @@
       "draining",
       "cutpendingtokentail",
       "游標修復",
-      "token 扣留"
+      "token 扣留",
+      "diverge",
+      "probe-draft",
+      "draft-frame"
     ]
   },
   {
@@ -157,7 +177,14 @@
       "fable-advisor",
       "status-push",
       "cloudflared",
-      "ngrok"
+      "ngrok",
+      "token-policy",
+      "bridge-actions",
+      "mcp-first",
+      "action domain",
+      "agent-action",
+      "specialist dashboard",
+      "localhost:3847"
     ]
   },
   {
@@ -216,44 +243,139 @@
     ]
   },
   {
+    "topic": "bridge-self-eval",
+    "keywords": [
+      "self_eval",
+      "selfeval",
+      "turn-lint",
+      "turnlint",
+      "turn_lint"
+    ]
+  },
+  {
+    "topic": "bridge-doc-sync",
+    "keywords": [
+      "readme",
+      "usage-guide",
+      "doc-facts",
+      "docupdate",
+      "doc-sync",
+      "event-log",
+      "command_specs",
+      "bot-command-description",
+      "desc 基線",
+      "refreshrouting",
+      "check-doc-sync"
+    ]
+  },
+  {
+    "topic": "bridge-secrets-backup",
+    "keywords": [
+      "/backup",
+      "secret 清理",
+      "acp-trace",
+      "push protection",
+      "credential manager",
+      "/sharedsync",
+      "ghp_",
+      "git reflog",
+      "洩漏",
+      "sync-skills"
+    ]
+  },
+  {
+    "topic": "bridge-infra",
+    "keywords": [
+      "psmux",
+      "status server",
+      "unhandledrejection",
+      "warmup",
+      "coreready",
+      "impact-gate",
+      "writependingbypath",
+      "events.jsonl",
+      "tsx 直吃",
+      "暖機",
+      "[ws]",
+      "env-file"
+    ]
+  },
+  {
+    "topic": "bridge-smoke-gate",
+    "keywords": [
+      "smoke",
+      "pre-push",
+      "githooks",
+      "hookspath",
+      "ci.yml",
+      "dist/",
+      "fast tier",
+      "支數",
+      "check-bot-command",
+      "截斷",
+      "nounusedlocals",
+      "check-"
+    ]
+  },
+  {
+    "topic": "adversarial-review",
+    "keywords": [
+      "異源覆核",
+      "對抗覆核",
+      "獨立覆核",
+      "覆核 agent",
+      "覆核紀律",
+      "push 前覆核",
+      "skeptic",
+      "覆核鏈",
+      "覆核者"
+    ]
+  },
+  {
+    "topic": "bridge-model-strategy",
+    "keywords": [
+      "model pin",
+      "model override",
+      "acp_model",
+      "effort config",
+      "advisor",
+      "advisor_rank",
+      "pricing tier",
+      "tier_",
+      "displaymodel",
+      "models 形狀",
+      "雙形狀",
+      "三模型分工",
+      "vc-kiro-delegate",
+      "opus[1m]",
+      "kiro cli",
+      "claude-fable",
+      "fable-5",
+      "fable5",
+      "--list-models"
+    ]
+  },
+  {
     "topic": "bridge-acp",
     "keywords": [
       "acp adapter",
       "kiro-cli",
       "claude-agent-acp",
       "codex-acp",
-      "acp_model",
       "acp_agent",
       "acp_session",
       "loadsession",
       "/agent",
       "acp-providers",
-      "claude-fable",
-      "fable-5",
-      "fable5",
-      "model pin",
       "session/set_config",
-      "effort config",
-      "advisor",
-      "kiro cli",
-      "三模型分工",
-      "vc-kiro-delegate",
-      "model override",
       "settingsources",
       "serena mcp",
       "mcp 繼承",
-      "異源覆核",
-      "對抗覆核",
-      "獨立覆核",
-      "覆核 agent",
-      "displaymodel",
-      "models 形狀",
-      "雙形狀",
-      "pricing tier",
-      "tier_",
-      "advisor_rank",
       "stdio json-rpc",
-      "http server mode"
+      "http server mode",
+      "sessioncapabilities",
+      "session/resume",
+      "replaysessionhistory"
     ]
   },
   {
@@ -279,68 +401,29 @@
       "sdd",
       "yc-software/qm",
       "harness 抽象",
-      "capability set"
+      "capability set",
+      "opencode"
     ]
   },
   {
-    "topic": "igs-uof",
+    "topic": "bridge-project",
     "keywords": [
-      "uof",
-      "加班單",
-      "加班時數",
-      "overtime",
-      "uof_form",
-      "vc-uof-hours",
-      "igs-uof",
-      "cloudflare 反機器人",
-      "antibot"
-    ]
-  },
-  {
-    "topic": "spine-viewer",
-    "keywords": [
-      "spine-viewer",
-      "spine-webgl",
-      "spine_webgl",
-      "spine webgl",
-      "drawcall",
-      "triangle",
-      "batch scan",
-      "editor.message.send"
-    ]
-  },
-  {
-    "topic": "dev-tools",
-    "keywords": [
-      "youtube-transcript",
-      "playwright",
-      "to_pdf",
-      "obsidian",
-      "tsc --noemit",
-      "bun",
-      "encodedcommand",
-      "powershell -encoded",
-      "gh cli",
-      "gh auth login",
-      "whois",
-      "heredoc",
-      "here-string",
-      "edit 工具",
-      "replace_all",
-      "上下文定位"
-    ]
-  },
-  {
-    "topic": "ai-strategy",
-    "keywords": [
-      "ai-canonical",
-      "正典",
-      "steering",
-      "正本",
-      "canonical corpus",
-      "跨模型",
-      "可攜式 skill",
-      "寫死絕對路徑"
+      "telegram-kiro-bridge",
+      "bridge 專案",
+      "bridge repo",
+      "bridge fork",
+      "start.bat",
+      "bot api",
+      "grammy",
+      "autoretry",
+      "upstream",
+      "dev-design",
+      "hook",
+      "preamble",
+      "relay-peers",
+      "通知沒有送達",
+      "通知管線",
+      "ctx 統計"
     ]
   },
   {
@@ -363,69 +446,58 @@
       "probe",
       "重建式",
       "payload diff",
-      "全負"
+      "全負",
+      "held constant"
     ]
   },
   {
-    "topic": "bridge-smoke-gate",
+    "topic": "igs-uof",
     "keywords": [
-      "smoke",
-      "pre-push",
-      "githooks",
-      "hookspath",
-      "ci.yml",
-      "dist/",
-      "fast tier",
-      "支數",
-      "check-bot-command",
-      "desc 基線",
-      "截斷",
-      "nounusedlocals"
+      "uof",
+      "加班單",
+      "加班時數",
+      "overtime",
+      "uof_form",
+      "vc-uof-hours",
+      "igs-uof",
+      "cloudflare 反機器人",
+      "antibot",
+      "uof_client"
     ]
   },
   {
-    "topic": "bridge-project",
+    "topic": "dev-tools",
     "keywords": [
-      "telegram-kiro-bridge",
-      "bridge 專案",
-      "bridge repo",
-      "bridge fork",
-      "start.bat",
-      "psmux",
-      "status server",
-      "bot api",
-      "grammy",
-      "autoretry",
-      "self_eval",
-      "selfeval",
-      "/backup",
-      "readme",
-      "upstream",
-      "sync-skills",
-      "check-",
-      "unhandledrejection",
-      "dev-design",
-      "hook",
-      "preamble",
-      "token-policy",
-      "relay-peers",
-      "env-file",
-      "writependingbypath",
-      "通知沒有送達",
-      "通知管線",
-      "[ws]",
-      "ctx 統計",
-      "bridge-actions",
-      "tsx 直吃",
-      "暖機",
-      "warmup",
-      "coreready",
-      "events.jsonl",
-      "doc-facts",
-      "event-log",
-      "docupdate",
-      "secret 清理",
-      "impact-gate"
+      "youtube-transcript",
+      "playwright",
+      "to_pdf",
+      "obsidian",
+      "tsc --noemit",
+      "bun",
+      "encodedcommand",
+      "powershell -encoded",
+      "gh cli",
+      "gh auth login",
+      "whois",
+      "heredoc",
+      "here-string",
+      "edit 工具",
+      "replace_all",
+      "上下文定位",
+      "目錄錨點"
+    ]
+  },
+  {
+    "topic": "ai-strategy",
+    "keywords": [
+      "ai-canonical",
+      "正典",
+      "steering",
+      "正本",
+      "canonical corpus",
+      "跨模型",
+      "可攜式 skill",
+      "寫死絕對路徑"
     ]
   },
   {
@@ -441,8 +513,7 @@
       "使用者對",
       "使用者把",
       "除錯對策偏好",
-      "未追蹤檔案",
-      "異源覆核紀律"
+      "未追蹤檔案"
     ]
   },
   {

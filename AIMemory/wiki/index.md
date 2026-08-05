@@ -13,7 +13,9 @@
 - [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（6×4 4096 Ways、VS Feature 🔴、spec-to-impl 完成、待確認 8 項）
 - [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核）
-- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、異源覆核紀律常態化）
+- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測）
+- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級；2026-08-05 從 bridge-acp 拆出）
+- [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、advisor 顧問工具、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
@@ -51,8 +53,9 @@
 - [[modelcontextprotocol-typescript-sdk-mcp-typescript-sdk-v-a1aded4e]] — MCP TypeScript SDK v2 正式進入 beta（2026-07-28 規範、套件拆分、任意 schema 庫、stateless core）
 - [[specialist]] — 什麼情況下會自動使用 specialist（SPECIALIST_PROXY vs PARALLEL_DELEGATE 觸發條件、bridge-dev specialist 不採納理由）
 - [[agent-claude-opus46]] — 懸案：`/agent claude` 切回後 model 仍是 Opus 4.6 而非 pin 的 Fable 5（settings watcher 覆蓋 set_config_option，未解決）
+- [[opencode-acp-implementation]] — OpenCode 的 ACP 實作研究（stdio+HTTP 雙層架構、完整方法表、capabilities 宣告、session/update 與 tool kind 對映、permission fail-closed、接成 bridge 第四個 backend 的 authMethods 恆非空陷阱）
 
 ---
 
-Total pages: 37
-Last updated: 2026-08-05（wikisync：更新 [[bridge-acp]] 新增 stdio JSON-RPC 選擇決策）
+Total pages: 40
+Last updated: 2026-08-05（wikilint：修補 4 個 stale 頁 [[dev-tools]]/[[bridge-upstream-sync]]/[[bridge-session]]/[[bridge-research]]；先前已新增 [[adversarial-review]]、[[bridge-model-strategy]]，更新 [[bridge-acp]]/[[bridge-project]]/[[ai-strategy]]/[[verification-diagnosis]]）

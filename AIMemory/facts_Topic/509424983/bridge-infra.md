@@ -1,0 +1,10 @@
+- [f_130b5d] [2026-07-06T07:01:34.360Z] 使用者已在 telegram-kiro-bridge repo 部署閘門 A/B 最小版 hook：.claude/hooks/impact-gate.mjs（Node，每 session 每檔首次 Edit/Write exit 2 要求輸出因果鏈、重試放行、只閘專案內檔案、fail-open）+ .claude/settings.local.json 註冊 PreToolUse；決策為 Claude-only（排除跨 CLI 投影因為成本/價值不成比例，切回 Kiro 時閘門消失屬接受的設計）
+- [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
+- [f_0e5446] [2026-07-10T15:54:46.744Z] bridge 架構陷阱：index.ts 的全域 unhandledRejection handler 會 process.exit(1)，任何同 process 的 async callback（如 HTTP handler）未捕捉的 throw 都會殺掉整個 bridge——新增 server/handler 必須自帶錯誤邊界
+- [f_484853] [2026-07-12T00:33:23.421Z] bridge 主程序跑 tsx 直吃 src，但 MCP 子行程（memory/google）三個 CLI 都吃 dist——改到 mcp-memory 的 import 鏈必須 npx tsc -p . 重建 dist 才生效，且要重啟 session 才會重新 spawn MCP
+- [f_651a0d] [2026-07-15T12:27:41.801Z] 使用者有一個未進版的本地腳本 start-psmux.ps1（psmux Windows 開發啟動器），與 upstream 新增的 docs/SPEC-psmux-dev-launcher.md 規劃概念相同但尚未整合比對
+- [f_e72b07] [2026-07-15T20:02:12.094Z] 因為 bridge 已有完整 lifecycle 管理（start.bat loop + <<RESTART>> token + grammY autoRetry）所以決定 psmux 不導入 bridge code，只當外層容器使用（排除讓 bridge 依賴 psmux 因為會增加耦合且無對等收益）；start-psmux.ps1 與 start.bat 並存，各用各的場景
+- [f_332dae] [2026-07-17T20:41:27.331Z] telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據
+- [f_ff0915] [2026-07-19T20:08:36.741Z] telegram-kiro-bridge 的暖機期訊息處理最終採 MVP-first 方案（新增 warmup.ts：coreReady 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay），此方案在 dev-design judge-panel 得 72 分，勝過 robustness-first（54 分）與 simplicity-first（40 分），並嫁接後兩者的關鍵設計
+- [f_4835ec] [2026-07-19T20:08:42.875Z] telegram-kiro-bridge 暖機佇列設計歸納出的可重用 trade-off：fetchReady（runner 已在 poll、訊息不會遺失）與 coreReady（訊息→agent 處理路徑完全安全）是兩個獨立的就緒層，長輪詢 bot 若有慢速啟動階段應把這兩層分開處理
+- [f_c79917] [2026-08-02T13:31:37.803Z] telegram-kiro-bridge 的 impact-gate hook 是「每檔首次修改」觸發：一次批次改 20 個檔案時 20 個 Edit 會全部被擋，同一份因果鏈分析可涵蓋整批同類改動，輸出後原樣重試即全數放行

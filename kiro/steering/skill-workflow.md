@@ -57,11 +57,21 @@ source: session
 
 ## 禁止事項
 
-- ❌ 直接在 `~/.kiro/skills/` 或 `~/.claude/skills/` 裡新增或編輯（會被下次 sync 覆蓋）
+- ❌ 直接在 `~/.kiro/skills/`、`~/.claude/skills/` 或 `~/.codex/skills/` 裡新增或編輯（會被下次 sync 覆蓋）
+- ❌ 手改 `~/.codex/AGENTS.md` 的 `canonical-steering` managed block（同上，改正本）
 - ❌ 把公司 raw code 寫進 SKILL.md（distilled-only 原則）
 
 ## 投影機制
 
-`tools/sync.ps1 -Apply`：
-- skills → junction 到 `~/.kiro/skills/` + `~/.claude/skills/`
-- steering `.md` → copy 到 `~/.kiro/steering/`
+`tools/sync.ps1 -Apply`（三個 CLI 一次投完）：
+
+| 來源 | Kiro | Claude | Codex |
+|------|------|--------|-------|
+| skills | junction `~/.kiro/skills/` | junction `~/.claude/skills/` | junction `~/.codex/skills/`（逐 skill，不碰它的 `.system`）|
+| steering `.md` | copy `~/.kiro/steering/`（開機自動載入）| copy `~/.claude/steering/` + `CLAUDE.md` `@import` | copy `~/.codex/steering/` + **全文內嵌** `~/.codex/AGENTS.md` managed block |
+
+Codex 走「全文內嵌」而非 pointer/import，是因為它是否支援 `@` 檔案引用未經驗證；
+內嵌由 sync 每次覆蓋 marker 之間的內容，所以不會與正本漂移，marker 外的手寫內容保留。
+
+⚠️ Codex 讀 `~/.codex/AGENTS.md` 這件事**尚未在本機實測**（Codex 未登入，
+且 openai/codex#8759、#27705 報告過全域檔不載入）。登入後值得驗一次。

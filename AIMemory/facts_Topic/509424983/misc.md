@@ -1,0 +1,3 @@
+- [f_71c654] [2026-08-05T02:45:22.922Z] Daily Intel 產出的 markdown 檔案在手機上顯示亂碼的問題是因為 UTF-8 without BOM，已於 2026-08-05 在 src/daily-intel/reports/daily.ts 加上 UTF-8 BOM（\uFEFF）修復
+- [f_9a7397] [2026-08-05T11:38:02.464Z] G:\AI\AIMemory\wiki 底下沒有 SCHEMA.md（只有 index.md、四個子目錄、兩個 .jsonl），新增 wiki 頁時應比對現有同型頁面的實際 frontmatter 格式（query 型為 title / type / created / updated / sources）
+- [f_ac4b34] [2026-08-05T15:08:54.619Z] Codex 的 ~/.codex/skills/.system 由 Codex CLI 自己在啟動時重建（2026-08-05 跑 codex exec 後自動多出 review-agent，從 5 支變 6 支），所以該目錄的內容數量會自行變動，投影工具不應把它的變化誤判為外部干擾

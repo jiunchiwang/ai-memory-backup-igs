@@ -2,8 +2,8 @@
 title: 驗證與診斷方法論
 type: concept
 created: 2026-08-01
-updated: 2026-08-01
-sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, f_6ad6e7, f_377321, f_306863, f_e92697, f_2x2_grid, f_gitbash_tmp]
+updated: 2026-08-05（修正兩個佔位 fact ID）
+sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, f_6ad6e7, f_377321, f_306863, f_e92697, f_0f0140, f_156659]
 ---
 
 # 驗證與診斷方法論

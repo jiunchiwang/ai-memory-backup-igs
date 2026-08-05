@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-08-01
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a]
+updated: 2026-08-05（補 Edit 工具 replace_all 陷阱）
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738]
 ---
 
 # 開發工具與環境設定
@@ -78,6 +78,10 @@ EOF
 ```
 
 反過來也成立：PowerShell tool 裡才用 `@'...'@`，且結尾 `'@` 必須頂格在第 0 欄。兩個 shell 各有自己的語法，別跨用。
+
+### Edit 工具 replace_all 誤改陷阱
+
+在 Edit 工具做整行刪除或改解構名時，若目標字串在同檔重複出現（如 `relay.ts` 的 `const { runPrompt, sessions } = deps()` 全檔 9 個相同字串），必須用**上下文定位**而非 `replace_all`，否則會誤改其他處——`tsc` 只標出未使用的那一處，行號才是唯一可靠依據（2026-08-02 實證）。
 
 ## 文件產出
 

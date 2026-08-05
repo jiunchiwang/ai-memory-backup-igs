@@ -2,8 +2,8 @@
 type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
-updated: 2026-07-17
-sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698]
+updated: 2026-08-05（新增 sync.ps1 三 CLI 投影擴展至 Codex）
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698, f_e68e53, f_4568c1, f_76462d, f_d5d14e, f_0e4a79, f_b9e59d]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -89,6 +89,26 @@ C = min(平均消耗 turn 數 / 10, 1.0)
 ## Junction 即時反映
 
 AI-canonical-corp 的 slot skill（如 `uk-slot-pattern-library`）透過 Windows junction 直接指向正本目錄，改正本即時反映到 `~/.kiro/skills/`，不需額外跑 `sync.ps1`。這讓 corp（slot 專屬）的 skill 開發比通用 skill 更直覺——改完就生效。
+
+**通用 skill 同樣如此**：`~/.claude/skills` 與 `~/.kiro/skills` 下的 skill 目錄本身就是指向 AI-canonical 正本的 junction（非 copy），改正本即時對這兩個 CLI 生效，不需再跑 `sync.ps1`；`sync.ps1 -Apply` 真正必要的是 steering 那批（copy，非 junction）。**因此正本一律寫在** `G:\AI\AI-canonical\skills\general\`（通用）或 `AI-canonical-corp`（slot/office），絕不直接編輯 `~/.claude/skills` 或 `~/.kiro/skills`——那兩處會被下次 sync 覆蓋。
+
+## sync.ps1 三 CLI 投影擴展至 Codex（2026-08-05，commit `b330aad`）
+
+`sync.ps1` 自本次起一次投三個 CLI，不再只有 Kiro/Claude：
+
+| CLI | Skills 投影 | Steering 投影 |
+|---|---|---|
+| Kiro | 逐 skill junction 直達正本 | copy 到 `~/.kiro/steering/` |
+| Claude | 逐 skill junction 直達正本 | copy 到 `~/.claude/steering/` + `CLAUDE.md` `@import` |
+| **Codex（新）** | 逐 skill junction 直達正本（原本是繞經 Kiro 的**二段** junction，已改為**一段**） | copy 到 `~/.codex/steering/` **+ 全文內嵌** `~/.codex/AGENTS.md` 的 `canonical-steering` managed block |
+
+**為何 Codex steering 選「全文內嵌」而非 pointer/`@import`**：Codex 是否支援檔案引用語法未經驗證，內嵌可確定生效；managed block 的 marker 之間每次 sync 覆蓋所以不會漂移，marker 外的手寫內容保留。
+
+**環境限制（未解，2026-08-05）**：這台機器的 Codex CLI（0.146.0）當時未登入（`codex login status` → Not logged in、`~/.codex` 無 auth 檔、bridge `.env` 也沒有 OpenAI/Codex key），所以「skill/steering 在 Codex 上能不能正確執行」的端到端驗證做不了，探針會撞 401。連帶「Codex 是否真的讀 `~/.codex/AGENTS.md` 全域指令」仍未實測——官方文件說會讀，但 [openai/codex#8759](https://github.com/openai/codex/issues/8759) 與 #27705 報告過全域檔不載入。登入後值得用 canary 字串跑一次 `codex exec --skip-git-repo-check` 驗證。
+
+**已確認的事實**（不受未登入影響）：Codex CLI 0.146.0 原生支援 skills 機制（掃 `~/.codex/skills/`，內建 skill 放 `.system/` 子目錄），SKILL.md frontmatter 格式與 Claude 完全一致（`name` + `description`），因此同一份 skill 正本可三個 CLI 共用不需改寫。
+
+**已知既存漂移（本次未動，待決定）**：`~/.kiro/steering/karpathy-guardrails.md` 沒有對應的 AI-canonical 正本（正本 steering 只有 `closed-loop-system` / `skill-workflow` / `task-acknowledgement` 三支），所以 Kiro 吃著一份 Claude 與 Codex 都拿不到的 steering——要嘛補進正本，要嘛確認為 Kiro 專屬。
 
 ## MCP-First 邊界說明（2026-07-17）
 

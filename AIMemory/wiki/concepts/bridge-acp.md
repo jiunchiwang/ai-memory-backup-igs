@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-05
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_440]
+updated: 2026-08-05（新增 session/resume 語意分析與能力探測）
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -156,6 +156,35 @@ Bridge 選擇 stdio JSON-RPC 而非 HTTP server mode 與底層 agent CLI 通訊�
 - `kiro-cli` 根本沒有 `serve` subcommand
 - QM 用 HTTP 是為了支援併發 abort+steer+prompt 與 tool bridging 回打場景，bridge 都用不到
 
+## ACP Session Resume 語意分析與能力探測（2026-08-05）
+
+### load 與 resume 是規格層的語意分離
+
+ACP spec 明文（normative）：
+- `session/load` — Agent **MUST** 把整段對話以 `session/update` 重播給 client
+- `session/resume` — Agent **MUST NOT** 在回應前重播對話歷史
+
+這不是某個 adapter 的實作偏好，是協定分工。opencode 的 `resumeSession`/`loadSession` 共用同一函式、`resume` 只多讀 `limit: 20` 且不重播，`fork` 則讀 20 筆並重播（opencode 自己此處不一致，別照抄 fork 的 limit）。
+
+### sessionCapabilities 實測（`scripts/probe-acp-session-capabilities.mjs`，initialize-only raw probe）
+
+| Adapter | 版本 | `sessionCapabilities` | resume | list | fork |
+|---|---|---|---|---|---|
+| claude-agent-acp | 0.63.0 | `{additionalDirectories, close, delete, fork, list, resume}` 無條件宣告 | ✅ | ✅ | ✅ |
+| kiro-cli | **2.16.1**（更正，舊記錄 2.15.1 已過時） | 整塊缺席（只有 `loadSession: true`） | ❌ | ❌ | ❌ |
+| codex-acp | — | npx 下載逾時未測完 | **未知**（不可讀成不支援） | — | — |
+
+### bridge 的 `replaying` 抑制旗標判定：不可刪，只能 capability-gate
+
+`acpClient.ts` 的 `replaying` 旗標（:472 宣告、:732 丟棄 replay 期間的 `session/update`）**確定不可刪除**，只能 capability-gate 成兩條分支：
+
+- **resume 路徑**（claude）：`session/resume`，request/response 與 load 版逐欄同形，呼叫端零改動，不需要 `replaying`
+- **load 路徑**（kiro）：`session/load` + `replaying` 抑制**照留**——因為 Kiro 未宣告 resume，且是使用者日常會切的 backend，load + replaying 是常態路徑而非邊緣 fallback
+
+Gate 條件：`agentCapabilities.sessionCapabilities?.resume !== undefined`（ACP 用空物件表示能力存在，Kiro 是整個欄位不存在，可靠區分，分支數確定為 2）。**已設計、尚未實作**——追蹤於 [[bridge-roadmap]]。
+
+OpenCode 的 ACP 支援（`sst/opencode` dev branch v1.18.13）採 stdio 前臉 + HTTP 後腦架構：`opencode acp` 起本機 HTTP server 後自己當自己的 client，ACP 層每個方法轉一次內部 HTTP 呼叫。此架構反向佐證 bridge 選 stdio JSON-RPC 的判斷（opencode 兩層都要是因為同時要餵 TUI/web/ACP 三種前端，bridge 只有單一 Telegram chat 對單一 ACP session）。細節見 [[opencode-acp-implementation]]。
+
 ## ACP Adapter 設定檔差異
 
 | Adapter | 讀取的設定檔 |
@@ -170,3 +199,7 @@ Bridge 選擇 stdio JSON-RPC 而非 HTTP server mode 與底層 agent CLI 通訊�
 - [[bridge-upstream-sync]] — Fork 同步與合併衝突處理
 - [[bridge-dream]] — Dream 例行維運框架（per-backend model 設定）
 - [[verification-diagnosis]] — 覆核的驗證方法論
+- [[bridge-roadmap]] — session/resume 實作追蹤於 Pending 清單
+- [[opencode-acp-implementation]] — OpenCode ACP 實作研究（stdio+HTTP 架構、完整方法表）
+- [[adversarial-review]] — 異源對抗覆核紀律（自本頁拆出，2026-08-05）
+- [[bridge-model-strategy]] — Model 選型/pricing/effort 策略（自本頁拆出，2026-08-05）

@@ -2,8 +2,8 @@
 title: Bridge 改善研究與 Roadmap
 type: concept
 created: 2026-06-28
-updated: 2026-08-02
-sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2, f_1da3ad, f_4e5ad0]
+updated: 2026-08-05（新增 yc-software/qm 與 OpenCode ACP 研究）
+sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, f_5bd2fc, f_db1e8b, f_029977, f_50c2e9, f_9b0067, f_f1be4b, f_31228e, f_bdf14b, f_7fcdfa, f_1a894e, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_0561d8, f_7fb676, f_bd8491, f_719003, f_121c69, f_a2c25a, f_b13c42, f_7cbc83, f_cf0946, f_9e12bd, f_d6c3a2, f_1da3ad, f_4e5ad0, f_ef3dd8, f_f54332]
 ---
 
 # Bridge 改善研究與 Roadmap
@@ -39,6 +39,14 @@ sources: [f_5a495e, f_af99c8, f_5209cd, f_c228c9, f_9d641c, f_7f1ee1, f_d933fc, 
   1. `headroom mcp serve` orphan（#2185/#1761）：client SIGKILL 後 stdio server 卡在 stdin reader、被 reparent 常駐，每個死 session 釘住一個 Python interpreter + tree-sitter grammars。bridge 每 ACP session 已 spawn 19 個 MCP 進程且 kill 是常態 → 等於加一條洩漏源
   2. prefix-cache lineage 撞號（#2085）：無 `x-headroom-session-id` 時 fallback id = hash(model + system prompt)，CC 主 session 與其平行 subagent 全撞同一 tracker → 回報 ~4.4x cache-creation 膨脹、**2.5–3x 淨成本上升**。省 token 工具在 fan-out 拓樸下反而更貴（bridge 的 PARALLEL_DELEGATE / workflow 命中此條件）
 - ∴ 評估時機推到 0.34.0；中間最低風險仍是方案 D，但它寫 `CLAUDE.local.md` 與自家 learning-log／問題追蹤重疊，須先定正本
+
+### yc-software/qm（2026-08-04）
+
+Y Combinator 出品的 multiplayer agent harness。研究後整理出 Harness 抽象層分析與 Capability Set 借鏡計畫，完整報告存於 `G:\AI\AIMemory\artifacts\qm-research-report.md`。此研究直接促成了「bridge 為何選 stdio JSON-RPC 而非 HTTP server mode」這條架構決策（QM 用 HTTP 是為了支援併發 abort+steer+prompt 與 tool bridging 回打場景，bridge 單一 Telegram chat 對單一 ACP session 都用不到）——見 [[bridge-acp]]。
+
+### OpenCode ACP 實作（2026-08-05）
+
+深入研究 `sst/opencode` 的 ACP 支援（讀原始碼而非官方文件），完整分析獨立成頁 [[opencode-acp-implementation]]，含 stdio+HTTP 雙層架構、完整方法表、`authMethods` 恆非空陷阱。借鏡成果（load/resume 語意分離、`session/list` pre-flight）已落地到 [[bridge-acp]] 與 [[bridge-session]]。文件生態的雷：官方文件只有薄薄一頁，`open-code.ai`／`opencode.asia`／`opencode-tutorial.com` 皆為 SEO 克隆站非官方，bgauryy/open-docs 的第三方文件與原始碼矛盾已過時不可引用。
 
 ### Loop Engineering（cobusgreyling/loop-engineering ⭐2.7k）
 

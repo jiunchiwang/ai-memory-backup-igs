@@ -578,6 +578,36 @@
       "chatId": 509424983,
       "score": 82,
       "evidence": "tsc 通過；邏輯正確（ACP 時讀 verifiedModelInfo，有值才覆蓋 fallback）；但未實際跑 runtime 驗證 /model 輸出"
+    },
+    {
+      "ts": "2026-08-05T08:48:22.803Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "已用 read/grep 覆核：frontmatter 欄位與既有 query 頁一致、130 行未超 200 行上限、3 個 wikilink 確認存在於 index、index 尾段三處改動皆已生效；扣分處為 SCHEMA.md 缺席只能以既有頁面推定格式，且頁內 opencode 相容性結論本身仍是讀碼推論而非實測"
+    },
+    {
+      "ts": "2026-08-05T14:30:31.178Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "三層都實測：codex --version + .system 列表證機制、讀取二段 junction 下的 SKILL.md 證可解析、兩個正本 repo 各跑一次 rg 證路徑與 Claude 專屬依賴、三個 CLI 各數一次證 12/37/37。唯一未實測的是「跑 refresh 後真的 created=25」——那是讀 code 推的，還沒實跑"
+    },
+    {
+      "ts": "2026-08-05T14:34:53.712Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "實跑 script 拿到 created=25/removed=0/kept=12，再獨立數一次 codex skills=37、non-junction=0、broken=0（每支驗 SKILL.md 可讀）、.system 仍 5 支，並抽驗 3 支新建的實際讀到 byte 數；未跑 tsc/smoke 因為沒動 src/"
+    },
+    {
+      "ts": "2026-08-05T14:50:39.402Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "每項改動都獨立驗過：DRY-RUN 先看範圍再 Apply、Codex 端重數 37/one-hop=37/.system 完好、AGENTS.md 用三個獨有字串抽驗內文而非只看 marker、冪等與保留手寫用真實 canary 插入再移除做突變測試、bridge 舊 script 實跑確認 skipped=37 不是推論。未驗證的只有「Codex 真的讀 AGENTS.md」，已明確標為未驗證而非當成已知；正本 steering 的 karpathy-guardrails 漂移只報告未動"
+    },
+    {
+      "ts": "2026-08-05T14:58:39.515Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "push 後獨立確認 5e8297b..b330aad 與 main...origin/main 無 ahead/behind；改動本身的驗證在前一輪已逐項實測（含突變測試）。未做的是異源覆核，已明示原因與替代手段，不假裝已覆核"
     }
   ]
 }

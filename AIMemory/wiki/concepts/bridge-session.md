@@ -2,8 +2,8 @@
 title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
-updated: 2026-07-23
-sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_20ed42, f_ecaf0b, f_76faa7, f_42aed5, f_c73099]
+updated: 2026-08-05（新增 ACP resume/load 規格分工與未接訊號）
+sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_20ed42, f_ecaf0b, f_76faa7, f_42aed5, f_c73099, f_233da9, f_1d7bed]
 ---
 
 # Bridge Session 生命週期與多 Session 管理
@@ -36,6 +36,14 @@ sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_20ed42, f_ecaf0b, 
 ## 使用場景偏好
 
 日常用 `/reset`（快速清 context 重開）；`/handoff` 保留給較大任務完成、換機器、當天收工等需要記憶留存的場景。
+
+## ACP session/load 與 session/resume 的規格分工（2026-08-05 新增）
+
+ACP 協定規定：`session/load` 的 Agent **MUST** 用 `session/update` 重播整段對話歷史；`session/resume` 的 Agent **MUST NOT** 重播。兩者的 Request/Response 逐欄同形（`{sessionId,cwd,mcpServers}` → `{modes,configOptions}`）。
+
+- `claude-agent-acp` 0.63.0 的 `resumeSession()` 與 `loadSession()` 呼叫同一個 `getOrCreateSession()`，唯一差別是 load 多一行 `replaySessionHistory()`——改走 resume 在 agent 端記憶復原上完全相同、無失憶風險（對照 opencode 的 resume 只讀 `limit:20`，不可推廣到所有 adapter）
+- bridge 現用 `session/load` + `replaying` 抑制旗標丟棄整段重播——該設計與能力探測結果見 [[bridge-acp]]
+- **兩個未接的免費訊號**：bridge 完全沒接 ACP 的 `usage_update` 與 `available_commands`（grep 0 命中），而 `claude-agent-acp` 的 resume 與 load 兩條路徑都會送 `available_commands`；bridge 的 resume 也沒用 `session/list` 做 pre-flight，現在是直接賭一發 `session/load`，失敗才 fallback 開新 session 並只寫 stderr（靜默降級）——追蹤於 [[bridge-roadmap]]
 
 ## 風險備忘
 

@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-08-02
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917]
+updated: 2026-08-05（補 draft 二次成因、regex 隔離修法、/model 顯示修復等 8 條積壓 fact）
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -156,6 +156,19 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - 修 `writePendingByPath` 這類共用 module-state 洩漏時要同類掃描同檔所有寫入端（commit 173591a 曾只修 `atomicWriteJson` 漏了 `updateJson`）
 - **tsconfig 已於 2026-08-02 開啟 noUnusedLocals**（commit 134aebe），舊記錄「未開 noUnusedLocals」已過時；詳見 [[bridge-smoke-gate]]
 - **impact-gate hook 是「每檔首次修改」觸發**：一次批次改 20 個檔案時 20 個 Edit 會全部被擋，同一份因果鏈分析可涵蓋整批同類改動，輸出後原樣重試即全數放行
+
+## 積壓修復記錄（2026-08-05 補記，實際發生於 2026-08-01~04）
+
+以下 fact 因今日 topic review 拆分而落入本 shard，內容過去未曾寫進任何 wiki 頁，屬積壓補記：
+
+- **draft 重播第二個獨立成因**：回覆超過 ~3900 字後 `truncateTail` 的滑動視窗會在頭部插 `…` 並整段位移，共同前綴只剩 1，之後每個 tick 必定重播——這不是 05:00/09:17 兩起症狀的成因（55–1938 字未達上限），要解需改設計（拆多則訊息，或到上限就凍結 draft 讓最終訊息帶完整文字）。列為待辦，未修。
+- **「共用函式 ⇒ 共用決策」是錯的推論**：同一支 helper 被兩個呼叫端以不同字串呼叫時（cut 收 raw buffer、hide 收已抽 token/已 collapse/已 trim 的字串），共用它並不保證判定一致。這個輸入不對稱在決策不依賴長度時完全不可觀測，一旦引入長度門檻就會暴露成使用者可見的分歧（實證：draft 顯示 742 字、final 只剩 8 字）。
+- **採納覆核建議的過度概括陷阱**：把「這個位置放上限會壞」讀成「這件事不該做」，於是製造出新的不一致——v1 反例真正禁止的只是「draft 幀上 hide 疊在 cut 之上」，卻被讀成「final 的 hide 必須無界」，導致 final 銷毀 draft 已展示的內容。
+- **測試斷言寬窄決定它能不能擋住錯誤設計**：3g 原本斷言「draft 與 final 都不含 opener」（寬錨點）而綠著出貨三個版本，改成 `draft === final` 逐字相等後才擋得住；語料只有「對稱形狀」時會全盲，必須把已知反例形狀（走廊 A/B）納入語料，並加兩個反向守衛擋掉「都扣光」與「都不扣」這兩種讓相等成立的退化解。
+- **live 計時器污染去重早退**：render 出來的字串若含 `Date.now()` 算出的經過秒數，下游所有 `content === lastRendered` 形式的去重早退會結構上永遠不命中，且不報錯，只安靜表現成週期性的多餘 API 寫入——單輪累計 3529 筆 `status.edit`，多數內容差異只有一個小數位。
+- **`/model` 指令已修復顯示實際 ACP model**：ACP provider 時從 session 的 `verifiedModelInfo` 取得實際 model，而非硬編碼的 `claude-sonnet-4` via Bedrock；有 effort 設定時一併顯示（如 `claude-opus-4.5 (effort: high)`）；adapter 尚未回報或無 session 時 fallback 顯示靜態值。
+- **正則 catastrophic backtracking 的正確防護層級**：不能靠「檔案與檔案之間的靜態 checkpoint 或靜態 regex guard」——爆炸發生在單一次 `test()` 呼叫內部、控制權永遠回不到 checkpoint，所以「處理完一個檔案就檢查一次」的做法在原理上就攔不到；正解是把 regex 執行隔離進 worker 並由外部逾時中止（2026-08-04）。
+- **AI-canonical 的 `sync.ps1` 連動範圍**：`tools/pull.ps1`（拉 upstream 後自動跑 `sync.ps1 -Apply`）與 `tools/bootstrap.ps1`（新機器初始化）兩支腳本都呼叫 `sync.ps1`，因此改 `sync.ps1` 的 `$Targets` 會自動被這兩條路徑繼承，不需個別修改。詳見 [[ai-strategy]]（此 fact 因含「upstream」關鍵字被本 shard 的廣義關鍵字截走，內容實屬 AI-canonical 工具鏈範疇）。
 
 ## 開發環境筆記
 

@@ -2,8 +2,8 @@
 title: Bridge Upstream Fork 同步與合併衝突處理
 type: concept
 created: 2026-07-21
-updated: 2026-07-21
-sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_f144ad, f_90a25d, f_a23d83, f_4c12ce, f_a1ecf7, f_ea9657, f_e272f0]
+updated: 2026-08-05（補「add/add 假衝突」第四原則）
+sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_f144ad, f_90a25d, f_a23d83, f_4c12ce, f_a1ecf7, f_ea9657, f_e272f0, f_a3f2b2]
 ---
 
 # Bridge Upstream Fork 同步與合併衝突處理
@@ -36,6 +36,8 @@ bridge repo 的 remote：`origin=jiunchiwang/telegram-kiro-bridge`、`upstream=r
 2. **假衝突判別（2026-07-15 實證）**：若共同祖先本身意外把未解決的合併標記（conflict markers）烘焙進歷史造成假衝突，應採用清理較完整的一方（不論本地或 upstream），而非機械套用固定優先權；**真正的功能路線分歧**（如同日 Electron 桌面監控視窗開關的取捨）才需要停下來問使用者決定。
 
 3. **結構性衝突慣例（2026-07-16）**：AI.md/README.md 這類「本地已把細節搬到子文件（如 `src/AI.md`、`docs/setup-agents.md`）」vs「upstream 就地擴充原檔內容」的衝突，應保留本地 pointer 結構、把 upstream 新增內容手動補進對應子文件，而非整段改用 upstream 版本。
+
+4. **add/add 假衝突（2026-07-27 實證）**：upstream（redkilin）會選擇性把本 fork 的修正 backport 回去，但**以英文註解重寫並改名識別字**，因此同一份修正在兩邊成為「內容等價但文字不同的新檔」，merge 時表現為 add/add 假衝突而非一般內容衝突。處理原則同原則 2——比較兩側完整度、保留較完整的一方（實測本地測試基建較完整，`check-transient-retry.mjs`、`check-npm-audit.mjs`、`run-smoke-suite.mjs`、`dependency-security.md` 四檔皆以 `git checkout --ours` 保留），而非機械沿用固定優先權。
 
 ## Upstream 同步歷程
 

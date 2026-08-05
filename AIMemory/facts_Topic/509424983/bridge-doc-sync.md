@@ -1,0 +1,8 @@
+- [f_cc8fd5] [2026-07-13T11:39:16.104Z] 使用者偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個（2026-07-13 對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit）
+- [f_f2dc75] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-19 補上 /refresh-routing 指令的別名 /refreshrouting 說明，修正與 README 常用指令表的落差
+- [f_f7318a] [2026-07-30T23:43:14.754Z] 恆真斷言（vacuous assertion）陷阱的識別方式：若測試驗的是「經過正規化／截斷／clamp 的結果符合上限」，那個斷言永遠會綠，因為該函式本身就保證上限。必須驗未經處理的原始值。2026-07-31 實證：bridge 的 check-bot-command-descriptions.mjs 驗 truncateBotCommandDescription(x) 結果 ≤256，導致 /dream 的 desc 276 字元被無聲截掉尾巴 20 字卻測試全綠。
+- [f_221993] [2026-07-30T23:43:23.228Z] 為「計數類文件漂移」設機械閘門時，期望值必須當場從真實來源算出、絕不可硬寫，否則閘門自己會變成下一個過期來源——尤其閘門本身加入後就會改變它要驗的數字（2026-07-31 加 scripts/check-doc-sync.mjs 使 smoke fast 92→93、full 95→96，故支數改向 run-smoke-suite.mjs --list 動態取得）。同一組計數當時散在 10 個檔案，只改部分會讓 repo 內部互相矛盾、比全錯更難察覺。
+- [f_5302c0] [2026-07-31T03:52:33.947Z] doc-facts.ts 從 regex 撕原始碼重構為直接 import TypeScript 模組（COMMAND_SPECS/DEFAULT_STEPS/EVENT_TYPES），減少「平行實作」的脫鉤風險（2026-07-31，Fable 5 review 建議）
+- [f_3fb62a] [2026-07-31T03:52:33.947Z] event-log.ts 已改寫成 const array + type 推導模式：EVENT_TYPES 陣列可在 runtime 枚舉，EventType 從該陣列推導（2026-07-31）
+- [f_faa25e] [2026-07-31T20:13:17.024Z] 因為 smoke 耗時 run-to-run 有約 8% 變異（2026-07-31 full tier 實測 260.7s / 274.1s / 249.9s），bridge 的文件同步閘門 check-doc-sync.mjs 只把「支數」這類硬計數納入機械檢查、耗時僅寫進文件並標註量測日期（排除把耗時納入 gate，因為那會變成每次跑都可能紅的雜訊閘）。
+- [f_f53d82] [2026-08-02T02:45:55.634Z] telegram-kiro-bridge 的 check-bot-command-descriptions 閘門把「desc 會被 truncateBotCommandDescription 截斷」視為失敗而非可接受，且 /dream 條目的 desc 基線 232 字元（加上 button 前綴後距 256 上限僅約 11 字元餘裕）—— 要在該欄位補說明幾乎無空間，應改為指向 schema 正本而非就地列舉

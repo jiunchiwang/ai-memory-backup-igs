@@ -304,3 +304,13 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-04T20:07:47.585Z] user=509424983 query="claude-mem-shortlist.md 有已知問題" deleted=0 token=forget-47ff8f22-1
 
+- [2026-08-05T20:32:37.331Z] user=509424983 query="AIMemory topic 分類於 2026-08-01 從 22 增為 24" deleted=1 token=forget-ed0bd29e-1
+    - [f_d4c3fe] [2026-07-31T20:47:31.616Z] AIMemory topic 分類於 2026-08-01 從 22 增為 24：新增 verification-diagnosis（跨專案驗證/診斷方法論）與 bridge-smoke-gate（bridge 測試閘門與建置），兩者刻意排在 bridge-project 之前、其他細類之後，只從那個 catch-all topic 抽走 facts；misc 由 13 降到 1、bridge-project 由 76 降到 55
+- [2026-08-05T20:32:39.046Z] user=509424983 query="接受 claude-sonnet-5 作為合法 model id 並原樣回報" deleted=1 token=forget-ed99ff8c-1
+    - [f_ace6e8] [2026-08-02T02:45:55.634Z] claude-agent-acp 接受 claude-sonnet-5 作為合法 model id 並原樣回報（不解析成其他 canonical id），2026-08-02 以 scripts/check-acp-model-effort.mjs 實際 spawn adapter 驗證；同 adapter 公告的合法值含 default / opus[1m] / sonnet
+- [2026-08-05T20:32:41.057Z] user=509424983 query="/sharedsync 功能已修復並驗證可正常 push/pull" deleted=0 token=forget-11058436-1
+
+- [2026-08-05T20:32:49.499Z] user=509424983 query="index.ts 的全域 unhandledRejection handler 會 process.exit(1)" deleted=0 token=forget-bcddd99f-1
+
+- [2026-08-05T20:32:53.526Z] user=509424983 query="對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit" deleted=0 token=forget-de23ae5f-1
+

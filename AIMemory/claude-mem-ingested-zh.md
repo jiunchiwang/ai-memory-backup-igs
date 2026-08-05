@@ -459,3 +459,50 @@ shortlist 檔頭仍是「產生:2026-07-30T20:30:02.058Z;筆數:14(上限 15);�
 8. `Dream per-step model configuration architecture decision pending（ASK id=dreammodel）` → 待決狀態的過程快照，已被第 4／5 條的定案 fact 取代。
 
 去重方式:list_facts 查詢 `adversarial` / `dream` / `覆核` / `commit message`（現存 437 筆）。未呼叫 remember、未呼叫 forget。
+
+## 2026-08-05 (claude-mem AUTO;寫入 1 條)
+
+來源 shortlist 檔頭（原文照貼，與 caller 傳入的 header 逐項一致：時間戳、12 筆／上限 15、epoch 1785665585219）:
+`> 產生:2026-08-04T20:30:03.071Z;筆數:12(上限 15);自 epoch 1785665585219`
+
+**這是全新一批**（epoch 1785665585219 > 上一輪 1785570559110，12 筆內容與 2026-08-03 那批 8 筆不同），**不是同批重掃**。專案分布：uk_872_eyestrike2_client 4 筆、telegram-kiro-bridge-main 4 筆、uk_917_leprechauns_pots_client 3 筆、system32 1 筆。
+
+**寫入 1 條：**
+
+1. 防護正則表達式的 catastrophic backtracking 不能靠「檔案與檔案之間的靜態 checkpoint 或靜態 regex guard」——爆炸發生在單一次 test() 呼叫內部、控制權永遠回不到 checkpoint，所以「處理完一個檔案就檢查一次」的 v1 做法在原理上就攔不到；正解是把 regex 執行隔離進 worker 並由外部逾時中止（telegram-kiro-bridge，2026-08-04）。→ shard `bridge-project`
+
+**捨棄 11 筆，逐條說明：**
+
+- `Fifth adversarial review round initiated to validate round-4 fix effectiveness`、`Second-round adversarial review launched targeting fix commit itself for same-pattern errors`、`Adversarial code review initiated with Fable 5 for supply-chain commits` → 三筆合併後撞既有 fact「使用者的 Fable5 push 前覆核紀律已擴充為『可多輪、範圍逐輪收窄』：每修完一輪 finding 就對新 commit 再派一輪範圍限定的覆核，直到只剩敘事精確度類 finding 才收斂 push」＋「第二輪起改派新 agent 並刻意不告知前一輪結論，避免錨定」＋「異源覆核紀律於 2026-08-02 新增成本分級」。既有 fact 更完整（含輪數收斂條件與模型成本判準），三筆均為單次執行紀錄。
+- `Respin Column Lock Skip Animation Optimization`（uk_872）→ 專案特定的 Respin 鎖列動畫最佳化，敘述僅到「1-4 列可能有 Cash symbol 鎖住」，無可跨專案重用的判準。
+- `PlayFlyEffect序列執行需求明確化`（uk_872）→ 一次性需求澄清（改為依序飛行而非並行）。
+- `POT_TO_REEL_TRAIL_INTRO_START_SECONDS set to 0.01`（uk_872）→ 單一常數調值，一次性。
+- `Validated slow-crawl speed parameter choice through trade-off analysis`（uk_872，vSlowRatio=0.004）→ 專案特定的動畫參數調校數值，換遊戲即失效。
+- `Complete bomb event UI, state machine, and testing plan defined`（uk_917 Task 11）→ 任務進度紀錄。
+- `TDD-driven bomb event feature implementation plan established`（uk_917 Task 8）→ 任務進度紀錄；其 TDD 方法論已由既有 skill/fact 覆蓋。
+- `Feature branch workflow initialized for bomb event`（uk_917 Task 7）→ 建分支的一次性步驟。
+- `Memory curation completed with zero facts written due to live-session overlap`（system32）→ 本 log 2026-08-03 那則的 observation 回聲，屬過程紀錄。
+
+去重方式:list_facts 查詢 `regex` / `backtracking` / `ReDoS` / `worker` / `逾時` / `對抗` / `Fable`（現存 440 筆）。`backtracking`、`ReDoS`、`worker` 三查皆 0 命中，故第 1 條確認為新知識。未呼叫 forget。
+
+## 2026-08-06 (claude-mem AUTO;寫入 2 條)
+
+來源 shortlist 檔頭（原文照貼；caller 傳入的 header 因編碼損毀呈 mojibake，但可判讀的欄位——時間戳 2026-08-05T20:30:04.052Z、筆數 3、上限 15、epoch 1785827290913——與檔案逐項一致）:
+`> 產生:2026-08-05T20:30:04.052Z;筆數:3(上限 15);自 epoch 1785827290913`
+
+**這是全新一批**（epoch 1785827290913 > 上一輪 1785665585219，3 筆內容與 2026-08-05 那批 12 筆不同），**不是同批重掃**。專案分布：telegram-kiro-bridge-main 2 筆、uk_872_eyestrike2_client 1 筆。
+
+**寫入 2 條（皆源自候選 3 的底層 gotcha,已讀原始 artifact 取得實據而非由標題推論）：**
+
+1. Node 的 readdirSync withFileTypes 回的 Dirent 不跟隨連結，junction/symlink 一律 isDirectory()===false、isSymbolicLink()===true；skill 投影全靠逐 skill junction,所以 filter(e=>e.isDirectory()) 掃 skill 目錄恆得靜默空集合。refresh-codex-skill-links.mjs 因此壞掉：dry-run 修前 isDirectory()=0/isSymbolicLink()=37 → REMOVE=12 CREATE=0（每跑一次 postinstall 清空一次 Codex），修後 REMOVE=0 KEEP=12 CREATE=25。正解是篩「目錄或指向目錄的 symlink」並 statSync 跟隨確認。→ shard `adversarial-review`
+2. 測試 fixture 形狀必須跟生產一致,否則綠燈與「沒驗到」外觀相同：check-codex-skill-links.mjs 用 mkdirSync 建實體目錄當 skill,8 項全綠卻測不到 junction 的 bug；已改成 junction 型 + 實體目錄型各一並做變異測試。→ shard `bridge-smoke-gate`
+
+**捨棄 1 筆:**
+
+- `ACP session management upgrade path defined with capability gating :: load MUST replay history while resume MUST NOT replay`（telegram-kiro-bridge）→ 撞既有 fact 兩條:「ACP 協定規定 session/load 的 Agent MUST 用 session/update 重播整段對話歷史、session/resume 的 Agent MUST NOT 重播,兩者 Request/Response 逐欄同形…」與「acpClient.ts replaying 抑制旗標確定不可刪除,只能 capability-gate 成兩條分支…gate 條件為 agentCapabilities.sessionCapabilities?.resume !== undefined」。既有 fact 更完整（含 claude-agent-acp 0.63.0 原始碼佐證與 gate 判別式）。
+
+**候選 2 判定為專案一次性,未寫入:**
+
+- `Complete investigation confirms four-point integration approach for In_H_FS/In_S_FS animation support :: FREE_GAME_INTRO_EVENT.PLAY 簽章 (totalRound, callback?) 在 FreeGameIntro.ts line 16`（uk_872）→ 綁單一專案單一檔案行號的整合步驟,無跨專案可重用判準。
+
+去重方式:list_facts 查詢 `junction` / `ACP` / `isDirectory` / `Dirent` / `fixture`（現存 459 筆）。`isDirectory`、`Dirent` 兩查皆 0 命中,故寫入兩條確認為新知識；`ACP` 查得 48 筆並命中上述兩條既有 fact。未呼叫 forget。

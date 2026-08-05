@@ -290,4 +290,8 @@ Windows cmd 的 `mkdir` + `&&` 連鎖常有 exit code 1 的問題，**用 PowerS
 ## 相關
 
 - **writing-skills** — skill 撰寫的格式與 TDD 方法論（本 skill 遵守其格式，但用 retrospective 取代 TDD）
-- **Bridge 的長期記憶系統** — `${MEMORY_DIR}/sessions/` 的來源與 archive 層；規格見 bridge 的 `docs/memory-system.md` 與 `src/memory.ts`
+- **`${MEMORY_DIR}/sessions/` 由誰寫入** — bridge 的 `src/session-extract.ts`（`saveTranscript`）。
+  搬到 `oldSessions/` 的**不是 bridge**，是本 skill 自己的第 4 步（見上方 `Move-Item`），
+  入口 `/memorytoskill`。⚠️ `docs/memory-system.md` 只涵蓋 facts／topics／wiki，
+  查不到 sessions；`src/memory.ts` 對 `oldSessions` 也只有一行 preamble 慣例字串，
+  沒有搬移邏輯——別去那兩個地方找。
