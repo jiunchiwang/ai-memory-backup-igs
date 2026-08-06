@@ -58,4 +58,4 @@
 ---
 
 Total pages: 40
-Last updated: 2026-08-05（wikilint：修補 4 個 stale 頁 [[dev-tools]]/[[bridge-upstream-sync]]/[[bridge-session]]/[[bridge-research]]；先前已新增 [[adversarial-review]]、[[bridge-model-strategy]]，更新 [[bridge-acp]]/[[bridge-project]]/[[ai-strategy]]/[[verification-diagnosis]]）
+Last updated: 2026-08-06（wikilint：修補 9 個 stale 頁 [[bridge-acp]]/[[bridge-model-strategy]]/[[igs-uof]]/[[bridge-smoke-gate]]/[[bridge-project]]/[[ai-strategy]]/[[verification-diagnosis]]/[[adversarial-review]]/[[dev-tools]]；0 orphan、0 broken link）

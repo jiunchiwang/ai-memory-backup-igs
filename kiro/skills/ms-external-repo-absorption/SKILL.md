@@ -1,4 +1,6 @@
 ---
+name: ms-external-repo-absorption
+description: 當需要評估並吸收外部 repo、skill、框架或架構文章的設計到自己的系統時使用。涵蓋範圍確認（全盤移植／選擇性借鏡／純研究不吸收）、現狀盤點、設計比對與吸收決策。使用者要求研究外部 repo、分享架構文章要求借鏡、或同事給的 skill 要整合進既有體系時觸發。
 type: skill
 domain: general
 created: 2026-07-10

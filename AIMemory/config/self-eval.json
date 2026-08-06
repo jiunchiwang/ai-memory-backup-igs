@@ -608,6 +608,150 @@
       "chatId": 509424983,
       "score": 87,
       "evidence": "push 後獨立確認 5e8297b..b330aad 與 main...origin/main 無 ahead/behind；改動本身的驗證在前一輪已逐項實測（含突變測試）。未做的是異源覆核，已明示原因與替代手段，不假裝已覆核"
+    },
+    {
+      "ts": "2026-08-06T00:52:39.479Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "7 月數字取自頁面合計原文並二次 dump 表格列覆核（25.0 平日／總筆數1=人員列非單數）；三臂皆實跑有 URL 證據；未驗證項已標註（headless 重用 session、是否真人點擊也會被 Turnstile 拒）"
+    },
+    {
+      "ts": "2026-08-06T01:04:02.994Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "py_compile+14條單元斷言（含3個mutation）全過，關鍵連動 close_uof 已用「跑完瀏覽器還活著」端到端實測，改動全部讀回驗證；扣分在填單 CDP 路徑未端到端實測（已標註）且尚未經異源覆核"
+    },
+    {
+      "ts": "2026-08-06T01:22:40.063Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "7條findings修正各有正反兩向斷言（共21條）、修正後真實端到端重跑並實證M1修正生效（session.json未再污染）、駁回2條有寫明理由；扣分在填單CDP路徑仍未端到端實測、且本輪修正尚未經異源覆核"
+    },
+    {
+      "ts": "2026-08-06T01:46:58.666Z",
+      "chatId": 509424983,
+      "score": 91,
+      "evidence": "F1 用原反例+反向 mutation 驗證、三條分支×兩模式共6組 hint 全對、接線本身另立斷言、e2e 重跑並確認 session 未污染、測試污染已還原；扣分在填單 CDP 路徑仍未端到端實測、本輪敘事修正尚未經異源覆核"
+    },
+    {
+      "ts": "2026-08-06T02:00:08.688Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "三輪覆核 findings 全部逐條重現後修正，本輪新增 6 項斷言含碼-文件全量 error 值交叉比對（自己抓到覆核者三輪都漏的既存缺口並查證非本次引入）、行為回歸確認敘事修正沒弄壞 F1 接線；扣分在填單 CDP 路徑仍未端到端實測"
+    },
+    {
+      "ts": "2026-08-06T02:06:16.439Z",
+      "chatId": 509424983,
+      "score": 93,
+      "evidence": "三輪覆核 13 條 findings 逐條重現後修正、2 條駁回有理由、commit 前碼-文件 26 個 error 值機械交叉比對零缺口、commit 後重驗 import 正常、未驗項（填單 CDP）明文標注於 SKILL.md 與 commit message；扣分僅在該項確實未實測"
+    },
+    {
+      "ts": "2026-08-06T02:46:56.950Z",
+      "chatId": 509424983,
+      "score": 89,
+      "evidence": "端到端兩次獨立實測（npx 與直接執行檔各一）拿到 PONG/end_turn，authRequired 的後果是追到消費端程式碼行號確認而非推測，並主動更正自己先前對 npx 的錯誤歸因、清掉 6 個探針孤兒進程；扣分在 gate 誤判的第 3 項後果（transient retry 關閉）未實際觸發串流中斷驗證，僅由碼路徑推導"
+    },
+    {
+      "ts": "2026-08-06T03:05:30.092Z",
+      "chatId": 509424983,
+      "score": 91,
+      "evidence": "突變測試證明新斷言真的會紅（5條）、真 adapter 端到端確認四個觀測點、fast tier 104/104、四個消費點逐一 grep 追過（含 auth-recovery 的登入按鈕路徑）；主動揭露一次假綠（突變未套用）；扣分在 transient retry 恢復是用 fixture 觀測 attempt 次數驗的，未在真 codex 上觸發真實串流中斷"
+    },
+    {
+      "ts": "2026-08-06T03:13:14.113Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "修正已 commit 且驗證鏈完整（突變測試證明斷言會紅、真 adapter 四觀測點、fast tier 104/104、三方對照）；孤兒進程殺前查過 ancestry 確認非 bridge session；主動更正自己三個錯誤並辨識出 exit-code 假陰性；扣分在真實串流中斷下的 retry 恢復仍未實測、且本次改動尚未經異源覆核"
+    },
+    {
+      "ts": "2026-08-06T03:47:54.237Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "兩個 commit 已 push 且 pre-push gate 104/104 通過；覆核 5 條逐條重現後修正，F4 有修前後量化對照（92s/exit0 → 0s/exit1）並額外驗證 unref 未破壞逾時路徑；主動揭露覆核抓到我 commit message 的錯誤與自己三個過程錯誤；扣分在真實串流中斷下的 retry 恢復未實測、codex 登出情境的錯誤形狀未實測（已寫入 commit）"
+    },
+    {
+      "ts": "2026-08-06T04:05:05.272Z",
+      "chatId": 509424983,
+      "score": 83,
+      "evidence": "pin 已寫入且值取自 adapter 自報的 configOptions（非猜測）、JSON shape 驗過、孤兒與臨時檔清乾淨；探針過程五次三錯已如實交代並在第五次停手改走生產路徑；扣分在 pin 是否真的套用尚未實測（要等你 /agent codex 看 bridge 的 log），且發現的格式改版問題只報告未修"
+    },
+    {
+      "ts": "2026-08-06T05:23:47.209Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "兩個方向的突變護欄各自證實會紅（含誤拆的具體輸出）、fast tier 104/104 + 兩支慢測通過、dist 每次都 grep 確認突變真的進產物；主動揭露自己兩次寫出恆真斷言與一次假綠；扣分在真 codex 的 footer 尚未實測，且本 commit 未經異源覆核"
+    },
+    {
+      "ts": "2026-08-06T05:58:50.865Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "四個 commit 全部 push 且各自經異源覆核＋pre-push gate 104/104；本輪覆核 4 條逐條處置（1 修 3 記錄）、BC 編號唯一性以 grep 驗證；主動記錄覆核者發現的 tsc emit 事實與我自己的反向踩坑；扣分在真 codex footer 仍未實測、F2 的測試缺口未補"
+    },
+    {
+      "ts": "2026-08-06T06:26:00.746Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "upstream 四個 codex commit 逐一用 merge-base 驗證已在本 fork、upstream 仍有兩個 bug 以原始碼行號佐證、兩套件差異全部來自 raw ACP probe 一手實測（非文件推測）、npx 失敗以兩臂對照隔離出「只在 bridge spawn 路徑發生」；扣分在該失敗根因未查明，故未動任何設定"
+    },
+    {
+      "ts": "2026-08-06T06:34:39.743Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "根因以五臂逐一排除定位並用正確呼叫方式驗證全綠、遷移路徑經生產路徑實測（兩個 pin 都確認）、錯誤記憶已 forget 並改寫；扣分在這個誤判是我自己造成、耗掉五輪對照才想到檢查最基本的參數解析，且遷移設定尚未實際套用"
+    },
+    {
+      "ts": "2026-08-06T06:50:33.134Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "遷移的 pin 值取自 adapter 自報清單並經生產路徑實測兩行 pinned 確認、防呆用「原本會失敗的呼叫」做前後對照驗證、預設臂無回歸、錯誤記憶已 forget 並改寫；扣分在誤判根因耗掉五輪且一度污染長期記憶，以及新設定尚未在真實 /agent codex 切換下跑過一輪對話"
+    },
+    {
+      "ts": "2026-08-06T06:54:16.464Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "只改註解行、以 git diff 與 gitignore 雙重確認未觸及機密或版控、讀取時只取 5-12 行避免把 token 拉進 context、新增內容全部來自今天的一手實測（斜線/方括號、-c 被忽略、effort 檔位）；扣分在第 10 行的同類過時建議未處理（已明確說明理由而非靜默略過）"
+    },
+    {
+      "ts": "2026-08-06T06:57:08.394Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "三處修正各以匹配數=1 與 KEY=value 行數不變雙重保險、內容全部來自今天的一手實測（含推翻 .env 原本「Codex 收到會 reject」的錯誤陳述）；扣分在第三處超出「補第 10 行」的字面要求（雖同屬修 .env 註解且已明確說明），且 .env 改動無法用 git diff 驗證只能靠行數與目視"
+    },
+    {
+      "ts": "2026-08-06T09:25:06.276Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "讀了 run-smoke-suite.mjs 的 SKIP/SLOW 定義與過濾邏輯、實跑 --list 對照 104 vs 107、grep 確認孤兒 smoke-*.mjs 無 package.json 入口、確認 check-npm-audit 離線 skip 路徑；純讀取無改動，唯一未親自驗證的是註解裡的 per-test 耗時數字（檔內自陳已與聚合對不上）"
+    },
+    {
+      "ts": "2026-08-06T12:02:19.749Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "Q6 有 A 級實碼佐證（Define.ts:126 getter + 三專案呼叫端無括號）；Q5 Pot 衝突以 MagicPotController.ts:821 m_serverLevel 佐證且確認無本地隨機；Q3/Q4 是我的判讀（B 級），Q1 的壓縮 vs 原始檔是未證實假設，已標明；Q2 明確不猜。未改任何檔案，故無型別/測試驗證需求。"
+    },
+    {
+      "ts": "2026-08-06T12:11:59.668Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "兩處交付檔改動已用 grep 讀回驗證（pitfalls:81/83 已無括號、README:36 已同步）；RoundIndex 為 getter 有 A 級佐證 CommonGameManager.ts:185；根因主張有 devsteps-survey-part2.md:160-161 直接原文佐證。未跑任何自動化驗收（README 的 probe.py 驗收流程未執行），故不給更高分。"
+    },
+    {
+      "ts": "2026-08-06T12:16:36.114Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "同類掃描用 regex 撈出交付包全部 9 個 \u0000CODE30\u0000 形式並逐一比對 framework 宣告（A 級：NewBottomBarManager.ts:214/644、Define.ts:103、MsgBoxManager.ts:100 等），新缺陷 SetBarNodeVisiable 有明確簽名佐證；Q4/Q5 的「正本未遮/未標」是實際讀檔確認非推測；design §11 十條逐條列出。未修任何檔案故無驗證需求；WithECDH 查無佐證已誠實標註。"
+    },
+    {
+      "ts": "2026-08-06T12:44:16.715Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "六個檔案改動全數 grep 讀回驗證；新增的識別字 tools.strip/setDesignResolutionSize 已比對 Tools.ts:57 確認為函式；補進的實碼範例全部來自實際讀取的 872 原始碼行段（GameView.ts:912/1083/1174/1189、PrefabPoolManager.ts:234-263、MagicPotController.ts:821）；重跑識別字掃描確認僅存的帶括號寫法是警告文字裡的反例引用；檔案大小已對照 design §5 上限全數通過。未執行 README 的 probe.py 問答驗收（需助理環境），故非滿分。"
+    },
+    {
+      "ts": "2026-08-06T20:45:44.133Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "9 個 stale 頁全部用原始 shard 檔的內嵌時間戳（非 list_facts 去時間戳輸出）逐一核對出確切新增 fact，且每條新增內容都附 fact ID 到 frontmatter sources；orphan/broken-link 檢查用完整 grep 掃過全站而非抽驗；扣分點：ai-strategy 的「內容已存在但日期未 bump」是靠肉眼發現而非系統性偵測，若還有其他頁面是同一種模式（內容新但日期舊）本輪未特別去找，只處理了時間戳比對抓到的 9 個。"
     }
   ]
 }

@@ -12,7 +12,9 @@
     "effort": "high"
   },
   "codex": {
-    "command": "npx @zed-industries/codex-acp",
-    "label": "Codex"
+    "command": "npx -y @agentclientprotocol/codex-acp",
+    "label": "Codex",
+    "model": "gpt-5.6-terra",
+    "effort": "high"
   }
 }

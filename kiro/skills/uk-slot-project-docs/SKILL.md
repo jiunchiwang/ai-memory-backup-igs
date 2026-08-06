@@ -1,3 +1,8 @@
+---
+name: uk-slot-project-docs
+description: UK 老虎機（Cocos Creator）專案的兩層 AI 文件維護規範 — AI.md 索引層（≤2000 字，含專案 meta、盤面佈局、模組地圖、不可動部分、踩坑紀錄）與 docs/modules.md 模組詳細層。當讀取或修改 uk_slot_*、uk_7xx_*、uk_8xx_* 專案底下的檔案、或要為這類專案建立／更新 AI.md 與 modules.md 時使用。
+---
+
 # uk-slot-project-docs
 
 當進入 uk_slot_* 系列專案（Cocos Creator 老虎機）讀取或修改檔案時，

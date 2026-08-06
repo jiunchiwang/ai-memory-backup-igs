@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-02
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b]
+updated: 2026-08-06（新增 fixture 形狀陷阱、argv 呼叫慣例、BC-x 編號紀律）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218]
 ---
 
 # Bridge 測試閘門與建置
@@ -64,6 +64,14 @@ runner 用 `readdirSync` 以 `check-*` 前綴**自動發現**腳本 → 新增�
 ## 為既有 smoke 腳本加單例狀態的陷阱
 
 為既有腳本加 module-level 單例（如 registry）時，要先檢查**既有測試區塊的狀態污染**：`check-draft-streaming.mjs` 的區塊 ①②③④ 刻意不 close（那正是它們要驗的事），加 registry 之後這些實例會殘留在 Set 裡。新區塊必須**先 drain 排空再斷言**，否則會拿到非 0 的 count 並誤刪前面區塊的 fake api 訊息。
+
+## 測試 fixture 與呼叫慣例陷阱（2026-08-05～06）
+
+**Fixture 形狀要跟生產一致，否則綠燈與「沒驗到」外觀相同**（ms-vacuous-test-gate 的形狀）：`check-codex-skill-links.mjs` 用 `mkdirSync` 建實體目錄當 Kiro skill，8 項全綠卻完全測不到 `Dirent.isDirectory()` 對 junction 回 `false` 的 bug——因為生產環境的 skill 目錄是 junction 而非實體目錄。已改成 junction 型 + 實體目錄型各一並做過變異測試。
+
+**命令列 argv 要傳分開的 token，不能傳一整串加引號的字串**：`check-acp-model-effort.mjs` 的位置參數取 `command = rest[0]`，若把 `"npx -y @agentclientprotocol/codex-acp"` 當單一參數傳入，含空白的整串會變成 command，`AcpClient` 的 `quoteForShell` 再把它整包加引號，cmd.exe 就去找一個檔名叫這整串的程式 → **exit 1 且完全沒有 stderr**。2026-08-06 因此誤判成「新套件走 bridge spawn 路徑會死」，花了五輪對照才發現是呼叫方式錯——這個失敗形狀（exit 1 + 零 stderr）之後應先懷疑命令解析，不是 adapter。已補防呆（含空白就自動 split，比照 `ACP_AGENT_COMMAND` 的既有處理方式）。
+
+**BC-x 斷言編號是全專案追溯主軸，同號異義會讓事故追查拿到不相干的斷言**：新增斷言前要 grep 該檔全部既有 BC-x 編號確認真的沒被用過，不能只挑下一個看起來沒用到的數字。2026-08-06 自己在 `check-transient-retry.mjs` 撞到 BC-17（該號正是先前為避開 BC-15 撞號才從上游平移過來的），由 Fable5 覆核抓到才改為 BC-18a/b（commit `0546eeb`）；改號時要留下改號理由，不能只是靜默換號。
 
 ## CI 決策（刻意不進版控的 ci.yml）
 

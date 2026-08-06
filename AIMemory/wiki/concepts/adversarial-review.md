@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-05
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c]
+updated: 2026-08-06（新增 Codex 覆核工具限制、缺陷多層遷移案例、stop-time 自動閘門陷阱）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1]
 ---
 
 # 異源對抗覆核紀律
@@ -39,8 +39,14 @@ sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, 
 | 2026-07-30 | Fable5 push 前覆核（開放授權不給檢查清單） | 4 條中 3 成立 1 駁回，且有 1 條連覆核者也枚舉不全 |
 | 2026-07-31 | Fable5 對 unpushed commit 覆核 | 最有價值一條不是程式 bug，是「commit message / 註解 / AI.md 三處共用同一個錯誤因果敘事」——因為寫註解時是從意圖推理而非讀實際呼叫順序時序 |
 | 2026-07-31 | 檢查清單式 prompt 覆核 | 同源自審漏掉的 medium 缺陷；且覆核推翻了原本的風險模型（怕強制補送打穿 429，實際上舊碼節流早已失效） |
+| 2026-08-06 | Codex ACP authMethods 誤判修正的三輪覆核 | 缺陷連續往上層遷移 4 層：碼裡 hint 字串硬編 → 靜態文件（SKILL.md）與碼矛盾 → 另一份靜態文件（DESIGN.md）錯誤值清單漏舉 → 列舉完整性（三份文件都沒提的 error 值）；每層都是異源在下一輪抓到，每輪都誤判「這輪應該只剩敘事精確度」 |
 
-**可重用教訓**：檢查清單式的 prompt 也能抓到同源自審漏掉的缺陷，關鍵是至少有一項要問成「開放式的互動問題」而非「確認某宣稱對不對」。
+**可重用教訓**：檢查清單式的 prompt 也能抓到同源自審漏掉的缺陷，關鍵是至少有一項要問成「開放式的互動問題」而非「確認某宣稱對不對」。「往上層遷移」沒有層數上限——收斂判準要看這輪還有沒有新類型的 finding，不是已經修過幾輪。
+
+## 覆核工具本身的限制（2026-08-06）
+
+- **不要把覆核自動化成無條件停止閘門**：CLI 提供的「stop 時自動跑異源覆核」hook（如 Codex `--enable-review-gate`）常見陷阱是①沒有 diff 閘門（純文字問答也觸發）②失敗一律 block 不是降級（額度耗盡/timeout/空輸出都算 block）③agentic 工具迴圈把成本放大。判準：免費/有限額度方案一律不開；付費且長時間連續改碼才值得評估，且要先確認有 diff 閘門、失敗是 warn 不是 block。已寫進 `ms-cross-model-adversarial-review` 正本。
+- **`codex exec -s read-only` 會被執行政策擋掉 git**（2026-08-06 實測 0.146.1：連 `git --version` 都 "rejected: blocked by policy"）：派 Codex 做 push 前覆核時必須先用 `git show <commit> > diff.txt` 把 diff 匯出成檔案再餵路徑，否則它只讀得到工作區現況、完全覆核不到「這次改了什麼」。改用 `-s workspace-write` 才看得到 commit 內容，但 scratchpad 若在 workspace 之外仍無法寫檔實跑，只能讀既有 artifact（比獨立重跑弱一階，回報時要標明）。
 
 ## Advisor 工具 vs 異源覆核（2026-08-02 判定，不可互相取代）
 

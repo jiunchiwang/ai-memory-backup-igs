@@ -13,9 +13,16 @@ Phase B（--submit）：讀 plan、重新填表、逐欄位比對、點送出、
   # Phase B: 真正送出（需要 Phase A 的 token）
   uof_form.py overtime --submit --token <token>
 
-離開碼：0 成功；2 連不到內網；3 登入失敗/驗證碼；
-       4 表單版型變了；5 參數/plan 錯誤；6 欄位比對不符；
-       7 送出被 server 拒絕；8 送出狀態不明（不重試）。
+離開碼：0 成功；2 連不到內網；3 登入失敗/驗證碼/被人機驗證擋住（antibot）/
+       接管的瀏覽器沒有 UOF 分頁（cdp_no_uof_page）；4 表單版型變了；
+       5 參數/plan 錯誤、CDP 連不上（cdp_connect_failed）、瀏覽器啟動失敗
+       （browser_launch_failed）；6 欄位比對不符；7 送出被 server 拒絕；
+       8 送出狀態不明（不重試）。
+
+⚠️ 人機驗證開著時必須加 --cdp（見 SKILL.md）。已知限制：Phase B 的一次性 token
+   在「開瀏覽器前就失敗」的路徑上仍會被消耗（unreachable / login_error / antibot /
+   cdp_connect_failed / cdp_no_uof_page 皆然，token 在進 sync_playwright 之前就標
+   consumed），需重跑 Phase A——既有設計，未在此次改動處理。
 """
 import argparse, sys, os, json, datetime, re, hashlib, secrets
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +32,13 @@ from uof_client import die, load_config, BASE
 
 OVERTIME_FORM = "WKF/FormUse/PersonalBox/ApplyFormList.aspx?fillFormDirectly=true&formId=cd8fb94e-a539-4c7e-9762-43e87e653ced"
 DRY_RUN_DIR = os.path.expanduser("~/.config/uof/dry_run")
+
+
+def cdp_of(args):
+    """--cdp / --cdp-endpoint → open_uof 的 cdp 參數（沒給回 None = 照舊自己開瀏覽器）。"""
+    if getattr(args, "cdp_endpoint", None):
+        return args.cdp_endpoint
+    return uof_client.CDP_DEFAULT if getattr(args, "cdp", False) else None
 
 # 加班單欄位（2026-07-13 recon 確認；2026-07-16 recon 更新 clock_in/clock_out 控制項）
 UC = {
@@ -190,13 +204,15 @@ def fill_overtime_dryrun(args):
     warnings = []
 
     with sync_playwright() as p:
-        browser, ctx, page, mode = uof_client.open_uof(p, cfg, headed=args.headed, fresh_login=args.fresh_login)
+        browser, ctx, page, mode = uof_client.open_uof(
+            p, cfg, headed=args.headed, fresh_login=args.fresh_login, cdp=cdp_of(args))
 
         page.goto(BASE + OVERTIME_FORM, wait_until="networkidle", timeout=40000)
         page.wait_for_timeout(5000)
 
         frame = find_form_frame(page)
         if not frame:
+            uof_client._die_if_antibot(page, attached=bool(cdp_of(args)))  # 先排除「中途被驗證擋住」再說版型（覆核 M2）
             die(4, "form_layout_changed", hint="找不到加班單表單 frame")
 
         verify_schema(frame)
@@ -263,8 +279,7 @@ def fill_overtime_dryrun(args):
         screenshot_path = os.path.join(DRY_RUN_DIR, f"overtime_{ts}.png")
         page.screenshot(path=screenshot_path, full_page=True)
 
-        ctx.close()
-        browser.close()
+        uof_client.close_uof(browser, ctx, mode)  # mode=='cdp' 時不關（使用者的瀏覽器）
 
     # ── 產出 plan 檔 + token ──
     token = secrets.token_hex(16)  # 32 字元 hex
@@ -342,7 +357,8 @@ def submit_overtime(args):
     cfg = load_config()
 
     with sync_playwright() as p:
-        browser, ctx, page, mode = uof_client.open_uof(p, cfg, headed=args.headed, fresh_login=args.fresh_login)
+        browser, ctx, page, mode = uof_client.open_uof(
+            p, cfg, headed=args.headed, fresh_login=args.fresh_login, cdp=cdp_of(args))
 
         # 攔截 JS alert（server validation 失敗時會跳 alert）
         dialog_messages = []
@@ -354,6 +370,7 @@ def submit_overtime(args):
 
         frame = find_form_frame(page)
         if not frame:
+            uof_client._die_if_antibot(page, attached=bool(cdp_of(args)))  # 同上（覆核 M2）
             die(4, "form_layout_changed", hint="找不到表單 frame")
 
         verify_schema(frame)
@@ -429,8 +446,7 @@ def submit_overtime(args):
         verify_screenshot = os.path.join(DRY_RUN_DIR, f"submit_verify_{ts}.png")
         page.screenshot(path=verify_screenshot, full_page=True)
 
-        ctx.close()
-        browser.close()
+        uof_client.close_uof(browser, ctx, mode)  # mode=='cdp' 時不關（使用者的瀏覽器）
 
     # 11. 更新 plan 的 submit_result
     plan["submit_result"] = {
@@ -590,6 +606,9 @@ def main():
     ot.add_argument("--project-owner", help="專案負責人")
     ot.add_argument("--headed", action="store_true", help="有頭模式")
     ot.add_argument("--fresh-login", action="store_true", help="忽略既有 session，強制重新登入")
+    ot.add_argument("--cdp", action="store_true",
+                    help="接管使用者自己開的瀏覽器（過 Cloudflare 人機驗證用；見 launch_cdp_browser.py）")
+    ot.add_argument("--cdp-endpoint", default=None, help="CDP endpoint（預設 http://127.0.0.1:9222）")
     # P3 submit
     ot.add_argument("--submit", action="store_true", help="Phase B：真正送出（需搭配 --token）")
     ot.add_argument("--token", help="Phase A 產出的一次性 token")

@@ -1,5 +1,18 @@
 {
   "f_76462d": "ai-strategy",
   "f_d5d14e": "ai-strategy",
-  "f_ec0c7c": "bridge-acp"
+  "f_ec0c7c": "bridge-acp",
+  "f_d5b5eb": "igs-uof",
+  "f_303689": "igs-uof",
+  "f_4ef3e7": "bridge-acp",
+  "f_b09bb8": "dev-tools",
+  "f_5d0939": "verification-diagnosis",
+  "f_dccd98": "bridge-acp",
+  "f_771784": "bridge-smoke-gate",
+  "f_b490fe": "adversarial-review",
+  "f_ddc6a2": "dev-tools",
+  "f_00d0b6": "dev-tools",
+  "f_806752": "ai-strategy",
+  "f_ca3437": "bridge-acp",
+  "f_204218": "bridge-smoke-gate"
 }

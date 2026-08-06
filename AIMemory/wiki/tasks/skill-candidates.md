@@ -57,10 +57,10 @@
   - 代表 session: 2026-07-18（merge 安全）、07-26（protobufjs 論證缺陷，37 tool calls/587s）、07-29（5 孤兒 import + 1 死碼，tsc 全綠抓不到）、07-30（4 條中 3 成立 1 駁回）、07-31 五輪（00-48 一輪 5 條、07-41 三輪 10 條、13-46 一輪 F1 await race）
   - 與既有候選 `kiro-delegate-three-stage-review` 的分界：後者是**委派實作後**的三段 QA（append 到 vc-kiro-delegate），本 skill 是**push 前**的異源對抗覆核紀律，兩者不合併
 
-- [ ] **acp-raw-capability-probe** | count=3 | score=0.30 | 留底觀察
+- [ ] **acp-raw-capability-probe** | count=4 | score=0.40 | 留底觀察
   - Pattern：文件查不到 ACP adapter 實際支援什麼（model/effort 現值、`sessionCapabilities.resume/list/fork`）時，寫一支 `probe-acp-*` 一次性腳本 spawn adapter → `initialize`/`session/new` → 直接讀回傳的 raw JSON-RPC 欄位，而非相信 adapter 的敘述或 CLI flag 成功與否
-  - 代表 session: 2026-07-29（`check-acp-model-effort.mjs`，查證 ACP session 實際跑什麼 model）、2026-08-02（`probe-acp-config-options`，走 `session/new` 讀 configOptions）、2026-08-05T11-37（`probe-acp-session-capabilities.mjs`，initialize-only 讀 `agentCapabilities.sessionCapabilities`，確認 claude-agent-acp 支援 resume/list/fork 而 kiro-cli 整塊缺席）
-  - 觀察點：與已升格的 `ms-blackbox-probe-experiment-design` 不是同一件事——那支是探針**實驗設計**原則（多臂矩陣、陽性對照），這個候選是**針對 ACP handshake 這一種特定協定**的固定探測手法（initialize-only、不開 session、逐 backend try/catch、探針前綴天生排除進 smoke gate）。若第 4~5 次出現且沉澱出可重用的探針骨架（共用 spawn/kill/timeout 邏輯），評估獨立成 skill 或 append 到 ms-blackbox-probe-experiment-design 的「ACP 應用範例」小節
+  - 代表 session: 2026-07-29（`check-acp-model-effort.mjs`，查證 ACP session 實際跑什麼 model）、2026-08-02（`probe-acp-config-options`，走 `session/new` 讀 configOptions）、2026-08-05T11-37（`probe-acp-session-capabilities.mjs`，initialize-only 讀 `agentCapabilities.sessionCapabilities`，確認 claude-agent-acp 支援 resume/list/fork 而 kiro-cli 整塊缺席）、2026-08-06T07-05（連續三次：codex-acp 已登入 authMethods 三方對照探針、`session/set_config_option` 的 `configId` 參數名探測、`@agentclientprotocol/codex-acp` 1.1.7 新舊套件 capability 差異探針——同一 session 內反覆用同一手法，且首次出現「探針本身逾時 timer 未 clear 造成掛住」這類探針工具本身的 bug）
+  - 觀察點：與已升格的 `ms-blackbox-probe-experiment-design` 不是同一件事——那支是探針**實驗設計**原則（多臂矩陣、陽性對照），這個候選是**針對 ACP handshake 這一種特定協定**的固定探測手法（initialize-only、不開 session、逐 backend try/catch、探針前綴天生排除進 smoke gate）。若第 5 次出現且沉澱出可重用的探針骨架（共用 spawn/kill/timeout 邏輯，含這次發現的「逾時 timer 要 clearTimeout」教訓），評估獨立成 skill 或 append 到 ms-blackbox-probe-experiment-design 的「ACP 應用範例」小節
   - 現有覆蓋：wiki `verification-diagnosis`（raw JSON-RPC probe 是查證 model 的唯一可靠法）、`bridge-acp`（ACP adapter 能力偵測陷阱）
 
 ## 誤判紀錄（防重複偵測）
@@ -72,4 +72,4 @@
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
 ---
-Last updated: 2026-08-05
+Last updated: 2026-08-06

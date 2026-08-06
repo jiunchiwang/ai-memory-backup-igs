@@ -314,3 +314,11 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-05T20:32:53.526Z] user=509424983 query="對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit" deleted=0 token=forget-de23ae5f-1
 
+- [2026-08-06T06:33:52.652Z] user=509424983 query="走 bridge AcpClient 的 spawn 路徑會 exit 1 且無 stderr" deleted=1 token=forget-1a00be09-1
+    - [f_346178] [2026-08-06T06:25:25.550Z] Codex 的 ACP adapter 有兩個套件且行為不同：@zed-industries/codex-acp 已 deprecated（npm 明寫 "replaced by @agentclientprotocol/codex-acp"，最後更新 2026-06-23，最新 0.16.0；這台機器全域裝的是 0.15.0），維護中的是 @agentclientprotocol/codex-acp（1.1.9，upstream redkilin 的預設命令就是它）。2026-08-06 raw ACP probe 實測差異：舊版 currentModelId 用斜線 gpt-5.5/medium、effort 只有 low/medium/high/xhigh、sessionCapabilities 整塊缺席；新版 1.1.7 用方括號 gpt-5.6-terra[medium]、effort 多了 max/ultra、且宣告 resume/list/close/delete/additionalDirectories（對 bridge 的 session resume gate 有意義）。兩者都在已登入時回非空 authMethods，所以 bridge 的 authMethodsImplyLoggedOut codex 例外對兩個套件都必要。⚠️ 換套件必須同時改 pin：gpt-5.5 在新版清單裡不存在。⚠️ 未解：`npx -y @agentclientprotocol/codex-acp` 直接 spawn 正常，但走 bridge AcpClient 的 spawn 路徑會 exit 1 且無 stderr，根因未查明——換命令前要先確認，否則 backend 會直接死。
+- [2026-08-06T11:01:44.699Z] user=509424983 query="探針會撞 401 Unauthorized" deleted=0 token=forget-58cddbee-1
+
+- [2026-08-06T11:02:48.643Z] user=509424983 query="探針會撞 401 Unauthorized" deleted=0 token=forget-58cddbee-1
+
+- [2026-08-06T11:04:19.858Z] user=509424983 query="探針會撞 401 Unauthorized" deleted=0 token=forget-58cddbee-1
+

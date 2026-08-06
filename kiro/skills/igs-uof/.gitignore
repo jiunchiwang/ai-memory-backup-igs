@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 config.json
+
+# 離線通訊錄快照含全公司姓名/Email/員編（PII），任何情況都不進版控
+directory.tsv
+directory.meta.json

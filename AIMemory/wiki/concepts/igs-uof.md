@@ -2,8 +2,8 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-07-31
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_cf4a82, f_9b3d71, f_e8c5f0, f_a2d693]
+updated: 2026-08-06（新增 CDP 接管模式突破 Cloudflare 反機器人驗證）
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_cf4a82, f_9b3d71, f_e8c5f0, f_a2d693, f_d5b5eb, f_303689]
 ---
 
 # IGS-UOF 加班單自動化
@@ -30,20 +30,42 @@ sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, 
 
 ⚠️ **二次確認彈窗誤判為送出失敗**（2026-07-17）：`uof_form.py` 的 submit 流程會把 UOF 的二次確認彈窗（含申請資料摘要的 alert/dialog）誤判為 `submit_rejected`——實際上第一次 headless submit 就已經成功送出（實測案例 BAE260706086 於 09:27 申請成功，腳本卻回報失敗）。腳本需修正確認彈窗處理邏輯，目前尚未修復。
 
-## ⛔ Cloudflare 反機器人驗證（2026-07-30）
+## Cloudflare 反機器人驗證與 CDP 接管（2026-07-30 → 2026-08-06 已破解）
 
-公司內網 UOF（`http://uof` → `https://hq.igs.com.tw/UOF/`）於 2026-07-30 前後新增 Cloudflare 反機器人驗證（`AntiBotCheck.aspx` + Turnstile），headless Playwright 無法通過，導致 igs-uof skill 的**所有查詢子命令**（`hours`/`attendance`/`leave`/`todo`/`whois`）**全數失效**。
+公司內網 UOF（`http://uof` → `https://hq.igs.com.tw/UOF/`）於 2026-07-30 前後新增 Cloudflare 反機器人驗證（`AntiBotCheck.aspx` + Turnstile，登入成功後才跳）。**2026-08-06 已找到可行的接管路徑，查詢功能恢復可用**——以下記錄從全數失效到破解的完整過程。
 
-### 處置決策
+### Turnstile 判的是什麼（三臂實測，2026-08-06）
 
-使用者選擇**不做規避驗證的工程**（stealth 參數／指紋偽裝），遇到時自行上網頁手動查加班時數。
+Turnstile 認的**不是** cookie、無痕、或瀏覽紀錄，而是「這個瀏覽器是不是自動化啟動的」：
 
-### 診斷注意事項
+| 臂 | 做法 | 結果 |
+|---|---|---|
+| 1 | Playwright 內建 Chromium（headless/headed 皆試） | ❌ 停在 AntiBotCheck |
+| 2 | Playwright `channel=msedge` 真 Edge headed | ❌ 等 241s 未過 |
+| 3 | 使用者自己用 `Start-Process msedge --remote-debugging-port=9222 --user-data-dir=<乾淨profile>` 開的 Edge，登入+點驗證後，`playwright connect_over_cdp("http://127.0.0.1:9222")` 接管既有 page | ✅ |
 
-- `uof_client.py` 的 `_is_net_error()` 把 Playwright Timeout 也歸類為網路錯誤——**不可信任其 unreachable 錯誤訊息**
-- 實際網路多半正常，應先確認是否被 AntiBotCheck 擋住
+分野純粹在瀏覽器是否由自動化啟動，不需要任何 stealth 參數或指紋偽裝。過驗證前刻意不用 CDP 碰該頁（避免留下自動化痕跡影響過驗證判定）。
 
-### 手動查詢路徑
+### CDP 接管模式已進 skill（commit `fce516d`，AI-canonical-corp）
+
+- `scripts/launch_cdp_browser.py`：開瀏覽器（獨立 profile + CDP port，Edge→Chrome 依平台找路徑）
+- 使用者在該視窗登入 + 點過驗證，視窗保持開著
+- `uof.py --cdp <子命令>` / `uof_form.py --cdp`：接管該視窗執行查詢/填單
+- 被 Turnstile 擋住時現在回明確的 `error=antibot`（不再誤報 `unreachable`/`scrape_failed`）
+
+**antibot 的處置依模式相反，agent 必須照 hint 走，不可套同一句話**：
+- 非 CDP 模式：**別重試同一條命令**（重試必敗，見上面三臂實驗）
+- 已在 CDP 卻中途被重新挑戰：**在既有視窗重新點過驗證後重跑同一條命令**，不要重開瀏覽器
+
+**CDP 模式刻意不落地 `session.json`**：`storage_state` 會把使用者當時瀏覽器裡**全部網站**的 cookies 存成明文——實測連新開的「乾淨」profile 都混進 `.msn.com`/`.bing.com`（Edge 開機頁塞的），且 Windows 上 `chmod 600` 是 no-op 沒有實際權限保護。
+
+**尚未端到端實測**：填單（`uof_form.py`）的 CDP 路徑。查詢路徑已驗證可用。
+
+### 診斷注意事項（歷史踩坑，仍有效）
+
+- `uof_client.py` 的 `_is_net_error()` 把 Playwright Timeout 也歸類為網路錯誤——**不可信任其 unreachable 錯誤訊息**，先確認是否被 AntiBotCheck 擋住（此問題在 antibot 偵測補上後已緩解，但邏輯本身的陷阱仍值得記住）
+
+### 手動查詢路徑（CDP 模式前的備援，仍可用）
 
 加班時數：差勤 → 加班統計查詢（`Project/BAE/Stats_Search.aspx`），設日期區間並勾選簽核狀態「同意」+「簽核中」，看底部平日／假日合計。
 

@@ -67,7 +67,7 @@ pipeline，一口氣跑到 Step 5，檢查點的逐項輸出改收進 Report 的
 
 | Skill | 何時用 | 用途 |
 |-------|--------|------|
-| `excel-to-ai-doc` | Pre-A | xlsx → markdown + 圖片轉換 |
+| `excel-to-ai-doc` | Pre-A | xlsx → markdown + 圖片 + 顏色圖例 + 自我驗證報告 |
 | `uk-slot-pattern-library` | Pre-B | 功能分類對照（模式索引 #1–#25，以該 skill 索引表為準） |
 
 M2+ 交棒的下游 skill（uk-conventions / uk-slot-project-docs / state-machine / extrabet /
@@ -101,7 +101,7 @@ fake-reel-manager / multilang-sync）見 `_milestones.md`「下游 skill 交棒�
 
 | 位置 | 內容 | 產生於 |
 |------|------|--------|
-| `<game>/docs/spec/` | 規格書 markdown + 圖片 + metadata.json | Pre-A |
+| `<game>/docs/spec/` | 規格書 markdown（含顏色圖例）+ 圖片 + metadata/（metadata.json、validation.txt、stats.json） | Pre-A |
 | `<game>/docs/dev-spec.md` | 差異開發規格（🟢🟡🔴 分類 + proto 映射） | Pre-B |
 | `<game>/SPEC.md` | milestone 任務清單（做完打 [x]） | Post（Step 5 後） |
 | `<game>/scratch/` | Game_Spec.md、Game_Summary_File.md、codegen-traceability.json、codegen-report.md | Step 1~5 |

@@ -81,20 +81,29 @@
 
 ```powershell
 $env:PYTHONUTF8='1'
-py "${SKILL_DIR}/excel-to-ai-doc/scripts/convert.py" "<spec_path>" "<target>/docs/spec"
+uv run "${SKILL_DIR}/excel-to-ai-doc/scripts/convert.py" "<spec_path>" "<target>/docs/spec"
+# 沒裝 uv 時退回：py "${SKILL_DIR}/excel-to-ai-doc/scripts/convert.py" ...（需先 pip install requirements）
 ```
 
-**輸出**：`<target>/docs/spec/markdown/<stem>.md` + `images/` + `metadata.json`
+**輸出**：`<target>/docs/spec/markdown/<stem>.md`（含顏色圖例）+ `<stem>_markitdown_raw.md`
+（比對基準，平時不讀）+ `images/` + `metadata/metadata.json` + `metadata/validation.txt`
++ `metadata/stats.json`
 
 > 🔍 **檢查點 1（請使用者過目）**：Codegen 不停等確認即可繼續，但**必須逐項輸出下列
 > 格式並收進 Step 5 Report**，不可只寫「看起來沒問題」：
 >
 > ```
-> - 圖片：共 {N} 張。比對工作表數量，漏抽風險：{有/無}
+> - 自我驗證：{validation.txt 第一行「整體：」原文}
+>   - 孤兒圖（xl/media 有但無錨點）：{N} 張 → {數量少屬正常 / 接近總數需查匯出方式}
+>   - 密集表縮水 / 有內容卻空輸出：{無 / 逐項列出}
+> - 圖片：共 {N} 張（validation 的「已錨定抽出」）
 > - 賠付表數值：{有完整數值 / 部分空白需機率文件 / 全空}
+> - 顏色圖例：{M} 種樣式組合 → {是否有明顯語意分組，如黃底=待確認}
 > - 關鍵玩法圖對應章節：
 >   - {章節名} → {圖片 cell 位置} {對/缺}
 > ```
+>
+> 前三項直接引用 `metadata/validation.txt`，不要自己數。
 
 Pre-A 完成後**立即建立 `<target>/AI.md`**（照 `uk-slot-project-docs` 慣例），填入已知的
 專案 meta、盤面佈局、Symbol 列表；後續每個 Step 增量更新。越早建越有用——留到 M0a
@@ -116,7 +125,7 @@ Pre-A 完成後**立即建立 `<target>/AI.md`**（照 `uk-slot-project-docs` �
 
 **跳過條件**：`<target>/docs/dev-spec.md` 已存在
 
-讀規格書 raw markdown，對照 pattern-library 的模式卡片，產出差異開發規格。
+讀規格書 規格 markdown，對照 pattern-library 的模式卡片，產出差異開發規格。
 
 ### 功能分類表
 
@@ -215,7 +224,7 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_adapter.py" <spec_path> <target>/scratch/G
 
 **輸出**：`<target>/scratch/Game_Spec.md`
 
-> 注意：adapter 的 Symbol idx 已從 ODDS 表 reindex 校正，但仍以 Pre-A 的 raw markdown 為最終權威。
+> 注意：adapter 的 Symbol idx 已從 ODDS 表 reindex 校正，但仍以 Pre-A 的 規格 markdown 為最終權威。
 > Step 2 產出 Summary 時若發現 adapter 順序與 ODDS 表不一致，以 ODDS 表為準。
 
 **驗證**：`_gates.md` §1
@@ -241,17 +250,18 @@ py "${SKILL_DIR}/uk-slot-codegen/spec_traceability.py" tag-spec <target>/scratch
 ## Step 2: Summary Generation
 
 📖 `<target>/scratch/Game_Spec.md`（adapter 結構化輸出，快速參考）
-📖 `<target>/docs/spec/markdown/<stem>.md`（excel-to-ai-doc raw，ground truth）
+📖 `<target>/docs/spec/markdown/<stem>.md`（excel-to-ai-doc 重建版，ground truth；
+   **不是** `_markitdown_raw.md`，那份只是比對基準）
 
 1. 解析 Game_Spec 產出 7 章節 Summary
 2. 辨識 SpinMode（4 條優先規則）
-3. **Symbol 排序校正**：從 raw markdown 找「ODDS表」區塊，讀取 SymID 欄數字。
+3. **Symbol 排序校正**：從 規格 markdown 找「ODDS表」區塊，讀取 SymID 欄數字。
    非 `server_only` 項目的 SymID 是 `enum Symbol` 的 client 契約；若 adapter 的
    Game_Spec 中 Symbol idx 與 ODDS 表 SymID 不一致，**以 ODDS 表為準**。
 4. 產出 `Game_Summary_File.md`
 
 **SymID 校正規則**：
-- ODDS 表通常在「2. 基本規格」sheet 內，raw markdown 中搜尋「ODDS表」或「SymID」關鍵字定位
+- ODDS 表通常在「2. 基本規格」sheet 內，規格 markdown 中搜尋「ODDS表」或「SymID」關鍵字定位
 - 第一個 Symbol（通常 WILD）若無 SymID 數字，則為 idx=0
 - 後續 Symbol 依 SymID 欄遞增排列
 - ODDS 表有但 adapter 漏掉的 Symbol（如 FEATURE、Blank、server 用）須補入 Summary；

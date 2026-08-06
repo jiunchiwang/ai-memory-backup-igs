@@ -1,4 +1,6 @@
 ---
+name: uk-slot-logo-localization
+description: UK 老虎機專案的 logo 圖多語系補齊 — 把 assets/game/Text/logo/logo_en.png 原圖複製改名成各語系檔名（logo_cn.png 是簡體獨立設計，不可用英文版覆蓋）。當新專案或既有專案要補齊 logo 多語系檔案、或使用者說「logo 圖複製到各語系」「logo 在地化」時使用。
 type: skill
 domain: slot
 created: 2026-07-14

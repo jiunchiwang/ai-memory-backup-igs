@@ -105,6 +105,68 @@
 - **電話分機查詢（whois）**：`CDS/WebPage/ExtQuery.aspx`（可直連）。控制項 `#name_TB`、`#engName_TB`、`#empno_TB`、`#company_DL`、`#department_DL`、`#team_DL`、`#ext_TB`、`#searchBtn`。結果 `#resultGrid`，欄：(2 空欄)|部門|組|姓名|分機|員工編號|Email；頁首 `查詢筆數: N筆`＋`資料最後更新時間: …（每小時更新）`。**0 筆時不渲染「查詢筆數」與 `#resultGrid`，只顯示「查無資料」**（2026-07-15 實測）→ 視為 total=0，不報錯。
 - **公告（已移除）**：`EIP/Bulletin/Default.aspx` 分類樹可點（postback），但所有分類含團膳公告皆「沒有資料」；首頁「最新公告」widget 同樣空。IGS 未使用此模組。
 
+## Cloudflare 人機驗證與 CDP 接管（2026-08-06 實測定案）
+
+**系統事實**：UOF 在**登入成功之後**跳 `AntiBotCheck.aspx?targetUrl=…`（頁面標題「安全驗證 - UOF System Verification」，內嵌 `challenges.cloudflare.com/…/turnstile/…` iframe 的「驗證您是人類」勾選框）。實際 host 為 `https://hq.igs.com.tw/UOF/`（`BASE` 的 `http://uof/UOF/` 會被 redirect 過去）。
+
+**三臂實驗**（同一天、同帳號、同網路）：
+
+| 臂 | 做法 | 結果 |
+|---|---|---|
+| 1 | Playwright 內建 Chromium `launch(headless=False)` | ❌ 停在 AntiBotCheck；連 Turnstile iframe 都定位不到 |
+| 2 | Playwright `launch(channel="msedge")` 真 Edge headed | ❌ 等 241 秒未過（iframe 有抓到） |
+| 3 | 使用者自行啟動的 Edge（`--remote-debugging-port` + 獨立 profile）+ 真人點擊 → `connect_over_cdp` 接管 | ✅ 查詢正常 |
+
+∴ **分野是「瀏覽器是否由自動化啟動」，不是瀏覽器廠牌、也不是無痕模式**。換瀏覽器與開無痕都無效（臂 1/2 已否證）。已排除的路徑：stealth 參數、指紋偽裝（使用者 2026-07-30 明確決定不做這類工程）。
+
+**修掉的假陽性**：`_goto_home_ok()` 只判 URL 有無 `login.aspx`，被導到 AntiBotCheck 時回 True → `open_uof` 回報 `session: reused/new`（看起來成功），失敗延後到查詢頁才炸成 `scrape_failed` / `Page.goto Timeout`；2026-07-30 因此被誤讀成「連不到內網」。現在 `open_uof` 的兩條路徑（session 重用後、帳密登入後）與 `attach_uof` 各接一個 `_die_if_antibot()`，改報全域錯誤 `antibot`(3)。
+
+**新增錯誤值**：`antibot`(3)、`cdp_no_uof_page`(3)、`cdp_connect_failed`(5)、launcher 的 `cdp_port_in_use`/`cdp_not_ready`/`browser_not_found`/`browser_launch_failed`(5，後者與 `uof_client` 既有的同名錯誤同語意)。
+
+`antibot` 的兩個維度（第三輪覆核 F-A/F-B 修正）：
+- **hint 依模式分流**：`ANTIBOT_HINT_LAUNCH`（還沒接管 → 跑 launcher、**別重試同一條命令**）／`ANTIBOT_HINT_ATTACHED`（已在 CDP、視窗被重新挑戰 → 在既有視窗重點驗證即可、**重跑同一條命令**）。兩者的處置**相反**，∴ 文件不可寫成單一無條件指引，必須要 agent 以 `hint` 為準。
+- **錯誤層級依觸發點分流**：擋在 session 建立點 → 全域錯誤（`die`，整份 JSON 只有 `error`）；查詢中途被重新挑戰 → **功能級**錯誤（掛該子命令鍵、`break` 停止後續，已完成子命令結果保留），語意同 `session_expired`。SKILL.md 兩處都要載明，否則 agent 會把仍然有效的部分結果整批丟掉重查。
+
+**CDP 模式設計**：
+- `open_uof(..., cdp=endpoint)` → 委派 `attach_uof()`：`connect_over_cdp` → 取 `contexts[0]` → 挑 URL 含 `/uof/` 的分頁 → antibot 檢查 → 若停在 Login 頁則代填帳密登入 → 再檢一次 antibot（驗證在登入後才跳）→ 存 session。`session_mode` 回 `'cdp'`。
+- ⚠️ **承重連動**：呼叫端原本一律 `ctx.close(); browser.close()`，那會關掉**使用者自己的瀏覽器**、害他重過一次驗證。∴ 新增 `close_uof(browser, ctx, session_mode)`，`'cdp'` 時 no-op；`uof.py` 與 `uof_form.py`（Phase A/B）共 3 處收尾全部改走它。這條是本次改動最容易漏的地方，已用「跑完後 curl `/json/version` 確認瀏覽器還活著」實測。
+- 過驗證**之前**刻意不用 CDP 碰那個頁面（減少自動化痕跡）；帳密代填只發生在已過驗證之後。
+- `launch_cdp_browser.py`：Edge→Chrome 依平台找路徑，獨立 `user-data-dir`（既有瀏覽器在跑時 `--remote-debugging-port` 會被忽略，故不共用預設 profile），輪詢 `/json/version` 確認 port 起來才回 JSON。
+
+### 異源覆核紀錄（Fable 5，2026-08-06，0 high / 3 medium / 6 low）
+
+採納並修掉：
+
+| # | 問題 | 處置 |
+|---|---|---|
+| M1 | `attach_uof` 存 session → `storage_state()` 匯出 context **全部 origin** 的 cookies。**實證比覆核者說的更嚴重**：連 launcher 的乾淨 profile 都混進 `.msn.com`/`.bing.com`/`turbo.microsoft.com`（18 顆 cookie 有 12 顆無關），且 `chmod 600` 在 Windows 是 no-op（實測 mode 666） | CDP 模式**不存 session**；已污染的 session.json 就地清洗只留 `hq.igs.com.tw`；`_save_session` 加警告 docstring；`browser_not_found` 的手動啟動 hint 補「用獨立目錄」 |
+| M2 | antibot 偵測只護 session 建立點。clearance 中途失效 → selector 逾時 → 回報 `scrape_failed`「版型可能改變」，填單更報「表單版型變了」——**正是這次要修掉的誤診模式在 mid-session 復發** | 新增 `antibot_result()`；`run_segments` 三條 except 分支（ScrapeFailed / PlaywrightError / 保底 Exception）各先問一次，命中即回 `antibot`(3) 並停止後續；`uof_form` 兩處 `find_form_frame` 失敗處同樣先排除 |
+| M3 | launcher 先 Popen 再輪詢 `/json/version`，port 已被別的 CDP 瀏覽器占用時會打到**別人**的瀏覽器並回報假成功（本機有其他 CDP 工具，情境真實） | Popen **之前**先探一次 port，占用即報 `cdp_port_in_use` 並指出兩條出路 |
+| L1 | CDP 模式下 hint 指錯方向（叫已在 CDP 的人去跑 launcher；驗證碼叫他用 `--headed`） | `_die_if_antibot(attached=)` / `login(attached=)` 兩套 hint |
+| L3 | `--browser chrome` 仍會靜默 fallback 到 Edge；缺 Chrome 使用者層安裝路徑 | 明確指定不 fallback；補 `%LOCALAPPDATA%` 路徑 |
+| L6 | `attach_uof` 只看 `contexts[0]`，使用者開無痕視窗（獨立 context）時誤報 `cdp_no_uof_page` | `_pick_uof_page(browser)` 掃全部 context，回 `(ctx, page)` |
+| L2 | `--fresh-login` / `--headed` 在 CDP 模式被靜默忽略 | uof.py docstring + SKILL.md 明載 |
+
+**第二輪覆核（範圍限定在上表的修正集）抓到 1 medium + 3 敘事**，全部已修：
+
+- **F1**（medium，行為）— 修 M2 時把 L1 剛修掉的同型錯誤又埋回來：新寫的 `antibot_result` 硬編 `ANTIBOT_HINT_ATTACHED`，非 CDP 模式中途被重新挑戰時會叫使用者「去點那個接管的視窗」（不存在）並「重跑本命令」（按三臂實驗必敗，且與 SKILL.md 的「別重試」矛盾）。根因：`run_segments` 拿不到 `mode`，`main` 手上有卻沒傳。→ `antibot_result(page, attached)` + `run_segments(..., attached=(mode == "cdp"))`。
+- **F2/F3/F4**（敘事）— `run_segments` 函式層 docstring 未同步新的 antibot 出口、DESIGN 的新增錯誤值清單漏 `cdp_port_in_use`、`uof_form.py` 頂部離開碼清單未涵蓋 antibot/cdp 錯誤。→ 三處補齊。
+
+**第三輪覆核（Sonnet，範圍限第二輪的修正集）抓到 2 條敘事-行為不符 + 3 條列舉不全**，全部已修：
+
+- **F-A**（medium-high）— SKILL.md 錯誤表的 `antibot` 列無條件寫「別重試同一條命令」，但碼在 attached 情境的 hint 明寫「重跑本命令」。**兩種情境的正確處置是相反的**，靜態文件寫成單一指引就必然有一半是錯的；agent 照表做會在已有視窗的情況下再開一個多餘的瀏覽器。→ 錯誤表列出兩種情境並要求以 `hint` 為準；agent 端流程段補 attached 分支。
+- **F-B**（medium）— `antibot` 只列在「全域錯誤」表，但 mid-query 觸發時走的是功能級路徑（`result[cmd]` + `break`，保留已完成結果）。agent 可能因此把仍有效的部分結果整批丟掉重查。→ 功能級錯誤段補一則跨兩層的說明。
+- **F-C**（low，3 項）— `uof_form.py` 離開碼清單漏 `cdp_no_uof_page`（exit 3，且同樣在 token 標 consumed 之後才觸發）、DESIGN 錯誤值清單漏 `browser_launch_failed`。→ 補齊。
+
+∴ 這批改動的失敗模式**逐層上移過三次**：碼（F1 的 hint 硬編）→ hint 敘事 → 靜態文件（F-A/F-B）→ 列舉完整性（F-C）。三輪都是異源抓到，同源自審每一輪都宣稱「只剩敘事精確度」而每一輪都還有行為面的錯。這條經驗比本次的功能本身更值得記住：**守衛類改動的缺陷會往上層遷移，修完碼不等於修完，文件層的錯一樣會讓 agent 做錯事。**
+
+未採納：
+
+- **L4**（Phase B 的一次性 token 在「開瀏覽器前就失敗」時被燒掉）— 既有設計，`unreachable`/`login_error` 早就同樣會燒；CDP 模式只是提高了該分支機率。動 token 消耗順序是寫入路徑改動，超出本次 scope → **列為 follow-up**。
+- **L5**（`--cdp-endpoint` 忘給值會吞掉下一個 token）— 標準 argparse 同行為，且失敗訊息會顯示 endpoint 值可自行診斷 → 不改，僅記錄。
+
+覆核者查核後**無 finding** 的面（我自己複驗過的）：`die()` 拋 `SystemExit` 落在 `except SystemExit: raise` 先於 `except Exception` 的結構內、`run_segments` 的 `except Exception` 不吞 `BaseException`、`with sync_playwright()` 的 `__exit__` 保證非 CDP 路徑不洩漏瀏覽器、`close_uof` 全庫 3 個收尾點全覆蓋（剩下唯一裸 `ctx.close()` 只在非 CDP 分支可達）、`parse_segments` 改寫 13 組邊界輸入不變。
+
 ## 用詞規範（2026-07-15 用戶回饋）
 
 - **框架**：`monthly_target` 是**個人自訂的加班目標時數**（personal goal），不是「公司最低標準/配額」。所有用戶可見的中文（SKILL.md 回答指引、SETUP.md、CLI help、JSON 內的中文 hint/note）一律採「目標」framing。

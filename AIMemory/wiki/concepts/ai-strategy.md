@@ -2,8 +2,8 @@
 type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
-updated: 2026-08-05（新增 sync.ps1 三 CLI 投影擴展至 Codex）
-sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698, f_e68e53, f_4568c1, f_76462d, f_d5d14e, f_0e4a79, f_b9e59d]
+updated: 2026-08-06（Codex CLI 登入狀態更正——內容已於當時補上，此次僅補正 frontmatter 日期與 source ID）
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698, f_e68e53, f_4568c1, f_76462d, f_d5d14e, f_0e4a79, f_b9e59d, f_806752]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -104,9 +104,13 @@ AI-canonical-corp 的 slot skill（如 `uk-slot-pattern-library`）透過 Window
 
 **為何 Codex steering 選「全文內嵌」而非 pointer/`@import`**：Codex 是否支援檔案引用語法未經驗證，內嵌可確定生效；managed block 的 marker 之間每次 sync 覆蓋所以不會漂移，marker 外的手寫內容保留。
 
-**環境限制（未解，2026-08-05）**：這台機器的 Codex CLI（0.146.0）當時未登入（`codex login status` → Not logged in、`~/.codex` 無 auth 檔、bridge `.env` 也沒有 OpenAI/Codex key），所以「skill/steering 在 Codex 上能不能正確執行」的端到端驗證做不了，探針會撞 401。連帶「Codex 是否真的讀 `~/.codex/AGENTS.md` 全域指令」仍未實測——官方文件說會讀，但 [openai/codex#8759](https://github.com/openai/codex/issues/8759) 與 #27705 報告過全域檔不載入。登入後值得用 canary 字串跑一次 `codex exec --skip-git-repo-check` 驗證。
+**環境狀態（已解，2026-08-06 更新）**：Codex CLI 0.146.1 在這台機器已完成認證（`codex login status` → Logged in using ChatGPT），端到端驗證已可執行——當日實跑兩輪 `codex exec` 異源覆核成功。先前 2026-08-05 記錄的認證障礙已排除。
+「Codex 是否真的讀 `~/.codex/AGENTS.md` 全域指令」也已於 2026-08-06 用 canary 字串實測通過（見 `steering/skill-workflow.md`）；[openai/codex#8759](https://github.com/openai/codex/issues/8759) 與 #27705 報告的全域檔不載入在此版本不重現。
 
-**已確認的事實**（不受未登入影響）：Codex CLI 0.146.0 原生支援 skills 機制（掃 `~/.codex/skills/`，內建 skill 放 `.system/` 子目錄），SKILL.md frontmatter 格式與 Claude 完全一致（`name` + `description`），因此同一份 skill 正本可三個 CLI 共用不需改寫。
+**仍未解**：`codex app-server` 在這台機器是壞的（`failed to initialize sqlite state runtime under ~/.codex`，穩定重現）。`codex exec` / `codex login` 都正常，只有 app-server 這條路徑掛。副作用是 Claude Code 的 `codex:setup` 透過 app-server 探測登入狀態，因此會誤報 `loggedIn: false`——以 `codex login status` 為準。
+另外 `codex exec -s read-only` 的執行政策會擋掉 git（連 `git --version` 都 rejected by policy），派 Codex 做 push 前覆核時要先把 `git show <commit>` 匯出成檔案再餵路徑，否則它只讀得到工作區現況。
+
+**已確認的事實**：Codex CLI 0.146.x 原生支援 skills 機制（掃 `~/.codex/skills/`，內建 skill 放 `.system/` 子目錄），SKILL.md frontmatter 格式與 Claude 完全一致（`name` + `description`），因此同一份 skill 正本可三個 CLI 共用不需改寫。
 
 **已知既存漂移（本次未動，待決定）**：`~/.kiro/steering/karpathy-guardrails.md` 沒有對應的 AI-canonical 正本（正本 steering 只有 `closed-loop-system` / `skill-workflow` / `task-acknowledgement` 三支），所以 Kiro 吃著一份 Claude 與 Codex 都拿不到的 steering——要嘛補進正本，要嘛確認為 Kiro 專屬。
 

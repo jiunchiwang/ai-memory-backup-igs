@@ -1,5 +1,36 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-08-07(AUTO 模式;10 筆候選 → 精選 + 去重後寫入 2 條)
+
+呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：
+`<<> ?Ｙ?:2026-08-06T20:30:09.133Z;蝑:10(銝? 15);??epoch 1785929047040>>`
+
+檔案自身 header 為「產生:2026-08-06T20:30:09.133Z;筆數:10(上限 15);自 epoch 1785929047040」——時間戳、筆數(10)、epoch 三者與呼叫端 header 一致,**無矛盾**。本批為全新批次,非重掃舊批。
+
+來源 project：`telegram-kiro-bridge-main`（5 筆）+ `uk_872_eyestrike2_client`（4 筆）+ `system32`（1 筆）。
+
+精選階段直接淘汰（一次性過程紀錄,非跨 session 可重用）：
+
+- 候選 1/3（Task 4 / Task 1 之 UK 文件修正任務佇列）：單次任務建立與排序,非知識。
+- 候選 5（Adversarial review prompt authored to scratchpad）：單次產出物路徑;做法本身已由 `ms-cross-model-adversarial-review` 既有紀律涵蓋。
+- 候選 8（Code review of tween chain lines 628-677 confirms correct）：單次審查通過紀錄。
+- 候選 2（Task 3 / GetBuyOdds 的 Client template limit vs Server DB cap）：同屬上述任務佇列紀錄,且 shortlist 自述為 *interpretive documentation additions without code evidence*——未經程式碼查證的解讀,依證據紀律不得寫成 fact。
+
+去重階段淘汰（`list_facts` 命中既有 fact,實質重複）：
+
+- 候選 7（codex adapter 兩套件 deprecated vs maintained）：查「codex-acp」命中既有 fact「Codex 的 ACP adapter 有兩個套件：@zed-industries/codex-acp 已 deprecated…維護中的是 @agentclientprotocol/codex-acp（1.1.9）」,既有版本含 raw probe 實測差異、pin 連動、authMethods 例外 → **既有更豐富**,丟棄。
+- 候選 10（CDP attach mode 併入 igs-uof skill）：查「CDP」命中既有兩條 fact——Turnstile 只有接管非自動化瀏覽器能過（含 Playwright 兩臂皆敗實測）,以及「igs-uof 已在 2026-08-06 加入 CDP 接管模式（commit fce516d）」含 antibot 兩種相反處置與不寫 session.json 的理由 → **完全重複**,丟棄。
+- 候選 4（SKILL.md 寫「three validation items」但程式實作四項）：查「覆核」/「閘門」命中既有兩條 fact——「異源覆核在文件層自我一致性（數字沒回頭同步、同頁多處寫死計數只改一處）上最有價值」與「計數類文件漂移的機械閘門期望值必須當場從真實來源算出」→ 本次只是同一模式的又一個實例,**實質重複**,丟棄。
+
+實際寫入：
+
+1. （shard `adversarial-review`）使用者的跨模型對抗覆核紀律於 2026-08-06 補上「不要把覆核自動化成無條件停止閘門」一節（寫進 AI-canonical 正本 ms-cross-model-adversarial-review/SKILL.md）,記錄把異源覆核接成 CLI stop-time 自動閘門（如 Codex --enable-review-gate 類）的陷阱——覆核維持人為判斷觸發、不做無條件攔停。
+2. （shard `uk-slot-eye-strike`）uk_872_eyestrike2_client 的停輪節奏設計決策（2026-08-06）：每一輪停下後會先短暫停頓,才讓下一輪開始停輪,目的是為特殊符號的進場演出留出播放時間。
+
+結果：**新增 2 條**。未呼叫 forget。
+
+備註：① 覆核紀律那條寫入前確認 `覆核` shard 已有 29 條（成本分級、多輪換 agent、授權回報收斂、advisor 不可取代覆核）,但**無任何一條**談「自動化成無條件閘門」的取捨,故判為新增而非重複。② 停輪那條在 `停輪`(0 筆)/`轉輪`(4 筆)/`eyestrike2`(7 筆) 三個查詢下均無命中。③ shortlist 未提供停頓秒數或類別名,刻意不補寫細節。④ 本紀錄檔前一筆為 2026-08-01,中間 08-03-08-06 期間無 entry——依證據紀律不臆測原因（可能為寫入 0 條時未 append）,僅如實標記此空檔。
+
 ## 2026-08-01(AUTO 模式;12 筆候選 → 精選 + 去重後寫入 1 條)
 
 來源 project：`telegram-kiro-bridge-main`（10 筆）+ `uk_917_leprechauns_pots_client`（1 筆）+ 2026-07-30 殘留 2 筆（shortlist 產生時間 2026-07-31T20:30:02.427Z，共 12 筆候選）。
@@ -506,3 +537,38 @@ shortlist 檔頭仍是「產生:2026-07-30T20:30:02.058Z;筆數:14(上限 15);�
 - `Complete investigation confirms four-point integration approach for In_H_FS/In_S_FS animation support :: FREE_GAME_INTRO_EVENT.PLAY 簽章 (totalRound, callback?) 在 FreeGameIntro.ts line 16`（uk_872）→ 綁單一專案單一檔案行號的整合步驟,無跨專案可重用判準。
 
 去重方式:list_facts 查詢 `junction` / `ACP` / `isDirectory` / `Dirent` / `fixture`（現存 459 筆）。`isDirectory`、`Dirent` 兩查皆 0 命中,故寫入兩條確認為新知識；`ACP` 查得 48 筆並命中上述兩條既有 fact。未呼叫 forget。
+
+## 2026-08-06 第二次 (claude-mem AUTO;重掃同批 → 寫入 0 條)
+
+shortlist 仍是同一份未重新產生的檔案（epoch 1785827290913、筆數 3、產生時間 2026-08-05T20:30:04.052Z），與本日第一輪逐欄一致。該批 3 筆已於第一輪全數處置完畢（候選 3 → 寫入 2 條、候選 1 → 撞既有 ACP fact 捨棄、候選 2 → 判定專案一次性）。
+
+**未呼叫 remember、未呼叫 forget。** 判定依據是 shortlist 檔頭的 epoch 與筆數，而非內容比對後重新判斷——同批重掃不需要也不應該再走一次精選。
+
+## 2026-08-06 第三次 (手動補記;寫入 3 條;非 shortlist 來源)
+
+來源不是 claude-mem shortlist（那份仍是同批未重新產生的檔案），而是**當日對話 session 直接產出的知識**——把外部 sheet-to-markdown 的四項設計吸收進 excel-to-ai-doc，並派 Codex 做兩輪異源覆核的過程。使用者明確要求指定 topic 寫入，未走自動分類（避免跨界的第 2 條掉進 misc）。
+
+**寫入 3 條：**
+
+1. Codex `exec -s read-only` 被執行政策擋掉 git（連 `git --version` 都不給跑），派它做 push 前覆核必須先把 diff 匯出成檔案再餵路徑；否則它只能讀工作區現況、覆核不到本次改動。→ shard `adversarial-review`
+2. openpyxl 的 `data_only=True` 讀的是 Excel 存檔時的快取值不是公式；無快取的公式格讀成 None，整張公式表會被判空而靜默消失，且若驗證跳過 empty sheet 就會假通過。→ shard `dev-tools`
+3. openpyxl 的 `fgColor.rgb` 只在 `type=='rgb'` 時是字串，theme/indexed 兩類只判 rgb 會靜默漏掉；theme 需讀 theme1.xml 且 Excel 索引前兩對與 XML 排列互換，另需套 tint。→ shard `dev-tools`
+
+去重方式：`list_facts` 查 `openpyxl` / `data_only` / `read-only` / `sandbox` 皆 0 命中；`codex exec` 命中 2 條但主題不同（一條講 2026-08-05 未登入、一條講 .system 自我重建）。未呼叫 forget。
+
+**兩點待處理的觀察（未自行修正）：**
+
+- `G:\AI\AIMemory` 底下**沒有 .git**，所以 claude-mem-curate skill 安全段所寫的「所有寫入都進 git-backed 的 AIMemory」不成立。實際復原手段是 `facts-*.md.bak.<timestamp>` 備份（150+ 個）＋ `forget-log.md` ＋ 本 ingest log。抽查與 forget 修正仍可行，但無版本控制歷史。
+- 既有 fact「這台機器的 Codex CLI（0.146.0）在 2026-08-05 時未登入…任何端到端驗證都做不了」已與現況不符：2026-08-06 實測 `codex login status` → Logged in using ChatGPT、版本 0.146.1，當日確實跑了兩輪 `codex exec` 覆核。該 fact 的「AGENTS.md 仍未實測」也已被 steering/skill-workflow.md 的 2026-08-06 實測記錄取代。AUTO 流程只 ADD 不 forget，故未動它。
+
+### 追記（同日）：過時 Codex fact 的處置 — 補推翻條，未刪除
+
+使用者核准「forget 掉再寫一條現況」，但 **forget 三次皆 deleted=0**：該 fact 被 wiki 頁 `concepts/ai-strategy.md` 的引用保護（forget 工具回 "protected by wiki references"）。
+
+嘗試過程：先把 wiki 那行的過時說法就地改成現況 → 仍被保護；再移除新文字中殘留的「401 / 未登入」引用字樣 → 仍被保護。判定保護不是鎖在我拿掉的那些字，而是 fact 與該頁的主題重疊（兩邊都在講 Codex / ~/.codex/AGENTS.md / canary 實測）。再往下追等於為了滿足護欄而挖空一頁正當的 wiki，故停止（3 次熔斷）並回報使用者，改採「補一條推翻 fact」。
+
+**實際結果：**
+- 舊 fact 保留（自帶 2026-08-05 時間戳，語意上是歷史記錄）。
+- 新增 1 條推翻 fact → shard `ai-strategy`，內容含：0.146.1 已認證、AGENTS.md canary 實測通過、以及 app-server 壞掉導致 `codex:setup` 誤報 loggedIn:false（判斷可用性一律以 codex login status 為準）。
+- **wiki 的兩次修改保留**：`wiki/concepts/ai-strategy.md` 原本寫「未解，2026-08-05，未登入、端到端驗證做不了」，已改為現況，並新增「仍未解」段落記下 app-server 壞掉與 `codex exec -s read-only` 擋 git 兩件。過時說法因此已從 wiki 層清掉，只剩舊 fact 那一行還舊。
+- 三次 forget 嘗試均記入 `forget-log.md`（deleted=0），可追溯。

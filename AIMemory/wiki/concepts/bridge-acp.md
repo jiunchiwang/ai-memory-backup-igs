@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-05（新增 session/resume 語意分析與能力探測）
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c]
+updated: 2026-08-06（新增 Codex authMethods 誤判修正、effort 斜線解析、套件遷移）
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -62,7 +62,7 @@ repo 自己的 BC-13 fixture（`FAKE_ACP_MODELS_SHAPE=1` + `FAKE_ACP_CONFIG_OPTI
 - 三個 backend 配置（2026-08-01 對照實檔更正）：
   - `claude`：claude-agent-acp，pin `opus[1m]` / effort high
   - `kiro`：`kiro-cli acp --model claude-opus-4.5 -a --agent main`
-  - `codex`：`npx @zed-industries/codex-acp`，auth 未解可能失敗
+  - `codex`：`npx -y @agentclientprotocol/codex-acp`（2026-08-06 遷移自已 deprecated 的 `@zed-industries/codex-acp`），pin `gpt-5.6-terra` / effort high；auth 已用 ChatGPT 登入可正常運作，見下方「Codex authMethods 誤判」
 
 ## Kiro CLI Model 生態
 
@@ -184,6 +184,37 @@ ACP spec 明文（normative）：
 Gate 條件：`agentCapabilities.sessionCapabilities?.resume !== undefined`（ACP 用空物件表示能力存在，Kiro 是整個欄位不存在，可靠區分，分支數確定為 2）。**已設計、尚未實作**——追蹤於 [[bridge-roadmap]]。
 
 OpenCode 的 ACP 支援（`sst/opencode` dev branch v1.18.13）採 stdio 前臉 + HTTP 後腦架構：`opencode acp` 起本機 HTTP server 後自己當自己的 client，ACP 層每個方法轉一次內部 HTTP 呼叫。此架構反向佐證 bridge 選 stdio JSON-RPC 的判斷（opencode 兩層都要是因為同時要餵 TUI/web/ACP 三種前端，bridge 只有單一 Telegram chat 對單一 ACP session）。細節見 [[opencode-acp-implementation]]。
+
+## Codex authMethods 誤判與 effort 斜線解析（2026-08-06）
+
+### authMethods 語意在 adapter 間不一致
+
+`initialize` 回傳的 `authMethods` 語意 ACP 沒規定，三方對照實測（2026-08-06）：
+
+| Adapter | 已登入時 `authMethods` |
+|---|---|
+| claude-agent-acp 0.63.0 | `[]` |
+| kiro-cli 2.16.1 | `[]` |
+| codex-acp（兩個套件版本皆同） | **非空**（`["chatgpt", "CODEX_API_KEY", "OPENAI_API_KEY"]`），且同 session 的 `session/prompt` 正常拿到 `end_turn` |
+
+bridge 原本 `authRequired = authMethods.length > 0`，把每個 Codex session 誤判成未登入，後果：靜默關掉整個 session 的 transient retry、錯誤訊息指向登入、多送一顆登入按鈕。已於 commit `56a09f0` 加 `authMethodsImplyLoggedOut(kind)` 例外（codex 豁免，`other` 維持保守）。OpenCode 已知同樣不遵守「已登入回空陣列」慣例，接成第四個 backend 時要一併加例外。
+
+### effort 後綴解析：為何不無條件拆斜線
+
+Codex 的 ACP adapter 有兩個套件，`currentModelId` 格式不同：
+
+| 套件 | 狀態 | `currentModelId` 格式 | effort 檔位 | sessionCapabilities |
+|---|---|---|---|---|
+| `@zed-industries/codex-acp` 0.15.0/0.16.0 | ⚠️ **已 deprecated**（npm 明寫改用下者，停更 2026-06-23） | 斜線 `gpt-5.5/medium` | low/medium/high/xhigh | 整塊缺席 |
+| `@agentclientprotocol/codex-acp` 1.1.9（upstream 預設） | 維護中 | 方括號 `gpt-5.6-terra[medium]` | 多 max/ultra | 宣告 resume/list/close/delete/additionalDirectories |
+
+`splitEffortSuffix` **刻意不無條件拆斜線格式**：因為 `vendor/model` 是 model id 的常見寫法，無條件拆會把正常 model 名砍一半、後半誤當成 effort。做法是只在後綴命中該 adapter 自己公告的 `reasoning_effort` 值域時才拆，拿不到值域就不拆（寧可少報 effort，也不謊報 model）；方括號格式是專用語法無歧義，維持無條件拆。commit `7974d27`，經 Fable5 覆核抓出兩次恆真斷言（斷言值其實跟斜線解析無關；兩臂都傳 pin 導致 `set_config_option` 回應把 effort 蓋回去）才驗證邏輯真的成立。
+
+### 套件遷移
+
+telegram-kiro-bridge 已於 2026-08-06 遷移到維護中的套件：`acp-providers.json` 的 codex 條目改為 `command=npx -y @agentclientprotocol/codex-acp`、`model=gpt-5.6-terra`、`effort=high`（原為 `npx @zed-industries/codex-acp` + `gpt-5.5`，該 model 在新套件不存在）；claude 與 kiro 兩個 backend 未動。新套件經 bridge `AcpClient` 端到端驗證：pinned `model=gpt-5.6-terra` + `reasoning_effort=high` 皆確認生效。
+
+⚠️ **參考 upstream 前先查 merge-base**：2026-08-06 查證 upstream/main 至今仍有 `authRequired = authMethods.length > 0` 誤判與方括號-only 的 effort regex——上面兩個修正都領先 upstream，不是重工；四個 codex 相關 upstream commit 早已全數在本 fork。
 
 ## ACP Adapter 設定檔差異
 

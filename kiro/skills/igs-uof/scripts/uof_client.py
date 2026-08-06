@@ -15,6 +15,8 @@ for _s in (sys.stdout, sys.stderr):
 
 BASE = "http://uof/UOF/"
 KEYCHAIN_SERVICE = "uof-hr"
+CDP_DEFAULT = "http://127.0.0.1:9222"
+ANTIBOT_MARK = "antibotcheck"  # AntiBotCheck.aspx = Cloudflare Turnstile 人機驗證頁
 CONFIG_PATH = os.environ.get("UOF_CONFIG") or os.path.expanduser("~/.config/uof/config.json")
 SESSION_PATH = os.environ.get("UOF_SESSION") or os.path.expanduser("~/.config/uof/session.json")
 
@@ -103,7 +105,9 @@ def _safe_visible(page, sel):
         return False
 
 
-def login(page, acct, pw):
+def login(page, acct, pw, attached=False):
+    """帳密登入。attached=True 表示操作的是使用者自己的瀏覽器（CDP 模式），
+    此時驗證碼的處置是「請他在那個視窗自己輸入」，`--headed` 在該模式無作用。"""
     page.goto(BASE + "Login.aspx", wait_until="domcontentloaded", timeout=60000)
     page.fill("#txtAccount", acct)
     page.fill("#txtPwd", pw)
@@ -126,7 +130,9 @@ def login(page, acct, pw):
                 pass
             continue
         if _safe_visible(page, "#captchaImage"):
-            die(3, "captcha", hint="登入被要求驗證碼，請用 --headed 手動輸入一次")
+            die(3, "captcha",
+                hint="登入被要求驗證碼，請在接管的那個視窗手動輸入後重跑（--headed 在 CDP 模式無作用）"
+                     if attached else "登入被要求驗證碼，請用 --headed 手動輸入一次")
     try:
         final = page.url.lower()
     except Exception:
@@ -145,18 +151,155 @@ def _is_net_error(msg):
 
 
 def _goto_home_ok(page):
-    """開首頁驗證 session 是否有效；被導回 Login.aspx 即失效。"""
+    """開首頁驗證 session 是否有效；被導回 Login.aspx 即失效。
+
+    ⚠️ 被導到 AntiBotCheck.aspx（Cloudflare 人機驗證）時這裡回 True——URL 不含
+    login.aspx。所以「回 True」只代表 session 沒過期，不代表真的進到系統；
+    呼叫端必須接一個 _die_if_antibot()，否則失敗會延後到查詢頁才炸成
+    scrape_failed / Page.goto Timeout（2026-08-06 前的實際行為，曾被誤讀成連不到內網）。
+    """
     page.goto(BASE + "Homepage.aspx", wait_until="domcontentloaded", timeout=60000)
     page.wait_for_timeout(800)
     return "login.aspx" not in page.url.lower()
 
 
-def open_uof(p, cfg, headed=False, fresh_login=False):
+def _is_antibot(page):
+    """是否停在 Cloudflare 人機驗證頁（登入成功之後才會跳）。"""
+    try:
+        return ANTIBOT_MARK in (page.url or "").lower()
+    except Exception:
+        return False
+
+
+# 兩個 hint 分開：已經在 CDP 模式的人不該再被叫去跑 launch_cdp_browser.py（他已經做了）
+ANTIBOT_HINT_LAUNCH = ("UOF 前面有 Cloudflare 人機驗證（AntiBotCheck.aspx），自動化啟動的瀏覽器過不了。"
+                       "請跑 launch_cdp_browser.py 開一個瀏覽器，自己登入並點過「驗證您是人類」，"
+                       "再加 --cdp 讓本工具接管那個視窗。")
+ANTIBOT_HINT_ATTACHED = ("接管的視窗停在 Cloudflare 人機驗證頁。請在那個視窗點過「驗證您是人類」"
+                         "（不必重開瀏覽器），確認進到 UOF 首頁後重跑本命令。")
+
+
+def _die_if_antibot(page, attached=False):
+    """被人機驗證擋住就中止，並給出唯一已知可行的走法。
+
+    2026-08-06 實測：Playwright launch() 出來的瀏覽器過不了這關——內建 Chromium
+    與 channel=msedge 的真 Edge 兩臂皆敗（headed 等 241s 未過）。分野不在瀏覽器
+    廠牌也不在無痕模式，而在瀏覽器是否由自動化啟動。∴ 唯一路徑是接管使用者
+    自己開的瀏覽器（--cdp），驗證由真人點擊完成，不做指紋偽裝。
+    """
+    if not _is_antibot(page):
+        return
+    die(3, "antibot", url=getattr(page, "url", ""),
+        hint=ANTIBOT_HINT_ATTACHED if attached else ANTIBOT_HINT_LAUNCH)
+
+
+def antibot_result(page, attached=False):
+    """查詢**中途**被重新挑戰時用：回功能級錯誤 dict，沒被擋則回 None。
+
+    attached 必須照實傳（CDP 模式才是 True）。否則非 CDP 模式會叫使用者去點一個
+    不存在的視窗、並「重跑本命令」——而重跑必然再敗，與 SKILL.md 的「別重試同一條
+    命令」自相矛盾（第二輪覆核 F1：修 M2 時把 L1 剛修掉的同型錯誤又埋回來）。
+
+    為什麼需要：`_die_if_antibot` 只護住 session 建立點。clearance 中途失效時
+    頁面會落到 AntiBotCheck，各 cmd 模組的 selector 隨即逾時 → 原本會回報
+    `scrape_failed`「頁面版型可能改變」，uof_form 甚至回報「表單版型變了」——
+    正是這次要修掉的誤診模式在 mid-session 復發（Fable5 覆核 M2，2026-08-06）。
+    """
+    if not _is_antibot(page):
+        return None
+    return {"error": "antibot", "url": getattr(page, "url", ""),
+            "hint": ANTIBOT_HINT_ATTACHED if attached else ANTIBOT_HINT_LAUNCH}
+
+
+def _save_session(ctx):
+    """把 storage_state 存回 session.json（權限 600；Windows 無此語意，失敗不致命）。
+
+    ⚠️ 只在**自己開的** context 上呼叫。CDP 接管的 context 不可存——storage_state
+    匯出的是該 context 全部 origin 的 cookies，會把使用者無關網站的 cookies 落地成
+    明文（2026-08-06 實測：乾淨 profile 都會混進 .msn.com/.bing.com；且 chmod 600
+    在 Windows 是 no-op，實測 mode 666）。見 attach_uof。
+    """
+    try:
+        os.makedirs(os.path.dirname(SESSION_PATH), exist_ok=True)
+        ctx.storage_state(path=SESSION_PATH)
+        os.chmod(SESSION_PATH, 0o600)
+    except Exception:
+        pass
+
+
+def _pick_uof_page(browser):
+    """從既有瀏覽器的**所有** context 挑出停在 UOF 的分頁。回 (ctx, page) 或 (None, None)。
+
+    不只看 contexts[0]：使用者可能在被接管的瀏覽器開了無痕視窗（獨立 context）。
+    """
+    for ctx in browser.contexts:
+        try:
+            pages = ctx.pages
+        except Exception:
+            continue
+        for pg in pages:
+            try:
+                if "/uof/" in (pg.url or "").lower():
+                    return ctx, pg
+            except Exception:
+                continue
+    return None, None
+
+
+def attach_uof(p, cfg, endpoint=CDP_DEFAULT):
+    """接管使用者自己啟動、已手動過人機驗證的瀏覽器（CDP）。回 (browser, ctx, page, 'cdp')。
+
+    ⚠️ 呼叫端一律用 close_uof() 收尾——這個瀏覽器是使用者的，直接 close()
+    會把他的視窗關掉、害他重過一次人機驗證。
+    """
+    try:
+        browser = p.chromium.connect_over_cdp(endpoint)
+    except Exception as e:
+        die(5, "cdp_connect_failed", endpoint=endpoint, detail=str(e)[:300],
+            hint=f"連不到 CDP {endpoint}；請先跑 launch_cdp_browser.py 並保持該視窗開著")
+    if not browser.contexts:
+        die(5, "cdp_connect_failed", endpoint=endpoint,
+            hint="CDP 連上了但瀏覽器沒有任何 context（視窗可能已關）")
+    ctx, page = _pick_uof_page(browser)
+    if page is None:
+        die(3, "cdp_no_uof_page", endpoint=endpoint,
+            hint=f"接管的瀏覽器裡沒有 UOF 分頁；請在那個視窗開 {BASE}Login.aspx 登入後再試")
+    try:
+        page.bring_to_front()
+    except Exception:
+        pass
+    _die_if_antibot(page, attached=True)
+    if "login.aspx" in (page.url or "").lower():
+        acct, pw = resolve_credentials(cfg)
+        login(page, acct, pw, attached=True)
+        _die_if_antibot(page, attached=True)  # 登入成功後才跳驗證，所以這裡要再檢一次
+    # 刻意不存 session：這是使用者的 context，storage_state 會把他全部網站的 cookies
+    # 落地成明文（見 _save_session 的警告）。CDP 模式的登入狀態本來就在他自己的
+    # 瀏覽器裡，存下來對後續 headless 也沒用（clearance cookie 綁 UA/指紋，未驗證可攜）。
+    return browser, ctx, page, "cdp"
+
+
+def close_uof(browser, ctx, session_mode):
+    """統一收尾。session_mode=='cdp' 時什麼都不做（那是使用者的瀏覽器）。"""
+    if session_mode == "cdp":
+        return
+    for obj in (ctx, browser):
+        try:
+            obj.close()
+        except Exception:
+            pass
+
+
+def open_uof(p, cfg, headed=False, fresh_login=False, cdp=None):
     """啟瀏覽器並取得已登入的 page。回 (browser, context, page, session_mode)。
 
     session_mode: 'reused'=沿用 session.json（免登入、不觸發重複登入互踢）；
-                  'new'=帳密登入並把 storage_state 回存 session.json（chmod 600）。
+                  'new'=帳密登入並把 storage_state 回存 session.json（chmod 600）；
+                  'cdp'=接管使用者自己開的瀏覽器（cdp 非 None 時；見 attach_uof）。
+    收尾一律走 close_uof(browser, ctx, session_mode)——'cdp' 不可 close。
     """
+    if cdp:
+        return attach_uof(p, cfg, cdp if isinstance(cdp, str) else CDP_DEFAULT)
     acct, pw = resolve_credentials(cfg)
     try:
         browser = p.chromium.launch(headless=not headed)
@@ -170,6 +313,7 @@ def open_uof(p, cfg, headed=False, fresh_login=False):
             ctx = browser.new_context(storage_state=SESSION_PATH, **ctx_opts)
             page = ctx.new_page()
             if _goto_home_ok(page):
+                _die_if_antibot(page)  # session 沒過期，但被人機驗證擋在系統外
                 return browser, ctx, page, "reused"
         except SystemExit:
             raise
@@ -188,6 +332,7 @@ def open_uof(p, cfg, headed=False, fresh_login=False):
         ctx = browser.new_context(**ctx_opts)
         page = ctx.new_page()
         login(page, acct, pw)
+        _die_if_antibot(page)  # login() 只確認離開 Login.aspx，AntiBotCheck 也算「離開」
     except SystemExit:
         raise
     except Exception as e:
@@ -196,10 +341,5 @@ def open_uof(p, cfg, headed=False, fresh_login=False):
             die(2, "unreachable", hint="連不到 http://uof，請確認已連上公司內網 / VPN", detail=msg)
         die(5, "login_error", detail=msg)
 
-    os.makedirs(os.path.dirname(SESSION_PATH), exist_ok=True)
-    try:
-        ctx.storage_state(path=SESSION_PATH)
-        os.chmod(SESSION_PATH, 0o600)  # Windows 無此語意，失敗不致命
-    except Exception:
-        pass
+    _save_session(ctx)
     return browser, ctx, page, "new"

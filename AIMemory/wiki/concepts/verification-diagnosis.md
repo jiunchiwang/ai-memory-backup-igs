@@ -2,8 +2,8 @@
 title: 驗證與診斷方法論
 type: concept
 created: 2026-08-01
-updated: 2026-08-05（修正兩個佔位 fact ID）
-sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, f_6ad6e7, f_377321, f_306863, f_e92697, f_0f0140, f_156659]
+updated: 2026-08-06（新增 tsc 型別錯誤仍會 emit dist 的突變測試陷阱）
+sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, f_6ad6e7, f_377321, f_306863, f_e92697, f_0f0140, f_156659, f_5d0939]
 ---
 
 # 驗證與診斷方法論
@@ -33,6 +33,8 @@ sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, 
 驗證新增斷言「真的有跑到」的手法是**突變測試**：對每一種預期壞法各做一次最小突變、確認測試分別紅，再還原複驗綠。理由是 smoke runner 只印每支腳本的 `ok`，**通過本身無法證明新斷言被執行**（2026-07-31 bridge 4 種突變逐一實證）。
 
 **Windows Git Bash 突變測試陷阱**：不要用 `/tmp` 存備份——`cp` 會成功（Git Bash 有虛擬映射），但 node 收到字面路徑會解析成 `G:\tmp` 而 ENOENT，於是突變根本沒寫進檔案、測試對未突變原檔跑出「1/1 passed」的假綠。改用 repo 內相對路徑（`./.rp.bak`）後三條斷言才各自如預期變紅（2026-08-01 實證）。
+
+**`tsc` 紅了不等於 dist 沒更新**：telegram-kiro-bridge 的 `npx tsc -p .` 在 `noUnusedLocals` 報 TS6133 時**仍然會 emit dist**——做突變測試時一律要 `grep dist` 確認突變真的進了產物才採信 smoke 結果，不可用 `tsc` 的 exit code 反推（2026-08-06 Fable5 覆核順帶發現）。反向的坑同一天也踩到過：突變寫成 `if (false && …)` 讓 tsc 型別收窄而**真的**編譯失敗，dist 沒更新，smoke 跑的是舊產物假綠——兩者外觀相似（都跟 tsc 的紅/綠有關）但機制相反，不能用同一條規則判斷。
 
 ### 順序型承重不變式的三件套
 

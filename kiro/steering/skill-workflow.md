@@ -21,6 +21,8 @@ G:\AI\AI-canonical\skills\<domain>\<skill-name>\SKILL.md
 
 ```markdown
 ---
+name: <skill-name>
+description: <何時該觸發這個 skill：情境 + 觸發語 + 邊界。寫給「還不知道內容的 agent」看>
 type: skill
 domain: general
 created: YYYY-MM-DD
@@ -39,6 +41,28 @@ source: session
 ## 步驟
 
 1. ...
+```
+
+⚠️ **`name` 與 `description` 是必填**，不是選填的補充欄位。缺任一個，
+Codex 會直接拒載該 skill（`failed to load skill ...: missing field description`），
+Claude Code 則 fallback 成「description = skill 名字」，等於 agent 無法判斷何時該觸發它——
+skill 檔案還在，但實際上是死的，而且不會有任何錯誤訊息。
+
+`type`/`domain`/`created`/`tags`/`source` 是自用 metadata，loader 不讀，可省。
+
+檢查全部正本 skill 的 frontmatter 是否齊備：
+
+```powershell
+Get-ChildItem G:\AI\AI-canonical\skills,G:\AI\AI-canonical-corp\skills -Recurse -Filter SKILL.md |
+  ForEach-Object {
+    $l = Get-Content $_.FullName
+    if ($l.Count -eq 0 -or $l[0].Trim() -ne '---') { "[NO-FRONTMATTER] $($_.FullName)"; return }
+    $end = 1; while ($end -lt $l.Count -and $l[$end].Trim() -ne '---') { $end++ }
+    if ($end -ge $l.Count) { "[UNCLOSED] $($_.FullName)"; return }
+    $fm = $l[1..($end-1)]
+    if (-not ($fm -match '^\s*name\s*:'))        { "[NO-NAME] $($_.FullName)" }
+    if (-not ($fm -match '^\s*description\s*:')) { "[NO-DESCRIPTION] $($_.FullName)" }
+  }
 ```
 
 ## 正本歸屬判斷
@@ -73,5 +97,14 @@ source: session
 Codex 走「全文內嵌」而非 pointer/import，是因為它是否支援 `@` 檔案引用未經驗證；
 內嵌由 sync 每次覆蓋 marker 之間的內容，所以不會與正本漂移，marker 外的手寫內容保留。
 
-⚠️ Codex 讀 `~/.codex/AGENTS.md` 這件事**尚未在本機實測**（Codex 未登入，
-且 openai/codex#8759、#27705 報告過全域檔不載入）。登入後值得驗一次。
+✅ Codex 讀 `~/.codex/AGENTS.md` **已於 2026-08-06 在本機實測通過**（codex-cli 0.146.1、Windows）。
+
+驗法：在一個沒有本地 `AGENTS.md` 的空目錄跑 `codex exec`，要求「不准用工具、只從 instructions 回答」，
+引用 managed block 裡一段不可能猜到的原文；它一字不差回出來（連行尾兩空格斷行都保留）。
+openai/codex#8759、#27705 報告的全域檔不載入在此版本不重現。
+
+⚠️ 但 `codex app-server` 在本機是壞的：
+`failed to initialize sqlite state runtime under C:\Users\<user>\.codex`（穩定重現）。
+`codex exec` / `codex login` 都正常，只有 app-server 這條路徑掛。
+副作用：Claude Code 的 `codex:setup` 透過 app-server 探測登入狀態，
+因此會誤報 `loggedIn: false`——別被它騙了，以 `codex login status` 為準。

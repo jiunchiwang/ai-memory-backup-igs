@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-08-05（補 Edit 工具 replace_all 陷阱）
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738]
+updated: 2026-08-06（新增管線緩衝陷阱、openpyxl 公式快取與 theme 色陷阱）
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6]
 ---
 
 # 開發工具與環境設定
@@ -82,6 +82,15 @@ EOF
 ### Edit 工具 replace_all 誤改陷阱
 
 在 Edit 工具做整行刪除或改解構名時，若目標字串在同檔重複出現（如 `relay.ts` 的 `const { runPrompt, sessions } = deps()` 全檔 9 個相同字串），必須用**上下文定位**而非 `replace_all`，否則會誤改其他處——`tsc` 只標出未使用的那一處，行號才是唯一可靠依據（2026-08-02 實證）。
+
+### Windows shell 管線接會 spawn 子進程的命令會假裝掛住
+
+把「會 spawn 子進程的命令」（如 ACP adapter handshake）接管線（`| tail`、`| grep`）會假裝成掛住：管線要等 EOF，而子進程握著 stdout 不放，即使父進程已經印完結果並退出也看不到任何輸出。2026-08-06 因此兩次誤判 codex-acp 探針「300 秒沒回應」，實際上兩次都成功回了 `PONG`，殺掉孤兒進程後輸出才一次吐出來。對這類命令要用 `> file 2>&1` 落檔再讀，不要接管線；同理 `child.kill()` 只殺 shell wrapper，孫進程要另外清（用 CommandLine 比對 + 查 ParentProcessId 存活再殺）。
+
+### openpyxl 讀 xlsx 的兩個靜默陷阱
+
+- **公式格沒有快取值會讀成 None**：`load_workbook(data_only=True)` 讀到的是 Excel **上次存檔時算好的快取值**，不是公式本身。由 openpyxl 之類產生器寫出、或存檔前未重算的檔案沒有快取，那些公式格一律讀成 `None`。2026-08-06 實測一張三格全公式的 sheet 整張被判成空白，而自我驗證因為刻意跳過 empty sheet 的檢查照樣印「整體：通過」。解法是另載一次 `data_only=False` 比對，把只有公式沒有快取的格回填公式字串並讓驗證失敗（回填的是 `=SUM(...)` 不是數值，仍須請對方在 Excel 重新存檔以寫入快取）。
+- **讀儲存格顏色只判斷 `.rgb` 是字串會漏掉 theme 色**：`fill.fgColor.rgb` 只在 `color.type == 'rgb'` 時是字串；Excel 調色盤上排的「佈景主題色彩」`type` 是 `'theme'`、舊調色盤是 `'indexed'`，只判斷 rgb 是不是字串會靜默漏掉一整類上色（比不做更危險，因為輸出看起來已支援顏色）。theme 要讀 `xl/theme/theme1.xml` 的 `clrScheme`，且 Excel 的 theme 索引順序與 XML 排列**不同**——XML 是 `dk1,lt1,dk2,lt2,accent1..6,hlink,folHlink`，Excel 索引前兩對互換（`0→lt1, 1→dk1, 2→lt2, 3→dk2, 4..9→accent1..6, 10→hlink, 11→folHlink`）——再套 tint（ECMA-376：在 HLS 亮度上，`tint<0 → L*(1+tint)`、`tint>0 → L*(1-tint)+tint`，HLSMAX 正規化為 1.0）；indexed 走 `openpyxl.styles.colors.COLOR_INDEX`。
 
 ## 文件產出
 

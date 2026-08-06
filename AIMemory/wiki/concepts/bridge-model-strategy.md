@@ -2,8 +2,8 @@
 title: Bridge Model 選型與配額策略
 type: concept
 created: 2026-08-05
-updated: 2026-08-05
-sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, f_948bf2, f_f6406d, f_7bf9a8, f_174485, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5b9478, f_d49b9a, f_7c7a20, f_ed90b4, f_c0459d]
+updated: 2026-08-06（.env 註解修正、codex backend 遷移）
+sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, f_948bf2, f_f6406d, f_7bf9a8, f_174485, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5b9478, f_d49b9a, f_7c7a20, f_ed90b4, f_c0459d, f_5c3ef5]
 ---
 
 # Bridge Model 選型與配額策略
@@ -14,7 +14,8 @@ sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, 
 
 - `/agent claude` backend model pin：`opus[1m]`（effort high）——設定檔 `${MEMORY_DIR}/config/acp-providers.json`
 - bridge 主 session model 為 `claude-fable-5[1m]`（1M context 變體）——這是 session 層 runtime 設定，與 `.env` 的 `ACP_MODEL` 屬不同層，不矛盾
-- 三個 backend（`acp-providers.json`）：`claude`（claude-agent-acp，pin opus[1m]/high）、`kiro`（`kiro-cli acp --model claude-opus-4.6 -a --agent main`）、`codex`（`npx @zed-industries/codex-acp`，auth 未解可能切換失敗）——此檔每次 `/agent` 即時重讀，不需重啟 bridge
+- 三個 backend（`acp-providers.json`）：`claude`（claude-agent-acp，pin opus[1m]/high）、`kiro`（`kiro-cli acp --model claude-opus-4.6 -a --agent main`）、`codex`（2026-08-06 遷移為 `npx -y @agentclientprotocol/codex-acp`，pin `gpt-5.6-terra`/high；已用 ChatGPT 登入可正常運作，細節見 [[bridge-acp]]「Codex authMethods 誤判」）——此檔每次 `/agent` 即時重讀，不需重啟 bridge
+- `.env` 的 adapter 註解已於 2026-08-06 修正三處：codex 段改推維護中的套件並刪掉誤導的 `-c model` 範例、claude 段改推 repo 內鎖版路徑取代已 deprecated 的 global bin、`ACP_MODEL` 段落原本錯寫「Codex 收到 `set_config_option` 會 reject」已更正為實測正確的「Codex 會接受」（`.env` 在 `.gitignore` 內，此為本機檔修正非 commit）
 
 ## 走過的 pin 修正史（勿當成當前值，只看最新 fact）
 
