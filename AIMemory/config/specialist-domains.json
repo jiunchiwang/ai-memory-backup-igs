@@ -66,14 +66,17 @@
         "cocos 版面",
         "promise.all",
         "logo-localization",
-        "知識庫的",
         "rtctrl",
         "rt 凍幀",
         "targetoverrides",
         "pascalcase",
         "maskexpand",
         "leprechaunsgoldstreak",
-        "gamestrings"
+        "gamestrings",
+        "uk-slot-codegen",
+        "magicpot",
+        "reel light",
+        "slot 專案"
       ],
       "wikiPages": [
         "uk-slot",
@@ -283,8 +286,6 @@
         "desc 基線",
         "截斷",
         "cutpendingtokentail",
-        "游標修復",
-        "token 扣留",
         "pricing tier",
         "tier_",
         "advisor_rank",
@@ -325,7 +326,21 @@
         "sessioncapabilities",
         "session/resume",
         "replaysessionhistory",
-        "opencode"
+        "opencode",
+        "merge-base",
+        "tg_draft_diag",
+        "draft 重播",
+        "draft 閃爍",
+        "draft 游標",
+        "draft 扣留",
+        "memory mcp",
+        "/dream",
+        "/selfeval",
+        "mutation test",
+        "突變測試",
+        "claude max 5x",
+        "authmethods",
+        "@agentclientprotocol"
       ],
       "wikiPages": [
         "bridge-project",
@@ -343,7 +358,9 @@
         "bridge-roadmap",
         "bridge-smoke-gate",
         "bridge-model-strategy",
-        "opencode-acp-implementation"
+        "opencode-acp-implementation",
+        "paulsha-cortex-governance-plane",
+        "bridge-draft-diag"
       ],
       "mcpServers": [
         "memory",

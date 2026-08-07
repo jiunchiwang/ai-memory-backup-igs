@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-06（新增 Codex 覆核工具限制、缺陷多層遷移案例、stop-time 自動閘門陷阱）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1]
+updated: 2026-08-08（新增 domain 判定、單表雙軸結構、findings 第三種處置、結構問題判定）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74]
 ---
 
 # 異源對抗覆核紀律
@@ -67,6 +67,30 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 - 孤兒 import／死碼 → **不派人**，交給型別系統
 - 敘事比對、恆真斷言 → Sonnet 級
 - 不變式／論證推理／時序 race → 最強模型（Fable 5）
+
+### Domain 判定與單表雙軸結構（2026-08-07）
+
+**異源性的單位是模型供應商**，不是 CLI／harness／分身名字：
+- `vc-kiro-delegate` 走的是 `kiro-cli --model claude-opus-4.5`，所以「Claude 寫、Kiro 覆核」在模型層是**同源**（只有 harness/context 不同），屬**弱異源**
+- 弱異源對「換個 context 就會發現」的錯（枚舉漏、敘事與碼不符、恆真斷言）仍有效
+- 對「這個模型本來就會這樣想」的錯（共有推理偏誤、共有知識盲點）沒有防禦力
+- **承重路徑優先跨 vendor**（anthropic → openai/Codex）
+
+拿不到強異源時降級不跳過，階梯為：**強異源 → 弱異源 → 同源重置（只餵 diff 不餵 commit message／註解／AI.md，切斷敘事回音是這一層唯一有效的機制）→ 不覆核**，且降級必須留痕、不可只寫「已覆核」。
+
+**核心判準**：強異源與貴是兩個獨立的軸，不可互換。glm-5 是 0.50x credits（比 Sonnet 便宜）卻是跨 vendor 強異源，所以「跨 vendor 麻煩就改派同 vendor 最強模型（Fable 5，3.3x）」是**同時更貴且更弱**的錯誤推論。
+
+**kiro-cli 預設 model 是 auto**（`--list-models` 輸出的 `*` 標在 auto，說明為「Models chosen by task」且不回報實際挑選結果）：不帶 `--model` 呼叫 Kiro 當覆核者時 domain 不可知，比同源更糟——連「本輪為弱異源」這種降級留痕都寫不出來，所以當覆核者用時**一律顯式帶 --model**。
+
+2026-08-07 `ms-cross-model-adversarial-review` 的覆核者選型重寫為**單表雙軸結構**（commit a8e3725 已 push）：原本 domain 與 tier 分成兩張表，因跨 vendor 覆核連兩輪抓到「兩張表分類軸對不齊」而判定是結構問題非標籤問題，改為一張三欄表（預期的 finding 類型 | domain | tier）。
+
+### Findings 處置的第三種路徑（2026-08-07）
+
+除了**採納**與**駁回**，還有第三種處置：**「指的位置對、但建議是錯的」**。
+
+2026-08-07 實測第三輪 glm-5 建議把表格標頭括號拿掉，照做會讓第一輪的 finding 原地復活，但它指出的接縫是真的。若照單全收會在兩個 finding 間來回，若因建議不對就整條駁回則會錯過「連兩輪打在同一個接縫＝**結構問題不是措辭問題**」這個訊號。
+
+**結構問題判定原則**：若連續兩輪的 finding 落在同一個接縫，應判定為結構問題而非措辭問題並**改做結構解**，不要繼續修標籤。實測併表才真正消除該類錯誤。
 
 ## 與 SDD 規格自審閘的關係
 

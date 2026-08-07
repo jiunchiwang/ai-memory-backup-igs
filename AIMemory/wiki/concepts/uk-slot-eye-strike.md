@@ -2,8 +2,8 @@
 title: Eye Strike 系列
 type: concept
 created: 2026-07-16
-updated: 2026-07-31
-sources: [f_cea694, f_3y3s2k, f_9322f0, f_82c757, f_0b3520, f_800551, f_d9e4a1, f_b7c382, f_e5f910, f_c4d7b2, f_a8f6c3]
+updated: 2026-08-08
+sources: [f_cea694, f_3y3s2k, f_9322f0, f_82c757, f_0b3520, f_800551, f_564bea, f_b9aeb7, f_391f10, f_73dbc7, f_6c587f, f_8ad906]
 ---
 
 # Eye Strike 系列
@@ -62,6 +62,10 @@ UK 市場的眼睛打擊主題老虎機系列，含第一代 Eye Strike（uk_slo
 | ⑤收分飛行 | `FeatureResultShowState.ts:252` | — |
 
 談「收分之後」的時機時必須先釐清是哪一個，否則會做出時序不可能的需求。
+
+### 停輪節奏設計決策（2026-08-06）
+
+每一輪停下後會先短暫停頓，才讓下一輪開始停輪，目的是為**特殊符號的進場演出**留出播放時間。這個節奏是刻意設計的，不是效能問題。
 
 ### tsc 驗證注意
 

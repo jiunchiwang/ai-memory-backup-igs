@@ -53,11 +53,157 @@ description: 當要在 push / 交付前派另一個模型（異源）對自己�
 - **付費且工作型態是長時間連續改碼 → 才值得評估**，且要先確認該 hook 有 diff 閘門、失敗時是 warn 而非 block。
 - 兩個條件都成立之前：**手動點名**（本 skill 的「何時使用」那份清單就是點名判準）。
 
-這條跟前面的成本分級同源——覆核者是稀缺資源，浪費在「這輪根本沒改到碼」上，跟用最強模型去審 typo 是同一種浪費。
+這條跟後面〈覆核者選型〉的 tier 分級同源——覆核者是稀缺資源，浪費在「這輪根本沒改到碼」上，跟用最強模型去審 typo 是同一種浪費。
 
-## 覆核者選型（成本分級）
+## 異源域：先確認「誰跟誰真的算異源」
 
-異源性來自「**不同模型 + 乾淨 context + 自己讀碼**」，**不是**來自「用最強的那個」。最強模型只在需要長推理鏈的 finding 類型上才拉開差距——其餘一律降級，因為覆核者是 agentic 的（實測一次 37 次工具呼叫、587 秒，讀進去的碼全算 input），單價會被工具迴圈放大。
+選型之前要先過的一關。異源性的單位是**模型供應商**，不是 CLI、不是 harness、不是分身名字。
+兩個看起來不同的 agent，底下可能是同一個模型——那不是異源，是同一個腦袋換了件外套。
+
+下覆核 prompt 前，先把 builder（產出者）和 reviewer（覆核者）各自對到一個 domain，**兩者必須不同**：
+
+| identity | 實際模型 | domain |
+|---|---|---|
+| Claude Code 主 agent（Opus / Sonnet / Fable / Haiku 任一） | Anthropic | `anthropic` |
+| Kiro CLI | **取決於 `--model`** | 見下 ⚠️ |
+| Codex CLI（`gpt-5.x`） | OpenAI | `openai` |
+| Gemini CLI | Google | `google` |
+
+⚠️ **Kiro 這一列是最容易誤判的，而且兩個方向都會錯。**
+
+`vc-kiro-delegate` 走的是 `kiro-cli --model claude-opus-4.5`，所以**照預設用**時
+「Claude 寫、Kiro 覆核」在模型層是**同源**——只有 harness / context / system prompt 不同。
+這屬**弱異源**：對「換個 context 就會發現」的錯（枚舉漏、敘事與碼不符）仍然有效，
+但對「這個模型本來就會這樣想」的錯（同一套推理偏誤、同一個知識盲點）**沒有防禦力**。
+
+**但 Kiro 本身不綁 vendor。** 2026-08-07 實測 `kiro-cli chat --list-models`：
+
+```
+Available models (* = default):
+* auto (1.00x)  / claude-sonnet-4.6 (1.30x) / claude-opus-4.5 (2.20x)
+  claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5 (0.40x)
+  deepseek-3.2 (0.25x) / minimax-m2.5 (0.25x) / minimax-m2.1 (0.15x)
+  glm-5 (0.50x) / qwen3-coder-next (0.05x)
+```
+
+∴ `--model glm-5` 是 `zhipu`、`--model deepseek-3.2` 是 `deepseek`、`minimax-*` 是
+`minimax`、`qwen3-*` 是 `alibaba` —— **全都是跨 vendor 強異源**。
+把「Kiro」整個當成 `anthropic` 的代價是實際發生過的：Codex 額度用盡時會誤判成
+「只剩弱異源」而降級，白跑一輪強度不足的覆核。**選型前先跑一次 `--list-models`。**
+
+⚠️ **第三個誤判方向：`kiro-cli` 自己的預設不是 `claude-opus-4.5`，是 `auto`。**
+帶 `*` 的那一列就是預設，而 `auto` 的說明是「Models chosen by task for optimal usage
+and consistent quality」——**它挑哪個模型不由你決定、也不回報**。
+∴ 不帶 `--model` 呼叫 Kiro 當覆核者時，這輪的 vendor 是**不確定**的；那比「同源」更糟，
+因為連 domain 都判不出來，也就沒辦法照降級表留痕說這輪是哪一級。
+**當覆核者用時一律顯式帶 `--model`**，`auto` 不可用於任何需要宣告 domain 的場合。
+（前一段講的「照預設用」指的是 `vc-kiro-delegate` 這支 skill 寫死的
+`--model claude-opus-4.5`，不是 `kiro-cli` 本身的預設——兩個「預設」不同層，別混。）
+
+pin 有被驗證（不會靜默降級）：`--model glm-99-not-real` 回硬錯誤並列出可用清單。
+驗 pin 真的生效的方法是**對照組**——問同一個問題，`glm-5` 自報智譜、`claude-opus-4.5`
+自報 Anthropic，答案不同才證明 pin 沒被吃掉。單看自報身分是弱證據，有對照才有鑑別力。
+
+**當唯讀覆核者的呼叫法**：
+
+```bash
+kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read "<prompt>"
+```
+
+`--trust-tools=fs_read` 給讀檔、不給執行命令——覆核是唯讀工作，不需要 bash，
+也就沒有它動到工作區的可能（別用 `--trust-all-tools`）。副作用是它無法自己
+`git show`，所以要先把 diff 落成檔案讓它讀（順便避開 Windows 命令列長度上限）。
+事後比對 `git status` + `git rev-parse HEAD` 確認工作區沒被動過。
+
+∴ 承重路徑的覆核（不變式、時序、依賴取捨論證）**優先**跨 vendor——`anthropic` 產出就派
+`openai` / `zhipu` / `deepseek` 任一覆核。
+
+### 拿不到強異源時：降級，不是跳過
+
+跨 vendor 不是隨時都有（額度用盡、該 CLI 沒登入、離線、對方模型不支援這個語言）。
+這時候的正確反應是**沿階梯往下降一級並標註**，不是放棄覆核——
+弱異源抓得到的那幾類，同源自審一樣抓不到。
+
+| 層級 | 組合 | 仍抓得到 | 結構上抓不到 |
+|---|---|---|---|
+| **強異源** | 跨 vendor（`anthropic` ↔ `openai`） | 全部類型 | — |
+| **弱異源** | 同 vendor 不同 harness／context（Claude ↔ Kiro 跑 Claude 模型、advisor 工具） | 枚舉半途而廢、敘事與碼不符、恆真斷言、死碼 | 共有的推理偏誤、共有的知識盲點 |
+| **同源重置** | 同一個模型、全新 context、**只餵 diff 與檔案路徑，不餵 commit message／註解／AI.md** | 敘事回音（因為它看不到敘事） | 上面兩類 + 同一套思考慣性 |
+| 不覆核 | — | — | 全部 |
+
+兩條規則：
+
+1. **降級要留痕。** 用了弱異源或同源重置，回報／commit message 要寫
+   「本輪為弱異源覆核，未涵蓋共有推理偏誤類」，**不可以只寫「已覆核」**。
+   把降級寫成通過，比不覆核更危險——它讓後面的人以為這條路已經走過了。
+2. **同源重置唯一有效的機制是切斷敘事回音**，所以「只給碼不給敘事」在這一層從建議變成**必要條件**。
+   一旦把自己的 commit message 餵進去，同源重置就退化成純粹的自我附和，價值歸零。
+
+承重路徑若只拿得到同源重置這一級：先做，並把「待補強異源覆核」列成 follow-up，不要靜默消失。
+
+**這一節只做宣告與判斷，不做攔停。** 不要把它接成「domain 相同就拒絕執行」的閘門——
+理由見上一節〈不要把覆核自動化成無條件停止閘門〉。domain 相同時的正確反應是
+「知道這輪只有弱異源，據此調整對 findings 的期待」，不是停下來。
+
+> 概念來源：`hamanpaul/paulsha-cortex` 的 `ModelIdentity.independence_domain`（必填欄位）+
+> `select_secondary_planner()` 的同 domain 跳過規則（2026-08-07 讀原始碼驗證）。
+> 該專案把異源做成 fail-closed 硬閘門；此處**只吸收資料層宣告，刻意不吸收閘門**。
+
+## 覆核者選型：domain 與 tier 是兩個獨立的軸
+
+異源性來自「**不同模型 + 乾淨 context + 自己讀碼**」，**不是**來自「用最強的那個」。
+∴ 選型有**兩個獨立的軸**，一次分類同時決定，不可以拿其中一個換另一個：
+
+1. **domain** —— 要不要跨 vendor？決定**異源強度**（見上一節〈異源域〉）
+2. **tier** —— 派多強的模型？決定**成本**
+
+把兩軸壓成一軸是實際發生過的錯，就長在這份 skill 自己身上：2026-08-02（`d8d74c6`）
+這一節原本只有一張 Claude 家族成本表，判準寫成「承重路徑 → 最強模型」，
+而「最強」在那張表裡是 Fable 5 —— `anthropic`，**與產出者同源**。
+照著做等於在最該跨 vendor 的地方派了弱異源。異源域那一節是五天後（`64b4b4e`）才補的，
+補的時候沒回頭調和這裡。2026-08-07 由使用者指出後重寫成現在的單表雙軸結構
+（中間先改成 domain / tier 兩張分開的表，但跨 vendor 覆核連兩輪抓到「兩張表分類軸
+對不齊」——那是結構問題不是標籤問題，∴ 併成一張表、兩個答案欄）。
+
+### 一次分類，兩個答案
+
+兩個問題讀的是**同一個輸入**——這次改動預期會出什麼類型的問題。
+所以只查一次表，同時拿到 domain 與 tier：
+
+| 預期的 finding 類型 | domain（異源強度） | tier（成本） |
+|---|---|---|
+| **不變式**（集合包含關係、單調性前提） | **跨 vendor** | 最強 |
+| **論證推理缺陷**（依賴取捨、風險評估） | **跨 vendor** | 最強 |
+| **時序 / cancel-finalize race** | **跨 vendor** | 最強 |
+| **跨模組契約** | **跨 vendor** | 最強 |
+| 敘事與碼不符（註解／commit／文件） | 弱異源可 | Sonnet 級 |
+| 恆真斷言 / 閘門強度低於宣稱 | 弱異源可 | Sonnet 級 |
+| 枚舉完整性 | 弱異源可 | Sonnet 級 |
+| 孤兒 import / 死碼 | **不派人** | — |
+
+- 前四列合稱**承重路徑**——本文件其他地方用這個詞時，指的就是這四類。
+- 跨 vendor 的對象：`anthropic` 產出 → `openai` / `zhipu` / `deepseek` / `minimax` / `alibaba` 任一。
+- 弱異源＝同 vendor 不同 harness／context。「不派人」那列交給型別系統（TS 開
+  `noUnusedLocals`；其他語言用等價 lint）——它已經是異源。
+
+**「預期的」是關鍵**：問的是改動性質所預期的風險，不是覆核跑完的實際結果。
+改 cancel/finalize 順序就預期時序類，改註解就預期敘事類。∴ 選型不需要先跑一輪覆核。
+
+**同一次改動落在多列時，取最高強度那列**——只要有任一項落在承重路徑，
+整輪就走跨 vendor + 最強，不因為「大部分只是改註解」而降級。
+
+拿不到跨 vendor 時**沿階梯降級並留痕**，不是跳過——見上一節的降級表。
+
+### 為什麼要拆成兩欄看：強異源 ≠ 貴
+
+⚠️ **這是兩個獨立的軸，別用成本表反推異源強度。**
+Kiro 的 `glm-5` 是 **0.50x credits**（比 Sonnet 還便宜），卻是跨 vendor 強異源。
+∴ 「跨 vendor 麻煩／貴，改派 Fable 5 就好」是把兩軸混在一起的錯誤推論——
+那個選擇同時**更貴**（3.3x）且**更弱**（同源）。表拆成兩欄就是為了讓你
+**不會拿 tier 去換 domain**。
+
+tier 仍然要省，因為覆核者是 agentic 的（實測一次 37 次工具呼叫、587 秒，
+讀進去的碼全算 input），單價會被工具迴圈放大。
 
 Claude 家族單價（來自 model catalog 的 `pricing` tier，`tier_A_B` = $A/M input、$B/M output）：
 
@@ -68,18 +214,15 @@ Claude 家族單價（來自 model catalog 的 `pricing` tier，`tier_A_B` = $A/
 | Opus 5 | `tier_5_25` | 1.7x |
 | Fable 5 | `tier_10_50` | **3.3x** |
 
-按 finding 類型選：
+⚠️ **誠實邊界**：tier 欄的「最強」在 `anthropic` 內指 Fable 5（有實測背書）。
+**跨 vendor 各家在這幾類上的對應強度未實測**——不知道 `glm-5` / `deepseek-3.2`
+在不變式與時序類上是否等價於 Fable 5。承重路徑目前的做法是**跨 vendor 優先**，
+若該輪對這類 finding 的產出明顯偏弱（只回敘事層、拿不出反例）**再補一輪同 vendor 最強**，
+而不是預設拿 Anthropic 最強去頂替跨 vendor。
 
-| finding 類型 | 選誰 |
-|---|---|
-| 孤兒 import / 死碼 | **不派人**——交給型別系統（TS 開 `noUnusedLocals`；其他語言用等價 lint） |
-| 敘事與碼不符（註解／commit／文件） | Sonnet 5——這是比對工作，不需長推理 |
-| 恆真斷言 / 閘門強度低於宣稱 | Sonnet 5 |
-| **不變式**（集合包含關係、單調性前提） | 最強（Fable 5） |
-| **論證推理缺陷**（依賴取捨、風險評估） | 最強（Fable 5） |
-| **時序 / cancel-finalize race** | 最強（Fable 5） |
-
-判準一句話：**改動碰承重路徑（時序、不變式、跨模組契約、依賴決策）→ 最強模型；其餘 → Sonnet 級。**
+另外兩格的來源要標明：`跨模組契約` 與 `枚舉完整性` 這兩列的 tier 是**依同組推得**
+（前者比照其他三個承重路徑類、後者比照其他敘事類），2026-08-02 那版的成本表
+**沒有這兩個條目**，也沒有針對它們的實測。照用沒問題，但別當成有背書的判定。
 
 兩個額外的省法（不動紀律結構）：
 - **給地圖不給答案**：直接餵 `git show <commit>` 的 diff 全文 + 涉及檔案清單當**起點**，省掉盲找的工具迴圈。這不違反「開放授權不給檢查清單」——給的是哪些檔案被動到，不是要檢查哪幾點。
@@ -161,6 +304,10 @@ round 3: 範圍只限 commit C  → 只剩敘事精確度類 → 收斂，push
 | 把覆核者的「已窮舉」當事實 | 自己 grep 一次；覆核者也會枚舉不全 |
 | 覆核完把 findings 丟掉 | 未採納的寫進 commit message；低優先的列成 follow-up，不要靜默消失 |
 | 開啟 CLI 的 stop-time 自動覆核閘門 | 先讀該 hook 的實作：有沒有 diff 閘門？失敗是 warn 還是 block？多數是「每 turn 觸發 + 失敗即 block」 |
+| 把「換一個 CLI／分身」當成換了一個模型 | 先對 domain（見〈異源域〉）——`vc-kiro-delegate` 寫死 `claude-opus-4.5`，與 Claude 同源；承重路徑要跨 vendor |
+| 不帶 `--model` 呼叫 Kiro 當覆核者 | `kiro-cli` 的預設是 `auto`，它挑哪個模型不回報 → 這輪 domain **不可知**，連降級留痕都寫不出來。一律顯式指定 |
+| 反過來：把「Kiro」整個當成 `anthropic` 而放棄跨 vendor | Kiro 不綁 vendor（`--model glm-5` 等）。跨 vendor 的覆核者掛掉時，**先跑 `--list-models` 再決定要不要降級** |
+| 承重路徑覺得跨 vendor 麻煩，改派同 vendor 最強模型頂替 | 那個選擇同時**更貴**且**更弱**——強異源與貴是兩個獨立的軸（`glm-5` 是 0.50x credits 的強異源）。domain 與 tier 一次分類同時決定，不可互換 |
 
 ## 相關
 - **dual-skill-review-loop** — 同源自我迭代到 ≥95 分；本 skill 是**異源**對抗，兩者互補不互斥

@@ -2,8 +2,8 @@
 title: 驗證與診斷方法論
 type: concept
 created: 2026-08-01
-updated: 2026-08-06（新增 tsc 型別錯誤仍會 emit dist 的突變測試陷阱）
-sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_f7318a, f_23885a, f_115ddb, f_924f84, f_6ad6e7, f_377321, f_306863, f_e92697, f_0f0140, f_156659, f_5d0939]
+updated: 2026-08-08（新增 GitHub tree API 截斷回應導致的否定式幻覺）
+sources: [f_cd0a8c, f_0ec894, f_ff9bce, f_115ddb, f_e92697, f_5d0939, f_c4f291]
 ---
 
 # 驗證與診斷方法論
@@ -97,6 +97,21 @@ bridge 覆核鏈三輪實證同一個失效模式：**「我寫的因果宣稱�
 防法兩條：① 凡寫「因為 X 所以 Y」先讀 X 的實際時序 ② **測試的敘事也要用可觀測量鎖死**（如 `elapsed < deadline` 上界斷言 + 非恆真前置斷言），不能只看斷言綠。
 
 此模式已升格為 bridge `.claudedocs/records/問題追蹤.md` 的長期警惕模式 **#002**（2026-07-31 使用者確認），涵蓋註解／AI.md／commit message／測試敘事四類高風險位置。
+
+## 七、否定式主張的幻覺風險（2026-08-07）
+
+GitHub tree API 的 `?recursive=1` 回應被截斷時，**WebFetch 背後的小模型會對「存在性」問題自信地答 no**——當天它連答「無 pyproject.toml／無 paulsha_cortex/／無 tests/」，一度讓我推論出「這個 repo 只有文件沒有程式碼」，足以推翻整份評估。
+
+### 翻案手法
+
+| 方法 | 訊號特性 |
+|---|---|
+| **raw.githubusercontent.com 打檔案 URL** | 存在→回檔案內容，不存在→404: Not Found。二元探針，不經摘要判斷，抗幻覺 |
+| **git/trees/main:\<path\>**（不遞迴） | JSON 夠小不會截斷，可靠列出子目錄 |
+
+### 教訓
+
+**對「某某東西不存在」這類否定式主張，永遠要用探針覆核而非採信摘要。** 這是既有 `research-report-citations-unverified` 教訓（引用越像真的越要先查）的反向補完——引用告訴你「有」要查，摘要告訴你「沒有」也要查。
 
 ## 相關
 

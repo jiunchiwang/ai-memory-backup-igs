@@ -14,5 +14,7 @@
   "f_00d0b6": "dev-tools",
   "f_806752": "ai-strategy",
   "f_ca3437": "bridge-acp",
-  "f_204218": "bridge-smoke-gate"
+  "f_204218": "bridge-smoke-gate",
+  "f_2f425e": "adversarial-review",
+  "f_c4f291": "verification-diagnosis"
 }

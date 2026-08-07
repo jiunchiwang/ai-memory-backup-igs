@@ -752,6 +752,30 @@
       "chatId": 509424983,
       "score": 85,
       "evidence": "9 個 stale 頁全部用原始 shard 檔的內嵌時間戳（非 list_facts 去時間戳輸出）逐一核對出確切新增 fact，且每條新增內容都附 fact ID 到 frontmatter sources；orphan/broken-link 檢查用完整 grep 掃過全站而非抽驗；扣分點：ai-strategy 的「內容已存在但日期未 bump」是靠肉眼發現而非系統性偵測，若還有其他頁面是同一種模式（內容新但日期舊）本輪未特別去找，只處理了時間戳比對抓到的 9 個。"
+    },
+    {
+      "ts": "2026-08-06T23:31:50.131Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "單檔文件改動，投影後已 grep 驗證四處新內容確實落地、sync 全 ok、git status 只有預期的一個檔；Kiro 底層模型是 claude-opus-4.5 一事有 vc-kiro-delegate 正本第 82/134 行原文佐證，cortex 側的 ModelIdentity 欄位有 raw 原始碼佐證。未給更高分是因為這是純文字規範、沒有機械化驗證能證明它會被實際遵守"
+    },
+    {
+      "ts": "2026-08-07T13:13:50.126Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "直接讀正本 SKILL.md 全文 255 行後摘述，未加入檔案以外的推論；純說明性回答無程式碼改動故無型別/測試可驗"
+    },
+    {
+      "ts": "2026-08-07T13:30:55.965Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "改動已用 Edit 工具落檔且 git diff 確認 47/13 行進了工作區；glm-5 可用性與 0.50x credits 經 --list-models 當場覆查；但跨 vendor 覆核尚未回來，內部一致性只經同源自審"
+    },
+    {
+      "ts": "2026-08-07T13:49:14.884Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "commit 與 push 皆已確認（a8e3725，git status 顯示與 origin/main 同步）；四輪跨 vendor 覆核逐條處置完畢並收斂至只剩 low；auto 預設與 glm-5 credits 為本 session 實測 A 級證據；未實測的跨 vendor tier 強度已在文件內標明為推論"
     }
   ]
 }

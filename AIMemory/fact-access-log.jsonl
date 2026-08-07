@@ -400,3 +400,17 @@
 {"ts":"2026-08-06T20:33:45.977Z","q":"轉輪","hits":4}
 {"ts":"2026-08-06T20:34:24.263Z","q":"閘門","hits":9}
 {"ts":"2026-08-06T20:34:55.677Z","q":"eyestrike2","hits":7}
+{"ts":"2026-08-07T20:03:46.923Z","q":"uk-slot-eye-strike","hits":12}
+{"ts":"2026-08-07T20:03:46.927Z","q":"verification-diagnosis","hits":7}
+{"ts":"2026-08-07T20:05:18.096Z","q":"bridge-draft-diag","hits":26}
+{"ts":"2026-08-07T20:07:02.181Z","q":"bridge-draft-diag","hits":26}
+{"ts":"2026-08-07T20:07:02.184Z","q":"adversarial-review","hits":23}
+{"ts":"2026-08-07T20:07:10.177Z","q":"bridge-model-strategy","hits":22}
+{"ts":"2026-08-07T20:07:10.178Z","q":"bridge-upstream-sync","hits":14}
+{"ts":"2026-08-07T20:07:10.178Z","q":"bridge-infra","hits":13}
+{"ts":"2026-08-07T20:07:10.182Z","q":"bridge-doc-sync","hits":6}
+{"ts":"2026-08-07T20:07:14.483Z","q":"bridge-self-eval","hits":5}
+{"ts":"2026-08-07T20:07:14.483Z","q":"uk-slot-clash-olympus","hits":5}
+{"ts":"2026-08-07T20:08:35.012Z","q":"misc","hits":4}
+{"ts":"2026-08-07T20:10:51.145Z","q":"bridge-streaming","hits":25}
+{"ts":"2026-08-07T20:10:51.149Z","q":"adversarial-review","hits":23}

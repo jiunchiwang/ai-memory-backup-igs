@@ -14,7 +14,6 @@
 - [f_437274] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向已改名的資料夾 igs-uof，且 igs-uof、uk-slot-logo-localization 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建
 - [f_e68c39] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 E 區（通用機制模式庫）決策：全角色統一使用索引版（pattern 名稱 + 一句話描述），不塞 pattern-library 完整 158KB 內容
 - [f_165cc0] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 D 區（Astarte Framework API）決策：只寫概要層（class + 生命週期 + 事件列表），不進到 method 簽名
-- [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
 - [f_f82ff1] [2026-07-28T11:03:56.028Z] uk-slot-logo-localization skill 的標準語系代碼清單已新增 urIN（烏爾都語印度），總計 24 個語系（不含 cn/en）
 - [f_2d697b] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的卡片新增流程需同步三處否則資料不一致：patterns/xxx.md 卡片本體、SKILL.md 索引表（+ 橫切機制表）、pattern-library-overview.html 的內嵌 PATTERNS JS 陣列與兩處寫死計數（line 50 subtitle 與 line 53-54 stat-box，只改 subtitle 會造成同頁自我矛盾）
 - [f_4b088c] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的 overview.html 參考專案計數慣例是「PATTERNS 陣列 unique refs 扣掉『框架 xxx』條目、不去重 wrath 的兩種寫法」（2026-07-30 用 git show 舊檔重算驗證與舊 subtitle 精確吻合）
