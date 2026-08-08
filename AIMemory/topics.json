@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-07T20:03:19.918Z (token=topics-960748f7-31)
+// Last applied: 2026-08-08T20:13:28.478Z (token=topics-ab46522e-31)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -97,7 +97,6 @@
       "far_west",
       "chachacha",
       "spec-to-impl",
-      "excel-to-ai-doc",
       "ghost slot",
       "並發 gotcha",
       "cocos 版面",
@@ -221,13 +220,13 @@
       "skill-usage",
       "state.md",
       "notebooklm",
-      "memory mcp"
+      "memory mcp",
+      "frontmatter"
     ]
   },
   {
     "topic": "bridge-session",
     "keywords": [
-      "session resume",
       "session/load",
       "sessionstore",
       "/session",
@@ -272,7 +271,7 @@
   {
     "topic": "bridge-doc-sync",
     "keywords": [
-      "readme",
+      "readme.md",
       "usage-guide",
       "doc-facts",
       "docupdate",
@@ -330,7 +329,6 @@
       "fast tier",
       "支數",
       "check-bot-command",
-      "截斷",
       "nounusedlocals",
       "check-",
       "mutation test",
@@ -512,7 +510,8 @@
       "replace_all",
       "上下文定位",
       "目錄錨點",
-      "openpyxl"
+      "openpyxl",
+      ".env"
     ]
   },
   {

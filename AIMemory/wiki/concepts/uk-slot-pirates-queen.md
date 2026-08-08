@@ -2,8 +2,8 @@
 title: UK Slot 海盜女王專案
 type: concept
 created: 2026-08-02
-updated: 2026-08-02
-sources: [f_a1b2c3, f_d4e5f6, f_789abc, f_def012, f_345678, f_9abcde, f_f01234, f_567890]
+updated: 2026-08-08
+sources: [f_a1b2c3, f_d4e5f6, f_789abc, f_def012, f_345678, f_9abcde, f_f01234, f_567890, f_ac39e3]
 ---
 
 # UK Slot 海盜女王專案

@@ -26,6 +26,10 @@
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
 - [[bridge-roadmap]] — Bridge 開發 Roadmap（Pending / In Progress 追蹤，2026-07-28 建立）
 - [[bridge-smoke-gate]] — Bridge 測試閘門與建置（tsc/smoke tier/pre-push 三層、dist≠跑著的碼、環境隔離假失敗、計數同步儀式、probe-* 命名隔離、CI 決策；2026-08-01 從 bridge-project 拆出）
+- [[bridge-doc-sync]] — Bridge 文件同步機制（事實來源改直接 import、計數類機械閘門設計原則、耗時排除在硬閘門外；2026-08-08 新建）
+- [[bridge-secrets-backup]] — Bridge 備份與密鑰洩漏防護（acp-trace 洩漏修復、GitHub PAT 洩漏與自我重複污染迴圈、/sharedsync 跨帳號 credential、default-skills 自動回填；2026-08-08 新建）
+- [[bridge-infra]] — Bridge 基礎設施（Process 生命週期、start.bat supervisor、暖機 coreReady/FIFO、session.buffer 中途失敗偵測、Impact-Gate Hook；2026-08-08 新建）
+- [[bridge-self-eval]] — Bridge 自評與收尾檢查（SELF_EVAL 六個共通致命缺陷檢查清單、/selfeval 決策、Turn-Lint 啟發式 warn-only 設計；2026-08-08 新建）
 - [[dev-tools]] — 開發工具與環境設定（Python/Playwright/TypeScript、機器路徑、工作流程）
 - [[agent-system-architecture]] — Agent 系統五層架構（公司比喻：Agent/MCP/Memory/Workflow/Agent SDK 的角色與關係）
 - [[spine-viewer]] — Spine Viewer 插件（Cocos Creator 編輯器擴充，批次掃描 DrawCall/Triangle 效能報告）
@@ -59,5 +63,5 @@
 
 ---
 
-Total pages: 42
-Last updated: 2026-08-08（更新 [[adversarial-review]] domain 判定與單表雙軸結構）
+Total pages: 46
+Last updated: 2026-08-08（wikilint：更新 8 個 stale 頁面 [[bridge-dream]]/[[bridge-memory]]/[[bridge-project]]/[[bridge-specialist]]/[[bridge-streaming]]/[[bridge-upstream-sync]]/[[uk-slot-codegen]]/[[uk-slot-pirates-queen]]）

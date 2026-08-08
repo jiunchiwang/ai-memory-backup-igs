@@ -1,10 +1,10 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-07T20:13:43.386Z",
+  "_last_updated_at": "2026-08-08T20:29:20.600Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.099Z",
       "last_agent_used_at": "2026-08-06T23:31:50.125Z",
       "use_count": 3,
       "last_reason": "Step 4-5 實作方案 A：把 cortex 的 independence_domain 概念吸收成 skill 正本的異源域宣告表，投影驗證後停在 commit 前",
@@ -14,7 +14,7 @@
     },
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.059Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.107Z",
       "last_agent_used_at": "2026-08-04T20:02:40.800Z",
       "use_count": 58,
       "last_reason": "完整流程執行",
@@ -24,17 +24,17 @@
     },
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
-      "last_bridge_listed_at": null,
-      "last_agent_used_at": "2026-08-07T20:13:43.386Z",
-      "use_count": 108,
-      "last_reason": "skilllint 步驟",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
+      "last_agent_used_at": "2026-08-08T20:29:19.636Z",
+      "use_count": 111,
+      "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
       "orphan": false
     },
     "writing-skills": {
       "created_at": "2026-05-29T12:41:52.929Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.317Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.123Z",
       "last_agent_used_at": "2026-07-06T12:47:08.453Z",
       "use_count": 1,
       "last_reason": "建立新 skill 時遵循其結構與 SDO 描述規範",
@@ -44,7 +44,7 @@
     },
     "ms-portable-skill-authoring": {
       "created_at": "2026-05-29T08:58:12.634Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.222Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.132Z",
       "last_agent_used_at": "2026-07-06T12:47:08.454Z",
       "use_count": 1,
       "last_reason": "SKILL.md 避免寫死機器絕對路徑，模板以名稱引用",
@@ -54,7 +54,7 @@
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.141Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.141Z",
       "last_agent_used_at": "2026-06-17T01:03:41.884Z",
       "use_count": 1,
       "last_reason": "生成比較頁面的設計系統（配色、字型、風格建議）",
@@ -64,7 +64,7 @@
     },
     "uk-slot-project-docs": {
       "created_at": "2026-06-19T02:00:09.159Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.151Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.147Z",
       "last_agent_used_at": "2026-07-07T02:23:18.478Z",
       "use_count": 2,
       "last_reason": "建立uk_917的AI.md索引層",
@@ -74,7 +74,7 @@
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.176Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.158Z",
       "last_agent_used_at": "2026-08-01T20:06:27.535Z",
       "use_count": 13,
       "last_reason": "AUTO 模式精選 shortlist 寫入 memory",
@@ -84,7 +84,7 @@
     },
     "dual-skill-review-loop": {
       "created_at": "2026-05-29T13:03:17.852Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.183Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.166Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -94,7 +94,7 @@
     },
     "excel-to-ai-doc": {
       "created_at": "2026-06-22T05:47:24.030Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.189Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.175Z",
       "last_agent_used_at": "2026-06-26T05:22:10.572Z",
       "use_count": 4,
       "last_reason": "將 Eye Strike2 規格書.xlsx 轉換為 AI 可讀文件結構",
@@ -104,7 +104,7 @@
     },
     "huashu-slides": {
       "created_at": "2026-02-23T13:13:08.000Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.195Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.184Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -114,7 +114,7 @@
     },
     "ms-agent-scheduled-prompts": {
       "created_at": "2026-05-29T08:58:12.625Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.205Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.192Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -124,7 +124,7 @@
     },
     "ms-agent-text-token-signaling": {
       "created_at": "2026-05-29T08:58:12.628Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.211Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.201Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -134,7 +134,7 @@
     },
     "ms-kiro-strreplace-silent-fail": {
       "created_at": "2026-05-29T08:58:12.630Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.215Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.211Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -144,7 +144,7 @@
     },
     "ms-streaming-token-pipeline": {
       "created_at": "2026-05-29T08:58:12.636Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.226Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.220Z",
       "last_agent_used_at": "2026-07-08T08:40:11.777Z",
       "use_count": 1,
       "last_reason": "審查 Rich Messages 升級方案，比對 streaming/final 雙路共用 transform 的四組已知坑",
@@ -154,7 +154,7 @@
     },
     "ms-telegram-ask-button-protocol": {
       "created_at": "2026-05-29T08:58:12.640Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.234Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.229Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -164,7 +164,7 @@
     },
     "ms-telegram-bot-rate-limit-survival": {
       "created_at": "2026-05-29T08:58:12.643Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.242Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.237Z",
       "last_agent_used_at": "2026-08-01T05:49:55.439Z",
       "use_count": 1,
       "last_reason": "研究 draft streaming 長文處理時參考了 grammY auto-retry 與 rate limit 相關機制",
@@ -174,7 +174,7 @@
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.251Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.244Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -184,7 +184,7 @@
     },
     "ms-windows-shell-interactive-prompt": {
       "created_at": "2026-05-29T08:58:12.650Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.263Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.252Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -194,7 +194,7 @@
     },
     "self-eval-prompt-pattern": {
       "created_at": "2026-05-29T13:04:56.604Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.278Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.260Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -204,7 +204,7 @@
     },
     "uk-slot-extrabet": {
       "created_at": "2026-06-16T07:54:26.401Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.289Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.270Z",
       "last_agent_used_at": "2026-06-25T02:29:16.293Z",
       "use_count": 1,
       "last_reason": "歸納框架元件介面文件化程度作為「AI-ready spec 需要什麼」的參考",
@@ -214,7 +214,7 @@
     },
     "uk-slot-fake-reel-manager": {
       "created_at": "2026-05-06T05:42:57.357Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.293Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.280Z",
       "last_agent_used_at": "2026-06-25T02:29:16.293Z",
       "use_count": 1,
       "last_reason": "歸納假轉輪帶在規格→程式映射中的角色（BetMode/GameType 分類、事件 API）",
@@ -224,7 +224,7 @@
     },
     "uk-slot-multilang-sync": {
       "created_at": "2026-06-11T07:19:35.267Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.299Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.288Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -234,7 +234,7 @@
     },
     "uk-slot-state-machine": {
       "created_at": "2026-02-25T02:28:57.398Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.304Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.297Z",
       "last_agent_used_at": "2026-06-25T02:29:16.293Z",
       "use_count": 1,
       "last_reason": "歸納 AI 開發時需要的 State Machine 框架知識（CommonState vs 自訂 State、模板選擇）",
@@ -244,7 +244,7 @@
     },
     "vc-kiro-delegate": {
       "created_at": "2026-05-06T09:18:41.260Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.311Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.306Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -254,7 +254,7 @@
     },
     "uk-slot-pattern-library": {
       "created_at": "2026-06-26T05:33:19.199Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.314Z",
       "last_agent_used_at": "2026-07-07T01:31:50.744Z",
       "use_count": 4,
       "last_reason": "10張pattern卡片對照分類，3LP變體與邊界案例直接入spec",
@@ -264,7 +264,7 @@
     },
     "sync-fork-from-upstream": {
       "created_at": "2026-07-06T02:51:00.564Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.322Z",
       "last_agent_used_at": "2026-07-09T01:57:13.234Z",
       "use_count": 2,
       "last_reason": "執行 fork ← upstream 半自動同步流程：拋棄式分支 merge + tsc 品質閘 + 人工確認後 push",
@@ -274,7 +274,7 @@
     },
     "uk-slot-spec-to-impl": {
       "created_at": "2026-07-07T00:59:23.331Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.331Z",
       "last_agent_used_at": "2026-07-09T12:27:22.955Z",
       "use_count": 4,
       "last_reason": "完整走步驟0~3：xlsx→spec→dev-spec→SPEC.md，過程中發現5個流程偏離並回饋改善skill正本",
@@ -285,7 +285,7 @@
     },
     "uk-conventions": {
       "created_at": "2026-07-07T02:23:18.478Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.339Z",
       "last_agent_used_at": "2026-07-07T02:23:18.478Z",
       "use_count": 1,
       "last_reason": "寫入uk_917專案CLAUDE.md開發規範",
@@ -295,7 +295,7 @@
     },
     "knowhow-accumulation": {
       "created_at": "2026-05-29T13:04:22.387Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.200Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.348Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -305,7 +305,7 @@
     },
     "non-engineer-agent-design": {
       "created_at": "2026-05-29T13:03:49.224Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.273Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.357Z",
       "last_agent_used_at": "2026-07-27T03:24:57.506Z",
       "use_count": 1,
       "last_reason": "分析 skill 打包與觸發設計模式",
@@ -315,7 +315,7 @@
     },
     "skill-creator": {
       "created_at": "2026-02-24T17:26:48.000Z",
-      "last_bridge_listed_at": "2026-06-22T09:56:51.283Z",
+      "last_bridge_listed_at": "2026-08-08T06:46:05.366Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -325,7 +325,7 @@
     },
     "uk-slot-codegen": {
       "created_at": "2026-07-11T02:53:51.000Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.376Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -335,7 +335,7 @@
     },
     "igs-uof": {
       "created_at": "2026-07-14T03:08:57.472Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.384Z",
       "last_agent_used_at": "2026-07-28T06:37:26.451Z",
       "use_count": 8,
       "last_reason": "查詢使用者本月加班時數",
@@ -345,7 +345,7 @@
     },
     "uk-slot-logo-localization": {
       "created_at": "2026-07-14T16:10:20.000Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.395Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -355,7 +355,7 @@
     },
     "ms-cross-model-adversarial-review": {
       "created_at": "2026-07-31T20:10:47.453Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.404Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -365,7 +365,7 @@
     },
     "ms-vacuous-test-gate": {
       "created_at": "2026-07-31T20:09:29.121Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.416Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -375,7 +375,7 @@
     },
     "ms-blackbox-probe-experiment-design": {
       "created_at": "2026-08-01T20:03:46.232Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.429Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -385,7 +385,7 @@
     },
     "imagegen": {
       "created_at": "2026-08-05T14:44:02.172Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.448Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -395,7 +395,7 @@
     },
     "openai-docs": {
       "created_at": "2026-08-05T14:44:02.313Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.462Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -405,7 +405,7 @@
     },
     "plugin-creator": {
       "created_at": "2026-08-05T14:44:02.492Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.478Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -415,7 +415,7 @@
     },
     "review-agent": {
       "created_at": "2026-08-05T14:44:02.647Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.492Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -425,7 +425,7 @@
     },
     "skill-installer": {
       "created_at": "2026-08-05T14:44:02.821Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.504Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,
@@ -435,7 +435,7 @@
     },
     "git-commit": {
       "created_at": "2026-08-06T06:45:17.490Z",
-      "last_bridge_listed_at": null,
+      "last_bridge_listed_at": "2026-08-08T06:46:05.517Z",
       "last_agent_used_at": null,
       "use_count": 0,
       "last_reason": null,

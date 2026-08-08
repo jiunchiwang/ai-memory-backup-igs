@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-08（新增 domain 判定、單表雙軸結構、findings 第三種處置、結構問題判定）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74]
+updated: 2026-08-08（新增 findings 處置的三個獨立維度）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0]
 ---
 
 # 異源對抗覆核紀律
@@ -91,6 +91,16 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 2026-08-07 實測第三輪 glm-5 建議把表格標頭括號拿掉，照做會讓第一輪的 finding 原地復活，但它指出的接縫是真的。若照單全收會在兩個 finding 間來回，若因建議不對就整條駁回則會錯過「連兩輪打在同一個接縫＝**結構問題不是措辭問題**」這個訊號。
 
 **結構問題判定原則**：若連續兩輪的 finding 落在同一個接縫，應判定為結構問題而非措辭問題並**改做結構解**，不要繼續修標籤。實測併表才真正消除該類錯誤。
+
+### Findings 處置的三個獨立維度（2026-08-07）
+
+收到 code review／異源覆核的 findings 時，處置有三個獨立維度而非一個：
+
+1. **這條成立嗎**——finding 描述的問題是否真實存在
+2. **它給的建議對嗎**——即使問題成立，覆核者給的修法本身可能是錯的（見上一節第三種處置）
+3. **它的修法屬不屬於本次改動的範圍**——最容易漏的一維：成立且建議正確的 finding，仍可能把不相干的既有缺陷拉進來造成範圍蔓延
+
+「不要盲目修掉每一條 finding」指的不只是駁回錯誤的 finding，也包含把**正確但越界**的 finding 記錄下來留待另一次改動處理，而非當場擴大本次 PR 範圍（2026-08-07 telegram-kiro-bridge 記錄此模式為 `review-findings-pull-scope`）。
 
 ## 與 SDD 規格自審閘的關係
 

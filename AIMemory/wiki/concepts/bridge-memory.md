@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-01
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs]
+updated: 2026-08-08（新增 Codex CLI 原生 skill 支援）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs, f_0e4a79]
 ---
 
 # Bridge 記憶與維運系統
@@ -69,6 +69,8 @@ Preamble 大小取捨：佔 context 5-6% 可接受，到警戒線才削減；優
 ## Skill Lint
 
 讀 `${MEMORY_DIR}/config/skill-usage.json` 的 `use_count` 與 `last_agent_used_at`，評估各 skill 是否仍被使用、需否淘汰。2026-07-11 曾把 `knowhow-accumulation`／`non-engineer-agent-design`／`skill-creator` 標為殭屍 skill，經評估決定保留不刪——日後 skilllint 再標記這三個應視為已知豁免，不需重複提案刪除。
+
+**Codex CLI 原生 skill 支援（2026-08-05）**：Codex CLI 0.146.0 原生支援 skills 機制（掃 `~/.codex/skills/`，內建 skill 放 `.system/` 子目錄），且 `SKILL.md` frontmatter 格式與 Claude 完全一致（`name` + `description`），因此同一份 skill 正本可三個 CLI 共用不需改寫。跨 CLI 可攜性盤點見 [[bridge-dream]]。
 
 已知的孤兒清單狀況：`skill-usage.json` 的 `vc-uof-hours` entry 仍指向已改名的資料夾 `igs-uof`，且 `igs-uof`、`uk-slot-logo-localization` 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建。另外 `uk-conventions` 是 Claude Code custom command（位於 `AI-canonical-corp/commands/uk-conventions.md`），不是 skill——skilllint 的 orphan 偵測對它是 false positive，應排除不報。
 

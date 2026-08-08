@@ -1,29 +1,23 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-08-05T20:45:13.012Z
+Last run: 2026-08-08T04:14:58.895+08:00
 
 ## High Priority (action needed)
 — 無
 
 ## Watch List (monitor)
-- Topic keyword 設計缺陷：`bridge-project` 的 "telegram-kiro-bridge"/"upstream"/"hook" 關鍵字過寬，截走本屬 bridge-streaming/verification-diagnosis/ai-strategy 的 fact，下次 topicreview 應收窄
-- `uk-slot-clash-olympus` 規格書待確認事項（8項）近一個月未更新，需確認是否已解決
-- Codex `.system/skill-creator` 與通用 `skill-creator` 同名不同源，use_count 追蹤可能失真
-- 4 個新 topic（bridge-doc-sync/bridge-secrets-backup/bridge-infra/bridge-self-eval）尚無 wiki 頁，下次 wikisync 優先處理
-- Fact/Wiki ratio 3.4 > 3.0（結構性接受：87%+ facts 被 wiki 保護）
-- 衰減判定不可用（觀測期 26 天 < 60 天，約 2026-09-09 才可判斷）
-- Skill underused 12 個（沿用先前裁決保留觀察，含 uk-slot-codegen 疑似回報缺口）
+- 🟡 skilllint: uk-slot-spec-to-impl 已 deprecated（功能併入 uk-slot-codegen），建議刪除
+- 🟡 skilllint: writing-skills 與 skill-creator 功能重疊，考慮合併
+- 🟡 skilllint: 14 個 underused skills（30 天未使用且 use_count < 3）
+- 🟡 docupdate: README 用 `/doctor` 寫法描述 Doctor Pattern（非指令），措辭易誤導但技術上正確
+- 🟡 factlint: repo 膨脹 ratio=3.1（>3.0），但零命中區 facts 都有持久價值無法機械清理
+- 🟡 wikisync: adversarial-review.md 更新 2026-08-07 新增的 5 條 facts（domain 判定、單表雙軸）
 
 ## Noise (ignored this run)
-- sharedsync：無更新
-- dailylog：已產出（6 session）
-- sessionreflect / specialistreflect：今日無新內容
-- memorytoskill：0 新建/更新，7 個 session 檔已搬移 oldSessions
-- topicreview：24→30 topic，拆分 bridge-acp/bridge-project
-- wikisync：新增 2 頁、更新 4 個 stale 頁
-- factlint：刪 2 條過時/瑣碎 fact，3 條被系統保護未刪
-- wikilint：健康 36/40，0 orphan，0 broken link
-- skilllint：健康 27 個，0 stale（抽驗）、1 個已知重疊
-- docupdate：文件已一致，`/forget` 確認為誤報
-- specialistreview：0 新建議，2 domain expansion 已套用
-- artifactcleanup：剩餘 3 個
-- backup：commit bbf3124 完成
+- ✅ sharedsync: 無更新
+- ✅ dailylog: 2026-08-07 已產出（5 session, 1069 bytes）
+- ✅ sessionreflect/specialistreflect: 無新內容
+- ✅ memorytoskill: 掃描完成，無新 skill 候選
+- ✅ topicreview: 485 facts / 30 topics，結構穩定
+- ✅ wikilint: 42 頁健康，0 孤兒，0 斷連
+- ✅ specialistreview: 2 domain expansion 已自動套用
+- ✅ backup: commit 70a302b（47 檔案）

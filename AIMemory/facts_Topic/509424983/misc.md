@@ -1,4 +1,3 @@
+- [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
 - [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
 - [f_71c654] [2026-08-05T02:45:22.922Z] Daily Intel 產出的 markdown 檔案在手機上顯示亂碼的問題是因為 UTF-8 without BOM，已於 2026-08-05 在 src/daily-intel/reports/daily.ts 加上 UTF-8 BOM（\uFEFF）修復
-- [f_9a7397] [2026-08-05T11:38:02.464Z] G:\AI\AIMemory\wiki 底下沒有 SCHEMA.md（只有 index.md、四個子目錄、兩個 .jsonl），新增 wiki 頁時應比對現有同型頁面的實際 frontmatter 格式（query 型為 title / type / created / updated / sources）
-- [f_10d8ff] [2026-08-06T07:06:05.871Z] 編輯 .env 這類含機密的檔案時，使用者接受的做法是：只讀取需要的行範圍（避免把 token 拉進 context）、用 regex 定位而非手抄空白、並以「匹配數必須恰為 1」與「KEY=value 行數前後不變」兩道保險驗證未動到設定值

@@ -61,7 +61,6 @@
         "robinhood",
         "far_west",
         "chachacha",
-        "excel-to-ai-doc",
         "並發 gotcha",
         "cocos 版面",
         "promise.all",
@@ -140,7 +139,6 @@
         "skill-usage",
         "state.md",
         "notebooklm",
-        "session resume",
         "session/load",
         "sessionstore",
         "/session",
@@ -195,7 +193,6 @@
         "self_eval",
         "selfeval",
         "/backup",
-        "readme",
         "upstream",
         "sync-skills",
         "smoke",
@@ -284,7 +281,6 @@
         "雙形狀",
         "check-bot-command",
         "desc 基線",
-        "截斷",
         "cutpendingtokentail",
         "pricing tier",
         "tier_",
@@ -340,7 +336,9 @@
         "突變測試",
         "claude max 5x",
         "authmethods",
-        "@agentclientprotocol"
+        "@agentclientprotocol",
+        "frontmatter",
+        "readme.md"
       ],
       "wikiPages": [
         "bridge-project",
@@ -360,7 +358,11 @@
         "bridge-model-strategy",
         "opencode-acp-implementation",
         "paulsha-cortex-governance-plane",
-        "bridge-draft-diag"
+        "bridge-draft-diag",
+        "bridge-doc-sync",
+        "bridge-secrets-backup",
+        "bridge-infra",
+        "bridge-self-eval"
       ],
       "mcpServers": [
         "memory",

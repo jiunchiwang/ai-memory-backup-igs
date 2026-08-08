@@ -35,3 +35,5 @@
 - [f_9a349f] [2026-07-31T20:13:18.775Z] factlint 審核被 wiki-reference 保護的瑣碎 facts 時的判準（2026-07-30 使用者逐條裁決）：純進度快照（日期綁定、wiki 頁已有同等彙整版）選擇刪除，而標題雖寫「完成」但內含技術細節（按鈕 selector、五層安全防線設計）者保留——因為前者資訊已被 wiki 取代、後者有持久參考價值。
 - [f_34a003] [2026-07-31T20:47:31.616Z] `[WS]` working-state facts 是 <<RESTART>> 前的過渡性接手筆記，工作結束後應主動 forget 清掉——不清會持續佔用 preamble 召回額度，且若當時結論後來被推翻會把已否證的說法餵回未來 session（2026-08-01 一次清 8 條）
 - [f_5e6afb] [2026-07-31T20:47:31.616Z] hit-log.jsonl 最早的 type:"fact" 命中是 2026-07-11，因此 factlint 的 60 天衰減判定在 2026-09-09 之前都屬「觀測期間不足」，不該產出衰減候選
+- [f_9a7397] [2026-08-05T11:38:02.464Z] G:\AI\AIMemory\wiki 底下沒有 SCHEMA.md（只有 index.md、四個子目錄、兩個 .jsonl），新增 wiki 頁時應比對現有同型頁面的實際 frontmatter 格式（query 型為 title / type / created / updated / sources）
+- [f_0e4a79] [2026-08-05T15:08:54.618Z] Codex CLI 0.146.0 原生支援 skills 機制（掃 ~/.codex/skills/，內建 skill 放 .system/ 子目錄），且 SKILL.md frontmatter 格式與 Claude 完全一致（name + description），因此同一份 skill 正本可三個 CLI 共用不需改寫

@@ -1,4 +1,3 @@
-- [f_cc8fd5] [2026-07-13T11:39:16.104Z] 使用者偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個（2026-07-13 對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit）
 - [f_f2dc75] [2026-07-18T20:31:18.716Z] telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-19 補上 /refresh-routing 指令的別名 /refreshrouting 說明，修正與 README 常用指令表的落差
 - [f_221993] [2026-07-30T23:43:23.228Z] 為「計數類文件漂移」設機械閘門時，期望值必須當場從真實來源算出、絕不可硬寫，否則閘門自己會變成下一個過期來源——尤其閘門本身加入後就會改變它要驗的數字（2026-07-31 加 scripts/check-doc-sync.mjs 使 smoke fast 92→93、full 95→96，故支數改向 run-smoke-suite.mjs --list 動態取得）。同一組計數當時散在 10 個檔案，只改部分會讓 repo 內部互相矛盾、比全錯更難察覺。
 - [f_5302c0] [2026-07-31T03:52:33.947Z] doc-facts.ts 從 regex 撕原始碼重構為直接 import TypeScript 模組（COMMAND_SPECS/DEFAULT_STEPS/EVENT_TYPES），減少「平行實作」的脫鉤風險（2026-07-31，Fable 5 review 建議）

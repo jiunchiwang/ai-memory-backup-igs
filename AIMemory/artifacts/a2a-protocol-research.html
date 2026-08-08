@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2A Protocol 研究報告</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --primary: #0f3460;
+      --accent: #e94560;
+      --text: #eaeaea;
+      --text-muted: #a0a0a0;
+      --border: #2a2a4a;
+      --success: #4ade80;
+      --warning: #fbbf24;
+      --info: #60a5fa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      padding: 2rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--accent), #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+    .date { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
+    
+    nav {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+    }
+    nav h2 { font-size: 1rem; color: var(--accent); margin-bottom: 1rem; }
+    nav ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; }
+    nav a {
+      color: var(--info);
+      text-decoration: none;
+      padding: 0.3rem 0;
+      display: block;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+    
+    section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      color: var(--info);
+      margin: 1.5rem 0 1rem;
+    }
+    p { margin-bottom: 1rem; }
+    
+    .highlight-box {
+      background: var(--primary);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+    .highlight-box.info { border-left-color: var(--info); }
+    .highlight-box.success { border-left-color: var(--success); }
+    .highlight-box.warning { border-left-color: var(--warning); }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--primary);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    tr:nth-child(even) { background: rgba(15, 52, 96, 0.3); }
+    
+    ul, ol { margin: 1rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+    
+    code {
+      background: var(--primary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: var(--primary);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    pre code { padding: 0; background: none; }
+    
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+    .tag-yes { background: var(--success); color: #000; }
+    .tag-no { background: var(--accent); color: #fff; }
+    .tag-partial { background: var(--warning); color: #000; }
+    
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .comparison-card {
+      background: var(--primary);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .comparison-card h4 {
+      color: var(--accent);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .comparison-card .role {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .recommendation {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: var(--primary);
+      border-radius: 8px;
+    }
+    .recommendation-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .ref-list { list-style: none; margin-left: 0; }
+    .ref-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ref-list a { color: var(--info); }
+    
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>A2A Protocol 研究報告</h1>
+      <p class="subtitle">Google Agent-to-Agent Protocol 深度分析與借鏡評估</p>
+      <p class="date">研究日期：2026-08-08 | 研究者：researcher specialist</p>
+    </header>
+
+    <nav>
+      <h2>📑 目錄</h2>
+      <ul>
+        <li><a href="#summary">Executive Summary</a></li>
+        <li><a href="#core">1. 核心概念</a></li>
+        <li><a href="#comparison">2. 與 ACP/MCP 比較</a></li>
+        <li><a href="#technical">3. 技術細節</a></li>
+        <li><a href="#ecosystem">4. 實作生態</a></li>
+        <li><a href="#evaluation">5. 借鏡評估</a></li>
+        <li><a href="#references">參考資料</a></li>
+      </ul>
+    </nav>
+
+    <section id="summary">
+      <h2>Executive Summary</h2>
+      <div class="highlight-box">
+        <p><strong>A2A (Agent-to-Agent Protocol)</strong> 是 Google 於 2025 年 4 月發布的開放協定，目標是讓不同框架、不同供應商的 AI agent 能夠<strong>安全地互相發現、溝通與協作</strong>，無需共享內部工具或 prompt。</p>
+      </div>
+      <p>核心定位是 <strong>agent-to-agent 水平協作</strong>（peer-to-peer），與 MCP 的 agent-to-tool 垂直整合互補。對 telegram-kiro-bridge 而言，可借鏡 <strong>Agent Card 自描述格式</strong>與 <strong>INPUT_REQUIRED 中斷態</strong>概念，但不建議完整採用——bridge 的 specialist/relay 在單一信任域內，A2A 的複雜度過高。</p>
+    </section>
+
+    <section id="core">
+      <h2>1. 核心概念</h2>
+      
+      <h3>1.1 設計目標</h3>
+      <ul>
+        <li><strong>互操作性</strong>：讓異構 agent 系統（不同框架、不同模型）能協作</li>
+        <li><strong>Opaque Execution</strong>：agent 不需暴露內部工具或 prompt</li>
+        <li><strong>安全邊界</strong>：跨組織協作時保護各方知識產權</li>
+      </ul>
+
+      <h3>1.2 四大抽象</h3>
+      <table>
+        <tr>
+          <th>概念</th>
+          <th>說明</th>
+          <th>類比</th>
+        </tr>
+        <tr>
+          <td><strong>Agent Card</strong></td>
+          <td>JSON 格式的自描述文件，列出 agent 的名稱、能力、支援的輸入模式、認證方式</td>
+          <td>履歷表 / API spec</td>
+        </tr>
+        <tr>
+          <td><strong>Task</strong></td>
+          <td>有狀態的工作單元，生命週期：submitted → working → input-required → completed/failed/canceled</td>
+          <td>工單 / Issue</td>
+        </tr>
+        <tr>
+          <td><strong>Message / Part</strong></td>
+          <td>任務中的對話訊息，Part 支援多模態（TextPart、FilePart、DataPart）</td>
+          <td>聊天訊息</td>
+        </tr>
+        <tr>
+          <td><strong>Artifact</strong></td>
+          <td>任務產出物，可包含檔案或結構化資料</td>
+          <td>交付物</td>
+        </tr>
+      </table>
+
+      <h3>1.3 Agent Card 範例</h3>
+      <pre><code>{
+  "name": "Research Assistant",
+  "description": "Helps with web research and summarization",
+  "url": "https://agent.example.com",
+  "provider": { "organization": "Example Corp" },
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true
+  },
+  "skills": [
+    { "id": "web-search", "name": "Web Search", "description": "..." },
+    { "id": "summarize", "name": "Summarization", "description": "..." }
+  ],
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text", "file"]
+}</code></pre>
+    </section>
+
+    <section id="comparison">
+      <h2>2. 與 ACP/MCP 比較</h2>
+      
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h4>A2A</h4>
+          <p class="role">Agent ↔ Agent</p>
+          <p>水平協作<br>Peer-to-Peer<br>跨組織邊界</p>
+        </div>
+        <div class="comparison-card">
+          <h4>MCP</h4>
+          <p class="role">Agent → Tool</p>
+          <p>垂直整合<br>Client-Server<br>工具暴露</p>
+        </div>
+        <div class="comparison-card">
+          <h4>ACP</h4>
+          <p class="role">Client → Agent</p>
+          <p>控制介面<br>Client-Server<br>UI 操作</p>
+        </div>
+      </div>
+
+      <div class="highlight-box info">
+        <p><strong>關鍵洞察：</strong>三者互補非競爭。A2A 解決「不同團隊的 agent 如何協作」，MCP 解決「agent 如何存取工具」，ACP 解決「如何控制 agent」。</p>
+      </div>
+
+      <h3>2.2 功能矩陣</h3>
+      <table>
+        <tr>
+          <th>特性</th>
+          <th>A2A</th>
+          <th>MCP</th>
+          <th>ACP</th>
+        </tr>
+        <tr>
+          <td>Discovery 機制</td>
+          <td><span class="tag tag-yes">✓</span> Agent Card</td>
+          <td><span class="tag tag-no">✗</span></td>
+          <td><span class="tag tag-no">✗</span></td>
+        </tr>
+        <tr>
+          <td>有狀態任務</td>
+          <td><span class="tag tag-yes">✓</span> Task lifecycle</td>
+          <td><span class="tag tag-no">✗</span> 無狀態</td>
+          <td><span class="tag tag-yes">✓</span> Session</td>
+        </tr>
+        <tr>
+          <td>中斷等待輸入</td>
+          <td><span class="tag tag-yes">✓</span> input-required</td>
+          <td><span class="tag tag-no">✗</span></td>
+          <td><span class="tag tag-partial">△</span> 靠 tool</td>
+        </tr>
+        <tr>
+          <td>Streaming</td>
+          <td><span class="tag tag-yes">✓</span> SSE</td>
+          <td><span class="tag tag-partial">△</span> 依實作</td>
+          <td><span class="tag tag-yes">✓</span> session/update</td>
+        </tr>
+        <tr>
+          <td>跨信任邊界</td>
+          <td><span class="tag tag-yes">✓</span> 設計目標</td>
+          <td><span class="tag tag-no">✗</span></td>
+          <td><span class="tag tag-no">✗</span></td>
+        </tr>
+      </table>
+
+      <h3>2.3 決策規則</h3>
+      <div class="highlight-box warning">
+        <p><strong>何時需要 A2A：</strong>跨信任邊界的獨立 agent 協作（不同公司、不同團隊、需保護內部實作）</p>
+        <p><strong>何時不需要：</strong>同一團隊擁有的 agent，用 orchestration framework 即可</p>
+      </div>
+    </section>
+
+    <section id="technical">
+      <h2>3. 技術細節</h2>
+      
+      <h3>3.1 Agent Discovery</h3>
+      <ul>
+        <li>Agent Card 發布於 <code>/.well-known/agent-card.json</code></li>
+        <li>支援 registry 集中註冊（類似 DNS）</li>
+        <li>client 可根據 <code>skills</code> 欄位判斷 agent 能力</li>
+      </ul>
+
+      <h3>3.2 Task 生命週期</h3>
+      <pre><code>submitted → working → [input-required ↔ working] → completed | failed | canceled
+                ↑                                              |
+                └──────────────── (resume) ────────────────────┘</code></pre>
+      <p><code>input-required</code> 是關鍵狀態——agent 可暫停等待 client 提供更多資訊，而非強迫一次給完所有輸入。</p>
+
+      <h3>3.3 通訊協定</h3>
+      <table>
+        <tr>
+          <th>層級</th>
+          <th>協定</th>
+        </tr>
+        <tr>
+          <td>Transport</td>
+          <td>HTTP/HTTPS</td>
+        </tr>
+        <tr>
+          <td>Messaging</td>
+          <td>JSON-RPC 2.0（也支援 gRPC、REST）</td>
+        </tr>
+        <tr>
+          <td>Streaming</td>
+          <td>Server-Sent Events (SSE)</td>
+        </tr>
+        <tr>
+          <td>Auth</td>
+          <td>OAuth 2.0、API Key、JWT</td>
+        </tr>
+      </table>
+
+      <h3>3.4 核心 RPC 方法</h3>
+      <table>
+        <tr>
+          <th>方法</th>
+          <th>用途</th>
+        </tr>
+        <tr>
+          <td><code>tasks/send</code></td>
+          <td>建立任務並送出訊息</td>
+        </tr>
+        <tr>
+          <td><code>tasks/get</code></td>
+          <td>查詢任務狀態</td>
+        </tr>
+        <tr>
+          <td><code>tasks/cancel</code></td>
+          <td>取消任務</td>
+        </tr>
+        <tr>
+          <td><code>tasks/sendSubscribe</code></td>
+          <td>建立任務並訂閱 streaming 更新</td>
+        </tr>
+        <tr>
+          <td><code>tasks/resubscribe</code></td>
+          <td>重新訂閱既有任務</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="ecosystem">
+      <h2>4. 實作生態</h2>
+      
+      <h3>4.1 官方資源</h3>
+      <ul>
+        <li><strong>Python SDK</strong>：<code>pip install a2a-sdk</code></li>
+        <li><strong>JavaScript SDK</strong>：<code>npm install @anthropic/a2a-sdk</code>（待確認套件名）</li>
+        <li><strong>範例</strong>：官方 repo 有 multi-agent 範例</li>
+      </ul>
+
+      <h3>4.2 支援廠商</h3>
+      <p>Google Cloud Vertex AI、Salesforce、SAP、ServiceNow、Atlassian、MongoDB、LangChain、CrewAI 等 50+ 家</p>
+
+      <h3>4.3 成熟度評估</h3>
+      <table>
+        <tr>
+          <th>面向</th>
+          <th>狀態</th>
+        </tr>
+        <tr>
+          <td>規格穩定性</td>
+          <td><span class="tag tag-yes">v1.0</span> 2025/06 發布</td>
+        </tr>
+        <tr>
+          <td>SDK 完整度</td>
+          <td><span class="tag tag-partial">中等</span> Python 較完整</td>
+        </tr>
+        <tr>
+          <td>生產案例</td>
+          <td><span class="tag tag-partial">有限</span> 大廠 pilot 為主</td>
+        </tr>
+        <tr>
+          <td>社群活躍度</td>
+          <td><span class="tag tag-partial">成長中</span></td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="evaluation">
+      <h2>5. 借鏡評估</h2>
+      
+      <h3>5.1 可借鏡</h3>
+      
+      <div class="recommendation">
+        <span class="recommendation-icon">✅</span>
+        <div>
+          <strong>Specialist 自描述格式</strong>
+          <p>目前 <code>SpecialistConfig</code> 只有 <code>description</code> 字串，可擴充為類似 Agent Card 的結構（skills、inputModes、tags），讓 main agent 的 specialist 選型更有依據。</p>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <span class="recommendation-icon">✅</span>
+        <div>
+          <strong>INPUT_REQUIRED 中斷態</strong>
+          <p>目前 delegate 是 fire-and-forget，無中途互動。可考慮讓 specialist 回傳 <code>{ status: 'input-required', message: '...' }</code>，支援「需要更多資訊」的情境。</p>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <span class="recommendation-icon">✅</span>
+        <div>
+          <strong>contextId 顯式化</strong>
+          <p>目前 chatId 隱式作為 context。若未來支援跨 chat 的 long-running task，可加入顯式 contextId。</p>
+        </div>
+      </div>
+
+      <h3>5.2 不建議採用</h3>
+      
+      <div class="recommendation">
+        <span class="recommendation-icon">❌</span>
+        <div>
+          <strong>完整 A2A 協定</strong>
+          <p>Bridge 的 specialist/relay 在<strong>單一信任域</strong>內，A2A 的 opaque execution 保護不必要，HTTP+JSON-RPC 的複雜度過高。</p>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <span class="recommendation-icon">❌</span>
+        <div>
+          <strong>JSON-RPC/gRPC/REST 多綁定</strong>
+          <p>Bridge 只需要一種通訊方式，三套綁定增加維護負擔無實質收益。</p>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <span class="recommendation-icon">❌</span>
+        <div>
+          <strong>標準 Agent Card 發布</strong>
+          <p><code>/.well-known/agent-card.json</code> 需要 HTTPS 公開端點，bridge 目前是私有部署。</p>
+        </div>
+      </div>
+
+      <h3>5.3 結論</h3>
+      <div class="highlight-box success">
+        <p><strong>建議策略：</strong>從 A2A 借鏡概念（Agent Card 結構、INPUT_REQUIRED 狀態），但不採用完整協定。Bridge 的 specialist/relay 架構已能滿足單一信任域內的 agent 協作需求。</p>
+      </div>
+    </section>
+
+    <section id="references">
+      <h2>參考資料</h2>
+      <ul class="ref-list">
+        <li><a href="https://a2a-protocol.org/latest/specification/" target="_blank">A2A 官方規格</a></li>
+        <li><a href="https://github.com/a2aproject/A2A" target="_blank">A2A GitHub Repository</a></li>
+        <li><a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability" target="_blank">Google 發布公告</a></li>
+        <li><a href="https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade" target="_blank">A2A v1.0 升級公告</a></li>
+        <li><a href="https://redis.io/blog/mcp-vs-a2a-which-protocol-do-you-need/" target="_blank">Redis: MCP vs A2A 比較</a></li>
+        <li><a href="https://goo.gle/dlai-a2a" target="_blank">DeepLearning.AI A2A 課程</a></li>
+        <li><a href="https://a2a-protocol.org/latest/topics/a2a-and-mcp/" target="_blank">A2A + MCP 整合文件</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Generated by telegram-kiro-bridge researcher specialist</p>
+      <p>研究日期：2026-08-08</p>
+    </footer>
+  </div>
+</body>
+</html>

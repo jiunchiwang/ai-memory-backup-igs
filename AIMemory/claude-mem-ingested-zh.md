@@ -1,5 +1,62 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-08-09(AUTO 模式;2 筆候選 → 精選 + 去重後寫入 0 條)
+
+呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：
+`<<> ?Ｙ?:2026-08-08T20:30:03.436Z;蝑:2(銝? 15);??epoch 1786098514174>>`
+
+檔案自身 header 為「產生:2026-08-08T20:30:03.436Z;筆數:2(上限 15);自 epoch 1786098514174」——時間戳、筆數(2)、epoch 三者與呼叫端 header 一致,**無矛盾**。本批為全新批次（epoch 1786098514174 ≠ 前一批 1786018890310,筆數 2 ≠ 7）,**非重掃舊批**。
+
+來源 project：`uk_872_eyestrike2_client`（2 筆,皆為 decision 類）。
+
+精選階段直接淘汰（一次性過程紀錄,非跨 session 可重用）：
+
+- 候選 2（Second round review workspace integrity verification :: HEAD verified at commit 7c369051e23f02a6025802b2b755da071a17f9f5）：純粹是「某次覆核前確認工作區 HEAD 在某個 commit」的一次性動作紀錄,綁死單一 commit hash,無任何跨 session 可重用的判準或方法論成分。
+
+去重階段淘汰（`list_facts` 命中既有 fact,實質重複）：
+
+- 候選 1（Terminated recursive verification loop with documented residual risk after third round :: 第三輪用 kiro-cli --model glm-5,Zhipu 跨 vendor 強異源,對 commit c6fffcd）：查「覆核」命中 39 筆、「glm-5」命中 3 筆（其中 2 筆與前者重疊,聯集 40 筆）,其中三條合起來完全涵蓋本條的兩個成分——
+  - 「終止遞迴覆核 + 記錄殘餘風險」→ 既有 fact「使用者的異源覆核紀律再擴充（2026-08-02）：第一輪覆核後修正產生的新 commit 要再派第二輪、且換新 agent 不告知前一輪結論;第二輪若回報無 high/medium 即視為收斂可 push,不強制第三輪 —— 但要誠實交代『覆核者的可 push 判斷是針對它看過的那個 commit,之後的修正 commit 未經覆核』」,以及「使用者的 Fable5 push 前覆核紀律已擴充為『可多輪、範圍逐輪收窄』…直到只剩敘事精確度類 finding 才收斂 push」。既有版本已把「何時可停」與「停下時要交代什麼殘餘風險」都寫死,比候選更完整。
+  - 「glm-5 = Zhipu 跨 vendor 強異源」→ 既有 fact「異源覆核選型的核心判準：強異源與貴是兩個獨立的軸…glm-5 是 0.50x credits（比 Sonnet 便宜）卻是跨 vendor 強異源」已記載,且附帶成本軸的推論陷阱。
+  - 本條無任何超出上述三條的新成分,丟棄。
+
+結果：**新增 0 條。未呼叫 remember,未呼叫 forget。**
+
+補充說明（依使用者指示）：寫入 0 條屬正常結果,不代表 producer 壞掉——本批 2 筆全出自 uk_872 當日的覆核 session,而該 session 期間產生的知識已即時寫進 AIMemory,隔日再以 claude-mem observation 形式出現在 shortlist,重疊本來就是預期行為。
+
+---
+
+## 2026-08-08(AUTO 模式;7 筆候選 → 精選 + 去重後寫入 2 條)
+
+呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：
+`<<> ?Ｙ?:2026-08-07T20:30:02.814Z;蝑:7(銝? 15);??epoch 1786018890310>>`
+
+檔案自身 header 為「產生:2026-08-07T20:30:02.814Z;筆數:7(上限 15);自 epoch 1786018890310」——時間戳、筆數(7)、epoch 三者與呼叫端 header 一致,**無矛盾**。本批為全新批次（epoch 1786018890310 ≠ 前一批 1785929047040,筆數 7 ≠ 10）,非重掃舊批。
+
+來源 project：`telegram-kiro-bridge-main`（6 筆）+ `uk_872_eyestrike2_client`（1 筆）。
+
+精選階段直接淘汰（一次性過程紀錄,非跨 session 可重用）：
+
+- 候選 1（uk_872 Idle State 旋轉與 Collect Symbol 觸發邏輯澄清:視覺元素分別亮起而非同時）：單一專案的規格澄清,無跨 session 可重用的方法論成分。
+- 候選 2（派第二輪異源覆核驗證 F0–F5 修正,agent af8753828c9897050、d14923c→6190dce 共 10 檔）：單次派工紀錄;做法本身已由既有 fact「第一輪覆核後修正產生的新 commit 要再派第二輪、且換新 agent」涵蓋。
+- 候選 4（為 BC-19/BC-20 修正發起跨 vendor 覆核,subagent_type codex:codex-rescue 審 commit 6898125）：單次派工紀錄,是既有跨 vendor 紀律的又一實例。
+- 候選 6（以 mcp__bridge-actions__ask 佇列 cortex_domain_impl 五選項給使用者裁決）：單次互動紀錄。
+
+去重階段淘汰（`list_facts` 命中既有 fact,實質重複）：
+
+- 候選 5（異源覆核的 heterogeneity domain 單位是 model vendor,不是 CLI／harness／agent 名字）：查「覆核」命中既有 fact「2026-08-07 確立異源覆核的 domain 判定：異源性的單位是模型供應商而非 CLI／harness／分身名字…階梯為 強異源→弱異源→同源重置→不覆核,且降級必須留痕」→ 既有版本已含 kiro-cli 同源判定、防禦力邊界、降級階梯與留痕要求,**完全涵蓋且更豐富**,丟棄。
+
+實際寫入：
+
+1. （shard `adversarial-review`）收到 code review／異源覆核的 findings 時,處置有三個獨立維度而非一個：①這條成立嗎 ②它給的建議對嗎 ③它的修法屬不屬於本次改動的範圍——第三個維度最容易漏,成立且建議正確的 finding 仍可能把不相干的既有缺陷拉進來造成範圍蔓延,所以「不要盲目修掉每一條 finding」指的不只是駁回錯誤的 finding,也包含把正確但越界的 finding 記錄下來留待另一次改動處理（2026-08-07 telegram-kiro-bridge 建立 review-findings-pull-scope 記錄此模式）。
+   - 與既有 fact 的關係：既有「覆核結論不可照單全收,每條 finding 須自己重現後才動手」管維度①、「異源覆核收到的 findings 有第三種處置：指的位置對、但建議是錯的」管維度②,本條補的是維度③（範圍),非重複。
+2. （shard `bridge-doc-sync`）研究／吸收外部 repo 或文章時,筆記裡的每條主張都要標證據等級：A 級＝親自讀過原始檔案或原始碼查證過,B 級＝只根據摘要、README 或二手描述推得。這道標記是抗幻覺的紀律——分級本身會逼你察覺「這條其實沒查過」,也讓後續決策知道哪些前提還沒站穩;與「否定式主張要用二元探針覆核（如直接打 raw.githubusercontent 檔案 URL 看 200/404）而非採信摘要」互補（2026-08-06 telegram-kiro-bridge 於外部 repo 研究時定案）。
+   - 與既有 fact 的關係：既有 2026-08-07 fact 記的是**探針手法**（GitHub tree API 截斷 → WebFetch 小模型自信答 no → 改打 raw URL 當二元探針）,本條記的是**標記紀律**（每條主張標 A/B 級）;手法解決「怎麼查」,紀律解決「哪些還沒查」,互補非重複。
+
+結果：**新增 2 條**。未呼叫 forget。
+
+---
+
 ## 2026-08-07(AUTO 模式;10 筆候選 → 精選 + 去重後寫入 2 條)
 
 呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：

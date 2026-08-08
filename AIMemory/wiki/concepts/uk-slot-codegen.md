@@ -2,8 +2,8 @@
 title: UK Slot Codegen 工具整合
 type: concept
 created: 2026-07-15
-updated: 2026-07-17
-sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_81ef45, f_ac9912, f_98e336, f_1b276f, f_6fe390]
+updated: 2026-08-08（新增 skill-usage 回報缺口提醒）
+sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_81ef45, f_ac9912, f_98e336, f_1b276f, f_6fe390, f_0db6f9]
 ---
 
 # UK Slot Codegen 工具整合
@@ -26,6 +26,7 @@ sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, 
 - **update 模式（anchor merge）對既有手寫專案不可用**——無 anchor 的代碼會被視為 CODEGEN 區覆寫，只有新專案的 `new` 模式有價值
 - **按需讀取設計有覆蓋盲區**：慣例覆蓋只寫在 SKILL.md 會被執行時跳過（agent 只讀 _flow.md 該步段落），必須就地寫進對應 Step 段落
 - **pattern-library 是純知識庫**（零硬編碼路徑），codegen 則有硬依賴本地專案——兩者設計定位根本不同
+- **skill-usage.json 的 use_count 會低估真實使用**：只在 agent 主動輸出 `<<SKILL_USED:...>>` 時累加，因此 `use_count=0` 往往是回報缺口而非真的沒用（uk-slot-codegen 顯示 0 卻是 slot 開發主入口）——修好回報覆蓋率之前不可用 `use_count` 當刪除 skill 的依據
 
 ## uk_917 拋棄式驗證結果
 

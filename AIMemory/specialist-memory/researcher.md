@@ -10,3 +10,7 @@
 - [2026-07-13T02:29:16.614Z] (目標：研究 cloudflared quick tunnel 的運作原理，寫一份 200 字中文摘要。背景：使用者正在測) Quick Tunnel 執行 cloudflared tunnel --url 後建立僅出站連線至 Cloudflare 網路，自動產生隨機 trycloudflare.com 子網域反向代理回 localhost，免帳號免 DNS
 - [2026-07-13T02:29:16.614Z] (目標：研究 cloudflared quick tunnel 的運作原理，寫一份 200 字中文摘要。背景：使用者正在測) 關鍵限制：URL 每次重啟變更（ephemeral）、不支援 SSE、並發上限 200 requests、無 SLA、無自訂網域、無認證（僅靠 URL 隨機性）
 - [2026-07-13T02:29:16.614Z] (目標：研究 cloudflared quick tunnel 的運作原理，寫一份 200 字中文摘要。背景：使用者正在測) bridge 的 status-tunnel.ts SSE endpoint 在 quick tunnel 下不可用，Mini App 前端需改用 HTTP polling 或升級到 named tunnel 才能使用即時串流
+- [2026-08-07T20:36:55.798Z] (# 研究任務：Google A2A (Agent-to-Agent Protocol)
+
+## 目標
+深度研究 Goog) [auto-summary] 生命週期含 input-required）、Message/Part、Artifact"},{"type":"finding","content":"決策規則：需要 A2A 的情境是跨信任邊界的獨立 agent 協作，同一團隊擁有的 agent 用 orchestration framework 即可"},{"type":"recommendation","content":"bridge 可借鏡 Agent Card 概念為 specialist 建立結構化自描述；可考慮 INPUT_REQUIRED 中斷態讓 specialist 要求澄清"},{"type":"recommendatio

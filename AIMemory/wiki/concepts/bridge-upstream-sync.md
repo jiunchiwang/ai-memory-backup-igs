@@ -2,8 +2,8 @@
 title: Bridge Upstream Fork 同步與合併衝突處理
 type: concept
 created: 2026-07-21
-updated: 2026-08-05（補「add/add 假衝突」第四原則）
-sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_f144ad, f_90a25d, f_a23d83, f_4c12ce, f_a1ecf7, f_ea9657, f_e272f0, f_a3f2b2]
+updated: 2026-08-08（新增 merge-base 前置查證原則）
+sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_f144ad, f_90a25d, f_a23d83, f_4c12ce, f_a1ecf7, f_ea9657, f_e272f0, f_a3f2b2, f_489e55]
 ---
 
 # Bridge Upstream Fork 同步與合併衝突處理
@@ -46,6 +46,10 @@ bridge repo 的 remote：`origin=jiunchiwang/telegram-kiro-bridge`、`upstream=r
 | 2026-07-13 | merge 進 upstream 的 relay 多 peer 系統（`relay-peers.json` + `src/relayPeers.ts`，commit `fa2b9f4`），取代本地未實際使用的 `RELAY_PEER_USERNAMES`/`resolvePeerUsername` 機制 |
 | 2026-07-15 | 一次 merge 19 個上游 commit（Rich Telegram replies 統一、MoA rich replies、psmux 開發啟動器規劃、背景通知修復等）+ 1 個本地 ctx 統計後綴 commit，`691e7f8..0a3c551` 已 push origin/main；同日對 `src/commands/status.ts` 的 Electron 桌面監控視窗路線衝突選擇採用 upstream 版（恢復自動開啟），推翻先前本地移除 Electron 改純 Bot 推送的決定 |
 | 2026-07-16 | merge 進 MCP-first action domain 基礎建設（`agent-actions.ts`/`agent-action-runtime.ts`/`agent-action-metrics.ts`/`mcp-actions.ts`）+ skill sync hook 改為 opt-in（postinstall 不再自動設定 `core.hooksPath`）+ legacy action id 消毒修規，main `0a3c551` → `199e30a` 已 push origin/main |
+
+## 參考 upstream 前先查 merge-base（2026-08-06）
+
+查證 fork 修正可能領先 upstream 時，發現 upstream/main 至今仍有 `authRequired = authMethods.length > 0` 誤判與方括號-only 的 effort 後綴 regex（詳見 [[bridge-acp]]），而四個 codex 相關 upstream commit 早已全數在本 fork——直接讀 upstream 程式碼前先跑一次 `git merge-base` 對照，能避免誤判「upstream 有我沒有的東西」而重工。
 
 ## Push 前安全網
 

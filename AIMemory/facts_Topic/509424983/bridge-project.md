@@ -9,6 +9,7 @@
 - [f_36e49d] [2026-07-06T22:56:52.248Z] 使用者對 preamble 大小的取捨判斷：佔 context 5-6% 可接受但到警戒線就削減；優先砍 facts tail 與 guideline 區塊（排除 wiki 索引瘦身與維持現狀），理由是舊 facts 有 topic index + list_facts 補位
 - [f_eb9ddd] [2026-07-07T00:32:54.720Z] 使用者機器已安裝 Bun runtime（C:\Users\jiunchiwang\.bun\bin，含 bun.exe/bunx.exe），claude-mem plugin 的 hooks 依賴它執行，不可刪除
 - [f_1e4cda] [2026-07-07T09:28:41.792Z] telegram-kiro-bridge 已實作 Telegram reply/quote context 注入（commit 1346519）：message handler 讀 reply_to_message（含 caption）與 Bot API 7.0 partial quote，組 [Reply context] 區塊（標注引用對象、截 500 字）前置於 promptText；連動把 negation reflexion 偵測改用原始 text 開頭比對；需重啟 bridge 生效
+- [f_bef432] [2026-07-07T11:48:47.069Z] session resume 實作計畫與三段 review 軌跡存於 bridge repo docs/superpowers/plans/2026-07-07-acp-session-resume.md（含 BC-1~5 行為契約與 adapter 實測記錄表）
 - [f_1867ae] [2026-07-08T14:03:20.386Z] grammY 的 api.raw 是 Proxy，任意 method 名都回傳 callable——用 typeof method !== 'function' 做能力偵測對真 grammY API 是死碼，真正的不支援偵測要靠 catch API 錯誤
 - [f_3bc9f5] [2026-07-10T00:12:51.628Z] telegram-kiro-bridge 送 .md 檔給 Telegram 時改用 .txt 顯示名（InputFile 第二參數），解決 Telegram in-app viewer 對 .md UTF-8 偵測不可靠導致中文亂碼的問題（commit 8a2df86）
 - [f_131cef] [2026-07-10T11:14:51.695Z] telegram-kiro-bridge 已修復 draft TTL 過期訊息消失問題（commit 75a5428）：editNow() 中 trySendDraft() 失敗且無 placeholder 時，用 sendMessage 建 placeholder 並降級為 placeholder 模式（useDraftMode=false, draftId=0），防止 rate limit 期間 draft 30s TTL 過期導致訊息從使用者畫面消失
@@ -18,6 +19,7 @@
 - [f_7d5145] [2026-07-14T20:31:33.143Z] 在 multi-agent 的 dev-design workflow 中,即使 judge panel 把某提案排名第一,該提案也可能被評為「無法照案直接實作」(例如僅 5.5/10 分),這代表評分結果本身是需要再迭代設計的訊號,不該直接採用第一名方案進入實作。
 - [f_51bc41] [2026-07-14T20:31:34.381Z] dev-design workflow 的 Explore phase 若宣稱「現有程式缺少某項能力」(例如缺少方向感知),該宣稱有可能是錯的(該能力其實透過其他底層邏輯間接實現),因此 adversarial 驗證階段應優先檢查 Explore 階段的假設是否成立,而不是只驗證新提案本身。
 - [f_b56b60] [2026-07-19T09:11:28.458Z] 已確認 redkilin/ai-shared-knowledge 是 upstream 專案作者 tonykuo 自己的私人跨機知識庫 repo，與使用者的 fork 無關，使用者本來就無權限也不該嘗試接取
+- [f_82bd9f] [2026-07-22T21:49:00.863Z] telegram-kiro-bridge 的 session resume cosmetic 問題（resume 後 /context 顯示 preamble 0 chars）其實已於 commit 55b3628（2026-07-07）修復：UI 加註說明此為刻意行為（preamble 凍在原 session）非 bug，先前記錄的「待補」狀態已過時
 - [f_877531] [2026-07-26T20:31:35.219Z] telegram-kiro-bridge 的背景通知不穩定（flakiness）問題於 2026-07-26 經量測推翻原本的 race condition 假設：把 sleep 縮到 2s、turn 長度 31.9s 時，通知仍固定在 turn 結束後 +3.0s 才到、未被併入該 turn——可重用判準是「調整等待延遲後時間差不變，就不是競態」，修復方向須改從通知投遞路徑下手而非繼續調延遲。
 - [f_84dd82] [2026-07-29T20:31:39.514Z] 處理「請求的 model 與實際生效的 model 可能不一致」時採用的架構是：AcpClient 用私有 _sessionConfig 欄位保存 adapter 回報的實際 model/effort，與呼叫端請求的 opts.acpModel 分開存放，讓靜默降級被記成事實而非回音請求值；model 身分注入排在 initialize() 之後、preamble 注入之前，因此不違反 preamble 凍結快照政策（2026-07-29）
 - [f_10387c] [2026-07-31T07:42:01.614Z] telegram-kiro-bridge 的 .claudedocs/ 在 .gitignore 內，問題追蹤.md 是刻意不進版控的本機記錄檔——升格條目寫進磁碟即生效（CLAUDE.md Section 6a 讀本機檔），不應用 git add -f 硬塞進版控
@@ -30,3 +32,4 @@
 - [f_d71f60] [2026-08-03T15:12:42.161Z] telegram-kiro-bridge 的 /model 指令已修復顯示實際 ACP model（commit 待定）：ACP provider 時從 session 的 verifiedModelInfo 取得實際 model，而非硬編碼的 claude-sonnet-4 via Bedrock；有 effort 設定時一併顯示（如 claude-opus-4.5 (effort: high)）；adapter 尚未回報或無 session 時 fallback 顯示靜態值
 - [f_39ef23] [2026-08-04T20:31:40.183Z] 防護正則表達式的 catastrophic backtracking 不能靠「檔案與檔案之間的靜態 checkpoint 或靜態 regex guard」——爆炸發生在單一次 test() 呼叫內部、控制權永遠回不到 checkpoint，所以「處理完一個檔案就檢查一次」的 v1 做法在原理上就攔不到；正解是把 regex 執行隔離進 worker 並由外部逾時中止（telegram-kiro-bridge，2026-08-04）。
 - [f_1076e9] [2026-08-05T15:08:54.619Z] 使用者的 AI-canonical 有 tools/pull.ps1（拉 upstream 後自動跑 sync.ps1 -Apply）與 tools/bootstrap.ps1（新機器初始化）兩支腳本會呼叫 sync.ps1，因此改 sync.ps1 的 $Targets 會自動被這兩條路徑繼承，不需個別修改
+- [f_15bffc] [2026-08-07T20:31:40.600Z] 研究／吸收外部 repo 或文章時，筆記裡的每條主張都要標證據等級：A 級＝親自讀過原始檔案或原始碼查證過，B 級＝只根據摘要、README 或二手描述推得。這道標記是抗幻覺的紀律——分級本身會逼你察覺「這條其實沒查過」，也讓後續決策知道哪些前提還沒站穩；與「否定式主張要用二元探針覆核（如直接打 raw.githubusercontent 檔案 URL 看 200/404）而非採信摘要」互補（2026-08-06 telegram-kiro-bridge 於外部 repo 研究時定案）。

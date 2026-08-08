@@ -2,8 +2,8 @@
 title: Bridge Dream 例行維運框架
 type: concept
 created: 2026-07-16
-updated: 2026-08-02
-sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_b8d2e1, f_c4f7a3, f_d9e5b2]
+updated: 2026-08-08（新增 skill 跨 CLI 可攜性盤點）
+sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_b8d2e1, f_c4f7a3, f_d9e5b2, f_1ae434]
 ---
 
 # Bridge Dream 例行維運框架
@@ -63,6 +63,8 @@ sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_b8d2e1, 
 新增 `handleClaudeMemCurate` handler（仿 `handleDocUpdate` 的 meta-prompt 模式）並註冊進 `COMMAND_HANDLERS`，`dream.json` 插入 `claudememcurate` 步驟（`memorytoskill` 之後、`topicreview` 之前），使精選流程從純手動變成每日自動執行。
 
 2026-07-19 補修 SKILL_USED 追蹤缺口：該步驟 meta-prompt 原未要求輸出 `<<SKILL_USED:...>>`，導致 `skill-usage.json` 的 `use_count` 恆為零，已補上第 8 步指示。
+
+**skill 跨 CLI 可攜性盤點（2026-08-05）**：使用者的 skill 集裡只有 `claude-mem-curate` 綁 Claude 專屬工具鏈（引用 `claude-mem` plugin），Codex 端讀得到但執行不了；其餘 36 支內容層皆可攜（絕對路徑僅 `ms-portable-skill-authoring` 的教學反例一處）。Codex 端原生 skill 支援細節見 [[bridge-memory]]。
 
 ## dream turn 誤報「(no output)」— 兩種不同根因
 
