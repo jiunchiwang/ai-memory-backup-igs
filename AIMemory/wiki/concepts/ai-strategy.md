@@ -2,8 +2,8 @@
 type: concept
 title: 跨模型 AI 策略
 created: 2026-06-23
-updated: 2026-08-06（Codex CLI 登入狀態更正——內容已於當時補上，此次僅補正 frontmatter 日期與 source ID）
-sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698, f_e68e53, f_4568c1, f_76462d, f_d5d14e, f_0e4a79, f_b9e59d, f_806752]
+updated: 2026-08-09（新增第三方安裝腳本寫入 junction 正本的風險）
+sources: [f_c3d198, f_7d7ffe, f_e3b009, f_e6394d, f_6d4701, f_0561d8, f_3165ae, f_f92692, f_fd8698, f_e68e53, f_4568c1, f_76462d, f_d5d14e, f_0e4a79, f_b9e59d, f_806752, f_ac57f8]
 why: 因為需要讓同一份 skill/steering 跨 Kiro、Claude Code、Codex 多個 AI CLI 共用，所以建立正本集中管理 + 投影分發的架構
 ---
 
@@ -114,6 +114,10 @@ AI-canonical-corp 的 slot skill（如 `uk-slot-pattern-library`）透過 Window
 
 **已知既存漂移（本次未動，待決定）**：`~/.kiro/steering/karpathy-guardrails.md` 沒有對應的 AI-canonical 正本（正本 steering 只有 `closed-loop-system` / `skill-workflow` / `task-acknowledgement` 三支），所以 Kiro 吃著一份 Claude 與 Codex 都拿不到的 steering——要嘛補進正本，要嘛確認為 Kiro 專屬。
 
+## 第三方安裝腳本的正本汙染風險（2026-08-09）
+
+第三方工具的安裝腳本可能靜默寫進 skill 正本，繞過 `sync.ps1` 投影流程：外部 repo cc-session-reader 的 `install.sh`/`install.ps1` 預設會裝一份 skill 到 `~/.claude/skills/cc-session`，而本機該路徑是 junction 直達 AI-canonical 正本 repo——等於第三方腳本直接改了正本，而且是靜默的（不會有任何提示說「這其實是正本目錄」）。要裝必須帶 `--no-skill`，或把該 skill 的 SKILL.md 走上面的正本 SOP 手動放。任何會往 `~/.claude/skills`、`~/.kiro/skills`、`~/.codex/skills` 寫檔的第三方安裝器都要先檢查這件事，不只 cc-session-reader 一例。完整研究脈絡見 [[cc-session-reader]]。
+
 ## MCP-First 邊界說明（2026-07-17）
 
 正本三份 skill（`ms-agent-scheduled-prompts`、`ms-agent-text-token-signaling`、`ms-telegram-ask-button-protocol`）已更新統一邊界規則：bridge-managed session 優先呼叫 `bridge-actions` MCP tool，只有明確回報 unavailable 才退回文字 token 協定；validation/policy 錯誤須修參數，不可用文字 token 繞過（commit d6853e2，未 push）。此規則反映 [[bridge-project]] 的 `bridge-actions` MCP 上線後，正本文件需同步更新消費端行為的慣例。
@@ -122,3 +126,4 @@ AI-canonical-corp 的 slot skill（如 `uk-slot-pattern-library`）透過 Window
 
 - [[bridge-project]] — Bridge 是正典的消費者之一
 - [[skill-and-eval]] — Skill 的評估與生命週期管理
+- [[cc-session-reader]] — 第三方安裝腳本汙染正本風險的完整研究脈絡

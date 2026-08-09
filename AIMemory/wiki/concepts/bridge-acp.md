@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-06（新增 Codex authMethods 誤判修正、effort 斜線解析、套件遷移）
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437]
+updated: 2026-08-09（新增 tool 結果狀態判定鏈查證）
+sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437, f_820b01, f_43da84]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -216,6 +216,33 @@ telegram-kiro-bridge 已於 2026-08-06 遷移到維護中的套件：`acp-provid
 
 ⚠️ **參考 upstream 前先查 merge-base**：2026-08-06 查證 upstream/main 至今仍有 `authRequired = authMethods.length > 0` 誤判與方括號-only 的 effort regex——上面兩個修正都領先 upstream，不是重工；四個 codex 相關 upstream commit 早已全數在本 fork。
 
+## Tool 結果狀態判定鏈（2026-08-09 查證）
+
+bridge 判斷一次 tool call 成敗完全依賴 ACP 的顯式 `status`，自己不做任何預設或嗅探：
+
+- `sessionManager.ts:1256/1289` 分派邏輯直接讀 ACP 回傳的 status，兩個分支都明寫
+- 上游 `claude-agent-acp` 的映射（`dist/acp-agent.js:5802`，逐字）：
+  ```js
+  isError = "is_error" in chunk && chunk.is_error ? "failed" : "completed"
+  ```
+- 下游消費者：`_consecutiveToolFails` 累加後於 `sessionManager.ts:1318` 觸發 Reflexion hint
+
+**更正一條先前錯誤主張**：`agent-diagnostics.ts` 只 parse `type:"system"/subtype:"api_error"`，從頭到尾不看 tool result，跟這條判定鏈沒有交集。
+
+### is_error 可信度實測（研究外部 repo cc-session-reader 時查證）
+
+外部 repo cc-session-reader 的 ADR-003 主張「Bash 結果沒有 `success` 欄位、`is_error` 也不可信」。拿本機 25 份 transcript、1260 個 `tool_result` block 實測現行 Claude Code：
+
+| 觀察 | 結果 |
+|---|---|
+| 非零 Exit code 的結果 | 18 筆，**18/18 都帶 `is_error: true`** |
+| Bash 的 `is_error` 欄位 | 從不缺席（false 497 / true 8） |
+| 欄位缺席的工具（Edit/Read/Agent/Write） | 缺席即代表成功，缺席但文字帶失敗特徵者 0 筆 |
+
+∴ **現行 Claude Code 的 `is_error` 是可信的失敗訊號**，上面 adapter 的映射正確，bridge 這條路徑健全；ADR-003 的主張在此不重現。
+
+⚠️ 誠實邊界：n=18 太小（錯誤率高到約 15% 仍有 5% 機率量到 0/18），單機單專案單版本，且未端到端驗 SDK 串流 chunk 的形狀——此段仍是 B 級推論，非普遍證實。完整研究脈絡見 [[cc-session-reader]]。
+
 ## ACP Adapter 設定檔差異
 
 | Adapter | 讀取的設定檔 |
@@ -234,3 +261,4 @@ telegram-kiro-bridge 已於 2026-08-06 遷移到維護中的套件：`acp-provid
 - [[opencode-acp-implementation]] — OpenCode ACP 實作研究（stdio+HTTP 架構、完整方法表）
 - [[adversarial-review]] — 異源對抗覆核紀律（自本頁拆出，2026-08-05）
 - [[bridge-model-strategy]] — Model 選型/pricing/effort 策略（自本頁拆出，2026-08-05）
+- [[cc-session-reader]] — is_error 可信度實測的完整研究脈絡與借鏡評估結案

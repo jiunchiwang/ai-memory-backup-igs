@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-06（新增 fixture 形狀陷阱、argv 呼叫慣例、BC-x 編號紀律）
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218]
+updated: 2026-08-09（新增 check-draft-streaming.mjs 的零 import 約束、恆假斷言、反向釘死斷言三則）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe]
 ---
 
 # Bridge 測試閘門與建置
@@ -64,6 +64,14 @@ runner 用 `readdirSync` 以 `check-*` 前綴**自動發現**腳本 → 新增�
 ## 為既有 smoke 腳本加單例狀態的陷阱
 
 為既有腳本加 module-level 單例（如 registry）時，要先檢查**既有測試區塊的狀態污染**：`check-draft-streaming.mjs` 的區塊 ①②③④ 刻意不 close（那正是它們要驗的事），加 registry 之後這些實例會殘留在 Set 裡。新區塊必須**先 drain 排空再斷言**，否則會拿到非 0 的 count 並誤刪前面區塊的 fake api 訊息。
+
+## check-draft-streaming.mjs 的額外陷阱（2026-07-31～08-01）
+
+同一支測試檔的另外三則陷阱，與上面「加單例狀態」屬同批教訓：
+
+- **零 import 硬約束**：`src/status-channel.ts` 刻意維持零 import——`check-draft-streaming.mjs` 是把該檔單獨 transpile 成 data-URL module 載入的，加任何 import 測試就載不起來。因此進程層 registry 必須自我包含（含自帶 `setTimeout` 上界，不可引用共用的 `withTimeout`）。
+- **「某字串必須完全不存在於原始碼」斷言會被自己的說明註解打成恆假**：正確做法是先濾掉註解行只掃可執行碼——解釋「為何移除」的註解必須留著，否則下一個人會照舊前提把碼加回來（2026-08-01 實證）。
+- **把已被推翻的前提釘死在測試裡會變成修復的阻礙**：原本要求送出條件必須含 `|| statusWrote`、要求 `"status-restore"` 字串存在，前提實測推翻後這兩條反而擋住正確修法，須改寫成**反向釘死**（該字串不得出現）加位置比較斷言（2026-08-01）。
 
 ## 測試 fixture 與呼叫慣例陷阱（2026-08-05～06）
 

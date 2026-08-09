@@ -1,3 +1,6 @@
-- [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
+- [f_0c44ff] [2026-07-06T02:55:13.600Z] 使用者對非 Claude model 的判斷：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項，qwen3-coder-next 超便宜但 experimental 穩定度未知
 - [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
+- [f_99e9ba] [2026-07-30T22:22:40.029Z] 使用者對「純進度/完成記錄」類型 facts 的去留判準：包含技術實作細節（如 selector、防線設計、API 行為）的進度記錄值得保留，純日期綁定的進度快照（如「M0a 完成」「三步驟已完成」）和歷史拆分記錄可刪除
+- [f_ebe025] [2026-07-31T11:33:09.321Z] 使用者對承重改動的驗證要求偏好「留下可否證條件」而非宣稱已修好：修法上線時要同時定義出「什麼觀測結果代表原假設是錯的」（2026-07-31 draft H1 修法實測，判讀表區分 status-restore 幀存在但症狀仍在=假設錯）
 - [f_71c654] [2026-08-05T02:45:22.922Z] Daily Intel 產出的 markdown 檔案在手機上顯示亂碼的問題是因為 UTF-8 without BOM，已於 2026-08-05 在 src/daily-intel/reports/daily.ts 加上 UTF-8 BOM（\uFEFF）修復
+- [f_c77fbc] [2026-08-09T01:20:19.280Z] 宣告持久化成果（檔案已改／已 commit／已存記憶）前必須確認該輪真的有對應的 tool call，判準是「指得出是哪一次呼叫」——2026-08-09 曾在回覆結尾具體寫出「wiki 頁已改寫（Section 4 重寫、加 Section 6）」但整輪零 Edit/Write；具體的章節號反而讓假宣稱更可信，且 READ-BACK 紀律結構上擋不到（沒有 write 就沒有東西可讀回，自檢項被整個跳過而非失敗）。

@@ -421,3 +421,18 @@
 {"ts":"2026-08-08T20:14:54.414Z","q":"adversarial-review","hits":24}
 {"ts":"2026-08-08T20:31:12.821Z","q":"覆核","hits":39}
 {"ts":"2026-08-08T20:31:21.106Z","q":"glm-5","hits":3}
+{"ts":"2026-08-09T20:15:27.961Z","q":"adversarial-review","hits":24}
+{"ts":"2026-08-09T20:15:30.884Z","q":"bridge-model-strategy","hits":22}
+{"ts":"2026-08-09T20:15:34.753Z","q":"bridge-acp","hits":22}
+{"ts":"2026-08-09T20:15:37.971Z","q":"ai-strategy","hits":12}
+{"ts":"2026-08-09T20:15:42.987Z","q":"verification-diagnosis","hits":7}
+{"ts":"2026-08-09T20:16:47.779Z","q":"tool 成敗判定鏈","hits":1}
+{"ts":"2026-08-09T20:17:04.576Z","q":"證據等級","hits":1}
+{"ts":"2026-08-09T20:20:04.136Z","q":"bridge-upstream-sync","hits":14}
+{"ts":"2026-08-09T20:20:05.828Z","q":"bridge-infra","hits":13}
+{"ts":"2026-08-09T20:20:08.089Z","q":"bridge-doc-sync","hits":5}
+{"ts":"2026-08-09T20:20:10.125Z","q":"bridge-self-eval","hits":5}
+{"ts":"2026-08-09T20:20:14.947Z","q":"uk-slot-clash-olympus","hits":5}
+{"ts":"2026-08-09T20:20:18.016Z","q":"misc","hits":7}
+{"ts":"2026-08-09T20:26:21.992Z","q":"excel-to-ai-document","hits":1}
+{"ts":"2026-08-09T20:26:35.223Z","q":"draft-streaming","hits":5}

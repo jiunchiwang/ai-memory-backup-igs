@@ -322,3 +322,5 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-06T11:04:19.858Z] user=509424983 query="探針會撞 401 Unauthorized" deleted=0 token=forget-58cddbee-1
 
+- [2026-08-09T20:24:20.518Z] user=509424983 query="外部 repo cc-session-reader（Mapleeeeeeeeeee，Go，Apache-2.0，讀 Claude Code transcript JSONL 做純靜態壓縮）於 2026-08-09 完成吸收評估並結案" deleted=1 token=forget-74258bdd-1
+    - [f_a7524a] [2026-08-09T01:20:19.280Z] 外部 repo cc-session-reader（Mapleeeeeeeeeee，Go，Apache-2.0，讀 Claude Code transcript JSONL 做純靜態壓縮）於 2026-08-09 完成吸收評估並結案：無任何項目值得吸收進 bridge。根本原因是兩系統資料源與目的不重疊——cc-session 吃 Claude Code 的 JSONL 產「可重新灌回 context 的壓縮歷史」，bridge 的 session-extract 吃自己的 markdown transcript 產「長期記憶 facts」；初版比對表高估了重疊度。研究筆記與判定表存於 wiki queries/cc-session-reader.md。

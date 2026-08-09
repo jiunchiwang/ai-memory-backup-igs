@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-08-06（新增管線緩衝陷阱、openpyxl 公式快取與 theme 色陷阱）
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6]
+updated: 2026-08-09（新增 excel-to-ai-document 專案位置記錄；上週 topic review 已確認此歸屬正確）
+sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55]
 ---
 
 # 開發工具與環境設定
@@ -21,6 +21,10 @@ sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, 
 ### Kiro CLI Model ID 格式
 
 Kiro CLI 使用**短名格式**（如 `claude-sonnet-4.6`、`claude-opus-4.6`），不是完整 API model ID（如 `claude-sonnet-4-5-20250514`）。可用清單：`auto` / `claude-opus-4.6` / `claude-sonnet-4.6` / `claude-opus-4.5` / `claude-sonnet-4.5` / `claude-sonnet-4` / `claude-haiku-4.5` / `deepseek-3.2`。
+
+## 相關專案
+
+- **excel-to-ai-document**（`G:\AI\excel-to-ai-document`）— 含 `skill/excel-to-ai-doc` 資料夾（`SKILL.md` + `scripts/convert.py`），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構。是通用工具而非 slot 專屬（曾被 `uk-slot` topic 的過寬關鍵字誤收，2026-08-09 topic review 已修正）。
 
 ## 已安裝工具
 

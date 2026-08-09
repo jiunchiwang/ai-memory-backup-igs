@@ -338,7 +338,8 @@
         "authmethods",
         "@agentclientprotocol",
         "frontmatter",
-        "readme.md"
+        "readme.md",
+        "draft-streaming"
       ],
       "wikiPages": [
         "bridge-project",
