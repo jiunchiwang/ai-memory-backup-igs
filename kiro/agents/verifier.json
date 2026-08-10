@@ -1,0 +1,25 @@
+{
+  "name": "verifier",
+  "description": "Output quality judge — 判定其他分身的產出是否完成任務。advisory only，不阻擋工作。",
+  "tools": [
+    "@builtin",
+    "@memory"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    }
+  }
+}

@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-08
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01]
+updated: 2026-08-11
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b]
 ---
 
 # Bridge Specialist 分身系統
@@ -31,6 +31,12 @@ sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, 
 - `moa-ref-claude`（claude-sonnet-4.6）、`moa-ref-kiro`（kiro 預設模型）、`moa-ref-adversary`（claude-sonnet-4.6）
 
 先前 `moa-presets.json` 引用的顧問名只是空殼、無法 spawn，此次補齊後 `/moa` 指令可正常運作。ctx 統計行已同步加上 agent/model/effort 後綴（格式「· agent/model/effort」），specialist proxy 則顯示 specialist name。
+
+## run_plan 與 wf-design 全有全無設計（2026-08-10）
+
+`run_plan` 的 DAG 依賴阻擋機制讓 `wf-design` 模板成為**全有全無**：三個提案 step（moa-ref-claude / moa-ref-kiro / moa-ref-codex）任一 failed，後續的 challenge 與 decide 步驟整個不執行（回報「未執行：前置 #3 失敗」），已完成的 2/3 份有效產出連帶白費。
+
+**已知問題（刻意擱置）**：`moa-ref-codex` 的 model pin `gpt-5.6-terra` 在本機 codex-cli 0.146.1 必掛（400 requires newer version），使用者於 2026-08-10 選擇**暫不修**（不改 pin、不重跑、不加 pin 驗證閘門）——後續 session 不應自行改掉該 pin。實測 2026-08-10 wf-design 因此只拿到兩份原始方案、零收斂產出，白燒 4 分 7 秒行程時間。
 
 ## Token 執行權限層（2026-07-07，commit 028a5ea）
 

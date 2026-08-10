@@ -812,6 +812,12 @@
       "chatId": 509424983,
       "score": 78,
       "evidence": "原型已寫出並用 node 驗過兩件事：script 區塊語法解析通過、click 時間表與紙上推算逐列相符（誤差<0.006s）；現況版曲線與常數逐行對照 FeatureWheelManager.ts 移植。未驗證的是瀏覽器實跑（沒開過瀏覽器）與音訊實際發聲，以及手感是否成立——那本來就要人耳判斷。順帶更正上則 5.80s→5.55s 的算錯"
+    },
+    {
+      "ts": "2026-08-10T05:11:51.033Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "實跑驗證：DAG 狀態與成本由 run_plan 回報、執行者身分由 bridge 端 artifact 的 specialist 欄位核對（非問 specialist 自己）、根因由 specialists.json 與 codex-cli 0.146.1 版本雙邊確認；未動任何檔案 ∴ 無型別/呼叫端風險。保留：未讀兩份 artifact 全文（本次目的是驗管線非評設計品質），且 challenge/decide 兩階從未執行 ∴ 那兩步的正確性本輪完全未驗證。"
     }
   ]
 }

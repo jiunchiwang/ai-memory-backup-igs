@@ -10,8 +10,9 @@ description: 當寫 skill 會被多個 agent CLI（Kiro / Codex / Claude）或�
 同一份 SKILL.md 常常要在多台機器、多個 agent CLI 下重用：Kiro 在
 `~/.kiro/skills/`，Codex 在 `~/.codex/skills/`，Claude 在
 `~/.claude/skills/`。這些是 agent 看見的入口，不代表內容一定各自複製；
-目前 Bridge 以 Kiro skills 為 canonical source，Claude 整個 skills root
-junction 到 Kiro，Codex 則逐 skill junction、保留自己的 `.system`。跨機器時
+本機的正本在一個獨立的 canonical repo，三個入口都是**逐 skill junction**
+指向它（Codex 另外保留自己的 `.system`）—— 但**這個拓樸逐台機器不同、而且會漂移**，
+別當常數記，要用時看下面「現行 skill 共用拓撲」節的實測判別法。跨機器時
 memory 根目錄仍可能不同。如果 SKILL.md 寫死
 `F:\AI\AIMemory\facts-123.md`，搬過去就壞。
 
@@ -114,34 +115,46 @@ Topic 維護同樣走 `propose_topics()` → `apply_topics(...)`。MCP unavailab
 
 ### 現行 skill 共用拓撲
 
-**⚠️ 這一節是環境事實，會漂移。動它之前先實測，不要照抄別台機器的描述。**
-（2026-08-04 實測；判別法：`readlink -f ~/.kiro/skills` 看 root 是不是 junction，
-再 `readlink -f ~/.kiro/skills/<name>` 看個別 skill 指向哪。）
+**⚠️ 這一節是環境事實，逐台機器不同、而且會漂移。動它之前先實測，不要照抄別台機器
+的描述——這份 skill 的兩條開發線就曾各自寫下互相矛盾的拓樸圖，兩邊在自己那台都是對的。**
+
+判別法（**兩層都要看**，只看一層會誤判）：
+
+```bash
+readlink -f ~/.kiro/skills          # root 本身是不是 junction？
+readlink -f ~/.kiro/skills/<name>   # 個別 skill 指向哪？
+```
+
+本機拓樸（2026-08-10 用上面兩條實測，三個入口全查）：
 
 ```
 <canonical-repo>/skills/<domain>/<name>/    ← 正本（獨立的 git repo）
         ├── ~/.kiro/skills/<name>           逐 skill junction
         ├── ~/.claude/skills/<name>         逐 skill junction
-        └── ~/.codex/skills/<name>          ⚠️ 實體複製，不是 junction
+        └── ~/.codex/skills/<name>          逐 skill junction
 
 ~/.codex/skills/.system/<name>/             Codex 內建，獨立保留
 ```
 
 - **三個 CLI 的 `skills/` root 都是實體目錄**，junction 發生在**個別 skill** 這一層。
-  root 不是 junction，所以「把整個 root 指過去」的心智模型是錯的。
+  root 不是 junction，所以「把整個 root 指過去」的心智模型在這台機器是錯的
+  ——但**別台機器可能相反**（有的機器 Claude 是整個 root junction 過去），所以
+  「三個入口都是同一種投影」同樣不能預設，要分開查。
 - **正本不在任何一個 `~/.<cli>/skills` 底下**，而在獨立的 canonical repo；
   投影由該 repo 的 sync 工具建立。改 skill 一律改正本，改投影會被下次 sync 覆蓋。
-- **Codex 那份是複製不是 junction ⇒ 會漂移。** 這是目前的已知缺口：改完正本後
-  Kiro/Claude 立即反映，Codex 要另外刷新（bridge 的
-  `scripts/refresh-codex-skill-links.mjs`）。懷疑漂移時直接 `diff` 正本與
-  `~/.codex/skills/<name>/SKILL.md`。
 - Codex 不能把整個 `skills/` junction 掉，否則會覆蓋 `.system`——這也是它只能
-  逐 skill 處理的原因。
+  逐 skill 處理的原因。新增 skill 後要補連結（bridge 的
+  `scripts/refresh-codex-skill-links.mjs`），否則 Codex 看不到那支。
 - 跨 CLI 共用的 `skill-usage.json` 掃描必須合併 `.kiro/.codex/.claude`
   三個 roots 與各自 `.system`，同名去重；只掃目前 `${SKILL_DIR}` 會製造
   orphan false positive。
-- 不要把三個入口誤當成三份需要各自維護的 copy——但也不要反過來假設它們**必然**
-  同步：上面那條 Codex 的例外就是反例。
+- 不要把三個入口誤當成三份需要各自維護的 copy——但**也不要反過來假設它們必然同步**。
+  已知的漂移失敗形狀有兩種，兩種都真的發生過：
+  ① **逐 skill junction 漏建**：新 skill 只有部分 CLI 看得到（`refresh-codex-skill-links`
+     曾整支邏輯失效，因為 `Dirent.isDirectory()` 對 junction 回 `false`）。
+  ② **某個入口是實體複製而非 junction**：改完正本不會反映。本機 Codex 在 2026-08-04
+     實測就是這個狀態，2026-08-10 已變成 junction ∴ **這條是會變的，別當常數記**。
+  懷疑漂移時直接 `diff` 正本與 `~/.<cli>/skills/<name>/SKILL.md`，不要靠推論。
 
 ## Bridge 端怎麼實作注入（給會改 bridge 的人）
 

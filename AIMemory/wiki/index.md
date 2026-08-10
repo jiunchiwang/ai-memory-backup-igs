@@ -21,7 +21,7 @@
 - [[bridge-draft-diag]] — Bridge Draft 診斷與重播修復（三個獨立成因、cutPendingTokenTail 扣留式設計、診斷探針、可重用方法論；2026-08-08 從 bridge-streaming 拆出）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
 - [[bridge-dream]] — Bridge Dream 例行維運框架（dream.json models 表 per-backend 設計、claude-mem-curate 接入、turn 誤報根因、confabulation 教訓）
-- [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控）
+- [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控、run_plan 全有全無設計、moa-ref-codex 已知擱置）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft、spine-animation-ai 自包含 Skill 打包機制）
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
 - [[bridge-roadmap]] — Bridge 開發 Roadmap（Pending / In Progress 追蹤，2026-07-28 建立）
@@ -65,4 +65,4 @@
 ---
 
 Total pages: 47
-Last updated: 2026-08-09（wikilint：0 孤兒、0 斷連 wikilink；修復 2 個因今日 topic review 關鍵字調整而漏更新的頁面 [[bridge-smoke-gate]]（check-draft-streaming.mjs 陷阱三則）/[[dev-tools]]（excel-to-ai-document 專案）；[[bridge-streaming]] 核對後確認不需更新——今日新分到該 shard 的內容本就屬於它。此前 wikisync 已更新 [[bridge-acp]]/[[ai-strategy]]）
+Last updated: 2026-08-11（wikisync：更新 [[bridge-specialist]] 加入 run_plan 全有全無設計與 moa-ref-codex 已知擱置；Query auto-save 候選 5 個全數跳過——4 個是 ASK/intent-hint 片段無實質內容，1 個診斷筆記已涵蓋在 [[bridge-draft-diag]]）

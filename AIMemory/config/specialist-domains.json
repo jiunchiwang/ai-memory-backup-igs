@@ -12,11 +12,23 @@
   "commonMcpServers": [
     "memory"
   ],
+  "mcpServerDefs": {
+    "readonly": {
+      "command": "node",
+      "args": [
+        "${BRIDGE_DIR}/dist/mcp-readonly.js"
+      ],
+      "env": {
+        "READONLY_ROOTS": "${READONLY_ROOTS}"
+      },
+      "disabled": false
+    }
+  },
   "domains": {
     "slot-dev": {
       "description": "UK slot game development specialist (Cocos Creator + Astarte + TypeScript)",
       "harness": "claude-agent-acp",
-      "model": "claude-sonnet-5",
+      "model": "sonnet",
       "effort": "high",
       "prefixes": [
         "uk-"
@@ -75,7 +87,13 @@
         "uk-slot-codegen",
         "magicpot",
         "reel light",
-        "slot 專案"
+        "slot 專案",
+        "eyestrike2",
+        "eye strike 2",
+        "featurewheel",
+        "click 音效",
+        "wheel-click",
+        "uk-slot-pitfalls"
       ],
       "wikiPages": [
         "uk-slot",
@@ -339,7 +357,12 @@
         "@agentclientprotocol",
         "frontmatter",
         "readme.md",
-        "draft-streaming"
+        "draft-streaming",
+        "run_plan",
+        "wf-design",
+        "wf-prd",
+        "wf-review",
+        "wf-verify"
       ],
       "wikiPages": [
         "bridge-project",
@@ -404,27 +427,83 @@
     },
     "moa-ref-claude": {
       "description": "MoA blind advisor (Claude)",
-      "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
-      "effort": "low",
-      "prefixes": [],
-      "topicKeywords": [],
-      "mcpServers": []
-    },
-    "moa-ref-kiro": {
-      "description": "MoA blind advisor (Kiro/Bedrock)",
       "harness": "kiro-cli acp -a",
       "effort": "low",
       "prefixes": [],
       "topicKeywords": [],
-      "mcpServers": []
+      "mcpServers": [],
+      "model": "claude-sonnet-4.6"
     },
-    "moa-ref-adversary": {
-      "description": "MoA devil's advocate (red-team preset)",
-      "harness": "kiro-cli acp --model claude-sonnet-4.6 -a",
+    "moa-ref-kiro": {
+      "description": "MoA blind advisor (Kiro/Bedrock)",
+      "harness": "kiro-cli acp --agent {name} -a",
       "effort": "low",
       "prefixes": [],
       "topicKeywords": [],
-      "mcpServers": []
+      "mcpServers": [
+        "readonly"
+      ],
+      "readOnlyLens": true,
+      "model": "glm-5"
+    },
+    "moa-ref-adversary": {
+      "description": "MoA devil's advocate (red-team preset)",
+      "harness": "kiro-cli acp -a",
+      "effort": "low",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "model": "claude-sonnet-4.6"
+    },
+    "verifier": {
+      "description": "Output quality judge — 判定其他分身的產出是否完成任務。advisory only，不阻擋工作。",
+      "harness": "claude-agent-acp",
+      "model": "sonnet",
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "skipCommonSkills": true
+    },
+    "moa-ref-security": {
+      "description": "MoA security reviewer (資安視角，可讀檔)",
+      "harness": "claude-agent-acp",
+      "model": "sonnet",
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "skipCommonSkills": true
+    },
+    "moa-ref-perf": {
+      "description": "MoA performance reviewer (性能視角，可讀檔)",
+      "harness": "claude-agent-acp",
+      "model": "sonnet",
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "skipCommonSkills": true
+    },
+    "moa-ref-ux": {
+      "description": "MoA UX reviewer (使用者體驗視角，可讀檔)",
+      "harness": "claude-agent-acp",
+      "model": "sonnet",
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "skipCommonSkills": true
+    },
+    "moa-ref-codex": {
+      "description": "MoA blind advisor (第三方 vendor：MiniMax via Kiro)。名稱沿用 moa-ref-codex 是因為 wf-design/wf-prd 依名字指名它，改名會讓那兩個 step 靜默退回 general。Codex 方案額度用盡時改走 Kiro 的非 Claude 模型，維持三方多樣性。要換回 Codex：harness=codex-acp, model=gpt-5.6-terra（本機實測有效值域之一）。",
+      "harness": "kiro-cli acp --agent {name} -a",
+      "model": "minimax-m2.5",
+      "effort": "high",
+      "prefixes": [],
+      "topicKeywords": [],
+      "mcpServers": [],
+      "skipCommonSkills": true
     }
   }
 }

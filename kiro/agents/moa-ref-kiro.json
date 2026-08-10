@@ -2,8 +2,8 @@
   "name": "moa-ref-kiro",
   "description": "MoA blind advisor (Kiro/Bedrock)",
   "tools": [
-    "@builtin",
-    "@memory"
+    "@memory",
+    "@readonly"
   ],
   "allowedTools": [
     "fs_read",
@@ -19,6 +19,16 @@
       "args": [
         "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
       ],
+      "disabled": false
+    },
+    "readonly": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main/dist/mcp-readonly.js"
+      ],
+      "env": {
+        "READONLY_ROOTS": "G:\\AI\\telegram-kiro-bridge-main;C:\\;D:\\;G:\\"
+      },
       "disabled": false
     }
   }

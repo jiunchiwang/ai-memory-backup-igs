@@ -229,6 +229,43 @@ Move-Item -Path '${MEMORY_DIR}\sessions\*.md' -Destination '${MEMORY_DIR}\oldSes
 
 Windows cmd 的 `mkdir` + `&&` 連鎖常有 exit code 1 的問題，**用 PowerShell 的 `New-Item -Force` 最穩**。
 
+### ⛔ `-Force` 會靜默覆蓋歸檔：`specialist-*.md` 的檔名可以重複出現
+
+上面那個 `Move-Item -Force` 有一個實際踩過的資料毀損路徑（2026-08-08 發生，已從備份復原）：
+
+`specialist-<name>-<date>.md` 的日期是 **UTC**，而分身**在檔案被搬走之後還會用同一個名字重建一份**。
+於是 `sessions/` 裡出現一個與 `oldSessions/` 同名、**內容完全不同**（不是超集）的檔案，
+`-Force` 直接把歸檔的那份蓋掉。實例：歸檔版 1,340,709 bytes 被一個 138,418 bytes 的新 transcript 覆蓋，
+md5 不同 ∴ 舊內容整份消失，而 `Move-Item` 不會有任何提示。
+
+**兩個訊號可以當場抓到它**（兩個都便宜）。下面兩段的 `$mem` 就是 `${MEMORY_DIR}` 的真值，
+先設好再跑（`$mem = 'F:\AI\AIMemory'` 之類，用 preamble 注入的那個）：
+
+```powershell
+# ① 搬完對帳：moved 數量必須等於 oldSessions 的增量
+$moving = (Get-ChildItem "$mem\sessions\*.md").Count
+$before = (Get-ChildItem "$mem\oldSessions\*.md").Count
+# ...搬移...
+$after  = (Get-ChildItem "$mem\oldSessions\*.md").Count
+if (($after - $before) -ne $moving) { "⛔ 有 $($moving - ($after-$before)) 個檔被覆蓋" }
+```
+
+② 搬之前先列出**同名衝突**，衝突的改名而不是覆蓋：
+
+```powershell
+Get-ChildItem "$mem\sessions\*.md" | ForEach-Object {
+  $dst = Join-Path "$mem\oldSessions" $_.Name
+  if (Test-Path $dst) {
+    # 同名但不同內容 → 用來源檔的 mtime 當後綴，兩份都留
+    $stamp = $_.LastWriteTimeUtc.ToString('yyyy-MM-ddTHH-mmZ')
+    Move-Item $_.FullName (Join-Path "$mem\oldSessions" ($_.BaseName + '.' + $stamp + '.md'))
+  } else { Move-Item $_.FullName $dst }
+}
+```
+
+可外推的一條：**`-Force` 只在「目的地那份是舊版本」時才安全**。當來源與目的地是「同名但各自獨立
+的兩份產物」時，它是無聲的資料刪除——而按日期命名的 append-only 記錄檔正是這種情況。
+
 ### 為什麼搬完整個資料夾、不是個別挑
 
 1. 已讀過就算「處理過」，即使沒抽出 skill（也是一種判斷結果）

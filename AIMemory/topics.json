@@ -4,9 +4,29 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-09T20:13:37.197Z (token=topics-6de8fff7-31)
+// Last applied: 2026-08-10T20:04:18.335Z (token=topics-b65dcbe7-32)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
+  {
+    "topic": "uk-917",
+    "keywords": [
+      "uk_917",
+      "uk-917",
+      "leprechaun",
+      "3 leprechaun"
+    ]
+  },
+  {
+    "topic": "uk-872-eyestrike2",
+    "keywords": [
+      "uk_872",
+      "eyestrike2",
+      "eye strike 2",
+      "featurewheel",
+      "click 音效",
+      "wheel-click"
+    ]
+  },
   {
     "topic": "uk-slot-codegen",
     "keywords": [
@@ -16,15 +36,6 @@
       "anchor_merge",
       "probe-compare",
       "uk-slot-codegen"
-    ]
-  },
-  {
-    "topic": "uk-917",
-    "keywords": [
-      "uk_917",
-      "uk-917",
-      "leprechaun",
-      "3 leprechaun"
     ]
   },
   {
@@ -42,7 +53,6 @@
       "eye_strike",
       "eyestrike",
       "uk_658",
-      "uk_872",
       "magicpot",
       "reel light"
     ]
@@ -106,7 +116,8 @@
       "pascalcase",
       "leprechaunsgoldstreak",
       "gamestrings",
-      "slot 專案"
+      "slot 專案",
+      "uk-slot-pitfalls"
     ]
   },
   {
@@ -196,7 +207,12 @@
       "action domain",
       "agent-action",
       "specialist dashboard",
-      "localhost:3847"
+      "localhost:3847",
+      "run_plan",
+      "wf-design",
+      "wf-prd",
+      "wf-review",
+      "wf-verify"
     ]
   },
   {
@@ -238,7 +254,8 @@
       "exportsession",
       "loadarchive",
       "session/resume",
-      "replaysessionhistory"
+      "replaysessionhistory",
+      "sessioncapabilities"
     ]
   },
   {
@@ -352,7 +369,8 @@
       "跨 vendor",
       "弱異源",
       "強異源",
-      "覆核收斂"
+      "覆核收斂",
+      "ms-cross-model-adversarial"
     ]
   },
   {
@@ -398,7 +416,6 @@
       "mcp 繼承",
       "stdio json-rpc",
       "http server mode",
-      "sessioncapabilities",
       "authmethods",
       "@agentclientprotocol"
     ]
@@ -437,7 +454,6 @@
       "bridge 專案",
       "bridge repo",
       "bridge fork",
-      "start.bat",
       "bot api",
       "grammy",
       "autoretry",

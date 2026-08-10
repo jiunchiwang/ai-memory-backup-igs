@@ -1,0 +1,25 @@
+{
+  "name": "moa-ref-codex",
+  "description": "MoA blind advisor (第三方 vendor：MiniMax via Kiro)。名稱沿用 moa-ref-codex 是因為 wf-design/wf-prd 依名字指名它，改名會讓那兩個 step 靜默退回 general。Codex 方案額度用盡時改走 Kiro 的非 Claude 模型，維持三方多樣性。要換回 Codex：harness=codex-acp, model=gpt-5.6-terra（本機實測有效值域之一）。",
+  "tools": [
+    "@builtin",
+    "@memory"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob"
+  ],
+  "resources": [
+    "skill://C:/Users/jiunchiwang/.kiro/skills/**/SKILL.md"
+  ],
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "G:\\AI\\telegram-kiro-bridge-main\\dist\\mcp-memory.js"
+      ],
+      "disabled": false
+    }
+  }
+}
