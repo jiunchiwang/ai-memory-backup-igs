@@ -63,6 +63,12 @@
   - 觀察點：與已升格的 `ms-blackbox-probe-experiment-design` 不是同一件事——那支是探針**實驗設計**原則（多臂矩陣、陽性對照），這個候選是**針對 ACP handshake 這一種特定協定**的固定探測手法（initialize-only、不開 session、逐 backend try/catch、探針前綴天生排除進 smoke gate）。若第 5 次出現且沉澱出可重用的探針骨架（共用 spawn/kill/timeout 邏輯，含這次發現的「逾時 timer 要 clearTimeout」教訓），評估獨立成 skill 或 append 到 ms-blackbox-probe-experiment-design 的「ACP 應用範例」小節
   - 現有覆蓋：wiki `verification-diagnosis`（raw JSON-RPC probe 是查證 model 的唯一可靠法）、`bridge-acp`（ACP adapter 能力偵測陷阱）
 
+- [ ] **specialist-blind-advisor-hallucination** | count=2（同一輪內兩支 specialist） | score=0.40 | 留底觀察
+  - Pattern：派 specialist 覆核 diff／文件時未先確認它有沒有讀檔工具就直接派工——`readOnlyLens:true` 但 `mcpServers` 只有 `readonly`、或 `mcpServers` 為空且 harness 不帶 `--agent`，兩者都會靜默收窄成零工具（`src/specialist-config-audit.ts:26,28` 已列為不變式），specialist 讀不到檔卻不會說「我讀不到」，反而產出帶行號、帶檔名的逐字引用；其中一支甚至捏造了不存在的檔名與變數名。可讀檔的 specialist（`readOnlyLens` 搭配非空 MCP，或 harness 帶 `--agent`）同一份任務跑起來則正常引用真實檔案內容
+  - 代表 session：2026-08-11（本輪，`moa-ref-kiro`/`moa-ref-adversary` 兩支盲審 commit `9897f46` 皆產出幻覺 diff，改派 `bridge-dev`/`verifier` 才驗證通過；已存為 fact f_667928、f_14cb23）
+  - 觀察點：目前只在 telegram-kiro-bridge 一輪內發生，且是這個 repo 特有的 specialist 設定形狀（`specialist-domains.json` 的 `readOnlyLens`/`mcpServers`/harness 組合）。若再出現 2–3 次（尤其換一個 agent 系統／換一種「盲審」設計仍踩到同一種「沒有讀檔能力卻不自報」失效），可考慮 append 到 `ms-cross-model-adversarial-review`（新增一節「派工前先確認覆核者讀得到檔」，與既有〈覆核者選型〉的 domain/tier 兩軸並列成第三軸：能力）
+  - 現有覆蓋：fact f_667928（bridge-specialist topic）、f_14cb23（adversarial-review topic）——兩則已含具體檔案:行號與修法，暫不需要更多
+
 ## 誤判紀錄（防重複偵測）
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
@@ -72,4 +78,4 @@
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
 ---
-Last updated: 2026-08-06
+Last updated: 2026-08-11

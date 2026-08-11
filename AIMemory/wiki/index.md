@@ -14,14 +14,14 @@
 - [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核）
 - [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測、tool 結果狀態判定鏈與 is_error 可信度實測）
-- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級；2026-08-05 從 bridge-acp 拆出）
-- [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、advisor 顧問工具、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
+- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級、派工前能力軸/blind advisor 幻覺、scope 擴張敘述凍結、樣板知識同源天花板；2026-08-05 從 bridge-acp 拆出）
+- [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、Kiro effort 值域 per-model 實測、sonnet-4.6[max] vs opus-4.5 對照實驗、advisor 顧問工具、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-draft-diag]] — Bridge Draft 診斷與重播修復（三個獨立成因、cutPendingTokenTail 扣留式設計、診斷探針、可重用方法論；2026-08-08 從 bridge-streaming 拆出）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份）
 - [[bridge-dream]] — Bridge Dream 例行維運框架（dream.json models 表 per-backend 設計、claude-mem-curate 接入、turn 誤報根因、confabulation 教訓）
-- [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控、run_plan 全有全無設計、moa-ref-codex 已知擱置）
+- [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控、run_plan 全有全無設計、moa-ref-codex 已知擱置、moa-ref-kiro/adversary 是 blind advisor 不能覆核）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft、spine-animation-ai 自包含 Skill 打包機制）
 - [[bridge-upstream-sync]] — Bridge Upstream Fork 同步與合併衝突處理（remote 配置、merge 策略、三種衝突處理原則、同步歷程、push 前 Fable5 覆核；2026-07-21 從 bridge-project/bridge-acp 拆出）
 - [[bridge-roadmap]] — Bridge 開發 Roadmap（Pending / In Progress 追蹤，2026-07-28 建立）
@@ -61,8 +61,9 @@
 - [[opencode-acp-implementation]] — OpenCode 的 ACP 實作研究（stdio+HTTP 雙層架構、完整方法表、capabilities 宣告、session/update 與 tool kind 對映、permission fail-closed、接成 bridge 第四個 backend 的 authMethods 恆非空陷阱）
 - [[paulsha-cortex-governance-plane]] — 外部 repo paulsha-cortex 研究（治理三件套、foreign review 的 independence_domain 資料化、verification contract 的 must_change 產出物驗證、對照 bridge 的借鏡排序；成熟度 VERSION 0.0.0 僅當概念來源）
 - [[cc-session-reader]] — 外部 repo cc-session-reader 研究（Go CLI 靜態壓縮 Claude Code transcript、inherit 分頁、ADR-003 狀態判定階梯揭露 Bash 結果無 success 欄位／is_error 不可信、ADR-004 fleet data 與異源覆核後刻意不實作、ADR-005 錯誤相同才折的不變式、安裝腳本會寫進 junction 正本；**借鏡評估已結案：無項目吸收**，且實測證實 is_error 在現行版本可信）
+- [[claude-agent-sdk]] — Claude Agent SDK（原 Claude Code SDK 已改名）研究（四路對照與 Tool Runner≠Agent SDK 的 harness/部署二維判準、query() 與 Options/Query 物件 API 面、能力清單與 claude.ai 額度授權限制、bridge → claude-agent-acp 0.63.0 → Agent SDK 0.3.220 層次；settingSources 寫死 user/project/local 是「CLAUDE.md 直達」與「19 個 MCP 行程」的同一個開關）
 
 ---
 
-Total pages: 47
-Last updated: 2026-08-11（wikisync：更新 [[bridge-specialist]] 加入 run_plan 全有全無設計與 moa-ref-codex 已知擱置；Query auto-save 候選 5 個全數跳過——4 個是 ASK/intent-hint 片段無實質內容，1 個診斷筆記已涵蓋在 [[bridge-draft-diag]]）
+Total pages: 48
+Last updated: 2026-08-12（wikilint：更新 [[bridge-specialist]]／[[bridge-model-strategy]]／[[adversarial-review]]——specialist model 記錄更正、bridge-dev 決策反轉、Kiro effort per-model 實測、sonnet-4.6[max] vs opus-4.5 對照實驗、blind advisor 派工陷阱、scope 擴張敘述凍結）

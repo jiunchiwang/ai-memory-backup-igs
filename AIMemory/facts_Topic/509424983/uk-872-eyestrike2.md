@@ -6,3 +6,4 @@
 - [f_73dbc7] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的轉輪兩側燈光（第1輪 LEFT / 第6輪 RIGHT）只在該輪落到 Collect 符號時才亮（SlotReels.ts:694/734），且 ReelUIManager 的壓暗（DARK_LIGHT_REEL，RGB 120）與熄燈（HIDE_LIGHT_*_REEL，收掉 spine）是兩套獨立狀態機制，m_reelLightStates 與 m_reelLightDarkStates 分開記錄
 - [f_6c587f] [2026-07-30T09:09:30.045Z] Cocos Creator 專案在編輯器外跑 tsc --noEmit 會產出大量來自引擎 cc.d.ts 與 astarte framework 宣告的既有錯誤（uk_872_eyestrike2_client 實測 509 行），驗證自己的改動時應過濾只看 assets/Script 底下的錯誤，不能用總錯誤數當通過標準
 - [f_8ad906] [2026-08-06T20:37:20.742Z] uk_872_eyestrike2_client 的停輪節奏設計決策（2026-08-06）：每一輪停下後會先短暫停頓，才讓下一輪開始停輪，目的是為特殊符號的進場演出留出播放時間。
+- [f_bbcecf] [2026-08-10T20:32:28.762Z] uk_872_eyestrike2_client 的 MagicPotFlyToCenterTrail.prefab 兩支動畫（ES2_FGBoard_In_H、ES2_FGBoard_In_S）飛行路徑是烘進動畫裡的（baked path）、完全不靠骨骼定位 ∴ 要改飛行起訖點或落點，調整骨骼與節點座標不會有效果。

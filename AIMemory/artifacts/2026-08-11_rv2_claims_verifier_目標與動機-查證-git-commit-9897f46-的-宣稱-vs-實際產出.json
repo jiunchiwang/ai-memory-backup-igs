@@ -1,0 +1,34 @@
+{
+  "id": "rv2_claims",
+  "specialist": "verifier",
+  "task": "目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo 路徑 G:\\AI\\telegram-kiro-bridge-main，branch main，該 commit 是 HEAD 且尚未 push。你上一轮已經證明你讀得到這個 repo（你正確指出另一支分身捿造了 src/models/effort.ts 這個不存在的檔），這轮請用同樣的功夫查作者本人。\n\n⚠️ 必須實際跑 git show 9897f46 並讀進檔案現況。若你沒有可用工具，直接回報「未能查證」，不要推論。\n\n已知背景：該 commit 改了 scripts/AI.md（新增一段 Kiro effort 值域說明）與 src/configRegistry.ts（ACP_EFFORT_FALLBACK.kiro 從 low medium high 補上 max、重寫註解、acp-effort 的 description 加一句 Kiro 限制）。commit message 裡作者自己列了實測結論與一條未驗證項。\n\n待決問題（逐條回答）：（a）commit message 里的每一條事實主張，在 diff 與檔案內容裡是否都有對應的改動或依據？有哪一條是只寫在 message 而檔案裡沒落地的？（b）作者聲稱 tsc --noEmit 綠、smoke fast 132 全綠、check-acp-model-effort 單跑也綠。請自己重跑驗證（npx tsc --noEmit 與 SMOKE_ONLY=check-acp-model-effort npm run smoke）並回報實際結果；注意不要直接跑 scripts 下的 check 檔案，要走 npm run smoke runner（直接跑會因繼承到的空環境變數假失敗）。（c）scripts/AI.md 新增那段裡標為未驗證的那一項，文件其他地方有沒有相反的、暷示它已確認生效的叙述？（d）新增的叙述裡有沒有任何一句是推論卻寫成實測結論（請逐句比對它列的證據強度）？\n\n驗收條件：每個判定附逐字引用（檔名加行號加原文）或指令的實際輸出。區分「我重跑驗過」與「我未能驗證」。\n\n回報格式：第一行 verdict 是 ship 或 fix-first 或 block。接著逐條回答 a 到 d。最後列出你實際跑過的指令與它們的退出碼。全部繁體中文。",
+  "created": "2026-08-11T15:34:56.321Z",
+  "status": "done",
+  "summary": "獨立重跑驗證 commit 9897f46：tsc/smoke fast/單支 acp-model-effort 全綠（作者聲稱屬實），但發現 scripts/AI.md 新增段落自相矛盾——宣稱 kiro effort fallback「尚未修」，實際同一 commit 的 src/configRegistry.ts diff 已經修好，判定 fix-first。",
+  "outputs": [
+    {
+      "type": "finding",
+      "content": "scripts/AI.md 新增文字（約行750）稱 ACP_EFFORT_FALLBACK.kiro 缺 max、尚未修，但同commit的 src/configRegistry.ts 已將該陣列改為含 max，且 commit message 本身也寫『補上 max』——文件與程式碼/訊息自相矛盾"
+    },
+    {
+      "type": "finding",
+      "content": "其餘逐條事實主張（xhigh 被拒訊息、9個model一律回不支援、CLI層不驗證--effort、/config description補充、局部docblock例外註解）均與diff/檔案內容一致，非虛構"
+    },
+    {
+      "type": "finding",
+      "content": "實跑驗證：npx tsc --noEmit exit 0；npm run smoke -- --fast 132/132 passed（tree f3b974d 與HEAD一致）；SMOKE_ONLY=check-acp-model-effort 單跑 1/1 passed(25.5s)——三項作者聲稱可重現"
+    },
+    {
+      "type": "finding",
+      "content": "未驗證項（--effort對sonnet-4.6是否真的套用）誠實邊界標注自洽，文件其他處查無暗示已確認生效的矛盾敘述"
+    }
+  ],
+  "files_modified": [],
+  "tags": [
+    "verification",
+    "commit-review",
+    "kiro-effort",
+    "doc-accuracy",
+    "push-gate"
+  ]
+}

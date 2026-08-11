@@ -1,0 +1,3 @@
+- [2026-08-11T15:34:56.336Z] (目標與動機：對本 repo 的 git commit 9897f46 做 push 前覆核（連動與 scope 視角）。) 對 commit 9897f46（Kiro effort 文件與 fallback 修正）做 push 前覆核，verdict = ship，無需加 warn、連動檢查通過、BC-17 不補 effort 斷言的取捨合理
+- [2026-08-11T15:34:56.336Z] (目標與動機：對本 repo 的 git commit 9897f46 做 push 前覆核（連動與 scope 視角）。) specialist-domains.json 的 defaultEffort=high 對走 kiro-cli + claude-opus-4.5 的 specialist 是 no-op，但這是文件已說明的限制而非程式碼 bug，不屬本次該連動的範圍
+- [2026-08-11T15:34:56.336Z] (目標與動機：對本 repo 的 git commit 9897f46 做 push 前覆核（連動與 scope 視角）。) 未來可考慮在 docs/SPEC-kiro-effort.md 補述 sonnet-4.6 only 的限制（非 blocking）

@@ -818,6 +818,54 @@
       "chatId": 509424983,
       "score": 82,
       "evidence": "實跑驗證：DAG 狀態與成本由 run_plan 回報、執行者身分由 bridge 端 artifact 的 specialist 欄位核對（非問 specialist 自己）、根因由 specialists.json 與 codex-cli 0.146.1 版本雙邊確認；未動任何檔案 ∴ 無型別/呼叫端風險。保留：未讀兩份 artifact 全文（本次目的是驗管線非評設計品質），且 challenge/decide 兩階從未執行 ∴ 那兩步的正確性本輪完全未驗證。"
+    },
+    {
+      "ts": "2026-08-11T13:45:32.426Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "官方文件與本機 node_modules 皆為一手引用且 settingSources 那行有 sed 逐字確認、adapter/SDK 版本以 require 讀出；但第 5 節四條全未實測、index.js:47 那處 settingSources 未查證，且沒有實際寫過任何 SDK 程式碼驗證 API 簽名"
+    },
+    {
+      "ts": "2026-08-11T13:47:55.174Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "檔案建立與 index 編輯皆由工具回報成功且內容為本輪一手產出；索引計數 47→48 依原檔數字遞增、格式對齊既有條目；扣分在 SCHEMA.md 不存在只能推斷格式，且未重讀檔案做視覺複驗"
+    },
+    {
+      "ts": "2026-08-11T14:02:28.537Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "型別與行為全部有本機 sdk.d.ts 逐字或官方 docs 原文支撐，並抓到一處文件與實裝不符（permissionMode 四值 vs 六值）；bridge 對照的 permissionMode 同名不同物有 grep + sed 實查。扣分在第 4 節②的 hook 路徑只讀碼未實跑，三個未驗證點雖已標明但仍是本回覆最可能出錯的地方"
+    },
+    {
+      "ts": "2026-08-11T14:23:26.771Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "三個 backend 的歸屬各有 package.json literal 或 repo grep 支撐，且直接否證了問句的前提；扣分在新版 @agentclientprotocol/codex-acp 未實際查其依賴清單（本機未安裝），該處已明確標為推論"
+    },
+    {
+      "ts": "2026-08-11T14:53:17.399Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "值域為 adapter 自身 literal 輸出（A 級），xhigh 被拒的錯誤訊息獨立佐證同一集合；10 個 model 逐一實測。未跑 tsc/smoke（本輪零 code 改動），且「--effort 是否真套用到 sonnet-4.6」明確標為未驗證，故不給更高。"
+    },
+    {
+      "ts": "2026-08-11T14:58:05.241Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "doc-only 改動，零 code 變更故未跑 tsc；引用者已 grep（4 處全指本檔其他章節、無連動）、兩支涉及 AI.md 的閘門實跑綠、diff 逐行看過。內容全部來自本輪 adapter 自身 literal 輸出，且未驗證項已在文中標明；扣分在沒跑完整 smoke fast tier。"
+    },
+    {
+      "ts": "2026-08-11T15:23:40.375Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "本輪沒有改碼；主要產出是「兩份覆核不可採用」的判定，證據強（rv_glm 自承未執行指令＋verifier 獨立抓到幻覺檔名；rv_adv 自己標「逐字證據（推論）」），以及 specialist 讀檔能力的設定層根因（specialist-domains.json 的 readOnlyLens/mcpServers 與 specialist-config-audit.ts:26,28 兩條不變式）。扣分在：派工前沒檢查覆核者有無讀檔工具是我這輪的實質錯誤，且重派結果尚未回來、commit 仍未經任何有效覆核。"
+    },
+    {
+      "ts": "2026-08-11T15:42:48.594Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "已 push，pre-push hook 實跑 build + 132/132 綠並蓋戳記（非採信自述）；push 前經兩支可讀檔的獨立 context 覆核，其中 verifier 自行重跑三項驗證且比對 tree hash 排除過期戳記，抓到的唯一 finding 已修。扣分在第一輪派錯覆核者（沒先確認它們有檔案存取）浪費一輪，且「--effort 對 sonnet-4.6 是否真的套用」仍未驗證——那條在兩個檔案裡都明白標為未驗證，不是被掩蓋。"
     }
   ]
 }

@@ -181,6 +181,7 @@ Validation、policy rejection 或參數錯誤必須修正 tool request，不可�
 - `slot-art-manifest-validator` — 美術覆蓋率驗證（獨立 skill）
 - `excel-to-ai-doc` — xlsx 轉換工具（Pre-A 依賴）
 - `uk-slot-pattern-library` — 模式對照庫（Pre-B 依賴）
-- `uk-slot-spec-to-impl` — 已於 2026-07-30 併入本 skill，保留為 pointer
+- 歷史：舊 skill `uk-slot-spec-to-impl` 已於 2026-07-30 併入本 skill，其 pointer 墓碑於
+  2026-08-11 刪除（原文與併入對照表見 `git log -- skills/slot/uk-slot-spec-to-impl/`）
 - Template repo: `git@github.com:IGS-ARCADE-DIVISION-RD2/uk_slot_template.git`
   （無 SSH 權限時走本地 `git archive`，見 `_milestones.md`「M0a 起新專案」）

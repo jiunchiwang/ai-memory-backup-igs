@@ -1,5 +1,31 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-08-11(AUTO 模式;4 筆候選 → 精選合併 + 去重後寫入 2 條)
+
+呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：
+`<<> ?Ｙ?:2026-08-10T20:30:03.592Z;蝑:4(銝? 15);??epoch 1786193461343>>`
+
+檔案自身 header 為「產生:2026-08-10T20:30:03.592Z;筆數:4(上限 15);自 epoch 1786193461343」——時間戳、筆數(4)、epoch 三者與呼叫端 header 一致,**無矛盾**。本批為全新批次（epoch 1786193461343 ≠ 前一批 1786098514174,筆數 4 ≠ 2）,**非重掃舊批**。
+
+來源 project：`verifier`(1)、`telegram-kiro-bridge-main`(2)、`uk_872_eyestrike2_client`(1),皆為 decision 類。
+
+寫入 2 條：
+
+1. （合併候選 1+2,同主題）telegram-kiro-bridge 的 run_plan 在指定的 specialist domain 不存在時會靜默 fallback 到 general、不向呼叫端顯示這次降級（2026-08-10 由 verifier 發現）;此案例被歸納成可泛化的「閘門盲視」失效形狀——檢查/路由機制存在但對「目標缺失」無感,對外回報成功、實際已偷偷換路徑,且已回填成方法論文件（commits 71f84a1、2528f9c 已 push）。→ shard `bridge-specialist.md`
+2. uk_872_eyestrike2_client 的 MagicPotFlyToCenterTrail.prefab 兩支動畫（ES2_FGBoard_In_H、ES2_FGBoard_In_S）飛行路徑是烘進動畫裡的（baked path）、完全不靠骨骼定位 ∴ 要改飛行起訖點或落點,調整骨骼與節點座標不會有效果。→ shard `uk-872-eyestrike2.md`
+
+合併說明：候選 1（run_plan 靜默 fallback 的可見性缺口）與候選 2（把 gate blindness 記成可泛化失效形狀,附 commit）是同一天同一主題的「現象」與「歸納」兩半,拆成兩條會互相指涉,故併為一條;去重時查「fallback」命中 18 筆、「靜默降級」3 筆、「run_plan specialist」0 筆、「gate blindness」0 筆、「backflow」0 筆——既有最接近的是「bridge 的 resume 直接賭一發 session/load、失敗才 fallback 開新 session 並只寫 stderr（靜默降級）」,那是 ACP session 路徑,與 specialist domain 路由不同機制,不構成重複。
+
+精選階段淘汰（一次性過程紀錄,非跨 session 可重用）：
+
+- 候選 4（Launched independent adversarial review agent for R-2 异源覆核 :: Agent a8d7da585723c4c47,claude-fable-5,覆核 CLAUDE.md 修改）：綁死單一 agent id 的「我派了一個 agent」動作紀錄。其中唯一有方法論成分的「CLAUDE.md 修改需要 R-2 異源覆核」在既有 fact 已有更完整版本（查「閘門」命中 12 筆,含「使用者的跨模型對抗覆核紀律於 2026-08-06 補上『不要把覆核自動化成無條件停止閘門』一節…覆核維持人為判斷觸發、不做無條件攔停」）,無新成分。
+
+去重階段淘汰：無（2 條存活條目皆無命中）。
+
+結果：**新增 2 條。未呼叫 forget。**
+
+---
+
 ## 2026-08-09(AUTO 模式;2 筆候選 → 精選 + 去重後寫入 0 條)
 
 呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：

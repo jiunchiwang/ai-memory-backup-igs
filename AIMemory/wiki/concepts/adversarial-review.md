@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-08（新增 findings 處置的三個獨立維度）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0]
+updated: 2026-08-12（新增派工前能力軸：blind advisor 會產出幻覺、scope 中途擴張的敘述凍結陷阱、樣板知識同源天花板實證）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7]
 ---
 
 # 異源對抗覆核紀律
@@ -102,6 +102,24 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 
 「不要盲目修掉每一條 finding」指的不只是駁回錯誤的 finding，也包含把**正確但越界**的 finding 記錄下來留待另一次改動處理，而非當場擴大本次 PR 範圍（2026-08-07 telegram-kiro-bridge 記錄此模式為 `review-findings-pull-scope`）。
 
+## 派工前的第三個軸：能力（讀不讀得到檔）——不是 domain 也不是 tier（2026-08-11）
+
+domain（異源強度）與 tier（成本）是兩個獨立軸（見上一節），但兩者都假設覆核者**讀得到材料**。這個假設不一定成立，而且失效時**沒有任何自報訊號**：
+
+telegram-kiro-bridge 的 `moa-ref-kiro`（glm-5，跨 vendor）與 `moa-ref-adversary` 派去盲審一個 commit 時都產出了帶行號的逐字引用——但兩者的設定都讓它們讀不到檔（`readOnlyLens:true` 卻只給 `readonly` MCP、或 `mcpServers` 為空且 harness 不帶 `--agent`）。`moa-ref-kiro` 那份報告**捏造了不存在的檔名與變數名**；`moa-ref-adversary` 那份報告的證據欄自己寫「逐字證據（推論）」。兩者都沒有主動說「我讀不到」。改派可讀檔的 `bridge-dev`／`verifier`（走 `claude-agent-acp`）才拿到有效覆核，其中 `verifier` 自行重跑驗證指令並比對 tree hash 排除過期戳記。
+
+**派工前必查**：這個覆核者的 harness／MCP 設定實際上讀不讀得到檔？跨 vendor 不等於能讀檔——目前 telegram-kiro-bridge **沒有任何「可讀檔＋跨 vendor」的分身**（唯二非 Anthropic 模型 `moa-ref-kiro`/`moa-ref-codex` 都是 blind advisor），能做到的最強是「同源、獨立 context、可讀檔」，留痕時不要把這個講成跨 vendor 異源。
+
+## Scope 中途擴張會凍結敘述成假事實（2026-08-11）
+
+在 scope 只有 A 的階段寫的「診斷」敘述（如「X 缺 Y——尚未修」），若後續 scope 擴大到連 Y 一起改掉，卻沒回頭改那句敘述，就會變成文件、程式碼、commit message 三者互相打臉的假事實——`scripts/AI.md` 寫「`ACP_EFFORT_FALLBACK.kiro` 缺 `max`——尚未修」，但同一個 commit 已經補上了 `max`，由 `verifier` 異源覆核抓到。
+
+**判準**：任何一輪只要 scope 從 A 擴到 A+B，收尾前重讀「在只有 A 的前提下寫的每一句對 B 的描述」——「尚未修」「目前沒有」「待處理」這類現在式否定句最容易凍結。修法不是刪掉整句，是拆成「已修的那部分」與「仍為真、但不是這裡能修的那部分」。
+
+## 樣板知識會偽裝成從碼推導：同源天花板的一手證據（2026-08-11/12）
+
+claude-sonnet-4.6 與 claude-opus-4.5 對 `src/concurrency.ts` 的 semaphore「超上限」宣稱與**程式碼實際內容無關**：未注入缺陷時兩臂都主張「waiter 被喚醒沒有 `active++` 導致超上限」（該版是直接交棒，`active` 本來就不該變，是誤報）；把 `active--` 真的搬到交棒之前（缺陷真的存在）後，sonnet 反而在有註解版斷言「release 先叫 waiter、不先 `active--` 本身是正確的」——與眼前的碼相反。兩個模型在同一處犯了完全相同的誤報，是**同源天花板**的直接證據：這類覆核者對有標準樣板的碼（semaphore、鎖、佇列）是在複述樣板知識、不是從碼推導。要驗這一軸得用行為測試而非模型審查，覆核找不到不代表沒有缺陷。詳見 [[bridge-model-strategy]] 的對照實驗完整數據。
+
 ## 與 SDD 規格自審閘的關係
 
 規格驅動開發（SDD）流程的規格自審品質閘（2026-07-28 定案）是**互補而非取代**：機械化檢查未填佔位符、內部矛盾、範圍蔓延、模糊敘述——擋掉的是「人工審查時最浪費來回的低階瑕疵」，異源對抗覆核處理的是更深層的論證/因果/不變式缺陷。
@@ -113,6 +131,7 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 ## 相關
 
 - [[bridge-acp]] — 本頁拆出的來源頁面，ACP 協定與 model 配置機制
-- [[bridge-model-strategy]] — 覆核者選型與 model 分工的延伸主題（同源自 bridge-acp 拆分）
+- [[bridge-model-strategy]] — 覆核者選型與 model 分工的延伸主題（同源自 bridge-acp 拆分）；sonnet-4.6[max] vs opus-4.5 對照實驗完整數據
+- [[bridge-specialist]] — moa-ref-kiro/adversary 的 blind advisor 設定細節（`readOnlyLens`／`mcpServers`／harness 組合）
 - [[verification-diagnosis]] — 覆核揭露問題後的驗證方法論（恆真斷言、突變測試）
 - [[bridge-smoke-gate]] — 孤兒 import／死碼交給型別系統攔（noUnusedLocals 閘門）

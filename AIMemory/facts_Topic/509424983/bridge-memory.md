@@ -37,3 +37,4 @@
 - [f_5e6afb] [2026-07-31T20:47:31.616Z] hit-log.jsonl 最早的 type:"fact" 命中是 2026-07-11，因此 factlint 的 60 天衰減判定在 2026-09-09 之前都屬「觀測期間不足」，不該產出衰減候選
 - [f_9a7397] [2026-08-05T11:38:02.464Z] G:\AI\AIMemory\wiki 底下沒有 SCHEMA.md（只有 index.md、四個子目錄、兩個 .jsonl），新增 wiki 頁時應比對現有同型頁面的實際 frontmatter 格式（query 型為 title / type / created / updated / sources）
 - [f_0e4a79] [2026-08-05T15:08:54.618Z] Codex CLI 0.146.0 原生支援 skills 機制（掃 ~/.codex/skills/，內建 skill 放 .system/ 子目錄），且 SKILL.md frontmatter 格式與 Claude 完全一致（name + description），因此同一份 skill 正本可三個 CLI 共用不需改寫
+- [f_072633] [2026-08-11T20:18:35.546Z] factlint 流程裡用 Grep 工具預先掃 wiki/ 目錄判斷 fact 是否受保護不可靠：2026-08-12 對 9 條候選 fact 各自用 Grep 找過一次逐字子字串，6 條回「無命中」，但呼叫 forget() 後 MCP 的 checkWikiReferences（權威實作）全部回報「受保護」，且指出的頁面（bridge-project.md、bridge-infra.md、lessons/bridge-pitfalls.md 等）Grep 完全沒抓到。∴ factlint 判斷是否受保護不要自己先 Grep 猜，直接呼叫 forget() 讓伺服器端全文掃描裁決最快也最準——Grep 落空不代表沒保護。

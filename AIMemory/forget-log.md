@@ -324,3 +324,17 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-09T20:24:20.518Z] user=509424983 query="外部 repo cc-session-reader（Mapleeeeeeeeeee，Go，Apache-2.0，讀 Claude Code transcript JSONL 做純靜態壓縮）於 2026-08-09 完成吸收評估並結案" deleted=1 token=forget-74258bdd-1
     - [f_a7524a] [2026-08-09T01:20:19.280Z] 外部 repo cc-session-reader（Mapleeeeeeeeeee，Go，Apache-2.0，讀 Claude Code transcript JSONL 做純靜態壓縮）於 2026-08-09 完成吸收評估並結案：無任何項目值得吸收進 bridge。根本原因是兩系統資料源與目的不重疊——cc-session 吃 Claude Code 的 JSONL 產「可重新灌回 context 的壓縮歷史」，bridge 的 session-extract 吃自己的 markdown transcript 產「長期記憶 facts」；初版比對表高估了重疊度。研究筆記與判定表存於 wiki queries/cc-session-reader.md。
+- [2026-08-11T20:14:07.565Z] user=509424983 query="尚未整合比對" deleted=0 token=forget-a219e99e-1
+
+- [2026-08-11T20:14:08.705Z] user=509424983 query="即帶最新 src 程式碼生效" deleted=0 token=forget-59eb5538-1
+
+- [2026-08-11T20:15:42.836Z] user=509424983 query="待根因定案再決定" deleted=0 token=forget-49e9ec10-1
+
+- [2026-08-11T20:15:43.925Z] user=509424983 query="probe-draft-frame-append.mjs --since" deleted=0 token=forget-315c799c-1
+
+- [2026-08-11T20:16:41.750Z] user=509424983 query="補上 bridge-actions MCP 說明（功能一覽新增一行" deleted=0 token=forget-c76825be-1
+
+- [2026-08-11T20:16:42.249Z] user=509424983 query="docs/usage-guide.html 已於 2026-07-17 補上 bridge-actions MCP" deleted=0 token=forget-910f49eb-1
+
+- [2026-08-11T20:16:42.778Z] user=509424983 query="使用者決定不建 bridge-dev specialist" deleted=0 token=forget-c4472659-1
+
