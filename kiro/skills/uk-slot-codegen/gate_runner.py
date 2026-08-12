@@ -397,8 +397,101 @@ def gate_report(target: Path) -> list:
     return results
 
 
+# 不進遊戲 repo 的 codegen 中間產物與 AI 文件。前 8 項照 uk_917 的 .gitignore，
+# 後 3 項是其他 AI 工具目錄（來源見下方 inline 註解，不在 uk_917 的 .gitignore 裡）。
+# 模板本身 track 著 .kiro/ ∴ 不能拿模板當基準——它不是出貨形態。
+AI_ARTIFACT_PATHS = (
+    ".kiro",
+    "docs",
+    "scratch",
+    "AI.md",
+    "SPEC.md",
+    "ART_ASSET_MANIFEST.md",
+    "uk-slot-state-machine.skill",
+    ".codegen-checkpoint.json",
+    # 非 codegen 產物，但同樣不該進遊戲 repo。2026-08-12 `git check-ignore -v` 實查：
+    # .claudedocs 存在於 uk_917 / uk_722 / uk_872，而擋住它的**是 .git/info/exclude
+    # 不是 .gitignore**（uk_872 的 .gitignore:134 只有 /.claudedocs/*.md 這種逐檔
+    # glob，子目錄的 .py 仍靠 info/exclude:10）。info/exclude 不進版控、clone 不帶走
+    # ∴ 版控層其實沒有這層保護——這條 gate 比原本以為的更必要，不是備援。
+    ".claudedocs",
+    ".claude-loop",
+    ".agents",
+)
+
+
+def gate_git(target: Path) -> list:
+    """target 必須是自己的 git repo（_flow.md Step 0.2）。
+
+    Step 0.0 會刻意刪掉模板的 .git/，而在 2026-08-12 之前流程沒有任何一步把它建回來，
+    ∴ 專案可以一路做到 finalize gate 全綠卻完全不在版控（uk_slot_clash_of_olympus 實例）。
+    這條就是為了讓那個狀態變成紅燈。
+    """
+    if not (target / ".git").exists():
+        return [check(
+            "git_repo_exists",
+            False,
+            "missing .git — 跑 _flow.md Step 0.2: git init -b main + 首次 commit",
+        )]
+    results = [check("git_repo_exists", True, "target is a git repo")]
+
+    # 只驗 .git 存在會漏掉兩種「有 .git 但 Step 0.2 沒真的完成」的狀態，
+    # 兩者都會讓專案帶著錯的 history 交付，且外觀與正常無異：
+    head = subprocess.run(
+        ["git", "-C", str(target), "rev-parse", "--verify", "HEAD"],
+        capture_output=True, text=True,
+    )
+    results.append(check(
+        "git_has_commit",
+        head.returncode == 0,
+        "repo 沒有任何 commit — init 成功但首次 commit 失敗（新機器未設 user.email 時必然如此）"
+        if head.returncode else "has at least one commit",
+    ))
+
+    # codegen 中間產物與 AI 文件不進遊戲 repo。模板的 .gitignore 沒擋這些
+    # （它自己就 track 著 .kiro/），要靠每個專案自行加碼 → 沒加就會靜默吃進 history。
+    # 2026-08-12 實查：uk_917/872/722/739/746 五個出貨專案對這批全部零追蹤。
+    tracked = subprocess.run(
+        ["git", "-C", str(target), "ls-files", "--", *AI_ARTIFACT_PATHS],
+        capture_output=True, text=True,
+    )
+    leaked = [line for line in (tracked.stdout or "").splitlines() if line.strip()]
+    if tracked.returncode != 0:
+        # ls-files 失敗時 stdout 是空的 → leaked 也是空的 → 會靜默綠燈。
+        # 「查不了」必須紅，不能長得像「查過了沒事」。
+        results.append(check(
+            "git_no_ai_artifacts",
+            False,
+            f"ls-files 失敗（exit {tracked.returncode}）: {(tracked.stderr or '').strip()[:200]}",
+        ))
+    else:
+        results.append(check(
+            "git_no_ai_artifacts",
+            not leaked,
+            f"{len(leaked)} 個 AI/codegen 產物被追蹤（例：{', '.join(leaked[:3])}）"
+            f" — 補 .gitignore 後 git rm -r --cached 再 amend"
+            f"（若是刻意要進版控的交付文件，改的是 AI_ARTIFACT_PATHS 不是繞過 gate）"
+            if leaked else "no AI/codegen artifacts tracked",
+        ))
+
+    remotes = subprocess.run(
+        ["git", "-C", str(target), "remote", "-v"],
+        capture_output=True, text=True,
+    )
+    is_template_clone = "uk_slot_template" in (remotes.stdout or "")
+    results.append(check(
+        "git_not_template_clone",
+        not is_template_clone,
+        "remote 指向 uk_slot_template — Step 0.0 的 rm .git 沒成功，這個 repo 帶著模板 history"
+        "（SKILL.md 明文禁止），且 Step 0.2 會因『.git 已存在』被跳過"
+        if is_template_clone else "not a template clone",
+    ))
+    return results
+
+
 PRE_FINALIZE_GATES = (
     ("bom", gate_bom),
+    ("git", gate_git),
     ("3.2", gate_3_2),
     ("3.3", gate_3_3),
     ("3.4", gate_3_4),
@@ -430,6 +523,7 @@ def gate_finalize(target: Path) -> list:
 
 GATES = {
     "bom": gate_bom,
+    "git": gate_git,
     "3.2": gate_3_2,
     "3.3": gate_3_3,
     "3.4": gate_3_4,

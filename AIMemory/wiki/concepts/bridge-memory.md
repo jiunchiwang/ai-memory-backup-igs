@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-08（新增 Codex CLI 原生 skill 支援）
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs, f_0e4a79]
+updated: 2026-08-12（新增：factlint 判斷 wiki 保護不可靠自行 Grep，要直接呼叫 forget() 讓伺服器裁決）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs, f_0e4a79, f_072633]
 ---
 
 # Bridge 記憶與維運系統
@@ -55,6 +55,8 @@ Factlint ratio 3.0 目標在 87%+ wiki-protection 下結構性不可達，已接
 **forgetMatch 陷阱**：比對的是 `stripFactPrefix` 後的內文（`[f_id]` 前綴已被剝掉），用 fact id 當 query 永遠 0 匹配——正確做法是用該 fact 的獨特內文子字串查詢，再用 `extractFactId` 驗證匹配行的 id 才刪。
 
 **Headless 場景的額外防線**：在無人值守的自動化腳本中，用 `claude.exe` 的 `--disallowedTools` 參數封鎖 `mcp__memory__remember` 與 `mcp__memory__forget`，可強制走 proposal-only（只提案、不直接寫入記憶）工作流程，避免自動流程擅自改寫長期記憶。
+
+**判斷是否受 wiki 保護不要自己先 Grep 猜（2026-08-12）**：對 9 條 factlint 候選 fact 各自用 Grep 找過一次逐字子字串，6 條回「無命中」，但呼叫 `forget()` 後 MCP 的 `checkWikiReferences`（權威實作）全部回報「受保護」，指出的頁面 Grep 完全沒抓到。Grep 落空不代表沒保護——判斷是否受保護要直接呼叫 `forget()` 讓伺服器端全文掃描裁決，最快也最準。
 
 ## 記憶命中日誌與衰減判斷
 

@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-12（新增派工前能力軸：blind advisor 會產出幻覺、scope 中途擴張的敘述凍結陷阱、樣板知識同源天花板實證）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7]
+updated: 2026-08-12（補：覆核者穩定抓碼內自相矛盾、抓不到樣板形狀下的參數竄改；n≤8 比較需先量底噪）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9]
 ---
 
 # 異源對抗覆核紀律

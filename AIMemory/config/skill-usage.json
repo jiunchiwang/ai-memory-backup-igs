@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-11T20:28:06.487Z",
+  "_last_updated_at": "2026-08-12T20:27:02.096Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -25,9 +25,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-11T20:28:03.421Z",
-      "use_count": 118,
-      "last_reason": "wikilint 步驟",
+      "last_agent_used_at": "2026-08-12T20:27:02.096Z",
+      "use_count": 122,
+      "last_reason": "skilllint 步驟（skill-usage.json 使用紀錄健康檢查）",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -75,8 +75,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-11T07:20:25.151Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-12T07:22:52.036Z"
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",
@@ -148,7 +148,9 @@
       "last_reason": null,
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-12T08:16:09.513Z"
     },
     "ms-streaming-token-pipeline": {
       "created_at": "2026-05-29T08:58:12.636Z",
@@ -178,7 +180,9 @@
       "last_reason": "研究 draft streaming 長文處理時參考了 grammY auto-retry 與 rate limit 相關機制",
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 2,
+      "last_routed_at": "2026-08-12T11:24:43.339Z"
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
@@ -188,7 +192,9 @@
       "last_reason": null,
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-12T07:22:52.036Z"
     },
     "ms-windows-shell-interactive-prompt": {
       "created_at": "2026-05-29T08:58:12.650Z",
@@ -258,7 +264,7 @@
       "last_reason": null,
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": true
     },
     "uk-slot-pattern-library": {
       "created_at": "2026-06-26T05:33:19.199Z",
@@ -339,7 +345,9 @@
       "last_reason": null,
       "pinned": false,
       "notes": "補建 entry — skilllint 2026-07-13 發現磁碟有但 usage.json 漏追蹤",
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-12T03:01:08.195Z"
     },
     "igs-uof": {
       "created_at": "2026-07-14T03:08:57.472Z",
@@ -379,7 +387,9 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 2,
+      "last_routed_at": "2026-08-12T11:24:43.339Z"
     },
     "ms-blackbox-probe-experiment-design": {
       "created_at": "2026-08-01T20:03:46.232Z",
@@ -389,7 +399,9 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-12T06:37:54.987Z"
     },
     "imagegen": {
       "created_at": "2026-08-05T14:44:02.172Z",
@@ -449,7 +461,9 @@
       "last_reason": null,
       "pinned": false,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-12T08:16:09.513Z"
     },
     "claude-api": {
       "created_at": "2026-08-11T13:45:32.380Z",

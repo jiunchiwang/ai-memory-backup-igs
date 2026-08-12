@@ -10,6 +10,11 @@
 ```powershell
 Test-Path "<target>/assets/Script/Game_Define.ts"  # mode=new 時 clone 完必須存在
 Test-Path "<target>/extensions/astarte-framework"   # extensions 必須存在
+Test-Path "<target>/.git"                           # Step 0.2 之後必須存在（mode=new）
+py "${SKILL_DIR}/uk-slot-codegen/gate_runner.py" --step git --target "<target>"
+# ⚠️ Step 0.2 之後才跑：它會 exit 1，在 Step 0 / 0.1 結束時照字面跑必紅
+# 另驗「至少一個 commit」與「remote 不是 uk_slot_template」——只驗 .git 存在
+# 會放過 init 後 commit 失敗、與 Step 0.0 的 rm .git 失敗這兩種帶錯 history 的狀態
 ```
 
 ---

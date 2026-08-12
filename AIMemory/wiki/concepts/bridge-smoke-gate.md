@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-09（新增 check-draft-streaming.mjs 的零 import 約束、恆假斷言、反向釘死斷言三則）
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe]
+updated: 2026-08-12（新增：smoke suite 逾時 flaky 診斷兩案例、A/B 類逾時分法、突變存活先驗證突變真的套用）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63]
 ---
 
 # Bridge 測試閘門與建置
@@ -80,6 +80,41 @@ runner 用 `readdirSync` 以 `check-*` 前綴**自動發現**腳本 → 新增�
 **命令列 argv 要傳分開的 token，不能傳一整串加引號的字串**：`check-acp-model-effort.mjs` 的位置參數取 `command = rest[0]`，若把 `"npx -y @agentclientprotocol/codex-acp"` 當單一參數傳入，含空白的整串會變成 command，`AcpClient` 的 `quoteForShell` 再把它整包加引號，cmd.exe 就去找一個檔名叫這整串的程式 → **exit 1 且完全沒有 stderr**。2026-08-06 因此誤判成「新套件走 bridge spawn 路徑會死」，花了五輪對照才發現是呼叫方式錯——這個失敗形狀（exit 1 + 零 stderr）之後應先懷疑命令解析，不是 adapter。已補防呆（含空白就自動 split，比照 `ACP_AGENT_COMMAND` 的既有處理方式）。
 
 **BC-x 斷言編號是全專案追溯主軸，同號異義會讓事故追查拿到不相干的斷言**：新增斷言前要 grep 該檔全部既有 BC-x 編號確認真的沒被用過，不能只挑下一個看起來沒用到的數字。2026-08-06 自己在 `check-transient-retry.mjs` 撞到 BC-17（該號正是先前為避開 BC-15 撞號才從上游平移過來的），由 Fable5 覆核抓到才改為 BC-18a/b（commit `0546eeb`）；改號時要留下改號理由，不能只是靜默換號。
+
+## smoke suite 逾時 flaky 診斷（2026-08-12）
+
+`check-session-resume` 的 M1/M2/M3 在 fast tier 內 FAIL（50.3s）、單獨跑卻 PASS（17.1s）——
+**單支 FAIL、單獨跑卻 PASS，且失敗的是連續一組斷言（不是隨機單點）**，是查「共用 setup」與
+「子行程輸出解析方式」的訊號，不要當隨機抖動。這次三條共用 `JSON.parse(out.split("\n").pop())`
+只認子行程 stdout 的最後一行，parse 失敗時 fallback 成 `r={}`，子行程多印任何一行就三條同時垮。
+
+根因追下去發現是 `runM` 的 `timeout: 15000` 太小——該子行程要 import 整包 `dist/sessionManager.js`，
+獨立跑實測 30.3s / 11.1s / 18.0s，冷載入是上限的**兩倍**；平常會過只因為在 suite 裡 `dist/` 已被
+前面測試暖進 page cache。已修（commit `d128f28`，timeout → 120s ＋ 解析失敗改印原文，因為逾時
+原本被 `catch {}` 吞掉、偽裝成「三個斷言不成立」）。
+
+### 逾時的兩類分法：A 類預算 vs B 類上界
+
+全面掃過 smoke suite 的寫死逾時後歸納出可重用的分法：
+
+| 類型 | 定義 | 處置 |
+|---|---|---|
+| **A 類 = 等子行程的預算** | 負載敏感，該遠大於實測最大值 | 可調大（`check-mcp-readonly` 10s→120s、`check-auth-recovery` 20s→120s） |
+| **B 類 = 行為斷言的時間上界** | 調大等於掏空測試 | 絕不可動（`check-mcp-readonly` 的 `elapsed < 9s`、`check-worker-terminate` 的 `elapsed < 2000`、`check-stale-agent-procs` 的 `< 10 分鐘`） |
+
+⚠️ 兩個踩雷點：① `check-mcp-readonly` 的 9s 上界**正是靠** `RESPONSE_TIMEOUT_MS` 生效（阻塞回歸時
+send 等滿它才回 null → elapsed 超標），沒讀到這段就盲調會誤以為在掏空斷言；② `run-smoke-suite.mjs`
+用 `spawnSync`、**沒有 per-script timeout**——各腳本自己的 timeout 是唯一 hang 兜底，只能調大不可
+移除。同類缺陷仍存在於 `scripts/check-mcp-readonly.mjs` 的 `RESPONSE_TIMEOUT_MS = 10000`（2026-08-12
+高負載下實紅過一次，單獨跑 14.9s 通過），尚未修。本 repo fast tier 實測同日跑出 416s 與 1332s
+（3.2 倍差距），是這類 flaky 的負載背景。
+
+### 突變存活時先驗證突變真的套用了
+
+`positiveIntOr` 拿掉 `Number.isFinite` 的突變一度存活，先驗證該字串出現次數 1→0、程式碼可見已改，
+才確認是**等價突變**（下界 `>0` 與上界 `<=max` 的檢查已涵蓋 NaN/±Infinity，因 `Math.floor(NaN)>0`
+為 false、`Infinity<=max` 為 false），據此把該行當死碼刪除。教訓：突變測試出現存活的突變體，先確認
+「突變真的套用了」再判斷是測試太弱還是等價突變——順序反了會錯殺測試或錯放死碼。
 
 ## CI 決策（刻意不進版控的 ci.yml）
 

@@ -1,0 +1,131 @@
+# 2026-08-12 uk_slot_clash_of_olympus 首次 commit 誤追蹤的 119 個 AI 產物
+#
+# 這是 `_flow.md` Step 0.2「追蹤範圍」節引用的事故案例的證據快照。
+# 原始 commit 7d686c9（1008 檔）→ 修正後 889 檔，差 119 檔即本清單。
+# （修正版經多次 amend，hash 會變動 ∴ 這裡刻意不釘現 HEAD 的 hash，只釘檔數。）
+# 快照的理由：7d686c9 只從 local reflog 可達，gc.reflogExpireUnreachable 預設
+# 30 天後會被 prune，且 reflog 不隨 push/clone 傳播 ∴ 那個 hash 不是長期可查證的。
+# 重建法（30 天內、且只在該機器有效）：
+#   git -C <clash> ls-tree -r --name-only 7d686c9 -- .kiro docs scratch AI.md SPEC.md ART_ASSET_MANIFEST.md uk-slot-state-machine.skill
+#
+# 分布：.kiro 24 / docs 87 / scratch 4 / AI.md 1 / SPEC.md 1 / ART_ASSET_MANIFEST.md 1 / *.skill 1
+
+.kiro/skills/reel-fill-strategy/SKILL.md
+.kiro/skills/uk-slot-state-machine/SKILL.md
+.kiro/skills/uk-slot-state-machine/assets/GameState/AddFreeState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/AwardState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/CheckJpState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/CheckState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/CoinState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/EffectStartState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/EnterFreeState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/ExplodeState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/FeatureShowState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/FullRewardState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/IdleState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/LeaveFreeState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/MatchingPatchUpState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/PlateShowState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/RoundEndState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/RoundShowEndState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/ScatterShowState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/SpinState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/UnshowPrepareState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/WaitReadyState.ts
+.kiro/skills/uk-slot-state-machine/assets/GameState/WaitResState.ts
+.kiro/skills/uk-slot-state-machine/references/states.md
+AI.md
+ART_ASSET_MANIFEST.md
+SPEC.md
+docs/dev-spec.md
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_A82_image20.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B60_image6.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B61_image7.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B62_image8.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B63_image9.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B64_image10.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B65_image11.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B66_image12.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B67_image13.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B68_image14.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B69_image15.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B70_image16.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B75_image4.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B76_image5.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B79_image18.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B80_image19.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B83_image22.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B84_image23.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_B84_image24.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_L40_image25.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_L79_image17.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_M79_image18.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_O80_image1.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_O84_image3.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_Q82_image21.png"
+"docs/spec/images/2__\345\237\272\346\234\254\350\246\217\346\240\274_Q84_image2.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_AB61_image40.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B118_image26.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B168_image41.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B179_image45.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B26_image29.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B44_image20.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_B92_image5.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_F168_image42.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_K168_image43.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_K46_image30.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_K61_image34.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_K6_image28.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_K89_image27.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_N61_image35.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_O168_image44.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_O46_image31.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_R45_image32.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_R61_image36.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_U61_image38.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_V46_image33.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_X61_image39.png"
+"docs/spec/images/3__\347\216\251\346\263\225\345\222\214\350\241\250\346\274\224\346\265\201\347\250\213_Y45_image37.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_D22_image24.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E10_image12.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E11_image13.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E12_image14.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E13_image15.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E14_image16.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E15_image4.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E16_image5.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E17_image18.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E18_image19.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E20_image20.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E21_image22.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E21_image55.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E21_image56.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E22_image23.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E27_image28.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E36_image46.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E45_image47.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E46_image48.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E48_image27.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E4_image6.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E55_image52.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E56_image53.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E57_image54.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E5_image7.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E6_image8.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E7_image9.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E8_image10.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_E9_image11.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_F87_image49.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_F88_image50.png"
+"docs/spec/images/5_\347\276\216\350\241\223\351\235\234\346\205\213\351\234\200\346\261\202_F91_image51.png"
+docs/spec/markdown/Clash of Olympus.md
+docs/spec/markdown/Clash of Olympus_markitdown_raw.md
+docs/spec/metadata/metadata.json
+docs/spec/metadata/stats.json
+docs/spec/metadata/validation.txt
+docs/spec/source/Clash of Olympus.xlsx
+scratch/Game_Spec.md
+scratch/Game_Summary_File.md
+scratch/codegen-report.md
+scratch/codegen-traceability.json
+uk-slot-state-machine.skill

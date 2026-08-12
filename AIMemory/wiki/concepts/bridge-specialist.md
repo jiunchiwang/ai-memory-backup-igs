@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-12
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7]
+updated: 2026-08-12（新增：委派逾時可 per-domain 設定、extractModel() 錯報、maxTurns 15/30 不一致）
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_c61829, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a]
 ---
 
 # Bridge Specialist 分身系統
@@ -44,6 +44,27 @@ sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, 
 `run_plan` 的 DAG 依賴阻擋機制讓 `wf-design` 模板成為**全有全無**：三個提案 step（moa-ref-claude / moa-ref-kiro / moa-ref-codex）任一 failed，後續的 challenge 與 decide 步驟整個不執行（回報「未執行：前置 #3 失敗」），已完成的 2/3 份有效產出連帶白費。
 
 **已知問題（刻意擱置）**：`moa-ref-codex` 的 model pin `gpt-5.6-terra` 在本機 codex-cli 0.146.1 必掛（400 requires newer version），使用者於 2026-08-10 選擇**暫不修**（不改 pin、不重跑、不加 pin 驗證閘門）——後續 session 不應自行改掉該 pin。實測 2026-08-10 wf-design 因此只拿到兩份原始方案、零收斂產出，白燒 4 分 7 秒行程時間。
+
+## 委派逾時可 per-domain 設定（2026-08-12，commit 3fd8a9e + 62f5701）
+
+查證委派逾時發現：預設是 **30 分鐘總時長**（`src/specialist.ts:575`/`:961` 的 `entry.timeoutMs ?? 1_800_000`），且**同時有第二道上限 `maxTurns`**，`while (turns < maxTurns && Date.now() < deadline)` 先到先停。兩者回報不同（`specialist.ts:654`）：`Date.now() >= deadline ? "timeout" : "done"` ∴ 收到 `⏱️ timeout` 代表真的跑滿時間、不是 turns 用完；turns 用完會回 `done` 帶部分輸出。
+
+三個容易踩的結構事實：
+
+1. **改 `specialist-domains.json` 對逾時原本無效**——`DomainDef` 原本沒有 `timeoutMs`/`maxTurns` 欄位，runtime 讀的是 `specialists.json`，而 `specialist-create.ts:generateSpecialistConfig` 產生它時是**寫死** `maxTurns: 30, timeoutMs: 1800000`
+2. ∴ 直接手改 `specialists.json` 會在下次 `syncAllSpecialists()`（`/specialist sync`、建新分身）被整包覆寫回去，且**沒有任何訊息**
+3. 桌面設定 UI 的 `recordSchema` **只有 string 欄位**，數字會以字串寫入 JSON，消費端是 `Date.now() + timeoutMs` → 字串串接讓 deadline 恆大於任何時間戳、`while` 一次都不跑，失敗形狀是「委派秒結束、零輸出、無錯誤」
+
+已修：`DomainDef` 加 `timeoutMs`/`maxTurns`、產生器改吃 domain 值並用新增的 `positiveIntOr()` 強制轉正整數（下界 `>0`、上界 24 小時／1000 turns）、常數集中為 `DEFAULT_SPECIALIST_{MAX_TURNS,TIMEOUT_MS}`、`configRegistry` 補兩個表單欄位、新增 `scripts/check-specialist-budget.mjs` 行為閘門（34 條斷言，4 種突變全殺，見 [[bridge-smoke-gate]]）。`slot-dev` 已設 `timeoutMs=5400000`（90 分）+ `maxTurns=40`，理由是 `uk-slot-codegen` 這種長 pipeline 一輪跑不完（實測連三輪各吃滿 30 分鐘超時，但**產物是好的**——timeout ≠ 失敗，收到 timeout 先去查 `.codegen-checkpoint.json` 與實際檔案，不要照字面判失敗更不要重跑）。
+
+**上限設不到防手滑**：24 小時上限原本註解宣稱「擋得住多打一個零的手滑」，但 90 分鐘多一個零是 15 小時、仍在上限內完全擋不到——沒有任何上限能區分手滑與故意。已改寫成「只擋明確荒謬值」，並在測試裡加反面斷言明文記錄「15 小時仍會被接受」。
+
+**驗證方式**：改 `specialists.json` 後 `/restart`（重啟 agent session）不夠，specialists 設定是開機時載入的 module 層變數（`index.ts` 開機路徑先跑 `syncAllSpecialists()` 再跑 `loadSpecialistsConfig()`），必須重啟 bridge 行程才會重讀。驗證是否生效的最強證據是 `GET http://127.0.0.1:3847/api/specialists`（status server 讀的是記憶體中的 `loadedConfig`，不是磁碟檔）。
+
+### 兩個已知未修項目
+
+- **`extractModel()` 錯報 model**：`status-server.ts` 只從 `harness.args` 撈 `--model` 旗標、不看 `entry.model` 欄位，所以所有走 `claude-agent-acp`（model 放 `entry.model` 而非 CLI 旗標）的 specialist 在 dashboard 都會錯報成 `default`；只有 `kiro-cli acp --model X` 這種把 model 塞進 args 的才顯示得對。2026-08-12 刻意排除在 timeoutMs 改動的 commit 之外避免 scope 膨脹，仍未修。
+- **`maxTurns` 預設值有兩個不一致的答案**：`specialist-create.ts` 產生器寫入 `DEFAULT_SPECIALIST_MAX_TURNS=30`，但 `specialist.ts:574` 與 `status-server.ts:300/325` 的保底都是 `?? 15`。實務上因產生器必定寫入該欄位故 15 幾乎不生效，屬潛在誤導來源，尚未修。
 
 ## Token 執行權限層（2026-07-07，commit 028a5ea）
 

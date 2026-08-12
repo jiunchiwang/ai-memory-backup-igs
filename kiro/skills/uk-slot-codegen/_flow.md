@@ -16,6 +16,7 @@
 | 0 | Preflight | ❌ | ❌ |
 | 0.0 | Template Copy | ❌ | 條件（目標非空時跳） |
 | 0.1 | Extensions Clone | ❌ | ❌ |
+| 0.2 | Git Init | ❌ | 條件（`.git` 已存在時跳） |
 | 1 | Spec Ingestion (adapter) | ❌ | ❌ |
 | 1.5 | Spec Traceability | ❌ | ❌ |
 | 2 | Summary Generation | ❌ | ❌ |
@@ -43,7 +44,7 @@
 | update | 重跑 ingestion/summary，再按 anchor merge 到 Step 5 | 同左 | 只改 CODEGEN anchor／差異追加 |
 | validate | 若有新 spec 先重建 `Game_Spec.md`，再跑 Step 0 → 4a → 5 | 複製為 `Game_Spec.md`，再跑 Step 0 → 4a → 5 | **禁止** |
 
-`validate` 模式不執行 Pre-B、Step 0.0/0.1、Step 2~H4；若未提供新 spec，必須使用 target 現有的 `scratch/Game_Spec.md`，不得偷用其他專案 fixture。
+`validate` 模式不執行 Pre-B、Step 0.0/0.1/0.2、Step 2~H4；若未提供新 spec，必須使用 target 現有的 `scratch/Game_Spec.md`，不得偷用其他專案 fixture。
 
 ---
 
@@ -187,6 +188,7 @@ Remove-Item "<target>\.git" -Recurse -Force
 ⚠️ **不加 `--recursive`**：extensions 由 Step 0.1 獨立處理（獨立 repo）。
 
 **驗證**：`assets/Script/Game_Define.ts` 存在 且 `<target>\.git` 不存在
+（新 repo 由 **Step 0.2** 建立，不是不需要 git）
 
 ---
 
@@ -205,6 +207,103 @@ Remove-Item "<target>\.git" -Recurse -Force
 - `extensions` 存在但不是 git repo：停止並報告，不得覆蓋
 
 **驗證**：`_gates.md` §0
+
+---
+
+## Step 0.2: Git Init（`<target>/.git` 不存在時）
+
+📖 無
+
+**目的**：Step 0.0 刻意刪掉模板的 `.git/`，本步替 target 建**全新 history**。
+少了這步，專案會一路做到交付都不在版控——2026-08-12 `uk_slot_clash_of_olympus`
+就是這樣產出的（事後補 init），根因是本流程從來沒有這一步、不是誰漏跑。
+
+```powershell
+# ⚠️ 順序不可調換：先補 .gitignore（見下方清單），否則首次 commit 就把
+#    codegen 中間產物與 AI 文件永久吃進 history
+git -C "<target>" init -b main
+git -C "<target>" add -A
+git -C "<target>" commit -m "init: <遊戲名> 專案骨架（template baseline）"
+```
+
+⚠️ **不設 remote**：repo 名需要遊戲編號（慣例 `uk_<編號>_<name>_client`，
+目錄名可以不同），codegen 階段通常還沒配號 → 由人工在 GitHub 建好 repo 後
+再 `git remote add origin <url>`。
+
+### 追蹤範圍：**模板的 `.gitignore` 不是出貨形態，每個專案都會自己加碼**
+
+⛔ 本節 2026-08-12 稍早的版本寫成「照模板 `.gitignore`，不要自行加碼」，**那是錯的**
+——那是拿模板當基準、沒去比對實際出貨的專案。`uk_slot_clash_of_olympus` 的首次
+commit 因此吃進 119 個 AI 產物：`.kiro/` 24、`docs/` 87（21MB 規格圖）、`scratch/` 4、
+`AI.md` / `SPEC.md` / `ART_ASSET_MANIFEST.md` / `*.skill` 各 1。
+
+⚠️ **當天已 amend 修掉 ∴ 現在的 HEAD 查不到。** 完整清單存在
+`docs/incident-2026-08-12-ai-artifacts-tracked.txt`（119 行 + 表頭）。
+
+**不要只靠那個 commit hash**：原始 commit `7d686c9` 只從 **local reflog** 可達，
+`gc.reflogExpireUnreachable` 預設 30 天後 prune，且 reflog 不隨 push/clone 傳播
+∴ 它對別人、對 30 天後的自己都不可查。∴ 證據要**落檔進版控**，hash 只當短期輔助。
+
+這一節暴露過兩個坑：跨 vendor 覆核者查了現 HEAD（修正後的 889 檔版本）而非原始
+commit，誤判成「敘述與事實不符」；而我為了防這個誤判所補的 hash，又被下一位覆核
+指出 30 天後會被 gc（∴ 才改成落檔）。前者是覆核者的坑，後者是我的。
+**寫進文件的事故案例要附落檔的證據，不能只附一個會被 gc 掉的 hash。**
+
+**init 之前**先把這批補進 `<target>/.gitignore`：
+
+```gitignore
+.kiro/
+kiro*/
+ART_ASSET_MANIFEST.md
+scratch/
+docs/
+uk-slot-state-machine.skill
+.codegen-checkpoint.json
+/AI.md
+/SPEC.md
+/.codegraph
+/assets/spineTest
+/assets/spineTest.meta
+
+# 其他 AI 工具目錄（見下方說明：既有專案是靠 local-only 的機制擋的）
+.claudedocs/
+.claude-loop/
+.agents/
+```
+
+原則是：**codegen 中間產物與 AI 文件留在工作目錄，不進遊戲 repo**。
+
+前 12 行照 uk_917（實查最完整的一份 `.gitignore`）。⚠️ **最後三行是本 skill 新增的，
+既有專案的 `.gitignore` 都沒有**：2026-08-12 用 `git check-ignore -v` 查，uk_917 /
+uk_722 / uk_872 的 `.claudedocs` 實際是被 **`.git/info/exclude` 擋的**（uk_872 的
+`.gitignore:134` 只有 `/.claudedocs/*.md` 這種逐檔 glob，子目錄的 `.py` 仍靠
+`info/exclude`）。`info/exclude` 不進版控、clone 不會帶走 ∴ **那三個 repo 的版控狀態
+裡沒有這層保護**——新專案要寫進 `.gitignore` 才有，別假設「照既有專案抄」就會有。
+
+模板已處理好、不必再動的：
+
+- `node_modules/` **要進版控**——`.gitignore` 裡的 `#node_modules/` 是刻意註解掉的
+- `extensions/` 已排除（獨立 repo，Step 0.1 自己管）
+- `Tools_SlotSetUP`：**照模板現況走（普通檔案），不要自己 `submodule add`**。
+  觀察到的分布：模板與 uk_917 是普通檔案（`100644`），uk_722 / uk_739 /
+  uk_746 / uk_872 是 gitlink（`160000`）——**gitlink 在專案側是多數，不是個案**。
+  ⚠️ 不要替這個分布編因果：模板 repo 全史 72 個 commit **0 筆 `160000`**、
+  root commit（`a0398d4`, 2025-12-10）就是普通目錄 ∴ 不是「模板後來改掉」；
+  uk_872 的 root 是 2026-05-27、**比模板 root 還晚** ∴ 也不是「gitlink ＝ 更早
+  世代」。成因未知，別在文件裡替它補一個。根目錄 `.gitmodules` 指向 OLD-RD1，
+  模板這側沒有對應 gitlink ∴ 不生效
+
+**時機**：在此 commit 的是**模板 baseline**，Step 1~5 的產出隨後成為可讀的 diff。
+若是事後補做（codegen 已跑完才發現沒 git），直接一次 commit 全部即可，
+差別只在能不能從 history 分辨哪些是 codegen 產的。
+
+⚠️ **`mode=validate` 不跑本步**（見上方 Mode/Input 矩陣）。若對舊流程產出的專案跑
+validate 而 gate 報 `git_repo_exists` 紅，那是**真陽性**（專案確實不在版控）：
+validate 模式內沒有合法修復動作，停下來回報，由人工執行本步後再跑。
+
+**驗證**：`_gates.md` §0（除了 `.git` 存在，還驗「至少一個 commit」與
+「remote 不指向 uk_slot_template」——只驗 `.git` 存在會放過 init 後 commit 失敗、
+以及 Step 0.0 的 `rm .git` 失敗這兩種帶錯 history 的狀態）
 
 ---
 
@@ -592,6 +691,7 @@ py ${SKILL_DIR}/uk-slot-codegen/verify_compile.py <target>
 |------|-----|--------|------|
 | 0 Template Copy | 執行 | **跳過** | 目標非空 |
 | 0.1 Extensions | 執行 | 執行（pull） | `git pull` 更新 |
+| 0.2 Git Init | 執行 | **跳過** | `.git` 已存在 |
 | 1 Spec Ingestion | 執行 | 執行 | 重新產 Game_Spec |
 | 2 Summary | 執行 | 執行 | 重新產 Summary |
 | 3.1 Game_Define | 覆寫 | **Anchor Merge**（CODEGEN 區覆寫、USER_EDIT 保留） |

@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-08-08（新增外部研究證據等級標記方法論）
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc]
+updated: 2026-08-12（新增：claude-mem plugin worker 靜默死亡診斷、Claude Agent SDK 權限模型對照）
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_0b90e2, f_60159c, f_b7206d, f_5a495e, f_af99c8, f_a10e66, f_721fa7, f_07d587, f_460731, f_7d747c, f_5b7f6a, f_381c4b, f_e47a60, f_5209cd, f_c228c9, f_71bf67, f_789096, f_5a515c, f_1c58e2, f_937543, f_d0b214, f_651961, f_75d645, f_a6e65d, f_78b50f, f_bd10fc, f_0a8153, f_9b1654, f_b533eb, f_456de2, f_645ea3, f_892166, f_046ffa, f_ae069c, f_493309, f_eb92f6, f_b615b7, f_84107f, f_e6facf, f_1ff1d5, f_bdc742, f_5a2532, f_e62610, f_15ac36, f_510f59, f_2327e5, f_d274c6, f_fedf5c, f_b966f9, f_dc72cc, f_6a3827, f_a4464b, f_054543, f_1dbc98, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_32a736, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -192,6 +192,26 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 Bridge 是中介層不是 harness，不追求與 Claude Code 功能對齊；保持差異化優勢（語意路由 + topic shard + embed-router）。Conversation Summarizer 已由 upstream `archiveSummaryEnabled` 覆蓋，不再獨立追蹤。
 
 `dev-design` 多 agent 設計工作流分四階段（Explore → Propose → Adversarial → Synthesize）：即使 judge panel 把某提案排名第一，該提案仍可能被評為「無法照案直接實作」；Explore 階段宣稱「現有程式缺少某項能力」也可能是錯的（該能力其實透過其他底層邏輯間接實現）——adversarial 驗證應優先檢查 Explore 階段的假設本身，而非只驗證新提案。
+
+## claude-mem plugin 診斷（2026-08-11）
+
+`claude-mem` 是第三方記憶 plugin（與 bridge 自己的記憶系統是兩個獨立系統）。`settings.json` 的
+`claude-mem@thedotmack: true` 已啟用、Bun runtime 已裝、plugin `scripts/` 目錄完整，但**沒有
+worker 進程在跑**——初步懷疑是 chroma（向量庫）被停用導致，但**已被觀測推翻**：chroma 自 18:52
+起停用，worker 47424 仍於 19:07 無聲死亡，∴ chroma 不是（唯一）成因，別再把「關掉 chroma」當修法。
+
+## Claude Agent SDK 權限模型（2026-08-11）
+
+Claude Agent SDK 權限是**六階評估**（Hooks → deny → ask → permissionMode → allow → canUseTool），
+四個實務陷阱：裸名 `allowedTools` 會讓 `canUseTool` 被靜默跳過（僅發 warning）、`allowedTools`
+完全不限制 `bypassPermissions`、`disallowedTools` 裸名（移除工具定義）與有 scope（保留工具但擋
+pattern）語意不同、`Write(path)` 規則永不被匹配（要擋寫檔一律寫 `Edit(path)`，它同時管 Write 與
+NotebookEdit）。
+
+bridge 自己的 `permissionMode`（值為 `grant-all｜readonly`，`src/acpClient.ts:130`，作用在 ACP 的
+`session/request_permission` 攔截點）與 SDK 的六值 `PermissionMode` 是**同名不同物**的兩套獨立命名
+空間，比對時不可混用；兩者且有同形狀的弱點——bridge 側 harness 帶 auto-approve（`kiro -a`）時根本
+不送 permission request，SDK 側 `bypassPermissions` 讓 `canUseTool` 形同虛設。
 
 ## 相關工具
 

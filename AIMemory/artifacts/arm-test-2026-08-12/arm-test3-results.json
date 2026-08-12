@@ -1,0 +1,522 @@
+[
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S1-orig",
+  "site": "S1",
+  "variant": "orig",
+  "mutLines": [
+   20
+  ],
+  "nLines": 35,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 25302,
+  "effortAck": "Effort set to max",
+  "text": "行 31：當 `active < max` 且 waiters 不為空時，新進的 `acquire()` 會走 `else active++` 直接取得 slot，跳過所有排隊者。\n\n失效機制：假設 `max=1`，A 正在執行（`active=1`），B 等在 queue 裡。A 呼叫 `release()`，`next = waiters.shift()`（取出 B 的 resolve），`active` 不變（仍為 1）。B 的 microtask 尚未執行前，C 同步呼叫 `acquire()`，此時 `active (1) >= max (1)` 為 true，C 被正確排進 queue——這個方向沒錯。但若是 `max=2`，`active=1`，B 排隊中，C 同步進來看到 `active (1) < max (2)`，走 `else active++`（變 2）直接拿到 slot，插隊在 B 前面執行。FIFO 保證被破壞，且當 `max>1` 且有 waiter 時，新進者永遠優先於等待者。\n\n---\n\n沒有其他真正的行為缺陷。\n\n`release` 的「直接交棒」邏輯（`active` 不遞減、直接 `next()`）本身是正確的 handoff 設計，文件也如實說明了它的意圖。`limit=0` 時所有 acquire 都會永久 pending，但這是參數契約問題而非邏輯錯誤。\n\n**總結：1 條缺陷，信心高。**",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S1-orig",
+  "site": "S1",
+  "variant": "orig",
+  "mutLines": [
+   20
+  ],
+  "nLines": 35,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 28637,
+  "effortAck": "",
+  "text": "🟠 收到：審查這段 semaphore 實作，找出會導致錯誤行為的缺陷\n🟠 打算：逐行推理併發邏輯，特別關注 acquire/release 的計數與交棒時序\n\n---\n\n**行 31-32：等待者被喚醒後沒有執行 `active++`，導致計數永久偏低**\n\n失效機制：當 `active >= max` 時，呼叫者進入等待佇列。當 `release()` 呼叫 `next()` 喚醒等待者時，等待者從 `await` 之後繼續執行，直接 return `release`——但從未執行 `active++`。此時 `active` 維持原值（因為 release 裡的 `else active--` 沒走到），但喚醒的任務確實在跑。\n\n後果：假設 limit=3，三個任務跑滿（active=3），第四個排隊。第一個完成呼叫 release，喚醒第四個，但 active 仍是 3。現在實際跑著 3 個任務、active=3，看起來對。但當第四個完成呼叫 release 時，沒有等待者，走 `else active--`，active 變成 2。此時實際跑 2 個、active=2。繼續運行後，每經過一輪「有人排隊被喚醒」，有效容量就少 1，最終 active 會歸零但沒有等待者，之後新 acquire 會讓 active 變成負數或持續偏低。\n\n等等——讓我重新推理：\n\n- 初始：active=0\n- A1 acquire：active < max → active++ → active=1，return release\n- A2 acquire：active++ → active=2\n- A3 acquire：active++ → active=3（假設 max=3）\n- A4 acquire：active >= max → 進等待佇列，**不執行 active++**\n- A1 完成，呼叫 release：waiters 有 A4，執行 next()（喚醒 A4），**不執行 active--**\n- A4 被喚醒，從 await 後繼續，return release（此時 active 仍=3）\n- 現在跑著 A2, A3, A4，active=3 ✓\n\n這樣看起來對？再想一輪：\n\n- A4 完成，呼叫 release：waiters 空，執行 `else active--` → active=2\n- 現在跑著 A2, A3，active=2 ✓\n\n嗯，計數是對的。註解說的「直接交棒」邏輯是：喚醒等待者時不減 active（因為位子直接給它），等待者也不加 active（因為位子是交接來的）。\n\n**重新審查後，我認為這段程式碼沒有缺陷。**\n\nsemaphore 的邏輯是正確的：\n- 非等待者 acquire 時 `active++`\n- 等待者被喚醒時不動 active（位子是「交棒」來的）\n- release 時若有等待者就交棒（不改 active），否則 `active--`\n\n這維持了不變式：`active = 當前執行中的任務數`。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S1-nocmt",
+  "site": "S1",
+  "variant": "nocmt",
+  "mutLines": [
+   2
+  ],
+  "nLines": 15,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 13779,
+  "effortAck": "Effort set to max",
+  "text": "沒有缺陷。\n\n這段 semaphore 實作邏輯是正確的：\n\n- `acquire` 在 `active < max` 時立即遞增 `active` 並回傳 `release`。\n- `active >= max` 時把 `resolve` 放進 `waiters`，等待被喚醒後繼續執行到 `return release`，此時 `active` **沒有遞增**。\n- `release` 呼叫 `waiters.shift()` 取出下一個等待者並喚醒它：因為等待者喚醒後 `active` 不變（繞過了 `else active++`），所以 `active` 的計數保持正確。若沒有等待者才執行 `active--`。\n\n進入/離開計數在兩條路徑都保持平衡，不存在計數漏失、雙重釋放或死鎖的條件。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S1-nocmt",
+  "site": "S1",
+  "variant": "nocmt",
+  "mutLines": [
+   2
+  ],
+  "nLines": 15,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 21656,
+  "effortAck": "",
+  "text": "這段程式碼有一個缺陷：\n\n**行 11-12：acquire 成功後未遞增 active，導致 semaphore 失效**\n\n當 `active >= max` 時，呼叫者被推入 waiters 等待。當前一個任務呼叫 `release()` 時，`waiters.shift()` 取出等待者並呼叫其 resolve，但此時 **沒有執行 `active++`**。\n\n失效機制：假設 `limit=1`，第一個 acquire 走 else 分支使 `active=1`；第二個 acquire 等待；第一個 release 時 `next` 存在所以呼叫 `next()` 但**不執行 `active--`**，此時 `active` 仍為 1。第二個 acquire 被喚醒後直接 return，**也沒有 `active++`**（因為是從 await 恢復，不會再走 if/else）。結果是 `active` 永遠卡在 1，但實際上從第二個任務開始，release 時會走 `else active--` 使 `active` 變成 0、-1、-2...，最終 semaphore 完全失去限流作用，允許無限並發。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S2-orig",
+  "site": "S2",
+  "variant": "orig",
+  "mutLines": [
+   25,
+   26,
+   27
+  ],
+  "nLines": 35,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 13979,
+  "effortAck": "Effort set to max",
+  "text": "行 31：當 `active >= max` 時，waiter 被推入佇列並 `await`，但 `active` 沒有遞增。等到 `release()` 呼叫 `next()` 喚醒這個 waiter 時，`active--` 已先執行（行 25），`active` 已是 `max - 1`，被喚醒的 waiter 從 `await` 返回後直接執行到 `return release`，始終沒有任何地方對 `active` 做 `++`。結果是每次從等待佇列放行一個 waiter，`active` 淨減 1，最終 `active` 可以降到負數，讓後續 `active >= max` 的判斷永遠走 `else active++` 分支，並發數超過上限。\n\n其餘邏輯（FIFO 順序、`max` 的 floor/clamp、`release` 的指派位置）在這段程式碼範圍內看不出行為缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S2-orig",
+  "site": "S2",
+  "variant": "orig",
+  "mutLines": [
+   25,
+   26,
+   27
+  ],
+  "nLines": 35,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 15909,
+  "effortAck": "",
+  "text": "🟠 收到：審查 `createSemaphore` 實作，找出會導致錯誤行為的缺陷\n🟠 打算：根據程式碼邏輯推理併發場景下的失效機制\n\n---\n\n有一個缺陷：\n\n**行 31-32**：當等待者被喚醒後沒有執行 `active++`，導致併發數追蹤錯誤。\n\n失效機制：當 `active >= max` 時，請求進入等待佇列；當 `release()` 呼叫 `next()` 喚醒等待者後，等待者直接返回 `release` 而沒有增加 `active`。此時 `active` 已被 `release()` 在第 25 行減一，但等待者實際上正在佔用一個位子卻沒有計入。後續新的 `acquire()` 會看到 `active < max` 而直接放行，造成實際併發數超過 `max`。\n\n諷刺的是，註解（行 12-15）描述的正是這個問題並聲稱透過「直接交棒」解決，但實作並沒有做到——`release()` 無條件執行 `active--`，即使有等待者接手也是先減再喚醒，並非真正的交棒。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S2-nocmt",
+  "site": "S2",
+  "variant": "nocmt",
+  "mutLines": [
+   6,
+   7,
+   8
+  ],
+  "nLines": 15,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 15203,
+  "effortAck": "Effort set to max",
+  "text": "🟠 收到：審查 `createSemaphore` 函式的行為缺陷\n🟠 打算：只根據程式碼邏輯推理，不呼叫工具\n\n---\n\n找到 1 條真實缺陷：\n\n**行 11–12**：`acquire` 解除等待後未遞增 `active`。\n\n失效機制：當 `active >= max` 時，呼叫者進入等待。`release()` 執行 `active--` 並呼叫 `next()`，Promise resolve 後 `acquire` 從 `await` 返回，**直接 return `release` 而不執行 `active++`**。結果是每次透過等待路徑取得 semaphore 的呼叫者，都不會增加 `active`，導致計數持續遞減。若有多個 waiter，下一個 `release` 又會多減一次，最終 `active` 變成負數，`active >= max` 永遠為 false，semaphore 的限流效果完全失效。\n\n正確做法是在 `await` 後（或在 `release` 的 `next()` 呼叫前）對 `active++`，讓等待路徑也完整佔用一個 slot。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S2-nocmt",
+  "site": "S2",
+  "variant": "nocmt",
+  "mutLines": [
+   6,
+   7,
+   8
+  ],
+  "nLines": 15,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 16756,
+  "effortAck": "",
+  "text": "🟠 收到：審查 semaphore 實作，找出真正的行為缺陷\n🟠 打算：逐行推理執行流程，特別關注併發時序與狀態一致性\n\n---\n\n**有缺陷：**\n\n1. **行 11-12**：當 `active >= max` 時，waiter 被 resolve 後**沒有遞增 `active`**。若兩個 task 同時等待、第一個 release 時 shift 並 resolve 第二個，第二個直接拿到 `release` 但 `active` 仍是舊值（沒 `++`），導致 semaphore 實際放行數超過 `max`。失效時序：limit=1，A acquire（active=1）→ B acquire（等待）→ C acquire（等待）→ A release（active=0，resolve B）→ B 拿到 release 但 active 仍=0 → 此時 D acquire 走 else 分支直接進入（active=1），B 和 D 同時持有鎖。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S3-orig",
+  "site": "S3",
+  "variant": "orig",
+  "mutLines": [
+   484
+  ],
+  "nLines": 35,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 15135,
+  "effortAck": "Effort set to max",
+  "text": "行 496–497：`unblocked.length < ready.length` 是 true 時，`skipped` 是用 `notRunReason.has(s.id)` 過濾 `ready`，但 `notRunReason` 並不是本 batch 才剛寫入的——它可能在前幾輪就已有記錄。結果：`skipped.length` 可能大於本輪真正被跳過的數量，通知訊息的數字會虛高。\n\n行 484：`stepDeps(s).find((d) => failedIds.has(d))` 只取第一個失敗的前置，`blockedBy: blocker` 只記錄一個。若某 step 有多個失敗前置，記錄與通知都只呈現其中一個，其餘被靜默忽略。這是資訊遺失，不影響執行邏輯，但下游的診斷/resume 可能誤判為只有一個前置失敗。\n\n以上兩條是我確認有行為偏差的。其餘（`fanOutCount` 宣告了但片段內沒看到遞增使用、`pendingSteps` 與 `settled` 的雙重維護）在這段片段內看不到足夠上下文確認是否真的失效，不列入。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S3-orig",
+  "site": "S3",
+  "variant": "orig",
+  "mutLines": [
+   484
+  ],
+  "nLines": 35,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 19536,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**沒有明顯的行為缺陷**。\n\n分析：\n\n1. **行 474 的 `ready` 篩選邏輯**：正確地從 pending 中找出所有前置都已 settled 的工項。\n\n2. **行 476 的 `break` 條件**：當沒有 ready 工項時跳出，配合註解說明「parse 時已驗過無環」，這是合理的終止條件。\n\n3. **行 483-493 的 blocked 處理**：對每個 ready 工項檢查是否有前置失敗，若有則標記 blocked 並從 pending 移除、加入 settled。邏輯一致。\n\n4. **行 496-497 的 skipped 計算**：用 `notRunReason.has(s.id)` 來過濾剛才被標記的工項，這與上面迴圈中 `notRunReason.set()` 的行為一致。\n\n唯一可能令人疑惑的是行 484 檢查 `stepDeps(s).find((d) => failedIds.has(d))`，但既然工項已經在 `ready` 裡（代表所有 deps 都 settled），而 `failedIds` 應是 `settled` 的子集，這個二次檢查是為了區分「前置完成但失敗」vs「前置完成且成功」，邏輯正確。\n\n若要挑剔，需要看到 `failedIds` 的維護邏輯才能確認是否有遺漏，但**僅憑這段程式碼本身，沒有可識別的缺陷**。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S3-nocmt",
+  "site": "S3",
+  "variant": "nocmt",
+  "mutLines": [
+   475
+  ],
+  "nLines": 25,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 28619,
+  "effortAck": "Effort set to max",
+  "text": "行 486：`unblocked.length < ready.length` 判斷式可能偽真，導致誤報跳過數量。\n\n條件成立的前提是 ready 裡有步驟被加到 `notRunReason`，但同一迴圈中被 block 的步驟也會被 `settled.add` 和 `pendingSteps.delete`——這本身沒問題。問題在於 `notRunReason` 是外部 Map，若先前的 batch 已經有 step 被記進去（而那些 step 不在本輪 `ready` 裡），這個差值計算仍然只看 `unblocked.length < ready.length`，實際邏輯是正確的。\n\n重新仔細分析：\n\n**行 475**：`stepDeps(s).find((d) => failedIds.has(d))` 只找第一個失敗的前置，但 `failedIds` 在這段片段中沒有被更新——被 blocked 的步驟本身不會加入 `failedIds`。若 A 失敗 → B blocked，C 依賴 B，C 的前置 `stepDeps` 裡有 B，但 B 不在 `failedIds`（只有真正執行失敗的才在），所以 C 不會被 block，C 會進入 `unblocked`。這會造成**間接依賴鏈中斷傳播失效**：C 依賴的 B 已被 blocked、不會執行，C 仍被派工執行，但 B 的產出不存在。\n\n這是唯一一個行為缺陷：\n\n**行 475**：當 `stepDeps(s)` 包含一個 blocked（而非 failed）的前置步驟時，`failedIds.has(d)` 為 false，該步驟不會被判定為 blocked，最終進入 `unblocked` 執行，但前置步驟的產出根本不存在——任何間接依賴失敗步驟（依賴鏈 ≥ 2 層）的工項都會被錯誤派工。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S3-nocmt",
+  "site": "S3",
+  "variant": "nocmt",
+  "mutLines": [
+   475
+  ],
+  "nLines": 25,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 16794,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**沒有明顯的行為缺陷**。\n\n分析：\n\n1. **行 470-471**：`ready` 取出所有依賴都已 settled 的 step，若沒有就 break 跳出迴圈——這是正確的 DAG 拓撲排序邏輯，用來處理循環依賴或無法推進的情況。\n\n2. **行 475-484**：對 ready 中的每個 step 檢查是否有前置失敗，有則標記 blocked 並加入 settled，否則加入 unblocked——邏輯一致。\n\n3. **行 486-487**：`skipped` 用 `notRunReason.has(s.id)` 過濾，而行 477 剛好在標記 blocked 時會 `notRunReason.set(s.id, ...)`，所以 `skipped` 確實會包含本輪被 block 的項目。\n\n4. **fanOutCount 變數**（行 467）在這段程式碼中只有宣告，沒有使用或修改，但這可能是因為後續程式碼未附上，不構成本段的行為缺陷。\n\n這段程式碼的拓撲執行與失敗傳播邏輯是正確的。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S4-orig",
+  "site": "S4",
+  "variant": "orig",
+  "mutLines": [
+   591
+  ],
+  "nLines": 31,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 22681,
+  "effortAck": "Effort set to max",
+  "text": "1 條真實缺陷，信心高。\n\n**行 591**：`results.set(ready[i].id, r)` 用的是 `ready[i]`，但下面 592–593 行用的是 `runnable[i]`。\n\n失效機制：`ready` 與 `runnable` 是兩個不同的陣列（從命名可推斷 `runnable` 是 `ready` 的某個子集或篩選結果）。`batchResults` 是 `runnable.map(...)` 派工的回傳，所以第 `i` 筆結果對應的是 `runnable[i]`，不是 `ready[i]`。當 `ready` 與 `runnable` 不完全相同時，`results.set` 會把結果掛到錯誤的 step id 上，導致後續依賴那個 step 的邏輯讀到 undefined 或前一輪的舊值，而 `runnable[i]` 的真正結果則完全遺失（永遠不會被 settle）。\n\n其餘 4 條（index-out-of-bounds、重複 taskId 碰撞、`settled` 與 `pendingSteps` 不同步、artifact 遺失）在這段片段範圍內無法確認是缺陷還是外部保證已覆蓋，不列入。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S4-orig",
+  "site": "S4",
+  "variant": "orig",
+  "mutLines": [
+   591
+  ],
+  "nLines": 31,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 18223,
+  "effortAck": "",
+  "text": "🟠 收到：審查 `src/moa-plan.ts` 片段，找出真正的行為缺陷\n🟠 打算：只根據這段程式碼推理，不呼叫工具\n\n---\n\n**行 591：index 對應錯誤 — 用了 `ready[i]` 但迴圈遍歷的是 `runnable`**\n\n`batchResults` 來自 `runnable.map(...)`，回傳順序與 `runnable` 一致。但 591 行用 `ready[i].id` 作為 `results.set` 的 key，而 592-593 行卻用 `runnable[i].id`。\n\n如果 `ready` 和 `runnable` 是不同陣列（從命名看極可能是：`ready` 可能包含已完成的項目，`runnable` 是過濾後真正要跑的子集），那麼：\n- 當 `ready.length > runnable.length` 時，`ready[i]` 與 `runnable[i]` 指向不同的 step\n- 結果會被存到錯誤的 step id 底下，導致後續依賴該 step 的工作拿到錯誤的輸入\n\n註解 588-589 行還特別強調「來源必須是 runnable 而非 batch」，但程式碼本身卻在 591 行用了 `ready[i]` — 這正是註解警告不要做的事。\n\n---\n\n若 `ready` 與 `runnable` 實際上是同一個陣列的別名，則沒有缺陷，但從命名差異與註解的警示語氣來看，這很可能是一個 copy-paste 或 refactor 遺留的 bug。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S4-nocmt",
+  "site": "S4",
+  "variant": "nocmt",
+  "mutLines": [
+   585
+  ],
+  "nLines": 19,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 13918,
+  "effortAck": "Effort set to max",
+  "text": "584–587行：`batchResults` 的索引對應的是 `runnable`，但迴圈用 `ready[i]` 寫入 `results`，卻用 `runnable[i]` 操作 `settled` 和 `pendingSteps`。\n\n如果 `ready` 和 `runnable` 不是同一個陣列（兩者可能在上游以不同方式過濾出來），當 `ready[i].id !== runnable[i].id` 時，`results.set` 會把結果寫到錯誤的 step id，導致後續依賴此 step 結果的下游 step 拿到別人的輸出，或找不到結果。\n\n其餘部分（573行的 `Date.now()` 造成每個 step taskId 不同 timestamp、580行的 spread 方式）屬於設計取捨，不是行為缺陷。\n\n**結論：1 條缺陷，信心高。**",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S4-nocmt",
+  "site": "S4",
+  "variant": "nocmt",
+  "mutLines": [
+   585
+  ],
+  "nLines": 19,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 19304,
+  "effortAck": "",
+  "text": "根據這段程式碼，我發現一個明確的缺陷：\n\n**行 585：`ready[i]` 與 `runnable[i]` 不一致導致結果錯誤寫入**\n\n`batchResults` 是由 `runnable.map(...)` 產生的 dispatch 結果，所以 `batchResults[i]` 對應的是 `runnable[i]`。但行 585 把結果寫入 `results.set(ready[i].id, r)`，用的卻是 `ready` 陣列的索引。\n\n如果 `ready` 和 `runnable` 是不同的陣列（從命名推斷 `ready` 可能是「準備好的 steps」而 `runnable` 是「實際可執行的 steps」，兩者可能經過不同的 filter 條件），當它們的元素順序或數量不同時，結果會被寫入錯誤的 step id，導致後續依賴這些結果的 step 拿到錯誤資料。\n\n行 586-587 正確使用了 `runnable[i]`，這進一步佐證行 585 的 `ready[i]` 是筆誤。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S5-orig",
+  "site": "S5",
+  "variant": "orig",
+  "mutLines": [
+   278
+  ],
+  "nLines": 51,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 23571,
+  "effortAck": "Effort set to max",
+  "text": "行 260：當 `given` 為 `0`、`false`、`null` 等 falsy 非字串值時，`typeof given === \"string\"` 為 false，會落入 else 分支——若該參數是 required 就報錯，若非 required 則靜默用 default 覆蓋呼叫端傳入的值。但這條在 `args` 型別若嚴格是 `Record<string, string>` 的情況下不會發生，信心中等。\n\n行 278：`s.task` 本身沒有在 replace 之前被 spread 或複製，迴圈每次都從原始 `s.task` 開始重跑（`reduce` 的初始值是 `s.task`，每次 iteration 的 `acc` 是上次的結果，這部分邏輯本身沒問題）。**這條撤回，邏輯正確。**\n\n行 260–265：`given.trim() !== \"\"` 這個條件讓呼叫端傳入純空白字串（`\"   \"`）時被當成「沒有給值」而走 default/required 路徑。如果呼叫端刻意傳空白字串作為合法值，會被靜默替換成 default——這是行為上的不對稱，但算不算缺陷取決於需求，信心偏低。\n\n**真正信心較高的一條：**\n\n**行 278**：`RegExp` 在每次 `reduce` iteration 都重新建構一個新物件，這本身無誤；但若 `k`（參數名）包含 regex 特殊字元（如 `foo.bar`、`a+b`），`new RegExp(...)` 不會逸出它，會把 `.` 解讀為「任意字元」，導致非預期的替換命中——例如參數名 `a.b` 會把 `{{axb}}`、`{{a1b}}` 等也替換掉。呼叫端的參數名若來自外部 JSON（模板檔），這是可達的輸入條件。\n\n---\n\n整理結論，按信心排：\n\n1. **行 278** — 若模板參數名含 regex 特殊字元（`.`、`+`、`*` 等），`new RegExp(\\`\\\\{\\\\{${k}\\\\}\\\\}\\`, \"g\")` 不會對 `k` 做 `escapeRegExp`，會誤匹配不同的 placeholder 字串，導致錯誤替換。\n2. **行 260** — `given.trim() !== \"\"` 讓純空白字串被當成未提供，若呼叫端有意傳空白字串，值會被 default 靜默覆蓋（或觸發 required 錯誤），行為與呼叫端意圖不符。\n\n其餘無可信度足夠的額外缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S5-orig",
+  "site": "S5",
+  "variant": "orig",
+  "mutLines": [
+   278
+  ],
+  "nLines": 51,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 17475,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**沒有明確的行為缺陷**。\n\n以下是我審查後的推理：\n\n1. **行 278 的正則替換**：註解 ①② 已正確說明設計意圖——用 `reduce` 單次掃描避免 arg 值中的 `{{other}}` 被二次展開，且用函數替換器可避免 `$&` 等特殊替換語法問題。但這裡**沒有用函數替換器**，只是用字串 `v` 直接替換。如果 `v` 包含 `$&`、`$'`、`` $` `` 或 `$<n>`，會被 JavaScript 的 `String.prototype.replace` 當成特殊替換模式解讀。\n\n   **但重新看**：註解說「用 function replacer」，而程式碼用的是 `.replace(regex, v)` 其中 `v` 是字串，不是 `() => v`。這與註解聲稱的防護不符。\n\n---\n\n**結論：有 1 條缺陷**\n\n**行 278**：當 `args` 的某個值包含 `$&`、`$'`、`` $` `` 或 `$1` 等字元時，`replace(regex, v)` 會將這些當成替換模式解讀，導致替換結果不符預期（例如 `$&` 會變成被匹配的 `{{key}}` 本身）。註解聲稱使用 function replacer 防止此問題，但實際程式碼沒有使用 `() => v` 函數形式。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S5-nocmt",
+  "site": "S5",
+  "variant": "nocmt",
+  "mutLines": [
+   266
+  ],
+  "nLines": 34,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 20091,
+  "effortAck": "Effort set to max",
+  "text": "1 條真實缺陷：\n\n**行 266** — 當 `v` 字串本身包含 `$` 後接 `$&` 等 RegExp 替換特殊字元（`$&`, `$$`, `$'`, `` $` ``, `$n`）時，`String.prototype.replace` 的第二個參數是字串時會解讀這些特殊 pattern，導致替換結果不是 `v` 的原文，而是某個衍生值（例如 `$&` 會插入整個 match）。具體情境：使用者傳入 `v = \"cost $0.50\"` → `$0` 被解讀為 capture group reference → 輸出錯亂。\n\n修法：把 `v` 換成 `() => v`（replacer function 形式不解讀特殊字元）。\n\n---\n\n其餘行我認為沒有行為缺陷：\n- 246–248 的「多餘參數」檢查在第一個未知 key 就 early return，但這是設計選擇而非 bug。\n- 259 的 `p.default ?? \"\"` 在 `p.default` 為空字串時行為符合預期（`\"\"` 不是 nullish）。\n- 271–272 的 `firstRequired` 取的是 `tpl.params` 第一個 required param，edge case 是所有 param 都非 required 時 `label` 為空字串，但這不會出錯，只是 `summary` 退化成 `[tpl.name]`。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S5-nocmt",
+  "site": "S5",
+  "variant": "nocmt",
+  "mutLines": [
+   266
+  ],
+  "nLines": 34,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 17237,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**沒有明確的行為缺陷**。\n\n分析如下：\n\n1. **行 266 的 RegExp 特殊字元**：參數名 `k` 來自 `tpl.params[].name`，如果參數名包含 regex 特殊字元（如 `$`、`.`、`(`），會導致替換行為不正確。但這是模板定義端的問題，且參數名通常是識別符風格，實務上不太會觸發。信心中等，但因為是「模板作者控制的輸入」而非「使用者輸入」，不算是執行期缺陷。\n\n2. **行 254 的空白字串處理**：`given.trim() !== \"\"` 會把純空白的輸入視為「未給值」，這是刻意行為（fallback 到 default 或報 required 錯誤），邏輯合理。\n\n3. **行 272 的 `??`**：`values.get(firstRequired.name)` 在 `firstRequired` 存在時一定會在 `values` 中（因為行 252-260 的迴圈保證所有 param 都會被 set），所以 `?? \"\"` 只是防禦性寫法，不會觸發。\n\n整體邏輯完整：先驗證模板存在、再驗證多餘參數、再驗證必填參數、最後展開模板。沒有發現會在正常輸入下導致錯誤結果的失效路徑。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S6-orig",
+  "site": "S6",
+  "variant": "orig",
+  "mutLines": [
+   1074
+  ],
+  "nLines": 25,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 11770,
+  "effortAck": "Effort set to max",
+  "text": "行 1073–1078：`resolveToolWarning` 讀了 `session._toolWarningMsgId` 但沒有清除它。`onToolWarningResolved` 是 fire-and-forget，清除應在同步路徑完成。若此函式從多個路徑被呼叫（如同行 1071 的說明所言），第二次呼叫時 `msgId` 仍非 `undefined`，`onToolWarningResolved` 會被重複觸發，對同一則訊息執行兩次 cleanup（可能是重複刪除訊息、重複計費或產生 Telegram API 錯誤）。\n\n其餘部分無法從這段片段識別出行為缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S6-orig",
+  "site": "S6",
+  "variant": "orig",
+  "mutLines": [
+   1074
+  ],
+  "nLines": 25,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 11124,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**有一個缺陷**：\n\n**行 1073-1078**：`resolveToolWarning` 在第 1075 行檢查 `msgId` 後沒有清除 `session._toolWarningMsgId`，導致同一個警告訊息可能被重複解除。如果 `resolveToolWarning` 被多次呼叫（註解說「可以放心從多個路徑呼叫」），每次都會對同一個 `msgId` 觸發 `onToolWarningResolved`，造成重複的清除動作（例如重複刪除 Telegram 訊息會 API 錯誤）。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S6-nocmt",
+  "site": "S6",
+  "variant": "nocmt",
+  "mutLines": [
+   1067
+  ],
+  "nLines": 15,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 16400,
+  "effortAck": "Effort set to max",
+  "text": "沒有缺陷。\n\n這四個方法的行為符合其語意：\n\n- `clearToolWarningTimer` 正確處理 timer 不存在的情況（undefined check）\n- `resolveToolWarning` 正確處理 msgId 不存在的情況，且用 `.catch` 保護非同步錯誤不會 unhandled\n- `scheduleToolWarning` 片段只到 1074 行（呼叫 `clearToolWarningTimer`），這是合理的第一步，沒有看到缺陷\n\n唯一值得注意但**不是缺陷**的是：`resolveToolWarning` 呼叫後沒有清除 `session._toolWarningMsgId`，若同一 session 重複呼叫可能會重複觸發 callback——但這是不是問題取決於呼叫方的邏輯，憑片段無法確定是缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S6-nocmt",
+  "site": "S6",
+  "variant": "nocmt",
+  "mutLines": [
+   1067
+  ],
+  "nLines": 15,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 16392,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為**沒有明確的行為缺陷**。\n\n分析：\n\n1. **行 1062-1065 `clearToolWarningTimer`**：正確檢查 timer 存在才 clear，然後設為 undefined，沒有問題。\n\n2. **行 1066-1072 `resolveToolWarning`**：\n   - 檢查 `msgId === undefined` 提前返回，正確的 guard\n   - 用 `Promise.resolve()` 包裹可能是 sync 或 async 的 callback，並 `.catch()` 處理錯誤，是合理的 fire-and-forget 模式\n   - `this.onToolWarningResolved?.` optional chaining 處理 callback 未設定的情況\n\n3. **行 1073-1074 `scheduleToolWarning`**：開頭就 clear 舊 timer，這是標準的 debounce/reschedule 模式，防止重複 timer。\n\n**潛在的觀察**（但不構成缺陷，因為看不到完整上下文）：\n- `resolveToolWarning` 沒有清除 `_toolWarningMsgId`，但這可能是刻意的（由其他地方清除，或允許多次 resolve）\n- `resolveToolWarning` 沒有呼叫 `clearToolWarningTimer`，但可能 caller 負責，或 timer 已經 fired 才會進到這裡\n\n這些都需要看完整程式碼才能判斷是否為問題，單看這段片段沒有明確的失效機制。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S7-orig",
+  "site": "S7",
+  "variant": "orig",
+  "mutLines": [
+   293
+  ],
+  "nLines": 26,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 25345,
+  "effortAck": "Effort set to max",
+  "text": "兩條缺陷，信心由高到低：\n\n**第 288 行**：檢查「兩個都沒給」的邏輯放在 template 分支（275–287）*之後*，但邏輯應是前置條件。當 `input.template` 有值但 `expandPlanTemplate` 在 283 行 early return 時，程式碼已離開 if-block，282–286 的賦值沒發生，**但第 288 行的 `input.template === undefined` 卻是 `false`**，所以這個 guard 不會觸發。真正的問題是：若 `input.template` 有值、`input.steps` 無值、且 expand 失敗（283 return invalid），流程正確結束。但若 `input.template` 有值、expand 成功、`rawSteps` 被設好，接著 288 的判斷是 `false && ...` = false，流程正常繼續——這路徑沒問題。**但如果 `input.steps` 和 `input.template` 都存在**，275 行的 if 進入、expand 完成後，288 行兩個條件都是 `false`，跳過 guard 直接到 293——這是預期行為。真正的缺陷是：**288 行的 guard 應在 275 行之前**；以目前順序，若 `input.template` 是 `undefined` 且 `input.steps` 也是 `undefined`，275 行的 `if (input.template !== undefined)` 不進入，rawSteps 仍是初始值，然後 288 行才攔住——順序上確實能攔到，但這是依賴初始值的脆弱防禦，而非明確的前置條件設計，容易在 rawSteps 有預設值時靜默失效。\n\n**第 293 行**：`rawSteps.length < 1` 的 guard 未檢查上界 `PLAN_MAX_STEPS`。錯誤訊息寫了 `1-${PLAN_MAX_STEPS} entries`，但實際只驗了下界，傳入超過 `PLAN_MAX_STEPS` 個 step 時不會被這裡攔住——後續若 DAG 驗證沒有獨立檢查上界，這個 guard 就是空頭承諾，導致超大 DAG 被默默接受。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S7-orig",
+  "site": "S7",
+  "variant": "orig",
+  "mutLines": [
+   293
+  ],
+  "nLines": 26,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 15716,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為有一個真正的缺陷：\n\n**行 293**：當 `input.template` 有值且 `expandPlanTemplate` 成功時，`rawSteps` 會在行 284 被賦值。但若 `input.template === undefined` 且 `input.steps !== undefined`，這段程式碼沒有顯示 `rawSteps` 從何處取得 `input.steps` 的值。行 293 的檢查會在 `rawSteps` 仍為初始值（可能是 `undefined` 或空陣列）時失敗，導致即使使用者正確提供了 `steps`，仍會收到錯誤訊息。\n\n---\n\n若 `rawSteps` 的初始化或 `input.steps` 的賦值發生在未顯示的程式碼區段（例如行 275 之前），則此問題不存在。但僅就所附片段而言，這是最可能的缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S7-nocmt",
+  "site": "S7",
+  "variant": "nocmt",
+  "mutLines": [
+   291
+  ],
+  "nLines": 24,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 29541,
+  "effortAck": "Effort set to max",
+  "text": "行 288：`input.template === undefined && input.steps === undefined` 這個檢查在第 282 行已經讀取過 `input.template` 的分支之後才執行，但問題出在**另一個方向**——若 `input.template !== undefined` 但 `expandPlanTemplate` 在第 283 行已經 `return invalid(...)` 退出，程式碼不會走到 288，沒問題；若 `input.template === undefined` 且 `input.steps !== undefined`，第 287 行之前的 template 分支被跳過，`rawSteps` 此時未被賦值（仍是宣告時的初始值，從片段看不到宣告，但若初始值為 `undefined`），第 291 行的 `!Array.isArray(rawSteps)` 會攔住——這條路徑本身沒 bug。\n\n真正有問題的：\n\n**行 291**：`rawSteps` 在此片段中看不到初始宣告，但若它被宣告為 `let rawSteps;`（即 `undefined`），當 `input.steps` 有值時 `rawSteps` 應該是在第 288 前的某個 `if (input.steps !== undefined)` 分支被賦值——但那個分支**不在這段程式碼裡**。若只有 template 分支在片段內，那麼 `input.steps` 有值時 `rawSteps` 根本沒被賦值，會在 291 行因 `!Array.isArray(undefined)` 回傳 invalid，訊息說「steps must contain 1–N entries」但實際問題是賦值邏輯缺失。不過這依賴片段外的宣告與賦值，無法確認。\n\n僅從片段本身能確定的缺陷：\n\n**行 288**：template 分支（275–287）存在時，若 `input.template` 有值且 `expandPlanTemplate` 成功，`input.steps` 是否同時存在不被檢查，兩者同時提供時只用 template 靜默忽略 `input.steps`，沒有歧義性驗證——但這算行為問題還是設計決策模糊，信心中等。\n\n結論：**從這段程式碼本身看不到明確的行為缺陷**。\n\n- 第 275–281 的 args 驗證邏輯正確。\n- 第 282–286 的 template 展開與賦值正確。\n- 第 288 的互斥檢查在 template 分支**之後**，意味著 template 展開失敗（283 return）時不走到 288，成功時也不需要 288 的保護——邏輯成立。\n- 第 291 的陣列長度守衛正確，但依賴片段外的 `rawSteps` 初始值是否正確。\n- 第 296–297 的欄位驗證邏輯正確。\n\n唯一值得標注的潛在問題：**行 285**——`templateName = input.template` 在 `expandPlanTemplate` 成功後才賦值，但若 `expandPlanTemplate` 回傳成功卻 `expanded.steps` 為空陣列，第 291 行會回傳 invalid，此時 `templateName` 已被賦值但 `steps` 為空——若 `templateName` 在後續流程有副作用（如日誌、狀態存檔），該值已被汙染。信心低，因為 invalid return 通常代表整個動作被丟棄。\n\n**最終答案：沒有高信心的缺陷。** 若硬要選一條，行 285–286 的提前賦值在 invalid path 上會留下汙染值，但只在 invalid 後仍有後續處理時才成為真正 bug。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S7-nocmt",
+  "site": "S7",
+  "variant": "nocmt",
+  "mutLines": [
+   291
+  ],
+  "nLines": 24,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 18419,
+  "effortAck": "",
+  "text": "根據這段程式碼推理，我認為有一個真的缺陷：\n\n**行 288-290**：當 `input.template` 有值時，這個檢查永遠不會觸發，但如果 template 展開失敗（283 行 `return invalid`），`rawSteps` 仍然是 `undefined`（或之前的值），而 288 行的檢查會被跳過，導致 291 行才報錯。這本身不算缺陷。\n\n重新檢視後，**真正的缺陷是**：\n\n**行 288**：這個檢查 `input.template === undefined && input.steps === undefined` 放錯位置。它在處理完 `input.template` 分支**之後**才執行，但問題是：\n- 如果 `input.template` 有值且成功展開，這個檢查被跳過（正確）\n- 如果 `input.template` 有值但展開失敗，283 行已經 return 了（正確）\n- 但如果 `input.template === undefined` 且 `input.steps === undefined`，程式碼會先跳過 275-287 的整個 template 分支，然後在 288 才報錯\n\n實際上這段邏輯是正確的，只是順序看起來奇怪。\n\n**結論：沒有缺陷。**\n\n這段程式碼的邏輯是：\n1. 若有 template，展開並設定 rawSteps\n2. 若兩者皆無，報錯\n3. 驗證 rawSteps（無論來自 template 還是 steps）\n\n雖然 288-290 的檢查位置看起來應該在最前面，但放在這裡功能上是正確的——如果兩者皆無且沒走 template 分支，rawSteps 會是 undefined/空，288 行會攔截；如果有 steps（程式碼未顯示但可推測在更早處理），rawSteps 會有值。程式碼行為正確。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S8-orig",
+  "site": "S8",
+  "variant": "orig",
+  "mutLines": [
+   127
+  ],
+  "nLines": 91,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 16962,
+  "effortAck": "Effort set to max",
+  "text": "分析這段程式碼，找出行為上真正的缺陷：\n\n---\n\n**124–131：`tool_call_update` 的 `completed`/`failed` 分支沒有遞增 `finished`**\n\n當 `status === \"completed\"` 或 `status === \"failed\"` 時，程式只做了 `titles.delete(id)` 就跳出，沒有 `finished++`。結果：`finished` 永遠是 0，第 100 行的通知和第 63 行的 `completedSteps` 會一直報零，和實際完成數不符。\n\n---\n\n**119：`kind === \"tool_call_update\"` 且 `id` 無值時，`name` fallback 到 `title`，但 `title` 在 update 事件中「不可靠出現」（116 行自述），可能是 `undefined`，最終 fallback 成字串 `\"tool\"`**\n\n第 130 行 `current = name` 在 `in_progress` 分支會把顯示中的工具名靜默換成 `\"tool\"`，覆蓋先前已知的正確名稱。這是可觀測到的錯誤顯示，但不影響計數邏輯，信心稍低於第一條。\n\n---\n\n以上兩條。第一條（`finished` 不遞增）是明確的計數缺陷，第二條是顯示值被錯誤覆蓋。其餘邏輯（節流、hang watch、`dirty` 旗標、timer 生命週期）在這段範圍內看不出行為問題。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S8-orig",
+  "site": "S8",
+  "variant": "orig",
+  "mutLines": [
+   127
+  ],
+  "nLines": 91,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 15555,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為有一個缺陷：\n\n**行 126-127**：當 `tool_call_update` 的 status 為 `completed` 或 `failed` 時，只從 `titles` map 刪除該 id，但**沒有遞增 `finished` 計數器**。這導致 `completedSteps`（行 63）永遠是 0，即使工具已完成。使用者會看到「已開始 N 個工具、完成 0 個」的錯誤進度，且閒置通知（行 100）也會顯示錯誤的完成數。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-sonnet-4.6",
+  "task": "S8-nocmt",
+  "site": "S8",
+  "variant": "nocmt",
+  "mutLines": [
+   106
+  ],
+  "nLines": 69,
+  "effort": "max",
+  "stopReason": "end_turn",
+  "ms": 12904,
+  "effortAck": "Effort set to max",
+  "text": "一條真實缺陷，信心高：\n\n**行 105–106**：`tool_call_update` 帶 `status === \"completed\"` 或 `status === \"failed\"` 時，`finished` 從未遞增。`started` 在每次 `tool_call` 都加一，但 `finished` 的計數器永遠停在初始值 `0`。結果是 checkpoint 裡 `completedSteps` 恆為 `0`，hang 通知也會一直顯示「完成 0 個工具」，無論實際完成了幾個。\n\n修法：在 `if (id) titles.delete(id)` 旁邊加上 `finished++`。\n\n---\n\n其餘邏輯（throttle 計算、hang watch、titles map 的 get/set/delete、schedule 的 timer 重入防護）在這段片段內看不出行為缺陷。",
+  "stderr": ""
+ },
+ {
+  "model": "claude-opus-4.5",
+  "task": "S8-nocmt",
+  "site": "S8",
+  "variant": "nocmt",
+  "mutLines": [
+   106
+  ],
+  "nLines": 69,
+  "effort": "(none)",
+  "stopReason": "end_turn",
+  "ms": 12214,
+  "effortAck": "",
+  "text": "根據這段程式碼，我認為有以下缺陷：\n\n1. **行 105-106**：當 `tool_call_update` 的 status 為 `completed` 或 `failed` 時，只刪除了 `titles` 中的記錄，但沒有增加 `finished` 計數器。這導致 `completedSteps`（行 61）永遠為 0，進度報告會顯示「已完成 0 個」即使工具實際已完成。\n\n2. **行 103-109**：當 `kind === \"tool_call_update\"` 且 status 為 `completed` 或 `failed` 時，`current` 不會被更新或清除。如果最後一個工具完成了，`current` 仍指向該工具名稱，而非反映「無進行中工具」的狀態，可能誤導使用者。",
+  "stderr": ""
+ }
+]

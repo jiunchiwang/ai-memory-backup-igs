@@ -34,5 +34,20 @@
   "f_8a90df": "verification-diagnosis",
   "f_072633": "bridge-memory",
   "f_618525": "bridge-specialist",
-  "f_2fe4f7": "bridge-specialist"
+  "f_2fe4f7": "bridge-specialist",
+  "f_ea64e9": "verification-diagnosis",
+  "f_e2fe39": "bridge-model-strategy",
+  "f_cd3300": "bridge-model-strategy",
+  "f_50ef2a": "adversarial-review",
+  "f_3f5340": "verification-diagnosis",
+  "f_173f37": "bridge-smoke-gate",
+  "f_545400": "bridge-infra",
+  "f_75ce78": "bridge-smoke-gate",
+  "f_9219db": "bridge-smoke-gate",
+  "f_74c227": "adversarial-review",
+  "f_9de427": "bridge-specialist",
+  "f_1007ff": "uk-slot-codegen",
+  "f_6039c4": "bridge-specialist",
+  "f_c61829": "bridge-specialist",
+  "f_90d6e8": "uk-slot-clash-olympus"
 }

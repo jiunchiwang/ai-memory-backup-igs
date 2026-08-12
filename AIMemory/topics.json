@@ -4,7 +4,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-10T20:04:18.335Z (token=topics-b65dcbe7-32)
+// Last applied: 2026-08-12T20:10:49.374Z (token=topics-e6bb1214-32)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -464,7 +464,10 @@
       "relay-peers",
       "通知沒有送達",
       "通知管線",
-      "ctx 統計"
+      "ctx 統計",
+      "claude-mem",
+      "chroma",
+      "worker 靜默死亡"
     ]
   },
   {

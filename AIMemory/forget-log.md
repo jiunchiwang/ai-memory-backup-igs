@@ -338,3 +338,13 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-11T20:16:42.778Z] user=509424983 query="使用者決定不建 bridge-dev specialist" deleted=0 token=forget-c4472659-1
 
+- [2026-08-12T20:20:15.680Z] user=509424983 query="clash_of_olympus_demo，希臘神話主題、6×4 盤面 4096 Ways、基於 uk_slot_template" deleted=0 token=forget-e8410631-1
+
+- [2026-08-12T20:20:16.480Z] user=509424983 query="[WS] 2026-08-12 開跑 uk_slot_clash_of_olympus codegen" deleted=1 token=forget-68781f3d-1
+    - [f_957634] [2026-08-12T03:10:54.826Z] [WS] 2026-08-12 開跑 uk_slot_clash_of_olympus codegen：規格書已從 G:\AI\Clash of Olympus.xlsx 搬到 G:\UK\Clash of Olympus.xlsx 並於 2026-08-07 更新；2026-07 那批 spec-to-impl 產出（G:\Cocos_Project\clash_of_olympus_demo，含 dev-spec/SPEC.md/AI.md）已實查不存在 ∴ wiki 頁 uk-slot-clash-olympus 記的「1🔴+6🟡+8🟢」與專案路徑都已過時、只能當參考不可當基準。新目標路徑 G:\Cocos_Project\uk_slot_clash_of_olympus（GameId 未分配，之後改名 uk_<id>_..._client）。已用 parallel_delegate 派 slot-dev 跑完整 codegen（mode=new、proto stub、template 走遠端 clone HEAD=527de9b2）。從 xlsx 直接驗到的規格：盤面 4x6（ROW=4/COL=6）4096 Ways、19 顆符號 symbol00~18、SCATTER_SYMBOL 只有 symbol12（Cash/CollectVS 等皆為 feature symbol）、機制含 Collect Feature／VS Feature（🔴 最重）／聚寶盆 3+1 階／FG／JP 五階／BuyBonus／MAX WIN／預中／聽牌。待確認 9 項，其中三項是新發現：道具卡=True 但三張流程表零規格、sheet 7 音樂音效與 sheet 8 多國語言皆為零儲存格空白 ∴ 音效清單只能推定、i18n 延到 M2+。
+- [2026-08-12T20:20:17.205Z] user=509424983 query="Clash of Olympus 唯一 🔴 新開發機制是 VS Feature" deleted=0 token=forget-959c53d6-1
+
+- [2026-08-12T20:20:18.316Z] user=509424983 query="Clash of Olympus 規格書待確認事項（8項）" deleted=0 token=forget-70e9c32d-1
+
+- [2026-08-12T20:20:19.180Z] user=509424983 query="specialist-domains.json 已配置完成（品質優先方案）：slot-dev 用 claude-sonnet-4.6、researcher 用 claude-opus-4.6" deleted=0 token=forget-8799e508-1
+

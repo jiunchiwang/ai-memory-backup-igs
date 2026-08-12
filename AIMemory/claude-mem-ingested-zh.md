@@ -1,5 +1,37 @@
 # claude-mem 精選寫入紀錄(繁中,供事後抽查)
 
+## 2026-08-12(AUTO 模式;10 筆候選 → 精選 + 去重後寫入 3 條)
+
+呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：
+`<<> ?Ｙ?:2026-08-11T20:30:25.243Z;蝑:10(銝? 15);??epoch 1786338503767>>`
+
+檔案自身 header 為「產生:2026-08-11T20:30:25.243Z;筆數:10(上限 15);自 epoch 1786338503767」——時間戳、筆數(10)、epoch 三者與呼叫端 header 一致,**無矛盾**。本批為全新批次（epoch 1786338503767 ≠ 前一批 1786193461343,筆數 10 ≠ 4）,**非重掃舊批**。
+
+來源 project：`telegram-kiro-bridge-main`(8)、`uk_872_eyestrike2_client`(2),皆為 decision 類。
+
+寫入 3 條：
+
+1. telegram-kiro-bridge 決定不為 Kiro `--effort` 的靜默 no-op 加 runtime 警告（2026-08-11 commit 9897f46 pre-push 覆核通過時定案,來源未記錄理由）∴ bridge 端不會有任何訊號告訴你 ACP_EFFORT 對 kiro backend 沒生效;要判斷只能回頭確認該 backend 的 model 是不是 claude-sonnet-4.6（Kiro 上唯一吃 effort 的 model）。→ shard `bridge-config.md`
+2. 已推翻的假設：停用 chroma 並不能防止 worker 靜默死亡——2026-08-11 觀測到 chroma 自 18:52 起已停用,worker 47424 仍於 19:07 無聲死亡 ∴ chroma 不是（唯一）成因,別再把「關掉 chroma」當修法、也不必重跑這個實驗（來源未載明該 worker 屬哪個子系統,故不在 fact 裡指名）。→ shard `bridge-project.md`
+3. 要讓單一專案不受專案級 CLAUDE.md 某條指示約束（例如「改完自動 git commit」）,做法是在專案根建 CLAUDE.local.md 寫下反向指示壓過它,而不是去改共用的 CLAUDE.md——2026-08-11 於 uk_872_eyestrike2_client 用此法停掉自動 commit。→ shard `uk-872-eyestrike2.md`
+
+精選階段淘汰（一次性過程紀錄,非跨 session 可重用）：
+
+- 候選 3、4、5（Pre-push review approved 9897f46 / Pre-push commit verification workflow for 9897f46 / Pre-Push Independent Review Initiated,含 parallel_delegate id `parallel_delegate_793cac0ae7954fde869ef3091326f0cf`）：同一次 pre-push 覆核的三段動作紀錄,綁死單一 commit hash 與單一 delegate id。其中有方法論成分的部分既有 fact 已涵蓋——查「假設」命中的「中途擴張 scope 會把先寫好的『診斷』敘述凍結成現在式的假事實…（同一個 commit 9897f46 就補上了 max）…修正在 4ec4ece」已完整記錄該 commit 的教訓與 max 已補上的事實,故三條只留下唯一未被涵蓋的成分（不加 runtime 警告的決定,即上方第 1 條）。
+- 候選 7（Refined Windows Spawn Bug Analysis with Evidence Grading :: readiness check 三路 OR：port probe (Bn) || alive status (qs()) || process check (s > 0 && Ve(s))）：識別字是壓縮後的 minified 名稱（Bn/qs/Ve）,換一次 build 就失效,無法跨 session 定位;證據分級本身既有 fact 已有更完整版本（查「證據等級」命中「研究／吸收外部 repo…每條主張都要標證據等級：A 級＝親自讀過原始檔案…B 級＝只根據摘要」）。
+- 候選 9（Automated backfill monitoring implemented with 40-minute watch window :: 背景任務 b08kinmni 監看 "Backfill check complete for all projects"）：綁死單一背景任務 id 的一次性運維動作。
+- 候選 6（Removed Invalid Cross-Version Comparison from Memory Document :: 移除「08-10：死 23 次但 0 個空窗」）：一次性的文件清理動作;可泛化成分（跨版本數據不能當證據）過於稀薄,且既有的證據紀律 fact 群（證據等級 A/B、可否證條件、「調整等待延遲後時間差不變就不是競態」）已覆蓋同一位置,單寫一條只會稀釋。
+
+去重階段淘汰（命中既有 fact）：
+
+- 候選 1（Sonnet-4.6[max] vs Opus-4.5 找 bug 能力 n=5 inconclusive、共同天花板）：**完全重複且已被超越**。既有 fact 已有兩條更完整的版本——「2026-08-12 實測…5 個真實 mutate-gate 變異…命中 sonnet 2/5、opus 3/5…n=5 差一題毫無區分力」以及擴大版「每臂 16 題…9/16 vs 6/16,配對 McNemar 5 對不一致、雙尾 p=0.375 ∴ 仍不能宣稱任一方更強」,後者已含「同源天花板」與註解效應的修正。
+- 候選 2 的事實面（Kiro CLI 對所有 model 收 `--effort` 但只有 claude-sonnet-4.6 真的吃）：既有 fact 命中兩條——「Kiro CLI 2.16.2 的 effort 是 per-model…11 個 availableModels 中只有 claude-sonnet-4.6 可設,合法值 low/medium/high/max（無 xhigh）」與「`kiro-cli chat --effort bogus-zzz` 照跑且 exit 0…CLI 層完全不驗證、是靜默 no-op」。僅「不加 runtime 警告」這個決定為新,故只寫該決定。
+- 「ACP_EFFORT_FALLBACK.kiro 已補上 max」：**刻意不寫**——既有的「中途擴張 scope」那條 fact 內文已明載 9897f46 補上了 max,且與本批候選同屬 effort 主題（未來查 effort 必定命中同一 shard）,再寫一次就是本步驟該擋掉的重複。
+
+結果：**新增 3 條。未呼叫 forget。**
+
+---
+
 ## 2026-08-11(AUTO 模式;4 筆候選 → 精選合併 + 去重後寫入 2 條)
 
 呼叫端機械讀到的本批 shortlist header（原樣照登,含亂碼）：

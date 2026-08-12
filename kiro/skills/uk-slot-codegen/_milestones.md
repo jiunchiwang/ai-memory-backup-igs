@@ -10,7 +10,7 @@ Step 5 Report 完成後，讀本文件產出 `<target>/SPEC.md`（milestone 任�
 
 | Milestone | 內容 | 前置 |
 |-----------|------|------|
-| M0a | 起新專案（codegen Step 0~0.1 已完成） | — |
+| M0a | 起新專案（codegen Step 0~0.2 已完成） | — |
 | M0b | proto 接通，能 spin 出 server 結果 | proto 發佈 |
 | M1 | Base game 可玩（轉輪表演、贏分、基本 UI）— codegen Step 1~5 已產骨架 | M0b |
 | M2 | 特色機制：每個 🔴 一個任務（來源：`docs/dev-spec.md`） | M1 |
@@ -59,15 +59,23 @@ codegen Step 0.0 預設走遠端 clone。沒有 GitHub SSH 權限、或想以本
 | 遠端（codegen 預設） | `git clone --depth=1 <template-repo> <target>` → `rm -rf <target>/.git` | GitHub SSH 權限 |
 | 本地 archive | `git -C <模板目錄> archive HEAD \| tar -x -C <新專案目錄>` | 本機已有 uk_slot_template |
 
-archive 路徑接續步驟（clone 路徑由 Step 0.1 自動處理）：
+archive 路徑接續步驟（clone 路徑的對應步驟列在括號內）：
+
+⚠️ 2026-08-12 更正：這裡原本寫「clone 路徑由 Step 0.1 自動處理」，**對第 1 項是錯的**
+——Step 0.1 只同步 extensions，整條 codegen 流程當時沒有任何一步建 repo，
+∴ 走預設 clone 路徑的專案結構上必定沒有 git（`uk_slot_clash_of_olympus` 實證）。
+現已補上 `_flow.md` **Step 0.2: Git Init**。
 
 ```
-1. git init → initial commit（全新 history，不帶模板 log）
-2. 執行 Tools_SlotSetUP/FirstClone.bat
+1. git init → initial commit（全新 history，不帶模板 log）      → clone 路徑：Step 0.2
+2. 執行 Tools_SlotSetUP/FirstClone.bat                          → clone 路徑：Step 0.1
    （讀根目錄 gameSetting.json，clone slotExtensions-client 到 extensions/，
     即 Astarte framework，獨立 repo、不進遊戲 repo）
-3. npm install
+3. npm install                                                  → clone 路徑：Step 3.3.6
 4. 改 GameId / ShortGameName / 盤面 / FillStrategy 設定
+   → clone 路徑：盤面＝Step 3.1、FillStrategy＝Step 3.5；
+     GameId / ShortGameName 在模板 client code grep 不到（0 命中），
+     對應步驟未查證，不要假設有人幫你改
 ```
 
 ---
@@ -106,3 +114,5 @@ codegen 跑完 Step 5 之後，各 milestone 該接誰：
 - ❌ 模板 demo 驗收拿別款 dev server 驗 → 欄數/形狀不符必炸；改用 ReelDevTool 假盤或 stub ack
 - ❌ unshow/replay 還原留到專案尾聲 → 放進每個機制的驗收標準
 - ❌ M0a 起專案時 clone 與 archive 兩條路徑混跑 → 二擇一，混用會出現重複 remote/殘留 .git
+- ❌ 以為 clone 路徑會自動建 repo → 不會；`_flow.md` Step 0.2 是唯一建 repo 的地方，
+  交付前用 `Test-Path <target>/.git` 確認（`_gates.md` §0 已納入）

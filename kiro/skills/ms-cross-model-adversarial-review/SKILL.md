@@ -71,7 +71,7 @@ description: 當要在 push / 交付前派另一個模型（異源）對自己�
 
 ⚠️ **Kiro 這一列是最容易誤判的，而且兩個方向都會錯。**
 
-`vc-kiro-delegate` 走的是 `kiro-cli --model claude-opus-4.5`，所以**照預設用**時
+委派實作給 Kiro 的慣用 pin 是 `kiro-cli --model claude-opus-4.5`，所以**照這個慣例用**時
 「Claude 寫、Kiro 覆核」在模型層是**同源**——只有 harness / context / system prompt 不同。
 這屬**弱異源**：對「換個 context 就會發現」的錯（枚舉漏、敘事與碼不符）仍然有效，
 但對「這個模型本來就會這樣想」的錯（同一套推理偏誤、同一個知識盲點）**沒有防禦力**。
@@ -97,8 +97,8 @@ and consistent quality」——**它挑哪個模型不由你決定、也不回�
 ∴ 不帶 `--model` 呼叫 Kiro 當覆核者時，這輪的 vendor 是**不確定**的；那比「同源」更糟，
 因為連 domain 都判不出來，也就沒辦法照降級表留痕說這輪是哪一級。
 **當覆核者用時一律顯式帶 `--model`**，`auto` 不可用於任何需要宣告 domain 的場合。
-（前一段講的「照預設用」指的是 `vc-kiro-delegate` 這支 skill 寫死的
-`--model claude-opus-4.5`，不是 `kiro-cli` 本身的預設——兩個「預設」不同層，別混。）
+（前一段講的「照慣例用」指的是呼叫端自己寫死的 `--model claude-opus-4.5`，
+不是 `kiro-cli` 本身的預設——兩個「預設」不同層，別混。）
 
 ∴ 承重路徑的覆核（不變式、時序、依賴取捨論證）**優先**跨 vendor——`anthropic` 產出就派
 `openai` / `zhipu` / `deepseek` 任一覆核。
@@ -168,6 +168,28 @@ kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read "<prompt>"
 也就沒有它動到工作區的可能（別用 `--trust-all-tools`）。副作用是它無法自己
 `git show`，所以要先把 diff 落成檔案讓它讀（順便避開 Windows 命令列長度上限）。
 事後比對 `git status` + `git rev-parse HEAD` 確認工作區沒被動過。
+
+**要它動手做事（委派實作、不是覆核）時的差別**：
+
+```bash
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 "<prompt>"
+# 接續同一個 session（例如叫它 self-review 剛才的修改）：
+kiro-cli chat --no-interactive --trust-all-tools --model claude-opus-4.5 --resume "<prompt>"
+```
+
+- `--no-interactive` 不是可選的：少了它會 hang 在輸入提示，headless 呼叫等於沒有回應。
+- `--trust-all-tools` 才給得到 `execute_bash`；不給就只能讀檔。⚠️ 反過來寫成
+  `--trust-tools=`（空值）會**連 fs_read 都關掉**，它只剩純文字回應。
+- 長 prompt 用 here-doc 或先落檔 `PROMPT="$(cat file)"`，不要硬塞進命令列。
+- `--resume` 接最近一次 session。**並行跑多個任務時它會接錯**，那時改用
+  `--resume-id`（id 由 `--list-sessions` 取）。
+
+⚠️ **寫死在文件裡的 `--model` 會過期，而失敗是靜默的。**
+2026-07-26 `claude-opus-4.6` 從可用清單下架，所有寫死它的指令一律
+`error: Model 'claude-opus-4.6' does not exist` 並 `exit 1`——訊息只出現在 stderr，
+呼叫端若沒檢查 exit code，看起來就只是「這輪沒動靜」。
+∴ 任何把 model 名寫進文件／腳本的地方，都要在委派失敗且訊息提到 model 時
+先跑一次 `--list-models` 再判，別往任務本身的方向查。
 
 ### 拿不到強異源時：降級，不是跳過
 
@@ -446,7 +468,7 @@ commit message 駁回了前一輪覆核的兩條意見：
 | 看到 `truncated` 就否決收斂／grep 不到 `truncated` 就當完整 | 兩個方向都錯：要看它有沒有補窄搜尋；靜默截斷與搜尋詞錯完全無訊號。補查要換窄 pattern 分段重跑，不是原樣重跑 |
 | 覆核完把 findings 丟掉 | 未採納的寫進 commit message；低優先的列成 follow-up，不要靜默消失 |
 | 開啟 CLI 的 stop-time 自動覆核閘門 | 先讀該 hook 的實作：有沒有 diff 閘門？失敗是 warn 還是 block？多數是「每 turn 觸發 + 失敗即 block」 |
-| 把「換一個 CLI／分身」當成換了一個模型 | 先對 domain（見〈異源域〉）——`vc-kiro-delegate` 寫死 `claude-opus-4.5`，與 Claude 同源；承重路徑要跨 vendor |
+| 把「換一個 CLI／分身」當成換了一個模型 | 先對 domain（見〈異源域〉）——Kiro 帶 `--model claude-opus-4.5` 時與 Claude 同源；承重路徑要跨 vendor |
 | 不帶 `--model` 呼叫 Kiro 當覆核者 | `kiro-cli` 的預設是 `auto`，它挑哪個模型不回報 → 這輪 domain **不可知**，連降級留痕都寫不出來。一律顯式指定 |
 | 反過來：把「Kiro」整個當成 `anthropic` 而放棄跨 vendor | Kiro 不綁 vendor（`--model glm-5` 等）。跨 vendor 的覆核者掛掉時，**先跑 `--list-models` 再決定要不要降級** |
 | 承重路徑覺得跨 vendor 麻煩，改派同 vendor 最強模型頂替 | 那個選擇同時**更貴**且**更弱**——強異源與貴是兩個獨立的軸（`glm-5` 是 0.50x credits 的強異源）。domain 與 tier 一次分類同時決定，不可互換 |
@@ -454,5 +476,21 @@ commit message 駁回了前一輪覆核的兩條意見：
 ## 相關
 - **dual-skill-review-loop** — 同源自我迭代到 ≥95 分；本 skill 是**異源**對抗，兩者互補不互斥
 - **ms-vacuous-test-gate** — 覆核最常抓到的一類：閘門宣稱的強度高於實際
-- **vc-kiro-delegate** — 委派實作後的品質保證；覆核者要用**不同**模型才有異源效果
+- **委派實作給 Kiro 之後的覆核** — 呼叫法與「model 名會過期且失敗靜默」的坑，
+  併在上面〈Kiro 專屬：pin 驗證與唯讀呼叫〉節；覆核者要用**不同**模型才有異源效果。
+  （原 `vc-kiro-delegate` skill 已於 2026-08-12 廢止：它規定的六步委派流程實證幾乎
+  未被執行。**用絕對數不用比例**——`~/.claude/logs/kiro-usage.log` 全歷史只有
+  **3 筆** intent 宣告、**2 筆** self-review 的 `resume`，而同一份 log 的
+  delegate 條目是三位數。⚠️ 刻意不寫成分數：那份 log 的比對條件寬到會把
+  「commit message 提到 kiro-cli」也記成一筆，連 2026-08-12 這次調查本身都
+  灌進去 27 筆——**分母是被污染的，分子不是**。
+  skill 被呼叫的次數本身有權威來源：`~/.claude.json` 的 `skillUsage` 物件
+  （每支 skill 一筆 `usageCount` + `lastUsedAt`，全時間累計、不隨 transcript 輪替）。
+  該 skill 是 **10 次、排名 8/57**（中位數 2）——**它被採用過**，但 `lastUsedAt`
+  停在 2026-07-13，之後 30 天零使用。∴ 廢止理由不是「沒人用」而是
+  「用過然後停了，且 10 次呼叫只換到 3 筆宣告、2 筆 self-review——
+  **連 skill 真的觸發時，它規定的儀式也照樣被跳過**」。
+  ⚠️ 這一段是 2026-08-12 的更正：原本寫「正式 skill 呼叫全歷史 1 次」，
+  那是拿 transcript grep 的結果當全歷史——transcript 約 30 天輪替，
+  1 是**視窗內**的數字。查 skill 使用情況要先看 `skillUsage`，不要從 transcript 數。）
 - **sync-fork-from-upstream** — merge 後 push 前的覆核閘就是本 skill 的一個固定使用點

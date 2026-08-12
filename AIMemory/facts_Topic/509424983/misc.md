@@ -4,7 +4,7 @@
 - [f_ebe025] [2026-07-31T11:33:09.321Z] 使用者對承重改動的驗證要求偏好「留下可否證條件」而非宣稱已修好：修法上線時要同時定義出「什麼觀測結果代表原假設是錯的」（2026-07-31 draft H1 修法實測，判讀表區分 status-restore 幀存在但症狀仍在=假設錯）
 - [f_71c654] [2026-08-05T02:45:22.922Z] Daily Intel 產出的 markdown 檔案在手機上顯示亂碼的問題是因為 UTF-8 without BOM，已於 2026-08-05 在 src/daily-intel/reports/daily.ts 加上 UTF-8 BOM（\uFEFF）修復
 - [f_c77fbc] [2026-08-09T01:20:19.280Z] 宣告持久化成果（檔案已改／已 commit／已存記憶）前必須確認該輪真的有對應的 tool call，判準是「指得出是哪一次呼叫」——2026-08-09 曾在回覆結尾具體寫出「wiki 頁已改寫（Section 4 重寫、加 Section 6）」但整輪零 Edit/Write；具體的章節號反而讓假宣稱更可信，且 READ-BACK 紀律結構上擋不到（沒有 write 就沒有東西可讀回，自檢項被整個跳過而非失敗）。
-- [f_7d05b7] [2026-08-11T07:11:08.031Z] **設定正常**：`settings.json` 裡 `claude-mem@thedotmack: true` 是啟用的
 - [f_c9e9ef] [2026-08-11T07:11:08.032Z] **Plugin 檔案存在**：13.15.0 版的 `scripts/` 目錄完整
-- [f_c0ada7] [2026-08-11T07:11:08.032Z] **但沒有 worker 進程在跑**：第一個 shell 指令沒找到任何 claude-mem 相關的 node 進程
 - [f_c38776] [2026-08-11T14:29:20.790Z] Claude Agent SDK 的 permissionMode 官方 TypeScript reference 頁只列四個值，但本機實裝 sdk.d.ts:2092 是六個（default / acceptEdits / bypassPermissions / plan / dontAsk / auto）——文件與實裝不符，應以 sdk.d.ts 為準
+- [f_b120d4] [2026-08-12T07:20:10.466Z] 在 Git Bash 環境用 Start-Process 排延遲工作時不可用 `timeout /t N`：Git Bash 的 PATH 讓 cmd 解析到 GNU coreutils 的 timeout 而非 Windows 的 timeout.exe，GNU 版看不懂 /t 會直接非零退出，接在後面的 `&&` 整串短路、後續指令完全不執行且無明顯錯誤。2026-08-12 因此宣告「重啟已排定」但實際什麼都沒發生。正確做法是用 PowerShell 的 Start-Sleep 或呼叫完整路徑 C:\Windows\System32\timeout.exe。
+- [f_d36f3a] [2026-08-12T07:20:10.466Z] 為設定值加「合理上限」時要誠實寫出它擋不到什麼：2026-08-12 原本在註解宣稱 24 小時上限擋得住「多打一個零」的手滑，但 90 分鐘多一個零是 15 小時、仍在上限內完全擋不到——沒有任何上限能區分手滑與故意。修法是把上限的定位寫成「只擋明確荒謬值（貼錯欄位、貼進 timestamp、MAX_SAFE_INTEGER）」，並在測試裡加一條反面斷言明文記錄「15 小時仍會被接受」，免得後人把它當防線。

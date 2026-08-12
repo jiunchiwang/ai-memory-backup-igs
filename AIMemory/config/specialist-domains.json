@@ -30,6 +30,8 @@
       "harness": "claude-agent-acp",
       "model": "sonnet",
       "effort": "high",
+      "timeoutMs": 5400000,
+      "maxTurns": 40,
       "prefixes": [
         "uk-"
       ],
@@ -103,7 +105,8 @@
         "uk-slot-codegen",
         "uk-slot-clash-olympus",
         "uk-slot-eye-strike",
-        "uk-slot-pirates-queen"
+        "uk-slot-pirates-queen",
+        "codegen-git-init-gap"
       ],
       "mcpServers": [
         "memory"
@@ -362,7 +365,10 @@
         "wf-design",
         "wf-prd",
         "wf-review",
-        "wf-verify"
+        "wf-verify",
+        "claude-mem",
+        "chroma",
+        "worker 靜默死亡"
       ],
       "wikiPages": [
         "bridge-project",

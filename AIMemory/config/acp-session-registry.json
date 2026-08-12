@@ -2,17 +2,17 @@
   "version": 2,
   "chats": {
     "509424983": {
-      "activeId": "d104b060",
+      "activeId": "6b9840d7",
       "sessions": [
         {
-          "id": "d104b060",
+          "id": "6b9840d7",
           "name": "",
-          "createdAt": 1786458691523,
-          "sessionId": "2ea58b1d-ff4e-4501-ac1e-0544c9948e1b",
+          "createdAt": 1786528501073,
+          "sessionId": "2651e48f-2d7b-4a50-9c01-6969338a6cf8",
           "backendKey": "claude",
           "agentCommand": "claude-agent-acp",
           "cwd": "G:\\AI\\telegram-kiro-bridge-main",
-          "savedAt": 1786458691475
+          "savedAt": 1786528501031
         }
       ]
     }
