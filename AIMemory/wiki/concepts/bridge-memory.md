@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-12（新增：factlint 判斷 wiki 保護不可靠自行 Grep，要直接呼叫 forget() 讓伺服器裁決）
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_hitlog_obs, f_0e4a79, f_072633]
+updated: 2026-08-13（新增：skill orphan 判定涵蓋不到 plugin marketplace、factlint「內容已證偽」例外裁決、wiki 無 SCHEMA.md 應比對既有頁面格式、apply_topics token 機制阻塞紀錄）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_713852, f_5e6afb, f_9a7397, f_34a003, f_6f6762]
 ---
 
 # Bridge 記憶與維運系統
@@ -30,6 +30,8 @@ sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, 
 
 `topics.json` 定義 keyword-based first-match-wins 分類規則，bridge 每 2 秒重讀（改完即生效，不需重啟）。fact 文字轉小寫後做 substring 比對，無匹配歸 misc。topicreview 步驟會定期實體重分 shard（如 2026-07-10 新建 bridge-streaming shard、misc 清零）。
 
+**⚠️ `apply_topics` 在本機無法成功呼叫（2026-08-13，facts 量 574+ 時觸發）**：`propose_topics` 回應超過 tool 輸出上限、被存成 plain-text 檔案，其中顯示的 `"snapshot token: ms1_..."` 與 `apply_topics` 實際驗證的 `expectedToken` 格式（`"topics-<hash>-<n>"`）不一致；連續 3 次呼叫皆被拒且每次錯誤訊息裡的 expected 值都不同，無法靠重試收斂——真正需要的 token 疑似只存在於 `propose_topics` 未被截斷的原始 JSON 回應裡，被文字化過程遺失。下次要跑 topic-review 前，先確認這條路徑是否已修，否則 `apply_topics` 結構上打不通（`propose_topics` 本身仍可正常用於唯讀分析）。
+
 ## Wiki 知識庫
 
 wikisync 步驟把 topic shard 蒸餾成 wiki 頁，門檻 ≥5 facts 自動產出 concepts 頁。配套模組（Karpathy P0，commit 6931445）：
@@ -38,7 +40,9 @@ wikisync 步驟把 topic shard 蒸餾成 wiki 頁，門檻 ≥5 facts 自動產�
 2. **ingest-ripple.ts** — hook 在 `remember()` 的 `insertFact` 後標記 wiki 漣漪式更新，wikisync 組 prompt 時注入優先清單
 3. **query-auto-save.ts** — 自動偵測優質回覆存為 wiki 候選
 
-頁面過長時拆分（先例：bridge-acp、bridge-session、bridge-streaming、bridge-memory、bridge-specialist），原頁留指標 stub，並在 topics.json 加對應規則分流未來 facts。
+頁面過長時拆分（先例：bridge-acp、bridge-session、bridge-streaming、bridge-memory、bridge-specialist），原頁留指標 stub，並在 topics.json 加對應規則分流未來 facts。roadmap 類長期追蹤內容選擇放獨立 wiki page（如 `bridge-roadmap`）而非散在 facts 用前綴標記——理由是跟現有 wiki 系統整合、preamble 可見、wikilint 自動維護，散在 facts 沒有優先級/狀態追蹤能力。
+
+`G:\AI\AIMemory\wiki` 底下**沒有 SCHEMA.md**（只有 `index.md`、四個子目錄、兩個 `.jsonl`）——新增頁面時應比對現有同型頁面的實際 frontmatter 格式（concept 型見本頁；query 型為 `title`/`type`/`created`/`updated`/`sources`），不要假設有一份權威 schema 文件可查。
 
 ## Factlint 三層防禦
 
@@ -75,6 +79,10 @@ Preamble 大小取捨：佔 context 5-6% 可接受，到警戒線才削減；優
 **Codex CLI 原生 skill 支援（2026-08-05）**：Codex CLI 0.146.0 原生支援 skills 機制（掃 `~/.codex/skills/`，內建 skill 放 `.system/` 子目錄），且 `SKILL.md` frontmatter 格式與 Claude 完全一致（`name` + `description`），因此同一份 skill 正本可三個 CLI 共用不需改寫。跨 CLI 可攜性盤點見 [[bridge-dream]]。
 
 已知的孤兒清單狀況：`skill-usage.json` 的 `vc-uof-hours` entry 仍指向已改名的資料夾 `igs-uof`，且 `igs-uof`、`uk-slot-logo-localization` 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建。另外 `uk-conventions` 是 Claude Code custom command（位於 `AI-canonical-corp/commands/uk-conventions.md`），不是 skill——skilllint 的 orphan 偵測對它是 false positive，應排除不報。
+
+**orphan 判定結構性涵蓋不到 plugin marketplace（2026-08-13）**：`usageStore` 的 skill orphan 判定只掃 `~/.{kiro,codex,claude}/skills/` 的 `<name>/` 與 `.system/<name>/` 六條路徑，涵蓋不到 `~/.claude/plugins/marketplaces/*/skills/`——任何 plugin skill 被 agent 自報 `<<SKILL_USED>>` 後都會在 `skill-usage.json` 留下 `orphan=true` 的假孤兒（`claude-api` 實例，已用 `notes` 標 false positive 讓 `/skilllint` 跳過，未改掃描邏輯以免多出約 20 筆從未使用的 plugin skill entry）。
+
+**Node `readdirSync` 不跟隨 junction 的靜默失效（2026-08-04）**：`readdirSync(dir,{withFileTypes:true})` 回的 `Dirent` 對 junction/symlink 一律 `isDirectory()===false`、`isSymbolicLink()===true`——而這台機器的 skill 投影全靠逐 skill junction，任何 `readdirSync(...).filter(e=>e.isDirectory())` 掃 skill 目錄的碼拿到的都是靜默空集合。`scripts/refresh-codex-skill-links.mjs` 就這樣壞掉且沒人發現：`sourceNames` 恆空造成建立邏輯全斷、移除迴圈把既有 link 全判 stale 刪掉（每跑一次 `postinstall` 清空一次 Codex）。正確寫法是篩「目錄或指向目錄的 symlink」並用 `statSync` 跟隨連結確認。這條是異源覆核抓到的（主 agent 讀碼推理判斷方向完全相反），案例見 [[adversarial-review]]。
 
 ## 維運工具與接線陷阱
 
@@ -117,6 +125,8 @@ wiki-reference 保護會讓 factlint 想刪的 fact 刪不掉，於是「哪些�
 | 標題寫「完成」但內含技術細節（按鈕 selector、五層防線設計、API 行為） | **留** | 有持久參考價值，不因「完成」字樣而瑣碎 |
 
 要真的刪掉受保護的 fact，流程是**先從相關 wiki 頁的 `sources:` frontmatter 移除該 fact id 解除保護，再 `forget()`**。但 2026-07-08 裁決是「接受保護、不解除引用」——所以這條流程是例外手段，不是常規。
+
+**第二個例外：內容已被證實為假的 fact（2026-08-13）**：若 wiki sources 保護的 fact「內容已被證實為假」，同樣允許先移除 sources 再 `forget()`——理由是假 fact 被注入 preamble 當事實，成本高於它的 provenance 價值。此例外**不推翻**上面「瑣碎但為真」那類的保護裁決，兩者適用範圍不同：一個看內容真偽，一個看內容是否瑣碎。刪除後刻意不補記替代快照——可從設定檔直讀的現況不入 fact，否則同樣會腐爛（例：`bridge-specialist` shard 一則記錯 model pin 的 fact 已按此例外刪除）。
 
 ### `[WS]` working-state facts 應主動清理（2026-08-01 實證）
 

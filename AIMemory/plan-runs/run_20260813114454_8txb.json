@@ -1,0 +1,165 @@
+{
+  "runId": "run_20260813114454_8txb",
+  "chatId": 509424983,
+  "task": "為 Clash of Olympus M2.2 在實作前完成獨立設計審查，鎖定 adapter、演出時序與 unshow/replay 的最小可交付邊界。",
+  "plan": {
+    "summary": "為 Clash of Olympus M2.2 在實作前完成獨立設計審查，鎖定 adapter、演出時序與 unshow/replay 的最小可交付邊界。",
+    "steps": [
+      {
+        "id": "adapter_review",
+        "task": "目標：審查 G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 M2.2 VS proto mock adapter 設計。背景：M2.1 的 assets/Script/Feature/VSManager.ts 是純函式；M2.2 要由 VsFeatureShowState 將 stub VSResult 接入，並讓 GameView 的 vsfeature mock 產生可信的轉型前盤面。請自行讀 docs/M2-VS-design.md、docs/modules.md、GameView.ts、VsFeatureShowState.ts、RecoverSpinAck.ts 與 proto stub。待決問題：最小改動檔案集合、資料適配責任、server proto 到來時的替換邊界。驗收：提出具體檔案與方法層級的設計，指出不可違反的 M2.1 契約。回報格式：結論、檔案清單、風險、建議測試。",
+        "specialist": "slot-dev",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "summary",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "files",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "risks",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "tests",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "lifecycle_review",
+        "task": "目標：審查 G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 M2.2 VS Feature 演出與 unshow/replay 時序。背景：需要在 VsFeatureShowState 依 VSManager steps 串 Fly Expand Spine，且轉型前盤面用於還原、轉型後盤面用於收分。請自行讀 docs/M2-VS-design.md、docs/dev-spec.md 的 VS 段、GameView.ts、Game_Define.ts、VsFeatureShowState.ts、CollectFeatureShowState.ts、RecoverSpinAck.ts、SlotReels.ts。待決問題：現有框架有哪些既有 API 可最小復用，何時保存與恢復快照，無資產時如何避免假演出。驗收：給出狀態流程與可測驗收條件，指出 race 或 replay 風險。回報格式：結論、狀態流、風險、建議測試。",
+        "specialist": "slot-dev",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "summary",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "flow",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "risks",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "tests",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "design_converge",
+        "task": "根據前兩份審查結果，為 G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 M2.2 收斂一份最小實作設計。目標是不重做 M2.1、不可臆造正式 server proto 或資產、且能驗證 mock 到 state 到 replay 的資料流。驗收：列出 BC/EH、精確修改邊界、分階段驗證命令；若先決條件不足，清楚縮小範圍而非假裝完整。回報格式：設計決策、BC/EH、檔案邊界、驗證清單。",
+        "specialist": "moa-ref-codex",
+        "depends_on": [
+          "adapter_review",
+          "lifecycle_review"
+        ],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "design",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "contracts",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "files",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "verification",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "status": "done",
+  "createdAt": "2026-08-13T11:44:54.424Z",
+  "updatedAt": "2026-08-13T11:57:49.633Z",
+  "steps": {
+    "adapter_review": {
+      "status": "done",
+      "specialist": "slot-dev",
+      "updatedAt": "2026-08-13T11:55:52.883Z",
+      "taskId": "moaplan_adapter_review_msrgb4x8",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_adapter_review_msrgb4x8_slot-dev_目標-審查-g-cocos-project-uk-slot-clash-of-o.json",
+      "outputChars": 4754,
+      "structured": true,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 657066,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 50,
+        "outputTokens": 29228,
+        "cachedReadTokens": 3554276,
+        "cachedWriteTokens": 157135,
+        "totalTokens": 3740689
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "lifecycle_review": {
+      "status": "done",
+      "specialist": "slot-dev",
+      "updatedAt": "2026-08-13T11:55:52.862Z",
+      "taskId": "moaplan_lifecycle_review_msrgb4x8",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_lifecycle_review_msrgb4x8_slot-dev_目標-審查-g-cocos-project-uk-slot-clash-of-o.json",
+      "outputChars": 5712,
+      "structured": true,
+      "qualityIssues": false,
+      "queuedMs": 40,
+      "durationMs": 494140,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 2451,
+        "outputTokens": 25777,
+        "cachedReadTokens": 3258196,
+        "cachedWriteTokens": 168532,
+        "totalTokens": 3454956
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "design_converge": {
+      "status": "done",
+      "specialist": "moa-ref-codex",
+      "updatedAt": "2026-08-13T11:57:49.569Z",
+      "taskId": "moaplan_design_converge_msrgp8gh",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_design_converge_msrgp8gh_moa-ref-codex_根據前兩份審查結果-為-g-cocos-project-uk-slot-clas.json",
+      "outputChars": 6600,
+      "structured": false,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 116008,
+      "turns": 1
+    }
+  }
+}

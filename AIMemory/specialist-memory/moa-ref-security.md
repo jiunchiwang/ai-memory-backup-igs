@@ -1,0 +1,2 @@
+- [2026-08-13T10:56:28.691Z] (審查對象：G:\Cocos_Project\uk_slot_clash_of_olympus\docs\M2-VS-de) 審查 M2-VS-design.md 資安視角：VS Collect 相加非連乘、server 權威未被繞過，皆有逐字引用確認；範圍內無可利用漏洞，僅有一項低嚴重度非漏洞觀察（winningMultiplier 缺數值邊界檢查，但因不影響派彩故不列為 finding）
+- [2026-08-13T10:56:28.691Z] (審查對象：G:\Cocos_Project\uk_slot_clash_of_olympus\docs\M2-VS-de) 無安全性發現。VS Collect 倍率相加邏輯（M2-VS-design.md:47, dev-spec.md:205-209, BC-VS-7）與 server 權威未被覆寫（M2-VS-design.md:11,39）皆已逐字核實，符合威脅模型：client 僅做展示/一致性檢查，不產生派彩，真實金流仍由 server 端 RoundWin 決定，未在此切片範圍內。

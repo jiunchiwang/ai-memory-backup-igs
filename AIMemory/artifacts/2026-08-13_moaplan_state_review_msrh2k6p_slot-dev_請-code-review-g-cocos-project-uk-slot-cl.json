@@ -1,0 +1,28 @@
+{
+  "id": "moaplan_state_review_msrh2k6p",
+  "specialist": "slot-dev",
+  "task": "請 code review G:\\Cocos_Project\\uk_slot_clash_of_olympus 目前未提交的 M2.2 變更，集中審查 assets/Script/GameState/VsFeatureShowState.ts、CollectFeatureShowState.ts、GameView.ts。目標：驗證 VS 轉型後顯示盤面沒有改寫 RoundInfo.MainPlateSymbol、VSResolveResult 交接不跨局、mock 可觸發真正 Resolve。已知：M2.1 VSManager 是純函式，UnshowPrepareState 模板 TODO 不在本切片。驗收：只回報可重現的 High/Medium finding；無則明說。回報格式：findings（含檔行與修法）、通過項、殘留風險。",
+  "created": "2026-08-13T12:16:03.381Z",
+  "status": "done",
+  "summary": "I'll start by reading the target files to review the M2.2 VS Feature changes.All 9 unit tests pass. Now let me verify TypeScript compiles cleanly and check a couple more integration edge cases (the `Game_Define.FEATURES.VS_FEATURE` flag and colProto type shapes).Good — `IVSResult.reelIndex?` exists in the proto stub, confirming the previously-flagged \"VSResult 缺 reelIndex\" gap is resolved and the adapter's field access is type-correct. Now let's run the TypeScript compiler to confirm no type err",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "I'll start by reading the target files to review the M2.2 VS Feature changes.All 9 unit tests pass. Now let me verify TypeScript compiles cleanly and check a couple more integration edge cases (the `Game_Define.FEATURES.VS_FEATURE` flag and colProto type shapes).Good — `IVSResult.reelIndex?` exists in the proto stub, confirming the previously-flagged \"VSResult 缺 reelIndex\" gap is resolved and the adapter's field access is type-correct. Now let's run the TypeScript compiler to confirm no type errors were introduced.No type errors in the reviewed files (the noise is pre-existing Cocos editor typings noise, unrelated to this change). Let me check one more integration detail: `AwardState` and whether `RoundWin`/`AwardDataVec` payout math double-counts VS-transformed cells versus the mock's separate `RoundWin` field.I've completed the review. Let me load the structured output tool and submit the findings.## 審查結論：無 High/Medium finding\n\n針對 `uk_slot_clash_of_olympus` 目前未提交的 M2.2 變更（`VsFeatureShowState.ts` / `CollectFeatureShowState.ts` / `GameView.ts` + 新增的 `Feature/VSManager.ts`），逐項驗證任務指定的三個驗收點，全部通過：\n\n1. **RoundInfo.MainPlateSymbol 未被改寫** — VSManager 在 adapter 層與 Resolve() 層各做一次 cell 級深拷貝，`GameView.ApplyVsPlate()` 只把轉型後盤面寫進 `m_slotReels.SetPlateInfo()`（顯示層），從未觸碰 `this.RoundInfo`。\n2. **VSResolveResult 交接不跨局** — `SetNowRoundInfo()` 新增的 `this.VsFeatureResult = null` 在目前唯二會被呼叫的路徑（`OnRecvSpinAck` 首輪、`SpinState.OnEnter` 的 FreeGame 分支）都先執行才進 VS 狀態，不會殘留上一局的值。\n3. **mock 可觸發真正 Resolve()** — 逐行手動追蹤 `'vsfeature'` mock 資料流過 `AdaptRoundToVSInput → VSManager.Resolve`，確認 `isTriggered=true`；這修正了上一輪設計審查抓到的兩個 bug（VSResult 缺 reelIndex、col0 誤用轉型後符號）。另外實跑 `tests/VSManager.test.ts` 9 案例全過，`npx tsc -p . --noEmit` 篩選這三個檔案 0 錯誤。\n\n殘留風險（均非本切片範圍內的 bug，僅記錄供後續實作留意）：\n- RespinGame 的模板 TODO 若未來實作、且繞過 `SetNowRoundInfo`，`VsFeatureResult` 可能跨局殘留——目前該路徑整段被註解、不可達。\n- `CollectFeatureShowState` 仍是 stub，日後串接時 `collectWins.reelIndex` 與 `CollectResult.col` 需顯式對應，不能假設欄位互通。",
+  "structured": {
+    "findings": [],
+    "passed": [
+      "RoundInfo.MainPlateSymbol 未被改寫：VSManager 在兩層做深拷貝——AdaptRoundToVSInput 的 normalizedPlate 對每個 cell 用 {...cell} 產生新物件、Resolve() 的 plateAfter 再對 input.plate 做一次同樣的深拷貝。GameView.ApplyVsPlate() 只把 result.plateAfter 寫進 m_slotReels.SetPlateInfo()（顯示層），從未寫回 this.RoundInfo。逐行追蹤確認 RoundInfo 物件本體全程未被觸碰。",
+      "VSResolveResult 交接不跨局：GameView.SetNowRoundInfo() 內新增的 this.VsFeatureResult = null 會在每次「當局」建立時清空——目前實際會執行到的兩個呼叫點（OnRecvSpinAck 處理首輪、SpinState.OnEnter 的 IsFreeGame 分支處理後續輪）都會先呼叫 SetNowRoundInfo() 才進入 VS_FEATURE_SHOW 狀態，所以 VsFeatureResult 不會帶著上一輪的殘留值進入下一輪的 Resolve()。VsFeatureShowState 只在 result.isTriggered 為 true 時才寫入該欄位，未觸發時維持 null，語意一致。",
+      "mock 可觸發真正 Resolve()：手動逐步展開 'vsfeature' mock（col0=Vs(16)+Collect(15)、col2=Cash(13) Number=50、VSResult=[{reelIndex:0, vsType:VsCollect(18), winningMultiplier:3}]）餵進 AdaptRoundToVSInput → VSManager.Resolve()，確認 HasSymbol(collect) 與 HasCash 兩個前置 guard 皆成立、IsValidReel 判斷 reelIndex 0 為 collect 型合法、最終 isTriggered=true 且 collectWins/steps 有值。這修正了上一輪設計審查抓到的兩個 bug（VSResult 缺 reelIndex、col0 誤用轉型後符號 VsCollect 而非原始 Vs/Collect）。",
+      "跑 tests/VSManager.test.ts（npx ts-node --transpile-only）：9 個案例全過，涵蓋不可變輸入、cash/collect 排序、guard 未成立時安全略過、非法倍率/型別不符/缺觸發符號時的 warning、proto adapter 正規化與缺欄位安全略過。",
+      "業務規則不重複計算：AwardState 讀 RoundInfo.RoundWin（server 權威值）計算贏分等級，完全未參照 VsFeatureResult/VSManager 輸出；CollectFeatureShowState.PlayCollectFeature 目前只 log 長度、註解明確標註『不能在此重複 Resolve() 的 S0-S4 規則』，避免了雙重結算風險。",
+      "npx tsc -p . --noEmit 篩選只看三個目標檔案（VsFeatureShowState.ts / CollectFeatureShowState.ts / GameView.ts）：0 筆錯誤（整體輸出有大量錯誤，但全部是 Cocos Creator 3.6.2 引擎內建 .d.ts 與 astarte-framework editor typings 的既有雜訊，與本次改動無關，改動前後皆存在）。",
+      "OnEnter 由 async 改回同步：StateManager.BaseState.OnEnter 簽名未標註回傳型別，框架呼叫端不 await，其餘既有 State（如 ScatterShowState/CheckState）多為同步寫法；PlayVsFeature/PlayCollectFeature 目前都只是同步 log，改成同步不影響行為，且移除了一個不必要的 microtask 延遲。"
+    ],
+    "risks": [
+      "（低風險、明確在本切片範圍外）VsFeatureResult 的重置只掛在 SetNowRoundInfo() 上，而該函式目前只在『首輪進場』與『IsFreeGame 分支的後續輪』兩處被呼叫。若之後把目前被註解掉的 RespinGame TODO（GameView.ts:1535-1541、UnshowPrepareState.ts:37-43）實作出來、且該路徑會在不呼叫 SetNowRoundInfo 的情況下推進 CurPlateIndex，VsFeatureResult 就可能帶著上一輪的舊值進入下一輪的 CollectFeatureShowState。目前這條路徑完全不可達（純模板 TODO、註解掉的死碼），不構成現有 bug，但實作 Respin 時務必記得在該處補上重置。",
+      "（低風險、非阻塞）CollectFeatureShowState.PlayCollectFeature 目前只是 stub，尚未真正消費 vsFeatureResult.collectWins。日後 Step 3.10 落地時，VSManager 輸出用 reelIndex 索引、而 server 的 CollectResult 用 col 索引——語意上兩者在本作對齊（同一輪同一欄），但實作時需要顯式對應，不能假設欄位名稱互通；純粹是留給後續實作者的注意事項，不是本次程式碼的缺陷。"
+    ]
+  }
+}

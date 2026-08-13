@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-12（補：覆核者穩定抓碼內自相矛盾、抓不到樣板形狀下的參數竄改；n≤8 比較需先量底噪）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9]
+updated: 2026-08-13（補：kiro-cli 繞過 specialist 可拿到可讀檔＋跨vendor、Dirent junction bug 案例、修正動作本身產生假因果的獨立失效模式、覆核者換人裁決與成本結構補齊 sources）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87]
 ---
 
 # 異源對抗覆核紀律
@@ -30,6 +30,7 @@ sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, 
 4. **收斂條件**：第二輪若回報無 high/medium 即視為收斂可 push，不強制第三輪
 5. **誠實交代覆核範圍**：覆核者的可 push 判斷是針對它看過的那個 commit，之後的修正 commit 未經覆核
 6. **明確授權回報「已收斂」**：避免覆核者為交差硬湊 finding——連續多輪都生出 finding 本身可能是覆核者在配合期待
+7. **節制條款（2026-08-12）**：剛跑完一輪覆核後不要馬上再派同一個重量級覆核者（如 Fable5）跑第二輪——與第 2 點的「換 context」互補，這條管的是頻率而非身分
 
 ## 價值實證（時間序）
 
@@ -40,6 +41,7 @@ sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, 
 | 2026-07-31 | Fable5 對 unpushed commit 覆核 | 最有價值一條不是程式 bug，是「commit message / 註解 / AI.md 三處共用同一個錯誤因果敘事」——因為寫註解時是從意圖推理而非讀實際呼叫順序時序 |
 | 2026-07-31 | 檢查清單式 prompt 覆核 | 同源自審漏掉的 medium 缺陷；且覆核推翻了原本的風險模型（怕強制補送打穿 429，實際上舊碼節流早已失效） |
 | 2026-08-06 | Codex ACP authMethods 誤判修正的三輪覆核 | 缺陷連續往上層遷移 4 層：碼裡 hint 字串硬編 → 靜態文件（SKILL.md）與碼矛盾 → 另一份靜態文件（DESIGN.md）錯誤值清單漏舉 → 列舉完整性（三份文件都沒提的 error 值）；每層都是異源在下一輪抓到，每輪都誤判「這輪應該只剩敘事精確度」 |
+| 2026-08-04 | `scripts/refresh-codex-skill-links.mjs` dry-run 判斷 | 主 agent 靠讀碼推理判成「下次 npm install 會擴成 37 支」，方向完全相反（真根因是 `Dirent.isDirectory()` 不跟隨 junction，見 [[bridge-memory]]）——異源覆核抓到；教訓是這類「實際生產行為」要直接跑 dry-run 驗真實環境，不能靠讀碼推理 |
 
 **可重用教訓**：檢查清單式的 prompt 也能抓到同源自審漏掉的缺陷，關鍵是至少有一項要問成「開放式的互動問題」而非「確認某宣稱對不對」。「往上層遷移」沒有層數上限——收斂判準要看這輪還有沒有新類型的 finding，不是已經修過幾輪。
 
@@ -66,7 +68,21 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 分級規則（已寫進 `ms-cross-model-adversarial-review` 正本）：
 - 孤兒 import／死碼 → **不派人**，交給型別系統
 - 敘事比對、恆真斷言 → Sonnet 級
-- 不變式／論證推理／時序 race → 最強模型（Fable 5）
+- 不變式／論證推理／時序 race → ~~最強模型（Fable 5）~~ **2026-08-13 更正：跨 vendor 優先（`kiro-cli --model glm-5`，0.50x 且強異源）**，Fable 5 降為「跨 vendor 那輪產出明顯偏弱（只回敘事層、拿不出反例）時才補的第二輪」。這一行原本與下方〈核心判準〉自相矛盾——2026-08-07 補了雙軸判準卻沒回頭改它。
+
+### 覆核的 token 成本結構（2026-08-13 實測）
+
+「覆核花的 token 比實作還多」的三個相乘項，量測與完整表格在 `ms-cross-model-adversarial-review` 正本：
+
+1. **冷啟 prefix**：四臂探針（同 cwd／同 prompt／`--model haiku`）量到 A 全開 169,962、`--strict-mcp-config` 83,784、`--setting-sources ""` 34,686。∴ **MCP tool schema 佔 51%（86,178）**、設定帶進來的 CLAUDE.md 鏈＋skills 清單佔 29%、地板 20%。⛔ 文本型覆核不需要 MCP ∴ 預設加 `--strict-mcp-config`／`--trust-tools=fs_read`，免費砍一半。⚠️ 有邊界（2026-08-13 由 glm-5 在開放式提問下指出，初版寫成無條件）：判定依據不在檔案裡時要例外——打 API／跑 CI／查外部狀態／**被測物本身就是 MCP tool**。正確規則是「需要哪些工具由覆核範圍決定，預設為零」。
+2. **每輪重送全部 context**：2026-07-29 那輪 Fable 覆核 85 個請求，context 從 90,218 長到 185,549，累計送進 12,724,628、output 156,050（**81:1**）。⚠️ 12.7M 是原始傳輸量不是成本當量（cache_read 0.1x／cache_write 1.25x；訂閱制怎麼加權**未證實**）——可靠的是結構不是絕對數。
+3. **比較基準不對等**：實作是在熱 context 裡的邊際成本，覆核是冷啟的絕對成本。
+
+⚠️ 最容易漏掉的支出：`~/.claude/settings.json` 的 `advisorModel: fable`——advisor 類工具**每次呼叫轉發整段對話歷史**，頻率遠高於 push 前覆核，而選型判準管不到它。
+
+⚠️ 撞到 Claude session limit 時（2026-08-12 實際發生），可直接改派 `kiro-cli glm-5` 跨 vendor 接手，不必等限流解除。
+
+⚠️ 未解：同 repo 的 transcript 實際 session 冷啟是 122–128k，比探針的 169,962 低約 46k，未隔離原因（候選：ACP session 會 defer 部分 MCP tool schema）。比例可靠、絕對值隨呼叫通道浮動。
 
 ### Domain 判定與單表雙軸結構（2026-08-07）
 
@@ -108,13 +124,23 @@ domain（異源強度）與 tier（成本）是兩個獨立軸（見上一節）
 
 telegram-kiro-bridge 的 `moa-ref-kiro`（glm-5，跨 vendor）與 `moa-ref-adversary` 派去盲審一個 commit 時都產出了帶行號的逐字引用——但兩者的設定都讓它們讀不到檔（`readOnlyLens:true` 卻只給 `readonly` MCP、或 `mcpServers` 為空且 harness 不帶 `--agent`）。`moa-ref-kiro` 那份報告**捏造了不存在的檔名與變數名**；`moa-ref-adversary` 那份報告的證據欄自己寫「逐字證據（推論）」。兩者都沒有主動說「我讀不到」。改派可讀檔的 `bridge-dev`／`verifier`（走 `claude-agent-acp`）才拿到有效覆核，其中 `verifier` 自行重跑驗證指令並比對 tree hash 排除過期戳記。
 
+⚠️ 另一個容易誤判的軸：`wf-design` 的四個 specialist 在本機**都走同一個 harness**（kiro-cli）只差 model pin（`moa-ref-claude`=claude-sonnet-4.6、`moa-ref-kiro`=glm-5、`moa-ref-adversary`=claude-sonnet-4.6、`general`=claude-opus-4.5），只有 `moa-ref-codex` 走 codex-acp——`moa-ref-adversary` 與 `moa-ref-claude` 同 model，挑戰階段對 claude 提案是**同源自審**而非異源覆核，即使兩者名字聽起來像獨立分身。
+
 **派工前必查**：這個覆核者的 harness／MCP 設定實際上讀不讀得到檔？跨 vendor 不等於能讀檔——目前 telegram-kiro-bridge **沒有任何「可讀檔＋跨 vendor」的分身**（唯二非 Anthropic 模型 `moa-ref-kiro`/`moa-ref-codex` 都是 blind advisor），能做到的最強是「同源、獨立 context、可讀檔」，留痕時不要把這個講成跨 vendor 異源。
+
+**補正（2026-08-12）**：上一句講的是 bridge **specialist 配置**的邊界，但**繞過 specialist 直接呼叫 `kiro-cli` 就同時拿得到兩者**——`kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read "<prompt>"` 可讀原始碼、跨 vendor 強異源（智譜、0.50x credits）、且 `--trust-tools=fs_read` 只給讀檔不給 bash，事後 `git status` 可確認工作區未被動過。承重路徑的跨 vendor 覆核不必等 specialist 配置改好，現在就做得到；長 prompt 要先落檔避免 Windows 命令列長度上限，輸出含 ANSI 需 strip 才讀得到短答案。
 
 ## Scope 中途擴張會凍結敘述成假事實（2026-08-11）
 
 在 scope 只有 A 的階段寫的「診斷」敘述（如「X 缺 Y——尚未修」），若後續 scope 擴大到連 Y 一起改掉，卻沒回頭改那句敘述，就會變成文件、程式碼、commit message 三者互相打臉的假事實——`scripts/AI.md` 寫「`ACP_EFFORT_FALLBACK.kiro` 缺 `max`——尚未修」，但同一個 commit 已經補上了 `max`，由 `verifier` 異源覆核抓到。
 
 **判準**：任何一輪只要 scope 從 A 擴到 A+B，收尾前重讀「在只有 A 的前提下寫的每一句對 B 的描述」——「尚未修」「目前沒有」「待處理」這類現在式否定句最容易凍結。修法不是刪掉整句，是拆成「已修的那部分」與「仍為真、但不是這裡能修的那部分」。
+
+## 修正動作本身會產生新的假因果（2026-08-12，獨立失效模式）
+
+與上一節不同：上一節講的是**原始敘述**從意圖推理而來；這條講的是**為了修上一條而新寫的句子**又犯了同一種錯。2026-08-12 codegen git-init 五輪異源覆核連續抓到三次同一形狀：修正時數字擴大了、寫對了，卻順手補一個**沒有證據的機制解釋**，或把**有例外的觀察壓縮成全稱句**——這比原錯更難抓，因為數字都對、語氣自信、讀起來像考證過。
+
+防法：①文件只留觀察到的分布＋操作規則，成因明寫「未知，別替它補一個」；②全稱句（任何／都／皆）出手前先找一個反例，找不到才寫；③要寫因果就得先跑得出證據的查法（`git log --all --raw`／`ls-tree`／`log --reverse`／`check-ignore -v`）。完整案例見 [[codegen-git-init-gap]]。
 
 ## 樣板知識會偽裝成從碼推導：同源天花板的一手證據（2026-08-11/12）
 

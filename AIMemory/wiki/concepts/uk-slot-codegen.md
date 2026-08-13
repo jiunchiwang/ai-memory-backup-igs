@@ -2,8 +2,8 @@
 title: UK Slot Codegen 工具整合
 type: concept
 created: 2026-07-15
-updated: 2026-08-08（新增 skill-usage 回報缺口提醒）
-sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_81ef45, f_ac9912, f_98e336, f_1b276f, f_6fe390, f_0db6f9]
+updated: 2026-08-14（wikilint：新增 Clash of Olympus 交付案例——三個可重用技術教訓 + M0b 全綠邊界）
+sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_81ef45, f_ac9912, f_98e336, f_1b276f, f_6fe390, f_0db6f9, f_1007ff, f_1751fa]
 ---
 
 # UK Slot Codegen 工具整合
@@ -39,6 +39,16 @@ sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, 
 
 - 8 項全部修正完畢（commit cee689e）
 - [[uk-slot-pitfalls]] 已回灌 5 條 codegen 來源踩坑（條目 5~9）
+
+## Clash of Olympus 交付案例（2026-08-12/13）：三個可重用技術教訓
+
+`uk_slot_clash_of_olympus` 的 codegen 交付（finalize gate 38/38、tsc 0 error）由主 agent 接手修 65 個編譯錯誤時實查出來：
+
+1. **`import protocol from "./Proto"` 的 default import 不能當 namespace 型別用**——寫 `protocol.<ns>.IRoundInfo` 會噴 TS2503（本次一口氣 60 處）。修法是補 `import type { <ns> } from "./Proto"` 只改型別位置；⚠️ **值位置（`new protocol.<ns>.SpinAck()`）必須保留**，Proto.ts 刻意用 default export 保住 CJS runtime object，誤改會編譯過但執行期 undefined——不可全域字串取代，要依 tsc 回報的精確 (line,col) 動刀。
+2. **proto stub 的 `.d.ts` 會與 runtime `.js` 失步且失步位置不對稱**：某型別在 `.js` 有 prototype 預設值、`interface` 也有，只有 `class` 缺——若只 grep interface 前幾十行會誤判成「interface 缺」而插錯位置。
+3. **mock 的實際形狀才是有效契約，不是 dev-spec proto 映射表的推測形狀**——映射表寫的欄位名／結構與 mock 實際產出可能不一致，照映射表寫 `.d.ts` 會讓 mock 整批型別錯，要以 mock 實際輸出為準。另：`gate_runner` 的 `Mock_symbol_effect_data` 要求物件字面值形式（`AwardDataVec:`），屬性指派（`round.AwardDataVec = [...]`）永遠過不了 gate。
+
+**M0b（Editor/Runtime 驗證）於 2026-08-13 全綠**，但綠燈邊界僅止於「骨架不會斷」不等於「功能會動」——演出類 state 仍可能是空 stub。細節見 [[uk-slot-clash-olympus]]。
 
 ## 相關
 

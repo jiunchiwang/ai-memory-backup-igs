@@ -27,3 +27,7 @@
 
 ### 目標
 對 src/commands/model.ts 的近期修改) [INFO] Edge cases（session 不存在、client 非 AcpProvider、verifiedModelInfo 為空、effort 為空）皆有處理
+- [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 收斂三 lens 審查：0 條確認、3 條剔除（對抗 lens 未讀檔全推測，經原文驗證均不成立）、1 條低嚴重度觀察（winningMultiplier 缺邊界檢查但不影響派彩）；未覆蓋面向：可測試性實證、step 順序、warnings 機制、proto adapter 契約
+- [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 剔除 3 條虛報：(1) VS Collect 相乘非相加 — M2-VS-design.md:47+BC-VS-7 明文為 Σ(multiplier) 不連乘；(2) server 權威缺 rollback — client 不是權威不需要對帳；(3) 隱性依賴 RoundWin — 介面無此入參物理上無法耦合
+- [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 低嚴重度觀察：winningMultiplier 缺 NaN/負值邊界檢查，僅影響展示不影響派彩（安全 lens 命中）
+- [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 後續補驗：(1) ts-node 實測可否跑通；(2) warnings 回報機制是否靜默吞掉；(3) proto adapter 契約

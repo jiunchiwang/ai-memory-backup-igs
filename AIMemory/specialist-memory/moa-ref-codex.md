@@ -1,0 +1,5 @@
+- [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) M2.2 最小實作設計收斂完成：VSManager.ts 新增 AdaptRoundToVSInput 純函式，VsFeatureShowState 呼叫 adapter + Resolve 後依 steps 播 Fly/Expand/Spine，GameView 新增 VsFeatureResult 欄位交接 collectWins 給 CollectFeatureShowState。Mock 修正（col0 改 Symbol.Collect + 補 reelIndex）與 adapter 必須一起交付。plateAfter 不持久化，CollectFeatureShowState 重新呼叫 Resolve() 計算。unshow 依賴模板級缺口（UnshowPrepareState TODO），本切片不做。
+- [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) GameView mock 有兩處 bug：col0 放 VsCollect 而非 Collect、VSResult 缺 reelIndex 欄位，需與 adapter 一併修正
+- [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) plateAfter 不需要持久化，CollectFeatureShowState 直接用 MainPlateSymbol + VSResult 重算 Resolve() 即可
+- [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) AdaptRoundToVSInput 放在 VSManager.ts 而非 VsFeatureShowState，維持 ts-node 可測性
+- [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) GameView.VsFeatureResult 新增欄位承載 collectWins[col]，解決 CollectFeatureShowState 收分係數來源問題

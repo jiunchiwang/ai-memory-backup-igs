@@ -1,0 +1,159 @@
+{
+  "runId": "run_20260813105317_kkfi",
+  "chatId": 509424983,
+  "task": "[wf-review] G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md",
+  "plan": {
+    "summary": "[wf-review] G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md",
+    "steps": [
+      {
+        "id": "lens_adversary",
+        "task": "審查對象：G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md\n背景：審查 M2.1 純資料解析設計。規則權威為 G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\dev-spec.md:149-247；現有 stub 在 assets\\Script\\GameState\\VsFeatureShowState.ts。範圍刻意不接 Cocos State、proto、動畫或 RoundWin。請特別檢查 VS Collect 是否只在收分時乘倍且多個為相加、server 結果是否仍為權威、以及輸入可否被 Node 單元測試。\n\n你的 lens 是「對抗」。目標不是稱讚也不是總評，而是**設法讓它出錯**：找出作者假設成立、但實際上可以不成立的地方。\n\n請做到：\n1. 先自己讀過對象本體，並在回報時為每個發現附上你**逐字複製**的那一行原始碼（不是你重述的版本）——沒有逐字引用的發現視為未經查證，寧可不報。\n2. 每個發現要給**具體失敗情境**（什麼輸入或狀態 → 什麼錯誤結果），不接受「可能有風險」這種沒有觸發條件的說法。\n3. 明確區分「我驗證過會發生」與「我推測可能發生」。\n\n回報格式：每個發現一段，含 檔案:行號 / 一句話結論 / 失敗情境 / 你的把握度（已驗證 或 推測）。沒有發現就說沒有，不要湊數。",
+        "specialist": "moa-ref-adversary",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "findings",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "lens_security",
+        "task": "審查對象：G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md\n背景：審查 M2.1 純資料解析設計。規則權威為 G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\dev-spec.md:149-247；現有 stub 在 assets\\Script\\GameState\\VsFeatureShowState.ts。範圍刻意不接 Cocos State、proto、動畫或 RoundWin。請特別檢查 VS Collect 是否只在收分時乘倍且多個為相加、server 結果是否仍為權威、以及輸入可否被 Node 單元測試。\n\n你的 lens 是「安全」。關注：輸入驗證缺口、路徑穿越、憑證或敏感值外洩、權限邊界被繞過、注入、對外部輸入的信任假設。\n\n請做到：\n1. 先自己讀過對象本體，並在回報時為每個發現附上你**逐字複製**的那一行原始碼（不是你重述的版本）——沒有逐字引用的發現視為未經查證，寧可不報。\n2. 每個發現要給**具體攻擊路徑**（誰能構造什麼輸入 → 得到什麼不該有的結果），不接受泛泛的「應加強驗證」。\n3. 明確標示這條是否在本專案的威脅模型內（例如僅單機自用 vs 對外服務），不在模型內的降級說明而非誇大。\n\n回報格式：每個發現一段，含 檔案:行號 / 一句話結論 / 攻擊路徑 / 嚴重度（high/medium/low）。沒有發現就說沒有。",
+        "specialist": "moa-ref-security",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "findings",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "lens_perf",
+        "task": "審查對象：G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md\n背景：審查 M2.1 純資料解析設計。規則權威為 G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\dev-spec.md:149-247；現有 stub 在 assets\\Script\\GameState\\VsFeatureShowState.ts。範圍刻意不接 Cocos State、proto、動畫或 RoundWin。請特別檢查 VS Collect 是否只在收分時乘倍且多個為相加、server 結果是否仍為權威、以及輸入可否被 Node 單元測試。\n\n你的 lens 是「效能與資源」。關注：熱路徑上的同步 I/O、重複計算、無界成長的集合、洩漏、不必要的序列化等待、以及**在真實資料量下**才會浮現的複雜度問題。\n\n請做到：\n1. 先自己讀過對象本體，並在回報時為每個發現附上你**逐字複製**的那一行原始碼（不是你重述的版本）——沒有逐字引用的發現視為未經查證，寧可不報。\n2. 每個發現要說明**在什麼規模下才會痛**（n 多大、多久一次），並誠實標註這是實測還是估算。\n3. 不要提出沒有量級依據的微優化——過早優化本身就是一個發現該被否決的理由。\n\n回報格式：每個發現一段，含 檔案:行號 / 一句話結論 / 痛的規模條件 / 實測或估算。沒有發現就說沒有。",
+        "specialist": "moa-ref-perf",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "findings",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "converge",
+        "task": "上面三個前置工項是同一個對象（G:\\Cocos_Project\\uk_slot_clash_of_olympus\\docs\\M2-VS-design.md）的三份獨立審查，分別出自對抗、安全、效能三個 lens。它們彼此看不到對方的結論。\n\n你的工作是收斂成一份可行動的清單：\n1. **去重**：三方講同一件事的合併成一條，並註明由哪幾個 lens 各自獨立命中——被多個 lens 獨立命中的發現，可信度顯著較高，要標出來。\n2. **裁決衝突**：三方結論互相矛盾時不要各列一遍，說明你採信哪邊、依據是什麼。\n3. **剔除虛報**：明顯是誤解對象、或觸發條件根本不成立的發現，直接剔除並簡短說明為什麼剔除（不要靜默丟掉）。\n4. **排序**：依「真的會發生 × 發生了有多痛」排，不是依 lens 排。\n\n回報格式：先一行總結（幾條確認、幾條剔除），再依序列出每條 —— 嚴重度 / 檔案:行號 / 結論 / 觸發條件 / 命中的 lens。最後附一段「本次審查沒有覆蓋到的」，誠實說明三個 lens 都沒碰到的面向。",
+        "specialist": "general",
+        "depends_on": [
+          "lens_adversary",
+          "lens_security",
+          "lens_perf"
+        ],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "confirmed",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "rejected",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "not_covered",
+              "type": "string",
+              "optional": false
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "status": "done",
+  "createdAt": "2026-08-13T10:53:17.580Z",
+  "updatedAt": "2026-08-13T10:57:57.880Z",
+  "steps": {
+    "lens_adversary": {
+      "status": "done",
+      "specialist": "moa-ref-adversary",
+      "updatedAt": "2026-08-13T10:56:28.696Z",
+      "taskId": "moaplan_lens_adversary_msregr19",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_lens_adversary_msregr19_moa-ref-adversary_審查對象-g-cocos-project-uk-slot-clash-of-ol.json",
+      "outputChars": 985,
+      "structured": true,
+      "qualityIssues": true,
+      "queuedMs": 0,
+      "durationMs": 116922,
+      "turns": 1
+    },
+    "lens_security": {
+      "status": "done",
+      "specialist": "moa-ref-security",
+      "updatedAt": "2026-08-13T10:56:28.726Z",
+      "taskId": "moaplan_lens_security_msregr1a",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_lens_security_msregr1a_moa-ref-security_審查對象-g-cocos-project-uk-slot-clash-of-ol.json",
+      "outputChars": 2579,
+      "structured": true,
+      "qualityIssues": false,
+      "queuedMs": 25,
+      "durationMs": 161495,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 10,
+        "outputTokens": 5163,
+        "cachedReadTokens": 455137,
+        "cachedWriteTokens": 120943,
+        "totalTokens": 581253
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "lens_perf": {
+      "status": "done",
+      "specialist": "moa-ref-perf",
+      "updatedAt": "2026-08-13T10:56:28.772Z",
+      "taskId": "moaplan_lens_perf_msregr1a",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_lens_perf_msregr1a_moa-ref-perf_審查對象-g-cocos-project-uk-slot-clash-of-ol.json",
+      "outputChars": 1062,
+      "structured": true,
+      "qualityIssues": true,
+      "queuedMs": 50,
+      "durationMs": 190181,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 18,
+        "outputTokens": 3816,
+        "cachedReadTokens": 928080,
+        "cachedWriteTokens": 127628,
+        "totalTokens": 1059542
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "converge": {
+      "status": "done",
+      "specialist": "general",
+      "updatedAt": "2026-08-13T10:57:57.855Z",
+      "taskId": "moaplan_converge_msreku85",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_converge_msreku85_general_上面三個前置工項是同一個對象-g-cocos-project-uk-slot-c.json",
+      "outputChars": 2668,
+      "structured": false,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 88620,
+      "turns": 1
+    }
+  }
+}

@@ -1,0 +1,2 @@
+- [2026-08-13T10:56:28.693Z] (審查對象：G:\Cocos_Project\uk_slot_clash_of_olympus\docs\M2-VS-de) 審查 M2-VS-design.md 效能視角：盤面固定 6x4（24格），vsResults 上限=COL，Resolve() 為單趟掃描的純函式；規模過小，無效能發現
+- [2026-08-13T10:56:28.693Z] (審查對象：G:\Cocos_Project\uk_slot_clash_of_olympus\docs\M2-VS-de) 無發現 — COL=6/ROW=4（Game_Define.ts:127-128）使任何微優化都是過早優化

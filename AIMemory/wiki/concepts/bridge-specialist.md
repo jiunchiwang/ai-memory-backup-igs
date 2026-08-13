@@ -2,8 +2,9 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-12（新增：委派逾時可 per-domain 設定、extractModel() 錯報、maxTurns 15/30 不一致）
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_32a736, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_05ac7e, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_c61829, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a]
+updated: 2026-08-14（factlint：確認「不建 bridge-dev」舊決策 f_32a736 已被 f_2fe4f7 現況取代，改列 history_sources 並執行 supersede；先前更新：刪除已證偽的來源 fact f_05ac7e、更正 slot-dev prefixes 為 ["uk-"]）
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_c61829, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a, f_198e79]
+history_sources: [f_32a736]
 ---
 
 # Bridge Specialist 分身系統
@@ -14,13 +15,15 @@ sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, 
 
 `specialist-domains.json` 配置（2026-06-24 建立，**2026-07-13 改為品質優先方案**；**2026-08-12 直接讀取設定檔更正**：`defaultModel=claude-opus-4.5`、`defaultEffort=high`，全部繼承 `effort: high`）：
 
-- **slot-dev**：UK 老虎機開發（harness `claude-agent-acp`、model `sonnet`——claude-agent-acp 的 canonical alias，不是舊敘述的 Kiro 命名 `claude-sonnet-4.6`；memory MCP，skill prefix 隔離 `uk-slot-`/`slot-`/`uk-`/`pq3-`/`cocos-` + topicKeywords + wikiPages）
+- **slot-dev**：UK 老虎機開發（harness `claude-agent-acp`、model `sonnet`——claude-agent-acp 的 canonical alias，不是舊敘述的 Kiro 命名 `claude-sonnet-4.6`；memory MCP，skill prefix 隔離 `prefixes: ["uk-"]`——2026-08-13 直接讀設定檔核對，舊敘述的五條 `uk-slot-`/`slot-`/`uk-`/`pq3-`/`cocos-` 已收斂成單一前綴；另有 topicKeywords 與 9 個 wikiPages）
 - **bridge-dev**：telegram-kiro-bridge 專案自身開發特化（ACP adapter 切換、memory/wiki 維運、streaming、session 生命週期、specialist 系統；model=`(default)` 即 opus-4.5）——**2026-07-16 已建立，見下方「不建」決策更正**
 - **researcher**：深度研究 / AI 策略（model=`(default)` 即 claude-opus-4.5；舊敘述的 pin `claude-opus-4.6` 已於 2026-07-27 從 Kiro 移除失效，目前退回繼承 `defaultModel`，memory + google MCP，`inheritsAll` 全繼承）
 - **general**：完整能力並行多工（`inheritsAll`，model=`(default)` 即 claude-opus-4.5，memory + google MCP）
 - **verifier**：輸出品質判定，advisory only（harness `claude-agent-acp`、model `sonnet`）
 
 ⚠️ **上面除 `slot-dev`/`verifier` 外全部繼承 `defaultModel=claude-opus-4.5`，不是各自寫死的 sonnet-4.6/opus-4.6**——2026-08-12 factlint 才發現這個落差，查無對應的變更 fact，很可能是設定檔被直接改動但沒補記錄；查證時請直接讀 `specialist-domains.json`，不要信這幾行歷史敘述的舊值。
+
+> 🗑️ **2026-08-13：來源 fact `f_05ac7e`（2026-07-13「品質優先方案」配置快照）已解除 wiki 引用並刪除。** 它的三個 model 值、slot-dev 五條 prefix 全部與設定檔不符，而 fact 會被注入 preamble 當成事實 ∴ 留著的成本高於它的 provenance 價值。這是對 2026-07-08「接受 wiki 保護、不解除引用」裁決的一次例外，適用範圍限「內容已被證實為假」的 fact，不是瑣碎但為真的那一類。**刻意不補記新的設定快照**——現況 30 秒內可從 `specialist-domains.json` 讀出，而新快照只會用同樣的方式再腐爛一次。
 
 `commonSkills` 含 5 項基礎防護 skill、`commonMcpServers` 含 memory。**設計決策已反轉**：2026-07-10 曾決定不建 bridge-dev specialist（理由：主 agent 工作目錄就是 bridge repo、bridge-dev 是降級冗餘），但 2026-07-16 仍建立並持續在用（2026-08-11/12 本次工作階段內兩度實際委派覆核）——舊決策 fact 因受 wiki 引用保護留存，但内容已被現況取代，此處以現況為準。
 

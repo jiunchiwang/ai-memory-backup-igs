@@ -1,25 +1,24 @@
 # Loop State — telegram-kiro-bridge
-Last run: 2026-08-11T04:13:52.009+08:00
+Last run: 2026-08-12T20:27:28.445Z
 
 ## High Priority (action needed)
-- moa-ref-codex 釘 gpt-5.6-terra 但本機 codex-cli 0.146.1 回 400，wf-design/wf-prd 的 codex 腳必掛（f_3e1d20）
-- uk-slot-clash-olympus 有 8 項規格待確認仍未解決
+- ✅ skill-usage.json：`vc-kiro-delegate` 孤兒——2026-08-13 已解決。查證結果**非改名/搬移，是刻意廢止**（AI-canonical `cac90a2`，2026-08-12，內容併入 `ms-cross-model-adversarial-review`），該 commit 的「連動處理」清單漏掉 skill-usage.json entry。使用者裁決後已刪除 entry（46 → 45 筆，其餘完整）。
+- ✅ skill-usage.json：`claude-api` 孤兒——2026-08-13 已解決。實際路徑 `~/.claude/plugins/marketplaces/anthropic-agent-skills/skills/claude-api/SKILL.md`，是 plugin marketplace skill；`usageStore.skillDirCandidates()` 只掃 `~/.{kiro,codex,claude}/skills/` 的 `<name>/` 與 `.system/<name>/` 六條路徑，結構上涵蓋不到 ∴ orphan 恆為 true。已在 entry 的 `notes` 標為 false positive（`/skilllint` 會跳過）。**未改掃描邏輯**——擴進 marketplace 會一次多出約 20 筆從沒人用的 plugin skill 噪音。
+- ✅ bridge-specialist 矛盾 fact `f_05ac7e`——2026-08-13 已解決。對照設定檔確認內容確實為假（slot-dev 現為 `sonnet`、researcher/general 無 model 欄位改繼承 `defaultModel=claude-opus-4.5`、prefixes 剩 `["uk-"]`）。使用者裁決後：先從 `wiki/concepts/bridge-specialist.md` frontmatter `sources` 移除該 ID，再 `forget()` 刪除（master log 與 shard 皆已驗證 0 殘留，forget-log 有 audit）。**刻意不補記新的設定快照**——現況可從 `specialist-domains.json` 直讀，新快照只會同樣腐爛。此例外的適用範圍已寫進該 wiki 頁：僅限「內容已被證實為假」的 fact，不推翻 2026-07-08 對瑣碎但為真 fact 的保護裁決。
 
 ## Watch List (monitor)
-- 4 條過時 facts（f_392c22, f_7bf9a8, f_f6406d, f_fedf5c）被 wiki 保護無法刪除，wiki 已更新為最新值
-- Repo 膨脹 ratio=3.1（>3.0 警告）— 已知設計取捨，87%+ facts 作為 provenance 不可刪
-- 零命中區 7 個 topic 經檢視皆有持久價值，無衰減候選
-- wikilint 被中斷，過時頁面偵測未完成
+- `uk-slot-codegen` 今日重度使用（route_count 命中）但 use_count 仍 0，token 自報紀律缺口
+- specialistreview 自動套用 2 個 domain expansion，下次確認擴充內容合理性
+- 10 個 underused skill（writing-skills/dual-skill-review-loop/huashu-slides 等）持續觀察，未達門檻
+- 5 個零命中 topic shard 距 60 天衰減判定門檻（2026-09-09）尚有約 27 天
+- plugin marketplace skill 目前只有 `claude-api` 一支自報過而被記成 orphan；若日後再有 plugin skill 出現同樣誤報，再考慮把 `usageStore.skillDirCandidates()` 擴到 `~/.claude/plugins/marketplaces/*/skills/`（代價：一次新增約 20 筆未使用 entry，且掃描邏輯綁死 Claude 專屬佈局）
+- ~~wiki `concepts/bridge-specialist.md` 的 slot-dev prefix 描述過時~~ — 2026-08-13 已隨 f_05ac7e 處置一併修正為 `["uk-"]`
 
 ## Noise (ignored this run)
-- sharedsync：無更新
-- dailylog：970 bytes 產出
-- sessionreflect：跳過（無 transcript）
-- specialistreflect：2 條 lesson 處理，0 產出
-- memorytoskill：5 檔案掃描完成
-- topicreview：32 topic 維持健康，misc 6 條
-- wikisync：bridge-specialist 已更新（run_plan 全有全無 + moa-ref-codex 已知擱置）
-- factlint：0 刪除，0 升格候選
-- specialistreview：0 新 specialist，2 domain expansion 自動套用
-- artifactcleanup：刪除 1 個，剩餘 6 個
-- backup：commit 46851fe，58 檔案
+- /sharedsync 無更新、/sessionreflect 無 transcript、/specialistreflect 無新 lesson
+- /dailylog 產出完成；/memorytoskill 0 新建/更新（候選皆低於門檻）
+- /topicreview 0 topic 異動（僅加 3 關鍵字降 misc）
+- /wikisync 更新 5 頁；/wikilint 修復 uk-slot-clash-olympus 月餘過時內容
+- /factlint 刪 1 條、標記 4 條受保護矛盾
+- /docupdate 無輸出（正常）；/artifactcleanup 刪 0、剩 13 個
+- /backup commit 1dcf668，80 檔，20s

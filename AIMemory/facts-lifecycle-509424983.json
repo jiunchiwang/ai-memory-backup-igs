@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "facts": {
+    "f_32a736": {
+      "status": "superseded",
+      "updatedAt": "2026-08-13T20:35:53.915Z",
+      "supersededBy": "f_198e79",
+      "reason": "舊決策已被 2026-07-16 的實際建立行動與持續使用推翻，wiki bridge-specialist.md 已同步記錄；factlint 2026-08-14 執行"
+    }
+  }
+}

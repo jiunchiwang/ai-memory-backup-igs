@@ -1,0 +1,37 @@
+{
+  "id": "moaplan_adapter_review_msrh2k6p",
+  "specialist": "verifier",
+  "task": "請 code review G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 assets/Script/Feature/VSManager.ts 與 tests/VSManager.test.ts 最新未提交變更。目標：驗證 AdaptRoundToVSInput 的 proto 邊界是零 cc 依賴、缺 reelIndex 或未知 vsType 時 fail-safe、測試確實能殺死對應錯誤。注意：不要建議從 appliedPositions 猜 reelIndex，因其語意不保證是 VS 位置。驗收：列出可重現 High/Medium finding 或確認無；檢查是否有類型或執行期風險。回報格式：findings、通過項、殘留風險。",
+  "created": "2026-08-13T12:16:03.381Z",
+  "status": "done",
+  "summary": "I'll review the specified files for the VS Manager adapter changes.Good, field names match. Now let's check GameView.ts to see how AdaptRoundToVSInput / VSManager is actually invoked, and how symbolIds are constructed (Game_Define symbol IDs), plus the two other modified state files.Confirmed zero runtime `cc` dependency (only a type-only import). I have enough to write up the review.## Review 完成\n\n審查 `assets/Script/Feature/VSManager.ts` + `tests/VSManager.test.ts`（皆為未提交新檔），對照 `docs/dev-spec.md` ",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "I'll review the specified files for the VS Manager adapter changes.Good, field names match. Now let's check GameView.ts to see how AdaptRoundToVSInput / VSManager is actually invoked, and how symbolIds are constructed (Game_Define symbol IDs), plus the two other modified state files.Confirmed zero runtime `cc` dependency (only a type-only import). I have enough to write up the review.## Review 完成\n\n審查 `assets/Script/Feature/VSManager.ts` + `tests/VSManager.test.ts`（皆為未提交新檔），對照 `docs/dev-spec.md` 的 S0~S5 / BC-VS-1~8 不變式逐條核對。\n\n**High finding**：`IsValidReel`（VSManager.ts:257-268）把「reelIndex 位置與 server 給的 vsType 不符」當成硬性過濾條件（`.filter()`，VSManager.ts:158-160），但 `dev-spec.md:193` 明寫這種情況該是 **dev-only warn、不改行為、以 server 為準**——目前實作會讓整筆 VS 轉型與收分係數消失，等於把 server 授權的賠付資料靜默丟棄，直接牴觸檔頭「不可改寫 server 賠付」的宣稱。`tests/VSManager.test.ts:143-155` 的測試把這個錯誤行為鎖進斷言（`isTriggered: false`），修正時要一併改測試名稱與斷言。目前盤面固定 6 輪、VS 只出現在既定位置 ∴ 現有資料踩不到，但這是規則明文要求、資料尚未觸發的潛伏缺陷。\n\n**通過項**：adapter 對缺 reelIndex / 未知 vsType 的 fail-safe 正確、zero cc 依賴確認（唯一 colProto 引用是 `import type`）、`Resolve()` 純函式性質（不改動輸入盤面）經測試驗證、核心收分演算法（VS Cash 加總、VS Collect 相加不連乘、普通 Collect 收未乘倍 T）逐條對照規格皆正確，`ts-node --transpile-only` 實測 9/9 全過。\n\n**次要風險**：`AdaptRoundToVSInput` 內 `raw.reelIndex` 在 strict TS 下會被標記 possibly-null（專案 `tsconfig.json` 明訂 `strict: false`，執行期邏輯本身安全，僅為型別層備註）。\n\nFindings 已透過 `structured_output` 回報結構化欄位（findings/passed/risks）。",
+  "structured": {
+    "findings": [
+      {
+        "severity": "High",
+        "title": "IsValidReel 把「位置與 server vsType 不符」當成硬性過濾，違反 dev-spec.md S1 的『不改行為，以 server 為準』",
+        "location": "assets/Script/Feature/VSManager.ts:161(filter 呼叫)、257-268(IsValidReel)；被 tests/VSManager.test.ts:143-155 鎖住",
+        "detail": "dev-spec.md 第193行明寫：client 依 reelIndex 推導出的預期型別（col∈{0,COL-1}→VSCollect；col∈{1..COL-2}→VSCash）若與 server 給的 vsType 對帳不符，規則是『dev-only warn（不改行為，以 server 為準）』——也就是仍要用 server 給的 vsType 處理該筆，只是多印一個警告。但目前 IsValidReel 是 validResults 的過濾條件之一（VSManager.ts:158-160），一旦 reelIndex 與推導型別不符就整筆被丟棄、完全不進入 Cash/Collect 兩組迴圈，等同真的『改了行為』：該輪的 VS 轉型與對應收分係數全部消失。這與檔頭註解『不可改寫 server 賠付』直接矛盾——被丟棄的是 server 授權的贏分資料，不是被改寫，而是被消音成 0。test『VS 類型與欄位不符時安全略過，不猜替代類型』(VSManager.test.ts:143-155) 反而把這個丟棄行為鎖進斷言（isTriggered=false, plate 不變），使得未來若照規格修正會直接撞上這條測試。",
+        "repro": "server 送出 { reelIndex: 2, vsType: symbolIds.vsCollect, winningMultiplier: 5 }（一筆型別合法、但位置不是 0 或 COL-1 的 VS Collect，例如未來版位或規則調整導致 col1~4 也能出現 VSCollect）。目前實作會在 IsValidReel 判斷 expectedType='cash'≠'collect' 而整筆丟棄，該輪 Collect 不會轉型、winningMultiplier 完全不計入收分——若這筆原本代表真實贏分，等同少算。",
+        "suggested_fix": "把 reelIndex 邊界檢查（result.reelIndex >= 0 && result.reelIndex < colCount）與『位置↔型別對帳』兩件事拆開：邊界檢查失敗才是真正該丟棄的資料（陣列外索引，無法安全處理，保留為 filter）；位置↔型別不符時改成單純 push warning、仍讓該筆進入對應的 cashResults/collectResults（依 server 的 result.vsType 分組，不依推導型別）。同步修正對應測試名稱與斷言。"
+      }
+    ],
+    "passed": [
+      "AdaptRoundToVSInput 對缺 reelIndex(非整數/undefined)與未知 vsType(非 vsCash 也非 vsCollect) 皆正確 fail-safe：只 push warning 並安全跳過，不猜替代型別，兩個對應測試（VSManager.test.ts:208-219）驗證通過",
+      "VSManager.ts 對 Cocos 零 runtime 依賴：唯一對 colProto 的引用是 `import type`（VSManager.ts:76），純型別、不進 bundle，符合檔頭『不依賴 Cocos』宣稱",
+      "Resolve() 確認為純函式：輸入 plate 在函式開頭即 clone 成 plateAfter（VSManager.ts:149，物件展開複製每個 cell），未見任何對 input.plate 原地寫入；test1/test3 皆有 deepStrictEqual(plate, original) 斷言並通過",
+      "核心收分演算法對照 docs/dev-spec.md 的 S0~S5、BC-VS-1~8 逐條核對皆一致：VS Cash 左至右先處理且互不影響、VS Collect 左至右後處理且不改盤面分數、T = 原地 Cash/JP + Σ(vsValue)、多個 VS Collect 相加非連乘、普通 Collect 收到未乘倍的 T——test1/test2 的數值斷言（1830、112 等）與手算一致",
+      "無效倍率 (NaN/負數/0) 正確被 IsValidMultiplier 擋下且不轉型盤面，對應 warning 內容與 reelIndex 正確（test4）",
+      "單輪缺對應 Cash 觸發符號時只警告該輪、不影響其他輪盤面數值（test6），零值 Cash（Number=0）仍視為合法觸發符號不被誤判為不存在（test7）",
+      "npx ts-node --transpile-only tests/VSManager.test.ts 實測 9/9 全過"
+    ],
+    "risks": [
+      "中低風險（非阻塞，因專案 tsconfig.json 明確設 strict:false）：AdaptRoundToVSInput 內 raw.reelIndex／rawResults 索引在 strict 模式下會被 TS 標記為 possibly null/undefined（VSManager.ts:114,133）。執行期邏輯本身安全（迴圈邊界已用 rawResults?.length ?? 0 保護、reelIndex 已用 Number.isInteger 守門），純屬型別層無法靠 Number.isInteger 做控制流窄化的已知限制，不建議因此改動執行期邏輯，但若日後專案切到 strict:true 會需要補型別斷言",
+      "主要 finding（IsValidReel 過度過濾）目前在盤面固定 6 輪、VS 只出現在 col∈{0,1,4,5} 對應規格既定規則的情境下不會觸發（因為目前 server 產生的 vsType 與位置理論上永遠一致），屬於『規格明文要求但目前資料不會踩到』的潜伏缺陷——一旦規則改版（例如中間輪也能出現 VSCollect）或 server 端出現非預期組合，會靜默少算贏分且無 error，只有 console.warn"
+    ]
+  }
+}

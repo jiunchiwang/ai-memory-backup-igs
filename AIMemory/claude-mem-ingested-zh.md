@@ -687,3 +687,70 @@ shortlist 仍是同一份未重新產生的檔案（epoch 1785827290913、筆數
 - 新增 1 條推翻 fact → shard `ai-strategy`，內容含：0.146.1 已認證、AGENTS.md canary 實測通過、以及 app-server 壞掉導致 `codex:setup` 誤報 loggedIn:false（判斷可用性一律以 codex login status 為準）。
 - **wiki 的兩次修改保留**：`wiki/concepts/ai-strategy.md` 原本寫「未解，2026-08-05，未登入、端到端驗證做不了」，已改為現況，並新增「仍未解」段落記下 app-server 壞掉與 `codex exec -s read-only` 擋 git 兩件。過時說法因此已從 wiki 層清掉，只剩舊 fact 那一行還舊。
 - 三次 forget 嘗試均記入 `forget-log.md`（deleted=0），可追溯。
+
+## 2026-08-13 (claude-mem AUTO;寫入 3 條)
+
+caller 傳入的 header（編碼損毀，照原樣回貼，未從其他來源改寫）:
+`<<> ?Ｙ?:2026-08-12T20:30:03.855Z;蝑:15(銝? 15);??epoch 1786476378062>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-12T20:30:03.855Z;筆數:15(上限 15);自 epoch 1786476378062`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-12T20:30:03.855Z、15 筆、上限 15、epoch 1786476378062），檔內實際條目數清點亦為 15。**這是全新一批**（epoch 1786476378062 > 上一次記錄在案的 1785827290913），不是同批重掃。來源全為 telegram-kiro-bridge-main（14 筆 2026-08-12 + 1 筆 2026-08-11）。
+
+**寫入 3 條（皆已讀原始 artifact 取得實據，非由標題推論）：**
+
+1. 修正動作本身會產生新的假因果——2026-08-12 codegen git-init 五輪覆核裡同一形狀出現三次（模板後來改掉了／皆已被各自 .gitignore 擋／不在任何專案的 .gitignore 裡），機制是修正時補一個沒有證據的機制解釋、或把有例外的觀察壓縮成全稱句；附三條防法與四個查全史的 git 指令。→ shard `adversarial-review`。實據：`G:\AI\AIMemory\wiki\queries\codegen-git-init-gap.md` 第 111-127 行。**與既有 2026-07-31 那條刻意區分**：那條講原始敘述從意圖推理而來，這條講「為了修上一條而新寫的句子」，fact 內文已寫明差異避免日後被誤併。
+2. vc-kiro-delegate skill 已於 2026-08-12 廢止並併入 ms-cross-model-adversarial-review，且明列記憶庫裡另外 5 條談它的 fact 皆為廢止前狀態、只能當歷史讀。→ shard `adversarial-review`。實據：`G:\AI\AI-canonical\skills\general\ms-cross-model-adversarial-review\SKILL.md:481-495`。採 supersede 式寫法（比照先前補正 f_14cb23 的做法），因為 AUTO 流程不 forget，舊 fact 會留著。
+3. 查 skill 使用次數的權威來源是 `~/.claude.json` 的 `skillUsage`（全時間累計）而非 transcript grep（約 30 天輪替，數到的是視窗內數字）；配套判準是分母被污染時只報絕對數不寫比例。→ shard `dev-tools`。實據：同上 SKILL.md 段落。
+
+**捨棄 3 筆（撞既有 fact，逐條指名）：**
+
+- 候選 15「ARM benchmark 25% test-retest variability」→ 撞既有 fact「2026-08-12 量到 Kiro 上 code-review 模型評測的 test-retest 翻轉率：…16 個 cell 翻了 4 個（25%）…」。既有 fact 更完整（含逐臂數字、同向機率 0.125、artifacts 路徑）。
+- 候選 11「flaky timeout in smoke tests / check-session-resume」→ 撞既有兩條：「⚠️ 更正並結案先前那條『check-session-resume flaky』的 fact：根因已證實是 runM 的 timeout: 15000 太小…（commit d128f28）」與「2026-08-12 掃過全 smoke suite 的寫死逾時，A 類＝等子行程的預算 vs B 類＝行為斷言的時間上界」。
+- 候選 6「MAX_SPECIALIST_TIMEOUT_MS 改 24 小時」→ 撞既有 fact「telegram-kiro-bridge 的 specialist 委派逾時已可 per-domain 設定…經 positiveIntOr() 收斂（下界 >0、**上界 24 小時 / 1000 turns**）」。候選標題的 "absurdity threshold" 即該 24h 上界。
+
+**捨棄 9 筆（一次性過程紀錄，無跨 session 可重用判準）：** 候選 1/2/3/5（某 commit 的 GO/NO-GO 覆核請求與結論）、7（gate_runner H1 某專案跑過）、8/10（某次委派給 slot-dev）、9（某次 pipeline 拆 7 個背景任務）、14（一次性 research task 規格）。
+
+去重方式：`list_facts` 查 `vc-kiro-delegate`(5)／`因果`(6)／`test-retest`(2)／`逾時`(8)／`修正`(25)／`adversarial-review` 整個 shard(33)／`廢止`(0)／`全稱`(0)／`gitlink`(0)／`假因果`(0)／`skillUsage`(1，內容無關)／`transcript`(9，無一相關)，現存 554 筆。未呼叫 forget。
+
+**兩點矛盾，照實回報未自行修正：**
+
+- `wiki/queries/codegen-git-init-gap.md:129` 寫「已存成 fact `correction-invents-new-causal-story`」，但記憶庫查無此 fact（adversarial-review 整個 shard 33 筆逐條看過 + 4 組關鍵字掃描皆 0 命中）；shortlist 候選 4 也宣稱建立了 `correction-invents-new-causal-story.md`，但 `find G:/AI -iname "*causal*" -o -iname "*invent*"` 只找到 `SPEC-causal-chain-permission-guard.md` 與 `analyze-causal-audit.mjs`，無該檔。∴ 該知識先前只存在於 wiki 頁，本次才真正落成 fact。**未修改 wiki 那一行**（AUTO 只 ADD，且動 wiki 依 2026-08-06 先例需使用者核准）。
+- 本 log 上一則是 2026-08-06 第三次，但 claude-mem observation 記錄 08-07(2 條)／08-08／08-09(0 條)／08-11(2 條)／08-12(3 條) 都跑過 curation ∴ **中間 5 次的 log 條目缺漏**。不影響本次判斷——去重一律以 `list_facts` 為準、批次身分以 epoch 為準，兩者都不依賴這份 log。
+
+## 2026-08-14 (claude-mem AUTO;15 筆候選 → 寫入 3 條)
+
+caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來源改寫）:
+`<<> ?Ｙ?:2026-08-13T20:30:04.436Z;蝑:15(銝? 15);??epoch 1786526680353>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-13T20:30:04.436Z;筆數:15(上限 15);自 epoch 1786526680353`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-13T20:30:04.436Z、15 筆、上限 15、epoch 1786526680353），**無矛盾**；檔內實際條目數清點亦為 15（行 5-19）。**全新一批**：epoch 1786526680353 > 上一則記錄的 1786476378062（見上方 2026-08-13 條目行 697）。來源全為 `telegram-kiro-bridge-main`，15 筆全部日期 2026-08-13，主題全部圍繞 `uk_slot_clash_of_olympus` 的 VS Feature（M2.2）。
+
+**寫入 3 條：**
+
+1. （shard `uk-slot-clash-olympus`）VS 轉型權威來源 2026-08-13 裁決為「server 給定 + client 推導對帳」——client 自行推導只用於對帳、不自行判定，∴「自己算出結果就直接採用」即違反 server 權威。合併候選 12(裁決) + 1(M2.2 覆核據此開出 High finding)；**覆核 finding 具體違反在哪，shortlist 未載明，刻意不重建**。去重：查「server 權威」0 筆、「對帳」3 筆皆無關；既有 f_cf423c 只涵蓋「轉型時機與 1×4 覆蓋順序」，不含「誰說了算」→ 淨新增。
+2. （shard `uk-slot-clash-olympus`）M2.2 VS Feature 演出定案為薄轉接器：VsFeatureShowState 只做 proto VSResult → VSManager.Resolve() → 逐 step 跑 Fly/Expand/Spine → 經新增 GameView.VsFeatureResult 交棒 CollectFeatureShowState；plateAfter 採 derive-not-persist；轉換層抽成 VSManager.ts 的純函式 `AdaptRoundToVSInput()` + colProto 只用 type-only import 以保 ts-node 可測。合併候選 2+3。與 f_917144（UK 老虎機運算層要 CC-free 才能在 ts-node 測）**互補非重複**——那條是原則，這條是 proto 型別上的具體做法；並已在 fact 內標明本條使 f_f8bf81 的「M2.2 尚未開始」過期。候選裡的「6 項風險」「GameView mock 嚴重 bug」是**沒有內容的計數**，只標「來源未列明細」不擴寫。
+3. （shard `bridge-smoke-gate`，來源候選 5）hang detection 安全邊際自 suite 增至 432.1s 後由約 2 倍降到約 1.39 倍，2026-08-13 刻意不調高門檻。**只寫 shortlist 給的數字**；門檻絕對值與「不調」的理由來源未載明，不寫入（由 432.1×1.39 反推的門檻值屬推導非實據，刻意不放進 fact）。與 f_9219db（腳本內寫死逾時的 A/B 兩類分法）互補：那條管單支腳本，這條管 suite 之上的兜底。
+
+**⚠️ 本批內部含同一問題的先後兩讀，照實記錄不靜默消解：**
+
+候選 10（VS Collect 倍數語意＝改寫盤面分數本身，稱 2026-08-13 使用者確認）與候選 15（同義，稱 confirmed to rewrite Cash score values directly on the board）是**被推翻的舊讀**，與同批的候選 7/8/9/13（編導條 7：只記 collectMul[col]、不動盤面；多個 VS Collect 相加非連乘）語意相反。既有 f_9b909e 已載明編導於 2026-08-13 改規格、明確推翻 [C72]/[C79]「打到盤面所有 Cash/JP」那一側。∴ 候選 10/15 是**「已被推翻」而淘汰，不是「重複」而淘汰**——兩者處置相同但理由不同，記在此以免日後誤讀成 f_9b909e 涵蓋了它們。
+
+**捨棄 6 筆（撞既有 fact，逐條指名）：**
+
+- 候選 7（VS Collect 由連乘改相加模型）、8（GAP-11 正式關閉：相加非連乘、最大贏分降兩個數量級）、9（VSManager.Resolve() S4 只記 collectMul[col] 不動盤面，編導條 7）、11（多個 VS Cash 互不影響、各自只乘自己輪次加總）、13（方案從盤面倍數改為收集時列倍數）→ 全數撞 **f_9b909e**，該 fact 已含具體算例（col0 ×10、col5 ×5、T=1000 → 15000）、規格條號對照（推翻 [C72]/[C79]、選 [B49]/[B64]）與 VS Cash 側不變、普通 Collect 收未乘倍 T 的但書，**比五條候選加起來更完整**。
+- 候選 14（VS Collect 連乘與否延後到問編導、不預設任一解讀）→ 同一決策鏈的前一步，其結論已由 f_9b909e 記載（GAP-11 已關閉）；「先問不預設」的方法論成分則已被既有的證據紀律 fact 群覆蓋，單寫會稀釋。
+
+**捨棄 2 筆（一次性過程紀錄）：** 候選 4（M2.2 VS Feature 演出設計覆核「已啟動」，含 task 名 moaplan_lifecycle_review）、6（第二輪語意合併覆核「已啟動」）。另候選 1 與 2/3 的「覆核完成／設計定案」敘述部分同屬過程紀錄，其有內容的成分已分別併入寫入第 1、2 條。
+
+候選 6 另含「第一輪覆核有 2 個查證缺口：mutation set 認定錯誤、對 .mjs 檔的 tsc 推理無效」——`.mjs` 那半有潛在可重用性（tsc 預設不檢 .mjs，用它當覆核依據是空的），但 shortlist 只給結論不給前後文，**寫成 fact 必須自行補完機制敘述＝過度推論**，依證據紀律丟棄而非猜著寫。
+
+去重方式：`list_facts` 查 `VS Collect`(2)／`clash_of_olympus`(16，逐條看過)／`VsFeatureShowState`(1)／`server 權威`(0)／`對帳`(3)／`ts-node`(1)／`hang`(4)／`mjs`(40)，現存 582 筆。未呼叫 forget。
+
+**兩點照實回報：**
+
+- 本檔排序已不一致：行 3 起是 2026-08-12 起往回倒序，但 2026-08-13 那則在檔尾（行 691）。本次依指示「append」續接檔尾，未重排（重排不在本次範圍）。
+- 帳目：15 筆＝貢獻寫入 5（候選 1、2、3、5、12）＋已被推翻 2（10、15）＋撞既有 fact 6（7、8、9、11、13、14）＋純過程紀錄 2（4、6）。即 10 筆整條丟棄，重疊率高——與 2026-08-01 那則觀察到的成因相同：08-13 當天的 clash_of_olympus VS Feature 工作在當下已即時寫進 AIMemory（f_9b909e、f_cf423c、f_e0a15e、f_f8bf81 等 16 條），claude-mem 隔日只是對同一批工作的第二次抽取。此為預期行為，非 producer 故障。

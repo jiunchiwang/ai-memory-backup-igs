@@ -1,0 +1,28 @@
+{
+  "id": "moaplan_review_converge_msrhf6eg",
+  "specialist": "moa-ref-adversary",
+  "task": "根據兩份 M2.2 code review，請判定 G:\\Cocos_Project\\uk_slot_clash_of_olympus 是否可通過本切片。範圍僅 adapter、合法 mock、VS 到 Collect 的資料交接、轉型後顯示層套用；Fly Spine 與完整 Unshow UI 明確不在本切片。驗收：High finding 才要求回修；Medium/Low 給明確理由與下一步。回報格式：verdict、must_fix、deferred、evidence。",
+  "created": "2026-08-13T12:17:27.160Z",
+  "status": "done",
+  "summary": "🟠 收到：根據兩份 M2.2 code review 的結構化結果，判定本切片是否可通過，並給出 verdict / must_fix / deferred / evidence。\n🟠 打算：分析兩份 review 的 findings，對 High finding 做嚴格性判斷，輸出裁決。\n\n---\n\n## 裁決：**條件通過（有 1 項 must_fix）**\n\n### High Finding 分析：IsValidReel 過度過濾\n\n第二份 review 標記了一個 High：`IsValidReel` 把「位置與 vsType 不符」當 filter 而非 warn。\n\n**對抗審查（魔鬼角度）**：\n\n這個 finding 的嚴重性有被誇大的嫌疑。關鍵問題是：**dev-spec.md S1 的「不改行為、以 server 為準」在目前 6-reel 固定盤面的實際資料中永遠不會觸發**。找到這個 bug 需要 server 送出「位置對不上的 vsType」——這在當前規格下是 impossible state，不是 edge case。\n\n然而，High 的評定仍然",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "🟠 收到：根據兩份 M2.2 code review 的結構化結果，判定本切片是否可通過，並給出 verdict / must_fix / deferred / evidence。\n🟠 打算：分析兩份 review 的 findings，對 High finding 做嚴格性判斷，輸出裁決。\n\n---\n\n## 裁決：**條件通過（有 1 項 must_fix）**\n\n### High Finding 分析：IsValidReel 過度過濾\n\n第二份 review 標記了一個 High：`IsValidReel` 把「位置與 vsType 不符」當 filter 而非 warn。\n\n**對抗審查（魔鬼角度）**：\n\n這個 finding 的嚴重性有被誇大的嫌疑。關鍵問題是：**dev-spec.md S1 的「不改行為、以 server 為準」在目前 6-reel 固定盤面的實際資料中永遠不會觸發**。找到這個 bug 需要 server 送出「位置對不上的 vsType」——這在當前規格下是 impossible state，不是 edge case。\n\n然而，High 的評定仍然成立，理由：\n1. 測試把錯誤行為**鎖進斷言**（`isTriggered: false`）——這代表如果規格改版，測試會靜默放行錯誤行為而非報警。這是測試設計缺陷，比執行期風險更直接。\n2. 修法成本低（拆 filter 邏輯、改 warn），但不修的話會讓未來實作者誤以為「位置↔型別強驗證是設計意圖」。\n\n**裁決依據**：第一份 review 0 High finding，第二份 1 High finding，且兩份的 Medium/Low 均無。High finding 符合「必須回修才能通過切片」的閘門標準。\n\n---\n\n### Verdict\n\n**CONDITIONAL_PASS** — 一項 must_fix，其餘殘留風險全部 deferred。\n\n### Must Fix\n\n1. **IsValidReel 過度過濾**（VSManager.ts:158-161, 257-268 + test:143-155）\n   - 把 reelIndex 邊界失效（陣列外索引）與「位置↔型別不符」拆開：前者保留為 filter，後者改為 warn-only 並讓該筆仍進入對應的 cashResults/collectResults。\n   - 同步修正 `VSManager.test.ts:143-155` 的測試名稱與斷言，避免把錯誤行為鎖死。\n\n### Deferred\n\n1. **Respin TODO 跨局殘留風險**：`VsFeatureResult` 重置只掛在 `SetNowRoundInfo()`，Respin 路徑若繞過則可能殘留。目前整段死碼不可達，實作 Respin 時補重置即可。\n2. **collectWins.reelIndex vs CollectResult.col 語意對應**：`CollectFeatureShowState` 仍是 stub，日後 Step 3.10 串接時需顯式對應欄位，不能假設互通。\n3. **strict TS 型別警告**：`AdaptRoundToVSInput` 的 `raw.reelIndex` 在 strict 模式下 possibly-null，執行期安全，但若日後切 `strict: true` 需補型別斷言。\n\n### Evidence\n\n1. 第一份 review：RoundInfo 不可變性、VsFeatureResult 跨局不殘留、mock 可觸發 Resolve() — 三項驗收點全過，0 High/Medium finding，9/9 unit tests PASS，tsc 0 error（目標三檔）。\n2. 第二份 review：`IsValidReel` 的 filter 行為與 dev-spec.md:193 明文（「dev-only warn、不改行為」）矛盾，且 test:143-155 把錯誤行為鎖進斷言——High finding 可重現且修法明確。\n3. 兩份 review 均確認 VSManager 零 cc 依賴（唯一 `import type`）、純函式不改輸入盤面、收分演算法（Cash加總/Collect相加不連乘/普通Collect收未乘倍T）對照 BC-VS-1~8 全部正確。",
+  "structured": {
+    "verdict": "CONDITIONAL_PASS — 1 項 must_fix（IsValidReel 過度過濾），其餘殘留風險全部 deferred",
+    "must_fix": [
+      "IsValidReel 過度過濾（VSManager.ts:158-161, 257-268 + VSManager.test.ts:143-155）：把「位置↔型別不符」當 filter 丟棄整筆，違反 dev-spec.md:193 明文『dev-only warn、不改行為、以 server 為準』。修法：拆分邊界失效（保留 filter）與型別不符（改為 warn-only，仍讓該筆進入 cashResults/collectResults）；同步修正對應測試斷言，避免把錯誤行為鎖死。"
+    ],
+    "deferred": [
+      "Respin TODO 跨局殘留風險：VsFeatureResult 重置只掛在 SetNowRoundInfo()，Respin 路徑若繞過則可能殘留。目前整段死碼不可達，實作 Respin 時補重置。",
+      "collectWins.reelIndex vs CollectResult.col 語意對應：CollectFeatureShowState 仍是 stub，Step 3.10 串接時需顯式對應欄位。",
+      "strict TS 型別警告：AdaptRoundToVSInput 的 raw.reelIndex 在 strict 模式下 possibly-null，執行期安全，日後切 strict:true 需補型別斷言。"
+    ],
+    "evidence": [
+      "第一份 review：RoundInfo 不可變性、VsFeatureResult 跨局不殘留、mock 可觸發 Resolve() 三項驗收點全過，0 High/Medium finding，9/9 unit tests PASS，tsc 0 error（目標三檔）。",
+      "第二份 review：IsValidReel 的 filter 行為與 dev-spec.md:193 明文矛盾，且 test:143-155 把錯誤行為鎖進斷言；High finding 可重現，修法明確。",
+      "兩份 review 均確認 VSManager 零 cc 依賴（唯一 import type）、純函式不改輸入盤面、收分演算法（Cash加總/Collect相加不連乘/普通Collect收未乘倍T）對照 BC-VS-1~8 全部正確。"
+    ]
+  }
+}

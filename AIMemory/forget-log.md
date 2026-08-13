@@ -348,3 +348,11 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-12T20:20:19.180Z] user=509424983 query="specialist-domains.json 已配置完成（品質優先方案）：slot-dev 用 claude-sonnet-4.6、researcher 用 claude-opus-4.6" deleted=0 token=forget-8799e508-1
 
+- [2026-08-12T22:36:49.178Z] user=509424983 query="品質優先方案" deleted=1 token=forget-8799e508-1
+    - [f_05ac7e] [2026-07-13T01:31:19.185Z] specialist-domains.json 已配置完成（品質優先方案）：slot-dev 用 claude-sonnet-4.6、researcher 用 claude-opus-4.6、general 用 claude-sonnet-4.6，全部 effort high；commonSkills 含 5 項基礎防護 skill、commonMcpServers 含 memory；slot-dev 有 skill prefix 隔離（uk-slot-/slot-/uk-/pq3-/cocos-）+ topicKeywords + wikiPages，researcher 和 general 設 inheritsAll 全繼承
+- [2026-08-13T20:37:10.478Z] user=509424983 query="POLICIES/development-methodology.md 的 Section 7 宣稱「.claude/hooks/ 不存在" deleted=1 token=forget-85a4f2a4-1
+    - [f_545400] [2026-08-12T00:53:09.898Z] POLICIES/development-methodology.md 的 Section 7 宣稱「.claude/hooks/ 不存在、impact-analysis-guard.sh 找不到 ∴ 修改前守衛純粹是文字層自律、沒有任何機械強制」——這段**已落後於部署現況**：2026-08-12 實際修改 scripts/mutate-gate.mjs 與 src/AI.md 時，`.claude/hooks/impact-gate.mjs` 兩次以 PreToolUse 攔下 Edit 並要求先輸出因果鏈（訊息逐字為「[impact-gate] 首次修改 <檔> — 先輸出以下分析，然後重試同一修改（重試即放行）」）。∴ 承重核在 Claude Code 這條路徑上**有**機械閘門（每檔首次修改觸發、重試即放行）。⚠️ 未改該文件——動 POLICIES/*.md 要走 R-2 異源覆核。下個 session 讀到 Section 7 的「誠實邊界」段落時不要據以認定沒有 hook。
+- [2026-08-13T20:37:11.384Z] user=509424983 query="與 upstream 新增的 docs/SPEC-psmux-dev-launcher.md 規劃概念相同但尚未整合比對" deleted=0 token=forget-a219e99e-1
+
+- [2026-08-13T20:37:12.045Z] user=509424983 query="**Plugin 檔案存在**：13.15.0 版的 `scripts/` 目錄完整" deleted=1 token=forget-fc49a1bb-1
+    - [f_c9e9ef] [2026-08-11T07:11:08.032Z] **Plugin 檔案存在**：13.15.0 版的 `scripts/` 目錄完整

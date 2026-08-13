@@ -1,0 +1,43 @@
+{
+  "runId": "run_20260813115635_lt86",
+  "chatId": 509424983,
+  "task": "查詢既有 M2.2 設計審查計畫的狀態。",
+  "plan": {
+    "summary": "查詢既有 M2.2 設計審查計畫的狀態。",
+    "steps": [
+      {
+        "id": "status",
+        "task": "請只回報 run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 是否已有可用整合結果；若無，勿自行重做審查。",
+        "specialist": "verifier",
+        "depends_on": []
+      }
+    ]
+  },
+  "status": "done",
+  "createdAt": "2026-08-13T11:56:35.022Z",
+  "updatedAt": "2026-08-13T12:00:32.535Z",
+  "steps": {
+    "status": {
+      "status": "done",
+      "specialist": "verifier",
+      "updatedAt": "2026-08-13T12:00:32.504Z",
+      "taskId": "moaplan_status_msrgq59x",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_status_msrgq59x_verifier_請只回報-run-plan-c8e08cd114cf4ed49f7f8c0f84.json",
+      "outputChars": 1677,
+      "structured": false,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 236457,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 36,
+        "outputTokens": 6732,
+        "cachedReadTokens": 2072177,
+        "cachedWriteTokens": 93980,
+        "totalTokens": 2172925
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    }
+  }
+}

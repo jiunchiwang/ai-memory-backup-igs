@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-09（新增 tool 結果狀態判定鏈查證）
-sources: [f_b533eb, f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_d8cd71, f_9c4a6e, f_ae2bf4, f_fc50c8, f_e63d1a, f_87a34f, f_6b2c90, f_f4d872, f_4f2c91, f_a7d3e8, f_c92b41, f_d8f6a2, f_e3c7b5, f_f1a8d9, f_02e4c6, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437, f_820b01, f_43da84]
+updated: 2026-08-13（新增：Codex/Kiro hooks 能力更正——三個 backend 底層各自的 hook 支援現況；provenance 稽核清掉 16 個不存在於 master log 的舊 source ID）
+sources: [f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_a1ecf7, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_20ed42, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437, f_820b01, f_43da84, f_5e2e61, f_ec52e4, f_08445d, f_938688]
 ---
 
 # Bridge ACP 與 Model 配置
@@ -242,6 +242,17 @@ bridge 判斷一次 tool call 成敗完全依賴 ACP 的顯式 `status`，自己
 ∴ **現行 Claude Code 的 `is_error` 是可信的失敗訊號**，上面 adapter 的映射正確，bridge 這條路徑健全；ADR-003 的主張在此不重現。
 
 ⚠️ 誠實邊界：n=18 太小（錯誤率高到約 15% 仍有 5% 機率量到 0/18），單機單專案單版本，且未端到端驗 SDK 串流 chunk 的形狀——此段仍是 B 級推論，非普遍證實。完整研究脈絡見 [[cc-session-reader]]。
+
+## 三個 Backend 底層的 Hook 支援現況（2026-08-13，更正先前錯誤結論）
+
+**先前記錄的結論已推翻**：舊 fact 主張「Codex 與 Kiro 底下沒有 Agent SDK 也就沒有這個攔截點」——前提對（確實沒有 Agent SDK），**結論錯**：Codex 與 Kiro 各自實作了自己的 hook 系統，不需要 Agent SDK。
+
+- **Codex**：`codex-cli 0.146.1` 的 `codex features list` 顯示 `hooks stable true`（本機 Windows 已啟用）。官方文件列 11 個事件（`PreToolUse`/`PostToolUse`/`PermissionRequest`/`PreCompact`/`PostCompact`/`UserPromptSubmit`/`SessionStart`/`SessionEnd`/`SubagentStart`/`SubagentStop`/`Stop`），本機 binary 全部命中。`PreToolUse` **明確涵蓋 `apply_patch` 檔案編輯**（matcher 別名 `apply_patch`/`Edit`/`Write`），擋法與 Claude Code 同形（`exit code 2` + stderr，或 `hookSpecificOutput.permissionDecision=deny`）。設定放 `<repo>/.codex/hooks.json` 或 `config.toml` 的 `[hooks]`。
+  - ⚠️ **黑箱探針實測的兩個重用陷阱**：① `apply_patch` 的 `tool_input` **不帶 `file_path`**，裝的是整段 patch 原文（`*** Update File: <path>` 那一行才有路徑）——直接沿用 Claude 側讀 `tool_input.file_path` 的 hook 腳本會靜默 fail-open（`if (!filePath) process.exit(0)`），零症狀看起來像裝好了；② 專案層 `.codex/hooks.json` 有**兩道靜默信任閘門**且都不印警告：專案要在 `~/.codex/config.toml` 標 `trust_level="trusted"`，且 hook 腳本本身要經 `/hooks` 互動式審核信任，兩者缺一律靜默 0 捕獲。繞過檔案探索的可靠測法是 `-c 'hooks.PreToolUse=[...]' --dangerously-bypass-hook-trust`。
+- **Kiro**：`kiro-cli 2.18.0` binary 含 `agentSpawn`/`userPromptSubmit`/`preToolUse`/`postToolUse` 與 `"hooks"`/`"trigger"` 字串，但無 `matcher` 欄位、`~/.kiro/agents/main.json` 無 `hooks` 欄位、查無官方文件——只能說「疑似有、設定形狀待驗」，不能當已確認。
+- **Claude**：走 Agent SDK 的 `PreToolUse` hook（見下方既有內容），機制最成熟且本 repo 已部署最小版（`.claude/hooks/impact-gate.mjs`）。
+
+第三方部落格「PreToolUse 只攔 shell 不攔 apply_patch」與「hooks 在 Windows 不可用」兩條說法皆已被官方文件與本機實測推翻。跨 backend 一致的機械閘門設計討論見 `docs/SPEC-causal-chain-permission-guard.md`（bridge 自己那層 `session/request_permission` 的方案）。
 
 ## ACP Adapter 設定檔差異
 

@@ -1,0 +1,61 @@
+{
+  "id": "moaplan_adapter_review_msrgb4x8",
+  "specialist": "slot-dev",
+  "task": "目標：審查 G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 M2.2 VS proto mock adapter 設計。背景：M2.1 的 assets/Script/Feature/VSManager.ts 是純函式；M2.2 要由 VsFeatureShowState 將 stub VSResult 接入，並讓 GameView 的 vsfeature mock 產生可信的轉型前盤面。請自行讀 docs/M2-VS-design.md、docs/modules.md、GameView.ts、VsFeatureShowState.ts、RecoverSpinAck.ts 與 proto stub。待決問題：最小改動檔案集合、資料適配責任、server proto 到來時的替換邊界。驗收：提出具體檔案與方法層級的設計，指出不可違反的 M2.1 契約。回報格式：結論、檔案清單、風險、建議測試。",
+  "created": "2026-08-13T11:55:52.817Z",
+  "status": "done",
+  "summary": "審查 uk_slot_clash_of_olympus M2.2 VS proto mock adapter 設計：建議把轉換邏輯放在 VSManager.ts 內的純函式（保持 ts-node 可測），並發現現有 GameView mock 有兩處會讓 Resolve() 恆不觸發的 bug，需與 adapter 一併修正",
+  "outputs": [
+    {
+      "type": "recommendation",
+      "content": "AdaptRoundToVSInput() 應為 VSManager.ts 內的 exported pure function（type-only import colProto），VsFeatureShowState 只做呼叫+播放+plateAfter 寫回顯示層"
+    },
+    {
+      "type": "finding",
+      "content": "GameView.ts:908-912 的 vsfeature mock：col0 用轉型後符號 VsCollect(18) 而非 Collect(15)、VSResult 缺 reelIndex，兩者疊加會讓 VSManager.Resolve() 恆回傳 isTriggered=false"
+    },
+    {
+      "type": "finding",
+      "content": "VSManager.Resolve() 回傳的 plateAfter 目前沒有任何寫回顯示盤面或 CollectFeatureShowState 的機制，是 M2.2 必須釘的整合缺口"
+    },
+    {
+      "type": "finding",
+      "content": "proto IVSResult.vsType 為 number，其編碼語意（symbol id vs 獨立 enum）未定案，僅有 mock 先例可循，應登記 spec-gap"
+    },
+    {
+      "type": "finding",
+      "content": "M2.1 設計文件（安全略過）與 dev-spec.md 規格權威 S1（warn 不改行為）對「類型不符」措辭不一致，雖因欄位互斥實務不會觸發，仍建議對齊文件用字"
+    }
+  ],
+  "files_modified": [],
+  "tags": [
+    "uk-slot-clash-olympus",
+    "vs-feature",
+    "adapter-design",
+    "proto-stub",
+    "design-review"
+  ],
+  "structured": {
+    "summary": "審查完成：M2.2 adapter 應以 VSManager.ts 內的純函式（type-only import colProto，維持 ts-node 可測性）處理 proto→VSResolveInput 轉換，VsFeatureShowState 只做呼叫與播放；但現有 GameView vsfeature mock 有兩處實質 bug（col0 放轉型後符號 VsCollect 而非 Collect、VSResult 缺 reelIndex）會讓 Resolve() 恆不觸發，必須與 adapter 一併修正。另有 plateAfter 交棒缺口（沒有寫回顯示盤面的機制）是 M2.2 範圍內必須釘的整合點。",
+    "files": [
+      "assets/Script/Feature/VSManager.ts — 新增 AdaptRoundToVSInput() 純函式",
+      "assets/Script/GameState/VsFeatureShowState.ts — PlayVsFeature() 呼叫 adapter+Resolve()，並把 plateAfter 寫回顯示盤面",
+      "assets/Script/GameView.ts — 修正 vsfeature mock：Symbol.VsCollect→Symbol.Collect，VSResult 補 reelIndex:0",
+      "tests/（新增或擴充）— AdaptRoundToVSInput 純函式單元測試"
+    ],
+    "risks": [
+      "proto IVSResult.vsType 數值編碼未定案（symbol id vs 獨立 enum），僅有 mock 先例可循，需登記 spec-gap",
+      "VSManager.Resolve() 回傳的 plateAfter 目前無任何寫回顯示層/CollectFeatureShowState 的機制，畫面會與資料脫節",
+      "若依 M2-VS-design.md 字面把轉換邏輯寫進 VsFeatureShowState（import cc），會喪失現有 ts-node --transpile-only 可測性，建議留在 VSManager.ts",
+      "GameView mock 現狀（col0 用轉型後符號、VSResult 缺 reelIndex）會讓 Resolve() 恆回傳 isTriggered=false，等同沒接",
+      "M2.1 設計文件（安全略過）與 dev-spec.md 規格權威 S1（warn 不改行為）對「類型不符」的措辭不一致，雖因欄位互斥實務不會觸發，但文件應對齊",
+      "FreePlateSymbol 尚未接線（GameView.ts:1527 註解掉），VS adapter 沿用現狀只吃 MainPlateSymbol 可接受但需留 TODO 錨點",
+      "unshow/replay 本切片不做，但 plateAfter 套用方式若寫死會讓下一切片重做，建議設計成保留 transform 前快照"
+    ],
+    "tests": [
+      "AdaptRoundToVSInput 純函式單元測試（ts-node --transpile-only 慣例）：reelIndex 缺失 fallback 到 appliedPositions[0].col；vsType 無法辨識分支",
+      "修正 mock 後於 Cocos Preview 手動按熱鍵 8（vsfeature），確認 VsFeatureShowState 真的進入 PlayVsFeature 而非直接跳過",
+      "Collect 演出開始前，人工確認畫面盤面符號已是 VsCollect(18) 而非殘留舊符號"
+    ]
+  }
+}

@@ -107,7 +107,12 @@ git merge-base main upstream/main   # 印不出 sha = NO COMMON ANCESTOR
      `git diff upstream/main HEAD`(合併結果 vs 上游的殘差 = 你的本地增補全集,看
      「本地功能有沒有被合掉」最精準),再加衝突檔逐檔看。
    - **覆核者優先序(異源 > 同源,三級分明、不可混為等價)**:
-     ① **異源 model**(例如 Fable5)**優先** — 打破同源盲點(同源自審漏看率高)。
+     ① **跨 vendor 的異源 model 優先** — 打破同源盲點(同源自審漏看率高)。
+        預設 `kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read`
+        (0.50x credits 且是跨 vendor 強異源)。⚠️ **不要用 Fable5 頂替跨 vendor**:
+        它是 `anthropic`、與產出者同源,3.3x 單價,同時更貴且更弱——選型與成本量測見
+        `ms-cross-model-adversarial-review` 的〈為什麼要拆成兩欄看〉與
+        〈覆核的 token 成本結構〉。Fable5 的位置是「跨 vendor 那輪產出明顯偏弱時才補的第二輪」。
      ② 異源不可用 → 退化用**同 model 新乾淨 context**,回報標「同源異 context」。
      ③ 都沒有 → 至少**人工**逐檔 diff + 實測關鍵路徑,回報標「單源自審」。
    - 覆核出 high/medium 缺陷 → **在 `sync-attempt` 上修完、回到本步重審**,過關才進下一步。

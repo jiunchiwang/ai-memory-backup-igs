@@ -77,5 +77,7 @@
 
 - ~~"commit" pattern（3 sessions）~~ — 2026-07-16 判定誤判：使用者正常的 git commit 互動流程（「幫 commit」「有 commit 嗎」），不是可重用技術模式，已有 user-pref fact 覆蓋偏好（commit 前先確認）
 
+- ~~"users jiunchiwang" / "users" / "jiunchiwang" pattern（4 sessions）~~ — 2026-08-13 判定誤判：全部命中同一個絕對路徑字串 `C:\Users\jiunchiwang\Downloads\Telegram Desktop\wheel-click-prototype.html`（使用者傳同一份 HTML 檔案討論多輪），是路徑字面值被重複引用，不是技術模式
+
 ---
-Last updated: 2026-08-11
+Last updated: 2026-08-13

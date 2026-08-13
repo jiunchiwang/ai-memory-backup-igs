@@ -276,7 +276,8 @@ Kiro 的 `glm-5` 是 **0.50x credits**（比 Sonnet 還便宜），卻是跨 ven
 **不會拿 tier 去換 domain**。
 
 tier 仍然要省，因為覆核者是 agentic 的（實測一次 37 次工具呼叫、587 秒，
-讀進去的碼全算 input），單價會被工具迴圈放大。
+讀進去的碼全算 input），單價會被工具迴圈放大。放大到什麼程度見下面
+〈覆核的 token 成本結構〉——那一節是本節判準的量化依據，不是補充讀物。
 
 Claude 家族單價（來自 model catalog 的 `pricing` tier，`tier_A_B` = $A/M input、$B/M output）：
 
@@ -297,8 +298,82 @@ Claude 家族單價（來自 model catalog 的 `pricing` tier，`tier_A_B` = $A/
 （前者比照其他三個承重路徑類、後者比照其他敘事類），2026-08-02 那版的成本表
 **沒有這兩個條目**，也沒有針對它們的實測。照用沒問題，但別當成有背書的判定。
 
-兩個額外的省法（不動紀律結構）：
-- **給地圖不給答案**：直接餵 `git show <commit>` 的 diff 全文 + 涉及檔案清單當**起點**，省掉盲找的工具迴圈。這不違反「開放授權不給檢查清單」——給的是哪些檔案被動到，不是要檢查哪幾點。
+### 覆核的 token 成本結構（2026-08-13 實測）
+
+「覆核花的 token 比前面實作還多」不是錯覺，也不是某個模型特別耗。三個**相乘**的項：
+
+**① 冷啟 prefix — 開一個新 session 就先付，還沒讀你任何一行 diff。**
+
+四臂探針，同一個 cwd、同一句 prompt（`claude -p "hi" --model haiku --output-format json`），
+prefix 取第 1 個請求的 `input + cache_creation + cache_read`：
+
+| 臂 | 旗標 | prefix | 推得 |
+|---|---|---:|---|
+| A | （無） | 169,962 | — |
+| B | `--strict-mcp-config` | 83,784 | **MCP tool schema = A−B = 86,178（51%）** |
+| C | `--setting-sources ""` | 34,686 | — |
+| D | B + C | 34,566 | **設定帶進來的（CLAUDE.md 鏈＋skills 清單＋hooks，已扣掉 MCP）= B−D = 49,218（29%）**<br>**地板（system prompt＋內建工具）= 34,566（20%）** |
+
+C≈D 是因為 MCP server 本來就由 settings 帶進來，關掉 settings 等於連 MCP 一起關。
+
+⛔ **可直接落地的一刀：文本型覆核不需要任何 MCP tool**（它只要讀檔），
+所以用 `claude -p` 當覆核者時預設加 `--strict-mcp-config`——**免費砍掉 51% 的冷啟**。
+`kiro-cli` 的等價寫法是 `--trust-tools=fs_read`（本來就該加，見〈Kiro 專屬〉）。
+
+⚠️ **這個預設有邊界，別讀成無條件**（2026-08-13 由跨 vendor 覆核者在開放式提問下指出——
+本節初版寫的就是「覆核者不需要**任何** MCP tool…**一律**加」）：判定依據**不在檔案內容裡**時
+關掉工具等於讓它無法驗證。四種要例外的場景：① 要實際打 API 端點看回什麼；
+② 要觸發 CI 或 build 看跑不跑得過；③ 要查外部狀態（依賴的最新版本、security advisory）；
+④ **改動的就是某個 MCP tool 本身——關掉 MCP 等於關掉被測物。**
+∴ 正確的規則是「**覆核者需要哪些工具由覆核範圍決定，預設是零**」，
+而不是「覆核者不需要工具」；要開就在 prompt 裡明確列出開了哪幾個。
+
+⚠️ **未解**：同一個 repo 的 transcript 量到的實際 session 冷啟是 122–128k，比這次探針的
+169,962 低約 46k，**沒有隔離出原因**（候選：ACP 生出來的 session 會 defer 一部分 MCP tool
+schema，探針走的 plain CLI 不 defer）。∴ 上表的**比例**可靠、**絕對值隨呼叫通道浮動**。
+
+**② 每一輪工具迴圈都把當時的全部 context 重送一次。**
+
+一輪真實的 Fable 5 覆核（2026-07-29 transcript，85 個請求）：
+
+```
+req#1   context  90,218   ← 冷啟，還沒讀 diff
+req#20  context 127,996
+req#40  context 150,555
+req#85  context 185,549
+累計送進去 12,724,628 ／ 累計 output 156,050  → 進去的是出來的 81 倍
+```
+
+turn 數與 context 兩個都在長 ∴ 這一項接近平方成長，不是線性。
+⚠️ **12.7M 是原始傳輸量，不是成本當量**：cache_read 在 API 定價是 0.1x、cache_write 1.25x，
+換算後約 2–3M；而**訂閱制配額怎麼加權 cache read 未經證實**，不要把 12.7M 直接讀成配額扣除。
+可靠的是**結構**（81:1 的進出比、隨輪數成長的曲線），不是那個絕對數字。
+
+**③ 你在拿邊際成本比絕對成本。** 實作是在已經熱起來的 session 裡做的——檔案早在 context 裡，
+寫 100 行的邊際成本只有幾千個 output token。覆核是**冷 context**，同樣那幾個檔要重讀，
+還要多讀呼叫端與測試。∴「覆核比實作貴」有一部分是比較基準本身不對等。
+
+**⚠️ 最容易漏掉的支出：把 `advisorModel` 設成 fable。**
+advisor 類工具**每次呼叫都轉發整段對話歷史**，而它被呼叫的頻率遠高於 push 前覆核。
+選型判準只管到「派誰覆核」，管不到這條——設定檔要另外看一眼。
+
+### 三個預設省法（不動紀律結構）
+
+前兩條**是預設，不是可選**——它們砍的是上面 ① 與 ② 兩個乘數，而且不碰任何紀律結構。
+
+- **關掉這一輪用不到的 MCP**：`claude -p --strict-mcp-config` ／ `kiro-cli --trust-tools=fs_read`。省 ①。
+  預設是零工具，要開哪幾個由覆核範圍決定——四個例外場景見上一節的 ⚠️（被測物就是 MCP tool 時尤其致命）。
+- **給地圖不給答案**：先把 `git show <commit>` 落成檔案，連同涉及檔案清單一起餵當**起點**，
+  省掉它盲找的工具迴圈。省 ②（砍的是輪數，也就是平方項的底）。
+  這不違反「開放授權不給檢查清單」——給的是哪些檔案被動到，不是要檢查哪幾點。
+  順帶避開 Windows 命令列長度上限。
+  ```bash
+  git show <commit> > /tmp/review-diff.txt
+  git show --stat --name-only <commit> > /tmp/review-files.txt
+  PROMPT="$(cat /tmp/review-prompt.txt)"
+  kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read "$PROMPT" \
+    | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g'
+  ```
 - **收斂條件按嚴重度分岔**：第一輪只出 low／敘事類 → 修完直接 push；第二輪只在第一輪出過 high/medium 時才派。
   ⚠️ **例外：這一輪有你駁回掉的 finding → 仍要派下一輪**（範圍可只限那幾條駁回，見〈下一輪的顯式標的〉）。
   沒有這條例外，「low-only ＋ 有駁回」這個最常見的組合會讓駁回永遠不受檢——而錯誤駁回的代價與 finding 嚴重度無關。

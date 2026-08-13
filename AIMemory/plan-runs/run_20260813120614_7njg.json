@@ -1,0 +1,155 @@
+{
+  "runId": "run_20260813120614_7njg",
+  "chatId": 509424983,
+  "task": "對 Clash of Olympus M2.2 已實作的 adapter、VS state、Collect state 與 mock 進行獨立品質審查，確認沒有違反轉型前盤面、不重算業務規則與 fail-safe 邊界。",
+  "plan": {
+    "summary": "對 Clash of Olympus M2.2 已實作的 adapter、VS state、Collect state 與 mock 進行獨立品質審查，確認沒有違反轉型前盤面、不重算業務規則與 fail-safe 邊界。",
+    "steps": [
+      {
+        "id": "state_review",
+        "task": "請 code review G:\\Cocos_Project\\uk_slot_clash_of_olympus 目前未提交的 M2.2 變更，集中審查 assets/Script/GameState/VsFeatureShowState.ts、CollectFeatureShowState.ts、GameView.ts。目標：驗證 VS 轉型後顯示盤面沒有改寫 RoundInfo.MainPlateSymbol、VSResolveResult 交接不跨局、mock 可觸發真正 Resolve。已知：M2.1 VSManager 是純函式，UnshowPrepareState 模板 TODO 不在本切片。驗收：只回報可重現的 High/Medium finding；無則明說。回報格式：findings（含檔行與修法）、通過項、殘留風險。",
+        "specialist": "slot-dev",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "findings",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "passed",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "risks",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "adapter_review",
+        "task": "請 code review G:\\Cocos_Project\\uk_slot_clash_of_olympus 的 assets/Script/Feature/VSManager.ts 與 tests/VSManager.test.ts 最新未提交變更。目標：驗證 AdaptRoundToVSInput 的 proto 邊界是零 cc 依賴、缺 reelIndex 或未知 vsType 時 fail-safe、測試確實能殺死對應錯誤。注意：不要建議從 appliedPositions 猜 reelIndex，因其語意不保證是 VS 位置。驗收：列出可重現 High/Medium finding 或確認無；檢查是否有類型或執行期風險。回報格式：findings、通過項、殘留風險。",
+        "specialist": "verifier",
+        "depends_on": [],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "findings",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "passed",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "risks",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "review_converge",
+        "task": "根據兩份 M2.2 code review，請判定 G:\\Cocos_Project\\uk_slot_clash_of_olympus 是否可通過本切片。範圍僅 adapter、合法 mock、VS 到 Collect 的資料交接、轉型後顯示層套用；Fly Spine 與完整 Unshow UI 明確不在本切片。驗收：High finding 才要求回修；Medium/Low 給明確理由與下一步。回報格式：verdict、must_fix、deferred、evidence。",
+        "specialist": "moa-ref-adversary",
+        "depends_on": [
+          "state_review",
+          "adapter_review"
+        ],
+        "output_schema": {
+          "fields": [
+            {
+              "name": "verdict",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "must_fix",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "deferred",
+              "type": "array",
+              "optional": false
+            },
+            {
+              "name": "evidence",
+              "type": "array",
+              "optional": false
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "status": "done",
+  "createdAt": "2026-08-13T12:06:14.347Z",
+  "updatedAt": "2026-08-13T12:17:27.201Z",
+  "steps": {
+    "state_review": {
+      "status": "done",
+      "specialist": "slot-dev",
+      "updatedAt": "2026-08-13T12:16:03.389Z",
+      "taskId": "moaplan_state_review_msrh2k6p",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_state_review_msrh2k6p_slot-dev_請-code-review-g-cocos-project-uk-slot-cl.json",
+      "outputChars": 1954,
+      "structured": true,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 588141,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 80,
+        "outputTokens": 21770,
+        "cachedReadTokens": 6170612,
+        "cachedWriteTokens": 162620,
+        "totalTokens": 6355082
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "adapter_review": {
+      "status": "done",
+      "specialist": "verifier",
+      "updatedAt": "2026-08-13T12:16:03.405Z",
+      "taskId": "moaplan_adapter_review_msrh2k6p",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_adapter_review_msrh2k6p_verifier_請-code-review-g-cocos-project-uk-slot-cl.json",
+      "outputChars": 1379,
+      "structured": true,
+      "qualityIssues": true,
+      "queuedMs": 16,
+      "durationMs": 433407,
+      "turns": 1,
+      "usage": {
+        "inputTokens": 42,
+        "outputTokens": 16369,
+        "cachedReadTokens": 2663590,
+        "cachedWriteTokens": 117087,
+        "totalTokens": 2797088
+      },
+      "adapter": "claude",
+      "model": "sonnet"
+    },
+    "review_converge": {
+      "status": "done",
+      "specialist": "moa-ref-adversary",
+      "updatedAt": "2026-08-13T12:17:27.168Z",
+      "taskId": "moaplan_review_converge_msrhf6eg",
+      "artifact": "G:\\AI\\AIMemory\\artifacts\\2026-08-13_moaplan_review_converge_msrhf6eg_moa-ref-adversary_根據兩份-m2-2-code-review-請判定-g-cocos-projec.json",
+      "outputChars": 1875,
+      "structured": true,
+      "qualityIssues": false,
+      "queuedMs": 0,
+      "durationMs": 83258,
+      "turns": 1
+    }
+  }
+}

@@ -53,7 +53,9 @@ bridge repo 的 remote：`origin=jiunchiwang/telegram-kiro-bridge`、`upstream=r
 
 ## Push 前安全網
 
-完成 merge/sync 後、push 到 origin 前，會先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端。
+完成 merge/sync 後、push 到 origin 前，會先派一個**獨立 context 的異源覆核者**檢查合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端。閘門本身不放寬。
+
+⚠️ **2026-08-13 換覆核者**：預設從 Claude Fable 5 改為 `kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read`。理由是 Fable 5 是 `anthropic`、與產出者**同源**（只算弱異源）且 3.3x 單價，而 glm-5 是 0.50x 的跨 vendor 強異源——同時更便宜且更強。Fable 5 保留為「跨 vendor 那輪產出明顯偏弱時才補的第二輪」。成本量測與選型判準見 [[adversarial-review]]。
 
 ## 相關
 

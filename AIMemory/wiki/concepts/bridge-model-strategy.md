@@ -2,7 +2,7 @@
 title: Bridge Model 選型與配額策略
 type: concept
 created: 2026-08-05
-updated: 2026-08-12（修 fixture 後第三輪重跑：命中數改為同尺重評值、補 test-retest 25% 底噪警示）
+updated: 2026-08-14（wikilint：修正「目前配置」節內部自相矛盾——主 session 誤留 claude-fable-5[1m] 舊值、kiro pin 誤留已移除的 claude-opus-4.6，與 [[bridge-acp]] 對齊為現況）
 sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, f_948bf2, f_f6406d, f_7bf9a8, f_174485, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5b9478, f_d49b9a, f_7c7a20, f_ed90b4, f_c0459d, f_5c3ef5, f_d36619, f_ccb09c, f_fd5954, f_31877c, f_e84ad9, f_d6f8a7, f_8a90df, f_e2fe39, f_cd3300, f_ea64e9]
 ---
 
@@ -13,8 +13,8 @@ sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, 
 ## 目前配置
 
 - `/agent claude` backend model pin：`opus[1m]`（effort high）——設定檔 `${MEMORY_DIR}/config/acp-providers.json`
-- bridge 主 session model 為 `claude-fable-5[1m]`（1M context 變體）——這是 session 層 runtime 設定，與 `.env` 的 `ACP_MODEL` 屬不同層，不矛盾
-- 三個 backend（`acp-providers.json`）：`claude`（claude-agent-acp，pin opus[1m]/high）、`kiro`（`kiro-cli acp --model claude-opus-4.6 -a --agent main`）、`codex`（2026-08-06 遷移為 `npx -y @agentclientprotocol/codex-acp`，pin `gpt-5.6-terra`/high；已用 ChatGPT 登入可正常運作，細節見 [[bridge-acp]]「Codex authMethods 誤判」）——此檔每次 `/agent` 即時重讀，不需重啟 bridge
+- bridge 主 session model 為 `opus[1m]`（Opus 5 1M context 變體）——⚠️ 本節先前誤留 `claude-fable-5[1m]` 舊值，`claude-opus-4.6` 已於 2026-07-27 移除見下方「走過的 pin 修正史」，主 session 與 `/agent claude` pin 現在是同一個值，兩者一致
+- 三個 backend（`acp-providers.json`）：`claude`（claude-agent-acp，pin `opus[1m]`/high）、`kiro`（`kiro-cli acp --model claude-opus-4.5 -a --agent main`——⚠️ 本節先前誤留已移除的 `claude-opus-4.6`）、`codex`（2026-08-06 遷移為 `npx -y @agentclientprotocol/codex-acp`，pin `gpt-5.6-terra`/high；已用 ChatGPT 登入可正常運作，細節見 [[bridge-acp]]「Codex authMethods 誤判」）——此檔每次 `/agent` 即時重讀，不需重啟 bridge；三個 backend 現況以 [[bridge-acp]] 的「目前配置」節為準
 - `.env` 的 adapter 註解已於 2026-08-06 修正三處：codex 段改推維護中的套件並刪掉誤導的 `-c model` 範例、claude 段改推 repo 內鎖版路徑取代已 deprecated 的 global bin、`ACP_MODEL` 段落原本錯寫「Codex 收到 `set_config_option` 會 reject」已更正為實測正確的「Codex 會接受」（`.env` 在 `.gitignore` 內，此為本機檔修正非 commit）
 
 ## 走過的 pin 修正史（勿當成當前值，只看最新 fact）
@@ -84,6 +84,44 @@ sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, 
 - Gating 條件：`advisorModel` 設定 + 僅第一方帳號（Bedrock/Vertex 不行）+ 顧問模型的 `advisor_rank` 必須 ≥ 主模型（Haiku 4.5=1、Sonnet 4.6=2、Sonnet 5／Opus 4.6=3、Opus 4.7/4.8/Opus 5=4、Fable 5=5）
 - 2026-07-14 使用者親自執行 `/advisor` 選定 Fable 5 後解除組織存取限制，之後 `advisor()` 呼叫確認可用
 - 不能取代異源覆核，細節見 [[adversarial-review]]
+
+### Token 成本與 context 機制（2026-08-13 查 CLI binary 實證）
+
+⚠️ **advisor 的 context 是被剝除，不是被快取**——這與直覺相反，寫在這裡是因為前者會讓人以為
+「advisor 的建議留在對話裡供後續參考」，那個假設不成立。
+
+`~/.local/bin/claude`（307 MB bundle）逐字：
+
+```js
+// server-side tool，帶自己的 model
+le.push({ type: "advisor_20260301", name: "advisor", model: S })
+
+// 送給主模型前，把 advisor 的問答整段濾掉
+i = o.filter(s => s.type !== "advisor_tool_result" &&
+                  (s.type !== "server_tool_use" || s.name !== "advisor"));
+// 整則被濾空時塞回佔位符：
+i.push({ type: "text", text: "[Advisor response]", citations: [] })
+```
+
+推論三件事（機制一致，但**只讀了字串與該函式片段、沒追過完整控制流** ∴ 標 B 級）：
+- 主模型 prefix 不被打亂 → prompt cache 保持命中
+- **advisor 的請求不出現在本機 transcript**（實查：叫過 2 次，今天所有 `.jsonl` 裡 `model=fable` 命中 0）
+- 主模型後續**看不到 advisor 說過什麼**，只看得到自己據此寫出的文字
+
+成本面：
+- 每次呼叫送**當下的完整 transcript**且不吃 cache ∴ 成本隨 session 長度線性成長。
+  實測同一 session 冷啟 109,380 → 39 個請求後 256,711，**同一次呼叫晚叫貴一倍以上**。
+- ⛔ **「快模型主力＋強模型 advisor 通常更省」這條通則在本機設定下不成立**：
+  它的前提是主力比 advisor 便宜很多（Sonnet 1x + Opus 1.7x）。現況是 Opus 5 主力（1.7x）
+  ＋ Fable 5 advisor（3.3x），只有 1.94 倍價差。
+- 官方自己的提示逐字：`Advisor Tool (experimental) is on and may use more tokens · /advisor`
+
+關閉方式（binary 實查）：
+- `CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1` ✅ 存在
+- `/advisor` 互動式指令（`type:"local-jsx"`，描述 `Let Claude consult a stronger model at key moments`）
+  → picker 裡選 `{label:"No advisor", value:"off"}`
+- ⛔ **`/advisor off` 不存在**（該字串在 binary 中 0 命中）——它不吃參數，只能走 picker
+- ⚪ **未解**：`/usage` 是否把 advisor 用量拆成分項顯示，未驗證（advisor 請求不落本機 ∴ 只能從伺服器端看）
 
 ## Claude Code commit trailer 不是 model 自我宣告
 

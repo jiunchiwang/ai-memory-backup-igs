@@ -968,6 +968,168 @@
       "chatId": 509424983,
       "score": 83,
       "evidence": "根因每一環都有原文佐證（RecoverSpinAck.ts:347 缺欄、colProto.js:821 emptyArray 預設、SymbolWinEffect 的 ?? [] 迴圈、截圖的 33ms 與 AWARD log），修完 verify_compile.py 5/5 PASS；扣分在於執行期尚未實測，「修好後會播」仍是預測"
+    },
+    {
+      "ts": "2026-08-12T22:29:37.692Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "三項皆以一手來源查證（git commit body、磁碟路徑、設定檔逐欄比對、usageStore.ts 掃描邏輯原始碼）；skill-usage.json 的寫入已讀回驗證 46 筆完整、notes 正確，但未跑 tsc/smoke（本輪沒動 src/），且項目 1/3 尚未執行只完成查證與 STATE.md 標記"
+    },
+    {
+      "ts": "2026-08-12T22:39:20.665Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "三項皆執行完成並以獨立方式驗證：skill-usage.json 刪後讀回確認 45 筆與其餘 entry 完整、fact 刪除以 master log + shard 雙向 grep 驗證 0 殘留且 forget-log 有 audit 紀錄、wiki 修正對照 specialist-domains.json 原始欄位；本輪未動 src/ ∴ 無需 tsc/smoke，唯一未驗證項是 /skilllint 下次實跑是否真的跳過 claude-api（依 memory.ts:573 的 notes 判讀邏輯推斷，未實測）"
+    },
+    {
+      "ts": "2026-08-12T23:22:32.979Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "探針數字內部自洽已驗（34,566+86,178+49,218=169,962、各佔比重算過），所有編輯皆讀回確認，AI-canonical git diff 為 2 檔 +75/-4 未動其他；探針產生的 4 個 transcript slug 已清除。未完成項：跨 vendor 覆核仍在跑、findings 未處置，∴ 這批改動尚未經任何異源檢查——分數保留在 82 而非更高就是因為這一點"
+    },
+    {
+      "ts": "2026-08-12T23:46:00.196Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "三項全部落地並 push（local 與 remote HEAD 皆為 3b8a00b，已用 git ls-remote 對照非只看 push 輸出）；經跨 vendor 覆核且 pin 實證為智譜、事後 git status 確認唯讀；覆核 0 finding 但開放題挖出的 MCP 邊界缺口已修進正本、wiki 與記憶。扣分項：該邊界修正本身未經第二輪覆核，且 46k 探針落差未解——兩者都寫進 commit body 而非隱瞞"
+    },
+    {
+      "ts": "2026-08-13T00:06:42.052Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "A 級主張皆有逐字來源（settings.json、advisor 工具契約原文、pricing tier fact）；量級估計標為 B 級並明說量測對象是我的 session context 而非 advisor 請求本身；主動更正了兩處——上一輪把推論講成事實、以及差點把外部 repo fable-advisor 的 packaging 誤當內建 advisor 的證據。未解項如實列出：advisor 呼叫不落本機任何 log、服務端是否 prompt cache 未知"
+    },
+    {
+      "ts": "2026-08-13T00:51:07.781Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "七條逐項對照本機 CLI binary 的逐字字串，修正一條不成立（advisor off 0 命中）並補上機制證據（filter 剝除 + [Advisor response] 佔位符原始碼）；明確標出未驗證項（/usage 是否分項）而非推測。扣分：binary 是 minified bundle，我讀的是字串與單一函式片段、非完整控制流，∴「剝除發生在送給主模型之前」是從該函式語意推得而非追過呼叫端"
+    },
+    {
+      "ts": "2026-08-13T00:57:56.920Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "五處編輯全數 grep 讀回驗證（binary 逐字碼、防混淆警語、index 摘要、fact shard 各 1 命中）；A/B 級證據分界寫進條目本身而非只在對話裡講；主動記下自己差點踩的同名混淆。扣分：核心機制主張仍是 B 級（minified bundle 未追完整控制流），且 /usage 分項與否無法從本機驗證"
+    },
+    {
+      "ts": "2026-08-13T02:03:23.853Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "已逐檔查證：GameView.ts:857 mock 值、Game_Define.ts:193 門檻、AwardState.ts:69-82 分支與 74 行 TODO 原文、兩個新 state 的 pass-through 皆為 literal 引用；M0b-checklist 既有記錄的 rate=3 與我的推算一致（交叉印證）。僅改文件未動程式碼故無需 tsc；扣分在於我沒有實際跑 Preview 重現，是靠使用者回報 + 靜態證據推定。"
+    },
+    {
+      "ts": "2026-08-13T02:19:08.100Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "兩處編輯已用 grep 逐條驗回（manifest:64/72、checklist:164），內容與我宣稱一致；對照表的 framework 期待值逐字取自 BigWinComponent.ts:13-34，現有動畫名取自 BigWin.json 的 animations key 實際列舉，非推測。純文件變更不影響編譯故未跑 tsc。扣分在於 MAX 階「靜默不播」是依 findAnimation 回傳 null 推導的失效形狀，未實際跑到那階驗證。"
+    },
+    {
+      "ts": "2026-08-13T02:35:55.674Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "三處 CHECK_JP 註解狀態與零呼叫端皆為實查（grep 涵蓋 assets/ 與 extensions/，含 framework）；熱鍵 7 的流程是從 mock 欄位值逐步推導 VsFeatureShowState/CollectFeatureShowState 的 early-return 條件，兩個 state 的原始碼本輪稍早已讀過全文。扣分同前：未實際跑 Preview 重現，流程是靜態推導。"
+    },
+    {
+      "ts": "2026-08-13T02:42:37.999Z",
+      "chatId": 509424983,
+      "score": 83,
+      "evidence": "八處編輯已用 grep 逐條驗回（頂端摘要、熱鍵表 163-170 八列、未勾選殘留只剩第 5 項目視）；結果欄一律寫「使用者實測」不編造觀察細節，僅 3/5/7 帶我實際查證過的機制說明。第 1/2 節勾選框是依頂端摘要 2026-08-12 已記 ✅ 補齊，屬文件內部一致性修補、非新宣稱。扣分：我未親自跑 Preview，全部通過與否以使用者回報為準。"
+    },
+    {
+      "ts": "2026-08-13T02:48:55.518Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "七處編輯全部 grep 驗回：專案端四檔的 \u0000CODE20\u0000 落點逐條列出、舊語氣「語意未定案／2X vs X2」零殘留；wiki frontmatter updated 已改、三個新段落錨點（:37/:44/:53/:57）確認存在。語意與數值的區分在每一處都保留，未把暫定寫成定案。扣分：S44 儲存格內容我引用自既有文件記載（dev-spec/codegen-report），未親自開 xlsx 核對原文。"
+    },
+    {
+      "ts": "2026-08-13T02:52:32.974Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "四處編輯全部 grep 驗回：checklist 頂端摘要五列全 ✅、未勾選框 grep 回空、wiki frontmatter 與 :37/:39 內容確認。M0b 完成宣稱的依據是使用者逐項回報（熱鍵全過、Mask 正常），我未親自跑 Preview，這點在文件裡一律標「使用者實測」未冒充自驗。風險 1 降級的範圍在文件與本則回覆都明確限縮為「骨架不會斷 ≠ 功能會動」，未過度宣稱。"
+    },
+    {
+      "ts": "2026-08-13T03:06:40.887Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "逐行讀完整份 HTML 後對照確認每個旋鈕的讀取點與 old 分支的覆寫（L.431 強制 0.75s、pickBranch 只在 planNew、audio 只在 mode===\"new\"），皆為 literal 證據；尚未實際在瀏覽器操作驗證主觀感受，也還沒改任何碼"
+    },
+    {
+      "ts": "2026-08-13T03:21:47.947Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "23 項行為斷言全綠（含九格旋鈕逐一生效、快照隔離、曲線守恆）、48 個 DOM id 交叉比對零落差、13 個移植常數比對過原始碼、標籤配對平衡；扣分因為沒有實際在瀏覽器渲染確認排版，且 harness 是 DOM stub 而非真 DOM"
+    },
+    {
+      "ts": "2026-08-13T05:52:18.986Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "黑箱探針四臂實測（檔案式無效→git init 無效→真 cd 無效→補 project trust 生效；再拆出 hook hash 信任那一層），payload 為實際捕獲原文非推測；探針產物已逐項驗證刪除且 config.toml 行數未變。扣分在：只驗了 Update File 一種 patch 動作，Add/Delete File 的形狀是推論；kiro hooks 仍只有 binary 字串證據、設定形狀未驗"
+    },
+    {
+      "ts": "2026-08-13T06:59:11.848Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "對帳 PASS、三道斷言各經一次突變測試確認會紅、verify_compile 5/5 PASS；碼改動全是註解 ∴ 執行期風險近零。扣分處：閘門是手動觸發無自動掛載，且核心重分類依賴一條未經領域專家覆核的 B 級推論"
+    },
+    {
+      "ts": "2026-08-13T07:07:35.977Z",
+      "chatId": -1004477408930,
+      "score": 72,
+      "evidence": "讀了 turn-lint.ts 與 claim-verify.ts 全文、跑實測確認我的 tail ratio 0.7394 不觸發且有陽性對照組，並窮舉五種警告來源證明 fallback 只可能來自 legacy 警告；但觸發源本身沒查出來（console.warn 未落檔），未改任何碼"
+    },
+    {
+      "ts": "2026-08-13T07:17:32.391Z",
+      "chatId": -1004477408930,
+      "score": 88,
+      "evidence": "tsc exit 0、fast tier 133/133 綠、兩個突變各自被殺且 anchor 驗過唯一匹配、還原後回綠；連動的三個檔案是 grep 全 repo 找出來的（含一個會變恆真的既有斷言）。扣分點：mutate-gate 沒加常設 mutation 條目（expect 對 assert 風格腳本的對應機制沒查清楚），以及觸發這次 footer 的原始 legacy count 來源仍未查明"
+    },
+    {
+      "ts": "2026-08-13T09:27:54.667Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "查證都是讀取類：dev-spec.md 逐行讀過、git check-ignore 確認 docs/ 被 .gitignore:84 擋、mtime 17:06 對上落檔時間；未動任何檔案 ∴ 無需型別檢查。「重送」是從 mtime + 觀測時間序推論，非直接證據。"
+    },
+    {
+      "ts": "2026-08-13T09:45:25.353Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "規格條目全部逐條讀自 docs/spec/markdown/Clash of Olympus.md 原文並附錨點；編導口頭部分標明來源等級；例子中兩處算法歧義已明確標為不確定而非寫成定論。dev-spec.md 只改一段文字、未動碼 ∴ 無型別檢查。未確認項是規格本身的歧義，不是我沒查。"
+    },
+    {
+      "ts": "2026-08-13T09:57:43.896Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "(a)(b) 兩條使用者答覆已逐條落檔並轉成 BC-VS-4/5 契約；演算法的每一步都對得到規格錨點或使用者確認。「兩個 VS Collect 連乘」明確標為推導非規格原文。未寫任何程式碼 ∴ 無型別檢查與測試可跑，BC-VS-x 目前只是契約敘述、尚未有對應測試。"
+    },
+    {
+      "ts": "2026-08-13T09:59:22.924Z",
+      "chatId": 509424983,
+      "score": 85,
+      "evidence": "更正經雙重查證：規格 markdown 符號表原文（13 CASH/14 JP/15 COLLECT）與 Game_Define.ts:63-73 兩邊獨立一致；用 grep 掃過全專案 .md 與 wiki，三處 (13)/(14) 命中皆為明寫「模板已有」的正確句子、非誤植。演算法未受影響是逐條核對 S3/S4/BC-VS-3 得出，非推測。"
+    },
+    {
+      "ts": "2026-08-13T10:02:23.344Z",
+      "chatId": 509424983,
+      "score": 83,
+      "evidence": "三處文件編輯後跑了 docs/check-spec-gaps.mjs 對帳閘門，PASS 且項數 10→11 正確；GAP-11 無錨點欄位、閘門第 3 條斷言「錨點為 — 者不得出現在碼裡」也通過。未寫程式碼 ∴ 無 tsc/測試。給編導的兩個數字（24000/7000）是照兩種讀法各自算出的，未經第三方覆核。"
+    },
+    {
+      "ts": "2026-08-13T10:10:54.737Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "三處文件同步改完後跑對帳閘門 PASS，並用 grep 掃「打到盤面/作用在盤面所有分數/依序複利/連乘」確認無殘留舊語意（命中皆為變更軌跡或規格原文）。主動偵測並標示出編導答覆與使用者稍早 (a) 答覆的衝突，未默默覆蓋。「普通 Collect ×1」與「規格內部矛盾」兩點標明為推導，非編導原話。未寫碼 ∴ 無 tsc/測試。"
+    },
+    {
+      "ts": "2026-08-13T11:09:58.011Z",
+      "chatId": 509424983,
+      "score": 93,
+      "evidence": "7項 VSManager 測試、專屬型別檢查、專案 verify_compile、規格對帳與 finalize gate 均通過；State/演出依範圍刻意未接"
+    },
+    {
+      "ts": "2026-08-13T12:22:27.576Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "9/9 純函式測試、專案編譯診斷、規格缺口對帳與 finalize gate 均通過；尚未執行 Cocos Preview 人工畫面驗證，完整 Fly/Spine 與 Unshow UI 亦明確延後"
     }
   ]
 }

@@ -85,6 +85,10 @@ Y Combinator 出品的 multiplayer agent harness。研究後整理出 Harness �
 
 ### Fable-Advisor（echo-of-machines/fable-advisor）
 
+⚠️ **這是外部 repo，與 Claude Code 內建的 `advisor` 工具無關**（名字撞在一起，2026-08-13
+差點拿本節當「內建 advisor 有做 context 壓縮」的證據）。內建 advisor 的成本與剝除機制見
+[[bridge-model-strategy]]。
+
 - 借鏡 **context packaging pattern**（commit 4c1cfd5）：
   - RELAY_DELEGATE / PARALLEL_DELEGATE goal prompt 從三要素擴充為五要素（加「已知背景」「待決問題」）
   - PARALLEL_DELEGATE 區分決策型（自打包 context brief）/ 調查型（給路徑讓 specialist 自己讀）兩種 context 模式
