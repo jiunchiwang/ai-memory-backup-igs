@@ -63,11 +63,21 @@
   - 觀察點：與已升格的 `ms-blackbox-probe-experiment-design` 不是同一件事——那支是探針**實驗設計**原則（多臂矩陣、陽性對照），這個候選是**針對 ACP handshake 這一種特定協定**的固定探測手法（initialize-only、不開 session、逐 backend try/catch、探針前綴天生排除進 smoke gate）。若第 5 次出現且沉澱出可重用的探針骨架（共用 spawn/kill/timeout 邏輯，含這次發現的「逾時 timer 要 clearTimeout」教訓），評估獨立成 skill 或 append 到 ms-blackbox-probe-experiment-design 的「ACP 應用範例」小節
   - 現有覆蓋：wiki `verification-diagnosis`（raw JSON-RPC probe 是查證 model 的唯一可靠法）、`bridge-acp`（ACP adapter 能力偵測陷阱）
 
-- [ ] **specialist-blind-advisor-hallucination** | count=2（同一輪內兩支 specialist） | score=0.40 | 留底觀察
+- [x] **specialist-blind-advisor-hallucination** | count=3 | score=0.60 | **2026-08-15 append 到 ms-cross-model-adversarial-review**（〈覆核者選型〉新增第三軸「能力」前置檢查段落）
   - Pattern：派 specialist 覆核 diff／文件時未先確認它有沒有讀檔工具就直接派工——`readOnlyLens:true` 但 `mcpServers` 只有 `readonly`、或 `mcpServers` 為空且 harness 不帶 `--agent`，兩者都會靜默收窄成零工具（`src/specialist-config-audit.ts:26,28` 已列為不變式），specialist 讀不到檔卻不會說「我讀不到」，反而產出帶行號、帶檔名的逐字引用；其中一支甚至捏造了不存在的檔名與變數名。可讀檔的 specialist（`readOnlyLens` 搭配非空 MCP，或 harness 帶 `--agent`）同一份任務跑起來則正常引用真實檔案內容
-  - 代表 session：2026-08-11（本輪，`moa-ref-kiro`/`moa-ref-adversary` 兩支盲審 commit `9897f46` 皆產出幻覺 diff，改派 `bridge-dev`/`verifier` 才驗證通過；已存為 fact f_667928、f_14cb23）
-  - 觀察點：目前只在 telegram-kiro-bridge 一輪內發生，且是這個 repo 特有的 specialist 設定形狀（`specialist-domains.json` 的 `readOnlyLens`/`mcpServers`/harness 組合）。若再出現 2–3 次（尤其換一個 agent 系統／換一種「盲審」設計仍踩到同一種「沒有讀檔能力卻不自報」失效），可考慮 append 到 `ms-cross-model-adversarial-review`（新增一節「派工前先確認覆核者讀得到檔」，與既有〈覆核者選型〉的 domain/tier 兩軸並列成第三軸：能力）
-  - 現有覆蓋：fact f_667928（bridge-specialist topic）、f_14cb23（adversarial-review topic）——兩則已含具體檔案:行號與修法，暫不需要更多
+  - 代表 session：2026-08-11（`moa-ref-kiro`/`moa-ref-adversary` 兩支盲審 commit `9897f46` 皆產出幻覺 diff，改派 `bridge-dev`/`verifier` 才驗證通過；已存為 fact f_667928、f_14cb23）、**2026-08-14 第 3 例**（`run_plan` 的 `wf-review` 模板把 `lens_adversary` 派給 preamble 明寫「不要使用任何工具」的 `moa-ref-adversary`，這次表現不是幻覺而是直接拒答「我沒有讀取工具的權限」——同根因、不同表現，確認是同一個 pattern 不是巧合）
+  - 已修（bridge 端）：`wf-review`/`wf-verify` 模板改派給讀得到檔的 specialist（`verifier`/`moa-ref-security`），並新增以 preamble 原文判盲審的防復發斷言
+
+- [ ] **replay-safety-guarantee-layer-crossing** | count=1 session（同一天內連續 4 次同形狀重複） | score=0.20（頻率公式偏低，但單次成本極高） | 留底觀察
+  - Pattern：在一個有多層錯誤處理／重送邏輯的系統裡修好某一層的重複投遞保證後，異源覆核在**上一層**又找到同樣的問題——同一個缺陷形狀往上遷移，每修一層在上一層發現同樣的東西，且該找的「第四層」仍是預設路徑（`TG_RICH_STREAM_ENABLED` 預設開啟）
+  - 代表 session：2026-08-14（Telegram 出站訊息重複投遞四層修復：`ff976f6` transformer 層 autoRetry 無界重試 → `c8f7ddd` 上層 catch-and-requeue 抵銷保證 → `c7bfca3` 重送拆兩則中途失敗整筆放回 → `2406c4f` rich fallback 吞 HttpError 讓前三層在預設路徑被繞過）
+  - 觀察點：目前只在單一 session 內發生（雖重複 4 次），若在另一個系統／另一個 repo 也出現「修好底層保證後，異源覆核在呼叫鏈上一層找到同樣問題」的形狀，可考慮新建 skill 或 append 到 ms-cross-model-adversarial-review（新增檢查清單「保證是否沿呼叫鏈往上傳遞，還是被上層邏輯抵銷」）
+  - 現有覆蓋：Claude Code 個人記憶 `layer-guarantee-undone-above`（僅覆蓋其中一層）、`docs/SPEC-replay-safety-audit.md`（bridge 專案文件，記錄未修的第五、六層候選）
+
+- [ ] **downstream-fork-setup-for-colleague** | count=1 | score=0.12 | 太低，繼續觀察
+  - Pattern：把自己的 private repo 交給同事當他們的獨立起點——GitHub Fork 按鈕在 private repo 情境下不好用（fork 綁在母 repo 權限、母 repo 撤權會讓 fork 失效且不能獨立轉 public），正確做法是同事自建空 repo、加你的 repo 當 upstream、**廢掉 upstream 的 push URL**（`git remote set-url --push upstream no-push`）避免手滑推爆你的 main。方向與既有 `sync-fork-from-upstream` skill（拉 upstream 更新進自己的 fork）恰好相反
+  - 代表 session：2026-08-14（協助同事接手 telegram-kiro-bridge，產出 `docs/SETUP-downstream-fork.md`）
+  - 觀察點：若再有同事／專案要用同一套「反向 fork」流程，且沉澱出固定檢查清單（private repo 可視性確認、collaborator 只有 write 沒有唯讀角色、`.env`／密鑰打包外流風險），可考慮 append 到 `sync-fork-from-upstream`（同域：fork 關係管理，方向互補）
 
 ## 誤判紀錄（防重複偵測）
 
@@ -80,4 +90,4 @@
 - ~~"users jiunchiwang" / "users" / "jiunchiwang" pattern（4 sessions）~~ — 2026-08-13 判定誤判：全部命中同一個絕對路徑字串 `C:\Users\jiunchiwang\Downloads\Telegram Desktop\wheel-click-prototype.html`（使用者傳同一份 HTML 檔案討論多輪），是路徑字面值被重複引用，不是技術模式
 
 ---
-Last updated: 2026-08-13
+Last updated: 2026-08-15

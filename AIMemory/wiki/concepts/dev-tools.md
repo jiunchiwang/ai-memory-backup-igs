@@ -2,8 +2,8 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-08-09（新增 excel-to-ai-document 專案位置記錄；上週 topic review 已確認此歸屬正確）
-sources: [f_7c41c5, f_99b243, f_0b76be, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55]
+updated: 2026-08-15（新增：.env 編輯驗證做法、Git Bash timeout /t 陷阱、skillUsage 權威來源、HTML 目錄錨點偏好）
+sources: [f_7c41c5, f_99b243, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55, f_8a4a0e, f_10d8ff, f_cbcb3c, f_b120d4, f_a1b97e, f_e189b1, f_1a68bf]
 ---
 
 # 開發工具與環境設定
@@ -96,9 +96,26 @@ EOF
 - **公式格沒有快取值會讀成 None**：`load_workbook(data_only=True)` 讀到的是 Excel **上次存檔時算好的快取值**，不是公式本身。由 openpyxl 之類產生器寫出、或存檔前未重算的檔案沒有快取，那些公式格一律讀成 `None`。2026-08-06 實測一張三格全公式的 sheet 整張被判成空白，而自我驗證因為刻意跳過 empty sheet 的檢查照樣印「整體：通過」。解法是另載一次 `data_only=False` 比對，把只有公式沒有快取的格回填公式字串並讓驗證失敗（回填的是 `=SUM(...)` 不是數值，仍須請對方在 Excel 重新存檔以寫入快取）。
 - **讀儲存格顏色只判斷 `.rgb` 是字串會漏掉 theme 色**：`fill.fgColor.rgb` 只在 `color.type == 'rgb'` 時是字串；Excel 調色盤上排的「佈景主題色彩」`type` 是 `'theme'`、舊調色盤是 `'indexed'`，只判斷 rgb 是不是字串會靜默漏掉一整類上色（比不做更危險，因為輸出看起來已支援顏色）。theme 要讀 `xl/theme/theme1.xml` 的 `clrScheme`，且 Excel 的 theme 索引順序與 XML 排列**不同**——XML 是 `dk1,lt1,dk2,lt2,accent1..6,hlink,folHlink`，Excel 索引前兩對互換（`0→lt1, 1→dk1, 2→lt2, 3→dk2, 4..9→accent1..6, 10→hlink, 11→folHlink`）——再套 tint（ECMA-376：在 HLS 亮度上，`tint<0 → L*(1+tint)`、`tint>0 → L*(1-tint)+tint`，HLSMAX 正規化為 1.0）；indexed 走 `openpyxl.styles.colors.COLOR_INDEX`。
 
+### 編輯含機密的檔案（如 .env）
+
+只讀取需要的行範圍（避免把 token 拉進 context）、用 regex 定位而非手抄空白，並以「匹配數必須恰為 1」與「`KEY=value` 行數前後不變」兩道保險驗證未動到設定值。
+
+### Git Bash 用 Start-Process 排延遲工作不可用 `timeout /t N`
+
+Git Bash 的 `PATH` 讓 cmd 解析到 GNU coreutils 的 `timeout` 而非 Windows 的 `timeout.exe`，GNU 版看不懂 `/t` 會直接非零退出，接在後面的 `&&` 整串短路、後續指令完全不執行且無明顯錯誤（2026-08-12 因此宣告「重啟已排定」但實際什麼都沒發生）。正確做法是用 PowerShell 的 `Start-Sleep` 或呼叫完整路徑 `C:\Windows\System32\timeout.exe`。
+
+### 查「某支 skill 被用了幾次」的權威來源
+
+`~/.claude.json` 的 `skillUsage` 物件（每支 skill 一筆 `usageCount` + `lastUsedAt`，全時間累計、不隨 transcript 輪替）——**不是**拿 transcript grep（transcript 約 30 天輪替，數出來的只是視窗內的數字）。配套判準：當計數來源的比對條件寬到會把無關事件也記進去（如某 log 把「commit message 提到某工具名」也算一筆），分母被污染而分子沒有，此時只能報絕對數，不可寫成比例或百分比，並明講分母為何不可用。
+
 ## 文件產出
 
 - `docs/typescript-guide.html` — TypeScript 教學手冊 HTML 版（深色主題、左側目錄、語法高亮），來源為 Obsidian Vault 的 `typescript-guide_Claude.md`
+
+## 使用者偏好
+
+- HTML 文件要有目錄錨點跳轉功能（點擊跳段落 + 回目錄連結）
+- 技術流程交接同時提供 Markdown 與具目錄錨點、可列印的 HTML 版本
 
 ## 相關
 

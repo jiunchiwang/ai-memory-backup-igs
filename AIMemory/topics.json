@@ -1,22 +1,29 @@
 // Topic classification rules for bridge preamble + list_facts.
 // Edit freely — bridge re-reads this file every ~2s, no /restart needed.
-// Schema: [{ topic: string, keywords: string[] }]
+// Schema: [{ topic_id, topic, keywords[], domain_id, domain, tags[], kind }]
+//   - topic_id/domain_id are stable identities; rename only display names.
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-12T20:10:49.374Z (token=topics-e6bb1214-32)
+// Last applied: 2026-08-14T20:13:14.032Z (token=topics-96b0dc9a-33)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
+    "topic_id": "t_b5abdf1630dd",
     "topic": "uk-917",
     "keywords": [
       "uk_917",
       "uk-917",
       "leprechaun",
       "3 leprechaun"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_2bb396e17412",
     "topic": "uk-872-eyestrike2",
     "keywords": [
       "uk_872",
@@ -25,9 +32,14 @@
       "featurewheel",
       "click 音效",
       "wheel-click"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_b28113484730",
     "topic": "uk-slot-codegen",
     "keywords": [
       "codegen",
@@ -36,18 +48,28 @@
       "anchor_merge",
       "probe-compare",
       "uk-slot-codegen"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_ef63e5b84014",
     "topic": "uk-slot-clash-olympus",
     "keywords": [
       "clash of olympus",
       "clash_of_olympus",
       "諸神之戰",
       "triplecointreasure"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_ffc1c4353a2c",
     "topic": "uk-slot-eye-strike",
     "keywords": [
       "eye_strike",
@@ -55,9 +77,14 @@
       "uk_658",
       "magicpot",
       "reel light"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_e9fa80dc7776",
     "topic": "uk-slot-pirates-queen",
     "keywords": [
       "pirates_queen",
@@ -66,9 +93,14 @@
       "懸賞令",
       "rtctrl",
       "rt 凍幀"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_99e3d0798a38",
     "topic": "uk-slot-template",
     "keywords": [
       "uk_slot_template",
@@ -79,9 +111,14 @@
       "slot 模板",
       "模板專案",
       "maskexpand"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_9a9bdab3b520",
     "topic": "spine-viewer",
     "keywords": [
       "spine-viewer",
@@ -92,9 +129,14 @@
       "triangle",
       "batch scan",
       "editor.message.send"
-    ]
+    ],
+    "domain_id": "d_f0dd190c13c4",
+    "domain": "spine",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_46415d60be7e",
     "topic": "uk-slot",
     "keywords": [
       "uk_slot",
@@ -118,9 +160,14 @@
       "gamestrings",
       "slot 專案",
       "uk-slot-pitfalls"
-    ]
+    ],
+    "domain_id": "d_83116acf18e4",
+    "domain": "uk",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_e33d11867cae",
     "topic": "bridge-upstream-sync",
     "keywords": [
       "同步 upstream",
@@ -137,9 +184,14 @@
       "backport",
       "add/add 假衝突",
       "merge-base"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_c9c21d947795",
     "topic": "bridge-draft-diag",
     "keywords": [
       "draft-diag",
@@ -152,9 +204,14 @@
       "draft 扣留",
       "cutpendingtokentail",
       "keepalive"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_f0ed3f4b5f6f",
     "topic": "bridge-streaming",
     "keywords": [
       "draft streaming",
@@ -185,9 +242,14 @@
       "drain",
       "draining",
       "diverge"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_4dfecaf05383",
     "topic": "bridge-specialist",
     "keywords": [
       "specialist",
@@ -213,9 +275,14 @@
       "wf-prd",
       "wf-review",
       "wf-verify"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_ccc3b318fd6e",
     "topic": "bridge-memory",
     "keywords": [
       "factlint",
@@ -238,10 +305,18 @@
       "state.md",
       "notebooklm",
       "memory mcp",
-      "frontmatter"
-    ]
+      "frontmatter",
+      "去留判準",
+      "topicreview",
+      "expectedtoken"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_934af6f028d4",
     "topic": "bridge-session",
     "keywords": [
       "session/load",
@@ -256,9 +331,14 @@
       "session/resume",
       "replaysessionhistory",
       "sessioncapabilities"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_31415ebd4478",
     "topic": "bridge-dream",
     "keywords": [
       "dream.json",
@@ -273,9 +353,14 @@
       "per-backend",
       "顯式還原",
       "/dream"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_9327a8fc7378",
     "topic": "bridge-self-eval",
     "keywords": [
       "self_eval",
@@ -284,9 +369,14 @@
       "turnlint",
       "turn_lint",
       "/selfeval"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_e21f8c76ce6a",
     "topic": "bridge-doc-sync",
     "keywords": [
       "readme.md",
@@ -300,9 +390,14 @@
       "desc 基線",
       "refreshrouting",
       "check-doc-sync"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_3e12c68847df",
     "topic": "bridge-secrets-backup",
     "keywords": [
       "/backup",
@@ -315,9 +410,14 @@
       "git reflog",
       "洩漏",
       "sync-skills"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_970976bdabf0",
     "topic": "bridge-infra",
     "keywords": [
       "psmux",
@@ -333,9 +433,14 @@
       "[ws]",
       "env-file",
       "start.bat"
-    ]
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_4beef26f92c2",
     "topic": "bridge-smoke-gate",
     "keywords": [
       "smoke",
@@ -350,10 +455,16 @@
       "nounusedlocals",
       "check-",
       "mutation test",
-      "突變測試"
-    ]
+      "突變測試",
+      "mutate-gate"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_86c43a9a02fd",
     "topic": "adversarial-review",
     "keywords": [
       "異源覆核",
@@ -370,10 +481,16 @@
       "弱異源",
       "強異源",
       "覆核收斂",
-      "ms-cross-model-adversarial"
-    ]
+      "ms-cross-model-adversarial",
+      "嚴重度降級"
+    ],
+    "domain_id": "d_4f72e839d948",
+    "domain": "adversarial",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_2491a4651115",
     "topic": "bridge-model-strategy",
     "keywords": [
       "model pin",
@@ -395,10 +512,17 @@
       "fable-5",
       "fable5",
       "--list-models",
-      "claude max 5x"
-    ]
+      "claude max 5x",
+      "deepseek",
+      "qwen3-coder"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_a3fcfbf63384",
     "topic": "bridge-acp",
     "keywords": [
       "acp adapter",
@@ -417,10 +541,16 @@
       "stdio json-rpc",
       "http server mode",
       "authmethods",
-      "@agentclientprotocol"
-    ]
+      "@agentclientprotocol",
+      "permissionmode"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_399533bc9812",
     "topic": "bridge-research",
     "keywords": [
       "cowart",
@@ -444,10 +574,16 @@
       "yc-software/qm",
       "harness 抽象",
       "capability set",
-      "opencode"
-    ]
+      "opencode",
+      "cloudflare-os"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_2283bf46c971",
     "topic": "bridge-project",
     "keywords": [
       "telegram-kiro-bridge",
@@ -467,10 +603,17 @@
       "ctx 統計",
       "claude-mem",
       "chroma",
-      "worker 靜默死亡"
-    ]
+      "worker 靜默死亡",
+      "daily intel",
+      "重放安全性"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_8a24eff33412",
     "topic": "verification-diagnosis",
     "keywords": [
       "恆真",
@@ -491,10 +634,18 @@
       "全負",
       "held constant",
       "vacuous",
-      "恆綠"
-    ]
+      "恆綠",
+      "可否證",
+      "合理上限",
+      "read-back"
+    ],
+    "domain_id": "d_4183b7793fd2",
+    "domain": "verification",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_2754c1cfff43",
     "topic": "igs-uof",
     "keywords": [
       "uof",
@@ -509,9 +660,30 @@
       "uof_client",
       "turnstile",
       "cdp 接管"
-    ]
+    ],
+    "domain_id": "d_5ff60895ec5c",
+    "domain": "igs",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_dfaac0c8a053",
+    "topic": "igaming-mend-scan",
+    "keywords": [
+      "igaming-mend-scan",
+      "mend.io",
+      "mend workflow",
+      "mend_target_github_org",
+      "igs-arcade-division",
+      "mend user key"
+    ],
+    "domain_id": "d_5ff60895ec5c",
+    "domain": "igs",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
+    "topic_id": "t_3219ce06c222",
     "topic": "dev-tools",
     "keywords": [
       "youtube-transcript",
@@ -533,10 +705,17 @@
       "目錄錨點",
       "openpyxl",
       ".env",
-      "excel-to-ai-document"
-    ]
+      "excel-to-ai-document",
+      "start-process",
+      "timeout /t"
+    ],
+    "domain_id": "d_ef260e9aa3c6",
+    "domain": "dev",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_f63a788a1276",
     "topic": "ai-strategy",
     "keywords": [
       "ai-canonical",
@@ -550,9 +729,14 @@
       "sync.ps1",
       "codex cli",
       "skillsmp"
-    ]
+    ],
+    "domain_id": "d_32e83e92d45d",
+    "domain": "ai",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_eb24913a6bc0",
     "topic": "user-pref",
     "keywords": [
       "使用者偏好",
@@ -564,14 +748,24 @@
       "使用者裁決",
       "使用者把",
       "除錯對策偏好",
-      "未追蹤檔案"
-    ]
+      "未追蹤檔案",
+      "授權 push"
+    ],
+    "domain_id": "d_04f8996da763",
+    "domain": "user",
+    "tags": [],
+    "kind": "topic"
   },
   {
+    "topic_id": "t_9c32429c2926",
     "topic": "misc",
     "keywords": [
       "misc",
       "fallback"
-    ]
+    ],
+    "domain_id": "d_9c32429c2926",
+    "domain": "misc",
+    "tags": [],
+    "kind": "misc"
   }
 ]

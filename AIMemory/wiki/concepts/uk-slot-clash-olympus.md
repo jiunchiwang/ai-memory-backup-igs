@@ -2,8 +2,8 @@
 title: Clash of Olympus（諸神之戰）
 type: concept
 created: 2026-07-16
-updated: 2026-08-13（VS Feature 規則與編導多輪確認定案：符號 id 更正、觸發兩層閘門、VS Collect 改收分時乘倍相加非連乘；M2.1/M2.2 進度）
-sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92, f_385d4d, f_90d6e8, f_5927a3, f_6587d2, f_ab095f, f_baad41, f_2675c6, f_cf423c, f_e0a15e, f_9b909e, f_05937b, f_f8bf81]
+updated: 2026-08-15（補：VS 轉型權威來源裁決——server 給定＋client 推導對帳）
+sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92, f_385d4d, f_90d6e8, f_5927a3, f_6587d2, f_ab095f, f_baad41, f_2675c6, f_cf423c, f_e0a15e, f_9b909e, f_05937b, f_f8bf81, f_4b8603, f_a732fb]
 ---
 
 # Clash of Olympus（諸神之戰）
@@ -98,6 +98,10 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 **觸發是兩層閘門**（編導口頭補充，規格未寫）：Level 1 盤面級＝有 Collect 且（有 Cash 或 JP）才可能發動；Level 2 輪級＝該輪有 Cash/JP 轉 VsCash、有 Collect 轉 VsCollect、都沒有則不發動。因 Collect 只在第 1/6 輪、Cash/JP 只在第 2~5 輪，型別由輪次唯一決定（col 0/5 → 只可能 VsCollect，col 1~4 → 只可能 VsCash），上限 4 個 VsCash + 2 個 VsCollect。
 
 **VS Collect 分數處置（編導 2026-08-13 改規格，推翻規格原文）**：倍率**不打到盤面上的 Cash/JP**，只在收集時才乘倍（每個 Collect 用自己的倍率乘它收到的分數）∴ 多個 VS Collect 是**相加**不是連乘（例：col0 ×10、col5 ×5、盤面總分 T=1000 → 10000+5000=15000），沒有 VS 的普通 Collect 收到未乘倍的 T。VS Cash 側不變（仍改寫分數、只乘自己那輪的加總，多個 VS Cash 互不影響）。
+
+## VS 轉型權威來源（2026-08-13 裁決）
+
+`server 給定 + client 推導對帳`：轉型結果以 server 下發為準，client 仍自行推導一份用來對帳而非自行判定 ∴ client 端任何「自己算出轉型結果就直接採用」的寫法都是違反 server 權威（M2.2 覆核據此開出過一條 High finding）。補上「尺寸與轉型」一節（轉型時機與 1×4 覆蓋順序）未涵蓋的「誰說了算」那一面。
 
 ## M2 實作進度
 

@@ -4,7 +4,6 @@
 - [f_0e5446] [2026-07-10T15:54:46.744Z] bridge 架構陷阱：index.ts 的全域 unhandledRejection handler 會 process.exit(1)，任何同 process 的 async callback（如 HTTP handler）未捕捉的 throw 都會殺掉整個 bridge——新增 server/handler 必須自帶錯誤邊界
 - [f_b1e2ca] [2026-07-12T00:04:25.981Z] telegram-kiro-bridge 的 start.bat 每輪 loop 用 npm run dev（tsx 直跑 src），所以 <<RESTART>>（bridge exit(1) 後 supervisor 重生）即帶最新 src 程式碼生效，不需先 build dist
 - [f_484853] [2026-07-12T00:33:23.421Z] bridge 主程序跑 tsx 直吃 src，但 MCP 子行程（memory/google）三個 CLI 都吃 dist——改到 mcp-memory 的 import 鏈必須 npx tsc -p . 重建 dist 才生效，且要重啟 session 才會重新 spawn MCP
-- [f_651a0d] [2026-07-15T12:27:41.801Z] 使用者有一個未進版的本地腳本 start-psmux.ps1（psmux Windows 開發啟動器），與 upstream 新增的 docs/SPEC-psmux-dev-launcher.md 規劃概念相同但尚未整合比對
 - [f_e72b07] [2026-07-15T20:02:12.094Z] 因為 bridge 已有完整 lifecycle 管理（start.bat loop + <<RESTART>> token + grammY autoRetry）所以決定 psmux 不導入 bridge code，只當外層容器使用（排除讓 bridge 依賴 psmux 因為會增加耦合且無對等收益）；start-psmux.ps1 與 start.bat 並存，各用各的場景
 - [f_332dae] [2026-07-17T20:41:27.331Z] telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據
 - [f_ff0915] [2026-07-19T20:08:36.741Z] telegram-kiro-bridge 的暖機期訊息處理最終採 MVP-first 方案（新增 warmup.ts：coreReady 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay），此方案在 dev-design judge-panel 得 72 分，勝過 robustness-first（54 分）與 simplicity-first（40 分），並嫁接後兩者的關鍵設計

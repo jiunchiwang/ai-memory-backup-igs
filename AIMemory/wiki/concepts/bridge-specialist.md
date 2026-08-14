@@ -2,8 +2,8 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-14（factlint：確認「不建 bridge-dev」舊決策 f_32a736 已被 f_2fe4f7 現況取代，改列 history_sources 並執行 supersede；先前更新：刪除已證偽的來源 fact f_05ac7e、更正 slot-dev prefixes 為 ["uk-"]）
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_c61829, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a, f_198e79]
+updated: 2026-08-15（新增：run_plan 能力錯配缺陷修正（wf-review/wf-verify 改派 verifier/moa-ref-security）+ 三個 CLI 各讀各自 MCP 設定檔的補充事實）
+sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_c61829, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a, f_198e79, f_665ffb, f_d878ad, f_e7bcdd, f_2bcda2, f_39026e, f_aa67b7, f_75089c]
 history_sources: [f_32a736]
 ---
 
@@ -40,7 +40,9 @@ history_sources: [f_32a736]
 
 先前 `moa-presets.json` 引用的顧問名只是空殼、無法 spawn，此次補齊後 `/moa` 指令可正常運作。ctx 統計行已同步加上 agent/model/effort 後綴（格式「· agent/model/effort」），specialist proxy 則顯示 specialist name。
 
-⚠️ **`moa-ref-kiro` 與 `moa-ref-adversary` 是 blind advisor，不能用來覆核程式碼**（2026-08-11 實測）：前者 `readOnlyLens:true` 但 `mcpServers` 只有 `readonly`、後者 `mcpServers` 為空且 harness `kiro-cli acp -a` 不帶 `--agent`——兩者皆讀不到檔（`src/specialist-config-audit.ts:26,28` 已列為靜默失敗不變式）。`moa-ref-kiro` 曾對盲審任務產出捏造檔名與變數名的幻覺 diff。可讀檔的覆核者是走 `claude-agent-acp` 那組（`moa-ref-security`/`moa-ref-perf`/`moa-ref-ux`/`verifier`/`bridge-dev`）。目前**沒有任何「可讀檔＋跨 vendor」的分身**（唯二非 Anthropic 模型 `moa-ref-kiro`/`moa-ref-codex` 都是 blind advisor）；`plan-templates/wf-review.json` 的 `lens_adversary` 指名 `moa-ref-adversary`，該模板的對抗 lens 因此結構上讀不到碼。
+⚠️ **`moa-ref-kiro` 與 `moa-ref-adversary` 是 blind advisor，不能用來覆核程式碼**（2026-08-11 實測）：前者 `readOnlyLens:true` 但 `mcpServers` 只有 `readonly`、後者 `mcpServers` 為空且 harness `kiro-cli acp -a` 不帶 `--agent`——兩者皆讀不到檔（`src/specialist-config-audit.ts:26,28` 已列為靜默失敗不變式）。`moa-ref-kiro` 曾對盲審任務產出捏造檔名與變數名的幻覺 diff。可讀檔的覆核者是走 `claude-agent-acp` 那組（`moa-ref-security`/`moa-ref-perf`/`moa-ref-ux`/`verifier`/`bridge-dev`）。目前**沒有任何「可讀檔＋跨 vendor」的分身**（唯二非 Anthropic 模型 `moa-ref-kiro`/`moa-ref-codex` 都是 blind advisor）。
+
+✅ **`wf-review`/`wf-verify` 的能力錯配已修（2026-08-13 發生、2026-08-14 修正，commit `9626e10`）**：`plan-templates/wf-review.json` 的 `lens_adversary` 與 `wf-verify.json` 的 `reverse_sweep` 都要求「先自己讀過對象本體＋逐字複製原始碼」，卻派給 `moa-ref-adversary`——它的 preamble 明寫「不要使用任何工具（不讀檔、不寫檔、不跑命令）」∴ 開場即回「我沒有讀取工具的權限」、findings 全部降級成推測。**承重的不是這個錯配本身而是它的不可見性**：step 有回東西就算完成，`moa_plan_done` 記 `failed:0`、run status `done`，拒答只出現在 verifier 的 `NEEDS_FIX` 與顧問自己的內文裡、`/job` 看全綠。改派理由：`lens_adversary` → **verifier**（實測會讀檔並附「檔案:行號」逐字引用）；`reverse_sweep` 排除 general（它同時是該模板的 enumerate/converge 角色，反向遍歷跟枚舉用同一個模型會共享盲點）改派 **moa-ref-security**（preamble 明寫「可讀檔」）。另在 `check-job-orchestration.mjs` 加一條用 **preamble 原文**判盲審的斷言（不寫死名單，名單會漂）＋新增變異守它。兩個容易誤判的事實：①「權限」是顧問自己的措辭不是 ACP 拒絕——`readOnlyLens` 只設在 `moa-ref-kiro`，`moa-ref-adversary` 沒有 ∴ 它握有讀檔工具只是被 prompt 禁用；② 盲審顧問接 `wf-prd`/`wf-design` 的 `challenge` 是合法的（那裡「逐字引用」的對象是 `depends_on` 餵進來的產出不是檔案），斷言的正則不能放寬到涵蓋那種用語，否則會製造假紅燈。
 
 ## run_plan 與 wf-design 全有全無設計（2026-08-10）
 
@@ -116,6 +118,10 @@ Status server（port 3847）擴充為 specialist 監控面板：
 ## MCP 繼承最佳化：暫緩（2026-07-27）
 
 評估過把 `settingSources` 限縮為 `['project']` 或 `[]` 可讓 `session/new` 從 spawn 19 個行程降到 3 個，但**決定暫緩不做**——單純限縮會連帶砍掉 specialist 需要的能力繼承。此項要動必須先做「保留能力前提下的架構設計」，不可當成純效能參數調整直接改。
+
+## 三個 CLI 各讀各自的 MCP 設定檔
+
+新增 MCP server 必須三處分別加，改本體才自動三家同步：claude → `~/.claude.json`（`claude mcp add` 寫入）、codex → `~/.codex/config.toml` 的 `[mcp_servers.*]`、kiro → `~/.kiro/agents/main.json` 的 `mcpServers`。Kiro 額外有 `tools` 白名單欄位（如 `["@builtin","@memory","@google","@bridge-actions"]`），只加 `mcpServers` 不夠、還要在 `tools` 加對應的 `@<name>`，否則 server 起得來但工具被白名單擋住。SELF_EVAL token 功能（2026-07-14）與 bridge-actions MCP 的 README／usage-guide.html 說明補齊（2026-07-16/17）皆已在 [[bridge-project]] 記錄，此處不重複。
 
 ## 延伸筆記
 

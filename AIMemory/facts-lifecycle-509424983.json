@@ -6,6 +6,18 @@
       "updatedAt": "2026-08-13T20:35:53.915Z",
       "supersededBy": "f_198e79",
       "reason": "舊決策已被 2026-07-16 的實際建立行動與持續使用推翻，wiki bridge-specialist.md 已同步記錄；factlint 2026-08-14 執行"
+    },
+    "f_713852": {
+      "status": "superseded",
+      "updatedAt": "2026-08-13T23:14:23.361Z",
+      "supersededBy": "f_017f18",
+      "reason": "2026-08-14 以 dist 實跑重現，原推測（token 被輸出截斷遺失）被反證；真因是 P2 flag 未開導致 token 命名空間錯配"
+    },
+    "f_017f18": {
+      "status": "superseded",
+      "updatedAt": "2026-08-13T23:49:52.344Z",
+      "supersededBy": "f_5c1956",
+      "reason": "跨 vendor 覆核（kiro-cli glm-5）指出 acknowledge 在 P2 off 時是 no-op，我追碼確認：重燒機制與 apply 成敗無關，原 fact 的因果是編的"
     }
   }
 }

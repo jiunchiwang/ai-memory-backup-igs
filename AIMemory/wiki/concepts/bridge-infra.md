@@ -3,7 +3,7 @@ title: Bridge 基礎設施（Process 生命週期、暖機、Hook）
 type: concept
 created: 2026-07-06
 updated: 2026-08-08
-sources: [f_130b5d, f_5bf5da, f_9c5954, f_0e5446, f_b1e2ca, f_484853, f_651a0d, f_e72b07, f_332dae, f_ff0915, f_4835ec, f_a692b7, f_c79917]
+sources: [f_130b5d, f_5bf5da, f_9c5954, f_0e5446, f_b1e2ca, f_484853, f_e72b07, f_332dae, f_ff0915, f_4835ec, f_a692b7, f_c79917, f_210d6f]
 ---
 
 # Bridge 基礎設施

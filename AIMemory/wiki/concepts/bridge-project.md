@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-08-14（factlint：f_32a736「不建 bridge-dev」舊決策已被 supersede → f_198e79，改列 history_sources）
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_5a2532, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_651a0d, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_2d2996, f_198e79]
+updated: 2026-08-15（新增：Telegram 出站重複投遞四層修復 + 重放安全性三判準、同事接手 repo 用獨立 fork 而非 GitHub Fork 按鈕、Daily Intel BOM 修復）
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_5a2532, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_b1e2ca, f_484853, f_cc8fd5, f_f144ad, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_90a25d, f_a23d83, f_4c12ce, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_e272f0, f_f2dc75, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_2d2996, f_198e79, f_bef432, f_71c654, f_1ac058, f_200c89, f_b82b6e, f_f0aeea, f_8ca646, f_42e862, f_57bf1c, f_4d4805, f_f9f50a, f_4a3140, f_5df807, f_549d3f, f_474e9e]
 history_sources: [f_32a736]
 ---
 
@@ -47,6 +47,7 @@ telegram-kiro-bridge 是一個 Telegram Bot ↔ ACP Agent 橋接器，位於 `G:
 - `docs/pending-roadmap.html` — 待做方案總覽（深色主題、目錄跳轉），記錄所有未完成 roadmap 項目
 - `docs/llm-to-ai-agent-summary.html`、`docs/hermes-vs-bridge.html`、`docs/karpathy-wiki-alignment-roadmap.html` — 學習/比較/roadmap 專頁
 - `docs/session-archive-explained.html` — session 歸檔說明
+- `docs/superpowers/plans/2026-07-07-acp-session-resume.md` — session resume 實作計畫，含 BC-1~5 行為契約與 adapter 實測記錄表（見 [[bridge-session]]）
 
 ## 部署與 Git
 
@@ -73,6 +74,7 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - **/intel 情報排程**：ai + game-industry 每日 08:00、topic-ai podcast 隔天 08:00（split 策略避免早晨資訊過載）
 - **QUIET_HOURS**：靜默時段排程延遲，目前未啟用；Passive Monitor 改 cron 每日 2 次（12:00、22:00）
 - **UI 修復**：/help keyboard parse_mode 改 HTML + escHtml；「返回選單」callback data 改 `help:_back` 避免撞名
+- **Daily Intel BOM 修復**（2026-08-05）：產出的 markdown 檔案在手機上顯示亂碼，根因是 UTF-8 without BOM；已在 `src/daily-intel/reports/daily.ts` 加上 UTF-8 BOM（`﻿`）
 
 ## Process 管理
 
@@ -114,6 +116,10 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 ## Push 前安全機制
 
 完成 merge/sync 後、push 到 origin 前的獨立 Fable5 覆核慣例見 [[bridge-upstream-sync]]；已在至少 4 個 commit 中實際採用（如 `04cc0bc` 訊息明確標註「Fable5 push 前覆核」），是跨多次 merge 反覆使用的專案慣例，非單次紀錄。輕量呼叫方式見 [[bridge-acp]]（`claude -p --model fable`，不透過 specialist/domain 機制註冊）。
+
+### 分享 repo 給同事（2026-08-14）
+
+同事接手時選了「同事自建 private repo 當 origin ＋ 使用者的 repo 當 upstream」而非 GitHub Fork 鈕——理由是使用者的 repo（`jiunchiwang/telegram-kiro-bridge`）與 upstream（`redkilin/telegram-kiro-bridge`）皆為 private（未認證打 GitHub API 兩者皆回 404，403=rate limit、301=改名，∴ 推論成立），private repo 的 fork 綁在母 repo 的存取權限上（撤存取即失效、無法獨立轉 public），獨立 repo 沒這問題。GitHub 個人帳號沒有「唯讀 collaborator」角色（細粒度角色只有 organization 才有）∴ 把人加成 collaborator 等於給 `main` 寫入權；下游設定流程因此把**廢掉 upstream 的 push URL**（`git remote set-url --push upstream no-push`）當成必要步驟而非建議。設定流程檔已產出在 `scratch/SETUP-downstream-fork.md`（裁決不 commit 進版控、只轉給同事，搬到 `scratch/` 結構性避免被 `git add -A` 誤掃）。
 
 ## 共享知識庫同步（/sharedsync，2026-07-19）
 
@@ -159,6 +165,23 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - **impact-gate hook 是「每檔首次修改」觸發**：一次批次改 20 個檔案時 20 個 Edit 會全部被擋，同一份因果鏈分析可涵蓋整批同類改動，輸出後原樣重試即全數放行
 - **Bash tool 用 heredoc 寫檔時 `\n` 可能被展開成真換行**，破壞產出的原始碼（2026-08-01 連續踩兩次：寫壞 TypeScript 註解、寫壞測試字串字面值導致 SyntaxError）；修法改用 `chr(10)`／`chr(92)+'n'` 這類不含跳脫字元的構造方式
 - **`POLICIES/development-methodology.md` 一則「L1 機械層一直是空的」假宣稱已更正（2026-08-13）**：實查 `.claude/hooks/impact-gate.mjs`（2026-07-06 建）確實存在且已在 `.claude/settings.local.json` 註冊為 PreToolUse，本輪在 `claude-agent-acp` session 內實測會 `exit 2` 擋下 Write——真正不存在的只有另一套工具（ClaudeCodeTools）的 `impact-analysis-guard.sh`，兩者被誤判成同一件事。該檔在 R-2 保護清單內，改動須走異源覆核；`CLAUDE.md` 承重核摘要與 `POLICIES/run-plan-orchestration.md` 退化路徑有同句回音待一併修。方向性結論：閉環方法論的可重用概念不拆成獨立 skill（已是 skill 的部分已 skill 化，多階段編排已是 plan-templates，always-on 紀律靠 `@import`），跨專案共用的載體改用 AI-canonical 的 steering。
+
+## Telegram 出站訊息重複投遞四層修復與重放安全性判準（2026-08-14/15）
+
+異源覆核（Codex `gpt-5.6-sol`）用開放式問題「同一個缺陷形狀連續往上跑了三層，第四層在哪」逐層挖出 Telegram 出站訊息的重複投遞鏈，四個 commit 依序修完：
+
+1. **`ff976f6`** — grammY `autoRetry` 的 `rethrowHttpErrors` 預設 `false`，HttpError 走 `call()` **內層** while 迴圈，`remainingAttempts` 只在**外層** do-while 遞減 ∴ 傳輸層失敗是**無界重試**（`maxRetryAttempts` 管不到）。改用 Cloudflare 的判準——**看操作不看錯誤**：唯讀/冪等方法有界重試，每次產生新內容的方法（`sendMessage` 等）不重試原樣拋出，未列到的方法 default-deny。
+2. **`c8f7ddd`** — 上一層建立的保證被上層 catch-and-requeue 抵銷（transformer 層擋掉的重複投遞被上層放回佇列）；順帶發現 pending queue 沒有自己的排空觸發器（只搭 429 恢復的便車）與 flush 無併發防護（`shift`/`unshift` 之間有 `await`，兩路並行會交錯送出同一筆）。
+3. **`c7bfca3`** — 訊息拆成兩則後，前段成功但後段失敗時整筆放回佇列重試，導致已送出的那則再送一次。
+4. **`2406c4f`** — `trySendRichMessage` 的裸 `catch { return undefined; }` 把「可能已送達」翻譯成「沒送出」，呼叫端補一則 plain message ⇒ 兩則持久訊息且第二則不帶標記；而 `TG_RICH_STREAM_ENABLED` 預設開啟 ∴ **前三層修法在預設路徑上大多被繞過**。
+
+⚠️ **「不是恆真斷言，但 safety property 定義錯」比恆真更難抓**：其中一條回歸測試（R10）曾把「重送整筆放回佇列」這個錯誤行為釘成 expected output，突變測試全綠——突變測試只能證明斷言有被執行到，不能證明斷言守的是對的性質；抓到它的是異源覆核讀懂測試在驗什麼，不是機械檢查。
+
+`docs/SPEC-replay-safety-audit.md` 記錄三條可複用判準（**R-A** 看操作不看錯誤——錯誤分不出送出前後失敗，判準要落在操作重放會不會產生新副作用；**R-B** allow-list 而非 deny-list；**R-C** 保證要沿層傳遞——第 N 層建立的 at-most-once 若第 N+1 層把錯誤翻譯成「確定沒發生」就歸零，每建立一個保證必須往上追一層）與兩條 high severity 未修項（H-1 ACP 整輪 prompt 重放含工具副作用、H-2 `/job resume` 無 per-run lease）——兩者選擇開案不動手，理由是各自要碰的是承重核心（session/turn 重試語意、lease 與持久化狀態），該先設計再動手，不該接在已疊四層的 commit 後面繼續加。
+
+順手更正兩則自己的事實錯誤：`PlanRunStepStatus` 是 `pending | done | failed | timeout | blocked | expanded`，**沒有 `running`**（run 層級才有）；`scheduler.ts` 檔頭曾有假契約「crash 會 re-fire」，實際是 `schedule-store.ts` 的 `load()` 對過期 recurring entry 往前滾到下一個未來 tick、one-shot 進 `missed` 並丟棄，**不會重放**。
+
+驗證：full tier 159/159（含 3 支平常被 `--fast` 跳過的慢測試）+ mutate-gate 12/12 killed。五個 commit（`e914f21..0db8132`）已 push origin/main。
 
 ## 積壓修復記錄（2026-08-05 補記，實際發生於 2026-08-01~04）
 

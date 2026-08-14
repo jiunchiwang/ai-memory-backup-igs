@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-12（新增：smoke suite 逾時 flaky 診斷兩案例、A/B 類逾時分法、突變存活先驗證突變真的套用）
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63]
+updated: 2026-08-15（新增：mutate-gate harness 慣例（紅燈行規範／noUnusedLocals 陷阱／無 timeout 風險）、hang detection 門檻侵蝕、raw JSON-RPC probe 查證法）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_a692b7, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63, f_2f4ae9, f_88d3a1, f_f32658, f_b01fe2, f_ed5f8b, f_cb572a, f_06ae88, f_23885a, f_377321, f_932293, f_156659, f_820b01, f_3c7003, f_30d188, f_47b507, f_5e618d, f_3e05f4, f_0b4a7b]
 ---
 
 # Bridge 測試閘門與建置
@@ -115,6 +115,26 @@ send 等滿它才回 null → elapsed 超標），沒讀到這段就盲調會誤
 才確認是**等價突變**（下界 `>0` 與上界 `<=max` 的檢查已涵蓋 NaN/±Infinity，因 `Math.floor(NaN)>0`
 為 false、`Infinity<=max` 為 false），據此把該行當死碼刪除。教訓：突變測試出現存活的突變體，先確認
 「突變真的套用了」再判斷是測試太弱還是等價突變——順序反了會錯殺測試或錯放死碼。
+
+## Mutate-gate Harness 慣例與陷阱（2026-08-14）
+
+`scripts/mutate-gate.mjs` 只認輸出含 `❌` 或 `[FAIL]` 的紅燈行——「只丟例外不印標記」的閘門會被判成 false-kill；harness 註解明訂的處置是「讓閘門去符合慣例」（改成收集全部失敗再 `exit 1` 並印 `❌`），不是放寬比對。
+
+三個容易踩的坑：
+
+- **`run()` 沒有 timeout** ∴ 會掛住的變異體會拖死整個變異測試。驗「無界重試」這類缺陷時，變異要用「放寬上限」而非「拿掉上限」，並把便宜的原始碼斷言排在會掛住的端到端斷言之前讓變異快速紅燈。
+- **變異體撞 `noUnusedLocals` 會被判 error 而非 killed**：拿掉呼叫或改成 `if (false)` 會讓符號變孤兒（TS6133）或只寫不讀；正確做法是保留讀取點只讓條件不成立（如 `if (x && false)`、`return f(x) || true`）。
+- **Windows Git Bash 下不要用 `/tmp` 存突變備份**：`cp` 會成功（Git Bash 有虛擬映射），但 Node 收到字面路徑會解析成 `G:\tmp` 而 ENOENT，突變根本沒寫進檔案，測試對未突變原檔跑出「1/1 passed」的假綠（2026-08-01 實證）。改用 repo 內相對路徑（`./.rp.bak`）。
+
+驗「順序型承重不變式」的可重用三件套：模組契約測試（fake api 記錄呼叫）＋ 來源順序斷言（`indexOf(A) < indexOf(B)`，錨在該呼叫點獨有的字串上避免多處 match）＋ mutation test（手動搬錯位置確認測試真的紅，還原後 `git diff` 確認無殘留）。
+
+## 效能觀察：hang detection 門檻侵蝕（2026-08-13）
+
+Smoke suite 整體的 hang detection 門檻安全邊際已被 suite 耗時成長侵蝕：耗時增至 432.1s（7.2 分）後，邊際從約 2 倍降到約 1.39 倍；使用者決定刻意不調高門檻。此條與上面「A 類/B 類逾時分法」互補——那條管單支腳本的逾時，這條管整個 suite 之上的 hang 兜底，下次再加 smoke 腳本前要先意識到這道兜底已所剩不多。
+
+## 查證 ACP session 實際跑什麼 model（raw JSON-RPC probe）
+
+唯一可靠法：spawn adapter → `initialize` → `session/new` → 讀回傳 `configOptions` 裡 `id==="model"` 的 `currentValue`（`options[].description` 開頭即真名如「Opus 5 with 1M context」）。`scripts/check-acp-model-effort.mjs` 只驗 pin 成不成功、不告訴你實際在跑什麼——`claude-agent-acp` 不支援 `effort` config option（`session/set_config_option` 設 effort 會回 `-32603 Unknown config option`，bridge 已 graceful ignore，屬已知限制非故障，該閘門因此必然報 effort 拒絕）。
 
 ## CI 決策（刻意不進版控的 ci.yml）
 

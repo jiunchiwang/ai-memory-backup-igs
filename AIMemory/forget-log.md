@@ -356,3 +356,9 @@ Shards updated: bridge-project.md (-3), misc.md (-3), uk-slot.md (-2)
 
 - [2026-08-13T20:37:12.045Z] user=509424983 query="**Plugin 檔案存在**：13.15.0 版的 `scripts/` 目錄完整" deleted=1 token=forget-fc49a1bb-1
     - [f_c9e9ef] [2026-08-11T07:11:08.032Z] **Plugin 檔案存在**：13.15.0 版的 `scripts/` 目錄完整
+- [2026-08-14T20:27:04.786Z] user=509424983 query="只能保護 /agent claude 一條" deleted=1 token=forget-a867c967-1
+    - [f_938688] [2026-08-11T14:29:20.790Z] Claude Agent SDK 的 PreToolUse hook 無法用來補 telegram-kiro-bridge 缺的 L1 機械閘門：hook 是 Agent SDK 的機制，Codex 與 Kiro 底下沒有 Agent SDK 也就沒有這個攔截點，只能保護 /agent claude 一條；要三個 backend 一致的機械閘門必須做在 bridge 自己那一層（ACP session/request_permission）
+- [2026-08-14T20:27:05.207Z] user=509424983 query="規劃概念相同但尚未整合比對" deleted=0 token=forget-a219e99e-1
+
+- [2026-08-14T20:27:30.887Z] user=509424983 query="規劃概念相同但尚未整合比對" deleted=1 token=forget-a219e99e-1
+    - [f_651a0d] [2026-07-15T12:27:41.801Z] 使用者有一個未進版的本地腳本 start-psmux.ps1（psmux Windows 開發啟動器），與 upstream 新增的 docs/SPEC-psmux-dev-launcher.md 規劃概念相同但尚未整合比對

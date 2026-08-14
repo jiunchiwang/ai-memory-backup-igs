@@ -25,3 +25,4 @@
 - [f_dac7e8] [2026-08-01T12:24:53.767Z] 測試斷言若寫成「某字串必須完全不存在於整份原始碼」會被解釋該修法原因的註解打紅（恆假而非恆真），正確做法是先濾掉註解行只掃可執行碼——解釋「為何移除」的註解必須留著，否則下一個人會照舊前提把碼加回來（2026-08-01 telegram-kiro-bridge check-draft-streaming 實證）
 - [f_29e3fe] [2026-08-01T12:24:53.767Z] 把已被推翻的前提釘死在測試裡的斷言會變成修復的阻礙：telegram-kiro-bridge 的 check-draft-streaming ⑭ 原本要求送出條件必須含 `|| statusWrote`、要求 "status-restore" 字串存在，前提實測推翻後這兩條反而擋住正確修法，須改寫成反向釘死（該字串不得出現）加位置比較斷言（2026-08-01）
 - [f_c662dd] [2026-08-01T20:06:12.228Z] telegram-kiro-bridge 的 draft streaming 拒絕採用 grammY stream plugin 的「Plan E」策略（draft 逼近上限時 finalize 再開新 draft 接續），因為 finalize 後舊 draft 仍會「幽靈並存」若干秒——client 在同一 chat 看到兩個 draft 泡泡會導致動畫行為不可預測。選用的方案是頭部凍結：到上限後只顯示尾端 N 字，讓最終訊息帶完整文字。
+- [f_53d158] [2026-08-14T17:04:31.035Z] src/telegram-rich-renderer.ts 是刻意零依賴模組：check-rich-renderer.mjs 與 check-draft-streaming.mjs 會把它的原始碼轉譯後用 data:text/javascript URL 載入，bare specifier（如 grammy）在那裡解析不了會直接載入失敗 ∴ 該檔只能用結構化判定（err.name === "HttpError"），並在另一支能 import grammy 的閘門加斷言釘住該假設避免靜默失效

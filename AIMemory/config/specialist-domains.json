@@ -368,7 +368,17 @@
         "wf-verify",
         "claude-mem",
         "chroma",
-        "worker 靜默死亡"
+        "worker 靜默死亡",
+        "去留判準",
+        "topicreview",
+        "expectedtoken",
+        "mutate-gate",
+        "deepseek",
+        "qwen3-coder",
+        "permissionmode",
+        "cloudflare-os",
+        "daily intel",
+        "重放安全性"
       ],
       "wikiPages": [
         "bridge-project",
@@ -392,7 +402,8 @@
         "bridge-doc-sync",
         "bridge-secrets-backup",
         "bridge-infra",
-        "bridge-self-eval"
+        "bridge-self-eval",
+        "cloudflare-os"
       ],
       "mcpServers": [
         "memory",

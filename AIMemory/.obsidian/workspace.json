@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/concepts/bridge-research.md",
+                "file": "facts_Topic/509424983/adversarial-review.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "bridge-research"
+              "title": "adversarial-review"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "檔案瀏覽器"
@@ -185,6 +187,16 @@
   },
   "active": "22a02900826b6a3d",
   "lastOpenFiles": [
+    "facts_Topic/509424983/uk-slot.md",
+    "facts_Topic/509424983/bridge-specialist.md",
+    "facts_Topic/509424983/bridge-model-strategy.md",
+    "facts_Topic/509424983/bridge-project.md",
+    "facts_Topic/509424983/bridge-doc-sync.md",
+    "facts_Topic/509424983/uk-872-eyestrike2.md",
+    "facts_Topic/509424983/uk-917.md",
+    "facts_Topic/509424983/adversarial-review.md",
+    "facts-509424983.md",
+    "wiki/concepts/bridge-research.md",
     "wiki/concepts/agent-system-architecture.md",
     "claude-mem-ingested-zh.md",
     "wiki/concepts/adversarial-review.md",
@@ -210,16 +222,6 @@
     "oldSessions/session-509424983-2026-07-28T01-43-22.md",
     "oldSessions/session-509424983-2026-07-28T01-43-21.md",
     "oldSessions/session-509424983-2026-07-28T01-24-17.md",
-    "oldSessions/session-509424983-2026-07-28T00-32-25.md",
-    "oldSessions/session-509424983-2026-07-27T20-23-27.md",
-    "dailylog/2026-07-28.md",
-    "sessions/session-509424983-2026-07-28T14-08-03.md",
-    "sessions/session-509424983-2026-07-28T08-03-50.md",
-    "sessions/session-509424983-2026-07-28T08-03-49.md",
-    "artifacts/uk-slot-knowledge-base-draft.md",
-    "sessions/session-509424983-2026-07-28T01-43-22.md",
-    "sessions/session-509424983-2026-07-28T01-43-21.md",
-    "sessions/session-509424983-2026-07-28T01-24-17.md",
-    "sessions/session-509424983-2026-07-28T00-32-25.md"
+    "oldSessions/session-509424983-2026-07-28T00-32-25.md"
   ]
 }

@@ -1,10 +1,3 @@
-- [f_0c44ff] [2026-07-06T02:55:13.600Z] 使用者對非 Claude model 的判斷：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項，qwen3-coder-next 超便宜但 experimental 穩定度未知
 - [f_48fdd8] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 B 區（規格書結構）決策：寫常見模式而非固定規範（因為每案 sheet 命名不同）
-- [f_99e9ba] [2026-07-30T22:22:40.029Z] 使用者對「純進度/完成記錄」類型 facts 的去留判準：包含技術實作細節（如 selector、防線設計、API 行為）的進度記錄值得保留，純日期綁定的進度快照（如「M0a 完成」「三步驟已完成」）和歷史拆分記錄可刪除
-- [f_ebe025] [2026-07-31T11:33:09.321Z] 使用者對承重改動的驗證要求偏好「留下可否證條件」而非宣稱已修好：修法上線時要同時定義出「什麼觀測結果代表原假設是錯的」（2026-07-31 draft H1 修法實測，判讀表區分 status-restore 幀存在但症狀仍在=假設錯）
-- [f_71c654] [2026-08-05T02:45:22.922Z] Daily Intel 產出的 markdown 檔案在手機上顯示亂碼的問題是因為 UTF-8 without BOM，已於 2026-08-05 在 src/daily-intel/reports/daily.ts 加上 UTF-8 BOM（\uFEFF）修復
-- [f_c77fbc] [2026-08-09T01:20:19.280Z] 宣告持久化成果（檔案已改／已 commit／已存記憶）前必須確認該輪真的有對應的 tool call，判準是「指得出是哪一次呼叫」——2026-08-09 曾在回覆結尾具體寫出「wiki 頁已改寫（Section 4 重寫、加 Section 6）」但整輪零 Edit/Write；具體的章節號反而讓假宣稱更可信，且 READ-BACK 紀律結構上擋不到（沒有 write 就沒有東西可讀回，自檢項被整個跳過而非失敗）。
-- [f_c38776] [2026-08-11T14:29:20.790Z] Claude Agent SDK 的 permissionMode 官方 TypeScript reference 頁只列四個值，但本機實裝 sdk.d.ts:2092 是六個（default / acceptEdits / bypassPermissions / plan / dontAsk / auto）——文件與實裝不符，應以 sdk.d.ts 為準
-- [f_b120d4] [2026-08-12T07:20:10.466Z] 在 Git Bash 環境用 Start-Process 排延遲工作時不可用 `timeout /t N`：Git Bash 的 PATH 讓 cmd 解析到 GNU coreutils 的 timeout 而非 Windows 的 timeout.exe，GNU 版看不懂 /t 會直接非零退出，接在後面的 `&&` 整串短路、後續指令完全不執行且無明顯錯誤。2026-08-12 因此宣告「重啟已排定」但實際什麼都沒發生。正確做法是用 PowerShell 的 Start-Sleep 或呼叫完整路徑 C:\Windows\System32\timeout.exe。
-- [f_d36f3a] [2026-08-12T07:20:10.466Z] 為設定值加「合理上限」時要誠實寫出它擋不到什麼：2026-08-12 原本在註解宣稱 24 小時上限擋得住「多打一個零」的手滑，但 90 分鐘多一個零是 15 小時、仍在上限內完全擋不到——沒有任何上限能區分手滑與故意。修法是把上限的定位寫成「只擋明確荒謬值（貼錯欄位、貼進 timestamp、MAX_SAFE_INTEGER）」，並在測試裡加一條反面斷言明文記錄「15 小時仍會被接受」，免得後人把它當防線。
 - [f_b0c1d8] [2026-08-13T03:00:58.319Z] 使用者的公司內部 AIBI 平台有一台 MCP server rockmanx4-aibi（Streamable HTTP，https://ai-gw-02.i17game.net/rockmanx4/mcp，Bearer token 認證），提供 SkillHub 技能庫／AI 採購用量／團膳菜單／員工通訊錄／平台公告；2026-08-13 嘗試加入時 claude mcp add 被 Claude Code auto mode classifier 擋下，尚未加成
+- [f_271855] [2026-08-14T20:08:54.910Z] iGaming Mend 掃描導入時，使用者選了沿用附件文件中已外流的既有 Mend User Key，排除撤銷重發——理由是「目前那把就是配發給我用的 Key」，非帳號本身有問題只是文件外流；assistant 已明確 push back 建議撤銷重發，使用者知情後仍裁決沿用。2026-08-14。

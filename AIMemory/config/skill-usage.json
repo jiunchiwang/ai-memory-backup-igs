@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-13T20:44:15.257Z",
+  "_last_updated_at": "2026-08-14T20:34:49.232Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.099Z",
-      "last_agent_used_at": "2026-08-13T03:58:07.883Z",
-      "use_count": 5,
-      "last_reason": "評估 ClaudeCodeTools 的概念要不要吸收成 skill，走它的 Step 0 範圍確認 + Step 1 現狀盤點比對表",
+      "last_agent_used_at": "2026-08-14T13:49:33.900Z",
+      "use_count": 6,
+      "last_reason": "依 Step 0-1 做範圍確認與現狀盤點，產出外部 vs 既有比對表，停在使用者確認吸收範圍之前",
       "pinned": false,
       "notes": "upgraded from skill-candidates (count=5, score=0.80)",
       "orphan": false
@@ -21,20 +21,20 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 2,
-      "last_routed_at": "2026-08-13T06:39:46.150Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-14T11:49:23.589Z"
     },
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-13T20:44:15.257Z",
-      "use_count": 126,
-      "last_reason": "skill lint 步驟：讀 skill-usage.json → 套用 pinned/新建/.system 排除規則篩 underused → 查證 brainstorming 孤兒路徑（plugin cache）→ 產出報告，未逐 skill 做 stale 內容比對（budget 限制）",
+      "last_agent_used_at": "2026-08-14T20:34:48.039Z",
+      "use_count": 129,
+      "last_reason": "wikilint 步驟：index.md 交叉比對磁碟檔案（orphan）→ 全域 grep wikilink 比對合法 slug（broken link，抓到 1 條並修正）→ 針對 sources/shard 計數落差挑 9 頁比對內容（stale，2 頁需更新）→ 直接修正 2+1 頁 → audit_provenance 逐頁驗證 blocking=0",
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-13T01:03:45.097Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T05:11:09.132Z"
     },
     "writing-skills": {
       "created_at": "2026-05-29T12:41:52.929Z",
@@ -55,8 +55,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 4,
-      "last_routed_at": "2026-08-13T10:06:43.585Z"
+      "route_count": 5,
+      "last_routed_at": "2026-08-14T05:11:09.132Z"
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -67,8 +67,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-11T04:24:27.393Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T06:09:21.662Z"
     },
     "uk-slot-project-docs": {
       "created_at": "2026-06-19T02:00:09.159Z",
@@ -79,8 +79,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 6,
-      "last_routed_at": "2026-08-13T10:06:43.585Z"
+      "route_count": 7,
+      "last_routed_at": "2026-08-14T05:35:12.979Z"
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",
@@ -113,8 +113,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-11T04:24:27.394Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T08:19:04.938Z"
     },
     "huashu-slides": {
       "created_at": "2026-02-23T13:13:08.000Z",
@@ -155,8 +155,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-12T08:16:09.513Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-14T08:19:04.938Z"
     },
     "ms-streaming-token-pipeline": {
       "created_at": "2026-05-29T08:58:12.636Z",
@@ -199,8 +199,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 2,
-      "last_routed_at": "2026-08-13T05:30:44.330Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-14T10:01:14.684Z"
     },
     "ms-windows-shell-interactive-prompt": {
       "created_at": "2026-05-29T08:58:12.650Z",
@@ -211,8 +211,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-13T03:43:43.586Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T08:28:35.699Z"
     },
     "self-eval-prompt-pattern": {
       "created_at": "2026-05-29T13:04:56.604Z",
@@ -327,7 +327,9 @@
       "last_reason": "分析 skill 打包與觸發設計模式",
       "pinned": true,
       "notes": "使用者 2026-07-11 決定保留（否決 dream zombie 清理提案），entry 重建自 bak.20260708",
-      "orphan": false
+      "orphan": false,
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T13:45:46.944Z"
     },
     "skill-creator": {
       "created_at": "2026-02-24T17:26:48.000Z",
@@ -348,8 +350,8 @@
       "pinned": false,
       "notes": "補建 entry — skilllint 2026-07-13 發現磁碟有但 usage.json 漏追蹤",
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-12T03:01:08.195Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-14T07:08:36.897Z"
     },
     "igs-uof": {
       "created_at": "2026-07-14T03:08:57.472Z",
@@ -380,8 +382,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 4,
-      "last_routed_at": "2026-08-13T07:02:41.188Z"
+      "route_count": 5,
+      "last_routed_at": "2026-08-14T07:08:36.897Z"
     },
     "ms-vacuous-test-gate": {
       "created_at": "2026-07-31T20:09:29.121Z",
@@ -404,8 +406,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 3,
-      "last_routed_at": "2026-08-13T05:30:44.329Z"
+      "route_count": 4,
+      "last_routed_at": "2026-08-14T02:28:38.100Z"
     },
     "imagegen": {
       "created_at": "2026-08-05T14:44:02.172Z",
@@ -486,8 +488,8 @@
       "last_bridge_listed_at": null,
       "last_agent_used_at": null,
       "use_count": 0,
-      "route_count": 0,
-      "last_routed_at": null,
+      "route_count": 1,
+      "last_routed_at": "2026-08-14T05:35:12.979Z",
       "last_reason": null,
       "pinned": false,
       "notes": null,
@@ -502,7 +504,7 @@
       "last_routed_at": null,
       "last_reason": "依 bounded 路徑先分類、提分析與方案再等核可，未先動手",
       "pinned": false,
-      "notes": null,
+      "notes": "false positive（已知誤報，非缺檔）：這是 Superpowers plugin skill，實際路徑 ~/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/brainstorming/SKILL.md。usageStore 的 skillMdCandidates()（src/usageStore.ts:177-182）只組出 ~/.{kiro,codex,claude}/skills/ 底下 <name>/SKILL.md 與 .system/<name>/SKILL.md 六條路徑，不含 plugins/cache ∴ orphan 恆為 true。同 claude-api 的形狀。2026-08-14 查證，勿再列入孤兒清理清單。",
       "orphan": true
     }
   }

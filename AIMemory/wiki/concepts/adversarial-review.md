@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-13（補：kiro-cli 繞過 specialist 可拿到可讀檔＋跨vendor、Dirent junction bug 案例、修正動作本身產生假因果的獨立失效模式、覆核者換人裁決與成本結構補齊 sources）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87]
+updated: 2026-08-15（新增：Codex 加入覆核者池、三家實績對照、findings 第四種處置維度「嚴重度降級」）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87, f_eb2436, f_5d91c4, f_b860aa, f_7a7712]
 ---
 
 # 異源對抗覆核紀律
@@ -145,6 +145,22 @@ telegram-kiro-bridge 的 `moa-ref-kiro`（glm-5，跨 vendor）與 `moa-ref-adve
 ## 樣板知識會偽裝成從碼推導：同源天花板的一手證據（2026-08-11/12）
 
 claude-sonnet-4.6 與 claude-opus-4.5 對 `src/concurrency.ts` 的 semaphore「超上限」宣稱與**程式碼實際內容無關**：未注入缺陷時兩臂都主張「waiter 被喚醒沒有 `active++` 導致超上限」（該版是直接交棒，`active` 本來就不該變，是誤報）；把 `active--` 真的搬到交棒之前（缺陷真的存在）後，sonnet 反而在有註解版斷言「release 先叫 waiter、不先 `active--` 本身是正確的」——與眼前的碼相反。兩個模型在同一處犯了完全相同的誤報，是**同源天花板**的直接證據：這類覆核者對有標準樣板的碼（semaphore、鎖、佇列）是在複述樣板知識、不是從碼推導。要驗這一軸得用行為測試而非模型審查，覆核找不到不代表沒有缺陷。詳見 [[bridge-model-strategy]] 的對照實驗完整數據。
+
+## 覆核者池擴為三家（2026-08-14）
+
+使用者指示「用 codex 覆核看看」後，異源覆核者池擴為三家：`kiro-cli glm-5`（智譜，預設）、Codex `gpt-5.6-sol`（OpenAI）、Fable5（Anthropic 同源，備位）。
+
+**Codex 當異源覆核者的正確呼叫法**：
+
+```bash
+codex exec -s read-only -c model_reasoning_effort="high" "$PROMPT" < /dev/null > out.txt 2>&1
+```
+
+三個必要條件缺一不可：**stdin 導開**（否則無聲掛住）、**read-only 沙箱**、**effort 顯式拉高**（預設 low）；開頭會印 reasoning effort 與 session id 可當自我驗證。
+
+**三輪跨 vendor 覆核實績對照（同一批 commit）**：glm-5 第一輪 0 finding、第二輪 5 條中真採納 1／部分採納 1／降級 1／駁回 1／誤讀 1；Codex 一輪 8 條且驗證後多數成立，並主動標明唯讀沙箱跑不了測試「沒有冒充實跑結果」。⚠️ 品質差異有模型與提問方式兩個未隔離變因，不可歸因於單一因素。
+
+**Findings 處置的第四種維度：嚴重度降級**（補上第 111 節「三個獨立維度」之外的第四種）：覆核者給的嚴重度本身可能過高——Codex 把「unref 導致行程結束佇列遺失」評為 high，但查證後該風險先於本次改動即存在（佇列本就是記憶體內、退出即失，與 unref 無關）∴ 降級為既有問題而非本次引入，不是駁回、也不是照單全收。
 
 ## 與 SDD 規格自審閘的關係
 

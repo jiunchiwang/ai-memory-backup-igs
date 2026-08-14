@@ -2,27 +2,6 @@
   "_schema_version": 1,
   "entries": [
     {
-      "ts": "2026-07-14T00:53:41.550Z",
-      "chatId": 509424983,
-      "score": 92,
-      "evidence": "tsc 零錯誤、19+22 個 smoke assertion 全過、三輪 review（self/獨立/Heavy）皆 PASS；扣分處：Kiro/Codex backend 遵守此協定與否尚未實測",
-      "belowThreshold": false
-    },
-    {
-      "ts": "2026-07-14T03:31:21.523Z",
-      "chatId": 509424983,
-      "score": 78,
-      "evidence": "Phase A + Phase B 核心流程實作完整且本機驗證通過（語法/plan 產出/token 防線/alert 攔截），但簽核 dialog 的真正互動因環境限制無法 e2e 測試，handle_sign_dialog 是啟發式實作未實測",
-      "belowThreshold": false
-    },
-    {
-      "ts": "2026-07-14T20:43:22.964Z",
-      "chatId": 509424983,
-      "score": 78,
-      "evidence": "3 則 fact 成功刪除且 wiki sources 修正完成，但過程中誤認 f_046ffa 為目標 fact 導致多次重試和一次誤移除需修復，整體正確但效率待改善",
-      "belowThreshold": false
-    },
-    {
       "ts": "2026-07-15T01:25:38.042Z",
       "chatId": 509424983,
       "score": 62,
@@ -1130,6 +1109,102 @@
       "chatId": 509424983,
       "score": 90,
       "evidence": "9/9 純函式測試、專案編譯診斷、規格缺口對帳與 finalize gate 均通過；尚未執行 Cocos Preview 人工畫面驗證，完整 Fly/Spine 與 Unshow UI 亦明確延後"
+    },
+    {
+      "ts": "2026-08-13T23:18:32.674Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "根因以 dist 實跑重現（傳 ms1_ token 得預期錯誤訊息）並反證了冪等性假說 H2；.env 缺 flag、四處 call site 皆逐行核對過。未給滿分是因為修法尚未實作驗證，且 skill-usage.json 的 notes 能否撐過 bridge runtime 的 read-modify-write 要等下輪 skill lint 才驗得到。"
+    },
+    {
+      "ts": "2026-08-14T00:57:11.614Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "根因由兩份檔案的 literal 原文對撞確認（preamble.md:4 與 wf-review.json 的 lens_adversary task），並用 events.jsonl + artifact 全文交叉比對；未實跑驗證 kiro-cli acp -a 是否物理上真的沒有讀檔工具，故該點只宣稱 prompt 層規則。本輪純調查未改任何檔案。"
+    },
+    {
+      "ts": "2026-08-14T02:45:15.445Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "閘門 20/20 逐項確認且非跳過，另對活的 bridge 做了 start/duplicate/finish 與 pid 自動熄燈四段 live round-trip，探針檔已清、git status 乾淨；未達更高分是因為真實 Electron 畫面未實跑，PET_ENABLED=false 下無法覆蓋最後一哩"
+    },
+    {
+      "ts": "2026-08-14T03:47:16.475Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "tsc 綠、閘門 21/21、變異 2/2 killed 且逐條確認紅在目標斷言、CDP 前後對照證明連線當下即正確；因果鏈涵蓋兩個真實呼叫端並實際約束了修法選址（假 win 缺 isLoading）。未給更高分：新斷言只在假 win 層驗時序，真 Electron 的 did-finish-load 語意仍是推論；fast tier 尚未跑完"
+    },
+    {
+      "ts": "2026-08-14T03:53:04.890Z",
+      "chatId": 509424983,
+      "score": 93,
+      "evidence": "commit 內容與 diff 逐行核對過、首尾驗證無 heredoc 損壞、工作區乾淨、未 push 且明講需另外授權；修正本身有 tsc/build/21-21 閘門/155-155 fast tier/變異 2-2 killed/CDP 前後對照六份證據。未給更高分：跨 vendor 覆核尚未執行，且真 Electron 的 did-finish-load 語意仍靠 Electron 文件與單次實測，未在閘門內以真 Electron 覆蓋"
+    },
+    {
+      "ts": "2026-08-14T05:23:24.113Z",
+      "chatId": 509424983,
+      "score": 76,
+      "evidence": "repo visibility、git 歷史掃描、remote 現況、hooks:install 行為、README 安裝段都是本機實查；但「個人 repo collaborator 只有 write 角色」與「同 token 長輪詢 409」是依 GitHub/Telegram 已知行為，本輪沒實測，文件本身也還沒有人照著跑過一次"
+    },
+    {
+      "ts": "2026-08-14T11:52:12.584Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "交接檔已讀回確認含實測證據與待辦，且已透過 send_file 排隊傳送；未執行外部 workflow 改動或重新掃描。"
+    },
+    {
+      "ts": "2026-08-14T11:58:12.069Z",
+      "chatId": 509424983,
+      "score": 91,
+      "evidence": "兩份文件已讀回確認章節、關鍵防呆與 Artifact 判讀一致，並已排隊傳送；未包含憑證值，未執行外部 workflow 改動。"
+    },
+    {
+      "ts": "2026-08-14T14:04:16.543Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "clone 後逐檔讀原始碼取代摘要層，識別字全數核對存在；自己抓出並以一手證據更正了上一輪的事實錯誤（含 index 連帶修正）；但未跑 pnpm run-local、B1 適用面盤點未做（該項是吸收與否的決定性前提），且 wiki 頁超出行數慣例"
+    },
+    {
+      "ts": "2026-08-14T14:14:15.029Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "逐字讀 auto-retry 原始碼確認 remainingAttempts 只在外層遞減（非推測）；主動查 reply-dedup.ts 避免把入站保護誤記為出站已有；scheduler 與 action 快取兩項查證後標為已有而非缺口；但未實測重複投遞是否真發生過、未跑 tsc/smoke（本輪零碼改動）"
+    },
+    {
+      "ts": "2026-08-14T14:49:14.725Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "tsc 0 錯 + fast tier 156/156 + 變異 5/5 killed（含實測出原缺陷的 20s 逾時證據）；自己抓出並修掉一個誇大註解與一個恆真斷言；doc-sync 連動已同步且複驗綠。扣分：/job resume 缺口未修（範圍外但仍是已知缺口）、未跑 full tier（3 支慢測試未涵蓋）、未經異源覆核"
+    },
+    {
+      "ts": "2026-08-14T15:05:48.230Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "commit 前逐檔驗行尾未翻面、還原了誤觸的 SPEC、逐檔 add 避開 .github 坑；覆核已用跨 vendor pin 背景派出且 prompt 指名了我自己最沒把握的那項。扣分：非冪等方法改為直接失敗後「呼叫端是否處理送出失敗」我尚未查證就已 commit，這是實質風險而非形式問題"
+    },
+    {
+      "ts": "2026-08-14T15:32:07.351Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "tsc 0 錯 + fast 156/156 + 變異 9/9 killed；必填參數逼出我 grep 漏掉的 2 個呼叫點，並額外發現 flush 併發缺陷（先於本次改動就存在）；主動說明偏離既定方案的理由而非默默替換。扣分：canary 紅過一次只以「證據指向爭用」結案未進一步隔離；第二輪覆核結果未到，取捨判斷尚未經外部挑戰"
+    },
+    {
+      "ts": "2026-08-14T15:46:40.006Z",
+      "chatId": 509424983,
+      "score": 70,
+      "evidence": "依既有記憶用對了 codex 的三個必要條件（stdin 導開、read-only、effort 拉高）並當場以輸出前幾行與 rollout 檔雙重驗證；prompt 依「清單式易得 0 finding」的教訓改成開放式為主。分數保留在此：覆核結果尚未回來，這則只是派工，實質產出為零"
+    },
+    {
+      "ts": "2026-08-14T16:24:36.247Z",
+      "chatId": 509424983,
+      "score": 83,
+      "evidence": "Codex 兩條 findings 都自己 grep 驗證後才修；踩到零依賴模組的 data: URL 載入限制時查出真因並回退成結構化判定，且補了防止該判定靜默失效的斷言；主動更正 commit 裡被反證的機制描述。扣分：兩條 high 未處理（已明確記錄）、第一版 import 是我沒先看閘門載入方式就動手、full tier 仍未跑"
+    },
+    {
+      "ts": "2026-08-14T16:41:50.290Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "full tier 159/159（首次涵蓋三支慢測試）+ pre-push 再驗 156/156 + mutate 12/12；push 前確認 remote 指向自己的 fork 而非 upstream；scheduler 註解在自己讀完 schedule-store.ts 確認後才改，未照抄覆核說法。扣分：兩條 high 僅記錄未解決，且第三輪覆核的品質提升有兩個未隔離的變因、我只能陳述不能歸因"
     }
   ]
 }

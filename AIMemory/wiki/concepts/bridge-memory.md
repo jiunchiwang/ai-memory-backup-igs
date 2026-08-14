@@ -2,8 +2,9 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-13（新增：skill orphan 判定涵蓋不到 plugin marketplace、factlint「內容已證偽」例外裁決、wiki 無 SCHEMA.md 應比對既有頁面格式、apply_topics token 機制阻塞紀錄）
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_713852, f_5e6afb, f_9a7397, f_34a003, f_6f6762]
+updated: 2026-08-15（topicreview 阻塞已修：phase-aware guidance 上線 commit 892f68f；補記 renderTopicReviewSnapshot 兩個呼叫者更正、topicreview 回歸斷言已知缺口、skill orphan 涵蓋不到 plugin marketplace 補充事實來源）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_5c1956, f_5e6afb, f_9a7397, f_34a003, f_6f6762, f_7fb676, f_842a1b, f_e17260, f_e547d2, f_d742a1, f_99e9ba, f_88c0ba, f_213f2c, f_622428, f_ee9da7]
+history_sources: [f_713852, f_017f18]
 ---
 
 # Bridge 記憶與維運系統
@@ -30,7 +31,21 @@ sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, 
 
 `topics.json` 定義 keyword-based first-match-wins 分類規則，bridge 每 2 秒重讀（改完即生效，不需重啟）。fact 文字轉小寫後做 substring 比對，無匹配歸 misc。topicreview 步驟會定期實體重分 shard（如 2026-07-10 新建 bridge-streaming shard、misc 清零）。
 
-**⚠️ `apply_topics` 在本機無法成功呼叫（2026-08-13，facts 量 574+ 時觸發）**：`propose_topics` 回應超過 tool 輸出上限、被存成 plain-text 檔案，其中顯示的 `"snapshot token: ms1_..."` 與 `apply_topics` 實際驗證的 `expectedToken` 格式（`"topics-<hash>-<n>"`）不一致；連續 3 次呼叫皆被拒且每次錯誤訊息裡的 expected 值都不同，無法靠重試收斂——真正需要的 token 疑似只存在於 `propose_topics` 未被截斷的原始 JSON 回應裡，被文字化過程遺失。下次要跑 topic-review 前，先確認這條路徑是否已修，否則 `apply_topics` 結構上打不通（`propose_topics` 本身仍可正常用於唯讀分析）。
+**⚠️ `apply_topics` 必然被拒 —— P2 未開啟卻被要求帶 P2-only token（2026-08-14 實測定案）**：`applyTopics`（`src/facts-store.ts:1759-1777`）只有在 `MEMORY_EVENT_TAXONOMY_ENABLED=1` 時才拿 `expectedToken` 比對 `MemorySnapshotId`（`ms1_` 開頭）；該 flag 在 `memory-rollout.ts` 的 `defaultEnabled=false` 且 `.env` 未設 ∴ 走 legacy 分支，比對的是 `computeTopicsToken()` 的 `topics-<sha1前8>-<條數>`。兩個命名空間不相交，而 `renderTopicReviewSnapshot`（`facts-store.ts:1510`）無條件印 `ms1_` token、`TOPIC_REVIEW_PROMPT` 第 3 步（`src/commands/memory.ts:229`）無條件要求原樣帶它 ⇒ 必拒。
+
+- **重試不收斂的原因**：legacy 的 expected 是「該次呼叫傳入的 topics 陣列」的雜湊，陣列一變 expected 就變——不是 token 遺失（2026-08-13 記的「token 被輸出截斷丟失」推測已被反證）。
+- **⚠️「每輪重燒」與 apply 成敗無關**（本頁初版寫成「throw 就不 acknowledge ∴ trigger 下輪再命中」，2026-08-14 經跨 vendor 覆核推翻）：P2 off 時 `topicReviewCheck()` 回的是寫死的 `shouldReview: true`（`src/memory-taxonomy-maintenance.ts:359-370`），`acknowledgeTopicReview()` 則直接 `return null` 不寫任何 state（同檔 `:433`）∴ **apply 就算完全成功，下一輪照樣觸發**。P2 off 下根本沒有 acknowledge 機制。
+  > 教訓形狀同 `correction-invents-new-causal-story`：真實觀察（連 3 輪 `written=false`）被接上一個沒查證的機制，數字對、語氣自信、因果是編的。抓到它的是異源覆核，不是自審——自審那輪還把這個機制同時寫進 fact、wiki、docs 與兩處碼註解。
+- **零改動 workaround**：非 P2 下**省略 `expectedToken`**，`mcp-memory.ts:1030` 會自動補 `dryRunToken`；`normaliseProposedTopics` 對正式 `topics.json` 實測冪等（三次皆 `topics-884fede8-32`）∴ 必定通過。
+- **錯誤訊息本身會誤導**：legacy 分支建議「re-run propose_topics to get a fresh token」，但重跑 propose 只會再給一個 `ms1_` token，永遠不會match。
+
+實測重現（`dist/` 直接 import、temp `MEMORY_DIR`、驗證在寫檔前 throw）：傳 `ms1_...` 得 `topics token mismatch (got=ms1_..., expected=topics-f67c5d32-2)`。`propose_topics` 本身唯讀、不受影響。
+
+**✅ 已修（2026-08-14，commit `892f68f`，phase-aware guidance）**：使用者選修法 A——讓 guidance 跟著 P2 flag 走、不動 P2 rollout 本身（排除 B「開啟 P2 flag」因為 rollout 有 source mutation 與三步 rollback 成本，屬獨立決策；排除 D「只用手動 workaround」因為 dream 自動迴圈跑的是寫死的 `TOPIC_REVIEW_PROMPT`，子 session 不會知道 workaround）。新增 `renderExpectedTokenGuidance()` 依 `MEMORY_EVENT_TAXONOMY_ENABLED` 產生指示（P2 off 明講「省略 expectedToken」、snapshot id 降級為 provenance），`/topicreview` prompt／`apply_topics` tool schema／`docs/`／`README` 全部改成指回 `propose_topics` 印的那一行，不再各自複述 flag 相依規則；legacy 拒絕訊息不再給「re-run propose_topics」這條死路。
+
+⚠️ **`renderTopicReviewSnapshot` 有兩個 production 呼叫者，不是一個**：`mcp-memory.ts` 的 `propose_topics` handler（agent 真正讀到的那份）與 `memory-baseline.ts:408` 的 `topicReviewPayloadChars`（只取 `.length`）。2026-08-14 連兩輪跨 vendor 覆核都只枚舉到前者，自己的因果鏈也因 grep 結果被 `head_limit` 截斷而寫成「唯一」——覆核者確認的是既有錯誤（回音而非獨立驗證）。實際影響：`check-memory-baseline.mjs:122` 是相對斷言（兩邊同一個 renderer 現算）∴ 不受影響，但 `topicReviewPayloadChars` 這個成本指標從此隨 P2 flag 微幅變動（百字級 vs 千字級 payload）。
+
+⚠️ **回歸斷言缺口（已知未修，非靜默略過）**：沒有任何閘門覆蓋 MCP handler 層的 `expectedToken` 補值邏輯——該 handler 是註冊在 `server.setRequestHandler` 上的 inline closure（`mcp-memory.ts:726`，未 export），要覆蓋需另建 MCP stdio 測試 harness，成本與風險不成比例。替代做法是補一條讓該 fallback 安全的不變式斷言（`normaliseProposedTopics` 冪等，`check-topic-review.mjs` 第 6f 段）。
 
 ## Wiki 知識庫
 
@@ -136,6 +151,13 @@ wiki-reference 保護會讓 factlint 想刪的 fact 刪不掉，於是「哪些�
 2. 若當時的結論後來被推翻，它們會把**已否證的結論**餵回未來的 session
 
 2026-08-01 一次清掉 8 條（bridge-streaming 的 draft 診斷 WS 組，其中 3 條主張的 H1 根因已被實測推翻）。判準：`[WS]` 前綴 + 對應工作已結束 + 未被任何 wiki 頁 `sources` 引用 → 可直接 `forget()`。
+
+## 延伸筆記（積壓補記）
+
+- `src/tool-hooks.ts` 的 PostToolUse hooks 是 Post、fire-and-forget，**僅 direct provider 路徑（`tool-loop.ts`）生效**——走任何 ACP 時不會 fire，不能當阻擋式閘門機制。
+- 設定檔自動建立方案：選 `/agent init` 顯式子指令（排除啟動時自動 seed，因為靜默寫檔到 `MEMORY_DIR` 違反「不逕自動作」偏好；排除訊息內嵌範本，因為手機複製貼上麻煩）。
+- `check-moa` 壞測試根因比原判大：某次改動不只把 `resolvePreset` 改 async，還以 embedding routing 整個取代 keyword routing（`routing.rules` 不再被讀），測試已對齊新語義。
+- 「UK 助理知識包」交付架構（2026-07-28 定案，可作為小規模領域知識問答機器人的預設架構）：採快照式蒸餾檔案 + headless agent CLI 直接讀取，刻意不引入向量資料庫與 embedding 層——RAG 基礎設施的維運成本通常高於快照重生成的成本；配套三層把關為敏感資料過濾、明確的知識更新工作流、交付前驗證。
 
 ## 相關
 
