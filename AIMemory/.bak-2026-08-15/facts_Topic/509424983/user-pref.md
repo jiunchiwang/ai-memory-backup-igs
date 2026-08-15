@@ -1,0 +1,8 @@
+- [f_4e6745] [2026-05-29T16:20:19.509Z] 使用者偏好 agent 回覆時以選項按鈕（<<ASK:...>>）優先，減少需要打字的情況
+- [f_70542c] [2026-06-01T12:16:45.051Z] 使用者偏好 git commit 訊息使用中文
+- [f_e0ce0f] [2026-06-24T20:31:28.200Z] 使用者偏好 git commit 前先確認：執行 commit 之前應多問幾個釐清問題並取得使用者同意，不要逕自 commit。
+- [f_be8c07] [2026-07-07T07:52:13.452Z] 使用者的除錯對策偏好：對帳/檢查類函式遇格式不符應「回報不 crash」（守衛 + error log），反對用關掉檢查或 clamp 掩蓋——理由是不用記得開回來、production 遇壞資料也不炸
+- [f_a738db] [2026-07-10T00:12:51.617Z] 使用者決定 underused skills 處理策略（2026-07-10）：刪除 skill-creator、knowhow-accumulation、non-engineer-agent-design（磁碟+store），保留 huashu-slides、dual-skill-review-loop、self-eval-prompt-pattern 繼續觀察
+- [f_cc8fd5] [2026-07-13T11:39:16.104Z] 使用者偏好把同一 session 內不相關的改動拆成多個小顆粒 commit，而非合併成一個（2026-07-13 對 README 拆分+roadmap更新兩件事確認選擇拆兩個 commit）
+- [f_d29dfc] [2026-07-13T13:25:29.299Z] 使用者對會產生真實外部紀錄的自動化（如公司系統表單送出）採保守策略：即使技術上可行，仍選擇只做到 dry-run+截圖、手動確認後才送出，不做一鍵全自動
+- [f_4ad101] [2026-08-14T00:21:06.070Z] 使用者於 2026-08-14 確認：說「commit」不等於授權 push——選定修法（如選 A）也不等於授權 commit，兩者都要各自明確指示。

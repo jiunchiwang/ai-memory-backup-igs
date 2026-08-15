@@ -3,7 +3,7 @@ title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
 updated: 2026-08-01
-sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_r0b1nh, f_wr4th9, f_f4rw3s, f_3y3s2k, f_ch4ch4, f_e9d947, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_b0253d, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_7e491d, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_d42a81, f_e7f3c2, f_a9b64d, f_c83ef1, f_f5d920, f_b6c47a, f_91e5d8, f_4367fb, f_189848]
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_4367fb, f_189848, f_1284be, f_b4c328, f_0af12a, f_937a50, f_4b6004]
 ---
 
 # UK Slot 老虎機專案群
@@ -27,7 +27,7 @@ sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, 
   - **Standard** — 傳統滾動
   - **Cascade** — 消除天降
   - **Tumble** — 快速掉落 + 乘倍
-- **2026-07-07 回灌修正**（4 commits 本地未 push）：bgm 改註解佔位（模板不含音檔）、欄數陣列改 `Game_Define.COL` 衍生（原寫死 6 欄）、CheckPlateInfo 欄數不符改回報不 crash（對帳函式不應 throw）、ReelDevTool 修復（驅動缺失 + IDLE 就緒閘門，原版從未實測過）
+- **2026-07-07 回灌修正**（4 commits，2026-07-22 查證已全數在 `origin/main` 上）：bgm 改註解佔位（模板不含音檔）、欄數陣列改 `Game_Define.COL` 衍生（原寫死 6 欄）、CheckPlateInfo 欄數不符改回報不 crash（對帳函式不應 throw）、ReelDevTool 修復（驅動缺失 + IDLE 就緒閘門，原版從未實測過）
 - **起新專案陷阱**：`FirstClone.bat` 的 `../extensions` 相對於執行時 cwd——需在 `Tools_SlotSetUP/` 內執行，從專案根執行會 clone 到上一層
 
 ### 衍生遊戲

@@ -14,3 +14,8 @@
 
 ## 目標
 深度研究 Goog) [auto-summary] 生命週期含 input-required）、Message/Part、Artifact"},{"type":"finding","content":"決策規則：需要 A2A 的情境是跨信任邊界的獨立 agent 協作，同一團隊擁有的 agent 用 orchestration framework 即可"},{"type":"recommendation","content":"bridge 可借鏡 Agent Card 概念為 specialist 建立結構化自描述；可考慮 INPUT_REQUIRED 中斷態讓 specialist 要求澄清"},{"type":"recommendatio
+- [2026-08-14T23:03:28.275Z] (研究「LLM agent 長期記憶（long-term memory）在規模成長後的三個問題」的現行解法，回報可操作的技) 研究 LLM agent 長期記憶規模化三問題（召回稀釋/維運覆蓋率/矛盾累積）的 10 個已驗證解法，含機制、成本、失敗模式與來源，並指出 4 類不值得做的方向
+- [2026-08-14T23:03:28.275Z] (研究「LLM agent 長期記憶（long-term memory）在規模成長後的三個問題」的現行解法，回報可操作的技) 矛盾累積的最佳解是確定性 supersession（Python max(timestamp)），MemoryAgentBench 驗證比 LLM-judgment 高 10-28pp
+- [2026-08-14T23:03:28.275Z] (研究「LLM agent 長期記憶（long-term memory）在規模成長後的三個問題」的現行解法，回報可操作的技) 召回稀釋主流解是 reasoning-aware reranking + hierarchical index，但 graph 複雜度本身不解決問題（Zep 只拿 7%）
+- [2026-08-14T23:03:28.275Z] (研究「LLM agent 長期記憶（long-term memory）在規模成長後的三個問題」的現行解法，回報可操作的技) 維運覆蓋率主流解是背景異步蒸餾（Dreaming），OpenAI 花兩年迭代才做到 5× compute 降幅
+- [2026-08-14T23:03:28.275Z] (研究「LLM agent 長期記憶（long-term memory）在規模成長後的三個問題」的現行解法，回報可操作的技) bridge 優先實作確定性 supersession + lightweight reranker，/dream 加 importance-weighted shard 掃描順序

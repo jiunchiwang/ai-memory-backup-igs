@@ -79,6 +79,17 @@
   - 代表 session：2026-08-14（協助同事接手 telegram-kiro-bridge，產出 `docs/SETUP-downstream-fork.md`）
   - 觀察點：若再有同事／專案要用同一套「反向 fork」流程，且沉澱出固定檢查清單（private repo 可視性確認、collaborator 只有 write 沒有唯讀角色、`.env`／密鑰打包外流風險），可考慮 append 到 `sync-fork-from-upstream`（同域：fork 關係管理，方向互補）
 
+- [ ] **windows-headless-gui-launch-hang** | count=1 | score=0.04 | 太低，繼續觀察
+  - Pattern：Windows 上某些指令看似印文字，實際是 spawn `cmd /c start "" file://...`去開瀏覽器/pager（如 `npm help <cmd>` 開 npm-run.html），在無頭 agent shell 裡沒有桌面可渲染，那個 `start` 永遠不會回來、無聲卡住數十分鐘。與既有 `ms-windows-shell-interactive-prompt`（PowerShell 缺參數觸發互動式 stdin prompt）同屬「Windows 指令讓 headless agent shell 卡死」大類，但觸發機制不同（GUI/瀏覽器啟動 vs stdin 提示）
+  - 代表 session：2026-08-15（覆核者 `kiro-cli glm-5` 自行跑 `npm help run` 卡死 27 分鐘；診斷法是看行程樹是否停在 `cmd start`，處置只殺最底層 process）
+  - 觀察點：若再出現其他「Windows 指令會開瀏覽器/GUI」導致 headless 卡住的案例（`npm docs`、某些 CLI 的 `--help` 走 pager 或瀏覽器），評估是否併入 `ms-windows-shell-interactive-prompt` 擴大成一般性「檢查指令是否會觸發互動式/GUI 行為」原則，或独立成新 skill
+  - 現有覆蓋：fact（adversarial-review shard，含判別法與外科式解除步驟）
+
+- [ ] **instrumentation-becomes-new-failure-source** | count=1 | score=0.06 | 太低，繼續觀察
+  - Pattern：為既有邏輯加觀測/遙測（emit 事件、寫 log）時，若同步的 emit 呼叫沒有被獨立的 try/catch 包住，一個拋錯的 listener 會被外層邏輯自己的 catch 接住，導致「不改變任何行為」的宣稱失效——觀測機制本身變成新的失敗源。本 repo 的 `src/AI.md` 已有這條原則（event-log 段：「整段包 try/catch」），但寫遙測時仍然漏了
+  - 代表 session：2026-08-15（ACP retry 遙測上線時，`emitOutcome("succeeded")` 放在 try 區塊內，任何 `retryOutcome` listener 拋錯會讓成功的 prompt 被回報成失敗；已修）
+  - 觀察點：這條目前綁在單一 repo 已有的文件化原則上，屬專案特定的違規案例而非新知識；若在另一個系統也出現「加觀測/遙測時忘記隔離副作用」且沉澱出通用檢查步驟（如「新 emit 呼叫是否被獨立 try/catch 包住」），可考慮寫成通用 skill
+
 ## 誤判紀錄（防重複偵測）
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
@@ -90,4 +101,4 @@
 - ~~"users jiunchiwang" / "users" / "jiunchiwang" pattern（4 sessions）~~ — 2026-08-13 判定誤判：全部命中同一個絕對路徑字串 `C:\Users\jiunchiwang\Downloads\Telegram Desktop\wheel-click-prototype.html`（使用者傳同一份 HTML 檔案討論多輪），是路徑字面值被重複引用，不是技術模式
 
 ---
-Last updated: 2026-08-15
+Last updated: 2026-08-16

@@ -1,8 +1,8 @@
 - [f_3f7536] [2026-06-03T12:26:41.806Z] cocos的老虎機專案都不能去改動Astarte Framework
-- [f_r0b1nh] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_722_robinhood_client 位於 G:\Cocos_Project\uk_722_robinhood_client，Robin Hood 主題
-- [f_wr4th9] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_739_wrath_of_thunder_client 位於 G:\Cocos_Project\uk_739_wrath_of_thunder_client，Wrath of Thunder 雷神主題
-- [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
-- [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
+- [f_1284be] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_722_robinhood_client 位於 G:\Cocos_Project\uk_722_robinhood_client，Robin Hood 主題
+- [f_b4c328] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_739_wrath_of_thunder_client 位於 G:\Cocos_Project\uk_739_wrath_of_thunder_client，Wrath of Thunder 雷神主題
+- [f_0af12a] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
+- [f_4b6004] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
 - [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
 - [f_e22204] [2026-06-19T02:11:08.803Z] 使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）
 - [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。

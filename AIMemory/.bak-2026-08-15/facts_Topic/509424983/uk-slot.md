@@ -1,0 +1,21 @@
+- [f_3f7536] [2026-06-03T12:26:41.806Z] cocos的老虎機專案都不能去改動Astarte Framework
+- [f_r0b1nh] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_722_robinhood_client 位於 G:\Cocos_Project\uk_722_robinhood_client，Robin Hood 主題
+- [f_wr4th9] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_739_wrath_of_thunder_client 位於 G:\Cocos_Project\uk_739_wrath_of_thunder_client，Wrath of Thunder 雷神主題
+- [f_f4rw3s] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\Cocos_Project\uk_746_far_west_client，Far West 西部主題
+- [f_ch4ch4] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_chachacha 位於 G:\Cocos_Project\uk_slot_chachacha，Cha Cha Cha 拉丁舞主題
+- [f_f4621c] [2026-06-19T02:11:08.786Z] 使用者決定 UK 老虎機專案採用分層文件規範：AI.md（索引層≤2000字）+ docs/modules.md（詳細層含事件介面/依賴/資料流），已建立 skill uk-slot-project-docs 控制此行為
+- [f_e22204] [2026-06-19T02:11:08.803Z] 使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）
+- [f_46f6e0] [2026-06-19T07:56:09.905Z] 並發 gotcha:在 Promise.all 之前的同步階段計算狀態決策(例如 willGhost),會與並發 group dispatch 產生 race condition;應把這類決策移到 async 階段計算以避免競態。
+- [f_94500e] [2026-06-19T07:56:14.534Z] Cocos 版面要在「兩項移除一項」時避免置中跳動(snap),可用 ghost slot 雙佔位機制,在不改動 Layout 參數的前提下同時滿足 0→1 置中、2→1 不跳動與旋轉相容。
+- [f_3165ae] [2026-06-26T13:11:01.098Z] AI-canonical-corp 的 slot skill（如 uk-slot-pattern-library）透過 junction 直接指向正本目錄，改正本即時反映到 ~/.kiro/skills/，不需額外跑 sync.ps1
+- [f_e84e55] [2026-07-09T19:00:02.547Z] uk-slot-spec-to-impl skill 正本已加強（AI-canonical-corp commit 14887cd）：新增步驟0前提確認checklist、步驟2前置4項checklist gate、檢查點改模板格式輸出、AI.md綁定步驟1完成時、常見錯誤新增5條流程偏離實證教訓
+- [f_8a9474] [2026-07-09T20:33:34.376Z] 記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。
+- [f_437274] [2026-07-16T20:34:00.040Z] telegram-kiro-bridge 的 skill-usage.json 追蹤檔案孤兒化：vc-uof-hours entry 仍指向已改名的資料夾 igs-uof，且 igs-uof、uk-slot-logo-localization 兩個實際存在的 skill 資料夾未被登記 usage entry，待合併/補建
+- [f_e68c39] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 E 區（通用機制模式庫）決策：全角色統一使用索引版（pattern 名稱 + 一句話描述），不塞 pattern-library 完整 158KB 內容
+- [f_165cc0] [2026-07-28T08:04:03.118Z] 公司 AI 知識庫的 D 區（Astarte Framework API）決策：只寫概要層（class + 生命週期 + 事件列表），不進到 method 簽名
+- [f_f82ff1] [2026-07-28T11:03:56.028Z] uk-slot-logo-localization skill 的標準語系代碼清單已新增 urIN（烏爾都語印度），總計 24 個語系（不含 cn/en）
+- [f_2d697b] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的卡片新增流程需同步三處否則資料不一致：patterns/xxx.md 卡片本體、SKILL.md 索引表（+ 橫切機制表）、pattern-library-overview.html 的內嵌 PATTERNS JS 陣列與兩處寫死計數（line 50 subtitle 與 line 53-54 stat-box，只改 subtitle 會造成同頁自我矛盾）
+- [f_4b088c] [2026-07-30T16:17:09.612Z] uk-slot-pattern-library 的 overview.html 參考專案計數慣例是「PATTERNS 陣列 unique refs 扣掉『框架 xxx』條目、不去重 wrath 的兩種寫法」（2026-07-30 用 git show 舊檔重算驗證與舊 subtitle 精確吻合）
+- [f_4b2a6c] [2026-07-30T16:17:09.612Z] 異源覆核在「文件層自我一致性」（數字沒回頭同步、枚舉半途而廢、同頁多處寫死計數只改一處）上最有價值，這類問題同源自審結構上抓不到——因為自審驗的是「我改的那處對不對」而非「還有沒有別處」（2026-07-30 pattern-library #26 實證）
+- [f_4367fb] [2026-07-30T20:31:36.930Z] UK 老虎機事件 gate 的重入防護應查下游狀態而非另設旗標：pre-stop gate 是否已執行改用 BombBoard.HasEventBombs() 這類「已註冊結果」查詢判斷，狀態源唯一，unshow/replay 還原時才不會與實際盤面脫節。
+- [f_189848] [2026-07-30T20:31:42.262Z] UK 老虎機 unshow/replay 還原的時序保真原則：原始事件的觸發時機必須原樣保留（during-spin 觸發的 BOMB 不可為了實作方便降級成 after-stop），否則還原畫面與原始 spin 表現不一致。

@@ -1,0 +1,5 @@
+- [f_2e77d3] [2026-08-14T13:44:45.636Z] 使用者已啟動 iGaming 原始碼 Mend SCA/SAST 掃描導入，採私有控制倉庫 `igaming-mend-scan` 搭配自架 runner group `mend.io` 管理。
+- [f_975249] [2026-08-14T13:44:45.636Z] iGaming Mend workflow 必須以 `MEND_TARGET_GITHUB_ORG` 明確指定掃描組織；fine-grained PAT 走 `/user/orgs` 可能回空陣列造成「0 個 org 的假綠燈」，不可只看 Action 綠燈判定成功。
+- [f_e40af6] [2026-08-14T13:44:45.636Z] iGaming Mend 首個已驗證 pilot 為 `IGS-ARCADE-DIVISION-RD4-IG/Client_Activity_LuckyMission`，Type 為 `Client(Cocos)`，SCA 與 SAST 均成功。
+- [f_0dec36] [2026-08-14T13:44:45.636Z] 使用者下週優先要補 Mend workflow 的 P0 保護：任一 repository 的 SCA 或 SAST 失敗時，Action 必須明確標紅並輸出失敗原因。
+- [f_0d1a3b] [2026-08-14T13:44:45.636Z] Mend User Key 曾出現在來源文件明文中；目前先沿用既有 Key，但已列為後續應輪替、且新 Key 僅可存放 GitHub Secret 的資安待辦。

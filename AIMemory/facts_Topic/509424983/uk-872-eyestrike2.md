@@ -1,4 +1,4 @@
-- [f_3y3s2k] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
+- [f_937a50] [2026-06-03T12:35:00.000Z] 使用者有一個 Cocos Creator 老虎機專案 uk_872_eyestrike2_client 位於 G:\Cocos_Project\uk_872_eyestrike2_client，Eye Strike 2（第一代的續作）
 - [f_0b3520] [2026-06-22T20:31:05.443Z] uk_872_eyestrike2_client 專案架構規範：Spine 動畫一律透過 SpineKit 播放（統一的 Spine 播放架構），不直接操作底層 spine 元件。
 - [f_564bea] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的轉輪燈光壓暗設計決策（2026-07-30）：逐側判斷門檻下沉到 ReelUIManager.SetReelLightDark()（方案 A），只在 dark===true 時檢查 m_reelLightStates、該側沒亮就不壓；還原路徑刻意不設此門檻，否則熄燈後燈光永遠回不到亮色（排除方案 B 加 onlyIfShowing 旗標、方案 C 開 public getter，因為狀態擁有者是 ReelUIManager，判斷放內部才符合封裝慣例）
 - [f_b9aeb7] [2026-07-30T09:09:30.045Z] uk_872_eyestrike2_client 的 FeatureWheelShowState 燈光壓暗與還原分工：壓暗由使用者這邊實作（已完成，掛在 spotlight 那批 SetAllSymbolsDark(true) 同一拍），RESTORE_LIGHT_REEL 的還原時機與實作由同事決定並處理

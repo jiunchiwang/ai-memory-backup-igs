@@ -1,0 +1,5 @@
+- [f_cea694] [2026-06-03T08:26:49.768Z] 使用者有一個 Cocos Creator 老虎機專案 uk_slot_eye_strike 位於 G:\Cocos_Project\uk_slot_eye_strike，其 MultiplierManager.m_downEffectSpine 的 Idle 動畫是靜止的，已記為待優化項目（改用靜態圖+隱藏Spine省效能）
+- [f_9322f0] [2026-06-19T02:11:08.809Z] uk_slot_eye_strike 的 GameId=658、ShortGameName=ar2es、盤面 6 列不等高（5-4-4-4-4-5）共 26 格、proto 來自 @igs-arcade-division-rd2/uk_658_eyestrike_proto
+- [f_82c757] [2026-06-19T02:11:08.816Z] uk_slot_eye_strike 有 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
+- [f_800551] [2026-07-07T07:52:13.442Z] uk_slot_template 的 demo 流程綁 eyestrike（uk_658）proto 與 dev server（6 欄盤面）——衍生遊戲改 COL 後連該 server 必然欄數不符，轉輪驗證應走 ReelDevTool 假盤，端到端等各自真 proto
+- [f_4f973f] [2026-08-10T01:17:26.337Z] uk_872 Eye Strike 2 的轉輪 click 音效節奏提案（2026-08-09）做成獨立 HTML 原型放在 G:\Cocos_Project\uk_872_eyestrike2_client\.claude_temp\wheel-click-prototype.html（遊戲碼未動），內含現況版原封移植的 CalcSpeedCurve 三段曲線與停輪懸念三分支可背靠背 A/B；關鍵量測為現況到 Collect 亮起 5.55 秒（其中死時間 2.15 秒：慢爬 0.85＋hold 0.3＋settle 0.25＋空窗 0.75，注意 settle 是從 ROTATE_TIME 內扣不是外加）對比新版 A 分支 3.92 秒、峰值 447°/s；狀態為使用者拿去給編導評估中，待回饋才決定調整／寫設計文件／接進遊戲。

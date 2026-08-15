@@ -3,7 +3,8 @@ title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
 updated: 2026-08-15（新增：.env 編輯驗證做法、Git Bash timeout /t 陷阱、skillUsage 權威來源、HTML 目錄錨點偏好）
-sources: [f_7c41c5, f_99b243, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_9bb794, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55, f_8a4a0e, f_10d8ff, f_cbcb3c, f_b120d4, f_a1b97e, f_e189b1, f_1a68bf]
+sources: [f_7c41c5, f_99b243, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55, f_8a4a0e, f_10d8ff, f_b120d4, f_a1b97e, f_e189b1, f_1a68bf]
+history_sources: [f_9bb794]
 ---
 
 # 開發工具與環境設定

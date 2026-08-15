@@ -11,15 +11,15 @@
 - [[uk-slot-pirates-queen]] — UK Slot 海盜女王專案（6×5 盤面、懸賞令、RTCtrl 凍幀報獎進化版、PascalCase 搜尋陷阱）
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
 - [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（ROW=4/COL=6 4096 Ways、M0b 全綠、VS Feature 規則與編導多輪確認定案、M2.1 完成＋M2.2 資料接線切片完成；2026-08-13 更新）
-- [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範）
-- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核、claude-mem plugin worker 診斷、Claude Agent SDK 權限模型、heredoc \n 展開陷阱、POLICIES 假宣稱更正、Telegram 出站訊息重複投遞四層修復＋重放安全性三判準、同事接手 repo 用獨立 fork 而非 GitHub Fork 按鈕；2026-08-15 更新）
+- [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範、停輪曲線量化分析、baked path 動畫限制、CLAUDE.local.md 覆蓋技巧；2026-08-16 更新）
+- [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核、claude-mem plugin worker 診斷、Claude Agent SDK 權限模型、heredoc \n 展開陷阱、POLICIES 假宣稱更正、Telegram 出站訊息重複投遞四層修復＋重放安全性三判準、同事接手 repo 用獨立 fork 而非 GitHub Fork 按鈕、grammY transformer 安裝順序更正；2026-08-16 更新）
 - [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測、tool 結果狀態判定鏈與 is_error 可信度實測、Codex/Kiro hooks 能力更正）
-- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級、派工前能力軸/blind advisor 幻覺、scope 擴張敘述凍結、樣板知識同源天花板、修正動作本身產生假因果的獨立失效模式；2026-08-05 從 bridge-acp 拆出）
+- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級、派工前能力軸/blind advisor 幻覺、scope 擴張敘述凍結、樣板知識同源天花板、修正動作本身產生假因果的獨立失效模式、覆核強度受 prompt 影響的受控對照、覆核者看不到 git 版控狀態；2026-08-05 從 bridge-acp 拆出，2026-08-16 更新）
 - [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、Kiro effort 值域 per-model 實測、sonnet-4.6[max] vs opus-4.5 對照實驗、advisor 顧問工具與其 token 成本／context 剝除機制、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-draft-diag]] — Bridge Draft 診斷與重播修復（三個獨立成因、cutPendingTokenTail 扣留式設計、診斷探針、可重用方法論；2026-08-08 從 bridge-streaming 拆出）
-- [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份、判斷 wiki 保護不要自行 Grep 要直接呼叫 forget()、apply_topics token 機制阻塞已修（phase-aware guidance）、skill orphan 涵蓋不到 plugin marketplace；2026-08-15 更新）
+- [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份、判斷 wiki 保護不要自行 Grep 要直接呼叫 forget()、apply_topics token 機制阻塞已修（phase-aware guidance）、skill orphan 涵蓋不到 plugin marketplace、fact ID 完整性與 provenance 稽核缺陷、memory canary gold set 與 latency gate 翻面實測；2026-08-16 更新）
 - [[bridge-dream]] — Bridge Dream 例行維運框架（dream.json models 表 per-backend 設計、claude-mem-curate 接入、turn 誤報根因、confabulation 教訓）
 - [[bridge-specialist]] — Bridge Specialist 分身系統（配置、token 執行權限層、PARALLEL_DELEGATE cross-check、Dashboard 監控、run_plan 全有全無設計、moa-ref-codex 已知擱置、moa-ref-kiro/adversary 是 blind advisor 不能覆核、run_plan 能力錯配缺陷已修（wf-review/wf-verify 改派 verifier/moa-ref-security）、委派逾時 per-domain 可設定、extractModel()/maxTurns 已知未修項目；2026-08-15 更新）
 - [[bridge-research]] — Bridge 改善研究與 Roadmap（外部框架借鏡、fable-advisor context packaging、claude-plugins-official Permission Relay、PostTool Hooks A→D、Karpathy P0、Rich Messages Draft、spine-animation-ai 自包含 Skill 打包機制）
@@ -36,7 +36,7 @@
 - [[ai-strategy]] — 跨模型 AI 策略（正典語料庫架構、投影分發、headless 安全機制、第三方安裝腳本汙染正本風險）
 - [[user-pref]] — 使用者偏好與決策風格（ASK 優先、Git 紀律、自動化保守策略、除錯對策）
 - [[skill-and-eval]] — Skill 評估與管理（方法論整合、工具評估決策）[歷史頁面，topic 已併入其他分類]
-- [[igs-uof]] — IGS-UOF 加班單自動化（原 vc-uof-hours 改名擴充、加班單送出五層防線、刷卡時間 onchange 踩坑）
+- [[igs-uof]] — IGS-UOF 加班單自動化（原 vc-uof-hours 改名擴充、加班單送出五層防線、刷卡時間 onchange 踩坑、Cloudflare CDP 接管；2026-08-16 provenance 修正）
 - [[verification-diagnosis]] — 驗證與診斷方法論（綠燈假象五型與突變測試、診斷實驗三原則、證據的 recovery 邊界、純觀測欄位、await 縫開 race、同源自審天花板、註解洩漏答案、行為測試 vs 模型冷讀判準；2026-08-01 從 misc 拆出）
 
 ## Lessons
@@ -68,5 +68,5 @@
 ---
 
 Total pages: 50
-Last updated: 2026-08-15（wikisync ingest-ripple 優先清單：更新 [[bridge-project]]／[[bridge-smoke-gate]]／[[bridge-specialist]]／[[bridge-memory]]／[[dev-tools]] 五頁，補齊 62 條未同步 fact 的 sources（bridge-project 15、bridge-smoke-gate 18、bridge-specialist 7、bridge-memory 10、dev-tools 7 + 清掉 dev-tools 1 個幻影 source ID），audit_provenance 五頁皆 blocking=0；topicreview 阻塞已修並記錄於 [[bridge-memory]]、run_plan 能力錯配已修並記錄於 [[bridge-specialist]]、Telegram 重複投遞四層修復已記錄於 [[bridge-project]]）
-Previous: 2026-08-14（新增 [[cloudflare-os]] 外部 repo 研究頁，Step 0–1 完成、吸收範圍待裁決）
+Last updated: 2026-08-16 wikilint（機械檢查 50 頁：orphans=0、broken links=0，全 wiki 連結完整；深查 sources-vs-shard 計數落差挑出 3 頁 stale 並修正——[[igs-uof]] 補 5 條漏引用 fact + 修正一次錯誤懷疑（f_6420f5 經查證為真實有效 fact 非錯字）、[[uk-slot-eye-strike]] 補 4 條含新技術內容（停輪曲線量化、baked path 限制）、[[bridge-dream]] 補 5 條含既有段落漏引用的 provenance + 新增 desc 截斷閘門限制小節；audit_provenance 全域 51 頁 blocking=0）
+Previous: 2026-08-16 wikisync + factlint（ingest-ripple 四頁補 14 條 sources；factlint supersede 1 條過時覆核者 fact、forget 5 條冗餘/一次性紀錄）

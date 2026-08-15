@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-14T20:34:49.232Z",
+  "_last_updated_at": "2026-08-15T20:29:24.198Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -27,14 +27,14 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-14T20:34:48.039Z",
-      "use_count": 129,
-      "last_reason": "wikilint 步驟：index.md 交叉比對磁碟檔案（orphan）→ 全域 grep wikilink 比對合法 slug（broken link，抓到 1 條並修正）→ 針對 sources/shard 計數落差挑 9 頁比對內容（stale，2 頁需更新）→ 直接修正 2+1 頁 → audit_provenance 逐頁驗證 blocking=0",
+      "last_agent_used_at": "2026-08-15T20:29:23.259Z",
+      "use_count": 132,
+      "last_reason": "wikilint 步驟：index.md 與磁碟檔案交叉比對（orphan）→ 全域 grep wikilink 比對合法 slug（broken link）→ 用 sources 陣列長度 vs shard fact 數的落差篩出 stale 候選 → 深讀 3 頁確認落差性質（provenance 漏列 vs 新內容缺席）→ 直接修正並新增章節 → audit_provenance 逐頁與全域驗證 blocking=0",
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 2,
-      "last_routed_at": "2026-08-14T05:11:09.132Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-14T22:59:59.029Z"
     },
     "writing-skills": {
       "created_at": "2026-05-29T12:41:52.929Z",
@@ -55,8 +55,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 5,
-      "last_routed_at": "2026-08-14T05:11:09.132Z"
+      "route_count": 6,
+      "last_routed_at": "2026-08-14T22:59:59.029Z"
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -187,8 +187,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 4,
-      "last_routed_at": "2026-08-13T07:27:04.514Z"
+      "route_count": 5,
+      "last_routed_at": "2026-08-15T14:24:53.868Z"
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
@@ -394,8 +394,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 5,
-      "last_routed_at": "2026-08-13T09:42:54.238Z"
+      "route_count": 6,
+      "last_routed_at": "2026-08-15T14:24:53.867Z"
     },
     "ms-blackbox-probe-experiment-design": {
       "created_at": "2026-08-01T20:03:46.232Z",

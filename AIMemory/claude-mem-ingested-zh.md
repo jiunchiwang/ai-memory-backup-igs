@@ -754,3 +754,46 @@ caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來
 
 - 本檔排序已不一致：行 3 起是 2026-08-12 起往回倒序，但 2026-08-13 那則在檔尾（行 691）。本次依指示「append」續接檔尾，未重排（重排不在本次範圍）。
 - 帳目：15 筆＝貢獻寫入 5（候選 1、2、3、5、12）＋已被推翻 2（10、15）＋撞既有 fact 6（7、8、9、11、13、14）＋純過程紀錄 2（4、6）。即 10 筆整條丟棄，重疊率高——與 2026-08-01 那則觀察到的成因相同：08-13 當天的 clash_of_olympus VS Feature 工作在當下已即時寫進 AIMemory（f_9b909e、f_cf423c、f_e0a15e、f_f8bf81 等 16 條），claude-mem 隔日只是對同一批工作的第二次抽取。此為預期行為，非 producer 故障。
+
+## 2026-08-15 (claude-mem AUTO;15 筆候選 → 寫入 4 條)
+
+caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來源改寫）:
+`<<> ?Ｙ?:2026-08-14T20:30:03.245Z;蝑:15(銝? 15);??epoch 1786623206724>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-14T20:30:03.245Z;筆數:15(上限 15);自 epoch 1786623206724`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-14T20:30:03.245Z、15 筆、上限 15、epoch 1786623206724），**無矛盾**；檔內實際條目數清點亦為 15（行 5-19）。**全新一批**：epoch 1786623206724 > 上一則記錄的 1786526680353。來源 11 筆 `telegram-kiro-bridge-main` + 4 筆 `uk_slot_clash_of_olympus`，全部日期 2026-08-14。
+
+**寫入 4 條（皆已讀原始 artifact 取得實據，非由標題推論）：**
+
+1.（shard `uk-slot-clash-olympus`，合併候選 11/13/14＝shortlist 行 15/17/18）GAP-04 於 2026-08-14 由編導口頭答覆關閉：①語意 `2X` 與 2026-08-13 暫定的 `NX` 一致 ∴ 是**確認非改變**、碼不需回頭改；②「種類數」是**問題被消滅**而非答出數字——倍率不固定 ∴ 改 BitmapFont 動態組字（字符集 `0-9`+大寫 `X` 共 11 字），演出切片解鎖；③數值由 server `winningMultiplier` 給、client 不持有倍率表。含遺留假設（正整數）與「口頭答覆、S44 仍是問句、勿默默採用日後文件版」兩條警告。實據 `docs/spec-gaps.md:42、65-84`。**此條使 f_5927a3 的「工作假設」狀態過期**，已在 fact 內文標明（採 supersede 式寫法，未呼叫 supersede 工具——AUTO 不退役既有 fact）。
+2.（shard `uk-slot-clash-olympus`，候選 12＝行 16）借來的 placeholder 字型與 charset 陷阱：前身 uk_739（wrath_of_thunder）沒做金額顯示 ∴ 從 uk_872_eyestrike2 借字型（埃及風格 vs 本作希臘主題，上線前必換）；`SymbolCashNUM` 已接線並實機驗證，`Multiplier_Num.fnt` 刻意未接線因其 `charset="32,48-57,120"` 只有小寫 `x`、缺 88（大寫 X）∴ 畫不出 `2X`，倍率改共用 `SymbolCashNUM`。可遷移判準＝接線點陣字型前先讀 .fnt 表頭 charset，缺字不報錯只靜默少字。實據 `ART_ASSET_MANIFEST.md:123-157`。
+3.（shard `bridge-project`，候選 7＝行 11）grammY transformer 層序更正：`bot.api.config.use()` 是 `reduce(concatTransformer, this.call)` ∴ **後裝的在外層**；護欄裝在 autoRetry 之後只換到「護欄自發重試會再過一次 429 處理」，⚠️**不承重**——已設 `rethrowHttpErrors: true` ∴ 順序對調時「非冪等方法只嘗試一次」照樣成立。推翻先前文件「順序裝反會 silent total failure」的宣稱。實據 `src/bot-setup.ts:195-198`（該註解本身即更正後版本）。已在 fact 內文寫明與 f_f9f50a **互補非重複**（那條講 rethrowHttpErrors 預設值與內層迴圈使 maxRetryAttempts 失效；這條講層序方向與不承重判定），以免日後 dedupe 誤併。
+4.（shard `bridge-project`，候選 2＝行 6）planUncertainReplay 刻意不做遞迴切分、改文件化限制：前提是 `text` 本身不得超過 limit，超過時無法補救。可遷移的是**理由**而非該前提——多一個切塊實作＝多一個會與既有 `splitForTelegram` 漂移的來源，切塊是呼叫端責任；且「超長 → 400 → 重新入列」的迴圈在護欄出現前就存在，非護欄引入。判準形狀同 f_ee9da7。實據 `src/telegram-retry-guard.ts:124-142`。
+
+**捨棄 5 筆（撞既有 fact，逐條指名）：**
+
+- 候選 1（行 5，兩條 high 重放安全問題文件化後延後 / ACP 整輪 prompt 重放含工具副作用）→ 撞 **f_549d3f**（同一決策，2026-08-14，含「排除接在已疊四層的 commit 後面」的理由）、**f_f0aeea**（SPEC-replay-safety-audit.md 六條含 H-1/H-2 逐條）、**f_8ca646**（R-A/R-B/R-C 三條可複用判準）。三條加起來比候選完整。
+- 候選 3（行 7，覆核用對抗式框架：告訴覆核者價值在反駁而非同意）→ 撞 **f_eb2186**（「關鍵是指令必須明寫『找缺陷而非讚美』，否則 agent 會傾向附和」），且該做法已固化為 skill `ms-cross-model-adversarial-review`。
+- 候選 4（行 8，pendingMessages 加 `uncertain: boolean` 欄位）→ 撞 **f_45b6ff**（「保留重送＋把不確定性顯性化」即此設計的判準層）＋ **f_5e618d**（四層修復已完成並 push）。候選只多出欄位名這個實作細節。
+- 候選 6（行 10，採冪等性重試、借 cloudflare-os `callMayHaveTakenEffect()`）→ 撞 **f_45b6ff**（明確點名 callMayHaveTakenEffect 並記載「成本不對稱在本 domain 是反過來的 ∴ 不照搬」）＋ **f_f9f50a**。
+- 候選 15（行 19，fork 式協作／同事已完成安裝）→ 撞 **f_1ac058**、**f_474e9e**（皆記載選「同事自建 repo + upstream remote」而非 GitHub Fork 鈕及其理由）、**f_b82b6e**（SETUP-downstream-fork.md 的產出與裁決）。
+
+**捨棄 3 筆（一次性過程紀錄）：** 候選 5（行 9，建立 `scratch/review-prompt-ff976f6.txt`、2555 bytes）、候選 8（行 12，ASK id `cfos_b1fix` 提供 4 個選項待使用者選範圍）、候選 9（行 13，cloudflare-os research 完成、wiki index.md 條目由 research-in-progress 改為 Step 2-3 complete）。
+
+**捨棄 1 筆（沒有內容的計數）：** 候選 10（行 14，cloudflare-os 吸收評估「兩個建議採用、兩個否決」）——shortlist 只給數字不給是哪四個模式，寫成 fact 必須自行補完＝過度推論；其唯一有實據的成分（callMayHaveTakenEffect 的成本不對稱判準）已在 f_45b6ff。
+
+**⚠️ 一處標題與 artifact 的張力，照實回報未靜默消解：**
+
+候選 12 標題寫「Amount numbers cannot use substitutes or reference other games like eye_strike2」（不得沿用他案），但 artifact `ART_ASSET_MANIFEST.md:123-126` 記載的是**確實已從 eye_strike2 借了兩份字型**並標為 placeholder。兩者可調和為「交付政策 vs 開發期現況」——上線前不得沿用他案資產，開發期作為顯性標記的暫代品則可接受——寫入的是這個調和版本，不是標題的字面版本。判讀依據是 artifact 原文「**上線前必須換掉**」。
+
+**⚠️ 一項刻意不寫（超出本批範圍，非遺漏）：**
+
+查證 artifact 時在 `src/telegram-retry-guard.ts:154-162` 讀到 2026-08-15 由 Codex 覆核抓到的更正——`sentParts` 只能證明前面幾則成功、證明不了當前失敗那則沒送達，∴ 判準改為「任何一次以『可能已送達』收場的嘗試都讓該筆從此變成不確定」（fail-safe 方向）。這是有價值的可重用判準，但**日期在本批（2026-08-14）之後、不屬本批候選**，依證據紀律不寫入，預期會出現在下一批 shortlist。
+
+**帳目（15 筆全部有下落）:** 寫入貢獻 6 筆（候選 2、7、11、12、13/14 併入第 1 條 ∴ 行 6/11/15/16/17/18 共 6 行 → 4 條 fact）＋撞既有 fact 5 筆（行 5、7、8、10、19）＋純過程紀錄 3 筆（行 9、12、13）＋無內容計數 1 筆（行 14）。
+
+去重方式：`list_facts` 查 `retry`(8)／`冪等`(2)／`cloudflare`(6)／`replay`(12)／`clash_of_olympus`(18，逐條看過)／`transformer`(0)／`uncertain`(0)／`BitmapFont`(0)／`wrath_of_thunder`(1，僅專案存在性)／`eye_strike2`(0)／`同事`(10)／`附和`(1)／`splitForTelegram`(0)，寫入前現存 622 筆。未呼叫 forget。
+
+本次依指示 append 於檔尾；先前記錄的檔內排序不一致未處理（重排不在本次範圍）。

@@ -2,9 +2,9 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-15（topicreview 阻塞已修：phase-aware guidance 上線 commit 892f68f；補記 renderTopicReviewSnapshot 兩個呼叫者更正、topicreview 回歸斷言已知缺口、skill orphan 涵蓋不到 plugin marketplace 補充事實來源）
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_484853, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_5c1956, f_5e6afb, f_9a7397, f_34a003, f_6f6762, f_7fb676, f_842a1b, f_e17260, f_e547d2, f_d742a1, f_99e9ba, f_88c0ba, f_213f2c, f_622428, f_ee9da7]
-history_sources: [f_713852, f_017f18]
+updated: 2026-08-16（新增：fact ID 完整性與 provenance 稽核兩類缺陷、memory canary gold set 與 latency gate 翻面實測、factlint wiki-reference 例外再擴大）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_e2e14a, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_5c1956, f_5e6afb, f_9a7397, f_34a003, f_6f6762, f_7fb676, f_842a1b, f_e17260, f_e547d2, f_d742a1, f_99e9ba, f_88c0ba, f_213f2c, f_622428, f_ee9da7, f_e2c507, f_e42c5d, f_3724e9, f_0b0278, f_2089a9, f_6b5161]
+history_sources: [f_713852, f_017f18, f_484853]
 ---
 
 # Bridge 記憶與維運系統
@@ -142,6 +142,21 @@ wiki-reference 保護會讓 factlint 想刪的 fact 刪不掉，於是「哪些�
 要真的刪掉受保護的 fact，流程是**先從相關 wiki 頁的 `sources:` frontmatter 移除該 fact id 解除保護，再 `forget()`**。但 2026-07-08 裁決是「接受保護、不解除引用」——所以這條流程是例外手段，不是常規。
 
 **第二個例外：內容已被證實為假的 fact（2026-08-13）**：若 wiki sources 保護的 fact「內容已被證實為假」，同樣允許先移除 sources 再 `forget()`——理由是假 fact 被注入 preamble 當事實，成本高於它的 provenance 價值。此例外**不推翻**上面「瑣碎但為真」那類的保護裁決，兩者適用範圍不同：一個看內容真偽，一個看內容是否瑣碎。刪除後刻意不補記替代快照——可從設定檔直讀的現況不入 fact，否則同樣會腐爛（例：`bridge-specialist` shard 一則記錯 model pin 的 fact 已按此例外刪除）。
+
+**第三個例外：已解決的一次性狀態（2026-08-15 擴大）**：原本兩個例外只涵蓋「內容已被證實為假」，現在**「已解決的一次性狀態」也納入**——fact 描述的是某個當時的暫時狀態（如「X 個 commit 未 push」），該狀態後來已關閉且沒有可遷移教訓。排除的是 2026-07-08 那條「瑣碎但為真」裁決的**全稱適用**，對仍然成立的瑣碎 fact 該裁決依然有效。操作紀律不變：解引用前先確認 wiki 正文有沒有依賴該 fact 的內容，有就先把內容改對再刪 ID。
+
+## Fact ID 完整性與 Provenance 稽核缺陷（2026-08-15）
+
+兩類獨立缺陷，都源自「不合規/不存在的 fact ID 被靜默接受」：
+
+- **手寫 leet ID 觸發三層連動降級**：`memory-db.ts:935` 的正則把 ID 括號設為選配，5 個手寫 leet ID（`f_r0b1nh` 等）匹配失敗時不是跳過而是「欄位左移一格」——`createdAt` 吃到 ID 字串、`text` 前面黏著 timestamp，再用這段錯 text 重新雜湊出一個 master 不存在的 fact ID（canary 報的孤兒即此），且 `created_at` 變非日期字串使時序衰減整條跳過，`audit_provenance` 也因只認 `f_[0-9a-f]{6}` 而恆綠。已修：ID 正規化為 `f_${sha256(text).slice(0,6)}` 並重跑 `syncFactsToDb`；`facts-store.ts:741` 原有的 `invalid_id_format` blocking 檢查因沒有 gate 在跑，這 5 條從 2026-06-03 躺到 08-15。
+- **wiki provenance 稽核抓到「捏造」與「畸形」是兩種不同的東西，不可混判**：49 條 blocking 裡 48 條在 master log 與 forget-log 兩處皆查無，判為捏造（`uk-slot-pirates-queen.md` 最露骨，9 個 source 有 8 個是 `f_a1b2c3` 這類佔位字串），逐頁移除；但另 6 個「含非 hex 字元」的 ID 曾被誤判為同類一併移除——其中 5 個其實是 2026-06-03 就存在的真 fact，只是 ID 為手寫 leet 字串，已回填正規化後的新 ID。判準：ID 形狀不合規 ≠ 該 fact 不存在，要拿內容去 master log 查證才能分辨遺失／捏造。
+
+## Memory Canary 與 Gold Set（2026-08-15）
+
+`npm run canary:memory` 首次量到記憶召回品質軸。三個由原始碼查證的硬約束決定 gold set 的形狀：gold fact 必須與 active 語料逐字相等、依 topic 過濾後須等於 canary 自選的 `selectedFactIds`、retrieval 回傳任何不在 gold.facts 的 fact 就整批不可用——facts 陣列因此由 `scripts/memory-gold-set-build.mjs` 從語料生成，不能手打。兩個 cohort（`uk-slot`+`uk-slot-eye-strike`、`bridge-draft-diag`）獨立複製出相同結論：P1（分類決策）對召回品質是 no-op，P5（typed retrieval）在 precision/recall/MRR 三軸優於 legacy。
+
+**latency gate 會在完全相同輸入下翻面**：同一 cohort、同一 gold set 連跑兩次，品質三軸逐位元相同，但 p95 latency 從 19.7ms 變 14.8ms，gate 隨之 FAILED→PASSED——量級只有十幾毫秒、擺動幅度大於效應量，已裁決降級為 advisory（照量照報但不再決定 `passed`）。gold set 人工標註（`canary-gold.json`）因含逐字使用者記憶，裁決不進版控只靠 `/backup` 帶走。使用者尚未授權開啟 P1/P5：兩個 cohort 撐得起「沒偵測到品質退步」，撐不起上線決定，且成本軸（latency）目前明確量不準。
 
 ### `[WS]` working-state facts 應主動清理（2026-08-01 實證）
 

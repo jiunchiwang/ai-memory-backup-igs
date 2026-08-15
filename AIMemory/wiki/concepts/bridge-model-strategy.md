@@ -2,8 +2,8 @@
 title: Bridge Model 選型與配額策略
 type: concept
 created: 2026-08-05
-updated: 2026-08-14（wikilint：修正「目前配置」節內部自相矛盾——主 session 誤留 claude-fable-5[1m] 舊值、kiro pin 誤留已移除的 claude-opus-4.6，與 [[bridge-acp]] 對齊為現況）
-sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, f_948bf2, f_f6406d, f_7bf9a8, f_174485, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5b9478, f_d49b9a, f_7c7a20, f_ed90b4, f_c0459d, f_5c3ef5, f_d36619, f_ccb09c, f_fd5954, f_31877c, f_e84ad9, f_d6f8a7, f_8a90df, f_e2fe39, f_cd3300, f_ea64e9]
+updated: 2026-08-15（補進 4 條未同步 fact 中的 3 條：vendor pin 自報的鑑別力判準、specialists.json 的 pin 無閘門驗證、HTTP MCP header 手改設定檔；第 4 條 advisor context 剝除本頁已有）
+sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, f_948bf2, f_f6406d, f_7bf9a8, f_174485, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5b9478, f_d49b9a, f_7c7a20, f_ed90b4, f_c0459d, f_5c3ef5, f_d36619, f_ccb09c, f_fd5954, f_31877c, f_e84ad9, f_d6f8a7, f_8a90df, f_e2fe39, f_cd3300, f_ea64e9, f_3e1d20, f_7dbef0, f_982e49]
 ---
 
 # Bridge Model 選型與配額策略
@@ -33,6 +33,26 @@ sources: [f_c228c9, f_fedf5c, f_efd659, f_c5dfde, f_392c22, f_fb7004, f_bd8491, 
 - **Claude 系可用清單**：auto / claude-opus-4.5 / claude-sonnet-4.6 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5（`claude-opus-4.6` 已於 2026-07-27 移除）
 - **非 Claude 系（2026-07）**：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5（0.25x, 196K）、minimax-m2.1（0.15x, 196K）、glm-5（0.5x, 200K）
 - `kiro-cli chat --list-models`（`--format plain/json/json-pretty`）可查可用清單，但需登入狀態才回傳結果；2026-07-26 曾因未登入失效，2026-07-27 恢復正常
+
+### vendor pin 的自報只在一種情況有鑑別力（2026-08-15 實測）
+
+要拿某個 pin 當**異源覆核者**前得先確認它真的換了 vendor。做法是問「忽略產品身分、只回一個詞：你的 vendor 是哪一家」，但結果只有一種情況能採信：
+
+| pin | 自報 | 判讀 |
+|---|---|---|
+| `glm-5` | 智譜 | ✅ **非 Anthropic 的 pin 自報了自己的 vendor** —— 唯一有鑑別力的訊號 |
+| `deepseek-3.2` | Anthropic | ⚪ **零鑑別力**：與 Kiro 產品身分 prompt 宣稱的相同 ∴「真自報」與「照抄 prompt」預測同一答案 |
+| `qwen3-coder-next` | 智譜（應為阿里；先前另一次答 DeepSeek）| ❌ 自報是噪音；「pin 靜默路由到別的模型」與「模型就是不可靠的自報者」在此方法下**分不開** |
+
+∴ 篩不過就退回已驗證的 pin（本機目前只有 `glm-5` 通過），留痕寫「非 Anthropic，但具體 vendor 未確認」——**不要**因為自報對不上就判定 pin 沒生效，也不要把「答了個非 Anthropic 的名字」當成該 vendor 已確認。
+
+### specialists.json 的 pin 沒有任何閘門在驗（2026-08-10）
+
+`moa-ref-codex` 釘 `gpt-5.6-terra`，本機 codex-cli 0.146.1 直接回 400「requires a newer version of Codex」∴ `wf-design` / `wf-prd` 的 codex 那一腳必掛。repo 自己的可用清單（`src/configRegistry.ts:198`：gpt-5.6-sol / gpt-5.5 / gpt-5.4 / gpt-5.4-mini，**無 terra**）只餵 UI 建議、**不 gate `specialists.json` 的 pin** ∴ 這個不一致沒有任何東西擋，2026-08-10 實跑 `wf-design` 才暴露。
+
+### HTTP MCP 帶 Authorization header 必須手改設定檔（2026-08-13）
+
+Codex CLI 0.146.1 與 Kiro CLI 2.18.0 都支援 Streamable HTTP 的 MCP server、也都支援自訂 header，但**兩者的 `mcp add` 子命令都沒有 `--header` 旗標**。欄位名不同：Codex 是 `http_headers`（binary 另有 `bearer_token_env_var` / `streamable_http`），Kiro 是 `type`/`url`/`headers`。
 
 ## ACP Adapter 的 model 偵測陷阱（與 [[bridge-acp]] 的協定機制交界處）
 

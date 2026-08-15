@@ -2,8 +2,9 @@
 title: Bridge Upstream Fork 同步與合併衝突處理
 type: concept
 created: 2026-07-21
-updated: 2026-08-08（新增 merge-base 前置查證原則）
-sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_f144ad, f_90a25d, f_a23d83, f_4c12ce, f_a1ecf7, f_ea9657, f_e272f0, f_a3f2b2, f_489e55]
+updated: 2026-08-16（factlint：清理 3 條已被本頁「Upstream 同步歷程」表完整涵蓋的一次性同步記錄；push 前覆核 fact 更正為 glm-5 現行預設）
+sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_a23d83, f_4c12ce, f_ea9657, f_a3f2b2, f_489e55, f_c42db4]
+history_sources: [f_e272f0]
 ---
 
 # Bridge Upstream Fork 同步與合併衝突處理

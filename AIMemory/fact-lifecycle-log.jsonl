@@ -1,3 +1,12 @@
 {"ts":"2026-08-13T20:35:54.068Z","userId":"509424983","action":"supersede","from":["f_32a736"],"to":"f_198e79","reason":"舊決策已被 2026-07-16 的實際建立行動與持續使用推翻，wiki bridge-specialist.md 已同步記錄；factlint 2026-08-14 執行"}
 {"ts":"2026-08-13T23:14:23.637Z","userId":"509424983","action":"supersede","from":["f_713852"],"to":"f_017f18","reason":"2026-08-14 以 dist 實跑重現，原推測（token 被輸出截斷遺失）被反證；真因是 P2 flag 未開導致 token 命名空間錯配"}
 {"ts":"2026-08-13T23:49:52.485Z","userId":"509424983","action":"supersede","from":["f_017f18"],"to":"f_5c1956","reason":"跨 vendor 覆核（kiro-cli glm-5）指出 acknowledge 在 P2 off 時是 no-op，我追碼確認：重燒機制與 apply 成敗無關，原 fact 的因果是編的"}
+{"ts":"2026-08-14T22:09:08.526Z","userId":"509424983","action":"supersede","from":["f_484853"],"to":"f_e2e14a","reason":"四條同群 fact 中兩條對 dist/ 消費者的「只有」宣稱互相矛盾且皆被原始碼否證，合併為一條經查證的正本"}
+{"ts":"2026-08-14T22:09:20.523Z","userId":"509424983","action":"supersede","from":["f_a692b7"],"to":"f_e2e14a","reason":"同群合併：本條的「dist 只有 smoke suite 在用」被 package.json bin 與 setup-mcp.mjs 否證"}
+{"ts":"2026-08-14T22:09:55.920Z","userId":"509424983","action":"supersede","from":["f_210d6f"],"to":"f_e2e14a","reason":"同群合併：本條的「dist 只給 MCP server 子行程使用」漏掉 smoke suite 這一類消費者"}
+{"ts":"2026-08-14T22:10:09.471Z","userId":"509424983","action":"supersede","from":["f_b1e2ca"],"to":"f_e2e14a","reason":"同群合併：內容正確但已被合併正本完全涵蓋，留著會讓下次 factlint 重複標記同一群"}
+{"ts":"2026-08-14T22:52:30.661Z","userId":"509424983","action":"supersede","from":["f_9bb794"],"to":"f_e189b1","reason":"同一條 heredoc 教訓的舊版；2026-08-14 的版本已完全涵蓋它並多帶修法"}
+{"ts":"2026-08-14T23:37:26.658Z","userId":"509424983","action":"supersede","from":["f_05c854"],"to":"f_e42c5d","reason":"初版把 6 個畸形 ID 判為捏造，其中 5 個經 master log 第一手否證為真 fact"}
+{"ts":"2026-08-15T00:42:56.455Z","userId":"509424983","action":"supersede","from":["f_51bf2c"],"to":"f_2a75e0","reason":"pooling 完成，judgedCoverage 1.0，兩個 gate 全過；並更正「retrieval 未依 topic 侷限」的誤判"}
+{"ts":"2026-08-15T00:53:04.437Z","userId":"509424983","action":"supersede","from":["f_2a75e0"],"to":"f_2089a9","reason":"「兩個 gate 全過」在 latency 檢查被證實會翻面後讀起來比實情強，需加限定"}
+{"ts":"2026-08-15T20:19:58.352Z","userId":"509424983","action":"supersede","from":["f_e272f0"],"to":"f_c42db4","reason":"2026-08-13 使用者已裁決預設覆核者從 Fable5 改為 kiro-cli glm-5，本條仍寫 Fable5 為預設，屬過時 fact"}

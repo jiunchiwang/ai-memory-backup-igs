@@ -3,7 +3,7 @@ title: Telegram-Kiro-Bridge 踩坑經驗
 type: lesson
 created: 2026-07-16
 updated: 2026-07-16
-sources: [f_6a2483, f_90a25d, f_4c12ce, f_e72b07, f_6a6988]
+sources: [f_6a2483, f_4c12ce, f_e72b07, f_6a6988]
 why: 因為 bridge 開發中反覆遇到環境變數繼承、merge 衝突、rate limit、unhandledRejection 等隱性陷阱，所以蒐集防護模式
 ---
 

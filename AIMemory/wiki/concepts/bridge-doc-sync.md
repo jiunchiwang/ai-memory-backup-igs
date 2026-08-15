@@ -2,8 +2,8 @@
 title: Bridge 文件同步機制（doc-sync）
 type: concept
 created: 2026-07-18
-updated: 2026-08-08
-sources: [f_f2dc75, f_221993, f_5302c0, f_3fb62a, f_faa25e]
+updated: 2026-08-16（factlint：f_f2dc75 內容已完整蒸餾進「歷史修復」節，解引用後刪除該 fact）
+sources: [f_221993, f_5302c0, f_3fb62a, f_faa25e]
 ---
 
 # Bridge 文件同步機制（doc-sync）

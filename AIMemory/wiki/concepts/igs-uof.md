@@ -2,8 +2,8 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-08-06（新增 CDP 接管模式突破 Cloudflare 反機器人驗證）
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_cf4a82, f_9b3d71, f_e8c5f0, f_a2d693, f_d5b5eb, f_303689]
+updated: 2026-08-16（wikilint：補齊 4 條頁面內文早已涵蓋但 sources 漏列的 fact——f_6420f5 經查證為真實有效 fact，非錯字，保留）
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_40460d, f_cd9df4, f_d0b4fc, f_c64ef5, f_ecd35a, f_d5b5eb, f_303689]
 ---
 
 # IGS-UOF 加班單自動化

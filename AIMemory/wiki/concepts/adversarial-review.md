@@ -2,8 +2,8 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-15（新增：Codex 加入覆核者池、三家實績對照、findings 第四種處置維度「嚴重度降級」）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87, f_eb2436, f_5d91c4, f_b860aa, f_7a7712]
+updated: 2026-08-16（新增：覆核強度受 prompt 影響的受控對照、Kiro vendor pin 驗證兩個新失效模式、覆核者看不到 git 版控狀態的環境盲點）
+sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87, f_eb2436, f_5d91c4, f_b860aa, f_7a7712, f_ae1f66, f_982e49, f_afb9ab, f_06eb83]
 ---
 
 # 異源對抗覆核紀律
@@ -161,6 +161,13 @@ codex exec -s read-only -c model_reasoning_effort="high" "$PROMPT" < /dev/null >
 **三輪跨 vendor 覆核實績對照（同一批 commit）**：glm-5 第一輪 0 finding、第二輪 5 條中真採納 1／部分採納 1／降級 1／駁回 1／誤讀 1；Codex 一輪 8 條且驗證後多數成立，並主動標明唯讀沙箱跑不了測試「沒有冒充實跑結果」。⚠️ 品質差異有模型與提問方式兩個未隔離變因，不可歸因於單一因素。
 
 **Findings 處置的第四種維度：嚴重度降級**（補上第 111 節「三個獨立維度」之外的第四種）：覆核者給的嚴重度本身可能過高——Codex 把「unref 導致行程結束佇列遺失」評為 high，但查證後該風險先於本次改動即存在（佇列本就是記憶體內、退出即失，與 unref 無關）∴ 降級為既有問題而非本次引入，不是駁回、也不是照單全收。
+
+## 2026-08-15：覆核強度受 prompt 影響、pin 驗證新失效模式、環境盲點
+
+- **同一模型、換 prompt，0 finding 變有展示痕跡的報告**：`kiro-cli glm-5` 對同一批 commit，弱 prompt（只說「找問題／不要相信自我描述」）得到「讀 檔:行號→複述→結論一致」零反例；強 prompt（明說不收哪種報告形狀＋要求「做了什麼能區分真假的操作」＋給一個具體懷疑方向而非檢查清單）讓同一模型去查了 runner 的 SKIP/SLOW 清單並注意到退出碼語意變更。∴ 覆核弱先換問法再判，不先歸因模型。⚠️ 強 prompt 不等於可信：那輪同時含一條經查為錯的支撐主張，留痕只能寫「有部分展示痕跡、含一條經查為錯的支撐主張」，不可寫「已取得獨立確認」。
+- **Kiro vendor pin 驗證兩個新失效模式**：`deepseek-3.2` 對「忽略產品身分選一個 vendor」這題答 **Anthropic**——與 Kiro 產品身分 prompt 宣稱相同 ∴ 零鑑別力，無法確認 pin 是否生效；`qwen3-coder-next` 答**智譜**但它應是阿里，配合先前答過 DeepSeek，同一題兩次兩個不同錯答案 ∴ 自報是噪音。方法只在「非 Anthropic 的 pin 自報**自己**的 vendor」時有鑑別力（glm-5→智譜穩定成立），其餘情況只能留痕「非 Anthropic，具體 vendor 未確認」，不要因自報對不上就誤判 pin 沒生效。
+- **覆核者看不到 git 版控狀態**：`glm-5` 覆核一個把 `check-npm-audit` 移出 fast tier 的 commit 時回「0 finding」，支撐論證之一是「`.github/ci.yml` 沒指定 `--fast`，完整 CI 會補跑到」——但該檔從未進版控（`git ls-files` 查無），是卡在 PAT 缺 workflow scope 的 TODO 不是生效的 CI。覆核者只能看到檔案系統，看不到版控狀態；拿「某設定檔存在」當論證支撐時要自己補一次 `git ls-files`。
+- **Windows 上覆核者跑 `npm help` 會靜默掛住約 28 分鐘**：npm 不印文字而是 spawn `cmd /d /s /c start "" file://...npm-run.html` 開瀏覽器，無頭 context 裡那個 `start` 不會回來。判別法是行程樹停在 `cmd start`；處置只殺最底層那個 `cmd`，上游 npm/pwsh 會自行收斂、覆核從下一步續跑。
 
 ## 與 SDD 規格自審閘的關係
 

@@ -2,8 +2,8 @@
 title: Bridge Dream 例行維運框架
 type: concept
 created: 2026-07-16
-updated: 2026-08-08（新增 skill 跨 CLI 可攜性盤點）
-sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_b8d2e1, f_c4f7a3, f_d9e5b2, f_1ae434]
+updated: 2026-08-16（wikilint：補齊 provenance——「claude-mem-shortlist 問題釐清」節內容早已涵蓋 f_6fd455/f_5ca96d/f_157e9c/f_3a6356 但 sources 漏列；新增 desc 基線 232 字元的閘門限制小節）
+sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_1ae434, f_6fd455, f_5ca96d, f_157e9c, f_3a6356, f_f53d82]
 ---
 
 # Bridge Dream 例行維運框架
@@ -94,6 +94,10 @@ sources: [f_e547d2, f_6e3e02, f_a3ef7e, f_411672, f_a18e55, f_071df3, f_b8d2e1, 
 ### 可重用教訓
 
 curate 這類「讀檔 A 後 append 到 log B」的步驟，agent 極易拿 B 的前一則當 A 的內容依據——prompt 必須明文禁止並要求原文貼出 A 的檔頭；且 dream 報告會把 confabulation 原封升格成 High Priority 加錯藥方，**處理 dream 建議前要先獨立查證它的前提**。
+
+## desc 基線與截斷閘門的空間限制
+
+`check-bot-command-descriptions` 閘門把「desc 會被 `truncateBotCommandDescription` 截斷」視為失敗而非可接受，而 `/dream` 條目的 desc 基線是 232 字元——加上 button 前綴後距 256 上限僅約 11 字元餘裕。要在該欄位補說明幾乎無空間，應改為指向 schema 正本而非就地列舉。
 
 ## 已知混淆：skill 觸發語境重疊
 
