@@ -2,8 +2,9 @@
 title: 使用者偏好與決策風格
 type: concept
 created: 2026-07-15
-updated: 2026-08-01
-sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_8a4a0e, f_e0ce0f, f_a738db, f_99e9ba, f_ebe025, f_9d9c71]
+updated: 2026-08-17（wikisync：新增 Git 紀律兩條——commit≠push 授權、收尾驗收規則）
+history_sources: [f_8a4a0e]
+sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_ca2e4f, f_e0ce0f, f_a738db, f_99e9ba, f_ebe025, f_9d9c71, f_4ad101, f_53944a]
 ---
 
 # 使用者偏好與決策風格
@@ -20,10 +21,21 @@ sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, 
 - **Commit 訊息使用中文**
 - **Commit 前先確認**：多問幾個釐清問題並取得同意，不逕自 commit
 - 同一 session 不相關的改動**拆成多個小顆粒 commit**
+- **Commit ≠ Push 授權**（2026-08-14 確認）：說「commit」不等於授權 push——即使選定了修法（如選 A），也不等於授權 commit，兩者都要各自明確指示
 
 ## 文件產出
 
 - HTML 文件要有**目錄錨點跳轉**（點擊跳段落 + 回目錄連結）
+
+## 回覆收尾驗收（2026-08-16 裁決採用）
+
+借自外部 repo `ayghri/i-have-adhd` 的 Pre-send check：**只讀第一行與最後一行，讀者是否知道 (a) 下一步做什麼 (b) 剛剛發生了什麼**——不通過就把答案往前提、把結論寫進末行。
+
+這條補入的原因：既有三層自檢各驗一個軸而沒有人驗「可讀性」——turn-lint 驗語言紀律與 ASK 按鈕、SELF_EVAL 驗正確性、事實主張閘門驗證據等級，沒有任何一層問「這則回覆讀得動嗎」。
+
+配套規則：**刪 hedge 但保留承載真實不確定性的 hedge**——刪的是 perhaps/might 這種無資訊量軟化詞，保留的是「B 級證據 ∴ 標為推論」這種真實不確定性；刪錯方向就是製造虛假自信。
+
+刻意不採用的部分：該 repo 的機械化規則（無開場白/客套、一律給時間估計、清單上限 5）在近 30 天實測命中率極低或與現行紀律衝突，加閘門只會製造誤報。
 
 ## 自動化保守策略
 

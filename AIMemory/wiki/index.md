@@ -64,9 +64,10 @@
 - [[claude-agent-sdk]] — Claude Agent SDK（原 Claude Code SDK 已改名）研究（四路對照與 Tool Runner≠Agent SDK 的 harness/部署二維判準、query() 與 Options/Query 物件 API 面、能力清單與 claude.ai 額度授權限制、bridge → claude-agent-acp 0.63.0 → Agent SDK 0.3.220 層次；settingSources 寫死 user/project/local 是「CLAUDE.md 直達」與「19 個 MCP 行程」的同一個開關）
 - [[cloudflare-os]] — 外部 repo cloudflare/cloudflare-os 研究（**Step 2–3 完成、已 clone 核對原始碼**；Gadget/Gatekeeper/Observer 三概念、讀取核可同步 vs 側效動作核可完全非同步的刻意不對稱且「不存在可略過檢查的模式」、ActionStore 重啟即認賠的 at-most-once 構造、型別當權限閘門；判別式是**單人 vs 多人** ∴ Observer／可達圖整套是「不需要」非「還沒做」；⚠️ **初版一條事實錯誤已更正**——「bridge ASK 是同步阻塞」為誤，實為 queue 後 turn 結束才 commit，真實差距是 turn 終結 vs 帶假定值續跑（見 §4.1）；借鏡排序 B1 at-most-once／B2 無 skip 模式 建議吸收，B3 動作核可閘門／B4 模擬續跑 不建議；上游明言不收外部貢獻 ∴ 回饋路徑不通）
 - [[codegen-git-init-gap]] — codegen clone 路徑從不建 repo 的流程缺口（Step 0.0 刪 .git 卻沒人建回來、專案在 finalize gate 38/38 全綠下無版控）、補 Step 0.2 與 gate_git 四條斷言、UK slot 的 git 追蹤慣例（**模板不是出貨形態**、node_modules 進版控、AI 產物靠專案自行加碼、`.claudedocs` 其實是 local-only 的 info/exclude 在擋），以及五輪異源覆核 12 條 findings——含**同一形狀的假因果連出現三次，每次都是「為了修上一條而新寫的句子」**
+- [[query-msh2m15g]] — BC-17b 恆真問題的根因分析（突變 2 沒被抓到、withProvider pin 被 set_config_option 回應的 configOptions 蓋回去、突變測試的結構性限制；2026-08-17 新增）
 
 ---
 
-Total pages: 50
-Last updated: 2026-08-16 wikilint（機械檢查 50 頁：orphans=0、broken links=0，全 wiki 連結完整；深查 sources-vs-shard 計數落差挑出 3 頁 stale 並修正——[[igs-uof]] 補 5 條漏引用 fact + 修正一次錯誤懷疑（f_6420f5 經查證為真實有效 fact 非錯字）、[[uk-slot-eye-strike]] 補 4 條含新技術內容（停輪曲線量化、baked path 限制）、[[bridge-dream]] 補 5 條含既有段落漏引用的 provenance + 新增 desc 截斷閘門限制小節；audit_provenance 全域 51 頁 blocking=0）
-Previous: 2026-08-16 wikisync + factlint（ingest-ripple 四頁補 14 條 sources；factlint supersede 1 條過時覆核者 fact、forget 5 條冗餘/一次性紀錄）
+Total pages: 51
+Last updated: 2026-08-17 wikisync（ingest-ripple 3 頁更新——user-pref 補 2 條 Git 紀律、adversarial-review 補 5 條含 2026-08-16 觀察、bridge-project 補 3 條含重試 instrumentation；query-msh2m15g 新增；4 個無 fact sources 的 ASK 回應 query 跳過）
+Previous: 2026-08-16 wikilint（機械檢查 50 頁：orphans=0、broken links=0，全 wiki 連結完整；深查 sources-vs-shard 計數落差挑出 3 頁 stale 並修正——[[igs-uof]] 補 5 條漏引用 fact + 修正一次錯誤懷疑（f_6420f5 經查證為真實有效 fact 非錯字）、[[uk-slot-eye-strike]] 補 4 條含新技術內容（停輪曲線量化、baked path 限制）、[[bridge-dream]] 補 5 條含既有段落漏引用的 provenance + 新增 desc 截斷閘門限制小節；audit_provenance 全域 51 頁 blocking=0）

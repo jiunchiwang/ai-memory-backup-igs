@@ -2,8 +2,9 @@
 title: IGS-UOF 加班單自動化
 type: concept
 created: 2026-07-16
-updated: 2026-08-16（wikilint：補齊 4 條頁面內文早已涵蓋但 sources 漏列的 fact——f_6420f5 經查證為真實有效 fact，非錯字，保留）
-sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_40460d, f_cd9df4, f_d0b4fc, f_c64ef5, f_ecd35a, f_d5b5eb, f_303689]
+updated: 2026-08-16（dream high-priority：uof_client.py 60s timeout 複驗已進 git 並 push（fce516d）；f_cd9df4 → f_ecf142）
+history_sources: [f_cd9df4]
+sources: [f_8f1b99, f_52d1ec, f_ce6c91, f_c76741, f_16d690, f_02e1bb, f_6420f5, f_40460d, f_ecf142, f_d0b4fc, f_c64ef5, f_ecd35a, f_d5b5eb, f_303689]
 ---
 
 # IGS-UOF 加班單自動化
@@ -71,7 +72,7 @@ Turnstile 認的**不是** cookie、無痕、或瀏覽紀錄，而是「這個�
 
 ### 其他調整
 
-- `uof_client.py` 登入與首頁導航 timeout 已從 20s 改為 60s（UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded）
+- `uof_client.py` 登入與首頁導航 timeout 已從 20s 改為 60s（UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded）——2026-08-16 複驗：該改動已在 commit `fce516d` 進 git 並 push（`scripts/uof_client.py:111/161`），舊 fact 的「尚未進 git」註記已失效
 
 ## 相關
 

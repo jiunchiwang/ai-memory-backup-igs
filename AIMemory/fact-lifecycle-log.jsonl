@@ -10,3 +10,8 @@
 {"ts":"2026-08-15T00:42:56.455Z","userId":"509424983","action":"supersede","from":["f_51bf2c"],"to":"f_2a75e0","reason":"pooling 完成，judgedCoverage 1.0，兩個 gate 全過；並更正「retrieval 未依 topic 侷限」的誤判"}
 {"ts":"2026-08-15T00:53:04.437Z","userId":"509424983","action":"supersede","from":["f_2a75e0"],"to":"f_2089a9","reason":"「兩個 gate 全過」在 latency 檢查被證實會翻面後讀起來比實情強，需加限定"}
 {"ts":"2026-08-15T20:19:58.352Z","userId":"509424983","action":"supersede","from":["f_e272f0"],"to":"f_c42db4","reason":"2026-08-13 使用者已裁決預設覆核者從 Fable5 改為 kiro-cli glm-5，本條仍寫 Fable5 為預設，屬過時 fact"}
+{"ts":"2026-08-15T23:33:02.853Z","userId":"509424983","action":"supersede","from":["f_5a2532","f_493b31"],"to":"f_8a9bd7","reason":"2026-08-16 dream high-priority：清單已被 upstream 吸收，改記「怎麼現算」而非硬寫清單"}
+{"ts":"2026-08-15T23:33:11.439Z","userId":"509424983","action":"supersede","from":["f_8a4a0e","f_1a68bf"],"to":"f_ca2e4f","reason":"2026-08-16 dream high-priority：f_8a4a0e 與 f_1a68bf 語意重疊，合併為兩條原文的嚴格聯集"}
+{"ts":"2026-08-15T23:33:17.164Z","userId":"509424983","action":"supersede","from":["f_cd9df4"],"to":"f_ecf142","reason":"2026-08-16 dream high-priority：複驗狀態註記，已 commit fce516d 並 push"}
+{"ts":"2026-08-17T00:56:38.466Z","userId":"509424983","action":"supersede","from":["f_99c92a"],"to":"f_0611d8","reason":"2026-08-17 以八臂探針重測，冷啟 prefix 組成已完全改變；舊 fact 的「--strict-mcp-config 免費砍半」在現行設定下只省 1.1%，屬會誤導的操作建議"}
+{"ts":"2026-08-17T01:24:23.196Z","userId":"509424983","action":"supersede","from":["f_3d90f2"],"to":"f_cf5316","reason":"同日已修復並實測驗證，狀態從「待處理的發現」變成「已修 + 有驗收數字」"}

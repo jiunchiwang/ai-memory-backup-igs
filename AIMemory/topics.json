@@ -5,7 +5,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-15T20:11:26.382Z (token=topics-96b0dc9a-33)
+// Last applied: 2026-08-17T05:10:25.904Z (token=topics-9a667a05-35)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -61,7 +61,11 @@
       "clash of olympus",
       "clash_of_olympus",
       "諸神之戰",
-      "triplecointreasure"
+      "triplecointreasure",
+      "vs feature",
+      "vscash",
+      "vscollect",
+      "vsmanager"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -183,7 +187,8 @@
       "覆核合併",
       "backport",
       "add/add 假衝突",
-      "merge-base"
+      "merge-base",
+      "downstream-fork"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -257,12 +262,7 @@
       "relay_delegate",
       "specialist-domain",
       "specialist-memory",
-      "moa-ref",
-      "moa 顧問",
-      "fable-advisor",
       "status-push",
-      "cloudflared",
-      "ngrok",
       "token-policy",
       "bridge-actions",
       "mcp-first",
@@ -274,7 +274,25 @@
       "wf-design",
       "wf-prd",
       "wf-review",
-      "wf-verify"
+      "wf-verify",
+      "timeoutms",
+      "maxturns"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
+    "topic_id": "t_0f55e94738aa",
+    "topic": "bridge-moa",
+    "keywords": [
+      "moa-ref",
+      "moa 顧問",
+      "fable-advisor",
+      "moa-presets",
+      "blind advisor",
+      "readonlylens"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -308,7 +326,9 @@
       "frontmatter",
       "去留判準",
       "topicreview",
-      "expectedtoken"
+      "expectedtoken",
+      "canary",
+      "gold set"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -321,16 +341,15 @@
     "keywords": [
       "session/load",
       "sessionstore",
-      "/session",
-      "session-archive",
       "session archive",
-      "/reset clean",
-      "/handoff",
       "exportsession",
       "loadarchive",
       "session/resume",
       "replaysessionhistory",
-      "sessioncapabilities"
+      "sessioncapabilities",
+      "/session",
+      "/reset clean",
+      "/handoff"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -482,7 +501,10 @@
       "強異源",
       "覆核收斂",
       "ms-cross-model-adversarial",
-      "嚴重度降級"
+      "嚴重度降級",
+      "glm-5",
+      "kiro-cli glm",
+      "codex gpt-5"
     ],
     "domain_id": "d_4f72e839d948",
     "domain": "adversarial",
@@ -606,6 +628,25 @@
       "worker 靜默死亡",
       "daily intel",
       "重放安全性"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
+    "topic_id": "t_dd18f452f629",
+    "topic": "bridge-retry-telemetry",
+    "keywords": [
+      "transient-retry",
+      "acp-retry",
+      "retrytransient",
+      "retryoutcome",
+      "emitoutocome",
+      "429",
+      "重試遙測",
+      "replay-safety",
+      "重複投遞"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",

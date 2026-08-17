@@ -2,9 +2,9 @@
 title: Bridge Upstream Fork 同步與合併衝突處理
 type: concept
 created: 2026-07-21
-updated: 2026-08-16（factlint：清理 3 條已被本頁「Upstream 同步歷程」表完整涵蓋的一次性同步記錄；push 前覆核 fact 更正為 glm-5 現行預設）
-sources: [f_5a2532, f_d61c50, f_493b31, f_8da350, f_2a93b5, f_a23d83, f_4c12ce, f_ea9657, f_a3f2b2, f_489e55, f_c42db4]
-history_sources: [f_e272f0]
+updated: 2026-08-16（dream high-priority：fork 獨有功能清單經 git grep upstream/main 逐項複驗全數已在上游，改記「怎麼現算」；f_5a2532+f_493b31 → f_8a9bd7）
+sources: [f_8a9bd7, f_d61c50, f_8da350, f_2a93b5, f_a23d83, f_4c12ce, f_ea9657, f_a3f2b2, f_489e55, f_c42db4]
+history_sources: [f_e272f0, f_5a2532, f_493b31]
 ---
 
 # Bridge Upstream Fork 同步與合併衝突處理
@@ -17,16 +17,11 @@ bridge repo 的 remote：`origin=jiunchiwang/telegram-kiro-bridge`、`upstream=r
 
 ## 同步策略：merge 而非 rebase
 
-用 `merge`（非 `rebase`）合併 upstream，衝突解決原則是 **upstream 架構為主、手動保留 fork 獨有功能**。
+用 `merge`（非 `rebase`）合併 upstream，衝突解決原則是 **upstream 架構為主**。
 
-**Fork 獨有功能清單**（同步 upstream 解衝突時必須保留）：
-- `/reset clean`
-- `handleDocUpdate`（`/docupdate`）
-- `specialist-memory`
-- `reaction_feedback`
-- READ-BACK 紀律
-- `userProfileBlock`
-- SS（skill search）callback
+**⚠️ 2026-08-16：原本掛在這裡的「fork 獨有功能清單」已整份失效。** 該清單把 `/reset clean`、`handleDocUpdate`（`/docupdate`）、`specialist-memory`、`reaction_feedback`、READ-BACK 紀律、`userProfileBlock`、SS（skill search）callback 七項列為「解衝突時必須手動保留」；`git fetch upstream` 後對 `upstream/main` 逐一 `git grep`，七個識別字在上游樹**全部有命中**（`/reset clean` 在 `src/commands/misc.ts:113`、SS callback 在 `src/commands/skillsearch.ts:203`，其餘五項在 `src`/`scripts` 底下的命中檔數與本地完全相同）∴ 它們已不是需要手動保留的對象——與下一段 `efab1ab` 的 port-back 一致。
+
+> 誠實邊界：識別字存在只證明**對應程式碼在上游存在**，不證明兩側實作等價；雙邊都改過的檔案仍照下方原則 2／4「比較兩側完整度、保留較完整的一方」處理，不得機械沿用固定優先權。清單不再維護——需要時對當下的 `upstream/main` 重跑 `git grep` 現算。
 
 2026-07-09：upstream（redkilin）於 `efab1ab` 把 fork 的功能 port 回上游（session/resume、token-policy 等）——之後同步時 fork 獨有功能清單的衝突面大幅縮小，本地獨有 commit 僅剩少數未被 port 的項目。
 

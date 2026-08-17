@@ -2,8 +2,9 @@
 title: 異源對抗覆核紀律
 type: concept
 created: 2026-08-05
-updated: 2026-08-16（新增：覆核強度受 prompt 影響的受控對照、Kiro vendor pin 驗證兩個新失效模式、覆核者看不到 git 版控狀態的環境盲點）
-sources: [f_69884b, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_932293, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_667928, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_ea64e9, f_070546, f_171670, f_74c227, f_e80a45, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_99c92a, f_602d87, f_eb2436, f_5d91c4, f_b860aa, f_7a7712, f_ae1f66, f_982e49, f_afb9ab, f_06eb83]
+updated: 2026-08-17（wikisync：新增 Codex 覆核耗時、複驗包裝成高嚴重度、餵材料形狀決定能力、sync-upstream 不做 push 按鈕；5 條 fact 移至 history_sources——分類到其他 topic 或已不存在）
+sources: [f_69884b, f_efd659, f_31febf, f_e85cc9, f_7a2f9d, f_fc4695, f_233414, f_243d72, f_6af093, f_bcc99d, f_cdf362, f_0dd859, f_6e52ff, f_8e6494, f_6ae02c, f_070546, f_b490fe, f_ca4aa1, f_2f425e, f_9bcb64, f_f81858, f_5317fe, f_b1c968, f_e97f74, f_03f2f0, f_171670, f_14cb23, f_15086c, f_d6f8a7, f_50ef2a, f_74c227, f_91280b, f_8e2dd2, f_b29a96, f_02d768, f_2f0f60, f_602d87, f_eb2436, f_5d91c4, f_8929d7, f_b860aa, f_7a7712, f_ae1f66, f_982e49, f_afb9ab, f_06eb83, f_bb8f33, f_3356be, f_a09852]
+history_sources: [f_99c92a]
 ---
 
 # 異源對抗覆核紀律
@@ -70,11 +71,15 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 - 敘事比對、恆真斷言 → Sonnet 級
 - 不變式／論證推理／時序 race → ~~最強模型（Fable 5）~~ **2026-08-13 更正：跨 vendor 優先（`kiro-cli --model glm-5`，0.50x 且強異源）**，Fable 5 降為「跨 vendor 那輪產出明顯偏弱（只回敘事層、拿不出反例）時才補的第二輪」。這一行原本與下方〈核心判準〉自相矛盾——2026-08-07 補了雙軸判準卻沒回頭改它。
 
-### 覆核的 token 成本結構（2026-08-13 實測）
+### 覆核的 token 成本結構（2026-08-13 首測 · 2026-08-17 重測改寫）
 
 「覆核花的 token 比實作還多」的三個相乘項，量測與完整表格在 `ms-cross-model-adversarial-review` 正本：
 
-1. **冷啟 prefix**：四臂探針（同 cwd／同 prompt／`--model haiku`）量到 A 全開 169,962、`--strict-mcp-config` 83,784、`--setting-sources ""` 34,686。∴ **MCP tool schema 佔 51%（86,178）**、設定帶進來的 CLAUDE.md 鏈＋skills 清單佔 29%、地板 20%。⛔ 文本型覆核不需要 MCP ∴ 預設加 `--strict-mcp-config`／`--trust-tools=fs_read`，免費砍一半。⚠️ 有邊界（2026-08-13 由 glm-5 在開放式提問下指出，初版寫成無條件）：判定依據不在檔案裡時要例外——打 API／跑 CI／查外部狀態／**被測物本身就是 MCP tool**。正確規則是「需要哪些工具由覆核範圍決定，預設為零」。
+1. **冷啟 prefix**（2026-08-17 八臂重測，CLI 2.1.233）：全開 **88,147**、`--strict-mcp-config` 87,164、`--setting-sources ""` 36,161。⚠️ **同日下修為 76,612**——量測過程發現 `~/.claude/CLAUDE.md` 有 10 個「以為註解掉了」的 @import 仍在載入（`#` 是 Markdown 標題不是註解），拿掉 `@` 後實測省 11,535；下列比例是修復前的組成，總量請用 76,612（見 f_cf5316）。∴ 現行組成是 **地板 36,161（41%）＋ user 設定鏈 32,185（36.5%）＋ project 設定鏈 19,810（22.5%）＋ MCP 僅 983（1.1%）**（user／project 兩項相加 51,995 vs 實測 51,986，加法自洽）。
+   - ⛔ **舊結論已失效**：08-13 量到「MCP 佔 51%（86,178）∴ 加 `--strict-mcp-config` 免費砍半」——**現在只省 1.1%**。同等級槓桿換成 `--setting-sources ""`（省 59%），代價是覆核者看不到 CLAUDE.md／POLICIES 鏈（對異源覆核可能反而是優點，自己選）。「需要哪些工具由覆核範圍決定、預設為零」這條原則不變，只是它現在省的是**行為污染**不是 token。
+   - **量測前提**：`--output-format json` 的頂層 usage 是該次 run **所有 request 的加總**（baseline 臂實跑 3 個 request），拿它當 prefix 會高估數倍；必須用 `--output-format stream-json --verbose` 取第一個 assistant message 的 usage。08-13 用哪種算法已不可考 ∴ 跨日只有單請求臂（地板 34,566→36,161、strict-mcp 83,784→87,164，皆 +4% 內）可比。
+   - **deferral 的真實貢獻**：`ENABLE_TOOL_SEARCH=false` 對照臂 → 全開 114,923、strict-mcp 101,090 ∴ MCP schema 全載也只有 13,833；而兩個「都沒 MCP」的臂相差 13,926 ⇒ **tool search 也 defer 內建工具**（WebFetch／Task／Cron…），不只 MCP。deferral 共省 26,776（非 deferred 的 23.3%），僅約半數來自 MCP。
+   - ⚠️ **混淆未分離**：51%→1.1% **不能單獨歸因於 deferral**——今日全載也只有 13,833，複製不出當年的 86,178；當時配了幾個 MCP server 已不可考（線索：07-27 記過「每 ACP session spawn 19 個 MCP 進程」，今日 global 只有 5 個）。server 減少與 deferral 兩個原因同時在動。
 2. **每輪重送全部 context**：2026-07-29 那輪 Fable 覆核 85 個請求，context 從 90,218 長到 185,549，累計送進 12,724,628、output 156,050（**81:1**）。⚠️ 12.7M 是原始傳輸量不是成本當量（cache_read 0.1x／cache_write 1.25x；訂閱制怎麼加權**未證實**）——可靠的是結構不是絕對數。
 3. **比較基準不對等**：實作是在熱 context 裡的邊際成本，覆核是冷啟的絕對成本。
 
@@ -82,7 +87,7 @@ Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1
 
 ⚠️ 撞到 Claude session limit 時（2026-08-12 實際發生），可直接改派 `kiro-cli glm-5` 跨 vendor 接手，不必等限流解除。
 
-⚠️ 未解：同 repo 的 transcript 實際 session 冷啟是 122–128k，比探針的 169,962 低約 46k，未隔離原因（候選：ACP session 會 defer 部分 MCP tool schema）。比例可靠、絕對值隨呼叫通道浮動。
+⚠️ 半解：同 repo 的 transcript 實際 session 冷啟是 122–128k，比 08-13 探針的 169,962 低約 46k。2026-08-17 重測後這條的候選解釋（ACP session 會 defer 部分 tool schema）**方向一致但仍未直接驗證**——實測確認 deferral 存在且會 defer MCP 與內建工具兩者，但沒有針對 ACP 通道本身量過。仍以「比例可靠、絕對值隨呼叫通道浮動」為準。
 
 ### Domain 判定與單表雙軸結構（2026-08-07）
 
@@ -150,6 +155,8 @@ claude-sonnet-4.6 與 claude-opus-4.5 對 `src/concurrency.ts` 的 semaphore「�
 
 使用者指示「用 codex 覆核看看」後，異源覆核者池擴為三家：`kiro-cli glm-5`（智譜，預設）、Codex `gpt-5.6-sol`（OpenAI）、Fable5（Anthropic 同源，備位）。
 
+**Kiro CLI 可用的非 Claude model 清單**（2026-07 更新）：`deepseek-3.2`（0.25x, 164K）、`qwen3-coder-next`（0.05x, 256K）、`minimax-m2.5`（0.25x, 196K）、`minimax-m2.1`（0.15x, 196K）、`glm-5`（0.5x, 200K）——用它們當覆核者時是跨 vendor 強異源。
+
 **Codex 當異源覆核者的正確呼叫法**：
 
 ```bash
@@ -158,7 +165,7 @@ codex exec -s read-only -c model_reasoning_effort="high" "$PROMPT" < /dev/null >
 
 三個必要條件缺一不可：**stdin 導開**（否則無聲掛住）、**read-only 沙箱**、**effort 顯式拉高**（預設 low）；開頭會印 reasoning effort 與 session id 可當自我驗證。
 
-**三輪跨 vendor 覆核實績對照（同一批 commit）**：glm-5 第一輪 0 finding、第二輪 5 條中真採納 1／部分採納 1／降級 1／駁回 1／誤讀 1；Codex 一輪 8 條且驗證後多數成立，並主動標明唯讀沙箱跑不了測試「沒有冒充實跑結果」。⚠️ 品質差異有模型與提問方式兩個未隔離變因，不可歸因於單一因素。
+**三輪跨 vendor 覆核實績對照（同一批 commit）**：glm-5 第一輪 0 finding、第二輪 5 條中真採納 1／部分採納 1／降級 1／駁回 1／誤讀 1；Codex 一輪 8 條且驗證後多數成立，並主動標明唯讀沙箱跑不了測試「沒有冒充實跑結果」。Codex 覆核（gpt-5.6-sol、effort high、開放式提問）一輪約 **12 分鐘、輸出約 1.9MB**，遠慢於 kiro-cli glm-5 的約 2–3 分鐘；最終報告在檔尾且會重複印兩份，讀取應定位最後一份。⚠️ 品質差異有模型與提問方式兩個未隔離變因，不可歸因於單一因素。
 
 **Findings 處置的第四種維度：嚴重度降級**（補上第 111 節「三個獨立維度」之外的第四種）：覆核者給的嚴重度本身可能過高——Codex 把「unref 導致行程結束佇列遺失」評為 high，但查證後該風險先於本次改動即存在（佇列本就是記憶體內、退出即失，與 unref 無關）∴ 降級為既有問題而非本次引入，不是駁回、也不是照單全收。
 
@@ -168,6 +175,12 @@ codex exec -s read-only -c model_reasoning_effort="high" "$PROMPT" < /dev/null >
 - **Kiro vendor pin 驗證兩個新失效模式**：`deepseek-3.2` 對「忽略產品身分選一個 vendor」這題答 **Anthropic**——與 Kiro 產品身分 prompt 宣稱相同 ∴ 零鑑別力，無法確認 pin 是否生效；`qwen3-coder-next` 答**智譜**但它應是阿里，配合先前答過 DeepSeek，同一題兩次兩個不同錯答案 ∴ 自報是噪音。方法只在「非 Anthropic 的 pin 自報**自己**的 vendor」時有鑑別力（glm-5→智譜穩定成立），其餘情況只能留痕「非 Anthropic，具體 vendor 未確認」，不要因自報對不上就誤判 pin 沒生效。
 - **覆核者看不到 git 版控狀態**：`glm-5` 覆核一個把 `check-npm-audit` 移出 fast tier 的 commit 時回「0 finding」，支撐論證之一是「`.github/ci.yml` 沒指定 `--fast`，完整 CI 會補跑到」——但該檔從未進版控（`git ls-files` 查無），是卡在 PAT 缺 workflow scope 的 TODO 不是生效的 CI。覆核者只能看到檔案系統，看不到版控狀態；拿「某設定檔存在」當論證支撐時要自己補一次 `git ls-files`。
 - **Windows 上覆核者跑 `npm help` 會靜默掛住約 28 分鐘**：npm 不印文字而是 spawn `cmd /d /s /c start "" file://...npm-run.html` 開瀏覽器，無頭 context 裡那個 `start` 不會回來。判別法是行程樹停在 `cmd start`；處置只殺最底層那個 `cmd`，上游 npm/pwsh 會自行收斂、覆核從下一步續跑。
+
+## 2026-08-16 新增觀察
+
+- **覆核者會把複驗通過包裝成高嚴重度的否證**：`kiro-cli glm-5` 覆核 telegram-kiro-bridge 的 preamble 改動時，交回一條 **HIGH「使用者宣稱為假」**，但它自己跑出來的驗證輸出正是被它標成「假」的那個宣稱（「disciplines 區塊行: 267 / memory block 行: 175 / disciplines 在 memStart 之前: false」），同一份報告內文寫著「但使用者的結論是對的」。∴ 讀覆核報告時**嚴重度標籤與證據要分開讀**：先看它實際做了什麼操作、觀察到什麼，再自己判定那個觀察支持還是反對原宣稱，不要讓 HIGH/MEDIUM 標籤決定處置。
+- **餵給覆核者的材料形狀決定能力上限**：只給攤平的 range diff（`git diff A..B`）而不給 bash／git 存取，覆核者就無法逐 commit 檢視——看不到中間 commit 的演進，也分不出「本輪引入」與「上一輪就存在」的缺陷。需要逐 commit 判斷時，要嘛給它 git 存取，要嘛把每個 commit 各自匯出成檔再餵。此條延伸自 f_b490fe（Codex read-only 沙箱被政策擋掉 git ∴ 必須先 git show 匯出 diff 檔）。
+- **sync-upstream 刻意不做 push 按鈕**：publishChecklist 回傳的是純文字檢查清單、明確不是可點的按鈕，因為 push 前的獨立覆核閘門必須不可被一鍵繞過——做成按鈕等於把「人為判斷＋異源覆核」壓縮成一次點擊。這是 `sync-fork-from-upstream` skill 的「絕不自動 push」原則在 bridge UI 層的具體實作。
 
 ## 與 SDD 規格自審閘的關係
 

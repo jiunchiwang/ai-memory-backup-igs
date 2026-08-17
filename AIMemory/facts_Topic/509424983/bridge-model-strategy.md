@@ -1,6 +1,5 @@
 - [f_c228c9] [2026-06-23T12:00:49.553Z] 使用者研究 Headroom（headroomlabs-ai/headroom）後，整合優先級決策：方案 A（MCP server 掛給 agent）> 方案 D（headroom learn 獨立跑）> 方案 C（bridge library 整合）；排除方案 B（proxy wrap）因為 Kiro CLI 大概不吃 ANTHROPIC_BASE_URL
 - [f_fedf5c] [2026-07-01T03:18:55.033Z] Kiro CLI 的 model ID 用短名格式（如 claude-sonnet-4.6、claude-opus-4.6），不是完整 API model ID（如 claude-sonnet-4-5-20250514）；可用清單含 auto / claude-opus-4.6 / claude-sonnet-4.6 / claude-opus-4.5 / claude-sonnet-4.5 / claude-sonnet-4 / claude-haiku-4.5 / deepseek-3.2
-- [f_efd659] [2026-07-06T02:55:13.594Z] Kiro CLI 可用的非 Claude model 清單（2026-07 更新）：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5（0.25x, 196K）、minimax-m2.1（0.15x, 196K）、glm-5（0.5x, 200K）
 - [f_0c44ff] [2026-07-06T02:55:13.600Z] 使用者對非 Claude model 的判斷：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項，qwen3-coder-next 超便宜但 experimental 穩定度未知
 - [f_c5dfde] [2026-07-06T07:01:34.346Z] 使用者的 telegram-kiro-bridge ACP 已從 Kiro CLI 切換為 Claude（claude-agent-acp），會原生載入全域與專案 CLAUDE.md（Kiro 讀 AGENTS.md+steering、Codex 讀 AGENTS.md，各 CLI 設定檔互不通用）
 - [f_392c22] [2026-07-06T07:26:54.192Z] telegram-kiro-bridge 的 .env 現為 ACP_AGENT_COMMAND=claude-agent-acp + ACP_MODEL=claude-fable-5（effort medium），model 由 bridge 在 session/new 後透過 session/set_config_option pin（claude-agent-acp 的 CLI --model flag 在 ACP 模式無效）

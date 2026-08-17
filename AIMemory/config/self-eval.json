@@ -2,84 +2,6 @@
   "_schema_version": 1,
   "entries": [
     {
-      "ts": "2026-07-29T03:12:01.777Z",
-      "chatId": 509424983,
-      "score": 95,
-      "evidence": "實跑 check-acp-model-effort 對 opus-5 得到 adapter 明確 reject 訊息(Invalid value for config option model),經驗性確認 pin 失敗+fallback;並修正先前「opus-5 不存在」的 stale 斷言為「adapter id 白名單不認此字串」"
-    },
-    {
-      "ts": "2026-07-29T23:42:18.303Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "正本已改、STATE.md 已更新、grep 驗證通過；環境變數尚未在 bridge 注入機制定義，屬後續整合項"
-    },
-    {
-      "ts": "2026-07-30T08:17:40.303Z",
-      "chatId": 509424983,
-      "score": 78,
-      "evidence": "tsc 過且 assets/Script 零錯誤、呼叫者已 grep 窮舉（SetReelLightDark 3 個全在同檔、Manual 0 呼叫者）、改動範圍限於需求且回讀驗證過；但未跑實機畫面驗證壓暗視覺效果，且 tsc 基線噪音大無法做前後對照"
-    },
-    {
-      "ts": "2026-07-30T13:10:29.380Z",
-      "chatId": 509424983,
-      "score": 72,
-      "evidence": "根因經實測確認（AntiBotCheck 重導 + Turnstile 懸置請求 + checkbox 缺席三項證據），但修復未完成：--headed 能否通過驗證尚未實測，使用者原始問題（7月加班時數）仍未取得答案；保留的 timeout 改動已驗證登入路徑通過，撤回的部分未再跑一次確認無副作用"
-    },
-    {
-      "ts": "2026-07-30T14:04:26.250Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "純讀碼調查未改任何檔案；RTCtrl.ts 全文讀過、呼叫端用 grep 窮舉、prefab 接線用 JSON 解析驗到 targetOverrides 實際指向 PerfGroup/Camera_RT 與 Node，路徑與行號皆逐一核對過；未實際跑遊戲驗證運行時行為"
-    },
-    {
-      "ts": "2026-07-30T14:30:45.738Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "新增 1 檔 + 改 2 檔；三處數字用 python 交叉核對一致、內嵌 JS 陣列用 node 實際 parse 通過、junction 投影已確認、臨時檔已清；OnDestroy 死碼與 targetOverrides 兩個關鍵主張都有反例檢查（grep framework 無該鉤子、其餘檔案用小寫）；未做的是沒在 Cocos 編輯器實跑 far_west 驗證事件洩漏的實際後果"
-    },
-    {
-      "ts": "2026-07-30T14:52:32.685Z",
-      "chatId": 509424983,
-      "score": 91,
-      "evidence": "3 條成立的 finding 逐條自己重現後才改（F1 用 grep 確認 stat-box、F3 用 grep 確認兩處數字、F4 讀 GameView.ts:2305-2343 與 Common.ts:255-275 原始碼確認 5 個寫入點）；F2 用 git show 取 41e11b4 舊檔重算 refs 才駁回，不是憑印象；修完重驗 4 處寫死計數已一致、node 重新 parse 陣列 26 張通過、臨時檔已清；未做的是沒在 Cocos 編輯器實跑驗證 BigHintShake 清鎖的災害路徑，該條在卡片中是依碼推導的時序風險而非實測重現"
-    },
-    {
-      "ts": "2026-07-30T22:31:44.067Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "Dream 步驟/事件型別/preset 清單全部對照原始碼逐項確認（dream-config.ts、event-log.ts、bot-setup.ts、ptyrun.ts、moa.ts），非照 README 抄；HTML 標籤平衡與 TOC 錨點用腳本機械驗證通過。保留原因：純文件改動未經瀏覽器實際渲染確認排版，且 /config 的範例互動畫面是依 COMMAND_SPECS 描述合理推寫、未實跑該指令核對真實輸出格式"
-    },
-    {
-      "ts": "2026-07-30T22:38:44.185Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "48 個指令 × 2 份文件的覆蓋率、15 個 Dream 步驟的順序、事件型別與 PTY preset/狀態/動作/脫敏 pattern 全部用腳本反向對照原始碼枚舉驗證通過（正是這個機械驗證抓到我人眼漏掉的 /selfeval、/skillsearch）；HTML 標籤平衡與 TOC 錨點雙向檢查通過。保留原因：純文件改動未經瀏覽器渲染確認 §11f 新增的 h4 與 7 個表格實際排版，且 /config 範例互動畫面仍是依 COMMAND_SPECS 描述合理推寫、未實跑核對真實輸出"
-    },
-    {
-      "ts": "2026-07-30T23:11:40.033Z",
-      "chatId": 509424983,
-      "score": 86,
-      "evidence": "tsc 通過、fast 92/92 與 full 95/95 全過；新模組的負向路徑寫了 10 項測試實測（含下界斷言與宣告改名兩種 throw），不是只驗 happy path；smoke 計數以 runner 自報數字交叉確認，耗時全部標注量測日期。三個保留：① doc-facts 的 regex 抽取本質上與程式碼寫法耦合（用下界斷言兜底，但改成 AST 解析才是真正穩固）② 改寫後的 /docupdate prompt 尚未實跑一次端到端（現在無差異會短路，需要製造差異才測得到 agent 那半段）③ runner per-test 明細與聚合數字的不一致我只加註記未實際重量"
-    },
-    {
-      "ts": "2026-07-30T23:33:52.578Z",
-      "chatId": 509424983,
-      "score": 87,
-      "evidence": "tsc 通過、full smoke 96/96 通過、新閘門做了兩次真實注入式負向測試（建檔時自然紅 8 項＋事件數手動注入紅→還原綠），不是只驗 happy path；改動 check-bot-command-descriptions 前先量測 48 支確認只有 dream 超標，避免引入紅測試；暫存檔全清、git status 確認未動非預期檔案。三個保留：① /docupdate 的 agent 半段未端到端實跑（需製造差異才觸發）② doc-facts 的 regex 抽取與程式碼寫法耦合，靠下界斷言兜底而非 AST 解析 ③ runner per-test 耗時明細的不一致只加註記未實際重量"
-    },
-    {
-      "ts": "2026-07-30T23:45:47.382Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "commit 前逐項確認：diff 全部人工複閱、pre-commit 的 skill 同步先手動跑過確認零變更、明確列檔避免誤收 .github/、commit 後驗證工作區只剩預期的未追蹤項；記憶 3 條皆含「為什麼」與實證日期而非純結論。誠實保留：未 push 且明確標出兩處異源覆核該看的弱點（regex 耦合、N 支白名單的 false negative），以及 /docupdate 的 agent 半段仍未端到端實跑——這三項都是已知未驗，不是我認為已解決的事"
-    },
-    {
-      "ts": "2026-07-31T00:31:38.170Z",
-      "chatId": 509424983,
-      "score": 90,
-      "evidence": "Fable 的 7 條全部自己重現才動手（F1/F4/F5/F6 用 grep+sed 直接看原始碼確認，F2/F3 造反例實測），沒照單全收；修完用「原本能重現的同一組反例」驗不再重現，並補正向迴歸（真指令仍算得到、真實 repo 零誤報、抽取仍 48/15/20 且順序不變）；修 F2/F3 過程中自己引入的三個新問題都是因為檢視輸出內容而非只看 exit code 才發現。誠實保留：① doc-facts 仍是 regex 撕原始碼的平行實作，Fable 建議改 import 我認同但未做 ② \u0000CODE97\u0000 白名單的 false green 未解 ③ /docupdate 的 agent 半段仍未端到端實跑，這批修復也沒改變那件事"
-    },
-    {
       "ts": "2026-07-31T01:02:37.993Z",
       "chatId": 509424983,
       "score": 85,
@@ -1200,6 +1122,84 @@
       "chatId": 509424983,
       "score": 72,
       "evidence": "分布數字由 logs/smoke-last.log 實檔算出、npm-audit 的網路依賴已 grep 原始碼確認；但「48 支引用 MEMORY_DIR」只數了 grep 命中未區分讀寫，平行化的 90–120s 是推估未實測"
+    },
+    {
+      "ts": "2026-08-15T23:37:57.819Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "三筆 supersede 的 confirm 清單逐一核對恰為目標 fact；upstream 主張有 A 級證據（實跑 git grep 含行號）且做了反例檢查（若仍獨有則 upstream 命中應為 0）；wiki 改動經 grep read-back + audit_provenance 全綠 + 散文層另一次 grep。未給更高分是因為「識別字存在」不等於實作等價，這條邊界已寫進 fact 但未逐檔 diff 驗證。"
+    },
+    {
+      "ts": "2026-08-15T23:40:11.703Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "刪除前逐條實查了三個安全前提（SKILL.md 兩處皆不存在、usageStore 無快取、migrateFromDisk 不會補回），刪除後用 unified diff 量化驗證改動範圍恰為 -11/+0 且 JSON 仍可解析；未給滿分是因為沒有真的重啟 bridge 觀察 entry 是否復活，那條靠讀碼推論而非行為驗證。"
+    },
+    {
+      "ts": "2026-08-16T00:14:38.079Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "B1 已寫入並確認落 shard；B2 四條落差每條都附本機第一手證據（bot-setup.ts:200 的 autoRetry、本輪 Edit 回傳原文、turn-lint.ts:32 的 OPEN_Q_RE、model-allocation §1），不採用的三條各有量測或政策衝突依據。未給更高分是因為第 3 條的衝突是「潛在」——我沒有找到實際因這條而誤委派的歷史案例，只有本輪的反向實例。"
+    },
+    {
+      "ts": "2026-08-16T00:31:16.228Z",
+      "chatId": 509424983,
+      "score": 91,
+      "evidence": "tsc 乾淨、fast tier 158/158、改寫後重跑 4 支相關 smoke 全過、commit 首尾與工作區狀態都驗過；覆核採納的那條有第一手證據支撐（實查 agentCommand 只到 buildEnvironmentBlock）。未給更高分是因為 READ-BACK 的新措辭是文字紀律，沒有任何機械層能驗它是否真的改善 agent 行為——這一點在 commit 裡沒有隱瞞但也沒有解法。"
+    },
+    {
+      "ts": "2026-08-16T01:57:28.711Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "四個事實主張都有 A 級證據（npm registry 實測輸出、src/config.ts:45 與 ptylogin.ts:65 原文、git check-ignore）；三支文件閘門實跑全綠；未驗的是 Kiro 正確安裝命令（官方頁抓不到，已標為未解而非猜測），且尚未跑完整 smoke"
+    },
+    {
+      "ts": "2026-08-16T06:21:48.465Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "TypeScript 建置與隔離 smoke 均通過；改動僅修正 Windows 環境變數鍵名的測試誤判，工作樹範圍已確認。"
+    },
+    {
+      "ts": "2026-08-16T06:22:57.213Z",
+      "chatId": 509424983,
+      "score": 95,
+      "evidence": "提交前確認暫存區只含一行修正，建置與隔離 smoke 均已通過，提交後工作樹乾淨。"
+    },
+    {
+      "ts": "2026-08-16T06:36:04.856Z",
+      "chatId": 509424983,
+      "score": 98,
+      "evidence": "跨供應商唯讀覆核完成且工作樹未變，pre-push build 與 fast tier 164/164 通過，推送後確認 main 與 origin/main 同步。"
+    },
+    {
+      "ts": "2026-08-17T00:41:46.221Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "四個核心數字逐條對回 Anthropic 官方文件原文（A 級），1.9x 明確標為 B 級並說明兩次取回失敗；未改動任何檔案或記憶 ∴ 無型別/呼叫端風險；未實測 MCP deferred 佔比，該項只標待驗未下結論"
+    },
+    {
+      "ts": "2026-08-17T00:58:26.650Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "八臂實測皆為第一手數據，user/project 分量加法自洽（差 −9）可當內部檢核；主動加控制組並因此推翻自己的歸因假設，混淆未分離已明寫不掩蓋；memory supersede 與 wiki sources 已驗證落地、暫存檔清除且 git status 為空。未達更高分是因為單一模型（haiku）單機單次、未對 Opus 5 或 ACP 通道複驗"
+    },
+    {
+      "ts": "2026-08-17T01:25:05.527Z",
+      "chatId": 509424983,
+      "score": 92,
+      "evidence": "改動前查證了 junction 與 sync.ps1 覆寫風險兩個隱性風險並留備份；改後讀回驗證殘留 @ 為零，並用改動前同一支探針、同一個指標實測驗收（88,147→76,612，與預估誤差 142）；memory 與 wiki 同步更新且標明新舊值關係。未給滿分是因為單一模型單機驗證，且「生效需重啟」這點尚未在真實新 session 複驗"
+    },
+    {
+      "ts": "2026-08-17T01:59:03.911Z",
+      "chatId": 509424983,
+      "score": 78,
+      "evidence": "tsc exit 0 + check-doc-sync 實跑 PASS 背書支數，錨點與 id 唯一性逐條 grep 確認；扣分在 mutate-gate 未實跑驗殺、doc-sync 第 1 節跑在舊 dist 上"
+    },
+    {
+      "ts": "2026-08-17T03:03:37.435Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "本輪未改動任何檔案，僅確認維持原案；先前的合併結果已有 tsc + check-doc-sync + 跨 vendor 覆核三層背書，扣分處是 mutate-gate 未實跑驗殺、完整 smoke 未跑"
     }
   ]
 }

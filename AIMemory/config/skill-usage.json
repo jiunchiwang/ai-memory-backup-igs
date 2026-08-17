@@ -1,13 +1,13 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-15T20:29:24.198Z",
+  "_last_updated_at": "2026-08-17T05:24:15.331Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.099Z",
-      "last_agent_used_at": "2026-08-14T13:49:33.900Z",
-      "use_count": 6,
-      "last_reason": "依 Step 0-1 做範圍確認與現狀盤點，產出外部 vs 既有比對表，停在使用者確認吸收範圍之前",
+      "last_agent_used_at": "2026-08-16T00:03:08.332Z",
+      "use_count": 7,
+      "last_reason": "依 Step 0-1 做外部 repo 研究與現狀盤點，產出 10 條規則 vs 既有機制的比對表與兩條不適配判定，停在使用者確認吸收範圍之前",
       "pinned": false,
       "notes": "upgraded from skill-candidates (count=5, score=0.80)",
       "orphan": false
@@ -15,9 +15,9 @@
     "memory-to-skill": {
       "created_at": "2026-06-13T20:18:29.898Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.107Z",
-      "last_agent_used_at": "2026-08-10T20:02:20.795Z",
-      "use_count": 59,
-      "last_reason": "執行 session 掃描與 skill 整理流程",
+      "last_agent_used_at": "2026-08-17T05:08:14.821Z",
+      "use_count": 60,
+      "last_reason": "掃描 sessions/ → 候選門檻篩選 → 比對既有 ms-* skill → 搬移到 oldSessions/",
       "pinned": false,
       "notes": null,
       "orphan": false,
@@ -27,9 +27,9 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-15T20:29:23.259Z",
-      "use_count": 132,
-      "last_reason": "wikilint 步驟：index.md 與磁碟檔案交叉比對（orphan）→ 全域 grep wikilink 比對合法 slug（broken link）→ 用 sources 陣列長度 vs shard fact 數的落差篩出 stale 候選 → 深讀 3 頁確認落差性質（provenance 漏列 vs 新內容缺席）→ 直接修正並新增章節 → audit_provenance 逐頁與全域驗證 blocking=0",
+      "last_agent_used_at": "2026-08-17T05:24:13.834Z",
+      "use_count": 135,
+      "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
       "orphan": false,
@@ -55,8 +55,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 6,
-      "last_routed_at": "2026-08-14T22:59:59.029Z"
+      "route_count": 7,
+      "last_routed_at": "2026-08-16T01:45:55.180Z"
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -144,7 +144,9 @@
       "last_reason": null,
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-16T04:17:30.846Z"
     },
     "ms-kiro-strreplace-silent-fail": {
       "created_at": "2026-05-29T08:58:12.630Z",
@@ -166,7 +168,9 @@
       "last_reason": "審查 Rich Messages 升級方案，比對 streaming/final 雙路共用 transform 的四組已知坑",
       "pinned": true,
       "notes": null,
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-17T00:36:30.365Z"
     },
     "ms-telegram-ask-button-protocol": {
       "created_at": "2026-05-29T08:58:12.640Z",
@@ -286,18 +290,9 @@
       "last_reason": "執行 fork ← upstream 半自動同步流程：拋棄式分支 merge + tsc 品質閘 + 人工確認後 push",
       "pinned": false,
       "notes": null,
-      "orphan": false
-    },
-    "uk-slot-spec-to-impl": {
-      "created_at": "2026-07-07T00:59:23.331Z",
-      "last_bridge_listed_at": "2026-08-08T06:46:05.331Z",
-      "last_agent_used_at": "2026-07-09T12:27:22.955Z",
-      "use_count": 4,
-      "last_reason": "完整走步驟0~3：xlsx→spec→dev-spec→SPEC.md，過程中發現5個流程偏離並回饋改善skill正本",
-      "pinned": false,
-      "notes": "2026-07-30 停用，功能併入 uk-slot-codegen",
-      "deprecated": true,
-      "orphan": true
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-16T04:17:30.846Z"
     },
     "uk-conventions": {
       "created_at": "2026-07-07T02:23:18.478Z",
@@ -328,8 +323,8 @@
       "pinned": true,
       "notes": "使用者 2026-07-11 決定保留（否決 dream zombie 清理提案），entry 重建自 bak.20260708",
       "orphan": false,
-      "route_count": 2,
-      "last_routed_at": "2026-08-14T13:45:46.944Z"
+      "route_count": 3,
+      "last_routed_at": "2026-08-16T00:00:20.961Z"
     },
     "skill-creator": {
       "created_at": "2026-02-24T17:26:48.000Z",
@@ -339,7 +334,9 @@
       "last_reason": null,
       "pinned": true,
       "notes": "使用者 2026-07-11 決定保留（否決 dream zombie 清理提案），entry 重建自 bak.20260708",
-      "orphan": false
+      "orphan": false,
+      "route_count": 1,
+      "last_routed_at": "2026-08-17T00:36:30.365Z"
     },
     "uk-slot-codegen": {
       "created_at": "2026-07-11T02:53:51.000Z",
@@ -376,14 +373,14 @@
     "ms-cross-model-adversarial-review": {
       "created_at": "2026-07-31T20:10:47.453Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.404Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-08-16T06:36:04.841Z",
+      "use_count": 1,
+      "last_reason": "依 upstream 同步後 push 前規範，以 Kiro glm-5 進行跨供應商唯讀覆核，無可重現行為 finding",
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 5,
-      "last_routed_at": "2026-08-14T07:08:36.897Z"
+      "route_count": 6,
+      "last_routed_at": "2026-08-16T01:45:55.180Z"
     },
     "ms-vacuous-test-gate": {
       "created_at": "2026-07-31T20:09:29.121Z",
@@ -422,9 +419,9 @@
     "openai-docs": {
       "created_at": "2026-08-05T14:44:02.313Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.462Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-08-17T00:34:38.540Z",
+      "use_count": 1,
+      "last_reason": "核對 Codex 自身身分與 GPT-5.6 Sol 的官方模型資訊",
       "pinned": false,
       "notes": null,
       "orphan": false
@@ -462,9 +459,9 @@
     "git-commit": {
       "created_at": "2026-08-06T06:45:17.490Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.517Z",
-      "last_agent_used_at": null,
-      "use_count": 0,
-      "last_reason": null,
+      "last_agent_used_at": "2026-08-16T06:22:57.193Z",
+      "use_count": 1,
+      "last_reason": "依既有中文 Conventional Commit 風格提交單一已驗證的一行 smoke 修正",
       "pinned": false,
       "notes": null,
       "orphan": false,
@@ -488,8 +485,8 @@
       "last_bridge_listed_at": null,
       "last_agent_used_at": null,
       "use_count": 0,
-      "route_count": 1,
-      "last_routed_at": "2026-08-14T05:35:12.979Z",
+      "route_count": 2,
+      "last_routed_at": "2026-08-16T00:00:20.961Z",
       "last_reason": null,
       "pinned": false,
       "notes": null,

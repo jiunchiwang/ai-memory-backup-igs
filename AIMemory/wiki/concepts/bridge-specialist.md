@@ -2,9 +2,9 @@
 title: Bridge Specialist 分身系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-15（新增：run_plan 能力錯配缺陷修正（wf-review/wf-verify 改派 verifier/moa-ref-security）+ 三個 CLI 各讀各自 MCP 設定檔的補充事實）
-sources: [f_5a2532, f_493b31, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a, f_198e79, f_665ffb, f_d878ad, f_e7bcdd, f_2bcda2, f_39026e, f_aa67b7, f_75089c]
-history_sources: [f_32a736]
+updated: 2026-08-16（dream high-priority：f_5a2532+f_493b31 → f_8a9bd7 的 source 搬移）
+sources: [f_8a9bd7, f_946c9d, f_e19357, f_2a93b5, f_ad29fd, f_02206d, f_bf688a, f_121c69, f_db7050, f_040f63, f_1ed45f, f_e2b049, f_88f2a3, f_e6394d, f_bdf14b, f_493309, f_ad661e, f_51868b, f_3c7a91, f_719003, f_b01ccb, f_c965d5, f_56f3c9, f_3bb538, f_76b1f7, f_a2c25a, f_182f52, f_10fbe3, f_7ab946, f_6a2483, f_705e1e, f_bd5b93, f_8b9cb4, f_7e1d01, f_af6d38, f_14861b, f_618525, f_2fe4f7, f_fd8698, f_6d597d, f_667928, f_9de427, f_6039c4, f_e8b20f, f_3ce2e3, f_f9956d, f_5c3a5a, f_198e79, f_665ffb, f_d878ad, f_e7bcdd, f_2bcda2, f_39026e, f_aa67b7, f_75089c]
+history_sources: [f_32a736, f_5a2532, f_493b31]
 ---
 
 # Bridge Specialist 分身系統

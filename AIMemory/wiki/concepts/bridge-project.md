@@ -2,9 +2,9 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-08-16（補記：grammY transformer 安裝順序更正、POLICIES Section 7 假宣稱更正的 provenance 補齊、memory rollout P1/P5 尚未授權開啟的交叉引用）
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_5a2532, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_493b31, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_e2e14a, f_cc8fd5, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_a23d83, f_4c12ce, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_198e79, f_bef432, f_71c654, f_1ac058, f_200c89, f_b82b6e, f_f0aeea, f_8ca646, f_42e862, f_57bf1c, f_4d4805, f_f9f50a, f_4a3140, f_5df807, f_549d3f, f_474e9e, f_aff418, f_e04f09, f_18f02e]
-history_sources: [f_32a736, f_b1e2ca, f_484853, f_e272f0]
+updated: 2026-08-17（wikisync：新增 planUncertainReplay 限制文件化、重試 instrumentation 偏誤、sync-upstream exit code 解析策略）
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_8a9bd7, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_e2e14a, f_cc8fd5, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_a23d83, f_4c12ce, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_dff56f, f_cd57ae, f_b56b60, f_810445, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_198e79, f_bef432, f_71c654, f_1ac058, f_200c89, f_b82b6e, f_f0aeea, f_8ca646, f_42e862, f_57bf1c, f_4d4805, f_f9f50a, f_4a3140, f_5df807, f_549d3f, f_474e9e, f_aff418, f_e04f09, f_18f02e, f_b5d499, f_5eaaed, f_565fbf]
+history_sources: [f_32a736, f_b1e2ca, f_484853, f_e272f0, f_5a2532, f_493b31]
 ---
 
 # Telegram-Kiro-Bridge 專案
@@ -75,6 +75,16 @@ Telegram 訊息用 HTML parse_mode（`src/format-html.ts`，Markdown → Telegra
 - **QUIET_HOURS**：靜默時段排程延遲，目前未啟用；Passive Monitor 改 cron 每日 2 次（12:00、22:00）
 - **UI 修復**：/help keyboard parse_mode 改 HTML + escHtml；「返回選單」callback data 改 `help:_back` 避免撞名
 - **Daily Intel BOM 修復**（2026-08-05）：產出的 markdown 檔案在手機上顯示亂碼，根因是 UTF-8 without BOM；已在 `src/daily-intel/reports/daily.ts` 加上 UTF-8 BOM（`﻿`）
+
+## Telegram 重試與 Instrumentation（2026-08-14~16）
+
+- **planUncertainReplay 限制文件化**：該函式對「送出結果不明」的待重送訊息加上不確定性前綴，前綴後若超過 `TELEGRAM_MESSAGE_LIMIT` 就拆成「通知 + 原文」兩則，但**前提是 text 本身不得超過 limit**——超過時它不會也無法補救。不代為 split 的理由：多一個切塊實作 ＝ 多一個會與既有 `splitForTelegram` 漂移的來源，切塊是呼叫端的責任；且「超長訊息→400→入列→永遠送不出」的迴圈先於本護欄即存在。
+- **重試行為的參數不可在「只看得到失敗重試」的儀器上調整**（2026-08-15 分析 31 天事件 log）：現行 instrumentation 只記錄失敗的重試，成功的重試根本不入帳 ∴ 重試成功率結構上不可觀測（存活者偏誤）。裁決是先補上成功重試的遙測，把行為調整延後到能量到成功率之後。
+
+## /sync Upstream 同步機制
+
+- **結果解析採 exit code 為主**（2026-08-16 決策）：10→衝突、11→型別檢查失敗、3→preflight 失敗、0→成功；文字輸出只用來補充細節，不用來判定結果種類。理由是文字會隨工具版本與語系漂移，exit code 才是穩定契約。
+- 完整 fork 同步策略見 [[bridge-upstream-sync]]
 
 ## Process 管理
 
