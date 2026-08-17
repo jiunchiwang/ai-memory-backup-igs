@@ -2,8 +2,8 @@
 title: UK Slot 踩坑經驗
 type: lesson
 created: 2026-06-23
-updated: 2026-07-09
-sources: [f_89a745, f_46f6e0, f_94500e, f_e9bd6a, uk-slot-codegen skill]
+updated: 2026-08-17
+sources: [f_89a745, f_46f6e0, f_94500e, f_e9bd6a, f_1e8a3d, f_931e5a, f_4ba968, f_ac39e3, uk-slot-codegen skill]
 why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 和 race condition，所以記錄防護模式
 ---
 
@@ -118,3 +118,44 @@ why: 因為 Cocos Layout/Promise.all/node 退場的隱性行為導致視覺 bug 
 
 - [[uk-slot]] — 專案群總覽與技術棧約束
 - `uk-slot-codegen` skill（同事的 codegen pipeline）— 條目 5~9 來源，完整踩坑見其 `_pitfalls.md`
+
+---
+
+## 10. Cocos 生命週期回呼命名大小寫（2026-07-30 實證）
+
+**專案**：uk_746_far_west_client
+**症狀**：`eventManager` 從未 unregister，導致 memory leak 或事件重複觸發。
+
+**根因**：UK slot 專案的「方法命名用大駝峰（PascalCase）」規範**不適用於 Cocos 引擎生命週期回呼**——`onLoad` / `start` / `onDestroy` / `update` 必須小寫，寫成 `OnDestroy` 引擎不會呼叫、變成死碼且無任何錯誤訊息。
+
+**對策**：
+- 生命週期回呼一律小寫（`onDestroy`），只有自定義方法才用 PascalCase
+- 已確認 astarte-framework 無 `OnDestroy` 鉤子可用
+
+---
+
+## 11. Grep `m_XxxName` 漏私有欄位直寫（2026-07-30 實證）
+
+**專案**：uk_pirates_queen
+**症狀**：枚舉某狀態旗標的寫入點時漏掉一處。
+
+**根因**：UK slot 專案慣例是 `public get/set PascalName` + `private m_pascalName`，程式碼可能直接寫私有欄位繞過 setter。
+
+**實例**：`GameView.ts:2314` 直接寫 `m_isLockRotation = true`，搜 `IsLockRotation =` 只找到 4 筆、實際 5 筆。
+
+**對策**：搜尋同時涵蓋 `m_` 前綴的 pattern，如 `[Mm]_?[Ii]sXxx`。
+
+---
+
+## 12. RenderTexture 凍幀報獎機制（RTCtrl）
+
+**專案**：uk_pirates_queen、uk_746_far_west_client
+**症狀**：搜 `screenshot` / `readPixels` 找不到截圖相關功能。
+
+**說明**：這兩個專案有同源的 **RenderTexture 凍幀報獎機制**（`RTCtrl.ts` + `PerfGroup` prefab）——報獎期間把整個畫面渲成 RT 貼上、關掉底下實體節點省效能。這**不是存檔截圖**也沒有 `readPixels`，關鍵字是 `RenderTexture` / `RTCtrl` / `RT_EVENT`。
+
+**版本差異**：
+- **pirates_queen**：進化版（有資源釋放、view.off、resize 守衛、防閃順序、主相機快取、正確的 `onDestroy` 小寫）
+- **far_west**：初版，缺上述 6 項保護措施，其中 3 項是真 bug
+
+**對策**：新 slot 專案要移植 RT 凍幀**一律抄 pirates_queen 版**。其餘 9 個 slot 專案皆未使用此機制。

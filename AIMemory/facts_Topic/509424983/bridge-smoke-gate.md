@@ -6,8 +6,6 @@
 - [f_f32658] [2026-07-28T01:24:36.753Z] 使用者研究 hamanpaul/paulsha-conventions（跨 repo 政策/慣例強制引擎，26條規則+GHA reusable workflow+SHA-pin）後判斷目前對 bridge 無可借鏡之處：多repo一致性、多人並行PR、GitHub Actions為主的CI、多AI agent慣例檔同步等前提皆與 bridge 現況（單一repo、單人開發、CI走pre-push hook、僅鎖定Claude）不符
 - [f_b01fe2] [2026-07-29T03:58:22.954Z] 查證「ACP session 實際跑什麼 model」的唯一可靠法是 raw JSON-RPC probe：spawn adapter → initialize → session/new → 讀回傳 configOptions 裡 id==="model" 的 currentValue（options[].description 開頭即真名如 "Opus 5 with 1M context"）；scripts/check-acp-model-effort.mjs 只驗 pin 成不成功、不告訴你實際在跑什麼
 - [f_ed5f8b] [2026-07-29T03:58:22.954Z] 依賴文件裡「升到最新版也修不了」類斷言有保存期限：docs/dependency-security.md 原寫「claude-agent-acp 升到 0.62.0 也沒用」，2026-07-29 升 0.63.0 直接證偽（解決 opus-5），並被 check-npm-audit 的 stale 檢查抓出——此類寫死版本的悲觀結論應標日期並定期複驗
-- [f_cb572a] [2026-07-29T08:29:16.673Z] telegram-kiro-bridge 的 npm run smoke 依賴 dist/ 編譯產物，但 tsc --noEmit 不會寫檔——改完 src 後要跑 smoke 前必須先用 tsc -p . 重新編譯，否則會用過期 dist 跑出假失敗（2026-07-29 sync-upstream 實測）
-- [f_06ae88] [2026-07-29T08:29:16.673Z] telegram-kiro-bridge 的 tsconfig 未開 noUnusedLocals，tsc 全綠不代表沒有孤兒 import／死碼——這類問題需要異源獨立覆核（如 Fable5）或手動 grep 才抓得到（2026-07-29 sync-upstream 覆核實測，抓到 5 個孤兒 import + 1 個死碼函式）
 - [f_23885a] [2026-07-31T05:18:03.742Z] 驗證「順序型承重不變式」的可重用手法：模組契約測試（fake api 記錄 send/edit/delete 呼叫）＋ 來源順序斷言（indexOf(A) < indexOf(B)，錨在該呼叫點獨有的字串上避免多處 match）＋ mutation test（手動把呼叫搬到錯位置確認測試真的紅，再還原並 git diff 確認無殘留）。此三件套是對抗恆真斷言的具體做法。
 - [f_eb4263] [2026-07-31T05:18:03.742Z] 使用者偏好在需要驗證的修正上接受小幅重構（把嵌在巨型函式裡的邏輯抽成獨立模組換取可測性），但傾向把新測試加進既有 smoke 腳本而非新增檔案——新增 scripts/check-*.mjs 會觸發 smoke 支數散落在約 10 個檔案的計數同步儀式。
 - [f_377321] [2026-07-31T11:33:09.321Z] 驗證新增測試斷言「真的有跑到」的手法是突變測試：對每一種預期壞法各做一次最小突變、確認測試分別紅，再還原複驗綠 —— 因為 smoke runner 只印每支腳本的 ok，通過本身無法證明新斷言被執行（2026-07-31 bridge 4 種突變實證）

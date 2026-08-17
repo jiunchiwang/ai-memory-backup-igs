@@ -2,8 +2,8 @@
 title: Bridge Streaming 與訊息渲染
 type: concept
 created: 2026-07-11
-updated: 2026-08-08
-sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef, f_562fe5, f_867564, f_20c975, f_6551d6, f_7c00f6, f_a9f3cf, f_6f02c7, f_585d7f, f_c662dd]
+updated: 2026-08-17
+sources: [f_5bb6fa, f_a1d087, f_56f3c9, f_1a58d7, f_7cfe9b, f_1867ae, f_de84a8, f_9792ce, f_43b977, f_ff9e43, f_330e15, f_192761, f_2a855c, f_131cef, f_562fe5, f_867564, f_20c975, f_6551d6, f_7c00f6, f_a9f3cf, f_6f02c7, f_585d7f, f_c662dd, f_53d158]
 ---
 
 # Bridge Streaming 與訊息渲染
@@ -178,6 +178,7 @@ grammY 和 Telegraf 都**沒有**內建 message splitter。`@gramio/split` 是�
 - `@grammyjs/stream` 的 append-only 不等於 API 限制 — 查 Bot API spec 是關鍵轉折
 - **「chat 收到一般訊息就會清掉 live draft」是未經實測的推論**，2026-07-31 已被探針牴觸；別再拿它當因果鏈的起點（詳見下方診斷節）
 - runtime 診斷的兩個結構性盲點：`console.warn` 只存在於 `start.bat` 那個 `cmd /K` 視窗的 scrollback（零 stdout 重導向、關窗即失、其他進程讀不到）；rate limit 狀態是 `bot-setup.ts` 的 module-level 區域變數（無落檔、無 endpoint）。凡需事後比對時間戳的診斷都必須自己落檔
+- **`telegram-rich-renderer.ts` 零依賴約束**：`check-rich-renderer.mjs` 與 `check-draft-streaming.mjs` 會把它單獨 transpile 成 data URL module 載入，bare specifier（如 `grammy`）在那裡解析不了會直接失敗。∴ 該檔只能用結構化判定（`err.name === "HttpError"`），並在另一支能 import grammy 的閘門加斷言釘住該假設避免靜默失效
 
 ## Expandable Blockquote 支援（Roadmap）
 

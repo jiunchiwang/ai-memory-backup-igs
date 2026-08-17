@@ -104,9 +104,11 @@ export class FakeReelData {
 
 /**@ch Coin 金額權重表項目 */
 export class CoinCreditWeightEntry {
-    // 【適配點】'JP' 標記可改為其他特殊 Symbol 標記
-    /**@ch 金額（數字，以幣為單位，例如 5000 = 50.00 元）或 'JP' 標記 */
-    public credit: number | 'JP' = 0;
+    /**@ch 金額（以 bet=100 為基準的比例值，例如 5000 → 5000 × bet ÷ 100）；JP 項固定為 0 */
+    public credit: number = 0;
+
+    /**@ch JP 等級（0=一般金額，1 起算對應專案的 JP 列舉）*/
+    public jpType: number = 0;
 
     /**@ch 權重值 */
     public weight: number = 0;
@@ -146,6 +148,18 @@ export class FakeReelManager extends Component {
         FAKE_REEL_MANAGER_EVENT.GET_FAKE_REEL_SYMBOL_BY_SEED,
         FAKE_REEL_MANAGER_EVENT.PROCESS_SEED_POSITION,
     ];
+
+    // 【適配點】JP 等級 token → jpType。級數、名稱、起算值皆依專案的 JP 列舉調整，
+    //           五級（Mini/Minor/Major/Mega/Grand）是 UK 常見慣例而非通則。
+    //           此處 1 起算是為了讓 0 保留給「一般金額」，顯示端取 jpType - 1 對應 JP 列舉。
+    /**@ch 權重表 JP 等級 token → SymbolInfo.JpType（1 起算）*/
+    private static readonly JP_TOKEN_TO_TYPE: { [token: string]: number } = {
+        'MINI':  1,
+        'MINOR': 2,
+        'MAJOR': 3,
+        'MEGA':  4,
+        'GRAND': 5,
+    };
     //#endregion Constants
 
     // 【適配點】屬性依分類維度（BetMode/GameType）和所需功能調整
@@ -419,14 +433,20 @@ export class FakeReelManager extends Component {
             }
         }
 
+        // 事件路徑供「只顯示金額」的呼叫端使用（飛行金幣 label、Cash/Blank 填值等），
+        // 這些地方沒有 JP 圖可顯示，抽到 JP 等級就重抽。要 JP 的路徑（假轉輪符號轉換）
+        // 直接呼叫 GenerateCoinCredit 不經此處。
+        //
+        // ⚠️ 判斷條件用 jpType（語意欄位）而非 symbolId（傳輸欄位）：
+        //    JP 與一般金額共用同一個 Cash symbolId，且 symbolId 的語意跨專案會漂移，
+        //    寫成 symbolId !== 某數字 會在語意變更時靜默失效且編譯器抓不到。
         const maxAttempts = 100;
         let result = this.GenerateCoinCredit(betMode);
-        // 【適配點】Coin Symbol ID 依專案定義調整（此處為 14）
-        for (let i = 1; i < maxAttempts && result.symbolId !== 14; i++) {
+        for (let i = 1; i < maxAttempts && result.jpType > 0; i++) {
             result = this.GenerateCoinCredit(betMode);
         }
 
-        if (result.symbolId !== 14 || result.credit <= 0) {
+        if (result.jpType > 0 || result.credit <= 0) {
             warn(`[FakeReelManager] OnGenerateCoinCredit: ${maxAttempts} 次仍未取得有效金額`);
         } else {
             // 【適配點】bet 計算方式依專案的 BottomBar/下注管理器調整
@@ -562,8 +582,11 @@ export class FakeReelManager extends Component {
 
     /**
      * @ch 解析 Coin 金額權重表檔案
-     * 格式: "5000\t300" (金額（幣）\t權重) 或 "JP\t120"
-     * 注意: 檔案中的金額已經是放大 100 倍後的值（例如 5000 = 50.00 元）
+     * 格式: "5000\t300"（金額\t權重）或 "MINI\t120"（JP 等級 token\t權重，見 JP_TOKEN_TO_TYPE）
+     * 注意:
+     * - 金額欄是「以 bet=100 為基準的比例值」，實際顯示金額 = 金額 × 目前 bet ÷ 100
+     * - 容許首行為標題列（機率人員給的表常帶表頭），靜默跳過
+     * - 權重 0 的項目保留在表內但永遠抽不中，這是「暫時停用此金額」的表示法，不要濾掉
      */
     private ParseCoinCreditWeightTable(fileContent: string, betModeName: string): CoinCreditWeightTable
     {
@@ -577,36 +600,41 @@ export class FakeReelManager extends Component {
         try {
             const lines = fileContent.split('\n').map(s => s.trim()).filter(s => s !== '');
 
-            for (const line of lines) {
+            lines.forEach((line, lineIndex) => {
                 const parts = line.split('\t').map(s => s.trim()).filter(s => s !== '');
 
-                if (parts.length < 2) continue;
+                if (parts.length < 2) return;
 
                 const creditStr = parts[0];
                 const weight = parseInt(parts[1], 10);
 
                 if (isNaN(weight) || weight < 0) {
-                    warn(`[FakeReelManager] ParseCoinCreditWeightTable: ${betModeName} 權重值無效 (${line})`);
-                    continue;
+                    // 首行權重欄非數字視為標題列，靜默跳過（不刷 warn）
+                    if (lineIndex > 0) {
+                        warn(`[FakeReelManager] ParseCoinCreditWeightTable: ${betModeName} 權重值無效 (${line})`);
+                    }
+                    return;
                 }
 
                 const entry = new CoinCreditWeightEntry();
                 entry.weight = weight;
 
-                if (creditStr.toUpperCase() === 'JP') {
-                    entry.credit = 'JP';
+                const jpType = FakeReelManager.JP_TOKEN_TO_TYPE[creditStr.toUpperCase()] ?? 0;
+                if (jpType > 0) {
+                    entry.jpType = jpType;
+                    entry.credit = 0;
                 } else {
                     const creditValue = parseInt(creditStr, 10);
                     if (isNaN(creditValue)) {
                         warn(`[FakeReelManager] ParseCoinCreditWeightTable: ${betModeName} 金額值無效 (${line})`);
-                        continue;
+                        return;
                     }
                     entry.credit = creditValue;
                 }
 
                 table.entries.push(entry);
                 table.totalWeight += weight;
-            }
+            });
         } catch (err) {
             error(`[FakeReelManager] ParseCoinCreditWeightTable: ${betModeName} 解析失敗: ${err}`);
         }
@@ -753,11 +781,15 @@ export class FakeReelManager extends Component {
     /**
      * @ch 根據權重隨機生成 Coin Symbol 的金額
      */
-    private GenerateCoinCredit(betMode: number): { credit: number, symbolId: number }
+    private GenerateCoinCredit(betMode: number): { credit: number, symbolId: number, jpType: number }
     {
         const table = this.GetCoinCreditWeightTable(betMode);
-        // 【適配點】Coin Symbol ID（14）和 JP Symbol ID（20）依專案定義
-        const defaultResult = { credit: 0, symbolId: 14 };
+        // 【適配點】先確認專案的「真實 JP」是怎麼轉出來的，假演出走同一條管線。
+        //           多數專案是「Cash 符號 + JpType」（server JP 狀態 → SymbolInfo.JpType →
+        //           顯示端依 JpType 取 JP 圖），因此這裡 symbolId 恆為 Cash、用 jpType 區分。
+        //           ⚠️ 不要改成「JP 專用 symbolId」：那會與真實開獎走不同管線，
+        //              且 symbolId 語意跨專案漂移時整段會靜默失效（編譯器抓不到）。
+        const defaultResult = { credit: 0, symbolId: Game_Define.Symbol.Cash, jpType: 0 };
 
         if (!table || !table.entries || table.entries.length === 0) {
             warn(`[FakeReelManager] GenerateCoinCredit: 權重表不存在或為空 (${this.GetBetModeName(betMode)})`);
@@ -776,34 +808,38 @@ export class FakeReelManager extends Component {
             cumulativeWeight += entry.weight;
 
             if (randomValue <= cumulativeWeight) {
-                if (entry.credit === 'JP') {
-                    return { credit: 0, symbolId: 20 };
-                } else {
-                    return { credit: entry.credit as number, symbolId: 14 };
-                }
+                return { credit: entry.credit, symbolId: Game_Define.Symbol.Cash, jpType: entry.jpType };
             }
         }
 
+        // 浮點誤差保險絲：正常走不到，取最後一項
         const lastEntry = table.entries[table.entries.length - 1];
-        if (lastEntry.credit === 'JP') {
-            return { credit: 0, symbolId: 20 };
-        } else {
-            return { credit: lastEntry.credit as number, symbolId: 14 };
-        }
+        return { credit: lastEntry.credit, symbolId: Game_Define.Symbol.Cash, jpType: lastEntry.jpType };
     }
 
-    /**@ch 將符號ID陣列轉換為SymbolInfo陣列 */
+    /**
+     * @ch 將符號ID陣列轉換為SymbolInfo陣列
+     *
+     * Cash 符號在此依權重表決定「金額或 JP 等級」：
+     * - 一般金額 → Value = 表值 × 目前 bet ÷ 100（必須與事件路徑的換算一致）
+     * - JP 等級 → JpType 帶出等級、Value = 0，由顯示端換成對應 JP 圖
+     * 這是假轉輪滾動途中轉出 JP 的路徑。
+     */
     private ConvertSymbolsToSymbolInfos(symbols: number[], betMode: number): SymbolInfo[]
     {
+        // bet 在整批符號共用，避免每個符號都向下注管理器取值
+        const bet = newBottombarManager.GetNowBetValue();
+
         return symbols.map(symbolId => {
             let symbolInfo = new SymbolInfo();
             symbolInfo.JpType = 0;
 
-            // 【適配點】Coin Symbol ID（14）依專案定義
-            if (symbolId === 14) {
+            // 【適配點】Coin Symbol ID 依專案定義（此處用 Game_Define 常數，勿硬編碼數字）
+            if (symbolId === Game_Define.Symbol.Cash) {
                 const coinResult = this.GenerateCoinCredit(betMode);
                 symbolInfo.Symbol = coinResult.symbolId;
-                symbolInfo.Value = coinResult.credit;
+                symbolInfo.JpType = coinResult.jpType;
+                symbolInfo.Value = coinResult.jpType > 0 ? 0 : tools.divide(coinResult.credit * bet, 100);
             } else {
                 symbolInfo.Symbol = symbolId;
                 symbolInfo.Value = 0;
@@ -1013,10 +1049,10 @@ export class FakeReelManager extends Component {
 
         const validRawCredits = new Set<number>();
         table.entries.forEach((entry, index) => {
-            if (entry.credit === 'JP') {
-                log(`[FakeReelManager]   ${index + 1}. JP → symbolId=20, credit=0`);
+            if (entry.jpType > 0) {
+                log(`[FakeReelManager]   ${index + 1}. JP 等級 ${entry.jpType}（事件路徑會重抽，不應出現）`);
             } else {
-                const raw = entry.credit as number;
+                const raw = entry.credit;
                 validRawCredits.add(raw);
                 const final_ = tools.divide(raw * bet, 100);
                 log(`[FakeReelManager]   ${index + 1}. 原始=${raw} → ${raw} × ${bet} ÷ 100 = ${final_}`);
@@ -1025,8 +1061,9 @@ export class FakeReelManager extends Component {
 
         let allCorrect = true;
         for (let i = 0; i < testCount; i++) {
-            let cbResult: { credit: number, symbolId: number } | null = null;
-            this.OnGenerateCoinCredit([betMode, (result: { credit: number, symbolId: number }) => {
+            type CoinCreditResult = { credit: number, symbolId: number, jpType: number };
+            let cbResult: CoinCreditResult | null = null;
+            this.OnGenerateCoinCredit([betMode, (result: CoinCreditResult) => {
                 cbResult = result;
             }]);
 
@@ -1036,27 +1073,26 @@ export class FakeReelManager extends Component {
                 continue;
             }
 
-            const { credit, symbolId } = cbResult as { credit: number, symbolId: number };
+            const { credit, symbolId, jpType } = cbResult as CoinCreditResult;
             const errors: string[] = [];
 
-            if (symbolId === 20) {
-                if (credit !== 0) errors.push(`JP 但 credit=${credit} 不為 0`);
-            } else if (symbolId === 14) {
-                if (credit <= 0) {
-                    errors.push(`非 JP 但 credit=${credit} <= 0`);
-                } else {
-                    const rawReversed = tools.divide(credit * 100, bet);
-                    if (!validRawCredits.has(rawReversed)) {
-                        errors.push(`反推原始值=${rawReversed} 不在權重表中`);
-                    }
-                }
+            // 事件路徑會重抽掉 JP 等級，這裡拿到的必定是「Cash + 一般金額」
+            if (jpType > 0) {
+                errors.push(`事件路徑不應回傳 JP (jpType=${jpType})`);
+            } else if (symbolId !== Game_Define.Symbol.Cash) {
+                errors.push(`symbolId=${symbolId} 不合法（應為 ${Game_Define.Symbol.Cash}）`);
+            } else if (credit <= 0) {
+                errors.push(`credit=${credit} <= 0`);
             } else {
-                errors.push(`symbolId=${symbolId} 不合法（應為 14 或 20）`);
+                const rawReversed = tools.divide(credit * 100, bet);
+                if (!validRawCredits.has(rawReversed)) {
+                    errors.push(`反推原始值=${rawReversed} 不在權重表中`);
+                }
             }
 
             const passed = errors.length === 0;
             if (!passed) allCorrect = false;
-            log(`[FakeReelManager]   ${passed ? '✓' : '✗'} 第 ${i + 1} 次: credit=${credit}, symbolId=${symbolId}` +
+            log(`[FakeReelManager]   ${passed ? '✓' : '✗'} 第 ${i + 1} 次: credit=${credit}, jpType=${jpType}` +
                 (errors.length > 0 ? ` [${errors.join(', ')}]` : ''));
         }
 

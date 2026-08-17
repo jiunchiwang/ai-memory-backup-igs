@@ -99,7 +99,10 @@
         "vs feature",
         "vscash",
         "vscollect",
-        "vsmanager"
+        "vsmanager",
+        "leprechauns_pots",
+        "featurewheelmanager",
+        "vsresult"
       ],
       "wikiPages": [
         "uk-slot",
@@ -396,7 +399,17 @@
         "429",
         "重試遙測",
         "replay-safety",
-        "重複投遞"
+        "重複投遞",
+        "sync-upstream",
+        "moa-ref-claude",
+        "moa-ref-kiro",
+        "moa-ref-adversary",
+        "moa-ref-codex",
+        "moa-ref-security",
+        "moa-ref-perf",
+        "memory canary",
+        "telegram 重複",
+        "planuncertainreplay"
       ],
       "wikiPages": [
         "bridge-project",

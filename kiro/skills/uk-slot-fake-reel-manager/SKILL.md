@@ -23,7 +23,7 @@ FakeReelManager 是 Cocos Creator 元件，透過 astarte-framework 的 eventMan
 | Seed 循環取值 | 可選 | 預決定起始位置，從指定位置循環取得符號。不需要時可用簡單隨機取值 |
 | fileIndex 來源 | 依方案 | BetMode 方案：Server 直接提供；GameType 方案：本地 Model/File 權重表 |
 | SymbolInfo 轉換 | 可選 | 不需要時直接回傳 number[] |
-| Coin 金額權重表 | 可選 | 僅 Coin/Cash Symbol 需要隨機金額時使用 |
+| Coin 金額權重表 | 可選 | 僅 Coin/Cash Symbol 需要隨機金額時使用。若表內含 JP 等級，**先確認專案真實 JP 的顯示管線**（多為 Cash 符號 + JpType），假演出走同一條 |
 
 ## 建立新 FakeReelManager
 

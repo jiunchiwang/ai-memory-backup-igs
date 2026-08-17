@@ -2,8 +2,8 @@
 title: Bridge 備份與密鑰洩漏防護（/backup、/sharedsync）
 type: concept
 created: 2026-07-11
-updated: 2026-08-08
-sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_810445, f_a4eb9f, f_cba34c, f_b8922f, f_212e36]
+updated: 2026-08-17
+sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_810445, f_a4eb9f, f_cba34c, f_b8922f, f_212e36, f_95d4e4, f_4e0d9d]
 ---
 
 # Bridge 備份與密鑰洩漏防護
@@ -29,6 +29,22 @@ sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_810445, 
 ## default-skills 自動回填
 
 - `default-skills/` 目錄由 `.githooks/pre-commit` 呼叫 `scripts/sync-skills-to-repo.mjs` 在每次 commit 自動從本機 skill 目錄回填，因此 AI-canonical 的 skill 改動會自己流進 repo 副本，不需手動 cp 維護——commit 時看到 `[sync-skills] N skill(s) updated` 即代表機制生效；也代表「default-skills 是過期舊副本」這類 finding 會在下次任何 commit 自動消失
+
+## Git 歷史 Secret 掃描結果（2026-08-14）
+
+對 telegram-kiro-bridge 1005 commit 全掃（`--all`）結果：
+
+- `.env` **從未進版控**
+- 無任何 `*.pem`、`*.key`、`credential*`、`token.json`、`client_secret*` 曾被新增
+- `ghp_`/`github_pat_`/`sk-ant-`/`AKIA`/`xoxb-`/Telegram bot token 形狀皆有命中，但逐條查證**全為 redaction 正則、文件表格或測試 fixture**（`AKIAIOSFODNN7EXAMPLE`、`sk-ant-...` 佔位符等）
+
+⚠️ **只涵蓋固定前綴**，無熵值分析 ∴ 下游 repo 預設 private，**要轉 public 前須跑 gitleaks/trufflehog**。
+
+## Zip 打包分享的陷阱
+
+把 repo 直接打包成 zip 分享會連 **untracked 的 `.env`**（含 `TELEGRAM_BOT_TOKEN`）、`logs/`、`.claude/`、`.github/` 一起送出——這比 git 歷史洩漏更實際（git 只會包含 tracked 檔案）。
+
+額外風險：**兩個 bridge 共用同一個 bot token** 長輪詢會互搶 `getUpdates` 導致 Telegram 回 409 Conflict、兩邊都不穩 ∴ 下游**必須換自己的 token**。
 
 ## 相關
 

@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-17T05:24:15.331Z",
+  "_last_updated_at": "2026-08-17T20:10:26.618Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -27,8 +27,8 @@
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-17T05:24:13.834Z",
-      "use_count": 135,
+      "last_agent_used_at": "2026-08-17T20:10:25.331Z",
+      "use_count": 137,
       "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
@@ -55,8 +55,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 7,
-      "last_routed_at": "2026-08-16T01:45:55.180Z"
+      "route_count": 8,
+      "last_routed_at": "2026-08-17T09:29:23.138Z"
     },
     "ui-ux-pro-max": {
       "created_at": "2026-06-17T01:03:41.884Z",
@@ -237,8 +237,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 1,
-      "last_routed_at": "2026-08-13T02:44:54.962Z"
+      "route_count": 2,
+      "last_routed_at": "2026-08-17T09:29:23.138Z"
     },
     "uk-slot-fake-reel-manager": {
       "created_at": "2026-05-06T05:42:57.357Z",
@@ -391,8 +391,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 6,
-      "last_routed_at": "2026-08-15T14:24:53.867Z"
+      "route_count": 7,
+      "last_routed_at": "2026-08-17T10:04:44.678Z"
     },
     "ms-blackbox-probe-experiment-design": {
       "created_at": "2026-08-01T20:03:46.232Z",
@@ -503,6 +503,18 @@
       "pinned": false,
       "notes": "false positive（已知誤報，非缺檔）：這是 Superpowers plugin skill，實際路徑 ~/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/brainstorming/SKILL.md。usageStore 的 skillMdCandidates()（src/usageStore.ts:177-182）只組出 ~/.{kiro,codex,claude}/skills/ 底下 <name>/SKILL.md 與 .system/<name>/SKILL.md 六條路徑，不含 plugins/cache ∴ orphan 恆為 true。同 claude-api 的形狀。2026-08-14 查證，勿再列入孤兒清理清單。",
       "orphan": true
+    },
+    "uk-slot-proto-bin-decode": {
+      "created_at": "2026-08-17T09:53:49.439Z",
+      "last_bridge_listed_at": null,
+      "last_agent_used_at": null,
+      "use_count": 0,
+      "route_count": 0,
+      "last_routed_at": null,
+      "last_reason": null,
+      "pinned": false,
+      "notes": null,
+      "orphan": false
     }
   }
 }

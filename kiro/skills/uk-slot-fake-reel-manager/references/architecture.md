@@ -94,7 +94,8 @@ class SymbolInfo {
 僅在專案有 Coin/Cash Symbol 需要隨機金額時使用：
 ```typescript
 class CoinCreditWeightEntry {
-    credit: number | 'JP';  // 金額或 'JP' 標記
+    credit: number;   // 金額（以 bet=100 為基準的比例值）；JP 項固定為 0
+    jpType: number;   // JP 等級（0=一般金額，1 起算對應專案的 JP 列舉）
     weight: number;
 }
 class CoinCreditWeightTable {
@@ -102,6 +103,20 @@ class CoinCreditWeightTable {
     totalWeight: number;
 }
 ```
+
+**⚠️ 不要用單一 `'JP'` 標記表達 JP。** 早期版本用 `credit: number | 'JP'`、抽中時回傳一個
+「JP 專用 symbolId」，這個做法有兩個問題：
+
+1. **JP 通常不只一級**。UK 系列常見 Mini / Minor / Major / Mega / Grand 五級，
+   單一標記無法表達要顯示哪一級（實際級數與名稱依專案，非通則）。
+2. **JP 多半不是獨立 Symbol**。多數專案的真 JP 是「Cash 符號 + JpType」轉出
+   （server 的 JP 狀態欄位 → `SymbolInfo.JpType` → 顯示端依 JpType 取 JP 圖）。
+   把假演出寫成另一個 symbolId，會與真實開獎走不同管線，視覺對不上；
+   更糟的是 symbolId 只是 `number`，**跨專案沿用時語意漂移編譯器抓不到**
+   （實例：某 id 在一代是 Mystery、在二代改成別的用途，整段悄悄變錯且零編譯錯誤）。
+
+**建立/修改前必須先確認**：這個專案的**真實** JP 是怎麼轉出來的？
+找到 server JP 欄位 → `SymbolInfo` → 顯示元件那條路徑，**假演出沿用同一條**。
 
 ## 資料架構
 
@@ -158,12 +173,29 @@ const expectedColumns = 6;
 ```
 
 ### Coin 金額權重表檔案（可選）
-Tab 分隔，每行一個項目：`金額\t權重` 或 `JP\t權重`
+Tab 分隔，每行一個項目：`金額\t權重`，或 `JP等級token\t權重`
 ```
+Credict	Weight     ← 可能有標題列
 5000	300
 10000	200
-JP	120
+20000	0          ← 權重 0 = 暫時停用
+MINI	120
+GRAND	120
 ```
+
+**金額欄的語意：以 bet=100 為基準的比例值**，實際顯示金額 = `表值 × 目前 bet ÷ 100`。
+例如表值 50、bet=20 → 顯示 10。同一張表因此能在任何注額下自動縮放。
+
+> ⚠️ **換算必須在所有消費路徑一致**。實務上常見兩條路徑：事件層（供只顯示數字的呼叫端）
+> 與符號轉換層（供轉輪滾動的 `SymbolInfo`）。曾發生只有事件層做了 `× bet ÷ 100`、
+> 符號轉換層直接塞原始表值的情況——bet=100 時看不出來，其他注額下滾動中的金額全部偏大。
+> 新增消費路徑時，第一件事是確認換算有沒有跟上。
+
+**解析容錯**（機率人員維護的表格常有這些）：
+- **標題列**：首行權重欄非數字時視為表頭跳過，不要當成解析錯誤刷 warn
+- **權重 0 的項目**：保留在表內但永遠抽不中（累積權重法天然如此），
+  這是機率人員標示「這個金額暫時停用」的方式，**不要在解析時濾掉**——
+  濾掉會讓表的內容與檔案對不上，之後要啟用時也看不出原本有哪些檔位
 
 ## Seed 工作流程
 

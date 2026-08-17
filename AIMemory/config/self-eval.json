@@ -2,24 +2,6 @@
   "_schema_version": 1,
   "entries": [
     {
-      "ts": "2026-07-31T01:02:37.993Z",
-      "chatId": 509424983,
-      "score": 85,
-      "evidence": "重構從 regex 改成 import：event-log.ts 改成 const array + type 推導、doc-facts.ts 改成直接 import 模組；tsc 通過、fast tier 93/93、full tier 95/96（唯一失敗是 rate limit 外部限制）。誠實保留：① 沒有完整端到端驗證 /docupdate 因為它依賴 agent 半段 ② check-acp-idle-pump 因 rate limit 沒跑過"
-    },
-    {
-      "ts": "2026-07-31T05:15:19.541Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "tsc 過、fast tier 93/93 過、mutation test 證明順序閘門非恆真、4 個呼叫點逐一連動改完；扣分在完全沒有 Telegram runtime 實測，且新增了每 turn 2 次 API 呼叫的成本未實測對 rate limit 的影響"
-    },
-    {
-      "ts": "2026-07-31T06:26:40.980Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "F-1/F-2 都自己讀 run-prompt.ts 實際呼叫順序與 timer 驅動路徑重現過而非採信覆核結論；F-1 修正已跑 tsc exit 0 + check-draft-streaming 綠；F-2 尚未修所以未驗證，commit message 錯誤敘事待處理"
-    },
-    {
       "ts": "2026-07-31T06:52:19.289Z",
       "chatId": 509424983,
       "score": 90,
@@ -1200,6 +1182,24 @@
       "chatId": 509424983,
       "score": 80,
       "evidence": "本輪未改動任何檔案，僅確認維持原案；先前的合併結果已有 tsc + check-doc-sync + 跨 vendor 覆核三層背書，扣分處是 mutate-gate 未實跑驗殺、完整 smoke 未跑"
+    },
+    {
+      "ts": "2026-08-17T09:36:53.260Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "型別應無問題（布林運算），但未在 Cocos 編輯器實際編譯驗證，也未能用真實多 PlateQueue 封包測試"
+    },
+    {
+      "ts": "2026-08-17T09:49:55.358Z",
+      "chatId": 509424983,
+      "score": 70,
+      "evidence": "型別應無問題，邏輯符合需求（緊鄰 BigWin、只在最後一個 Plate），但未在 Cocos 編輯器實際編譯驗證，也未能用真實 MaxWin 封包測試"
+    },
+    {
+      "ts": "2026-08-17T10:05:45.125Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "邏輯正確（OnEnter 開頭判斷、不依賴 BigWin 級距），但未在 Cocos 編輯器實際編譯驗證"
     }
   ]
 }

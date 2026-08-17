@@ -173,7 +173,7 @@ const expectedColumns = 6;
 |------|---------|---------|
 | Column 模式列數 | `Game_Define.COL` | `const expectedColumns = 6` |
 | Symbol ID | 專案 Symbol 列舉 | `symbolId === 14` |
-| JP Symbol ID | 專案定義 | `symbolId === 20` |
+| JP 判斷 | 語意欄位 `jpType > 0` | `symbolId === 20`（JP 多半不是獨立 Symbol，且 id 語意跨專案會漂移）|
 | BetMode/GameType 列舉值 | 專案實際列舉 | 假設存在某個未定義的類型 |
 | Bet 計算方式 | 專案的 BottomBar 管理器 | 直接寫 `credit * 0.01` |
 
@@ -206,6 +206,12 @@ const expectedColumns = 6;
 - [ ] SymbolInfo 轉換邏輯與專案的 `SymbolInfo` 結構匹配
 - [ ] Coin 金額的 Symbol ID 與專案定義一致（非硬編碼）
 - [ ] `OnGenerateCoinCredit` 中的 bet 計算使用正確的管理器
+- [ ] **JP 表達方式與專案真實 JP 顯示管線一致**：假演出的 JP 是否走與 server 開獎
+      相同的路徑（多數專案為 Cash 符號 + JpType，而非另一個 symbolId）？級數是否齊全？
+- [ ] **金額換算在所有消費路徑一致**：`× bet ÷ 100` 是否每條路徑都有？
+      （事件層與符號轉換層各自獨立，很容易只改到一邊）
+- [ ] **過濾/判斷條件用語意欄位而非傳輸欄位**：例如「這是不是 JP」應判斷 `jpType`，
+      不要判斷 `symbolId !== 某個數字`——symbolId 的語意跨專案會漂移且編譯器抓不到
 
 ### 5. 資料解析
 - [ ] Row/Column 讀取模式與實際檔案格式對應正確

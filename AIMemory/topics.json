@@ -5,7 +5,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-17T05:10:25.904Z (token=topics-9a667a05-35)
+// Last applied: 2026-08-17T20:05:43.722Z (token=topics-5f229394-35)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -15,7 +15,8 @@
       "uk_917",
       "uk-917",
       "leprechaun",
-      "3 leprechaun"
+      "3 leprechaun",
+      "leprechauns_pots"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -31,7 +32,8 @@
       "eye strike 2",
       "featurewheel",
       "click 音效",
-      "wheel-click"
+      "wheel-click",
+      "featurewheelmanager"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -65,7 +67,8 @@
       "vs feature",
       "vscash",
       "vscollect",
-      "vsmanager"
+      "vsmanager",
+      "vsresult"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -188,7 +191,8 @@
       "backport",
       "add/add 假衝突",
       "merge-base",
-      "downstream-fork"
+      "downstream-fork",
+      "sync-upstream"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -292,7 +296,13 @@
       "fable-advisor",
       "moa-presets",
       "blind advisor",
-      "readonlylens"
+      "readonlylens",
+      "moa-ref-claude",
+      "moa-ref-kiro",
+      "moa-ref-adversary",
+      "moa-ref-codex",
+      "moa-ref-security",
+      "moa-ref-perf"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -328,7 +338,8 @@
       "topicreview",
       "expectedtoken",
       "canary",
-      "gold set"
+      "gold set",
+      "memory canary"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -646,7 +657,9 @@
       "429",
       "重試遙測",
       "replay-safety",
-      "重複投遞"
+      "重複投遞",
+      "telegram 重複",
+      "planuncertainreplay"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
