@@ -2,9 +2,9 @@
 title: 開發工具與環境設定
 type: concept
 created: 2026-06-28
-updated: 2026-08-16（dream high-priority：兩條 HTML 目錄錨點偏好合併為 f_ca2e4f；gh CLI 未登入 f_af2a3f 於 2026-08-16 複驗仍成立）
-sources: [f_7c41c5, f_99b243, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55, f_ca2e4f, f_10d8ff, f_b120d4, f_a1b97e, f_e189b1]
-history_sources: [f_9bb794, f_8a4a0e, f_1a68bf]
+updated: 2026-08-18（新增：Markdown 無註解語法 ∴ `#   @Foo.md` 的 ghost import 仍載入，含 11,393 tokens 代價與 88,147→76,612 的修後實測）
+sources: [f_7c41c5, f_99b243, f_86246b, f_5871a8, f_947e7a, f_fedf5c, f_a8a12e, f_eb9ddd, f_5bf5da, f_8da350, f_af2a3f, f_cb572a, f_ab7e0a, f_129738, f_b09bb8, f_ddc6a2, f_00d0b6, f_4f4b55, f_ca2e4f, f_10d8ff, f_b120d4, f_a1b97e, f_e189b1, f_cf5316]
+history_sources: [f_9bb794, f_8a4a0e, f_1a68bf, f_3d90f2]
 ---
 
 # 開發工具與環境設定
@@ -48,7 +48,7 @@ HTML+CSS 排版 → Playwright headless Chromium 渲染（`docs/to_pdf.py`）。
 npx tsc --noEmit
 ```
 
-遇到 TS6.0 deprecation 警告時加 `--ignoreDeprecations 6.0` 抑制。
+遇到 TS6.0 deprecation 警告時加 `--ignoreDeprecations 6.0` 抑制。⚠️ **這條有版本前提**：`ignoreDeprecations` 的值必須對得上實際跑的 tsc——TS 5.x 只吃 `"5.0"`，在釘 5.9.3 的專案寫 `"6.0"` 會回 TS5103 **把本來能跑的閘門打壞**（2026-08-17 於 uk_872 實證，見 [[uk-slot-eye-strike]]）。專案有自己的 `npm run typecheck` 時一律以它為準，不要套這裡的通用寫法。
 
 ### Smoke Test 依賴 dist/ 編譯產物
 
@@ -108,6 +108,18 @@ Git Bash 的 `PATH` 讓 cmd 解析到 GNU coreutils 的 `timeout` 而非 Windows
 ### 查「某支 skill 被用了幾次」的權威來源
 
 `~/.claude.json` 的 `skillUsage` 物件（每支 skill 一筆 `usageCount` + `lastUsedAt`，全時間累計、不隨 transcript 輪替）——**不是**拿 transcript grep（transcript 約 30 天輪替，數出來的只是視窗內的數字）。配套判準：當計數來源的比對條件寬到會把無關事件也記進去（如某 log 把「commit message 提到某工具名」也算一筆），分母被污染而分子沒有，此時只能報絕對數，不可寫成比例或百分比，並明講分母為何不可用。
+
+### ⚠️ Markdown 沒有註解語法 —— `#   @Foo.md` 的 import 照樣會載入（2026-08-17 已修）
+
+`~/.claude/CLAUDE.md` 裡用井字號開頭「註解掉」的 `@import` **仍然被 loader 解析並載入**。兩條獨立 A 級證據：①當時 session context 直接出現那 10 個檔的全文，並被 harness 標成 "user's private global instructions"；②repo 外暫存目錄的差分探針——`#   @big.md` 讓 prefix +2,838、裸 `@big.md` +2,716（同量級 ∴ 有載入，多出的 122 是那行字面文字本身）。同一行可有多個 `@`，全部都會載入。
+
+代價：2026-08-11 健檢決定移除的 10 個檔（MCP_Magic / Morphllm / Playwright / Sequential / Tavily / Context7 / Serena ＋ BUSINESS_PANEL_EXAMPLES / BUSINESS_SYMBOLS / MODE_Business_Panel，44,543 chars）每次冷啟仍付 **11,393 tokens**，而正文寫著「已移除」「已改為延遲載入」；business-panel 那三個檔更與既有的 lazy-load skill 重複載入同一份內容。
+
+**修法**：把那幾行的 `@` 字元拿掉（寫成 `MCP_Magic.md`）＋ 加一行不含 at 符號的警告說明為何不能寫回去。**實測驗收**：bridge repo 冷啟 prefix **88,147 → 76,612（省 11,535）**、user 設定層 32,185 → 21,117，與預估 11,393 的誤差 142 來自新增的警告行與移除的字面文字。
+
+- ⚠️ **仍未驗證**：把 import 路徑包進 code block 能不能讓 parser 跳過——確定有效的只有**拿掉 `@` 字元本身**。
+- ⚠️ **生效時機**：`CLAUDE.md` 在 session 啟動時讀入並持有，mid-session 編輯不生效也不打掉快取，要下一次 `/clear`／`/compact`／重啟才載入新版。
+- **可遷移判準**：任何「用註解語法停用設定」的做法，都要先確認那個檔格式**真的有註解語法**——Markdown、JSON 都沒有。
 
 ## 文件產出
 

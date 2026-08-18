@@ -90,6 +90,12 @@
   - 代表 session：2026-08-15（ACP retry 遙測上線時，`emitOutcome("succeeded")` 放在 try 區塊內，任何 `retryOutcome` listener 拋錯會讓成功的 prompt 被回報成失敗；已修）
   - 觀察點：這條目前綁在單一 repo 已有的文件化原則上，屬專案特定的違規案例而非新知識；若在另一個系統也出現「加觀測/遙測時忘記隔離副作用」且沉澱出通用檢查步驟（如「新 emit 呼叫是否被獨立 try/catch 包住」），可考慮寫成通用 skill
 
+- [ ] **live-probe-self-contamination**（CDP／引擎執行期探針的自我汙染） | count=2 session（同構表現 5 次） | score≈0.2–0.3（session 計法偏低，manifestation 計法達 0.5，兩種算法落在門檻兩側） | 留底觀察
+  - Pattern：對活的瀏覽器／遊戲引擎 process 連續下探針時，**上一支探針留下的狀態會污染下一支的量測**，且外觀與真訊號無法區分——與已升格的 `ms-blackbox-probe-experiment-design` 不同（那支管的是**實驗設計**：陽性對照、2×2 矩陣覆蓋），這個候選管的是**同一個活行程裡跨次呼叫的狀態汙染**，是不同的失效軸。五個同構實例：① `Object.defineProperty` 覆寫的 getter 活到頁面重載為止，下一支探針讀到污染值差點被記成真結論；② `Runtime.enable` 會重播先前緩衝的 console 訊息，導致「這輪跑了幾行」被算成兩倍；③「按能力找物件」（誰身上有某方法）命中多個候選時靜默取第一個，取到錯的那個；④ 讀錯欄位（`m_currState` 是 key 不是物件）回傳 `null`，「沒發生」與「讀錯」外觀相同；⑤ Cocos 未重編譯（stale bundle）被誤判為「新行為已生效」，本次連踩兩次
+  - 代表 session：2026-08-18T09-43-55（①④⑤，M2.4/M2.5 Preview 驗收）、2026-08-18T14-26-21/22（①②③，M2.6 真實 unshow 探針）
+  - 觀察點：本輪已把最完整的一次實例（①③並發、且互相導致差點誤判）存成 fact `f_2210cb`，∴ 這條知識目前沒有遺失，只是還沒被提煉成可重用的探針衛生檢查清單。若第 3 次獨立事件出現（另一個專案／另一種活行程探針），評估 append 到 `ms-blackbox-probe-experiment-design` 新增「原則 5：探針自身狀態不可跨次呼叫存活／每次呼叫前清乾淨已知的覆寫」；屆時把上面五個實例當作 Common Mistakes 表的種子
+  - 現有覆蓋：fact f_2210cb（①③最完整的一次，含 `clearedPatchedGetter` 驗證清乾淨的做法）
+
 ## 誤判紀錄（防重複偵測）
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
@@ -101,4 +107,4 @@
 - ~~"users jiunchiwang" / "users" / "jiunchiwang" pattern（4 sessions）~~ — 2026-08-13 判定誤判：全部命中同一個絕對路徑字串 `C:\Users\jiunchiwang\Downloads\Telegram Desktop\wheel-click-prototype.html`（使用者傳同一份 HTML 檔案討論多輪），是路徑字面值被重複引用，不是技術模式
 
 ---
-Last updated: 2026-08-16
+Last updated: 2026-08-18

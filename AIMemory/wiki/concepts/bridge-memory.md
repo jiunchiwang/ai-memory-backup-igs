@@ -2,8 +2,8 @@
 title: Bridge 記憶與維運系統
 type: concept
 created: 2026-07-11
-updated: 2026-08-16（新增：fact ID 完整性與 provenance 稽核兩類缺陷、memory canary gold set 與 latency gate 翻面實測、factlint wiki-reference 例外再擴大）
-sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_e2e14a, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_5c1956, f_5e6afb, f_9a7397, f_34a003, f_6f6762, f_7fb676, f_842a1b, f_e17260, f_e547d2, f_d742a1, f_99e9ba, f_88c0ba, f_213f2c, f_622428, f_ee9da7, f_e2c507, f_e42c5d, f_3724e9, f_0b0278, f_2089a9, f_6b5161]
+updated: 2026-08-18（新增：skill-usage 真孤兒 entry 直接刪不留墓碑的裁決與安全前提、preamble `buildMemoryBlock()` 固定區塊只掛最長 return 的附帶損害型缺陷）
+sources: [f_d21a12, f_b615b7, f_84107f, f_a4464b, f_054543, f_912029, f_152b53, f_e5843d, f_b01ccb, f_c965d5, f_a0a929, f_0c2487, f_dd41a9, f_7d8cb9, f_36529c, f_7cb830, f_a1f2f2, f_909065, f_741af7, f_e737a7, f_b7367a, f_182f52, f_e2e14a, f_de06cc, f_36e49d, f_77ddbd, f_e3b009, f_e6facf, f_15ac36, f_6a6c22, f_f94c52, f_ace685, f_b773d9, f_8cc27f, f_437274, f_a8b737, f_9a349f, f_0e4a79, f_072633, f_900c14, f_51511f, f_5c1956, f_5e6afb, f_9a7397, f_34a003, f_6f6762, f_7fb676, f_842a1b, f_e17260, f_e547d2, f_d742a1, f_99e9ba, f_88c0ba, f_213f2c, f_622428, f_ee9da7, f_e2c507, f_e42c5d, f_3724e9, f_0b0278, f_2089a9, f_6b5161, f_652074, f_84bfee]
 history_sources: [f_713852, f_017f18, f_484853]
 ---
 
@@ -98,6 +98,14 @@ Preamble 大小取捨：佔 context 5-6% 可接受，到警戒線才削減；優
 **orphan 判定結構性涵蓋不到 plugin marketplace（2026-08-13）**：`usageStore` 的 skill orphan 判定只掃 `~/.{kiro,codex,claude}/skills/` 的 `<name>/` 與 `.system/<name>/` 六條路徑，涵蓋不到 `~/.claude/plugins/marketplaces/*/skills/`——任何 plugin skill 被 agent 自報 `<<SKILL_USED>>` 後都會在 `skill-usage.json` 留下 `orphan=true` 的假孤兒（`claude-api` 實例，已用 `notes` 標 false positive 讓 `/skilllint` 跳過，未改掃描邏輯以免多出約 20 筆從未使用的 plugin skill entry）。
 
 **Node `readdirSync` 不跟隨 junction 的靜默失效（2026-08-04）**：`readdirSync(dir,{withFileTypes:true})` 回的 `Dirent` 對 junction/symlink 一律 `isDirectory()===false`、`isSymbolicLink()===true`——而這台機器的 skill 投影全靠逐 skill junction，任何 `readdirSync(...).filter(e=>e.isDirectory())` 掃 skill 目錄的碼拿到的都是靜默空集合。`scripts/refresh-codex-skill-links.mjs` 就這樣壞掉且沒人發現：`sourceNames` 恆空造成建立邏輯全斷、移除迴圈把既有 link 全判 stale 刪掉（每跑一次 `postinstall` 清空一次 Codex）。正確寫法是篩「目錄或指向目錄的 symlink」並用 `statSync` 跟隨連結確認。這條是異源覆核抓到的（主 agent 讀碼推理判斷方向完全相反），案例見 [[adversarial-review]]。
+
+**真孤兒 entry 的處置＝直接刪，不留墓碑（2026-08-16 使用者裁決）**：當次對象是 `uk-slot-spec-to-impl`（已停用併入 `uk-slot-codegen`）。保留 deprecated 墓碑的代價是每輪 skilllint 都重複列它。安全前提（該次已實查）：`usageStore.ts` 刻意不自動移除 orphan（註解寫明是 user-driven decision），寫入是 per-mutation read-modify-write 無記憶體快取 ∴ **跑著的 bridge 不會覆寫復活**，且 `migrateFromDisk` 只為磁碟上存在的 `SKILL.md` 補 entry ∴ 也不會自動長回來。刪前留 `config/skill-usage.bak.<日期>.json`，並用 json round-trip（indent=2 ＋ 結尾換行，實測與原檔逐字節相同）確保 diff 只有被刪的那幾行。
+
+## Preamble 的路徑覆蓋缺陷 —— 固定區塊只掛在最長那條 return（2026-08-16，已修 26b69a8）
+
+`buildMemoryBlock()`（`src/memory.ts`）有三條 return——facts 為空、`opts.tail === 0 || total <= opts.tail` 的 early return、完整路徑——而 `[Agent disciplines]`（七條 always-on 行為紀律，2737 chars）**只掛在完整路徑那一條**。∴ 新部署的第一天（facts 少於 tail）與刻意設 `MEMORY_PREAMBLE_TAIL=0` 的人，agent 完全拿不到 READ-BACK／REFLEXION／ASK BUTTONS 那一整組，**preamble 外觀正常、無任何徵兆**。本機不受影響（facts 早就超過 tail=10）∴ 這類缺陷只在「別人的機器／第一天」發作，自己的環境永遠測不出來。修法是抽成 `AGENT_DISCIPLINES_BLOCK` 常數掛上每條路徑。
+
+三件可遷移的事：①「條件式 early return 把後來新增的固定區塊丟掉」是**附帶損害型**缺陷，加新區塊到多 return 的函式時要枚舉全部 return；②`tail === 0 || total <= tail` 這種**含 disjunct 的條件**會讓「多餵幾筆就會走另一條路」的直覺失效——`tail=0` 時任何筆數都走 early return，任何依賴「餵夠資料逼出某條路徑」的測試都在該設定下靜默退化（第一版閘門就中了，commit 008397d）；③驗路徑覆蓋的斷言不能只驗「產物在不在」，要另驗「**真的走到那條路**」（本例判別式是只有完整路徑才產生的 `[Memory topics`），否則路徑退化時三個 case 仍全綠。詳見 [[verification-diagnosis]]。
 
 ## 維運工具與接線陷阱
 

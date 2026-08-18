@@ -5,7 +5,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-17T20:05:43.722Z (token=topics-5f229394-35)
+// Last applied: 2026-08-18T20:10:19.112Z (token=topics-d5f9639b-33)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -281,28 +281,6 @@
       "wf-verify",
       "timeoutms",
       "maxturns"
-    ],
-    "domain_id": "d_17f29b073143",
-    "domain": "bridge",
-    "tags": [],
-    "kind": "topic"
-  },
-  {
-    "topic_id": "t_0f55e94738aa",
-    "topic": "bridge-moa",
-    "keywords": [
-      "moa-ref",
-      "moa 顧問",
-      "fable-advisor",
-      "moa-presets",
-      "blind advisor",
-      "readonlylens",
-      "moa-ref-claude",
-      "moa-ref-kiro",
-      "moa-ref-adversary",
-      "moa-ref-codex",
-      "moa-ref-security",
-      "moa-ref-perf"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -639,27 +617,6 @@
       "worker 靜默死亡",
       "daily intel",
       "重放安全性"
-    ],
-    "domain_id": "d_17f29b073143",
-    "domain": "bridge",
-    "tags": [],
-    "kind": "topic"
-  },
-  {
-    "topic_id": "t_dd18f452f629",
-    "topic": "bridge-retry-telemetry",
-    "keywords": [
-      "transient-retry",
-      "acp-retry",
-      "retrytransient",
-      "retryoutcome",
-      "emitoutocome",
-      "429",
-      "重試遙測",
-      "replay-safety",
-      "重複投遞",
-      "telegram 重複",
-      "planuncertainreplay"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",

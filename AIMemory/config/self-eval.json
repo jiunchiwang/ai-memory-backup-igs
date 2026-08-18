@@ -2,168 +2,6 @@
   "_schema_version": 1,
   "entries": [
     {
-      "ts": "2026-07-31T06:52:19.289Z",
-      "chatId": 509424983,
-      "score": 90,
-      "evidence": "F-1/F-2 都自己讀 run-prompt.ts 的實際呼叫順序與 timer 驅動路徑重現過才動手；F-2 的守衛與 F-4 的斷言各做過 mutation test 確認非恆真，且驗證 mutation 已還原無殘留；tsc + smoke fast 93/93 全綠。未給更高分是因為新寫的因果敘事尚未經獨立覆核，可能重複同一類錯誤"
-    },
-    {
-      "ts": "2026-07-31T07:23:08.184Z",
-      "chatId": 509424983,
-      "score": 93,
-      "evidence": "三輪覆核全部逐條自己重現才動手，F-1 有 smoke 耗時 0.4s→2.0s→0.4s 的可觀測證據支撐；新斷言過 mutation test；主動發現並如實標註覆核者未點明的救援有效範圍，選擇不加 I/O 追蹤並寫明理由而非默默擴大 scope；tsc + smoke fast 93/93。未給更高分是因為 d703bf3 本身未經第四輪覆核，且 Telegram runtime 端行為仍只有模組契約測試、無真機驗證"
-    },
-    {
-      "ts": "2026-07-31T07:51:01.927Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "tsc 與 96 支 smoke（93 fast + 3 慢）全部實跑取得 exit 0 與 pass 計數，unpushed 為空已用 git 確認；扣分在於全為本機 fake API 測試、無真實 Telegram 端到端驗證，且殘餘視窗屬已知未修"
-    },
-    {
-      "ts": "2026-07-31T07:54:45.214Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "實跑 CIM 進程追蹤證實 bridge PID 41368 走 tsx src/index.ts 且啟動時間晚於 src mtime，並讀 start.bat 確認無 stdout 重導向；扣分在於 UI 層行為結構上無法自證（需使用者觀察），且我前一輪把 dist build 時間當證據其實搭錯（bridge 不讀 dist），本輪才修正"
-    },
-    {
-      "ts": "2026-07-31T08:08:42.004Z",
-      "chatId": 509424983,
-      "score": 71,
-      "evidence": "讀完 status-channel.ts 全文 + run-prompt.ts 關鍵區塊 + telegram-ui.ts 兩個 render 函式，用排除法把可能路徑收斂到 2 個並排除「頭部插入」假設；但核心前提（editMessageText 是否清 draft）查官方文件兩次都失敗、未取得 A 級證據，所以這是推論而非結論，且尚未動任何碼"
-    },
-    {
-      "ts": "2026-07-31T10:54:44.374Z",
-      "chatId": 509424983,
-      "score": 84,
-      "evidence": "tsc exit 0 + fast tier 93/93 + check-draft-streaming 12 支全過，且逐檔做過因果鏈分析（含發現 status-channel.ts 禁 import 的約束，改用 deps 注入避開）；扣分在於這只是診斷層、根因仍未定案（H1/H2 待 runtime 證據），且診斷本身尚未經真實流量驗證能否產出可判別的 log"
-    },
-    {
-      "ts": "2026-07-31T11:06:29.687Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "git log 與 smoke 均為實際執行且輸出貼在上面；tsc 我誠實標註 exit code 那行是 tail 的、以零診斷輸出為依據；未涵蓋 3 支慢測已標明，非全量驗證故不給更高"
-    },
-    {
-      "ts": "2026-07-31T11:12:14.247Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "log 58 筆全讀、sinceLastMs 語意與 statusChannel.update 唯一呼叫點都回查原始碼確認；H2 與另三條路徑靠零筆訊號硬排除。但 H1 本身是消去法非直接觀測（官方文件無載），且尚未改碼驗證，故不給更高"
-    },
-    {
-      "ts": "2026-07-31T11:27:50.734Z",
-      "chatId": 509424983,
-      "score": 86,
-      "evidence": "tsc 零診斷 + fast tier 93/93 + 4 種突變逐一驗證新斷言有效並還原複驗；因果鏈已 grep 全部呼叫者與唯一實作者。未給更高因為修法本身依賴消去法定位的 H1，且尚未重啟 bridge 做端到端驗證"
-    },
-    {
-      "ts": "2026-07-31T11:51:25.844Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "H1 修法在 runtime 的作用已用 log 幀 + 使用者觀測雙向確認，且讀碼排除了「順序反了」的誤判；扣分處：本輪只驗證未改承重碼，.env 單行改動無型別/測試風險但也未重跑 smoke，且強制補送的限流風險仍只有小樣本、待 Fable5 覆核"
-    },
-    {
-      "ts": "2026-07-31T12:09:01.818Z",
-      "chatId": 509424983,
-      "score": 90,
-      "evidence": "F1 經獨立讀碼三項結構事實驗證後才採納（非照單全收），修法與既有 :751/:787 處置對稱；tsc exit 0、fast tier 93/93 兩次、pre-push hook 再一次，且新斷言用突變測試證實真的被執行到並紅在正確條目。扣分：F1 仍是靜態錨定非行為測試（editNowInner 未匯出，抽出它超出 bugfix 範圍），F2/F3 只記錄未處理"
-    },
-    {
-      "ts": "2026-07-31T12:20:45.300Z",
-      "chatId": 509424983,
-      "score": 80,
-      "evidence": "探針 dry-run 實跑驗證過設定解析（chat/rich/token 三項正確），且忠實對齊生產路徑（rich API、同 draft_id 重用、直讀 .env）；三臂含陽性對照，能區分「H1 為假」與「觀測方法無效」這兩個會被混淆的結果。扣分：--go 路徑未實際執行過（結構上只能由使用者跑），所以 API 參數形狀僅由 trySendDraft 原碼與 smoke 斷言推得、未經真實回應驗證"
-    },
-    {
-      "ts": "2026-07-31T12:50:24.074Z",
-      "chatId": 509424983,
-      "score": 76,
-      "evidence": "方向轉折有實測支撐（你的 surface 回答讓 Q2/Q3 從無效變有效，牴觸了 sendMessage 前提），且新假設有量化對照——19.6s 間隔 vs 設計假設的 30s TTL，與兩個時段的症狀有無精確對應。扣分：TTL 數值仍未量到，新方向目前是最佳解釋而非已證實；且我第一輪探針設計時漏掉「8s 靜候測不到 TTL」這個明顯缺口，是同一個實驗設計連續兩次沒把主要對手假設納入"
-    },
-    {
-      "ts": "2026-07-31T13:12:08.702Z",
-      "chatId": 509424983,
-      "score": 72,
-      "evidence": "三個候選機制已逐一被實測否證（edit/sendMessage 不清不重播、TTL 35s vs 間隔 19.6s、sendChatAction 零匹配），新假設鎖定在探針從未覆蓋而生產碼大量在做的幀型上，且這次帶了非恆真基準段。扣分：這是同一個診斷的第三輪換方向，前兩輪各有一個本該事前想到的設計缺口（陽性對照未驗證、observable 問錯）；根因仍未定案，且新假設若成立意味著我今天已 push 的修法方向是錯的"
-    },
-    {
-      "ts": "2026-07-31T13:17:03.012Z",
-      "chatId": 509424983,
-      "score": 70,
-      "evidence": "payload 形狀這次是用讀碼排除（telegram-rich-renderer.ts:5-7 與探針自拼完全一致）而非再猜一輪，新一輪把唯一沒變過的軸獨立出來且三段幀數/總長對齊，判讀表含「全都無」的退路。扣分：這是第四輪換方向，根因仍未定案；且前三輪固定錯變數是本該在設計第一輪時就想到的——症狀的內容相依性從一開始就寫在使用者的描述裡"
-    },
-    {
-      "ts": "2026-07-31T13:32:12.848Z",
-      "chatId": 509424983,
-      "score": 85,
-      "evidence": "等級 2 落檔實地驗過（verbose flag=true、兩檔都寫入、seq 對齊=1、中文與換行完整），不是只靠 tsc；seq 不自增這個最易錯的性質有明確驗證；.gitignore 覆蓋是查證而非假設；93/93 通過且驗證殘留已清。扣分：根因仍未定案，這輪只是裝儀器；且新增的三個匯出目前呼叫者僅 1 處，等級 2 的實際生產路徑要等重啟後才算真的驗過"
-    },
-    {
-      "ts": "2026-07-31T13:56:01.757Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "模型名取自 transcript 最新 message.model 與 session 身分行雙來源一致；context 數字是實測 usage 欄位相加，非估算；200k/1M 的落差由讀 config.ts:174 + .env:69 確認，但沒改任何碼所以無型別/測試驗證需求"
-    },
-    {
-      "ts": "2026-07-31T14:05:36.343Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "cache_read 來源用 transcript 兩輪 usage 欄位相加得到精確吻合（80954+20797=101751），非推測；靜態負載的前兩項是實測檔案大小，preamble/schema 兩項已明確標為「估」；未改任何檔案"
-    },
-    {
-      "ts": "2026-07-31T20:02:08.823Z",
-      "chatId": 509424983,
-      "score": 87,
-      "evidence": "8 個 session 檔全部實際讀取（最後一個分兩頁讀到 730 行結尾），commit hash 與實測數字（TTL≈35s、19.6s 間隔、93/96 支）都取自 transcript 原文非記憶；檔案為新建無覆寫風險。扣分：29 行的長度限制我壓在 27 行但沒逐行機械計數，且「完成/進行中」的歸類是我自己判斷的，例如 4276f08 已 push 但根因被推翻，我放在完成又在進行中註明依據失效"
-    },
-    {
-      "ts": "2026-07-31T20:15:02.468Z",
-      "chatId": 509424983,
-      "score": 84,
-      "evidence": "每個候選都算了 F/C 分數並寫在報告與候選檔裡，兩支新 skill 各有 6/8 個可指名的實例支撐；rewrite 的判定有實測證據（八臂探針）而非我的推測；3 條 fact 都先 list_facts 查重（刷掉 5 條重複）；skill 投影後實地驗過兩個 CLI 目錄的 SKILL.md 存在、session 搬移數量 341→351 對得上。扣分：① 一輪產出 2 支新 skill 與門檻 0.5 只差 0.08/0.37，C 值（平均 user turn 數）是我逐一數出來的估算，換個算法可能落到門檻下 ② 兩支新 skill 未經 writing-skills 的 pressure scenario 驗證（本 skill 明文以「已在真實對話反覆使用」取代，但那是格式豁免不是品質保證）③ ms-streaming-token-pipeline 的 rewrite 建立在單次三臂實測 + 使用者肉眼觀察上，該實驗的陽性對照本身就失效過"
-    },
-    {
-      "ts": "2026-07-31T20:18:53.309Z",
-      "chatId": 509424983,
-      "score": 90,
-      "evidence": "重複偵測不是憑印象——用 grep 找到 ingest log 的 2026-07-31 條目逐筆比對 14 項，再用 list_facts 查 after-stop 實地確認該 fact 真的在 store 裡（不只記在 log）；且我先獨立精選完才比對，所以兩輪一致這件事有獨立性而非抄現成答案。扣分：ingest log 的行數在 PowerShell（233）與 Read（≥235）不一致我沒追根因，可能有非標準換行；另外我第一次查 uk-917 shard 漏掉那條 fact，是靠 grep log 才補回來，若當時就 remember 會製造一條重複"
-    },
-    {
-      "ts": "2026-07-31T20:23:12.664Z",
-      "chatId": 509424983,
-      "score": 86,
-      "evidence": "apply_topics 前先跑 propose_topics 取快照、且實際讀完 misc 全部 13 筆才設計分類（不是看 topic 名稱猜）；套用後回查 misc 與 verification-diagnosis 兩個 shard 驗證內容真的合理，不只信 histogram；keyword 順序的搶奪風險有逐條推演（把新 topic 放在 bridge-project 前、其他細類後）。扣分：① 24 個 topic 的 keyword 陣列是我手抄重建的，若某個既有 keyword 抄漏會靜默改變分類，我只驗了 2 個 shard 沒逐一比對全部 22 個舊 topic 的筆數變化（user-pref -1 與 dev-tools +1 我沒去確認移動的是哪一筆）② bridge-smoke-gate 的 \u0000CODE18\u0000 是較寬的 keyword，長期可能吸走原該屬 bridge-project 的 facts"
-    },
-    {
-      "ts": "2026-07-31T20:30:38.728Z",
-      "chatId": 509424983,
-      "score": 85,
-      "evidence": "fact IDs 全部從 shard 檔行首實際讀出（不是憑記憶編），且刻意排除 [WS] working-state 那類過渡性 fact 不列 sources；兩處過時數字（30s TTL）是主動偵測並更正，不只追加新內容；uk-slot 的 ripple 計數與頁面實況比對後發現偏高並如實回報。扣分：① 節流讓 bridge-memory 未處理，是我自己選的優先序 ② bridge-project 我用 grep 讀 heading 而非全文，新增節與既有 51 行「其他功能紀錄」是否有內容重疊我沒逐段確認 ③ 兩頁新建頁的行數我沒實際計數確認 ≤200 行（目測約 100/90 行，未量測）"
-    },
-    {
-      "ts": "2026-07-31T20:36:39.171Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "8 條刪除前逐一 grep 全 wiki 確認零引用，且用 forget() 兩階段 preview 核對過完整清單才 confirm（未走任何 shell 改檔）；衰減判定沒有硬套 60 天，而是先查出 hit-log 最早一筆 2026-07-11 才判定期間不足；兩個新 shard 的「零命中」如實標記為假訊號而非列衰減候選。扣分：① 10 shard 上限下 bridge-project/bridge-memory/uk-slot-codegen/uk-slot-eye-strike 只做關鍵字定向掃描、未逐條讀完，可能漏掉非關鍵字型的瑣碎 fact ② 升格候選的踩坑計數是 grep 命中「行數」，一行含多個關鍵字只算一次、但也可能把引述性提及算進去，未逐條人工確認"
-    },
-    {
-      "ts": "2026-07-31T20:41:55.678Z",
-      "chatId": 509424983,
-      "score": 87,
-      "evidence": "bridge-acp 的更正不是照 fact 抄，而是實際讀 config/acp-providers.json 當事實來源——過程中還推翻了我記憶裡「backend pin 是 claude-sonnet-5」那條（實檔是 opus[1m]/high），沒有把錯的記憶寫進 wiki；斷連檢查是把全部 156 個 wikilink 目標與 Glob 出的 36 個檔名逐一對照，orphan 雙向都查；dev-tools 缺 wikilink 這個 schema 違規是額外抓到的。扣分：① stale 偵測用「shard 近期 fact 數 vs 頁面 updated 日期」當 proxy，只實查了 5 個嫌疑頁的實際內容，其餘 31 頁我沒逐頁比對 shard 內容就判健康 ② 五頁新增段落的行數未量測是否仍 ≤200 行 ③ 弱連結那項只列報告沒補連結"
-    },
-    {
-      "ts": "2026-07-31T20:44:28.586Z",
-      "chatId": 509424983,
-      "score": 86,
-      "evidence": "usage.json 35 筆與磁碟 36 個資料夾逐一對照算出雙向差集（找到 2 筆反向缺口）；stale 檢查不是只讀 description，而是 grep 全部 SKILL.md 的過時 model／路徑字串，並區分「硬寫在指令行」vs「刻意的反例示範」；vc-kiro-delegate 的 opus-4.6 命中先確認上下文才判定非 stale。扣分：① 過時偵測只掃 model ID 與機器路徑兩類字串，沒有逐支讀 SKILL.md 全文比對 facts（36 支全讀成本過高），API/做法層的矛盾可能漏掉 ② underused 的 30 天門檻我用今天回推，但 last_agent_used_at 為 null 者無法區分「從未用」與「回報缺口」，我只能標註口徑警告而無法判定"
-    },
-    {
-      "ts": "2026-07-31T20:46:16.094Z",
-      "chatId": 509424983,
-      "score": 89,
-      "evidence": "結論不是採信注入的「差異無」，而是實跑 tsc + repo 自己的 check-doc-sync 閘門取得 PASS 作為證據；/forget 先 grep 三個註冊面確認指令真的不存在，再讀兩份文件的實際句子確認語意是否定的，才判定為抽取器 false positive 並依規則不動它。扣分：① 閘門的 [1] 段是「兩份文件是否都提到該項」層級的覆蓋率檢查，它不保證每個指令的**說明內容**與 COMMAND_SPECS 的 usage/desc 逐字相符——真要驗這層得逐條比對 48 個 desc，本輪沒做 ② 我沒重跑完整 fast tier，只跑了單支（工作區有未 commit 的 draft-diag 改動，但那批不影響 doc-facts 讀的三個常數）"
-    },
-    {
       "ts": "2026-07-31T21:03:09.856Z",
       "chatId": 509424983,
       "score": 82,
@@ -1200,6 +1038,168 @@
       "chatId": 509424983,
       "score": 72,
       "evidence": "邏輯正確（OnEnter 開頭判斷、不依賴 BigWin 級距），但未在 Cocos 編輯器實際編譯驗證"
+    },
+    {
+      "ts": "2026-08-17T23:18:50.688Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "topics.json 改動有機械驗收（JSON 可解析、33 筆、兩名不存在、list_facts 路由實測正常）；wiki 五頁跑過行數棘輪 PASS 且逐頁確認 <200 行；引用的 fact 全部逐字取自 master log 並查過 lifecycle（f_3d90f2 確認已非 active）。扣分處：wiki 內容正確性沒有異源覆核，且「f_e21eb1 改收 verification-diagnosis」是我單方面的歸屬判斷"
+    },
+    {
+      "ts": "2026-08-17T23:25:38.961Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "四處改動各有機械驗收：active shard 已無 f_a738db、f_4f0022 已入 user-pref shard、wiki 只剩 history_sources 引用舊 ID、gold set 重建後標註 dead=0 且 30 條標註完整保留；canary-gold 走 builder 重建而非手改衍生資料。扣分處：未實跑 memory-production-canary 端到端複驗（已說明判斷依據與未跑理由）"
+    },
+    {
+      "ts": "2026-08-17T23:40:13.239Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "A 級證據來自 GitHub API 原始欄位與 contents 目錄清單，bridge 側的 mcpServers 傳遞與 loadSession fallback 是自己 grep src/acpClient.ts 得到行號；新頁 119 行、棘輪 PASS、四個 wikilink 實測全部解析得到。扣分處：dsh-acp 的方法表與 capability 宣告是 WebFetch 小模型轉述（B+），未讀 packages/acp/acp/src/，且「傳了 mcpServers 會被忽略還是報錯」明確未驗"
+    },
+    {
+      "ts": "2026-08-17T23:49:36.221Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "bridge 側全是 A 級（逐檔讀 src/context-assembly.ts、context-telemetry.ts、run-prompt.ts:793-815、三個 mcp-*.ts，shard 字元數實際量測）；主動抓到並更正自己上一輪的錯誤宣稱，且用該 skill 明列的成本不對稱查核步驟擋掉了一個看似合理的借鏡。扣分處：dsh 側全部是 WebFetch 小模型轉述（B+），沒讀 packages/compaction 與 packages/spill 的任何一行原始碼；「ACP 有無 compact 觸發介面」明確未驗"
+    },
+    {
+      "ts": "2026-08-18T00:01:35.318Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "tsc exit 0、真值表 7 條含邊界全過、三處 literal 一致性實際 grep 確認、舊識別字無程式碼殘留；因果鏈那步真的抓到 memory.ts 的跨檔字串耦合並寫進註解防後人改壞。扣分處：smoke 尚未完成 ∴ 迴歸未驗，且這段程式碼**沒有任何 smoke 斷言覆蓋**（改動本身也沒補一支）——真值表驗的是抽出來的邏輯不是實際注入路徑"
+    },
+    {
+      "ts": "2026-08-18T00:18:19.159Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "commit 前逐 hunk 讀完整份 diff 確認無夾帶他人在製品、確認無 staged/未追蹤檔案、逐路徑 staging；smoke PASS 有輸出檔原文佐證（非推測）；tsc exit 0；真值表 7/7。扣分處：分層邏輯仍無 smoke 斷言覆蓋（已寫進 commit 訊息但未補測），且 bg-run 的 finish 憑證失效這個基礎設施問題只診斷未修"
+    },
+    {
+      "ts": "2026-08-18T05:41:32.739Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "全部結論來自 repo 一手證據（git log 時間戳、SPEC.md 勾選狀態、docs/spec-gaps.md 登記表、檔案 mtime），未跑編譯或 Preview 驗證專案現況"
+    },
+    {
+      "ts": "2026-08-18T06:00:58.936Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "tsc/單元測試/對帳/finalize 四道靜態閘門皆過且呼叫端已逐一檢查，但本切片是顯示層與時序改動，Preview 實機驗收完全沒做（Editor 未啟動）∴ 不給 75 以上"
+    },
+    {
+      "ts": "2026-08-18T06:19:49.698Z",
+      "chatId": 509424983,
+      "score": 70,
+      "evidence": "新方法在執行期確認存在（證明重編譯成功），且已用 DOM 層 listener 證據排除輸入通道問題；但六條顯示層契約零實機證據，演出到底長什麼樣完全未觀察"
+    },
+    {
+      "ts": "2026-08-18T06:36:46.678Z",
+      "chatId": 509424983,
+      "score": 74,
+      "evidence": "進場流程已用逐顆按鈕點擊實測定位（可重現）、三個誤導訊號各有觀測證據排除；但 spin 觸發仍未解，VS 演出本體依舊零實機證據"
+    },
+    {
+      "ts": "2026-08-18T06:56:26.287Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "四條契約有逐幀實機證據且演出順序與資料層數值對得起來；扣分在 EH-VS-6 中斷窗口實際沒被觸發、BC-VS-14 與 EH-VS-7 未驗，這三項已如實標註未結"
+    },
+    {
+      "ts": "2026-08-18T07:26:52.183Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "覆核者每條 finding 都自己重現（其中核心那條用執行期原始碼否證）、兩處真缺陷已修且四道閘門重跑全綠；扣分在駁回未受檢、unshow 路徑無實機證據"
+    },
+    {
+      "ts": "2026-08-18T07:39:03.193Z",
+      "chatId": 509424983,
+      "score": 89,
+      "evidence": "兩輪跨 vendor 覆核、每條 finding 自己重現、兩處真缺陷已修、四道閘門重跑全綠，且證據等級逐項分級留痕；扣分在駁回未取得獨立確認、三條顯示層契約仍無實機證據"
+    },
+    {
+      "ts": "2026-08-18T07:46:19.397Z",
+      "chatId": 509424983,
+      "score": 89,
+      "evidence": "commit 已落地、四道閘門全綠、四條契約有逐幀實機證據、兩輪異源覆核的處置逐條留痕分級；扣分在三條顯示層契約仍無實機證據且駁回未受獨立檢查"
+    },
+    {
+      "ts": "2026-08-18T08:04:58.727Z",
+      "chatId": 509424983,
+      "score": 80,
+      "evidence": "規格三條逐字查證後才寫碼、純函式有 7 條測試、四道閘門全綠且對帳閘門實際擋到一次；但演出層與 M2.4 同樣尚未有任何實機證據"
+    },
+    {
+      "ts": "2026-08-18T08:31:18.699Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "兩個 mock 情境都有逐幀實機證據、實機抓到的設計缺陷已修並補測試、五道閘門全綠且判讀前確認過重編譯；扣分在 EH-CO-2/3 無實機證據、[B27] 順序不一致未解"
+    },
+    {
+      "ts": "2026-08-18T08:39:00.482Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "覆核 7 條逐條複驗、駁回有具體理由且提出不丟資料的替代、自己另找到規格圖修正了 GAP-13 的敘述、五道閘門全綠；扣分在新 warning 路徑無實機證據、駁回未受檢"
+    },
+    {
+      "ts": "2026-08-18T08:42:07.849Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "commit 已落地、兩個實機抓到的缺陷已修並補測試、覆核 7 條逐條複驗、五道閘門全綠、文件與 wiki 同步；扣分在 [B27] 順序不一致未解、新 warning 路徑與中斷/unshow 無實機證據"
+    },
+    {
+      "ts": "2026-08-18T08:52:43.339Z",
+      "chatId": 509424983,
+      "score": 87,
+      "evidence": "壓暗已實機逐幀驗證且抓到並更正自己前一個 commit 的錯誤斷言、五道閘門全綠；扣分在 eye_strike2 的 FlyManager 只讀了關鍵段落尚未完整評估可搬性"
+    },
+    {
+      "ts": "2026-08-18T09:13:28.782Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "拖尾已實機截圖確認在路徑上、失敗的骨頭驅動法有截圖為證並寫進文件、壓暗用對照組排除誤判、五道閘門全綠；扣分在落點效果 Collect_fx 搬了但沒接、拖尾尺寸未調校"
+    },
+    {
+      "ts": "2026-08-18T09:36:53.032Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "六個方向逐項量測後才下結論、真兇已修並目視確認飛行可見、錯誤診斷已在 commit 與文件雙處更正；扣分在這個 0×0 缺陷本該在 M2.5 當下就被抓到，我當時只驗資料層就宣稱通過"
+    },
+    {
+      "ts": "2026-08-18T09:39:57.503Z",
+      "chatId": 509424983,
+      "score": 90,
+      "evidence": "工作狀態已逐欄寫入回覆供 restart 解析、下一步建議錨在一個具體的證據缺口（VS 飛行沿用同一個 0x0 缺陷、當時只驗資料層），未開啟新的多步驟任務"
+    },
+    {
+      "ts": "2026-08-18T09:42:52.967Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "補驗有量測與截圖雙重證據、並回頭縮小了先前過度宣稱的驗收範圍；扣分在這件事本該在 M2.4 當下就做，以及 EH-VS-6/EH-CO-2 的中斷路徑仍無實機證據"
+    },
+    {
+      "ts": "2026-08-18T14:18:01.662Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "四輪跨 vendor 覆核逐條複驗全採納；本輪兩條 medium/low 皆為我引入、已修並實機回歸（臂 D 序列化未被破壞、真 unshow promises 3→0）；並用自建探針獨立否證自己文件裡一條錯誤理由。扣分：演出層仍未目視（無美術）、本輪修法未受覆核、F-1 既有缺陷未修。"
+    },
+    {
+      "ts": "2026-08-18T14:53:50.828Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "新建頁面與 index 兩處編輯的工具回報均為成功寫入；frontmatter 因 SCHEMA.md 實查不存在而改依現行同 type 頁面推導（此為推論非規格）；index 的 Previous/Earlier 鏈序已順手修正；頁面內容全為 B 級（未 clone）且已在文首標明"
+    },
+    {
+      "ts": "2026-08-18T15:24:14.090Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "tsc 0 錯、fast tier 167/167 實跑、mutation 5/5 killed（且第一輪 false-kill 的根因已查出並修正）、--live 命中已逐條查證為佔位符；未給更高分是因為 BC-4 經實測確認對 lastIndex 恆真（已標註而非隱藏），且 POLICIES 層的流程規則刻意未做"
+    },
+    {
+      "ts": "2026-08-18T15:45:42.012Z",
+      "chatId": 509424983,
+      "score": 86,
+      "evidence": "tsc 0 錯、fast tier 168/168 實跑、兩組 mutation 各 5/5 killed 且三條假 mutation 的根因都已查出並修正；未給更高分是因為新文案只有合成測試、沒有在真實啟動失敗下目視驗收過，且 K3 的 BC-4 恆真問題（已標註）與 POLICIES 未動兩項都還掛著"
     }
   ]
 }

@@ -107,7 +107,59 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 
 - **M2.1 已完成**：新增純 `VSManager.Resolve()` 與單元測試（VS Collect 僅於收分時計入自身倍率且多個相加），專案編譯、spec-gaps 對帳與 codegen finalize gate 皆通過。
 - **M2.2 已完成資料接線切片**：proto/mock adapter（`AdaptRoundToVSInput`）、修正 `GameView.ts` 的 `vsfeature` mock（原本型別上讓 `Resolve()` 恆不觸發）、`VsFeatureShowState`→`CollectFeatureShowState` 資料交接、轉型後盤面套用顯示層（不改寫 `RoundInfo.MainPlateSymbol`）。異源覆核抓到一個 High finding（`IsValidReel` 把「位置與 server vsType 不符」當硬性過濾，違反規格「dev-only warn、不改行為、以 server 為準」）已修並以 mutation test 驗證測試真的會攔住該回歸。
-- **尚未開始**：Fly／Expand／Spine 實際演出、完整 Unshow/replay UI（模板既有缺口，VS Feature 只是繼承不在此切片單獨解決）。
+- **M2.3 已完成**：VS 欄的倍率（`NX`）與加總值顯示，走 BitmapFont（GAP-04 解除）。
+- **M2.4 已完成（2026-08-18，commit `9c8d605`）**：對決演出時序骨架。每個 VS 欄四拍——
+  ①觸發符號飛向 VS 種子格 ②整欄換成 VS 符號 ③對決（Spine 未交付 ∴ 佔位等待）④揭示數字。
+  `OnEnter` 改 async、轉場照 `AwardState` 的旗標 idiom 交給 `OnProcess`。
+  Preview 實機逐幀驗過：演出順序（Cash 型左→右先、Collect 型後）、飛行複本無殘留、
+  cell 位置未被動到、下一局清空、演出期擋按停。
+  ⚠️ 三項未結：中斷窗口（EH-VS-6）實機測試**被 `IsMgOmen` 擋掉 ∴ 沒真的觸發**、
+  unshow 修法只證明可達、兩路徑等價只有間接證據。細節在專案的 `docs/M2-VS-design.md`
+  （該檔**不進版控**，只在本機）。
+- **M2.5 已完成（2026-08-18，commit `53858fc`）**：Collect 收分演出。逐顆 Cash 飛向 Collect、
+  雙 Collect 各收一次、JP 先轉分數再飛、VS 欄的來源收合成承載值。Preview 實機驗過熱鍵 6 與 9。
+  跨 vendor 覆核 7 條中採納 3 個新 warning（含把「proto 可能改用打包座標編碼」做成越界偵測）。
+- **尚未開始**：對決 Spine 本體與 1×4 美術（資產未交付）、聚寶盆、Jackpot 五階、BuyBonus、
+  MAX WIN、預中／聽牌、完整 Unshow/replay UI。
+
+## 規格圖是 A 級證據，別只讀文字（2026-08-18）
+
+`[B25]` 的文字「收集的順序如下：1~4、5~8、9~12、13~16」有兩種讀法（逐欄 vs 逐列），
+而**下一格 `[B26]` 就是一張圖**（`docs/spec/images/3__玩法和表演流程_B26_image29.png`），
+直接畫出 1-4 在第一個中間欄由上而下、5-8 第二欄、9-12 第三欄、13-16 第四欄 ∴ 逐欄讀法確認。
+∴ 規格轉出的 markdown 裡看到 `image` 條目時要真的去看圖，它常常就是文字歧義的裁決者。
+
+同一張圖也**削弱**了另一個推論：它只畫一組編號、兩側都標 COLLECT ∴「右側 Collect 鏡像」
+沒有規格支撐，那是推論（GAP-13）。
+
+## 框架狀態機的兩個事實（2026-08-18 執行期查證，A 級）
+
+1. **`stateManager.NextState()` 只設旗標**（`m_nextState` + `m_toTransit`），真正的轉場在
+   `Tick()`；而 `Tick()` 在轉場時**必定**先呼叫當前 state 的 `OnLeave()` 才 `OnEnter()` 下一個。
+   ∴ 「強制跳 state 會跳過 OnLeave」是**錯的**——這是異源覆核提出、被執行期原始碼否證的主張。
+   查法：Preview 執行期 `window.Astarte.StateManager.Tick.toString()`（實作在未版控的
+   `dist/main.js`，靜態讀 `StateManager.ts` 只會看到介面宣告）。
+2. **`SpinState.OnEnter` 在呼叫 `OnRecvSpinAck( ack, true )` 之前就把
+   `commonGameManager.HasUnshow` 清成 `false`** ∴ 任何在後續 state（VS／Collect／Award）
+   讀 `HasUnshow` 判斷「這輪是不是斷線復原」的分支**恆為 false，是死碼**。
+   要判斷得自己在 `OnRecvSpinAck` 把 `isUnshow` 記下來。
+
+## Preview 實機驗收的三個入口坑（2026-08-18）
+
+在這個專案跑 Preview 自動化時，以下三件事各害我誤判一輪：
+
+1. **進場不會自己過**，要點 `IntroView/AnimNode/Btn/LoadingToBtn/Btn_Loading`（loading 跑完才 active）。
+   同畫面的 `Btn_Right` / `Btn_Left` 都無效。
+2. **spin 鍵是 `btn_spin`**（路徑 `Node_Bar/BarNode_share/floatView/Node_Bar/Bar_Body/Btn/btn_spin/btn_spin`）。
+3. **找節點要看 `activeInHierarchy` 不是 `active`**——場景裡有 `Btn_Play` 自己 `active: true` 但父層關著，
+   依 `active` 找到它、算座標、點下去是點到空氣，**外觀與「按了沒反應」完全一樣**。
+
+另兩個誤導訊號：`Clip_Intro_*` 的 `instantiate` 失敗只是 warning（根因訊息是
+`Node "AnimNode" has no path "Btn/Continue_Text"`）；`Common_Mask` 恆 `active: true` 是四邊 letterbox，
+不是擋輸入的遮罩。
+
+工具：專案內 `docs/preview-vs-probe.mjs`（自起 Chrome + CDP，Node 24 內建 WebSocket，零外部相依）
+與 `docs/preview-interrupt-test.mjs`。⚠️ 兩支都在 `docs/` **不進版控**。
 
 ## spec-to-impl 教訓（仍成立）
 

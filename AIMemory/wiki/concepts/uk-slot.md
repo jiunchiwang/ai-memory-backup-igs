@@ -2,8 +2,8 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-08-01
-sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_4367fb, f_189848, f_1284be, f_b4c328, f_0af12a, f_937a50, f_4b6004]
+updated: 2026-08-18（ingest-ripple：補 9 條——7 條為既有段落漏引用的 provenance、2 條為新內容：規格圖是 A 級證據、跨專案搬 Spine 資產的驗收陷阱）
+sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_4367fb, f_189848, f_1284be, f_b4c328, f_0af12a, f_937a50, f_4b6004, f_437274, f_e68c39, f_165cc0, f_f82ff1, f_2d697b, f_4b088c, f_4b2a6c, f_65e102, f_769e08]
 ---
 
 # UK Slot 老虎機專案群
@@ -125,6 +125,7 @@ Clash of Olympus 實作過程暴露 5 個流程偏離，已回饋改善 skill �
 
 - `AI-canonical-corp` 的 slot skill（如 `uk-slot-pattern-library`）透過 **junction** 直接指向正本目錄，改正本即時反映到 `~/.kiro/skills/`，不需額外跑 `sync.ps1`
 - `uk-conventions` 是 Claude Code **custom command**（`/uk-conventions`），不是 skill
+- `skill-usage.json` 追蹤檔會孤兒化：曾出現 `vc-uof-hours` entry 仍指向已改名的資料夾 `igs-uof`，而 `igs-uof`、`uk-slot-logo-localization` 兩個實際存在的 skill 資料夾卻沒有登記 usage entry——改名/新增 skill 資料夾後記得回頭核對這份追蹤檔
 
 ### uk-slot-pattern-library 維護要點
 
@@ -204,6 +205,18 @@ Cocos Creator 全域插件，位於 `~/.CocosCreator/extensions/spine-viewer`，
 ### Cocos Creator 3.6 插件開發踩坑
 
 - `Editor.Message.send` 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
+
+## spec-to-impl 教訓補充（2026-08-18，Clash of Olympus 實戰）
+
+### 規格圖是 A 級證據，文字歧義先看圖
+
+規格轉出的 markdown 裡，關鍵敘述附近的 image 條目常常就是文字歧義的裁決者——例如收集順序寫「1~4、5~8、9~12、13~16」有逐欄與逐列兩種讀法，金額不受影響 ∴ 讀錯不會被任何對帳或測試抓到，只會演出順序錯；而下一格恰好是一張圖，直接畫出逐欄讀法，當場確認為 A 級。同一張圖也可能反向削弱其他推論（例如只畫一組編號時，「另一側鏡像」就沒有規格支撐，只能登記成缺口）。∴ 讀 xlsx 轉出的規格時，關鍵敘述附近有 image 引用就先看圖再下判斷——圖能同時裁決歧義、以及暴露「我以為有規格、其實是自己推的」那類假前提。
+
+### 跨專案搬 Spine 資產：「動畫解析成功」≠「畫得對」
+
+從另一個專案借 Spine 資產（例如把 uk_872_eyestrike2_client 的拖尾動畫搬進 Clash of Olympus）時，若對方做法是把控制骨移到起訖世界座標、路徑交給 Spine 動畫自己畫，原樣搬過來後**執行期檢查可以全綠**（節點存在、動畫名正確、`hasSkeletonData` true、`findBone` 都拿得到），但畫面上可能完全不在飛行路徑上——因為骨頭座標依賴來源專案的節點階層與縮放。唯一抓得到的方法是「在飛行當下截圖」，資料層的取樣結構上看不到。
+
+**判準**：借來的 Spine 只要牽涉「用骨頭/插槽帶座標」就必須看畫面驗收，不能用回傳值或屬性快照代替；退而求其次的穩健做法是讓路徑由自己已驗證的 tween 決定、Spine 只當跟著跑的視覺。同型陷阱：視覺類懷疑（例如「壓暗是不是沒生效」）要造對照組（強制全套用再截圖比對），不要靠單張截圖的印象判斷。
 
 ## 相關
 

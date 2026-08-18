@@ -2,9 +2,9 @@
 title: 使用者偏好與決策風格
 type: concept
 created: 2026-07-15
-updated: 2026-08-17（wikisync：新增 Git 紀律兩條——commit≠push 授權、收尾驗收規則）
-history_sources: [f_8a4a0e]
-sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_ca2e4f, f_e0ce0f, f_a738db, f_99e9ba, f_ebe025, f_9d9c71, f_4ad101, f_53944a]
+updated: 2026-08-18（三支 skill 去留矛盾裁決：f_a738db supersede 成 f_4f0022，補三條保留側佐證與 junction 刪除注意事項）
+history_sources: [f_8a4a0e, f_a738db]
+sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, f_70542c, f_ca2e4f, f_e0ce0f, f_4f0022, f_99e9ba, f_ebe025, f_9d9c71, f_4ad101, f_53944a]
 ---
 
 # 使用者偏好與決策風格
@@ -55,7 +55,9 @@ sources: [f_be8c07, f_d29dfc, f_c73099, f_0c44ff, f_31febf, f_de7bc7, f_4e6745, 
 
 ## Skill 管理
 
-- Underused skills 處理策略（2026-07-10 決策，**已於隔天撤回**）：原決定刪除 skill-creator / knowhow-accumulation / non-engineer-agent-design，但 2026-07-11 使用者否決了 dream 的 zombie 清理提案，改為保留三者（`skill-usage.json` 對應 entry notes 記載此撤回）；huashu-slides / dual-skill-review-loop / self-eval-prompt-pattern 仍持續觀察中
+- Underused skills 處理策略（2026-07-10 決策，**已於隔天撤回**）：原決定刪除 skill-creator / knowhow-accumulation / non-engineer-agent-design，但 2026-07-11 使用者否決了 dream 的 zombie 清理提案，改為保留三者並列為 skilllint 已知豁免；huashu-slides / dual-skill-review-loop / self-eval-prompt-pattern 仍持續觀察中。
+  2026-08-18 依使用者指示把兩條相反的 fact 合併成 f_4f0022（原 f_a738db 已 supersede），保留側的三條實查佐證：①`skill-usage.json` 三筆皆 `pinned:true` 且 `notes` 記載此撤回；②三支在 `~/.claude/skills/` 是 **junction** 指向正本 `G:\AI\AI-canonical\skills\general\<name>` ∴ 日後真要刪必須刪正本再重跑 sync，直接砍投影只會留下懸空 junction；③撤回後仍有實際使用（non-engineer-agent-design 2026-07-27、skill-creator 2026-08-17 被 routing 命中）。
+  **可遷移判準**：同一議題兩條 fact 差一天而結論相反時，去找第三方 artifact（註冊表 notes／磁碟狀態／使用紀錄）當裁判，不要只比時間戳。
 - 對非 Claude model 的判斷：DeepSeek 3.2 是非 Claude 裡 coding 最強穩定選項，qwen3-coder-next 超便宜但 experimental 穩定度未知
 - 把「多視角分析 + 每個發現派 skeptic 對抗驗證」的 review 流程做成固定 skill，加入日後的 skill 開發流程，會對既有 skill 原始碼重跑此流程來優化
 

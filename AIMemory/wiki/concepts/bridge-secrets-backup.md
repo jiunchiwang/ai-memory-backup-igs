@@ -3,7 +3,8 @@ title: Bridge 備份與密鑰洩漏防護（/backup、/sharedsync）
 type: concept
 created: 2026-07-11
 updated: 2026-08-17
-sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_810445, f_a4eb9f, f_cba34c, f_b8922f, f_212e36, f_95d4e4, f_4e0d9d]
+sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_a4eb9f, f_cba34c, f_b8922f, f_212e36, f_95d4e4, f_4e0d9d]
+history_sources: [f_810445]
 ---
 
 # Bridge 備份與密鑰洩漏防護
@@ -24,7 +25,7 @@ sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_810445, 
 ## /sharedsync 與跨帳號 Credential 快取
 
 - 使用者主機（jiunchiwang）的 Windows Credential Manager 對 GitHub 快取兩組不同帳號憑證：generic `https://github.com` 對應 `igs-jiunchiwang`、`https://jiunchiwang@github.com` 對應 `jiunchiwang`；跨帳號 git 操作需注意 remote URL 要嵌對帳號名才能配對到正確快取憑證
-- 已建立新的 GitHub private repo `jiunchiwang/ai-shared-knowledge`，接上本機 `G:\AI\AIMemory\shared\` 供 `/sharedsync` 使用（取代先前誤以為要接的 upstream 作者 redkilin 私人 repo），功能已修復並驗證可正常 push/pull
+- 已建立新的 GitHub private repo `jiunchiwang/ai-shared-knowledge`，接上本機 `G:\AI\AIMemory\shared\` 供 `/sharedsync` 使用（取代先前誤以為要接的 upstream 作者 redkilin 私人 repo）
 
 ## default-skills 自動回填
 

@@ -67,6 +67,11 @@
       "topic": "uk-slot-clash-olympus"
     },
     {
+      "id": "f_0611d8",
+      "text": "覆核／冷啟 token 成本結構（2026-08-17 八臂探針重測，取代 2026-08-13 四臂版）。**方法學先決條件**：`--output-format json` 的頂層 usage 是**該次 run 全部 request 的加總**（baseline 臂實際跑了 3 個 request），拿它當 prefix 會高估數倍；必須改用 `--output-format stream-json --verbose` 取**第一個 assistant message 的 usage**（input + cache_creation + cache_read）才是單一請求的 prefix。08-13 那組數字是用 aggregate 還是 first-request 算的**已無從查證**，∴ 跨日比較只在單請求臂（floor / strict-mcp）成立。",
+      "topic": "verification-diagnosis"
+    },
+    {
       "id": "f_0675c2",
       "text": "Headroom 專案已從 chopratejas/headroom 轉移到組織 headroomlabs-ai/headroom（CHANGELOG compare 連結定位：0.27.0/2026-06-22 仍舊名、0.28.0/2026-06-29 起新名），舊 URL 只是 GitHub redirect，且 PyPI 的 headroom-ai metadata 到 v0.33.0 仍指向舊名 chopratejas。",
       "topic": "bridge-research"
@@ -74,7 +79,12 @@
     {
       "id": "f_06ae88",
       "text": "telegram-kiro-bridge 的 tsconfig 未開 noUnusedLocals，tsc 全綠不代表沒有孤兒 import／死碼——這類問題需要異源獨立覆核（如 Fable5）或手動 grep 才抓得到（2026-07-29 sync-upstream 覆核實測，抓到 5 個孤兒 import + 1 個死碼函式）",
-      "topic": "bridge-smoke-gate"
+      "topic": "bridge-upstream-sync"
+    },
+    {
+      "id": "f_06eb83",
+      "text": "異源覆核者會把「本機工作區裡未進版控的檔案」當成生效中的基礎設施，並用它當安全網來下「覆蓋無縫」的結論——2026-08-15 第一手實測：kiro-cli glm-5 覆核 telegram-kiro-bridge 的 commit 7335e7f（把 check-npm-audit 移出 smoke fast tier）時回「已收斂，0 finding」，其四條觀察之一是「CI (ci.yml) 沒有指定 --fast，會跑完整 suite（含 npm audit）」，並據此判定閘門覆蓋無縫；但 `git ls-files .github/` 與 `git log --all -- .github/` 皆為空，該檔從未 commit 過（卡在 PAT 缺 workflow scope，是 TODO 不是生效的 CI）∴ 該安全網不存在。可遷移的判準：**覆核者只能看到檔案系統，看不到版控狀態** ∴ 凡是它拿「某個設定檔／workflow／hook 存在」當論證支撐時，都要自己補一次 `git ls-files <path>`；這類錯誤特別隱蔽，因為它引用的檔案內容完全正確、抽查引用一定通得過（抽查只能否證不能肯證的又一個實例）。連帶的留痕紀律：這種情況結論可能仍對（本例主張確實成立），但只能寫成「回已收斂、有部分展示痕跡、含一條經查為錯的支撐主張」，不可寫成「已取得獨立確認」。同輪它也有真的展示痕跡（實搜 src/ 是否讀寫 package.json 得 0 命中、追 writeFileSync.*package 的唯一命中進去確認是改外部目錄），∴ 展示與錯誤支撐可以並存在同一份報告裡，不是二選一。",
+      "topic": "adversarial-review"
     },
     {
       "id": "f_070546",
@@ -115,6 +125,11 @@
       "id": "f_0af12a",
       "text": "使用者有一個 Cocos Creator 老虎機專案 uk_746_far_west_client 位於 G:\\Cocos_Project\\uk_746_far_west_client，Far West 西部主題",
       "topic": "uk-slot"
+    },
+    {
+      "id": "f_0b0278",
+      "text": "telegram-kiro-bridge 的 memory canary p5 gate 於 2026-08-15 實測為「會在完全相同的輸入下翻面」：同一個 cohort（bridge-draft-diag 26 facts／15 queries）、同一份 gold set 連跑兩次，品質三軸逐位元相同（microP 0.089→0.107、microR 0.909→0.955、MRR 0.833→0.967），但 p1-p5 的 p95 latency 從 19.7ms 變成 14.8ms，gate 就從 FAILED（latency 13.11→19.75 超過 limit 18.11）翻成 PASSED。∴ 那個紅燈是 gate 的性質不是被測物的性質。成因指向量測設計而非實作：只有 15 條 query 取 p95、三條 lane 在同一個行程樹裡循序跑（有暖快取順序效應）、量級只有十幾毫秒——同輸入的擺動幅度大於它要偵測的效應量。連帶作廢先前 cohort 1 量到的「P5 快 44%」（26.8→15.0ms），那同樣是單次數字。可遷移判準：gate 若混合了確定性指標與雜訊指標，要分開看——先用「同輸入連跑兩次」證明哪些欄位是確定性的，再決定哪些欄位有資格當 gate；單次跑的結果無法自我分辨拿到的是哪一面。⚠️ 刻意未處置：latency 檢查要不要改（加 warmup／多輪取中位數／降級成 observation）不該由「它剛好擋到這次」驅動，那是把量測工具調到自己想要的答案。經此兩輪確定性複製後仍成立的結論只有兩條：P1 對召回品質是 no-op（兩個 cohort 皆與 legacy 逐項相同），P5 在 precision／recall／MRR 三軸優於 legacy 且 cohort 2 是以「回傳更少」（225→197 筆、injection 4565→4458 chars）達成。",
+      "topic": "bridge-memory"
     },
     {
       "id": "f_0b0e71",
@@ -204,7 +219,7 @@
     {
       "id": "f_10fbe3",
       "text": "使用者的公司網路環境封鎖 QUIC 協定導致 cloudflared quick tunnel 無法取得 URL（卡在 Requesting new quick Tunnel 超過 35 秒無回應）；ngrok（走 TLS 443）是驗證過的可行替代但最終選擇不用 tunnel",
-      "topic": "bridge-specialist"
+      "topic": "misc"
     },
     {
       "id": "f_115ddb",
@@ -337,6 +352,11 @@
       "topic": "uk-slot"
     },
     {
+      "id": "f_18f02e",
+      "text": "使用者對 telegram-kiro-bridge 的 memory rollout P1/P5 尚未授權開啟：兩個 cohort 的量測撐得起「在這兩組資料上沒偵測到品質退步、P5 三軸較優」，撐不起上線決定；且成本軸（latency）目前明確是量不準的狀態。2026-08-15。",
+      "topic": "bridge-project"
+    },
+    {
       "id": "f_191c67",
       "text": "Claude Agent SDK 權限是六階評估（Hooks → deny → ask → permissionMode → allow → canUseTool），四個實務陷阱：裸名 allowedTools 會讓 canUseTool 被靜默跳過（僅發 CLAUDE_SDK_CAN_USE_TOOL_SHADOWED warning）、allowedTools 完全不限制 bypassPermissions、disallowedTools 裸名（移除工具定義）與有 scope（保留工具但擋 pattern 且連 bypass 都擋）語意不同、Write(path) 規則永不被匹配（要擋寫檔一律寫 Edit(path)，它同時管 Write 與 NotebookEdit）",
       "topic": "bridge-acp"
@@ -355,11 +375,6 @@
       "id": "f_1a58d7",
       "text": "telegram-kiro-bridge Rich Messages 升級 PoC 裁決（2026-07-08）：原「1.5-2h 接 @grammyjs/stream」方案否決——plugin 是 append-only 累積（yield 出去的字收不回），與現有「整 buffer 重跑 transform → 整份 replace」streaming 模型不相容，draft 化需重寫 hold-back incremental emitter + 無 placeholder 流程，屬大型任務已列 roadmap P2（docs/pending-roadmap.html Section 7，commit b265a72），啟動時從 /dev-design 起步；R-2 通過（replyWithMarkdownStream 回傳 message_id 且支援 reply_markup，ASK 按鈕可行）",
       "topic": "bridge-streaming"
-    },
-    {
-      "id": "f_1a68bf",
-      "text": "使用者希望技術流程交接同時提供 Markdown 與具目錄錨點、可列印的 HTML 版本。",
-      "topic": "dev-tools"
     },
     {
       "id": "f_1ac058",
@@ -420,6 +435,11 @@
       "id": "f_204218",
       "text": "telegram-kiro-bridge 的 BC-x 斷言編號是全專案追溯主軸，同號異義會讓事故追查拿到不相干的斷言：新增斷言前要 grep 該檔全部既有 BC-x 編號確認真的沒被用過，不能只挑下一個看起來沒用到的數字。2026-08-06 自己在 check-transient-retry.mjs 撞到 BC-17（該號正是先前為避開 BC-15 撞號才從上游平移過來的），由 Fable5 覆核抓到才改為 BC-18a/b（commit 0546eeb）；因為編號是追溯主軸，改號時要留下改號理由（不能只是靜默換號）。",
       "topic": "bridge-smoke-gate"
+    },
+    {
+      "id": "f_2089a9",
+      "text": "telegram-kiro-bridge 的 memory canary gold set 於 2026-08-15 建成並完成 pooling，品質軸首次量到。三個由 canary 原始碼查證的硬約束決定了 gold set 的形狀：①worker:143-145 每筆 gold fact 必須與 active 語料逐字相等 ∴ facts 陣列不能手打、要由腳本從 readActiveConsolidationFacts 生成（工具：scripts/memory-gold-set-build.mjs）；②canary:299-303 gold facts 依 --topic 過濾後必須「等於」canary 自己選的 selectedFactIds（全等非子集）；③worker:236 retrieval 回傳任何不在 gold.facts 的 fact 就整批不可用。第一個 cohort（uk-slot＋uk-slot-eye-strike 共 26 筆、15 條 query、judgedCoverage 1.0 三條 lane 同分母）的量測：legacy 與 p1 逐項完全相同（microP 0.061／microR 0.444／MRR 0.273）∴ P1 對召回品質是 no-op；p1-p5 為 microP 0.126／microR 1.000／MRR 0.933。該輪 report 是 status: passed、failureReasons: []，⚠️ 但這個「全過」**不能整段當證據**：它含 latency 檢查，而 latency 檢查於同日稍後被實測證實同輸入會翻面（見 bridge-memory 同日另一條 fact）∴ 該輪 PASSED 裡 latency 那一項不具意義，與第二 cohort 首跑那個 FAILED 一樣不可信；有意義的是品質三軸，那部分是確定性的。同輪量到的「P5 latency 快 44%（26.8→15.0ms）」已作廢。可遷移的量測教訓有兩條，一條被證實一條被推翻：✅ 證實——judgedCoverage 低到 9.2% 時跨 lane 比 micro-precision 會得到反向結論（當時 p5「紅」在 precision 0.667→0.474，補判到 coverage 1.0 後 p5 的 precision 反而是 legacy 的兩倍），∴ 看 gold set 型量測前先看 judgedCoverage，過低時 precision 類指標跨組不可比。❌ 推翻——我當時據 unjudged=119 推論「retrieval 沒有依 topic 侷限」是錯的：pool 的唯一 fact 數恰好等於 cohort 26、越界 0、cohort 內從未被回傳 0 ⇒ retrieval 嚴格依 topic 侷限，那些 unjudged 是 cohort 內沒替該 query 標到的，∴ 補判不需跨 topic、只需每條 query 對 cohort 判完（改 closedWorld: true）。取得 pooling 素材的工具是 worker 的 opt-in 環境變數 MEMORY_CANARY_DUMP_RETRIEVED=1（預設不輸出，report 形狀不變）。",
+      "topic": "bridge-memory"
     },
     {
       "id": "f_20c975",
@@ -510,6 +530,11 @@
       "id": "f_28e62a",
       "text": "spine-viewer 的 Triangle 計算採全 keyframe 掃描（從 animation timelines 抽取所有 frame time 取最大值）",
       "topic": "spine-viewer"
+    },
+    {
+      "id": "f_290edc",
+      "text": "telegram-kiro-bridge 的 smoke fast tier 成本分布極度偏斜，2026-08-15 由 logs/smoke-last.log 逐支實測（159 支／231.7s）：最短的 81 支（<0.5s）合計僅 14.5s，前 10 支佔 117.2s（51%），單支新增閘門約 0.1–0.4s ∴「支數變多所以變慢」是錯的前提，優化要看前 10 名不要看支數。當日據此把 check-npm-audit（15.8s）移出 fast tier（commit 7335e7f），判準是**兩者皆須成立**：慢，且改 src/ 不可能讓它迴歸（它跑 npm audit --json 打 registry，輸入是 package-lock + 外部 advisory DB）——只慢就排除會讓 SLOW 清單變成「跑起來很煩的都丟進來」而靜靜侵蝕 pre-push 覆蓋率。⚠️ 三件可遷移的教訓：①**單次前後對照量不出這個效應**——wall clock 231.7→229.2s 只差 2.5s，因為同樣那 158 支這一輪自己比上一輪慢了 12.4s（+5.7%），雜訊大於效應（6.8%）∴ 只能宣稱「15.8s 的工作被確定性移出序列」，不能宣稱「量到快了 16 秒」；②計數同步的兩個易漏點是 docs/usage-guide.html（grep 只掃 md/ts/mjs 會漏）與 src/commands/smoke.ts 的**執行期**訊息（使用者每次跑 /smoke 都看得到，不是註解），兩處都是 check-doc-sync 抓出來的；③check-doc-sync 的白名單只認 runner --list 的五個數字 ∴ 連「3 支真 timer」這種正確的子分類數字也會被擋，正確處置是改列腳本名而不是想辦法讓數字過關。",
+      "topic": "bridge-smoke-gate"
     },
     {
       "id": "f_29848b",
@@ -612,6 +637,11 @@
       "topic": "adversarial-review"
     },
     {
+      "id": "f_32e842",
+      "text": "uk_872_eyestrike2_client 的型別檢查閘門真相（2026-08-17 session 記錄，2026-08-18 已逐字查證 package.json 與 tsconfig.typecheck.json）：唯一有效指令是 `npm run typecheck`（= `npx -y -p typescript@5.9.3 tsc --noEmit -p tsconfig.typecheck.json`），裸跑 `npx tsc --noEmit` 是假閘門——npx 預設抓 TypeScript 6.x，而 node10 模組解析在 6.0 被升為錯誤（TS5107），連編譯都進不去；編輯器內建的 4.6.3 也不能用（本 codebase 用了 4.7+ 的 instantiation expression，會爆 850 個語法錯誤），5.9.3 是實測可用落點。通過判準是「assets/ 底下零錯誤」而非 exit code：tsconfig.typecheck.json 開 skipLibCheck 後總錯誤 175→18，殘餘來自引擎 cc.d.ts 與 extensions 第三方 .d.ts（非本專案可修）。⚠️ 此條更新 f_6c587f 的操作建議——那條「跑 tsc --noEmit 要過濾只看 assets/Script 的錯誤」方向仍對，但在本專案裸跑 tsc 現在連跑都跑不起來，必須改走 npm run typecheck。",
+      "topic": "uk-872-eyestrike2"
+    },
+    {
       "id": "f_330e15",
       "text": "telegram-kiro-bridge draft streaming 有一個遺漏 bug（commit e3a3a45）：run-prompt.ts:991 的 placeholder guard 漏排除 useDraftMode，導致 draft mode 啟用時 visible reply 直接 throw Error；已修正為 !placeholder && !useDraftMode（與 445 行 editNow guard 一致），tsc 通過",
       "topic": "bridge-streaming"
@@ -620,6 +650,11 @@
       "id": "f_332dae",
       "text": "telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據",
       "topic": "bridge-infra"
+    },
+    {
+      "id": "f_3356be",
+      "text": "派異源覆核時「餵給覆核者的材料形狀」直接決定它的能力上限，這是派工者的責任而非覆核者的能力問題：只給攤平的 range diff（git diff A..B）而不給 bash／git 存取，覆核者就無法逐 commit 檢視——看不到中間 commit 的演進，也分不出「本輪引入」與「上一輪就存在」的缺陷。∴ 需要逐 commit 判斷時，要嘛給它 git 存取，要嘛把每個 commit 各自匯出成檔再餵。此條延伸自 f_b490fe（Codex read-only 沙箱被政策擋掉 git ∴ 必須先 git show 匯出 diff 檔）——那條講「怎麼讓它看得到改動」，這條講「攤平成單一 range diff 會抹掉 commit 邊界」。2026-08-16 telegram-kiro-bridge 派工時記錄。",
+      "topic": "adversarial-review"
     },
     {
       "id": "f_34a003",
@@ -852,11 +887,6 @@
       "topic": "bridge-specialist"
     },
     {
-      "id": "f_493b31",
-      "text": "bridge fork 獨有功能清單（同步 upstream 解衝突時必須保留）：/reset clean、handleDocUpdate（/docupdate）、specialist-memory、reaction_feedback、READ-BACK 紀律、userProfileBlock、SS（skill search）callback",
-      "topic": "bridge-upstream-sync"
-    },
-    {
       "id": "f_4970d5",
       "text": "使用者正在為公司 ai_multi_agent 框架規劃靜態 markdown 知識庫，供 UK 專案全角色（開發、企劃、機率、QA）使用，已完成 9 區規劃並產出初版存於 G:\\AI\\AIMemory\\artifacts\\uk-slot-knowledge-base-draft.md",
       "topic": "bridge-research"
@@ -957,6 +987,11 @@
       "topic": "bridge-acp"
     },
     {
+      "id": "f_4f0022",
+      "text": "underused skills 的處置結論（2026-07-10 初裁 → 2026-07-11 改判，2026-08-18 依使用者指示合併更正）：`skill-creator`、`knowhow-accumulation`、`non-engineer-agent-design` 三支 **2026-07-10 一度決定刪除（磁碟+store），但隔天 2026-07-11 被推翻改為保留**，並列為 skilllint 的已知豁免——日後再被標成殭屍 skill 不需重複提案刪除。另三支 `huashu-slides`、`dual-skill-review-loop`、`self-eval-prompt-pattern` 自 2026-07-10 起維持「保留繼續觀察」，未變。保留一側有三條獨立佐證（2026-08-18 實查）：①`${MEMORY_DIR}/config/skill-usage.json` 三筆皆 `pinned:true` 且 `notes` 逐字寫「使用者 2026-07-11 決定保留（否決 dream zombie 清理提案）」；②三支在 `~/.claude/skills/` 仍是 junction 指向正本 `G:\\AI\\AI-canonical\\skills\\general\\<name>`（∴ 若日後真要刪，必須刪正本再重跑 sync，直接砍投影會留下懸空 junction）；③改判後仍有實際使用—— `non-engineer-agent-design` 2026-07-27 用過一次、`skill-creator` 2026-08-17 被 routing 命中。可遷移判準：**同一議題的兩條 fact 差一天且結論相反時，先去找第三方 artifact（註冊表 notes／磁碟狀態／使用紀錄）當裁判，不要只比時間戳**。",
+      "topic": "user-pref"
+    },
+    {
       "id": "f_4f46c7",
       "text": "bridge status bubble 孤兒的真實來源是「finally 沒跑到的併發 turn」，不是觸發 restart 的那個 turn：<<RESTART>> 只在 run-prompt.ts 設 pendingRestartReason，handleRestart 在 try/finally 之後（2166 行）才呼叫，2139 行的 statusChannel.close() 已同步把 channel 移出 registry。真正撈得到的是 /restart 或 crash 時其他 chat/同 chat 的 in-flight draft turn，以及 sessions.shutdown 撞 withTimeout 走 catch 分支未收尾的 turn。2026-07-31 Fable5 覆核 F-1 更正（原先寫「finally 來不及跑」是錯的，AI.md/註解/commit message 三處都被污染）。",
       "topic": "bridge-streaming"
@@ -1037,6 +1072,11 @@
       "topic": "adversarial-review"
     },
     {
+      "id": "f_53944a",
+      "text": "回覆送出前的收尾驗收（2026-08-16 由使用者裁決採用，借自外部 repo ayghri/i-have-adhd 的 Pre-send check）：**只讀第一行與最後一行，讀者是否知道 (a) 下一步做什麼 (b) 剛剛發生了什麼**——不通過就把答案往前提、把結論寫進末行。為什麼補這一條：既有三層自檢各驗一個軸而沒有人驗「可讀性」——turn-lint 驗語言紀律與 ASK 按鈕、SELF_EVAL 驗正確性、事實主張閘門驗證據等級，沒有任何一層問「這則回覆讀得動嗎」。配套採用的還有它的「刪 hedge 但保留承載真實不確定性的 hedge」——刪的是 perhaps/might 這種無資訊量軟化詞，保留的是「B 級證據 ∴ 標為推論」這種真實不確定性；刪錯方向就是製造虛假自信。**刻意不採用**該 repo 的機械化部分：規則 10（無開場白/客套）在近 30 天 4505 則回覆實測命中率為客套 2 則（0.04%）、英文開場且現行閘門抓不到 4 則（0.09%，其中 3 則是回 JSON 的 structured-output 子任務）∴ 加閘門只會製造誤報；規則 6（一律給具體時間估計）與 RULES.md 的 No Fake Metrics 成本不對稱方向相反；規則 9（清單上限 5）與承重核的呼叫者窮舉／證據逐條列衝突。",
+      "topic": "user-pref"
+    },
+    {
       "id": "f_53d158",
       "text": "src/telegram-rich-renderer.ts 是刻意零依賴模組：check-rich-renderer.mjs 與 check-draft-streaming.mjs 會把它的原始碼轉譯後用 data:text/javascript URL 載入，bare specifier（如 grammy）在那裡解析不了會直接載入失敗 ∴ 該檔只能用結構化判定（err.name === \"HttpError\"），並在另一支能 import grammy 的閘門加斷言釘住該假設避免靜默失效",
       "topic": "bridge-streaming"
@@ -1065,6 +1105,11 @@
       "id": "f_564bea",
       "text": "uk_872_eyestrike2_client 的轉輪燈光壓暗設計決策（2026-07-30）：逐側判斷門檻下沉到 ReelUIManager.SetReelLightDark()（方案 A），只在 dark===true 時檢查 m_reelLightStates、該側沒亮就不壓；還原路徑刻意不設此門檻，否則熄燈後燈光永遠回不到亮色（排除方案 B 加 onlyIfShowing 旗標、方案 C 開 public getter，因為狀態擁有者是 ReelUIManager，判斷放內部才符合封裝慣例）",
       "topic": "uk-872-eyestrike2"
+    },
+    {
+      "id": "f_565fbf",
+      "text": "telegram-kiro-bridge 的 sync-upstream 結果解析採「exit code 為主、文字輸出為輔」（2026-08-16 決策）：10→衝突、11→型別檢查失敗、3→preflight 失敗、0→成功；文字輸出只用來補充細節，不用來判定結果種類。理由是文字會隨工具版本與語系漂移，exit code 才是穩定契約。",
+      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_56f3c9",
@@ -1100,11 +1145,6 @@
       "id": "f_59bf73",
       "text": "給同事的回饋文件位於 G:\\AI\\Skill\\uk-slot-codegen-feedback.md（8 條：2 文件 bug + 3 實測 bug + 2 建議 + 1 澄清）；整合驗證包位於 G:\\AI\\Skill\\uk-slot-integration-bundle.zip（含整合版 skills + 證據 + README 驗證指引），已傳給使用者轉交同事",
       "topic": "uk-slot-codegen"
-    },
-    {
-      "id": "f_5a2532",
-      "text": "telegram-kiro-bridge fork 同步策略：用 merge（非 rebase）合併 upstream，衝突解決原則是 upstream 架構為主、手動保留 fork 獨有功能（/reset clean、handleDocUpdate、specialist-memory、reaction_feedback event）",
-      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_5a4d84",
@@ -1207,6 +1247,11 @@
       "topic": "bridge-memory"
     },
     {
+      "id": "f_5eaaed",
+      "text": "重試行為的參數不可以在「只看得到失敗重試」的儀器上調整：2026-08-15 telegram-kiro-bridge 分析 31 天的事件 log 視窗後發現現行 instrumentation 只記錄失敗的重試，成功的重試根本不入帳 ∴ 重試成功率結構上不可觀測（存活者偏誤），任何據此得出的「重試沒用／該調上限」都是對偏誤樣本下結論。裁決是先補上成功重試的遙測、把行為調整整個延後到能量到成功率之後，而不是憑現有資料先改。可遷移判準與 f_0b0278（gate 混合確定性指標與雜訊指標要先分開看）同形：動被測物之前先確認量測本身有沒有資格支撐那個結論。",
+      "topic": "bridge-project"
+    },
+    {
       "id": "f_5fa621",
       "text": "uk-slot-codegen 的 uk_917 拋棄式驗證結果（probe 位於 G:\\Cocos_Project\\uk_917_codegen_probe，報告在 scratch/probe-compare-report.md）：gate 17/17 通過；custom feature 偵測對照 dev-spec 🔴 清單 0 漏 0 誤報；spec_adapter.py 有 3 個實測 bug（Symbol idx 未依 ODDS 表 SymID 排序全錯位、音效表解析失敗、總數少算+HAS_JACKPOT 誤判）——結論：codegen 當 M0a~M1 加速器成立，但規格轉換不能無人化，人工檢查點 1 必須保留",
       "topic": "uk-917"
@@ -1260,6 +1305,11 @@
       "id": "f_645ea3",
       "text": "telegram-kiro-bridge 已新增 /reset clean（或 /reset fresh）指令：結束 session 後額外刪除 session-archive + working-state，下次對話不帶入上次上下文；預設 /reset 行為不變（照舊歸檔）",
       "topic": "bridge-session"
+    },
+    {
+      "id": "f_652074",
+      "text": "skill 註冊表（${MEMORY_DIR}/config/skill-usage.json）出現真孤兒 entry 時，使用者 2026-08-16 選擇「直接刪除 entry」而非「保留 deprecated 墓碑」（當次對象是 uk-slot-spec-to-impl，已停用併入 uk-slot-codegen）——保留墓碑的代價是每輪 skilllint 都會重複列它。安全前提（該次已實查）：usageStore.ts 刻意不自動移除 orphan（註解寫明是 user-driven decision），寫入是 per-mutation read-modify-write 無記憶體快取 ∴ 跑著的 bridge 不會覆寫復活，且 migrateFromDisk 只為磁碟上存在的 SKILL.md 補 entry ∴ 也不會自動長回來；刪前留 config/skill-usage.bak.<日期>.json，並用 json round-trip（indent=2 + 結尾換行，實測與原檔逐字節相同）確保 diff 只有被刪的那幾行。",
+      "topic": "bridge-memory"
     },
     {
       "id": "f_654f09",
@@ -1342,9 +1392,19 @@
       "topic": "adversarial-review"
     },
     {
+      "id": "f_6b5161",
+      "text": "使用者接受 canary gold set 的人工標註（${MEMORY_DIR}/canary-gold.json，30 queries／5 pairs）不進版控、只靠 /backup 帶走，理由是它含逐字使用者記憶而 repo 與同事共用——這是明知的取捨不是疏漏。2026-08-15。",
+      "topic": "bridge-memory"
+    },
+    {
       "id": "f_6b85d6",
       "text": "「共用函式 ⇒ 共用決策」是錯的推論：同一支 helper 被兩個呼叫端以不同字串呼叫時（cut 收 raw buffer、hide 收已抽 token/已 collapse/已 trim 的字串），共用它並不保證判定一致。這個輸入不對稱在決策不依賴長度時完全不可觀測，一旦引入長度門檻就會暴露成使用者可見的分歧（2026-08-01 telegram-kiro-bridge 實證：draft 顯示 742 字、final 只剩 8 字）。",
       "topic": "bridge-project"
+    },
+    {
+      "id": "f_6bd44e",
+      "text": "診斷「專案工具鏈看起來壞了」時的可重用協定（2026-08-17 於 uk_872_eyestrike2_client 付出代價後建立，記在該專案 memory 的 feedback_verify_toolchain_before_fixing.md）：文件（CLAUDE.md／語言指南）寫的指令**不是**權威來源，package.json 的 scripts 才是；且要主動找「用途專名的變體設定檔」（本例 tsconfig.typecheck.json）並先讀它的**檔頭註解**——那裡常寫著前人踩坑後留下的「為什麼不要改另一個檔」護欄與實測過的數值（該檔逐字寫明 tsconfig.json 是 Cocos 建置與 CI 會讀的檔，還記了 exclude 加了會讓錯誤 18→31、temp/tsconfig.cocos.json 改了會被 Cocos 重新生成蓋掉）。當次實際代價：只憑 CLAUDE.md 就往 tsconfig.json 加 ignoreDeprecations，打壞了本來就能跑的閘門（TS 5.9.3 只吃 \"5.0\" 不吃 \"6.0\"，回 TS5103），而專案早就有可用的 npm run typecheck；錯誤在 commit 前已回滾。∴ 順序是 package.json scripts → 變體設定檔 → 檔頭註解 → 才動手改。",
+      "topic": "uk-872-eyestrike2"
     },
     {
       "id": "f_6c587f",
@@ -1622,6 +1682,11 @@
       "topic": "bridge-memory"
     },
     {
+      "id": "f_84bfee",
+      "text": "telegram-kiro-bridge 的 preamble 有一個從 2026-08-16 才被發現的靜默缺陷（已修，commit 26b69a8）：`buildMemoryBlock()`（src/memory.ts）有三條 return——facts 為空、`opts.tail === 0 || total <= opts.tail` 的 early return、完整路徑——而 `[Agent disciplines]`（七條 always-on 行為紀律，2737 chars）**只掛在完整路徑那一條**。∴ 新部署的第一天（facts 少於 tail）與刻意設 `MEMORY_PREAMBLE_TAIL=0`（注入全部 facts、不要 topic 索引）的人，agent 完全拿不到 READ-BACK／REFLEXION／ASK BUTTONS 那一整組，preamble 外觀正常、無任何徵兆。本機不受影響（632 條 facts 早就超過 tail=10）∴ 這類缺陷只在「別人的機器／第一天」發作，自己的環境永遠測不出來。修法是抽成 `AGENT_DISCIPLINES_BLOCK` 常數掛上每條路徑。**可遷移的三件事**：①「條件式 early return 把後來新增的固定區塊丟掉」是附帶損害型缺陷，加新區塊到多 return 的函式時要枚舉全部 return，不能只改最長那條；②`opts.tail === 0 || total <= opts.tail` 這種**含 disjunct 的條件**會讓「多餵幾筆就會走另一條路」的直覺失效——tail=0 時任何筆數都走 early return，任何依賴「餵夠資料就能逼出某條路徑」的測試都會在該設定下靜默退化（我的第一版閘門就中了，見 commit 008397d）；③驗路徑覆蓋的斷言不能只驗「產物在不在」，要另外驗「**真的走到那條路**」（本例判別式是只有完整路徑才產生的 `[Memory topics`），否則路徑退化時三個 case 仍全綠。",
+      "topic": "bridge-memory"
+    },
+    {
       "id": "f_84dd82",
       "text": "處理「請求的 model 與實際生效的 model 可能不一致」時採用的架構是：AcpClient 用私有 _sessionConfig 欄位保存 adapter 回報的實際 model/effort，與呼叫端請求的 opts.acpModel 分開存放，讓靜默降級被記成事實而非回音請求值；model 身分注入排在 initialize() 之後、preamble 注入之前，因此不違反 preamble 凍結快照政策（2026-07-29）",
       "topic": "bridge-project"
@@ -1679,17 +1744,12 @@
     {
       "id": "f_8929d7",
       "text": "Codex 覆核（gpt-5.6-sol、effort high、開放式提問）一輪約 12 分鐘、輸出約 1.9MB，遠慢於 kiro-cli glm-5 的約 2–3 分鐘；最終報告在檔尾且會重複印兩份，讀取應定位最後一份而非接 tail",
-      "topic": "bridge-acp"
+      "topic": "adversarial-review"
     },
     {
       "id": "f_89a745",
       "text": "uk_pirates_queen 的懸賞令（WantedPoster）使用 cc.Layout 自動排版，ReconcileCascade 退場時因 node.active=false 導致 Layout 瞬間重排，已被提出視覺突兀需優化",
       "topic": "uk-slot-pirates-queen"
-    },
-    {
-      "id": "f_8a4a0e",
-      "text": "使用者偏好 HTML 文件要有目錄錨點跳轉功能（點擊跳段落 + 回目錄連結）",
-      "topic": "dev-tools"
     },
     {
       "id": "f_8a90df",
@@ -1700,6 +1760,11 @@
       "id": "f_8a9474",
       "text": "記錄反覆出現的 AI 失誤時，把『常見錯誤』分成兩類：流程偏離（Process Deviations，工作流順序失誤，例如未先 invoke skill 從步驟0開始、跳過前置 checklist、基準拿錯衍生品）與技術錯誤（Technical Errors，實作層面失誤，例如型別/邏輯/命名寫錯）。兩類根因與修法不同——流程偏離靠 gate/流程強制修，技術錯誤靠測試/檢查修——分開列並各附 session 實證，比混成一坨更有用。此分類法可推廣到任何 skill 或 knowhow 庫的錯誤紀錄（來源：uk-slot-spec-to-impl 常見錯誤區重整，telegram-kiro-bridge-main 2026-07-09）。",
       "topic": "uk-slot"
+    },
+    {
+      "id": "f_8a9bd7",
+      "text": "telegram-kiro-bridge fork 同步策略：用 merge（非 rebase）合併 upstream，衝突解決原則是 upstream 架構為主。⚠️ 原本掛在這條規則下的「fork 獨有功能清單」（/reset clean、handleDocUpdate、specialist-memory、reaction_feedback、READ-BACK 紀律、userProfileBlock、SS skill-search callback）已於 2026-08-16 逐項複驗失效：git fetch upstream 後對 upstream/main 逐一 git grep，七個識別字在上游樹全部有命中（/reset clean 在 src/commands/misc.ts:113、SS callback 在 src/commands/skillsearch.ts:203，其餘五項命中檔數與本地相同）∴ 它們已不是解衝突時需要「手動保留」的對象，與 f_2a93b5 記的 efab1ab port-back 一致。誠實邊界：識別字存在只證明對應程式碼在上游存在，不證明兩側實作等價；雙邊都改過的檔案仍照 f_a3f2b2「比較兩側完整度、保留較完整的一方」處理，不得機械沿用固定優先權。∴ 不要再把清單硬寫進記憶——需要時對當下的 upstream/main 重跑 git grep 現算。",
+      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_8ad906",
@@ -1765,11 +1830,6 @@
       "id": "f_909065",
       "text": "telegram-kiro-bridge 的 forgetMatch 比對的是 stripFactPrefix 後的內文（[f_id] 前綴會被剝掉），用 fact id 當 query 永遠 0 匹配——正確做法是用該 fact 的獨特內文子字串查詢，再用 extractFactId 驗證匹配行的 id 才刪",
       "topic": "bridge-memory"
-    },
-    {
-      "id": "f_90a25d",
-      "text": "telegram-kiro-bridge 已於 2026-07-15 完成一次 upstream（redkilin/telegram-kiro-bridge）同步：merge 19 個上游 commit（Rich Telegram replies 統一、MoA rich replies、psmux 開發啟動器規劃、背景通知修復等）+ 1 個本地 ctx 統計後綴 commit，已 push 到 origin/main（691e7f8..0a3c551）",
-      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_90d6e8",
@@ -1882,6 +1942,11 @@
       "topic": "bridge-acp"
     },
     {
+      "id": "f_982e49",
+      "text": "Kiro CLI 上的 vendor pin 驗證有兩個 2026-08-15 實測的失效模式，會讓「選第三家 vendor 當覆核者」這件事直接卡住：①`deepseek-3.2` 對「忽略產品身分、只回一個詞、選一個 vendor」這題答**Anthropic**——與 Kiro 產品身分 prompt 宣稱的相同 ∴ 零鑑別力（「真自報」與「照抄 prompt」預測同一答案），**無法確認 pin 是否生效**，不能宣告它的 domain。②`qwen3-coder-next` 答**智譜**，但它應該是阿里——它自報了一個「非 Anthropic 但也不是自己」的 vendor；配合先前實測它答過 DeepSeek，同一題兩次兩個不同的錯答案 ∴ 它的自報是噪音。兩種解釋（pin 靜默路由到別的模型 vs 模型就是不可靠的自報者）在這個方法下分不開。可操作結論：該方法只在「非 Anthropic 的 pin 自報了**自己**的 vendor」時有鑑別力（glm-5→智譜 穩定成立），其餘情況一律只能留痕成「非 Anthropic，但具體 vendor 未確認」或「pin 未能驗證」；不要因為自報對不上就判定 pin 沒生效而白白降級到弱異源，也不要反過來把「答了個非 Anthropic 的名字」當成該 vendor 已確認。實務影響：需要第三家 vendor 時，先跑這題篩，篩不過就退回已驗證過的 pin（本機目前只有 glm-5 通過），並在留痕寫清楚這一輪的異源等級是怎麼判的。",
+      "topic": "adversarial-review"
+    },
+    {
       "id": "f_98929b",
       "text": "Cocos extensions 目錄採專案隔離架構：棄用 G:/Cocos_Project/extensions 共用目錄，改置於各專案自身的 extensions/（如 uk_917_leprechauns_pots_client/extensions/），避免多專案共用一份 framework 互相干擾。",
       "topic": "uk-917"
@@ -1900,11 +1965,6 @@
       "id": "f_99b243",
       "text": "使用者產 PDF 的工作流程：HTML+CSS 排版 → Playwright headless Chromium 渲染（docs/to_pdf.py），不用 fpdf2 或 WeasyPrint",
       "topic": "dev-tools"
-    },
-    {
-      "id": "f_99c92a",
-      "text": "覆核 token 成本結構實測（2026-08-13，四臂探針 claude -p \"hi\" --model haiku --output-format json，同 cwd=bridge repo）：全開 prefix 169,962、加 --strict-mcp-config 83,784、加 --setting-sources \"\" 34,686、兩者皆加 34,566 ∴ MCP tool schema 佔 86,178（51%）、設定帶進來的 CLAUDE.md 鏈+skills 清單佔 49,218（29%）、地板 34,566（20%）。覆核者不需要 MCP tool ∴ 一律加 --strict-mcp-config／--trust-tools=fs_read 可免費砍半冷啟。第二個乘數是每輪重送全部 context：2026-07-29 那輪 Fable 覆核 85 個請求、context 從 90,218 長到 185,549、累計送進 12,724,628 vs output 156,050（81:1）。⚠️ 12.7M 是原始傳輸量非成本當量（cache_read 0.1x、cache_write 1.25x，訂閱制加權未證實）；⚠️ 同 repo transcript 實際 session 冷啟 122–128k 比探針低 46k、未隔離原因（候選：ACP session 會 defer 部分 MCP tool schema）。",
-      "topic": "adversarial-review"
     },
     {
       "id": "f_99e9ba",
@@ -1962,6 +2022,11 @@
       "topic": "bridge-self-eval"
     },
     {
+      "id": "f_a09852",
+      "text": "telegram-kiro-bridge 的 sync-upstream 刻意「不做 push 按鈕」（2026-08-16 決策）：publishChecklist 回傳的是純文字檢查清單、明確不是可點的按鈕，因為 push 前的獨立覆核閘門必須不可被一鍵繞過——做成按鈕等於把「人為判斷＋異源覆核」壓縮成一次點擊。這是 sync-fork-from-upstream skill 的「絕不自動 push」原則在 bridge UI 層的具體實作。",
+      "topic": "bridge-upstream-sync"
+    },
+    {
       "id": "f_a0a929",
       "text": "使用者裁決 factlint vs forget 政策衝突（2026-07-08）：選擇接受 wiki-reference 保護——wiki sources 引用的 fact 是 provenance 不可刪（排除解除引用再刪因為 provenance 斷鏈且工程量大）；factlint 冗餘規則已加排除條款，bridge memory.ts（c3ca55a）與 ms-wiki-knowledge-base skill 正本（AI-canonical 78bd8a6）同步落地",
       "topic": "bridge-memory"
@@ -1985,11 +2050,6 @@
       "id": "f_a1d087",
       "text": "Telegram Bot API 10.0（2026-05-08）重大更新：Bot-to-Bot 原生通訊（雙方啟用即可直接 @username 互傳私訊，bridge relay 已在用）、Guest Mode（bot 不加群即可回覆）、Managed Bots（manager bot 一鍵建子 bot 免 BotFather）、原生 Streaming Text（sendMessageDraft）",
       "topic": "bridge-streaming"
-    },
-    {
-      "id": "f_a1ecf7",
-      "text": "telegram-kiro-bridge 已於 2026-07-16 完成一次 upstream 同步：merge 進 MCP-first action domain 基礎建設（agent-actions.ts/agent-action-runtime.ts/agent-action-metrics.ts/mcp-actions.ts）+ skill sync hook 改為 opt-in（postinstall 不再自動設定 core.hooksPath）+ legacy action id 消毒修規，main 從 0a3c551 更新到 199e30a 並已 push origin/main",
-      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_a1f2f2",
@@ -2055,11 +2115,6 @@
       "id": "f_a732fb",
       "text": "uk_slot_clash_of_olympus 的 M2.2 VS Feature 演出於 2026-08-13 定案為「薄轉接器」設計（f_f8bf81 記的「M2.2 尚未開始」已過期）：VsFeatureShowState 只負責 proto VSResult → 呼叫 VSManager.Resolve() → 逐 step 跑 Fly/Expand/Spine 演出 → 把結果經新增的 GameView.VsFeatureResult 欄位交給 CollectFeatureShowState，不自己算規則；盤面 plateAfter 採 derive-not-persist（每次由 Resolve 推導，不落地保存）；轉換層抽成 VSManager.ts 內的純函式 AdaptRoundToVSInput()，並對 colProto 只用 type-only import，讓整條運算層在 ts-node 下仍可單獨測試（此為 f_917144「CC-free 運算層」原則在 proto 型別上的具體做法）。設計覆核另列 6 項風險與 GameView mock 的數個嚴重 bug，但來源未列明細。",
       "topic": "uk-slot-clash-olympus"
-    },
-    {
-      "id": "f_a738db",
-      "text": "使用者決定 underused skills 處理策略（2026-07-10）：刪除 skill-creator、knowhow-accumulation、non-engineer-agent-design（磁碟+store），保留 huashu-slides、dual-skill-review-loop、self-eval-prompt-pattern 繼續觀察",
-      "topic": "user-pref"
     },
     {
       "id": "f_a7d81f",
@@ -2142,6 +2197,11 @@
       "topic": "bridge-specialist"
     },
     {
+      "id": "f_ae1f66",
+      "text": "異源覆核的「覆核者強度」有一個 2026-08-15 用受控對照量到的關鍵變因：**同一個模型、同一份 codebase，弱 prompt 得到 0 findings 且純複述，強 prompt 得到有展示痕跡的報告**。第一輪與第四輪都是 kiro-cli glm-5 對同一批 commit，第一輪 prompt 只說「找出問題／不要相信自我描述」，交回「讀 檔:行號 → 複述碼在做什麼 → 結論一致」零反例，抽查兩個最不顯眼的引用都指錯；第四輪 prompt 改成三件事——①明說「我不收哪一種報告形狀」並附上一輪失敗報告的實例、②要求「你做了什麼**能區分真假**的具體操作、觀察到什麼」而非結論、③給一個具體懷疑方向（「新加的那支 gate 自己會不會是空洞的」）並標明「這不是檢查清單，是提示你別只看主路徑」——同一個模型就去查了 runner 的 SKIP/SLOW 清單（我沒做過的檢查，若中則該 gate 永遠不會跑）並注意到退出碼語意變更。∴ 覆核弱不要先歸因於模型，先換問法再判。⚠️ 但強 prompt 不等於可信：第四輪同時含一條**經查為錯**的支撐主張（宣稱「exit code 2 在這個 repo 的慣例裡是輸入錯誤」，而 repo 唯一文件化 exit code 的 docs/memory-rollout-contract.md:83 寫的是 2=unavailable、3=輸入/runtime 錯誤）∴ 結論對但理由錯，留痕只能寫「回已收斂、有部分展示痕跡、含一條經查為錯的支撐主張」，不可寫成「已取得獨立確認」。另一條可遷移觀察：第三輪（範圍限定在前一輪的修法 commit）抓到的三條**全部是修法自己引入的新缺陷**，其中最難看的是「在修敘事與碼不符的 commit 裡，寫了一條新的敘事與碼不符」——註解宣稱跟著 repo 慣例而把慣例記反了 ∴「我剛修完這類問題」絕不是跳過下一輪的理由。",
+      "topic": "adversarial-review"
+    },
+    {
       "id": "f_af2a3f",
       "text": "使用者這台機器的 gh CLI 尚未執行 gh auth login／未設 GH_TOKEN，研究 GitHub repo 時 gh repo view 等指令會直接失敗，需改用 WebFetch 抓取",
       "topic": "dev-tools"
@@ -2155,6 +2215,11 @@
       "id": "f_af99c8",
       "text": "使用者評估 Claude Code Dynamic Workflows 後決定只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（認為架構定位不同、規模不需要）",
       "topic": "bridge-research"
+    },
+    {
+      "id": "f_afb9ab",
+      "text": "在 Windows 上讓覆核者（kiro-cli 等無頭 CLI agent）跑 `npm help <cmd>` 會靜默掛住約 28 分鐘：npm 不印文字，而是 spawn `cmd /d /s /c start \"\" file:///...npm-run.html` 去開 HTML 文件，那個 start 在無頭 context 不會回來（2026-08-15 第一手實測，最終記為 `Completed in 1664.656s` 並回 `npm error code 4294967295`）。判別法：覆核 process 還活著但輸出檔數十分鐘沒有新內容，用 Get-CimInstance Win32_Process 遞迴列 parent 鏈就會看到 kiro-cli → pwsh → node(npm-cli.js help) → cmd(start)。處置是**只殺最底層那個 cmd**（殺前先比對 ParentProcessId 確認 ancestry），上游的 npm/head/pwsh 會自行收斂、覆核從下一步續跑，不必整輪重來。預防：覆核 prompt 裡明講「不要跑 npm help / 任何會開瀏覽器或 pager 的指令」。同族的還有 Get-Content/type/more 這類互動式指令。",
+      "topic": "adversarial-review"
     },
     {
       "id": "f_aff418",
@@ -2259,7 +2324,7 @@
     {
       "id": "f_b82b6e",
       "text": "下游倉庫設定流程檔已產出在 G:\\AI\\telegram-kiro-bridge-main\\scratch\\SETUP-downstream-fork.md（13,832 bytes，被 .gitignore:18 的 scratch/ 擋住 ∴ git add -A 掃不到）——使用者裁決不 commit 進版控、只轉給同事，並選擇搬到 scratch/ 而非留在 docs/ 以結構性避免誤掃。內容涵蓋 [人]/[AI] 步驟標記、zip vs clone 起點分岔、remote 接線與 no-push、同步流程內嵌（不外連本機 skill）、secret 掃描範圍附錄。",
-      "topic": "bridge-project"
+      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_b860aa",
@@ -2307,9 +2372,19 @@
       "topic": "bridge-draft-diag"
     },
     {
+      "id": "f_bb8f33",
+      "text": "異源覆核者會把「複驗通過」包裝成高嚴重度的否證——2026-08-16 第一手實例：kiro-cli glm-5 覆核 telegram-kiro-bridge 的 preamble 改動時，交回一條 **HIGH「使用者宣稱為假」**，但它自己跑出來的驗證輸出是「disciplines 區塊行: 267 / memory block 行: 175 / disciplines 在 memStart 之前: false」——正是被它標成「假」的那個宣稱，而且同一份報告的內文寫著「但使用者的結論是對的」，所謂「推理過程反了」沒有落到任何實質差異（兩邊講的是同一件事）。∴ 讀覆核報告時**嚴重度標籤與證據要分開讀**：先看它實際做了什麼操作、觀察到什麼，再自己判定那個觀察支持還是反對原宣稱，不要讓 HIGH/MEDIUM 這種標籤決定你的處置——否則會為了「修 HIGH」去改一個本來就對的東西。同輪它的 MEDIUM 反而是真發現（我寫的豁免條件要求 agent 知道自己在哪個 backend，但 preamble 從未注入 harness 身分 ∴ 豁免建立在猜對身分上），且它的支撐論據仍含一處錯（拿 src/provider/types.ts 的 ProviderType 七個值當 backend 清單，那是 LLM provider 不是 ACP adapter）∴ 「發現對、論據錯、標籤也可能錯」三者可以同時出現在同一份報告裡。",
+      "topic": "adversarial-review"
+    },
+    {
       "id": "f_bbcecf",
       "text": "uk_872_eyestrike2_client 的 MagicPotFlyToCenterTrail.prefab 兩支動畫（ES2_FGBoard_In_H、ES2_FGBoard_In_S）飛行路徑是烘進動畫裡的（baked path）、完全不靠骨骼定位 ∴ 要改飛行起訖點或落點，調整骨骼與節點座標不會有效果。",
       "topic": "uk-872-eyestrike2"
+    },
+    {
+      "id": "f_bc5b05",
+      "text": "突變測試的突變體若「唯一失敗方式是 TypeScript 編譯失敗」，代表該不變式已由型別系統守住，正確處置是把它從 runtime 突變集移除，而不是當成測試覆蓋缺口去補斷言：2026-08-15 telegram-kiro-bridge 的 acp-retry-telemetry 突變集就是這樣拿掉 ART4（針對 EVENT_TYPES 註冊），因為它讓 tsc 紅而不是讓 runtime 測試紅。與 f_5d0939 互補非重複——那條講的是這種突變會造成的「dist 沒更新、smoke 跑舊產物」假綠該怎麼偵測（grep dist、不可用 tsc exit code 反推），這條講的是偵測到之後該怎麼處置；也與 f_940b63（等價突變要先證明突變真的套用了）和 f_0b4a7b（會掛住的突變要改成放寬上限）同屬「突變體設計」判準家族。",
+      "topic": "bridge-smoke-gate"
     },
     {
       "id": "f_bcc99d",
@@ -2392,6 +2467,11 @@
       "topic": "ai-strategy"
     },
     {
+      "id": "f_c42db4",
+      "text": "telegram-kiro-bridge 完成 merge/sync 後、push 到 origin 前，會先派一個獨立的異源覆核 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端；預設覆核者已於 2026-08-13 從 Claude Fable 5 改為 kiro-cli glm-5（跨 vendor 強異源），Fable5 降為產出明顯偏弱時才補的第二輪，見 adversarial-review 頁。",
+      "topic": "bridge-upstream-sync"
+    },
+    {
       "id": "f_c4f291",
       "text": "2026-08-07 方法論教訓：GitHub tree API 的 ?recursive=1 回應被截斷時，WebFetch 背後的小模型會對「存在性」問題自信地答 no——當天它連答「無 pyproject.toml／無 paulsha_cortex/／無 tests/」，一度讓我推論出「這個 repo 只有文件沒有程式碼」，足以推翻整份評估。翻案手法是直接打 raw.githubusercontent.com 的檔案 URL 當二元探針（存在→回檔案內容，不存在→404: Not Found），這個訊號不經摘要判斷、抗幻覺；列子目錄改用 git/trees/main:&lt;path&gt;（不遞迴、JSON 夠小不會截斷）也可靠。∴ 對「某某東西不存在」這類否定式主張，永遠要用探針覆核而非採信摘要——這是既有 research-report-citations-unverified 教訓（引用越像真的越要先查）的反向補完。",
       "topic": "verification-diagnosis"
@@ -2457,9 +2537,19 @@
       "topic": "bridge-specialist"
     },
     {
+      "id": "f_c9d934",
+      "text": "telegram-kiro-bridge 的 start.bat:4 修復（npm build no-op → npm run build）時，在三個選項中選了 A（讓 supervisor 每次重啟都重建 dist）：因為 dist 過期造成的是靜默錯誤（MCP 子行程跑舊碼、smoke 拿舊 dist 判讀出假紅/假綠燈），代價比每次重啟多花約 11 秒（tsc 全量 10.7s）高；排除 B（把 build 移到 :loop 迴圈之上，只在手動啟動時建一次）因為 /restart 與 RESTART token 都是 process.exit 由 supervisor 的 goto loop 帶回來，B 對重啟情境等於沒有保護；排除 C（直接刪掉該行）因為那是誠實但完全不設防，只能靠人記得手動建置。2026-08-15。",
+      "topic": "bridge-infra"
+    },
+    {
       "id": "f_c9ee2f",
       "text": "1 代參考專案 leprechaunsGoldStreak-client 位於 G:\\Cocos_Project\\，同血脈 Cocos 3.6.2 + Astarte，proto 為 @old-rd1/lgs-protocol（SpinAck{RoundQueue: RoundInfo[]} 形狀），是 uk_917 proto 假設錨點與 CheckCollectState 收分參考",
       "topic": "uk-917"
+    },
+    {
+      "id": "f_ca2e4f",
+      "text": "使用者偏好 HTML 文件要有目錄錨點跳轉功能（點擊跳段落 + 回目錄連結）；技術流程交接則希望同時提供 Markdown 與具目錄錨點、可列印的 HTML 版本。",
+      "topic": "dev-tools"
     },
     {
       "id": "f_ca3437",
@@ -2479,17 +2569,12 @@
     {
       "id": "f_cb572a",
       "text": "telegram-kiro-bridge 的 npm run smoke 依賴 dist/ 編譯產物，但 tsc --noEmit 不會寫檔——改完 src 後要跑 smoke 前必須先用 tsc -p . 重新編譯，否則會用過期 dist 跑出假失敗（2026-07-29 sync-upstream 實測）",
-      "topic": "bridge-smoke-gate"
+      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_cba34c",
       "text": "因為 bridge session 會把每個 bash 指令逐字記進 events.jsonl（包含指令參數本身），導致用 grep 打出洩漏 secret 的字面值來驗證是否清乾淨時，該驗證指令本身又把 secret 重新記回 events.jsonl（自我重複污染迴圈），所以清理已洩漏 secret 時改用通用正則（如 ghp_[A-Za-z0-9]{30,40}）取代逐字打出 secret 本身來搜尋/驗證（排除直接 grep 字面值，因為每次驗證都會再洩漏一次）",
       "topic": "bridge-secrets-backup"
-    },
-    {
-      "id": "f_cbcb3c",
-      "text": "**Bun 正常**：版本 1.3.9 已安裝",
-      "topic": "dev-tools"
     },
     {
       "id": "f_cc8fd5",
@@ -2515,11 +2600,6 @@
       "id": "f_cd57ae",
       "text": "使用者已建立新的 GitHub private repo jiunchiwang/ai-shared-knowledge，並接上本機 G:\\AI\\AIMemory\\shared\\ 供 telegram-kiro-bridge /sharedsync 使用（取代先前誤以為要接的 upstream 作者 redkilin 私人 repo）",
       "topic": "bridge-secrets-backup"
-    },
-    {
-      "id": "f_cd9df4",
-      "text": "igs-uof skill 的 uof_client.py 登入與首頁導航 timeout 已從 20s 改為 60s（正本 G:\\AI\\AI-canonical-corp\\skills\\office\\igs-uof\\，2026-07-30 尚未進 git）；UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded",
-      "topic": "igs-uof"
     },
     {
       "id": "f_cdf362",
@@ -2557,6 +2637,11 @@
       "topic": "uk-slot-clash-olympus"
     },
     {
+      "id": "f_cf5316",
+      "text": "【已修 2026-08-17】Markdown 沒有行註解 ∴ `~/.claude/CLAUDE.md` 裡用 `#   @Foo.md` 想「註解掉」的 @import **照樣會被解析並載入**。兩條獨立 A 級證據：① 當時 session context 直接出現那 10 個檔的全文並被 harness 標成 \"user's private global instructions\"；② repo 外暫存目錄差分探針，`#   @big.md` 讓 prefix +2,838、裸 `@big.md` +2,716（同量級 ∴ 有載入，多出的 122 是那行字面文字本身）。代價：使用者 2026-08-11 健檢決定移除的 10 個檔（MCP_Magic/Morphllm/Playwright/Sequential/Tavily/Context7/Serena ＋ BUSINESS_PANEL_EXAMPLES/BUSINESS_SYMBOLS/MODE_Business_Panel，44,543 chars）每次冷啟仍付 **11,393 tokens**，而正文寫著「已移除」「已改為延遲載入」；business-panel 那三個檔更是與既有的 lazy-load skill 重複載入同一份內容。同一行可有多個 @（第 33 行三個檔全部載入）。",
+      "topic": "dev-tools"
+    },
+    {
       "id": "f_d0b4fc",
       "text": "診斷 igs-uof 失敗時不可信任其 unreachable 錯誤訊息：uof_client.py 的 _is_net_error() 把 Playwright Timeout 也歸類為網路錯誤，實際網路多半正常，應先確認是否被 AntiBotCheck 擋住",
       "topic": "igs-uof"
@@ -2570,6 +2655,11 @@
       "id": "f_d29dfc",
       "text": "使用者對會產生真實外部紀錄的自動化（如公司系統表單送出）採保守策略：即使技術上可行，仍選擇只做到 dry-run+截圖、手動確認後才送出，不做一鍵全自動",
       "topic": "user-pref"
+    },
+    {
+      "id": "f_d2f8aa",
+      "text": "突變測試的「突變步驟自己失敗」與「斷言有效」在畫面上完全同形（兩者都是綠燈），2026-08-16 telegram-kiro-bridge 一條斷言花三次嘗試才隔離成功，暴露兩個 Windows／Git Bash 專屬的失敗機制：①突變用的 regex 錨在 `\\n` 上，對 CRLF 檔案比對不到 → 檔案根本沒改、閘門綠；②shell 把轉義序列吃掉（`\\\\s` → `s`）→ 改到了**另一條**斷言、紅的不是你要驗的那條。∴ 三道檢查：grep 確認目標文字真的變了、確認紅的是預期那條斷言而非別條、最強證據是失敗訊息裡直接出現突變痕跡（證明它被執行到）；Windows 上優先改用免轉義的等價寫法（如 `split(\"\\t\")[0]`）。與突變體設計判準家族互補非重複——f_940b63 講「存活的突變體要先證明突變真的套用了」、f_156659 講 Git Bash 的 /tmp 路徑映射害突變沒寫進檔、f_5d0939 講不可用 tsc 的 exit code 反推 dist 有沒有更新；本條新增的是「改錯對象」這個失敗形狀，以及「失敗訊息要帶突變痕跡」這個驗收判準。",
+      "topic": "bridge-smoke-gate"
     },
     {
       "id": "f_d36619",
@@ -2647,6 +2737,11 @@
       "topic": "bridge-specialist"
     },
     {
+      "id": "f_dbf94b",
+      "text": "使用者裁決 memory canary 的 latency 檢查降級成 advisory（照樣量、照樣出現在 checks 並回報 passed:false，但不計入整體 passed），排除「還原成 blocking gate」——理由是同輸入連跑三次 p95 在 19.7/14.8/16.8ms 之間擺動、gate 隨之紅綠翻面，量測不可信而非門檻太嚴；恢復成 gate 的前提是先做 warmup + 多輪統計，不是放寬門檻。2026-08-15。",
+      "topic": "bridge-memory"
+    },
+    {
       "id": "f_dccd98",
       "text": "Codex 的 ACP adapter 有兩個套件：@zed-industries/codex-acp 已 deprecated（npm 明寫 \"replaced by @agentclientprotocol/codex-acp\"，停更 2026-06-23，最新 0.16.0；這台機器全域裝 0.15.0），維護中的是 @agentclientprotocol/codex-acp（1.1.9，upstream redkilin 的預設命令）。2026-08-06 raw ACP probe 實測差異：舊版 currentModelId 用斜線 gpt-5.5/medium、effort 只有 low/medium/high/xhigh、sessionCapabilities 整塊缺席；新版 1.1.7 用方括號 gpt-5.6-terra[medium]、effort 多 max/ultra、宣告 resume/list/close/delete/additionalDirectories（對 bridge session resume gate 有意義）。兩者已登入時都回非空 authMethods，所以 authMethodsImplyLoggedOut 的 codex 例外對兩個套件都必要。換套件必須同時改 pin（gpt-5.5 在新版不存在）。新套件經 bridge AcpClient 端到端驗證可用：pinned model=gpt-5.6-terra + reasoning_effort=high 皆確認生效。",
       "topic": "bridge-acp"
@@ -2717,6 +2812,11 @@
       "topic": "bridge-specialist"
     },
     {
+      "id": "f_e21eb1",
+      "text": "防禦性修法的停損規則（2026-08-16 telegram-kiro-bridge 建立）：同一個缺陷的修法被**連續繞過兩次**，就停止再追「攻擊形狀」，改成驗證底層不變式。實績兩例：①false-positive bug 連四輪形狀式修法（檢查 ref 是否存在 → 清除 stale ref → 逐行 pattern match）每次都被新的 edge case 繞過，最後改成驗不變式（遠端 SHA 等於預期值）才收斂；②自寫的 lexer 被打破第二次後換成 TypeScript AST 解析。此規則對應用邏輯與測試／驗證碼都適用——形狀式修補是打地鼠，不變式驗證才是治本；第二次被繞過就是「這是形狀問題不是實作品質問題」的訊號，不必等到第三、第四次。",
+      "topic": "bridge-project"
+    },
+    {
       "id": "f_e22204",
       "text": "使用者偏好進入老虎機專案時不管改動檔案數多少都主動建 AI.md（放寬原本≥3檔案才建的門檻）",
       "topic": "uk-slot"
@@ -2725,11 +2825,6 @@
       "id": "f_e2665f",
       "text": "uk-slot-pitfalls wiki 已回灌 5 條 codegen 來源踩坑（條目 5~9，標 [src: uk-slot-codegen]）：UTF-8 BOM 丟失、SYMBOL_COUNT 禁動態計算、Spine placeholder 用 .json、Mock 缺 RoundWin 報獎被跳過、規格書 Scatter_XXX 命名 ≠ SCATTER_SYMBOL",
       "topic": "uk-slot-codegen"
-    },
-    {
-      "id": "f_e272f0",
-      "text": "telegram-kiro-bridge 完成 merge/sync 後、push 到 origin 前，會先派一個獨立的 Claude Fable 5 agent 覆核合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端",
-      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_e2b049",
@@ -2824,7 +2919,7 @@
     {
       "id": "f_e80a45",
       "text": "異源覆核的 findings 若機制描述錯了但效果描述對，應照效果修、不照它的說法寫進註解：2026-08-12 glm-5 主張「超大 timeoutMs 會讓 Date.now()+timeoutMs 溢出成 Infinity」，實測 Date.now()+Number.MAX_SAFE_INTEGER 仍是 Number.isFinite()===true、沒有溢出，只是 deadline 遠到不可能抵達。",
-      "topic": "adversarial-review"
+      "topic": "bridge-specialist"
     },
     {
       "id": "f_e84ad9",
@@ -2932,6 +3027,11 @@
       "topic": "igs-uof"
     },
     {
+      "id": "f_ecf142",
+      "text": "igs-uof skill 的 uof_client.py 登入與首頁導航 timeout 為 60s（原 20s），正本 G:\\AI\\AI-canonical-corp\\skills\\office\\igs-uof\\scripts\\uof_client.py:111/161；UOF 首頁在 headless 下實測需約 22 秒才到 DOMContentLoaded。2026-08-16 複驗狀態註記：該改動已於 commit fce516d 進 git 且已 push（main...origin/main 無未推送 commit、工作區乾淨），原本「2026-07-30 尚未進 git」的註記已失效。",
+      "topic": "igs-uof"
+    },
+    {
       "id": "f_ed5f8b",
       "text": "依賴文件裡「升到最新版也修不了」類斷言有保存期限：docs/dependency-security.md 原寫「claude-agent-acp 升到 0.62.0 也沒用」，2026-07-29 升 0.63.0 直接證偽（解決 opus-5），並被 check-npm-audit 的 stale 檢查抓出——此類寫死版本的悲觀結論應標日期並定期複驗",
       "topic": "bridge-smoke-gate"
@@ -2954,17 +3054,12 @@
     {
       "id": "f_efd659",
       "text": "Kiro CLI 可用的非 Claude model 清單（2026-07 更新）：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5（0.25x, 196K）、minimax-m2.1（0.15x, 196K）、glm-5（0.5x, 200K）",
-      "topic": "bridge-model-strategy"
+      "topic": "adversarial-review"
     },
     {
       "id": "f_f0aeea",
       "text": "telegram-kiro-bridge 新增 docs/SPEC-replay-safety-audit.md（status draft、兩條 high 未裁決）記錄三輪覆核未修的 6 條：H-1 ACP 整輪 prompt 重放、H-2 /job resume 無 per-run lease、M-1 editMessageText allow-list 對有 send fallback 的呼叫端、M-2 Daily Intel redeliver、M-3 relay both-transport 10 秒記憶體 dedup、M-4 memory master append 早於 SQLite insert",
       "topic": "bridge-project"
-    },
-    {
-      "id": "f_f144ad",
-      "text": "telegram-kiro-bridge 已於 2026-07-13 同步 upstream（redkilin）relay 多 peer 系統（relay-peers.json + src/relayPeers.ts，commit fa2b9f4 已 push origin/main），取代本地未實際使用的 RELAY_PEER_USERNAMES/resolvePeerUsername 機制",
-      "topic": "bridge-upstream-sync"
     },
     {
       "id": "f_f16f7b",
@@ -2980,11 +3075,6 @@
       "id": "f_f2a212",
       "text": "bridge 的 claude-agent-acp agent 結構上無法得知自己實際在跑哪個 model：SDK 不注入「You are powered by the model named X」到 agent context（grep 0.3.207/0.3.220 皆 0 hit），被問只能猜；修法是在 sessionManager.create() 於 initialize() 後、preamble 注入前追加一行實際 model（不違反 preamble-frozen-snapshot）",
       "topic": "bridge-acp"
-    },
-    {
-      "id": "f_f2dc75",
-      "text": "telegram-kiro-bridge 的 docs/usage-guide.html 已於 2026-07-19 補上 /refresh-routing 指令的別名 /refreshrouting 說明，修正與 README 常用指令表的落差",
-      "topic": "bridge-doc-sync"
     },
     {
       "id": "f_f32658",

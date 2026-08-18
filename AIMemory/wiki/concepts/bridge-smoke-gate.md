@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-15（新增：mutate-gate harness 慣例（紅燈行規範／noUnusedLocals 陷阱／無 timeout 風險）、hang detection 門檻侵蝕、raw JSON-RPC probe 查證法；更正：「dist 只有 smoke suite 在用」為誤，MCP 子行程亦吃 dist）
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_e2e14a, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63, f_2f4ae9, f_88d3a1, f_f32658, f_b01fe2, f_ed5f8b, f_cb572a, f_06ae88, f_23885a, f_377321, f_932293, f_156659, f_820b01, f_3c7003, f_30d188, f_47b507, f_5e618d, f_3e05f4, f_0b4a7b]
+updated: 2026-08-18（ingest-ripple：補 1 條——tsc-only-fail 的突變體要移出 runtime 突變集）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_e2e14a, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63, f_2f4ae9, f_88d3a1, f_f32658, f_b01fe2, f_ed5f8b, f_cb572a, f_06ae88, f_23885a, f_377321, f_932293, f_156659, f_820b01, f_3c7003, f_30d188, f_47b507, f_5e618d, f_3e05f4, f_0b4a7b, f_3eb82d, f_290edc, f_d2f8aa, f_bc5b05]
 history_sources: [f_a692b7]
 ---
 
@@ -57,6 +57,16 @@ runner 用 `readdirSync` 以 `check-*` 前綴**自動發現**腳本 → 新增�
 
 - ✅ **硬計數**（支數、指令數、事件型別數）→ 納入機械檢查，但期望值必須當場向 `run-smoke-suite.mjs --list` 取得，**零硬寫**
 - ❌ **耗時** → 不納入。run-to-run 約 8% 變異（2026-07-31 full tier 實測 260.7s / 274.1s / 249.9s），納入會變成每次跑都可能紅的雜訊閘；耗時只寫進文件並**標註量測日期**
+
+## 成本分布極度偏斜 —— 優化看前 10 名不看支數（2026-08-15）
+
+`logs/smoke-last.log` 逐支實測（159 支／231.7s）：**最短的 81 支合計僅 14.5s，前 10 支佔 117.2s（51%）**，單支新增閘門約 0.1–0.4s ∴「支數變多所以變慢」是錯的前提。
+
+移出 fast tier 的判準**兩者皆須成立**：慢，**且**改 `src/` 不可能讓它迴歸。當日據此把 `check-npm-audit`（15.8s，打 registry、輸入是 package-lock ＋ 外部 advisory DB）移出（commit `7335e7f`）。只用「慢」當判準會讓 SLOW 清單變成「跑起來很煩的都丟進來」，靜靜侵蝕 pre-push 覆蓋率。
+
+⚠️ **單次前後對照量不出這個效應**：wall clock 231.7→229.2s 只差 2.5s，因為同樣那 158 支這一輪比上一輪自己慢了 12.4s（+5.7%）——雜訊大於效應（6.8%）∴ 只能宣稱「15.8s 的工作被確定性移出序列」，**不能宣稱「量到快了 16 秒」**。這正是上面「耗時不納入閘門」的同一個理由在優化場景的鏡像。
+
+計數同步的兩個易漏點（皆由 `check-doc-sync` 抓出）：`docs/usage-guide.html`（只掃 md/ts/mjs 會漏）與 `src/commands/smoke.ts` 的**執行期**訊息（使用者跑 `/smoke` 每次都看得到，不是註解）。另外 `check-doc-sync` 的白名單只認 runner `--list` 的五個數字 ∴ 連「3 支真 timer」這種正確的子分類數字也會被擋，正確處置是**改列腳本名**而不是想辦法讓數字過關。
 
 ## noUnusedLocals 閘門（2026-08-02 新增）
 
@@ -112,6 +122,18 @@ send 等滿它才回 null → elapsed 超標），沒讀到這段就盲調會誤
 高負載下實紅過一次，單獨跑 14.9s 通過），尚未修。本 repo fast tier 實測同日跑出 416s 與 1332s
 （3.2 倍差距），是這類 flaky 的負載背景。
 
+### 另一種「只在完整 suite 出現」的紅：cleanup 而非逾時（2026-08-15）
+
+`check-memory-rollout-canary` 的紅燈同樣是**單獨跑不重現**，但機制與上面的逾時無關：完整 fast tier 四輪中前兩輪紅、後兩輪綠（其中一輪綠是 `git stash` 掉當日改動的控制組），單獨跑 `SMOKE_ONLY` 連三次皆綠。訊息是 `production runner removes every runner-owned temp clone`，report 自帶 `cleanup: failed`，並在 `os.tmpdir()` 留下 `memory-production-canary-XXXXXX` 目錄。
+
+可查證的脆弱點：`scripts/memory-production-canary.mjs:385-393` 的 `finally` 只做一次 `removeRunnerTemp`、**沒有重試也沒有退避**，而 lane worker 會在該 temp clone 內開 SQLite ∴ Windows 上剛關檔的 rmdir transient EPERM 直接翻成 `cleanup_failed`（exit 5）。
+
+⚠️ **歸因未定**：控制組只跑一輪 ∴ 不能宣稱「與當日 facts-store/memory-db 改動無關」，只能說沒找到機制（新增的兩條路徑只有 `readFileSync`，不開新 handle），且失敗集中在時間較早的兩輪。下次先做的事：**清掉 `os.tmpdir()` 殘留的 `memory-production-canary-*` 再重跑**，並記錄該輪是第幾次連續失敗，別直接當 flaky 放過。
+
+### 突變體「唯一失敗方式是 tsc 編譯失敗」要移出 runtime 突變集
+
+若一個突變體存活的唯一原因是它讓 TypeScript 編譯失敗（tsc 紅、runtime 測試從沒機會跑），代表那個不變式已經由型別系統守住了。正確處置是把它從 runtime 突變集**移除**，不是當成測試覆蓋缺口去補斷言——`acp-retry-telemetry` 突變集就是這樣拿掉一條針對 `EVENT_TYPES` 註冊的突變（它讓 tsc 紅而不是讓 runtime 測試紅）。這與下一節「突變存活時先驗證突變真的套用了」是同一個「突變體設計」判準家族的不同成員：那條講存活的突變體要先確認真的套用了，這條講確認之後如果是 tsc-only-fail 該怎麼處置。
+
 ### 突變存活時先驗證突變真的套用了
 
 `positiveIntOr` 拿掉 `Number.isFinite` 的突變一度存活，先驗證該字串出現次數 1→0、程式碼可見已改，
@@ -128,6 +150,8 @@ send 等滿它才回 null → elapsed 超標），沒讀到這段就盲調會誤
 - **`run()` 沒有 timeout** ∴ 會掛住的變異體會拖死整個變異測試。驗「無界重試」這類缺陷時，變異要用「放寬上限」而非「拿掉上限」，並把便宜的原始碼斷言排在會掛住的端到端斷言之前讓變異快速紅燈。
 - **變異體撞 `noUnusedLocals` 會被判 error 而非 killed**：拿掉呼叫或改成 `if (false)` 會讓符號變孤兒（TS6133）或只寫不讀；正確做法是保留讀取點只讓條件不成立（如 `if (x && false)`、`return f(x) || true`）。
 - **Windows Git Bash 下不要用 `/tmp` 存突變備份**：`cp` 會成功（Git Bash 有虛擬映射），但 Node 收到字面路徑會解析成 `G:\tmp` 而 ENOENT，突變根本沒寫進檔案，測試對未突變原檔跑出「1/1 passed」的假綠（2026-08-01 實證）。改用 repo 內相對路徑（`./.rp.bak`）。
+
+**「突變步驟自己失敗」與「斷言有效」在畫面上完全同形**（兩者都是綠燈），2026-08-16 一條斷言花三次嘗試才隔離成功，暴露兩個 Windows／Git Bash 專屬機制：①突變用的 regex 錨在 `\n` 上，對 **CRLF 檔案比對不到** → 檔案根本沒改、閘門綠；②shell 把轉義序列吃掉（`\\s` → `s`）→ 改到了**另一條**斷言、紅的不是你要驗的那條。∴ 三道檢查：grep 確認目標文字真的變了、確認紅的是**預期那條**斷言而非別條、最強證據是**失敗訊息裡直接出現突變痕跡**（證明它被執行到）。Windows 上優先改用免轉義的等價寫法（如 `split("\t")[0]`）。此條與上面「突變存活時先驗證突變真的套用了」互補——那條講存活的突變體，這條講改錯對象。
 
 驗「順序型承重不變式」的可重用三件套：模組契約測試（fake api 記錄呼叫）＋ 來源順序斷言（`indexOf(A) < indexOf(B)`，錨在該呼叫點獨有的字串上避免多處 match）＋ mutation test（手動搬錯位置確認測試真的紅，還原後 `git diff` 確認無殘留）。
 

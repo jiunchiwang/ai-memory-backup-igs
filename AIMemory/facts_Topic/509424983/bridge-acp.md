@@ -3,7 +3,6 @@
 - [f_ceda58] [2026-07-06T22:31:18.572Z] 使用者要求 bridge 的機制設計必須跨 ACP adapter 適用（Kiro/Codex/Claude 都要生效）——因此偏好走 bridge preamble/prompt 路徑，排除 CLAUDE.md/AGENTS.md/steering 這類單一 CLI 的載入機制
 - [f_5caae0] [2026-07-07T11:48:47.050Z] ACP adapter loadSession capability 實測（2026-07-07）：kiro-cli acp ✅、claude-agent-acp ✅（冷啟動 handshake 可能超過 60 秒）、codex-acp 未判定（initialize 回 -32000 需 auth）
 - [f_884e78] [2026-07-07T13:20:25.872Z] bridge 的 tool call 進度顯示由 sessionManager.ts 渲染（開始 🔧 {title}、完成 ✅ {toolName}），title 是 ACP adapter 回報的：claude-agent-acp 對 shell 執行類 tool call 回報泛用名「Terminal」，kiro-cli acp 的 title 風格較具描述性——切 backend 後顯示名稱不同屬正常非 bug
-- [f_20ed42] [2026-07-07T13:26:02.664Z] telegram-kiro-bridge 生產機 .env 的 ACP_SESSION_RESUME=true 已於 2026-07-07 啟用（.env:39 解除註解），待使用者重啟 bridge 後做手動 e2e：建 context 暗號 → idle → 驗證 resumed ACP session log + 暗號保留 + 無舊訊息/ASK token 重放
 - [f_50d5f5] [2026-07-08T05:55:13.683Z] Claude Fable 5 在 2026-07-08 碰到安全分類器 false positive（Usage Policy violation error），透過 claude-agent-acp ACP 路徑會直接拋 -32603 error 而非 fallback 到 Opus 4.8；使用者決定先觀望不換 model
 - [f_6d48aa] [2026-07-13T05:03:15.775Z] telegram-kiro-bridge 的 scheduler ephemeral session 原本固定讀 .env 的 ACP_AGENT_COMMAND（claude-agent-acp），不跟隨 /agent 熱切換——已修復（commit 85242f9）：sessionManager 新增 getActiveBackend(chatId)，scheduler fire() 優先用 pinned backend，fallback .env；重啟後排程跟隨 /agent 選的 backend
 - [f_5c5722] [2026-07-27T20:32:00.206Z] 降低 agent session 啟動延遲的低風險手段：serena MCP 原以 uvx 直接從 git 安裝，每次啟動都要重抓；改為預先 uv tool install 到本機再引用，實測每個 session 省下約 10-11 秒且不需改任何程式碼，屬於零風險、可優先執行的最佳化（相對於需要架構設計的 MCP 繼承限縮）。

@@ -874,3 +874,46 @@ caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來
 去重方式：`list_facts` 查 `adversarial review`（topic shard 全 47 筆逐條看過）／`exit code`(6)／`sync-upstream`(2)／`ADHD`(1)／`checklist`(3)／`按鈕`(13)，寫入前現存 634 筆。未呼叫 forget。
 
 **更正（同日，寫入後自審發現）：** 上列寫入第 2 條（sync-upstream exit code 對照）的末句「理由是文字會隨工具版本與語系漂移，exit code 才是穩定契約」**不在候選原文裡**——候選 6 只給了對照表與「exit code 為主、文字為輔」的規則，沒給理由。那句是本次整理時補上的推斷，屬 **f_b29a96** 記載的失效模式（整理／修正時順手補一個沒有證據的機制解釋，數字都對、讀起來像考證過）。∴ 上文帳目段「⚠️ 照實回報」第 2 點對第 2 條的描述應收窄：對照表與主從規則係決策原文，該句理由**非原文而是推斷**，抽查時以碼為準。第 3 條的理由（閘門不可被繞過）則確為候選原文（標題即 "External Review Gate Must Not Be Bypassable"），不受此更正影響。依 AUTO 模式 ADD-only 護欄，不 forget、不改寫既有 fact，僅在此留痕。
+
+---
+
+## 2026-08-18（AUTO 模式）
+
+呼叫端機械讀出的 shortlist header（逐字照抄，含亂碼）:
+`<<> ?Ｙ?:2026-08-17T20:30:03.203Z;蝑:8(銝? 15);??epoch 1786876672220>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-17T20:30:03.203Z;筆數:8(上限 15);自 epoch 1786876672220`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-17T20:30:03.203Z、8 筆、上限 15、epoch 1786876672220），**無矛盾**；檔內實際條目數清點亦為 8（行 5-12）。**全新一批**：epoch 1786876672220 > 上一則記錄的 1786803012539，筆數 8 ≠ 10 ∴ **不是同批重掃**。來源三個專案：`uk_872_eyestrike2_client` ×4、`system32` ×2、`telegram-kiro-bridge-main` ×2；全為 decision 類。
+
+**寫入 4 條（來自 3 個候選）：**
+
+1.（shard `uk-872-eyestrike2`，候選 4＝行 8，同 session obs #15489 補實）uk_872_eyestrike2_client 的型別檢查閘門真相：唯一有效指令是 `npm run typecheck`（= `npx -y -p typescript@5.9.3 tsc --noEmit -p tsconfig.typecheck.json`），裸跑 `npx tsc --noEmit` 是**假閘門**——npx 預設抓 TS 6.x，node10 模組解析在 6.0 被升為錯誤（TS5107），連編譯都進不去；編輯器內建 4.6.3 也不能用（codebase 用了 4.7+ instantiation expression，爆 850 個語法錯誤），5.9.3 是實測落點。通過判準是「assets/ 底下零錯誤」而非 exit code（skipLibCheck 後總錯誤 175→18，殘餘來自引擎 cc.d.ts 與 extensions 第三方 .d.ts）。已在 fact 內文標明**更新 f_6c587f 的操作建議**——那條「過濾只看 assets/Script 錯誤」方向仍對，但本專案裸跑 tsc 現在連跑都跑不起來。
+2.（shard `uk-872-eyestrike2`，候選 4＝行 8 的方法論層）診斷「專案工具鏈看起來壞了」的可重用協定：文件（CLAUDE.md／語言指南）寫的指令**不是**權威來源，package.json 的 scripts 才是；且要主動找「用途專名的變體設定檔」並先讀它的**檔頭註解**——那裡常寫著前人踩坑後留下的「為什麼不要改另一個檔」護欄與實測數值。當次代價：只憑 CLAUDE.md 就往 tsconfig.json 加 ignoreDeprecations，打壞本來能跑的閘門（TS 5.9.3 只吃 "5.0" 不吃 "6.0"，回 TS5103），而專案早就有 npm run typecheck；已在 commit 前回滾。順序：package.json scripts → 變體設定檔 → 檔頭註解 → 才動手。
+3.（shard `bridge-smoke-gate`，候選 7＝行 11）突變測試的「突變步驟自己失敗」與「斷言有效」在畫面上**完全同形**（都是綠燈），2026-08-16 一條斷言花三次才隔離成功，暴露兩個 Windows／Git Bash 專屬機制：①regex 錨在 `\n` 上對 CRLF 檔案比對不到 → 檔案沒改、閘門綠；②shell 吃掉轉義（`\s`→`s`）→ 改到**另一條**斷言、紅的不是要驗的那條。∴ 三道檢查：grep 確認目標文字真的變了、確認紅的是預期那條、最強證據是失敗訊息裡出現突變痕跡；Windows 上優先用免轉義等價寫法（`split("\t")[0]`）。已在 fact 內文框成**互補非重複**並指名家族三條：f_940b63（存活突變體要先證明突變套用了）、f_156659（Git Bash /tmp 映射害突變沒寫進檔）、f_5d0939（不可用 tsc exit code 反推 dist）；本條新增的是「**改錯對象**」這個失敗形狀與「失敗訊息帶突變痕跡」這個驗收判準。
+4.（shard `bridge-project`，候選 8＝行 12）防禦性修法的停損規則：同一缺陷的修法被**連續繞過兩次**，就停止追「攻擊形狀」，改驗底層不變式。實績兩例：①false-positive bug 連四輪形狀式修法（檢查 ref 存在 → 清 stale ref → 逐行 pattern match）每次被新 edge case 繞過，最後改驗不變式（遠端 SHA 等於預期值）才收斂；②自寫 lexer 被打破第二次後換 TypeScript AST。對應用邏輯與測試／驗證碼都適用。
+
+**捨棄 2 筆（撞既有 fact，指名）：**
+
+- 候選 5（行 9，no-push-button 設計原則）→ 撞 **f_a09852**，逐字同一決策。
+- 候選 6（行 10，sync-upstream exit code 對照 10/11/3/0）→ 撞 **f_565fbf**，逐字同一決策。
+- ⚠️ 這兩筆正是本任務簡報預告的**自我指涉迴圈**：它們的 project 是 `system32`、日期 2026-08-16，內容是 claude-mem 觀測到「**我自己 2026-08-17 那輪 curation 把這兩條寫進記憶**」這件事，因此必然撞上當輪寫入的 fact。這不是生產端故障，是同一 coding session 內已寫入的 fact 以 observation 形式回流。
+
+**捨棄 3 筆（選取層淘汰，非撞 fact，逐條給理由）：**
+
+- 候選 1（行 5，配置第四輪可執行式覆核，前三輪為唯讀推論式）——單一 session 的覆核輪次記帳；其可遷移核心「餵給覆核者的材料形狀決定能力上限」已在 **f_3356be**，「唯讀沙箱跑不了測試比獨立重跑弱一階、回報時要標明」已在 **f_b490fe**，「覆核弱先換問法再判模型」已在 **f_ae1f66**。
+- 候選 2（行 6，使用者要求用 Codex 做最終覆核）——純一次性指令，無可遷移內容；Codex 覆核的呼叫法與成本已在 **f_5d91c4**／**f_8929d7**。
+- 候選 3（行 7，fakeReel_10_01~04.txt 以新格式機率設定更新、已與團隊確認）——單次資料檔更新且無決策理由，屬 repo 自身已記錄的內容（依記憶規則不入庫）。
+
+**帳目（8 筆全部有下落，無重複計數）:** 採用 3 筆候選（行 8、11、12）→ 產出 4 條 fact（候選 4 拆成「專案事實」與「方法論協定」兩條，因前者綁 uk_872、後者跨專案可重用）＋撞既有 fact 2 筆（行 9、10）＋選取層淘汰 3 筆（行 5、6、7）= 8 筆候選全數結案。
+
+**✅ 本批已做原始碼獨立查證（與前兩則不同）：** 候選 4 的兩條 fact 所依賴的主張已於 2026-08-18 逐字讀檔驗證：`G:\Cocos_Project\uk_872_eyestrike2_client\package.json:9` 確有 `typecheck` script 且釘 typescript@5.9.3、指向 tsconfig.typecheck.json；`tsconfig.typecheck.json:2-31` 的檔頭註解確實逐字寫明「為什麼不直接改 tsconfig.json」（Cocos 建置與 CI 會讀）、三個 TS 版本的取捨理由（4.6.3 爆 850 錯／6.x 撞 TS5107／5.9.3 是落點）、skipLibCheck 使錯誤 175→18、以及刻意不加 exclude（實測 18→31）與不要改 temp/tsconfig.cocos.json 兩條護欄。
+
+**⚠️ 一處數字不符，照實回報不靜默調和：** claude-mem 觀測 #15489 記「extensions/ 有 17 個預期錯誤」，但 tsconfig.typecheck.json:19 的註解逐字寫「錯誤數 175 → 18」。差 1。無法判定是觀測抄錯、或註解寫下後 codebase 有小幅漂移。∴ 寫入的 fact 採**檔案內註解的 18**（第一手來源）並把通過判準寫成「assets/ 底下零錯誤」這個不依賴殘餘錯誤絕對值的形式，不採觀測的 17。
+
+**⚠️ `remember` 仍未回傳新 fact ID**（回傳只有 `ok: appended to facts-509424983.md, shard=…`）∴ 本則無法引用四條新 fact 的 `f_xxxxxx`；抽查請以 shard 檔內文比對：`uk-872-eyestrike2.md` ×2、`bridge-smoke-gate.md` ×1、`bridge-project.md` ×1。
+
+**重疊率說明：** 本批 8 筆中 2 筆撞既有 fact（25%），3 筆選取層淘汰（37.5%），3 筆採用（37.5%）。撞的那 2 筆 100% 來自自我指涉迴圈（見上），非知識重複。
+
+去重方式：`list_facts` 查 `toolchain`(0)／`工具鏈`(2)／`typecheck`(0)／`tsconfig`(3)／`CLAUDE.md`(13)／`mutation`(4)／`突變`(8)／`CRLF`(1)／`bypass`(4)／`繞過`(9)／`不變式`(12)／`AST`(37)／`exit code`(7)／`publishChecklist`(1)／`fakeReel`(1)／`Codex`(55)，寫入前現存 647 筆。**未呼叫 forget。**

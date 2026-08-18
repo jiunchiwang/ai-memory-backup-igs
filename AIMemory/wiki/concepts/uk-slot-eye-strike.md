@@ -2,8 +2,8 @@
 title: Eye Strike 系列
 type: concept
 created: 2026-07-16
-updated: 2026-08-16（wikilint：補 4 條漏同步 fact——轉輪 click 音效節奏提案、停輪曲線量化分析、baked path 動畫限制、CLAUDE.local.md 覆蓋技巧）
-sources: [f_cea694, f_937a50, f_9322f0, f_82c757, f_0b3520, f_800551, f_564bea, f_b9aeb7, f_391f10, f_73dbc7, f_6c587f, f_8ad906, f_4f973f, f_bbcecf, f_479ac3, f_e12b2f]
+updated: 2026-08-18（更正：uk_872 的型別檢查閘門改為 `npm run typecheck`，裸跑 `npx tsc --noEmit` 已是假閘門；新增：診斷工具鏈的權威來源順序）
+sources: [f_cea694, f_937a50, f_9322f0, f_82c757, f_0b3520, f_800551, f_564bea, f_b9aeb7, f_391f10, f_73dbc7, f_6c587f, f_8ad906, f_4f973f, f_bbcecf, f_479ac3, f_e12b2f, f_32e842, f_6bd44e]
 ---
 
 # Eye Strike 系列
@@ -71,9 +71,23 @@ UK 市場的眼睛打擊主題老虎機系列，含第一代 Eye Strike（uk_slo
 
 每一輪停下後會先短暫停頓，才讓下一輪開始停輪，目的是為**特殊符號的進場演出**留出播放時間。這個節奏是刻意設計的，不是效能問題。
 
-### tsc 驗證注意
+### 型別檢查閘門：唯一有效指令是 `npm run typecheck`（2026-08-17 更新，2026-08-18 逐字查證）
 
-Cocos Creator 專案在編輯器外跑 `tsc --noEmit` 會產出大量來自引擎 `cc.d.ts` 與 astarte framework 宣告的既有錯誤（uk_872 實測 509 行）。驗證自己的改動時應過濾只看 `assets/Script` 底下的錯誤，不能用總錯誤數當通過標準。
+⚠️ **原本這裡寫的「跑 `tsc --noEmit` 並過濾只看 `assets/Script` 的錯誤」在 uk_872 已不可行**——裸跑 `npx tsc --noEmit` 是**假閘門**，現在連編譯都進不去。
+
+| | |
+|---|---|
+| 唯一有效指令 | `npm run typecheck`（＝ `npx -y -p typescript@5.9.3 tsc --noEmit -p tsconfig.typecheck.json`）|
+| 為何不能裸跑 `npx tsc --noEmit` | npx 預設抓 TypeScript 6.x，而 node10 模組解析在 6.0 被升為**錯誤**（TS5107）|
+| 為何不能用編輯器內建 4.6.3 | 本 codebase 用了 4.7+ 的 instantiation expression，會爆 850 個語法錯誤 |
+| 5.9.3 的地位 | 實測可用的落點 |
+| 通過判準 | **`assets/` 底下零錯誤**，不是 exit code——`tsconfig.typecheck.json` 開 `skipLibCheck` 後總錯誤 175→18，殘餘來自引擎 `cc.d.ts` 與 extensions 第三方 `.d.ts`（非本專案可修）|
+
+### 診斷「專案工具鏈看起來壞了」的順序（付出代價後建立）
+
+**文件（`CLAUDE.md`／語言指南）寫的指令不是權威來源，`package.json` 的 `scripts` 才是。** 順序：`package.json` scripts → 找**用途專名的變體設定檔**（本例 `tsconfig.typecheck.json`）→ 讀它的**檔頭註解** → 才動手改。變體設定檔的檔頭常寫著前人踩坑後留下的護欄與實測數值（該檔逐字寫明 `tsconfig.json` 是 Cocos 建置與 CI 會讀的檔、`exclude` 加了會讓錯誤 18→31、`temp/tsconfig.cocos.json` 改了會被 Cocos 重新生成蓋掉）。
+
+實際代價：只憑 `CLAUDE.md` 就往 `tsconfig.json` 加 `ignoreDeprecations`，**打壞了本來就能跑的閘門**（TS 5.9.3 只吃 `"5.0"` 不吃 `"6.0"`，回 TS5103），而專案早就有可用的 `npm run typecheck`；錯誤在 commit 前已回滾。同型教訓見 [[verification-diagnosis]]。
 
 ### 停輪曲線量化分析（2026-08-06，A 級：與 `FeatureWheelManager.ts:216-258` 七個 readonly 逐一比對相符）
 

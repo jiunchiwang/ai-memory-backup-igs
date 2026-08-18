@@ -3,7 +3,8 @@ title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
 updated: 2026-08-05（新增 ACP resume/load 規格分工與未接訊號）
-sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_20ed42, f_ecaf0b, f_76faa7, f_42aed5, f_c73099, f_233da9, f_1d7bed]
+sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_ecaf0b, f_76faa7, f_42aed5, f_c73099, f_233da9, f_1d7bed]
+history_sources: [f_20ed42]
 ---
 
 # Bridge Session 生命週期與多 Session 管理
