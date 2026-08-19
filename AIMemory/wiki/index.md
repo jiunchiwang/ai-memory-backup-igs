@@ -10,7 +10,7 @@
 - [[uk-slot-codegen]] — UK Slot Codegen 工具整合（定位 M0a~M1 加速器、anchor merge 限制、驗證結果、回饋修正）
 - [[uk-slot-pirates-queen]] — UK Slot 海盜女王專案（6×5 盤面、懸賞令、RTCtrl 凍幀報獎進化版、PascalCase 搜尋陷阱）
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
-- [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（ROW=4/COL=6 4096 Ways、M0b 全綠、VS Feature 規則與編導多輪確認定案、M2.1 完成＋M2.2 資料接線切片完成；2026-08-13 更新）
+- [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（ROW=4/COL=6 4096 Ways、M0b 全綠、VS Feature 規則與編導多輪確認定案、M2.1 完成＋M2.2 資料接線切片完成、GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；2026-08-20 更新）
 - [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範、停輪曲線量化分析、baked path 動畫限制、CLAUDE.local.md 覆蓋技巧、型別檢查閘門唯一有效指令是 npm run typecheck＋診斷工具鏈的權威來源順序；2026-08-18 更新）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核、claude-mem plugin worker 診斷、Claude Agent SDK 權限模型、heredoc \n 展開陷阱、POLICIES 假宣稱更正、Telegram 出站訊息重複投遞四層修復＋重放安全性三判準、同事接手 repo 用獨立 fork 而非 GitHub Fork 按鈕、grammY transformer 安裝順序更正；2026-08-16 更新）
 - [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測、tool 結果狀態判定鏈與 is_error 可信度實測、Codex/Kiro hooks 能力更正）
@@ -67,12 +67,14 @@
 - [[deepseek-harness]] — DeepSeek Harness (dsh) 借鏡評估（源碼層 49 個 package 盤點、`packages/acp` 是 **agent 側**但對 bridge **不可用**——不宣告 MCP capability ∴ agent-action 層歸零、`session/load` 明列不支援、啟動只有 demo script；更正 2026-08-17 首輪報告的證據等級為 B 級（raw 被 rate limit ∴ 從搜尋＋文件站建、未讀源碼）；原三條軟性借鏡沿用；**第二輪追查 compaction/spill 並更正本頁初版**——「bridge 完全沒有對應物」為誤（實有 context-assembly 注入側預算／context-telemetry 精確使用率／70% 警告），且壓縮既有歷史結構上不是 bridge 的活（不擁有 context），套 spill 到 list_facts 的成本不對稱方向相反（漏 fact 比多花 1.4% 視窗貴，已量測最大 shard 31.5k chars）∴ 唯一建議項是「70% 警告一次性、之後到死線再無提醒」的分層觸發；2026-08-18 新增並更新）
 - [[query-msh2m15g]] — BC-17b 恆真問題的根因分析（突變 2 沒被抓到、withProvider pin 被 set_config_option 回應的 configOptions 蓋回去、突變測試的結構性限制；2026-08-17 新增）
 - [[kkterm]] — 外部 repo ryantsai/KKTerm 借鏡評估（Tauri 桌面終端工作站，真正交集是「宿主 app 怎麼接多家 AI agent、怎麼管動作權限」；**K1 最有價值**——`*.dangerous.*` 命名空間 + 單一 flag + default-deny 的廉價核可閘門，**推翻 [[cloudflare-os]] B3「要狀態機+UI+儲存 ∴ 成本高」的前提**，但須換算方向：bridge 常在無人值守輪次跑 ∴ 該走 ask 佇列而非回 `permissionRequired` 讓 agent 靜默卡死；K2 ACP 初始化失敗退回 one-shot CLI（bridge 未見等價）、K3「新 assistant surface 必須有 prompt-secret 斷言」通則閘門、K4 Cursor 當第 4 backend、K5 SKILL.md 的 Boundaries 詞彙釘樁；排除對外 MCP server／compaction／ADR／skill 隨 repo 出貨；**全頁 B 級未 clone**，並記一條自抓的誤讀——AIINSTRUCTIONS.md 是貢獻者文件不是 runtime prompt；2026-08-18 新增）
+- [[munder-difflin]] — 外部 repo chaitanyagiri/munder-difflin 借鏡評估（Electron 桌面 multi-agent hive，把 11 家 agent CLI 包成蜂巢；**已 sparse clone、四支核心模組 A 級**；**M2 最有價值**——`canReceiveInbox` 這類能力旗標讓「缺某能力」變成**降級到協調者代收**而非全有全無，直接命中 run_plan 的已知設計；M3 出站邊界主動 secret redaction（正則陣列 MIT 可直搬，補 K3 只覆蓋入站 preamble 的另一半）、M1 circuit breaker 的**偽陽性工程四條**（差分取樣／compaction 豁免／distinct-tool 算進度／連 N 拍去抖，只吸收判準不吸收模組——bridge 的 runaway 實證案例為 0）、M4 hop 上限、M5 `.gitignore` 對已追蹤檔無效、M6 verify-don't-trust 命名；**排除整套 hook shim／proxy tier**（bridge 走 ACP ∴ 是不需要不是還沒做）；兩條自抓的外部錯誤——`SPEC.md` 已被實作走過頭（`grep tmux`=0）、它宣稱「PROVES」secret 遮蔽的那支測試**不在 CI 也不在任何 npm 腳本**（8/38 無引用，三支 workflow 全部只跑 typecheck／build）；2026-08-19 新增）
 
 ---
 
-Total pages: 53
-Last updated: 2026-08-18 wikisync（ingest-ripple 4 頁更新——uk-slot 補 9 條含 2 則新內容（規格圖是 A 級證據、跨專案搬 Spine 驗收陷阱）；verification-diagnosis 新增第九節補 7 條（可否證條件、持久化宣稱前查 tool call、上限誠實邊界、3 則今日執行期驗收陷阱）；bridge-smoke-gate 補 1 條（tsc-only-fail 突變體移出 runtime 集）；adversarial-review 補 3 條（未版控實作只給推論、全稱結論的外部事件前提、駁回本身要受檢且可能雙向過頭）；5 個 Query Auto-save 候選皆判定內容不足（3 個是純 ASK 按鈕回應無實質內容、2 個是被截斷的片段看不到完整脈絡）跳過）
-Previous: 2026-08-18 新增 [[kkterm]]（外部 repo 借鏡評估；K1 推翻 [[cloudflare-os]] B3 的成本前提）
+Total pages: 54
+Last updated: 2026-08-20 wikisync（ingest-ripple 1 頁更新——uk-slot-clash-olympus 補 4 條 facts：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；Query Auto-save 候選皆判定內容不足跳過）
+Previous: 2026-08-19 新增 [[munder-difflin]]（外部 repo 借鏡評估；M2 能力旗標式降級命中 run_plan 全有全無設計）
+Earlier: 2026-08-18 新增 [[kkterm]]（外部 repo 借鏡評估；K1 推翻 [[cloudflare-os]] B3 的成本前提）
 Earlier: 2026-08-18 新增 [[deepseek-harness]]（外部 repo 借鏡評估；補上 08-17 那份研究報告從未落成 wiki 頁的缺口——`wiki-auto-save-candidates.jsonl` 該筆仍 `processed:false`，**未手改該檔**，因全檔 100 筆有 92 筆同樣未處理 ∴ 該旗標不是 pipeline 的實際驅動）
 Earlier: 2026-08-18 wikisync 手動重跑（08-18 dream 那輪失敗、turn 無產出，本輪補做）：ingest-ripple 5 個 topic／5 頁更新——bridge-smoke-gate 補 3 條（fast tier 成本偏斜、canary cleanup 型紅燈、突變改錯對象）、dev-tools 補 ghost @import（f_3d90f2 已被 f_cf5316 取代 ∴ 移入 history_sources）、bridge-memory 補 2 條、uk-slot-eye-strike 更正 tsc 閘門並補診斷順序、verification-diagnosis 新增第八節（f_e21eb1 原判給 bridge-project，因該頁在行數棘輪基線上且內容屬方法論而改收）。行數棘輪 PASS。**未處理積壓（下輪優先）**：f_ca710c（bridge-model-strategy，08-13 起最久）、f_166468／f_676da8（uk-slot-clash-olympus）、f_c9d934（bridge-infra）、f_0611d8（無 ripple 條目，且其 88,147 已被 f_cf5316 標為修前值）、f_bc5b05／f_5eaaed（ripple 記的 bridge-testing topic 已不存在，重分類後分別落在 bridge-smoke-gate 與 bridge-project shard）、f_271855（misc，設計上無頁）
 Earlier: 2026-08-17 wikisync（ingest-ripple 3 頁更新——user-pref 補 2 條 Git 紀律、adversarial-review 補 5 條含 2026-08-16 觀察、bridge-project 補 3 條含重試 instrumentation；query-msh2m15g 新增；4 個無 fact sources 的 ASK 回應 query 跳過）

@@ -2,8 +2,9 @@
 title: Clash of Olympus（諸神之戰）
 type: concept
 created: 2026-07-16
-updated: 2026-08-15（補：VS 轉型權威來源裁決——server 給定＋client 推導對帳）
-sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92, f_385d4d, f_90d6e8, f_5927a3, f_6587d2, f_ab095f, f_baad41, f_2675c6, f_cf423c, f_e0a15e, f_9b909e, f_05937b, f_f8bf81, f_4b8603, f_a732fb]
+updated: 2026-08-20（補：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構）
+sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92, f_385d4d, f_90d6e8, f_5927a3, f_6587d2, f_ab095f, f_baad41, f_2675c6, f_cf423c, f_e0a15e, f_9b909e, f_05937b, f_f8bf81, f_4b8603, f_a732fb, f_166468, f_676da8, f_fe2aba, f_8481cf]
+history_sources: []
 ---
 
 # Clash of Olympus（諸神之戰）
@@ -88,6 +89,33 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 - **VS 語意 `NX` 是暫定非定案**（規格 sheet 3 `S44` 仍是問句）。
 - **道具卡是「不實作」不是「待辦」**——三張流程表零規格，不猜測是否為 ExtraBet。
 - 對帳：`node docs/check-spec-gaps.mjs`（雙向；三道斷言皆經突變測試確認會紅）。
+
+## GAP-04 語意確定（2026-08-14 編導口頭答覆，關閉）
+
+三小項處置不同：
+1. **語意確定為 `2X`**（數字在前、X 在後），與 2026-08-13 暫定的 `NX` 格式一致 ∴ 是「確認」不是「改變」
+2. **「倍率種類數」問題被消滅**——編導答倍率不固定 ∴ 無法逐張出美術字，改用 BitmapFont 動態組字（字符集只需 `0-9` + `X` 共 11 字符）
+3. 倍率數值由 server `winningMultiplier` 給，client 不持有倍率表
+
+⚠️ 遺留假設（非編導答覆）：倍率均為正整數，日後若出現 `1.5X` 需追加「.」字符。
+⚠️ 這是**口頭**答覆，規格 xlsx 的 S44 仍是問句，日後 xlsx 若更新成別的寫法要回頭確認。
+
+## 借來的 placeholder 字型（2026-08-14）
+
+本作前身 uk_739（wrath_of_thunder）沒做金額顯示 ∴ 從 uk_872_eyestrike2_client 借了字型放進 `assets/game/Font/`，但那是埃及美術風格、本作是希臘神話 ∴ **上線前必須換掉**。
+
+- `SymbolCashNUM.fnt`：已接上並實機驗證（綁在 `MainGame.prefab` 的 `GameView.m_cashFont`）
+- `Multiplier_Num.fnt`：**刻意未接線**——其 `.fnt` 表頭 `charset="32,48-57,120"` = 空白+`0-9`+小寫 `x`，**沒有大寫 X (88)** ∴ 畫不出 `2X`
+
+∴ 倍率現階段共用 `SymbolCashNUM`（它含 88 與 120 兩者）。可遷移判準：接線點陣字型前先讀 `.fnt` 表頭的 charset 確認涵蓋所需字符，缺字不會報錯只會靜默少一個字。
+
+## 設計文件的單一真相源紀律（2026-08-18）
+
+同一份 `docs/M2-FirePot-design.md` 同時展示兩面：
+1. **放指標不複製**：對「已在別處登記的東西」（如 GAP-14/15/16）只列編號，內容以 `spec-gaps.md` 為準，並逐字寫明「此處刻意不複製表格」
+2. **改寫不追加**：對「已被推翻的判斷」直接改寫原文，不保留兩份互相矛盾的敘事
+
+⚠️ 改寫不等於湮滅：被推翻的判斷在 §9 技術債登記表以**刪除線 + ✅已解 + 來源 + 指向**的形式保留可追溯性。∴ 判準：一份設計文件裡「看得到但不是權威」的內容就是漂移來源。
 
 ## VS Feature 規則定案（2026-08-13，多輪與編導確認）
 

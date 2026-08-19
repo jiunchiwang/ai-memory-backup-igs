@@ -917,3 +917,51 @@ caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來
 **重疊率說明：** 本批 8 筆中 2 筆撞既有 fact（25%），3 筆選取層淘汰（37.5%），3 筆採用（37.5%）。撞的那 2 筆 100% 來自自我指涉迴圈（見上），非知識重複。
 
 去重方式：`list_facts` 查 `toolchain`(0)／`工具鏈`(2)／`typecheck`(0)／`tsconfig`(3)／`CLAUDE.md`(13)／`mutation`(4)／`突變`(8)／`CRLF`(1)／`bypass`(4)／`繞過`(9)／`不變式`(12)／`AST`(37)／`exit code`(7)／`publishChecklist`(1)／`fakeReel`(1)／`Codex`(55)，寫入前現存 647 筆。**未呼叫 forget。**
+
+---
+
+## 2026-08-19（AUTO 模式）
+
+呼叫端機械讀出的 shortlist header（逐字照抄，含亂碼）:
+`<<> ?Ｙ?:2026-08-18T20:30:02.785Z;蝑:15(銝? 15);??epoch 1786959520219>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-18T20:30:02.785Z;筆數:15(上限 15);自 epoch 1786959520219`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-18T20:30:02.785Z、15 筆、上限 15、epoch 1786959520219），**無矛盾**；檔內實際條目數清點亦為 15（行 5-19）。**全新一批**：epoch 1786959520219 > 上一則記錄的 1786876672220，筆數 15 ≠ 8 ∴ **不是同批重掃**。寫入前現存 657 筆。
+
+**⚠️ 一處必須顯式回報的矛盾（不靜默調和）：** shortlist 把 **15 筆全部**標成 project `telegram-kiro-bridge-main`，但實查後**至少 6 筆的內容屬 `uk_slot_clash_of_olympus`**（FirePot／VS Feature／Collect／Spine 拖尾／`HideCells`），與 f_27f464、f_97790d、f_58cbc0 等既有 fact 記載的專案一致。逐檔驗證的結果是**標籤並非一律錯**：候選 1 的 `re.lastIndex = 0` 確實在 `G:\AI\telegram-kiro-bridge-main\src\preamble-secret-scan.ts:98`，標籤正確。∴ 這一批是**兩個專案的觀測被統一貼上同一個 project 標籤**。合理推測是該 session 透過 bridge 執行、claude-mem 以 bridge 的工作目錄當 project——但這是**推論不是查證**，寫下來當線索，不當結論。實務影響：本批寫入的 fact 一律以**實查到的檔案路徑**標註歸屬，不採 shortlist 的 project 欄位。
+
+**✅ 本批 5 條 fact 全部經原始碼／設計文件第一手逐字查證**（與 08-17 那則不同，非「以觀察原文為據」）。兩個 repo 都可及：`G:\AI\telegram-kiro-bridge-main`（注意有 `-main` 後綴——08-17 那則記的「`G:\AI\telegram-kiro-bridge` 不存在」是少打後綴，該結論應視為過期）、`G:\Cocos_Project\uk_slot_clash_of_olympus`。
+
+**寫入 5 條（來自 8 個候選）：**
+
+1.（shard `bridge-smoke-gate`，候選 1＋6 的方法論層）「測不到的純防禦碼」的三段式處置紀律：碼留著但註解誠實標明無測試覆蓋、對應斷言標明自己是過度決定的、突變清單刻意排除註定 survive 的突變。實據逐字讀過三個檔：`src/preamble-secret-scan.ts:88-99`（「⚠️ 誠實標註：這一行目前沒有任何測試蓋得到，它是純防禦」）、`scripts/check-preamble-secret-scan.mjs:107-119`（BC-4 過度決定，「假裝它守著某個東西，比沒有它更糟」）、`scripts/mutate-gate.mjs:85-88`（刻意不含該突變的理由）。JS 語意主張（帶 /g 的正則在 exec 回 null 時自動歸零 lastIndex）為語言規範層事實，成立。已在 fact 內文框成**與 f_940b63 互補的相反取捨**（那條是證實等價突變後刪行，本條是保留防禦但拒絕宣稱有測試在守）。
+2.（shard `uk-872-eyestrike2`，候選 2＋3＋6 合併）FirePot SCATTER 飛入時機由「全部停輪後再飛」**改判**為「逐欄停輪即飛」的完整證據鏈：初版理由只是 blast radius → Codex 覆核 F-3 指出規格不符（`[C141][C142]` STEP5/6 排在 `[C143]` STEP7 之前）→ 參考前作，`uk_slot_eye_strike` 與 `uk_872_eyestrike2_client` 的 `CheckAndPlayScatterStopEffect( col, … )` 皆逐欄呼叫，**同時否證初版兩個決策**。含定案接線（`SlotReels.ShowStopSymbolEffect` 逐欄回呼 → `GameView.OnColumnScatterStopped`，`ScatterShowState` 只剩 barrier）、多顆配階規則（只有最後一顆帶真 server `EnergyLevelUpgrade`）、`isFast` 競態（計數遞增必須在任何 await 之前）、實機不等間距證據（397ms vs 2.4s，固定序列做不出來）。可遷移判準兩條：規格 STEP 順序是 A 級證據；前作實作比自己的風險偏好更強。候選 6 的突變（`stage < after && stage < before + 1`）作為 BC-FP-3 的驗證附記併入本條，未另立 fact——因為「失敗訊息帶突變痕跡＝最強證據」已在 **f_d2f8aa**，本次只是又一個確證實例。實據：`docs/M2-FirePot-design.md:181-212、279、353-357、557-585`。
+3.（shard `uk-slot-clash-olympus`，候選 5＋候選 2 的文件面）設計文件單一真相源紀律的**兩面**：對已登記的東西放指標不複製（§8 逐字「此處刻意不複製表格」，理由是 spec-gaps.md 檔頭記過「五份副本各自漂移」的代價），對已推翻的判斷改寫不追加（§5.A 逐字「保留兩份互相矛盾的敘事就是 spec-gaps.md 檔頭記過的漂移形狀」）。⚠️ 併入一條我在讀檔時實查到、候選原文沒提的邊界：改寫不等於湮滅——被推翻那條在 §9 技術債登記表以刪除線＋✅已解＋來源（Codex F-3）保留可追溯性（`docs/M2-FirePot-design.md:326`）。原本打算把候選 5 當「通用 DRY、太泛」淘汰，讀到「五份副本各自漂移」這個已付代價後改為採用。
+4.（shard `uk-slot-clash-olympus`，候選 14）VS Feature 於 M2.4 從「一次性同步套用」重構為**逐欄四拍 staged show**（S1 飛行／S2 擴滿整輪／S3 對決佔位／S4 揭示倍率）。已在 fact 內文標明**更新 f_a732fb 的演出形狀描述**（其「薄轉接器、不自己算規則、derive-not-persist」仍有效）。含 instant／staged 兩條路徑、BC-VS-14／BC-VS-15 驗收契約，以及⚠️**BC-VS-14 目前只有間接證據（instant path 未在實機跑過）**這條誠實邊界。實據：`docs/M2-VS-design.md:340-343、355-360、379-380、417、498-500`、`assets/Script/GameState/VsFeatureShowState.ts:132-133、159`。
+5.（shard `uk-872-eyestrike2`，候選 8＋9＋11 合併）兩處「看起來像死碼、其實是刻意停用」的地方：①`GameView.ts:2007` 的 `void this.PlayCollectTrailSpine;`（借來的 `EyeStrike_Cash_Trail` 單獨播畫不出東西，已量測排除骨頭落點／動畫在播／貼圖有綁／layer／相機 visibility，缺的是來源 prefab `FlyToCollectTrail.prefab` 的子節點組合）；②`GameView.ts:2141` 的 `HideCells()` 現為**零呼叫點的孤兒 public 方法**（實查：全 `assets/` 只有定義沒有呼叫）。①同時**收斂 f_769e08 的「退而求其次」**成已定案架構：路徑由自己驗證過的 tween（`Common.MoveTo`）決定、Spine 只當裝飾，不採骨骼驅動（跨專案節點階層與縮放不可攜）。⚠️ 候選 11 只說「停用以避免狀態還原 bug」，**未載明 bug 機制**，fact 內文已顯式寫「不要回填推測」——這是 **f_b29a96** 記載的失效模式（整理時順手補一個沒證據的機制解釋），2026-08-17 那則已為此更正過一次。
+
+**捨棄 3 筆（撞既有 fact，指名）：**
+
+- 候選 4（行 8，dual over-claim 對抗覆核方法論案例）→ 撞 **f_27f464**，逐字同一案例（第一輪 glm-5 答「所有路徑保證離開」→ 我駁回「await 永不 resolve」→ 第二輪 gpt-5.6-sol 判兩邊都過頭）。候選新增的只有「已寫進方法論文件」這個動作，屬產出物紀錄非新知識。
+- 候選 12（行 16，跨 vendor 覆核結果與驗證紀律）→ 撞 **f_2f0f60**（glm-5 為預設覆核者的裁決）＋ **f_97790d**／**f_9c2a72**（同批 glm-5 覆核 olympus 的兩條第一手留痕）。
+- 候選 13（行 17，部署 GLM-5 做跨 vendor 覆核且給檔案系統存取）→ 撞 **f_74c227**，逐字同一呼叫法（`kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read`，讀檔不給 bash）。
+- ⚠️ 這三筆同樣是**自我指涉迴圈**（前一則已預告的形狀）：它們是 claude-mem 觀測到「同一個 coding session 內我自己已經把這些寫進記憶／已經做過這些覆核」，必然撞上當時寫入的 fact。**不是生產端故障**。
+
+**選取層處置 4 筆（非撞 fact，逐條給理由）：3 筆淘汰＋1 筆併入他條**
+
+- 候選 7（行 11，M2.6 FirePot 設計文件建立、10 個章節）——純產出物建立紀錄，文件內容的可遷移部分已由本批第 2、3 條寫入。
+- 候選 10（行 14，dimming 完成後排下一步決策，ask_4c0ae8c9… state=queued）——這是**提出決策點**而非**做成決策**，shortlist 未載最終選了哪個，無內容可寫（與 2026-08-17 那則的候選 8 同型）。
+- 候選 15（行 19，專案狀態盤點完成、SPEC.md 顯示 M0a/M0b 完成、M2 進行中）——里程碑進度快照，會被下一次進度取代，且 M2.1/M2.2 完成狀態已在 **f_f8bf81**／**f_a732fb**。
+- 候選 6（行 10，M2.6a 突變測試驗證 BC-FP-3）——**未獨立成 fact 但未丟棄**：其具體突變與失敗訊息已併入本批第 2 條的附記段；不另立是因為方法論核心（失敗訊息帶突變痕跡＝最強證據）已在 **f_d2f8aa**。
+
+**帳目（15 筆全部有下落，無重複計數）:** 採用 **9 筆**候選（行 5[候1]、6[候2]、7[候3]、9[候5]、10[候6]、12[候8]、13[候9]、15[候11]、18[候14]）→ 產出 **5 條 fact**（合併關係：候1→#1、候2＋候3→#2、候5→#3、候14→#4、候8＋候9＋候11→#5；候 6 不獨立成 fact，其突變實例併入 #2 的附記段、其「不可測突變排除」的紀律面併入 #1）＋撞既有 fact **3 筆**（行 8、16、17）＋選取層淘汰 **3 筆**（行 11、14、19）= 9＋3＋3 = **15 筆全數結案**。
+
+**⚠️ shard 分類有兩條落點不理想（抽查時要知道去哪找）：** 第 2、5 條在內容上屬 `uk_slot_clash_of_olympus`，但因內文引用了 `uk_872_eyestrike2_client`／`EyeStrike_Cash_Trail` 等字串，被自動分類器送進 **`uk-872-eyestrike2.md`**；第 3、4 條正確落在 **`uk-slot-clash-olympus.md`**，第 1 條落在 **`bridge-smoke-gate.md`**。未手動指定 topic 覆寫（AUTO 模式 ADD-only，且分類器行為本身是可觀察的既有事實，不在本輪改）。
+
+**⚠️ `remember` 仍未回傳新 fact ID**（回傳只有 `ok: appended to facts-509424983.md, shard=…`）∴ 本則無法引用五條新 fact 的 `f_xxxxxx`；抽查請以 shard 檔內文比對：`bridge-smoke-gate.md` ×1、`uk-872-eyestrike2.md` ×2、`uk-slot-clash-olympus.md` ×2。
+
+**重疊率說明：** 本批 15 筆中 3 筆撞既有 fact（20%），3 筆選取層淘汰（20%），9 筆採用（60%）。採用率高於前兩批，原因是本批多為**實作與設計決策**（有具體形狀、可查證），而非前兩批那種「發動某輪覆核」的過程紀錄。
+
+去重方式：`list_facts` 查 `lastIndex`(1)／`regex`(10)／`Spine`(18)／`FirePot`(0)／`VsFeatureShowState`(2)／`HideCells`(0)／`glm-5`(23)／`不可測`(0)／`mutation`(4)／`單一真相`(0)／`死碼`(7)／`clash_of_olympus`(27)／`停輪`(4)／`tween`(2)／`Scatter`(8)／`spec-gaps`(3)，寫入前現存 657 筆。**未呼叫 forget。**

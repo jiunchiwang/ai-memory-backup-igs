@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "facts_Topic/509424983/adversarial-review.md",
+                "file": "wiki/queries/munder-difflin.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "adversarial-review"
+              "title": "munder-difflin"
             }
           }
         ]
@@ -187,6 +187,17 @@
   },
   "active": "22a02900826b6a3d",
   "lastOpenFiles": [
+    "working-state-509424983.md",
+    "session-archive-509424983.json",
+    "sessions/session-509424983-2026-08-19T08-22-54.md",
+    "sessions/session-509424983-2026-08-19T04-58-30.md",
+    "wiki/concepts/adversarial-review.md",
+    "config/self-eval.json.tmp-30044-1787102810973",
+    "wiki/queries/munder-difflin.md.tmp.34892.c504912c313f",
+    "wiki/index.md.tmp.34892.98a5fab1f906",
+    "wiki/queries/munder-difflin.md",
+    "wiki/queries/munder-difflin.md.tmp.34892.6ac6a1ca8644",
+    "facts_Topic/509424983/adversarial-review.md",
     "facts_Topic/509424983/uk-slot.md",
     "facts_Topic/509424983/bridge-specialist.md",
     "facts_Topic/509424983/bridge-model-strategy.md",
@@ -194,34 +205,22 @@
     "facts_Topic/509424983/bridge-doc-sync.md",
     "facts_Topic/509424983/uk-872-eyestrike2.md",
     "facts_Topic/509424983/uk-917.md",
-    "facts_Topic/509424983/adversarial-review.md",
     "facts-509424983.md",
     "wiki/concepts/bridge-research.md",
     "wiki/concepts/agent-system-architecture.md",
     "claude-mem-ingested-zh.md",
-    "wiki/concepts/adversarial-review.md",
     "wiki/concepts/bridge-roadmap.md",
-    "working-state-509424983.md",
-    "session-archive-509424983.json",
     "sessions/session-509424983-2026-08-13T00-58-21.md",
     "config/self-eval.json.tmp-86568-1785276444576",
     "facts-509424983.md.bak.1785276405122",
     "facts-509424983.md.bak.1785276401029",
     "facts-509424983.md.bak.1785276400979",
     "facts-509424983.md.bak.1785276400887",
-    "facts-509424983.md.bak.1785276391803",
-    "facts-509424983.md.bak.1785276375248",
-    "facts-509424983.md.bak.1785276374999",
-    "facts-509424983.md.bak.1785276374887",
     "sessions/session-509424983-2026-07-28T20-13-45.md",
     "oldSessions/session-509424983-2026-07-28T14-08-03.md",
     "oldSessions/session-509424983-2026-07-28T11-03-48.md",
     "oldSessions/session-509424983-2026-07-28T11-03-47.md",
     "oldSessions/session-509424983-2026-07-28T08-03-50.md",
-    "oldSessions/session-509424983-2026-07-28T08-03-49.md",
-    "oldSessions/session-509424983-2026-07-28T01-43-22.md",
-    "oldSessions/session-509424983-2026-07-28T01-43-21.md",
-    "oldSessions/session-509424983-2026-07-28T01-24-17.md",
-    "oldSessions/session-509424983-2026-07-28T00-32-25.md"
+    "oldSessions/session-509424983-2026-07-28T08-03-49.md"
   ]
 }

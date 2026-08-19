@@ -5,7 +5,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-18T20:10:19.112Z (token=topics-d5f9639b-33)
+// Last applied: 2026-08-19T20:06:15.906Z (token=topics-11c6b21a-35)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -16,7 +16,9 @@
       "uk-917",
       "leprechaun",
       "3 leprechaun",
-      "leprechauns_pots"
+      "leprechauns_pots",
+      "triluck",
+      "clover bomb"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -33,7 +35,8 @@
       "featurewheel",
       "click 音效",
       "wheel-click",
-      "featurewheelmanager"
+      "featurewheelmanager",
+      "spinekit"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -49,7 +52,11 @@
       "anchor merge",
       "anchor_merge",
       "probe-compare",
-      "uk-slot-codegen"
+      "uk-slot-codegen",
+      "proto stub",
+      "proto-stub",
+      "自產 proto",
+      "假設錨點"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -99,7 +106,9 @@
       "wantedposter",
       "懸賞令",
       "rtctrl",
-      "rt 凍幀"
+      "rt 凍幀",
+      "drop-out",
+      "掉落動畫"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -117,7 +126,8 @@
       "gamesetting.json",
       "slot 模板",
       "模板專案",
-      "maskexpand"
+      "maskexpand",
+      "tools_slotsetup"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -166,7 +176,8 @@
       "leprechaunsgoldstreak",
       "gamestrings",
       "slot 專案",
-      "uk-slot-pitfalls"
+      "uk-slot-pitfalls",
+      "回灌工作流"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -192,7 +203,8 @@
       "add/add 假衝突",
       "merge-base",
       "downstream-fork",
-      "sync-upstream"
+      "sync-upstream",
+      "merge-file"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -251,6 +263,25 @@
       "drain",
       "draining",
       "diverge"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
+    "topic_id": "t_c84dfd6de125",
+    "topic": "bridge-rate-limit",
+    "keywords": [
+      "429",
+      "retry_after",
+      "限流",
+      "rate limit",
+      "autoretry",
+      "maxdelayseconds",
+      "flood wait",
+      "tg_rate_limit",
+      "tg_autoretry"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -317,7 +348,9 @@
       "expectedtoken",
       "canary",
       "gold set",
-      "memory canary"
+      "memory canary",
+      "空寫保護",
+      "比例閘門"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -338,7 +371,9 @@
       "sessioncapabilities",
       "/session",
       "/reset clean",
-      "/handoff"
+      "/handoff",
+      "restoration block",
+      "working-state"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -360,7 +395,9 @@
       "models 表",
       "per-backend",
       "顯式還原",
-      "/dream"
+      "/dream",
+      "state.md",
+      "pending dream"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -440,7 +477,8 @@
       "暖機",
       "[ws]",
       "env-file",
-      "start.bat"
+      "start.bat",
+      "--env-file"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -465,6 +503,24 @@
       "mutation test",
       "突變測試",
       "mutate-gate"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
+    "topic_id": "t_aa34ecd9f903",
+    "topic": "bridge-hooks",
+    "keywords": [
+      "pretooluse",
+      "posttooluse",
+      "tool-hooks",
+      "gate hook",
+      "impact-gate.mjs",
+      "settings.local.json",
+      "hooks 快照",
+      "fail-open"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -525,7 +581,8 @@
       "--list-models",
       "claude max 5x",
       "deepseek",
-      "qwen3-coder"
+      "qwen3-coder",
+      "model 短名"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -553,7 +610,9 @@
       "http server mode",
       "authmethods",
       "@agentclientprotocol",
-      "permissionmode"
+      "permissionmode",
+      "claude.md",
+      "agents.md"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -586,7 +645,8 @@
       "harness 抽象",
       "capability set",
       "opencode",
-      "cloudflare-os"
+      "cloudflare-os",
+      "雷蒙"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -603,7 +663,6 @@
       "bridge fork",
       "bot api",
       "grammy",
-      "autoretry",
       "upstream",
       "dev-design",
       "hook",
@@ -616,7 +675,9 @@
       "chroma",
       "worker 靜默死亡",
       "daily intel",
-      "重放安全性"
+      "重放安全性",
+      "user-profile",
+      "html 美化"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -739,7 +800,9 @@
       "寫死絕對路徑",
       "sync.ps1",
       "codex cli",
-      "skillsmp"
+      "skillsmp",
+      "memory-to-skill",
+      "junction"
     ],
     "domain_id": "d_32e83e92d45d",
     "domain": "ai",

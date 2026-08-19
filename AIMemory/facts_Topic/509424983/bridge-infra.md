@@ -2,7 +2,6 @@
 - [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
 - [f_9c5954] [2026-07-07T13:00:14.437Z] bridge 的錯誤無檔案落地：bot.catch 只 console.error、start.bat 無 stdout 重導向，歷史錯誤證據僅存在 console 視窗 scrollback（找 Bot error: 或 [rate-limit] 關鍵字）
 - [f_0e5446] [2026-07-10T15:54:46.744Z] bridge 架構陷阱：index.ts 的全域 unhandledRejection handler 會 process.exit(1)，任何同 process 的 async callback（如 HTTP handler）未捕捉的 throw 都會殺掉整個 bridge——新增 server/handler 必須自帶錯誤邊界
-- [f_e72b07] [2026-07-15T20:02:12.094Z] 因為 bridge 已有完整 lifecycle 管理（start.bat loop + <<RESTART>> token + grammY autoRetry）所以決定 psmux 不導入 bridge code，只當外層容器使用（排除讓 bridge 依賴 psmux 因為會增加耦合且無對等收益）；start-psmux.ps1 與 start.bat 並存，各用各的場景
 - [f_332dae] [2026-07-17T20:41:27.331Z] telegram-kiro-bridge 架構陷阱：session.buffer 只靠串流 agent_message_chunk 累積，turn 若在產出最終文字前中途崩潰（如 ACP 行程卡死）會維持空字串，與「agent 真的沒話說」無法區分——已修復（commit de0b7e2）新增 session._lastTurnFailed 旗標讓 dream.ts 能標記真正失敗的步驟，診斷手法是交叉比對 events.jsonl 的 tool_call 時間戳與 session transcript 找出 turn 中途停止的證據
 - [f_ff0915] [2026-07-19T20:08:36.741Z] telegram-kiro-bridge 的暖機期訊息處理最終採 MVP-first 方案（新增 warmup.ts：coreReady 旗標 + FIFO 佇列暫存啟動期收到的原始 grammy Update，核心就緒後 replay），此方案在 dev-design judge-panel 得 72 分，勝過 robustness-first（54 分）與 simplicity-first（40 分），並嫁接後兩者的關鍵設計
 - [f_4835ec] [2026-07-19T20:08:42.875Z] telegram-kiro-bridge 暖機佇列設計歸納出的可重用 trade-off：fetchReady（runner 已在 poll、訊息不會遺失）與 coreReady（訊息→agent 處理路徑完全安全）是兩個獨立的就緒層，長輪詢 bot 若有慢速啟動階段應把這兩層分開處理
