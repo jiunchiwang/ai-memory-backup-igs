@@ -5,7 +5,7 @@
 //   - Keywords are lowercase substrings; fact text is lowercased before matching.
 //   - First matching rule wins; facts matching nothing become 'misc'.
 //   - Topic names should be short and unique (case-insensitive).
-// Last applied: 2026-08-19T20:06:15.906Z (token=topics-11c6b21a-35)
+// Last applied: 2026-08-20T20:09:20.816Z (token=topics-3a8d5424-35)
 // If the file is deleted or malformed, bridge falls back to built-in defaults.
 [
   {
@@ -65,8 +65,12 @@
   },
   {
     "topic_id": "t_ef63e5b84014",
-    "topic": "uk-slot-clash-olympus",
+    "topic": "uk-963-divine-duel",
     "keywords": [
+      "divine_duel",
+      "divine duel",
+      "uk_963",
+      "uk-963",
       "clash of olympus",
       "clash_of_olympus",
       "諸神之戰",
@@ -75,7 +79,10 @@
       "vscash",
       "vscollect",
       "vsmanager",
-      "vsresult"
+      "vsresult",
+      "firepot",
+      "聚寶盆",
+      "scatter"
     ],
     "domain_id": "d_83116acf18e4",
     "domain": "uk",
@@ -381,6 +388,28 @@
     "kind": "topic"
   },
   {
+    "topic_id": "t_a527d775e442",
+    "topic": "bridge-persona",
+    "keywords": [
+      "persona",
+      "人格",
+      "doraemon",
+      "哆啦a夢",
+      "personas/",
+      "/persona",
+      "personakey",
+      "personaoverride",
+      "carve-out",
+      "systemprompt.append",
+      "persona-stage1",
+      "personaconfiguredbutnotapplicable"
+    ],
+    "domain_id": "d_17f29b073143",
+    "domain": "bridge",
+    "tags": [],
+    "kind": "topic"
+  },
+  {
     "topic_id": "t_31415ebd4478",
     "topic": "bridge-dream",
     "keywords": [
@@ -478,7 +507,14 @@
       "[ws]",
       "env-file",
       "start.bat",
-      "--env-file"
+      "--env-file",
+      "pretooluse",
+      "posttooluse",
+      "tool-hooks",
+      "gate hook",
+      "settings.local.json",
+      "hooks 快照",
+      "fail-open"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",
@@ -503,24 +539,6 @@
       "mutation test",
       "突變測試",
       "mutate-gate"
-    ],
-    "domain_id": "d_17f29b073143",
-    "domain": "bridge",
-    "tags": [],
-    "kind": "topic"
-  },
-  {
-    "topic_id": "t_aa34ecd9f903",
-    "topic": "bridge-hooks",
-    "keywords": [
-      "pretooluse",
-      "posttooluse",
-      "tool-hooks",
-      "gate hook",
-      "impact-gate.mjs",
-      "settings.local.json",
-      "hooks 快照",
-      "fail-open"
     ],
     "domain_id": "d_17f29b073143",
     "domain": "bridge",

@@ -1,0 +1,6 @@
+- [f_1bd398] [2026-08-20T15:20:43.009Z] 使用者在 telegram-kiro-bridge 開發「哆啦A夢」角色人格系統（persona），Stage 1 已實作完成於分支 feat/persona-stage1（12 commit），但因跨 vendor 覆核抓到兩條 Critical 而未 push
+- [f_5247b2] [2026-08-20T15:20:43.009Z] persona 系統的設計定案（v4）：人格只放語氣個性關係、工程紀律完全不進 persona 檔（紀律留在 CLAUDE.md/POLICIES），注入通道走 Claude ACP 的 _meta.systemPrompt.append 而非 preamble，僅支援 Claude backend
+- [f_145db3] [2026-08-20T15:20:43.009Z] persona 系統採四階拆解推進：Stage 1 通道+/dream 維運隔離、Stage 2 /persona 指令與切換、Stage 3 Kiro/Codex 重測與惡意 persona 測試；使用者於 2026-08-20 核可此拆解並要求先做 Stage 1
+- [f_0c20d9] [2026-08-20T15:20:43.009Z] persona 檔正本位於 personas/*.md 進版控（比照 plan-templates 的「資料不是程式碼」慣例），首個人格 doraemon.md 逐字複製自 G:\AI\哆啦A夢 AI 角色 System Prompt.md
+- [f_3fafee] [2026-08-20T15:20:43.009Z] 使用者提供的兩份外部 AI 建議文件位於 G:\AI\Codex ACP 加入角色人格的兩種作法.md 與 G:\AI\ROLE_SYSTEM_DESIGN.md；後者的 Persona/Behavior 解耦概念被採用（比原設計乾淨），但其 Kiro Custom Agent 與 claude -p --append-system-prompt 兩處建議經實測反駁
+- [f_3bf9d1] [2026-08-20T15:20:43.009Z] 使用者於 2026-08-20 移除全域 @zed-industries/codex-acp@0.15.0、安裝 @agentclientprotocol/codex-acp@1.6.0；舊版實測已不可用（prompt 被 API 打回 400「gpt-5.6-terra requires a newer version of Codex」），此更換與 persona 無關也該做

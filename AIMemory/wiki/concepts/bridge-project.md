@@ -2,8 +2,8 @@
 title: Telegram-Kiro-Bridge 專案
 type: concept
 created: 2026-06-03
-updated: 2026-08-17（wikisync：新增 planUncertainReplay 限制文件化、重試 instrumentation 偏誤、sync-upstream exit code 解析策略）
-sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_8a9bd7, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_e2e14a, f_cc8fd5, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_a23d83, f_4c12ce, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_dff56f, f_cd57ae, f_b56b60, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_198e79, f_bef432, f_71c654, f_1ac058, f_200c89, f_b82b6e, f_f0aeea, f_8ca646, f_42e862, f_57bf1c, f_4d4805, f_f9f50a, f_4a3140, f_5df807, f_549d3f, f_474e9e, f_aff418, f_e04f09, f_18f02e, f_b5d499, f_5eaaed, f_565fbf]
+updated: 2026-08-20（ingest-ripple：補 2 條——auth-recovery providerType 判斷更正、run_plan specialist 降級修復四形狀；f_e21eb1 已於 2026-08-18 刻意改收進 [[verification-diagnosis]]（本頁在行數棘輪基線上），本輪不重複收）
+sources: [f_946c9d, f_e19357, f_719003, f_e17260, f_36e49d, f_842a1b, f_8da350, f_4e8237, f_d21a12, f_af99c8, f_5b7f6a, f_5209cd, f_c228c9, f_0a8153, f_456de2, f_645ea3, f_046ffa, f_493309, f_b615b7, f_84107f, f_e6facf, f_8a9bd7, f_15ac36, f_fedf5c, f_b966f9, f_a4464b, f_054543, f_912029, f_152b53, f_ceda58, f_6a6c22, f_e5843d, f_f94c52, f_d61c50, f_1e4cda, f_9c5954, f_b01ccb, f_ace685, f_c965d5, f_a0a929, f_5bb6fa, f_a1d087, f_56f3c9, f_de84a8, f_7cfe9b, f_1867ae, f_0c2487, f_2a93b5, f_50951c, f_dd41a9, f_7d8cb9, f_5871a8, f_69884b, f_36529c, f_3bc9f5, f_3bb538, f_ad29fd, f_02206d, f_bf688a, f_0e5446, f_76b1f7, f_88d3a1, f_5bd2fc, f_0561d8, f_130b5d, f_b1b0f4, f_166fd1, f_5bf5da, f_eb9ddd, f_131cef, f_f44d46, f_e2e14a, f_cc8fd5, f_28e17b, f_f16f7b, f_d6b17c, f_9f9b1f, f_87901e, f_3f826e, f_b21c3a, f_7d5145, f_51bc41, f_a23d83, f_4c12ce, f_e72b07, f_ea9657, f_d878ad, f_e7bcdd, f_1b2fd1, f_6de90c, f_332dae, f_dff56f, f_cd57ae, f_b56b60, f_ff0915, f_4835ec, f_a4eb9f, f_b8922f, f_da3d5b, f_877531, f_e85cc9, f_06ae88, f_5302c0, f_3fb62a, f_10387c, f_bb1fcf, f_b01fe2, f_84dd82, f_cba34c, f_40504b, f_c79917, f_66f268, f_6b85d6, f_633596, f_a60ce8, f_bee7a3, f_d71f60, f_39ef23, f_1076e9, f_489e55, f_15bffc, f_7d05b7, f_c0ada7, f_191c67, f_916228, f_a37cfa, f_82bd9f, f_6ad6e7, f_8d5086, f_198e79, f_bef432, f_71c654, f_1ac058, f_200c89, f_b82b6e, f_f0aeea, f_8ca646, f_42e862, f_57bf1c, f_4d4805, f_f9f50a, f_4a3140, f_5df807, f_549d3f, f_474e9e, f_aff418, f_e04f09, f_18f02e, f_b5d499, f_5eaaed, f_565fbf, f_6dffc5, f_b35b6b]
 history_sources: [f_32a736, f_b1e2ca, f_484853, f_e272f0, f_5a2532, f_493b31, f_810445]
 ---
 
@@ -252,6 +252,11 @@ bridge 自己的 `permissionMode`（值為 `grant-all｜readonly`，`src/acpClie
 `session/request_permission` 攔截點）與 SDK 的六值 `PermissionMode` 是**同名不同物**的兩套獨立命名
 空間，比對時不可混用；兩者且有同形狀的弱點——bridge 側 harness 帶 auto-approve（`kiro -a`）時根本
 不送 permission request，SDK 側 `bypassPermissions` 讓 `canUseTool` 形同虛設。
+
+## 兩則機制更正（2026-08-19）
+
+- **auth-recovery 判斷 providerType 應用 `config.defaultProvider`，不可用 `peek()?.activeProvider`**：`replyWithAgentStartError` 的呼叫點都在 `sessions.get()` 的 catch 分支，`create(chatId, userId)` 不帶 providerType ⇒ 按構造 `activeType = config.defaultProvider`，用它就等於這次失敗的 create 用的值；`peek()` 結構上描述的是另一個 session。
+- **`run_plan` specialist 不存在時的靜默降級已修**（commit a09f0ff）：降級改回結構化欄位（不解析中文字串）、警告送到使用者而非只 console.warn、具名模板降級停下來走確認鍵盤不直接派工、單槽清理改身分比對（`get(chatId) === entry`）避免 A 跑完清掉 B 的槓位。
 
 ## 相關工具
 

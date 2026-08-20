@@ -1,4 +1,6 @@
+- [f_5bd2fc] [2026-06-27T00:45:09.018Z] SkillsMP 上的 196 萬份 skill 絕大多數設計給 Claude Code 本地 CLI 環境（依賴 PostToolUse hooks、.claude/ 目錄、memory_remember API），bridge 的 ACP+Telegram 架構無法直接安裝使用，但可借鏡概念融入現有機制
 - [f_130b5d] [2026-07-06T07:01:34.360Z] 使用者已在 telegram-kiro-bridge repo 部署閘門 A/B 最小版 hook：.claude/hooks/impact-gate.mjs（Node，每 session 每檔首次 Edit/Write exit 2 要求輸出因果鏈、重試放行、只閘專案內檔案、fail-open）+ .claude/settings.local.json 註冊 PreToolUse；決策為 Claude-only（排除跨 CLI 投影因為成本/價值不成比例，切回 Kiro 時閘門消失屬接受的設計）
+- [f_166fd1] [2026-07-06T20:36:15.296Z] telegram-kiro-bridge 的 gate hook 決策已反轉：專案記憶文件 decision-no-gate-hook.md 改名為 decision-gate-hook-minimal.md，改採最小版 gate hook；CLAUDE.md Section 7 的完整 impact-analysis-guard PreToolUse hooks 維持不部署，此決策文件用於防止未來重複提案
 - [f_5bf5da] [2026-07-06T22:56:52.260Z] node --env-file 不會覆蓋已存在的環境變數——bridge spawn 的子 shell 繼承舊 env 值，測試 .env 改動時要用顯式變數覆蓋模擬重啟後行為
 - [f_9c5954] [2026-07-07T13:00:14.437Z] bridge 的錯誤無檔案落地：bot.catch 只 console.error、start.bat 無 stdout 重導向，歷史錯誤證據僅存在 console 視窗 scrollback（找 Bot error: 或 [rate-limit] 關鍵字）
 - [f_0e5446] [2026-07-10T15:54:46.744Z] bridge 架構陷阱：index.ts 的全域 unhandledRejection handler 會 process.exit(1)，任何同 process 的 async callback（如 HTTP handler）未捕捉的 throw 都會殺掉整個 bridge——新增 server/handler 必須自帶錯誤邊界

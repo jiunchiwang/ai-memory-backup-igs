@@ -965,3 +965,67 @@ caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來
 **重疊率說明：** 本批 15 筆中 3 筆撞既有 fact（20%），3 筆選取層淘汰（20%），9 筆採用（60%）。採用率高於前兩批，原因是本批多為**實作與設計決策**（有具體形狀、可查證），而非前兩批那種「發動某輪覆核」的過程紀錄。
 
 去重方式：`list_facts` 查 `lastIndex`(1)／`regex`(10)／`Spine`(18)／`FirePot`(0)／`VsFeatureShowState`(2)／`HideCells`(0)／`glm-5`(23)／`不可測`(0)／`mutation`(4)／`單一真相`(0)／`死碼`(7)／`clash_of_olympus`(27)／`停輪`(4)／`tween`(2)／`Scatter`(8)／`spec-gaps`(3)，寫入前現存 657 筆。**未呼叫 forget。**
+
+---
+
+## 2026-08-20（AUTO 模式）
+
+呼叫端機械讀出的 shortlist header（逐字照抄，含亂碼）:
+`<<> ?Ｙ?:2026-08-19T20:30:04.479Z;蝑:12(銝? 15);??epoch 1787065843124>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-19T20:30:04.479Z;筆數:12(上限 15);自 epoch 1787065843124`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-19T20:30:04.479Z、12 筆、上限 15、epoch 1787065843124），**無矛盾**；檔內實際條目數清點亦為 12（行 5-16）。**全新一批**：epoch 1787065843124 > 上一則記錄的 1786959520219，筆數 12 ≠ 15 ∴ **不是同批重掃**。寫入前現存 **669 筆**。來源兩個專案：`telegram-kiro-bridge-main` ×10、`uk_917_leprechauns_pots_client` ×2；全為 decision 類。
+
+**✅ project 標籤本批抽查正確**（與 2026-08-19 那則不同——該批 15 筆全被貼上 bridge、實查至少 6 筆屬 clash_of_olympus）：本批 10 筆 bridge 候選逐一在 `G:\AI\telegram-kiro-bridge-main` 找到對應 commit／原始碼，2 筆 uk_917 候選也在 `G:\Cocos_Project\uk_917_leprechauns_pots_client` 對得上。
+
+**✅ 本批 8 條候選衍生 fact 全部經原始碼／commit 第一手逐字查證**（唯一例外見下方候選 5 的證據等級標註）。查證過的檔：`scripts/run-smoke-suite.mjs:612-690`、`scripts/mutate-gate.mjs:4789-4800`、`src/preamble-secret-scan.ts:1-60`、`src/moa-plan.ts:100-140/290-320`、`git show 604a7d6 / e588653 / a09f0ff`、`assets/game/Prefab/Effect/ExtraBetNode.prefab`、`AI-canonical-corp/skills/slot/uk-slot-preview-runtime/SKILL.md`。
+
+**⚠️ 一處 shortlist 與原始碼的敘述不符，照實回報不靜默調和：** 候選 5（行 9）的標題寫 **"killed 21 findings"**，讀起來像「駁回／擊落 21 條」；但 commit a09f0ff 的訊息逐字寫「共 21 條 findings，**全部自行重現後判定成立，駁回 0，全部修完**」——語意恰好相反。無法判定是 claude-mem 摘要用詞失準（把 mutation testing 語境的「全殺」誤植到 findings 上）還是別的原因。∴ 寫入的 fact 採 **commit message 的原文語意**（21 條全部成立、駁回 0），並在 fact 內文標明該條的證據等級。
+
+**⚠️ 一組看似互斥的候選其實不互斥（先查再判，未當成矛盾）：** 候選 1（行 5）說門檻升到 1.75、候選 4（行 8）說門檻由 1.2 改成 1.5。實查 git log 得知這是**兩個先後的 commit**（8ed207d「門檻回到 1.5」→ 8c29fb7「1.5 → 1.75」），同一天的第二版與第三版，不是矛盾記載 ∴ 合併成一條 fact 記完整校準史。
+
+**寫入 8 條（來自 10 個候選）＋候選外 1 條 = 共 9 條：**
+
+1.（shard `bridge-smoke-gate`，候選 1＋4 合併＝行 5＋8）smoke 爭用偵測門檻校準連錯兩次、第三版才是量出來的：空機分布 250.9/263.1/308.5/323.2/323.7/367.0s（差 1.46 倍）vs 唯一可信爭用觀測 466.7s（1.86 倍）；1.2 誤報兩次 → 1.5 只剩 3% 餘裕 → 現設 1.75 並**預先講死收斂條件**（再出現超標的空機一輪就移除功能、不再調）。含儀器解析度的誠實定位（只分得出 1.9 倍級嚴重爭用）與三條紀律（只在全綠時更新基準／子集與巢狀不參與／觀測不得變成失敗來源）。已在 fact 內文框成**擴充而非取代 f_faa25e**（那條排除的是把耗時納入 gate，本條是 warn-only 觀測），並與 f_30d188 區分機制（那條是 suite 之上的 hang 兜底）。
+2.（shard `verification-diagnosis`，候選 3＝行 7）三種無效驗證的可重用清單：①正對照的效應量必須跳出雜訊底線（307.8s 的刻意負載從未離開空機分布 ⇒ 零證據力）；②挑到對負載免疫的統計量等於把儀器弄瞎（min-of-N 在 14 核機上爭用中的最小值 67/87ms **低於**空機 74ms；⚠️ 明文寫進 fact：改中位數也只有 1.3–1.7 倍、照樣不夠，別以為換中位數就修好了）；③把基準造假成 1ms 證明的是分支可執行、不是那件事偵測得到。歸入 f_0b0278／f_5eaaed 的「動被測物之前先確認量測有沒有資格」家族。
+3.（shard `bridge-smoke-gate`，候選 7＝行 11）**變異存活的第三種解釋＝防禦深度**：OR8 第一版把 git-sha 的 `{40}` 放寬成 `{40,}` 存活，不是閘門有洞而是 `long-hex-41` 排在它之前且兩個邊界都套 ⇒ 拆成三條 pattern 本身就是防禦深度、單改一條打不穿；正確處置是換一個真的造得出缺陷的變異（改 long-base64 的 boundaries），不是把斷言改鬆去遷就它。已在內文指名家族四條（f_940b63／f_bc5b05／f_0b4a7b／f_5d0939）並說明本條補的是「存活的第三種解釋」。
+4.（shard `bridge-secrets-backup`，候選 11＝行 15）啟發式偵測器選 warn-only 的**理由層**（f_23b6cc 只記了「warn-only、不阻擋不改寫」這個結果）：不阻擋（拿啟發式正則換「bot 可能開不了機」是壞交易）／不改寫（靜默竄改使用者記憶資料比誤報嚴重）／不自動清理（retract 要人在場）；另加兩條跨專案遷移的設計紀律——正則一律 anchored 且帶長度下限（否則本 repo 文件裡的 `sk-ant`／`ghp_` 字面字串會讓它恆紅）、刻意不收泛用高熵偵測並明文選擇「漏報可接受、誤報不可接受」（誤報一多這支就會被無視）。
+5.（shard `bridge-project`，候選 10＝行 14）**f_6d597d 記載的「靜默降級成 general」已修**（commit a09f0ff），修法四個可遷移形狀：降級回結構化欄位不回訊息字串／警告要送到使用者不只 console.warn（bridge 跑在不留檔的視窗裡）／具名模板降級要走確認鍵盤不直接派工（wf-review 降級後仍交出看起來正常的**單一視角**報告，而 R-2 靠它當異源閘，「看起來全綠的單源覆核」比「明顯停住」危險）／**單槽所有權的缺陷在「誰可以清」不在「誰可以寫」**（三個入口有兩個傳從未註冊的臨時物件、收尾無條件清空 ⇒ 刪掉別人 park 的計畫；canParkPlan 這道寫入端守衛擋不到）。含「判斷抽成純函式才驗得到語意改動」這條測試設計理由。
+6.（shard `adversarial-review`，候選 5＝行 9）三個被異源推翻的**自審失效形狀**（當檢查表用）：①「已修」宣稱要指明修的是哪一端（修了寫入端、缺陷在清除端）；②SPEC 寫的洩漏範圍要實測不要推理（寫「只剩 Digest 會漏」，實測 JSON／單引號／env 三種全零命中）；③「修這個要重縮排 400 行」是假二分法（改名本體＋薄 wrapper 即可）。⚠️ fact 內文已標明證據等級 **commit＋SPEC 自述、無法獨立佐證**（自我報告本身無外部佐證來源）。已框成**與 f_b639af 互補非重複**——那條記輪次結構（逐層上移、收斂看類別不看輪數），本條記被抓到的錯誤形狀。
+7.（shard `adversarial-review`，候選 9＋12 合併＝行 13＋16）覆核 prompt 的不可信清單從 commit message／註解／AI.md **擴充到 SPEC／設計文件、測試名稱、以及「已經測過了」這種斷言**，理由同一個（全出自同一作者，互相印證只是回音）；並寫明三者各自的失效方式（SPEC 把錯誤前提固定成規格；測試名稱與「已測過」讓覆核者跳過，而恆真斷言／錨點失準的測試正是名字最像在守著什麼的那種，指名 f_14b56d／f_a7d81f）。兩天內兩筆候選重複出現 ∴ 判定為常態紀律非一次性措辭。⚠️ fact 內文已記待辦：正本 `ms-cross-model-adversarial-review` 的 SKILL.md 約 430 行那張表目前只列三樣，擴充**尚未寫進 skill**——AUTO 流程不動檔，留給互動 session。
+8.（shard `bridge-smoke-gate`，候選 2＝行 6）根因是「人的操作順序習慣」時，把提示放在**唯一會感覺到痛的那一刻**是正當的症狀式修法，兩個承重細節：①位置本身承重（印在 runner 之後等於沒有；正確位置是 pre-push 判定戳記沒中、即將開跑 4–5 分鐘之前）；②只有人看得到的提示消失時不會有任何紅燈 ∴ 必須自己配閘門（check-smoke-stamp 三條斷言是它唯一護欄）。⚠️ **候選外的查證所得併入本條**：commit 604a7d6 的訊息過度宣稱「覆蓋所有沒戳記的原因」，被覆核逐條核 evaluateStamp 分支後抓到（有兩條指引幫不上忙：「拿不到要推的 commit tree」是 stdin 問題、「戳記時間在未來」是系統時鐘被改過）；因已 push ∴ **不改寫歷史、記 erratum，且更正寫進讀者真的會看到的地方（hook 註解）不是 git log**，沿用 8d0b8fa 先例。
+9. **【候選外新增 ×1，來源 commit e588653 逐字查證，非 shortlist 候選】**（shard `dev-tools`）🚨 **未加引號的 heredoc（`<<EOF` 而非 `<<'EOF'`）會在生成檔案的當下執行反引號內的命令**：寫給覆核者的 prompt 裡有一句「或它與 git push --no-verify 的關係」（原文用反引號包住該指令），結果該指令**真的被執行**、把 604a7d6 繞過 pre-push 閘門推上 origin；同批六輪覆核的 prompt 全部中招（另有 git init 被執行，既有 repo 上是無害 re-init，已確認 core.hooksPath 仍是 .githooks）。此失效模式**沒有任何錯誤訊息**（檔案照樣產生、內容看起來正常，副作用發生在別處）∴ 只會事後從 git log 或閘門紀錄發現。已與 f_8d5086（heredoc 的 \n 展開）、f_e189b1（PowerShell here-string 汙染 commit 標題）框成同家族但**嚴重度高一階**（後果是執行任意命令並繞過閘門）。
+   **為什麼破例寫這條**：它不在 12 筆候選裡，是查證候選 2 的 commit 家族時讀到的；`list_facts` 查 `heredoc` 確認零覆蓋；本批只用了 12/15 額度、生產端仍未把它 surface 出來 ∴ 等下一次 shortlist 不可靠。帳目上**單獨計列、不併入 12 筆的下落**，維持候選帳與寫入帳可分別勾稽。
+
+**捨棄 2 筆（選取層淘汰，非撞既有 fact，逐條給理由）：**
+
+- 候選 6（行 10，「Centralize URL configuration documentation in shared UK slot」，說明欄僅寫「URL configuration currently not documented in a centralized location」）——**無內容的待辦**而非做成的決策：沒有記載要集中到哪、集中什麼、為何。⚠️ 刻意不宣稱「已經做完了」——這條候選的指涉對象有歧義（預覽網址參數 vs 一般 server URL 設定）；只能說**最接近的具體指涉**（預覽網址必帶 `?forceTadaUat=1`）已集中記在 `AI-canonical-corp/skills/slot/uk-slot-preview-runtime/SKILL.md`（實查行 3、8-15、37）∴ 依記憶規則（repo／skill 已記錄的不入庫）不寫。
+- 候選 8（行 12，ExtraBet feature implementation planned，說明欄記 ExtraBetNode.prefab 已存在且掛在 MainGame.prefab）——計畫／狀態快照，且**計畫已被執行**（實查 uk_917 的 git log：`9d6db82 調整 ExtraBet 切換盤面`、`6cadca8 搬入美術 ExtraBet 演出資源`、`5f17f9e 演出接上美術資源`、`e4205ab ExtraBetManager.prefab 存成編輯器正規格式`）∴ 會被下一次進度取代；ExtraBet 子系統本身已有專屬 skill `uk-slot-extrabet` 承載。prefab 路徑存在一事實查為真，但屬 repo 自身已記錄的內容。
+
+**撞既有 fact 而整條丟棄：0 筆。** ⚠️ 但有三筆與既有 fact 高度重疊、**刻意改寫成互補／更新而非丟棄**，抽查時要一起看：候選 5 ↔ f_b639af（同為多輪跨 vendor 覆核，改寫成「錯誤形狀」層）、候選 11 ↔ f_23b6cc（同一支 scanner，改寫成「理由」層）、候選 10 ↔ f_6d597d（本次是那條缺陷的**結案**，內文明寫「已修」）。這與前兩批「自我指涉迴圈整條撞掉」的形狀不同——本批候選多為**新寫的碼與新做的取捨**，既有 fact 記的是同一個主題的較早狀態。
+
+**帳目（12 筆全部有下落，無重複計數）:** 採用 **10 筆**候選（行 5[候1]、6[候2]、7[候3]、8[候4]、9[候5]、11[候7]、13[候9]、14[候10]、15[候11]、16[候12]）→ 產出 **8 條 fact**（合併關係：候1＋候4→#1、候3→#2、候7→#3、候11→#4、候10→#5、候5→#6、候9＋候12→#7、候2→#8）＋選取層淘汰 **2 筆**（行 10[候6]、12[候8]）= 10＋2 = **12 筆全數結案**。另**候選外新增 1 條**（#9）單獨計列 ∴ 本次 `remember` 呼叫共 **9 次**。
+
+**⚠️ `remember` 仍未回傳新 fact ID**（回傳只有 `ok: appended to facts-509424983.md, shard=…（pinned）`）∴ 本則無法引用九條新 fact 的 `f_xxxxxx`；抽查請以 shard 檔內文比對：`bridge-smoke-gate.md` ×3（#1、#3、#8）、`verification-diagnosis.md` ×1（#2）、`bridge-secrets-backup.md` ×1（#4）、`bridge-project.md` ×1（#5）、`adversarial-review.md` ×2（#6、#7）、`dev-tools.md` ×1（#9）。本批 shard 落點全部由 `topic` 參數顯式指定（與 2026-08-19 那則「兩條被自動分類器送錯 shard」不同）。
+
+**重疊率說明：** 本批 12 筆中 0 筆整條撞既有 fact（0%）、2 筆選取層淘汰（16.7%）、10 筆採用（83.3%）。採用率是目前各批最高，原因與 08-19 那則同向但更強：本批 10/12 筆是**同一天寫出的碼與當場做的取捨**（門檻校準、變異體設計、降級可見化、遮蔽正則邊界），有具體形狀可查證；唯二被淘汰的兩筆恰好是那兩筆 uk_917 的「計畫／待辦」型候選。
+
+去重方式：`list_facts` 查 `smoke`(29)／`門檻`(7)／`正對照`(0)／`雜訊`(4)／`降級`(21)／`遮蔽`(0)／`security theater`(0)／`回音`(7)／`駁回`(7)／`過度宣稱`(1)／`勘誤`(0)／`heredoc`(2)／`forceTadaUat`(0)，另比對 `AI-canonical` 正本 skill 的不可信清單原文。寫入前現存 669 筆。**未呼叫 forget。**
+
+**✅ 追記更正（同日，寫完後補查）：上面那句「`remember` 仍未回傳新 fact ID ∴ 無法引用」需要收窄。** `remember` 的回傳值確實不含 ID（只有 `ok: appended to …, shard=…（pinned）`），但**寫入後用 `list_facts` 帶 topic 名 + `tail=N` 讀該 shard 尾端就拿得到 ID**——本則九條的 ID 已補齊如下，抽查可直接用 ID 而不必比對內文。前三則（08-17／08-18／08-19）都寫了「無法引用 f_xxxxxx」，那個結論同樣應收窄成「remember 不回傳，但事後查得到」。
+
+| # | fact ID | shard | 來源候選（行） |
+|---|---------|-------|----------------|
+| 1 | `f_8a1614` | bridge-smoke-gate | 候選 1＋4（行 5＋8）|
+| 2 | `f_dafe71` | verification-diagnosis | 候選 3（行 7）|
+| 3 | `f_81a06d` | bridge-smoke-gate | 候選 7（行 11）|
+| 4 | `f_21ce70` | bridge-secrets-backup | 候選 11（行 15）|
+| 5 | `f_b35b6b` | bridge-project | 候選 10（行 14）|
+| 6 | `f_dc2548` | adversarial-review | 候選 5（行 9）|
+| 7 | `f_a2eb1a` | adversarial-review | 候選 9＋12（行 13＋16）|
+| 8 | `f_84a42b` | bridge-smoke-gate | 候選 2（行 6）|
+| 9 | `f_ce935e` | dev-tools | **候選外**（commit e588653）|
+
+master log 寫入後為 **678 筆**（669＋9，與帳目相符）。本則的九次 `remember` 全部帶 `topic` 顯式指定，九條落點與上表一致、無自動分類器偏移。

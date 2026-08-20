@@ -5,3 +5,5 @@
 **tool search 的實際貢獻（`ENABLE_TOOL_SEARCH=false` 對照臂）**：關掉後全開 114,923、strict-mcp 101,090 ∴ MCP schema 全載也只有 13,833；而兩個「都沒有 MCP」的臂相差 13,926 ⇒ **deferral 也 defer 內建工具（WebFetch/Task/Cron…），不只 MCP**。deferral 共省 26,776（非деferred prefix 的 23.3%），其中僅約一半來自 MCP。
 **第二個乘數仍成立（未重測）**：每輪重送全部 context——2026-07-29 那輪 Fable 覆核 85 個請求、context 從 90,218 長到 185,549、累計送進 12,724,628 vs output 156,050（81:1）。⚠️ 12.7M 是原始傳輸量非成本當量（cache_read 0.1x；cache_write 1h TTL 2x／5m TTL 1.25x，訂閱制預設 1h）。
 **可遷移判準**：任何「用註解語法停用設定」的做法，都要先確認那個檔格式**真的有註解語法**——Markdown、JSON 都沒有。
+- [f_d682b4] [2026-08-20T15:20:43.009Z] 逐 task 覆核會把缺陷推到沒人被指派的最外層：每輪覆核恪守自己的 brief 是對的，但沒有人擁有 task 之間的接縫，修正一律修在該 task 層內、未受測邊界每修一次外移一格；全分支覆核必做，且要求它真的改一個 token 看功能能不能被靜默關掉
+- [f_88faeb] [2026-08-20T15:20:43.009Z] 對「加了一個 skip 旗標」這類修法要追問「這條路徑上這個旗標之前還有誰會動手」——旗標只保護它自己那一行的 if；對「用 chatId 去重」的 cache／pending map 要追問「去重時把 opts 丟掉了嗎」

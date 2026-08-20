@@ -2,8 +2,8 @@
 title: Bridge 備份與密鑰洩漏防護（/backup、/sharedsync）
 type: concept
 created: 2026-07-11
-updated: 2026-08-17
-sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_a4eb9f, f_cba34c, f_b8922f, f_212e36, f_95d4e4, f_4e0d9d]
+updated: 2026-08-21（wikilint ingest：補 1 條——preamble 憑證掃描器的 warn-only 完整取捨與兩條可遷移偵測器設計紀律）
+sources: [f_f44d46, f_28e17b, f_b21c3a, f_de7bc7, f_dff56f, f_cd57ae, f_a4eb9f, f_cba34c, f_b8922f, f_212e36, f_95d4e4, f_4e0d9d, f_21ce70]
 history_sources: [f_810445]
 ---
 
@@ -46,6 +46,10 @@ history_sources: [f_810445]
 把 repo 直接打包成 zip 分享會連 **untracked 的 `.env`**（含 `TELEGRAM_BOT_TOKEN`）、`logs/`、`.claude/`、`.github/` 一起送出——這比 git 歷史洩漏更實際（git 只會包含 tracked 檔案）。
 
 額外風險：**兩個 bridge 共用同一個 bot token** 長輪詢會互搶 `getUpdates` 導致 Telegram 回 409 Conflict、兩邊都不穩 ∴ 下游**必須換自己的 token**。
+
+## 憑證掃描器為何選 warn-only（2026-08-19，補 f_23b6cc 的理由層）
+
+`src/preamble-secret-scan.ts` 的完整取捨：①**不阻擋**——preamble 組不出來等於 bot 開不了機，用一個啟發式正則去換這個是壞交易；②**不改寫**——一條記載「某種 token 長什麼形狀」的 fact 是正當內容，靜默竄改使用者記憶資料是另一種事故，比誤報嚴重得多；③**不自動清理**——命中後交給人用 `retract()`／`supersede()` 決定。另兩條可跨專案遷移的偵測器設計紀律：④正則一律 **anchored 且帶長度下限**（鎖前綴形狀＋主體字元集＋最小長度）——本 repo 文件與註解裡本來就有 `sk-ant`、`ghp_`、`TELEGRAM_BOT_TOKEN` 字面字串，子字串比對會恆紅；⑤**刻意不收泛用高熵字串偵測**（會把 fact ID、commit hash、base64 路徑全掃進來）——明文選擇「漏報可接受、誤報不可接受」，理由是誤報一多這支就會被無視。Telegram token 主體長度鎖死 35 是已知漏報邊界，刻意選漏報不放寬。
 
 ## 相關
 

@@ -1,2 +1,0 @@
-- [f_5bd2fc] [2026-06-27T00:45:09.018Z] SkillsMP 上的 196 萬份 skill 絕大多數設計給 Claude Code 本地 CLI 環境（依賴 PostToolUse hooks、.claude/ 目錄、memory_remember API），bridge 的 ACP+Telegram 架構無法直接安裝使用，但可借鏡概念融入現有機制
-- [f_166fd1] [2026-07-06T20:36:15.296Z] telegram-kiro-bridge 的 gate hook 決策已反轉：專案記憶文件 decision-no-gate-hook.md 改名為 decision-gate-hook-minimal.md，改採最小版 gate hook；CLAUDE.md Section 7 的完整 impact-analysis-guard PreToolUse hooks 維持不部署，此決策文件用於防止未來重複提案

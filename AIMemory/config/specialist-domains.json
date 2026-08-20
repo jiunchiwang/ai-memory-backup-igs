@@ -113,7 +113,14 @@
         "drop-out",
         "掉落動畫",
         "tools_slotsetup",
-        "回灌工作流"
+        "回灌工作流",
+        "divine_duel",
+        "divine duel",
+        "uk_963",
+        "uk-963",
+        "firepot",
+        "聚寶盆",
+        "scatter"
       ],
       "wikiPages": [
         "uk-slot",
@@ -417,7 +424,6 @@
         "posttooluse",
         "tool-hooks",
         "gate hook",
-        "impact-gate.mjs",
         "settings.local.json",
         "hooks 快照",
         "fail-open",
@@ -426,7 +432,19 @@
         "agents.md",
         "雷蒙",
         "user-profile",
-        "html 美化"
+        "html 美化",
+        "persona",
+        "人格",
+        "doraemon",
+        "哆啦a夢",
+        "personas/",
+        "/persona",
+        "personakey",
+        "personaoverride",
+        "carve-out",
+        "systemprompt.append",
+        "persona-stage1",
+        "personaconfiguredbutnotapplicable"
       ],
       "wikiPages": [
         "bridge-project",
@@ -452,7 +470,8 @@
         "bridge-infra",
         "bridge-self-eval",
         "cloudflare-os",
-        "deepseek-harness"
+        "deepseek-harness",
+        "bridge-persona"
       ],
       "mcpServers": [
         "memory",

@@ -2,8 +2,8 @@
 title: Bridge 測試閘門與建置
 type: concept
 created: 2026-08-01
-updated: 2026-08-18（ingest-ripple：補 1 條——tsc-only-fail 的突變體要移出 runtime 突變集）
-sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_e2e14a, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63, f_2f4ae9, f_88d3a1, f_f32658, f_b01fe2, f_ed5f8b, f_cb572a, f_06ae88, f_23885a, f_377321, f_932293, f_156659, f_820b01, f_3c7003, f_30d188, f_47b507, f_5e618d, f_3e05f4, f_0b4a7b, f_3eb82d, f_290edc, f_d2f8aa, f_bc5b05]
+updated: 2026-08-20（ingest-ripple：補 8 條——綠燈戳記紀律、爭用偵測門檻三版收斂、變異存活的防禦深度解釋、測不到的純防禦碼處置、機械閘門守不住猜測建議、smoke-lock 誤報更正、SDD 落地慣例）
+sources: [f_5871a8, f_50951c, f_28e17b, f_da3d5b, f_221993, f_eb4263, f_fad6c9, f_e2e14a, f_bfaf63, f_faa25e, f_40504b, f_9744ee, f_771784, f_204218, f_ea9ccb, f_dac7e8, f_29e3fe, f_173f37, f_75ce78, f_9219db, f_940b63, f_2f4ae9, f_88d3a1, f_f32658, f_b01fe2, f_ed5f8b, f_cb572a, f_06ae88, f_23885a, f_377321, f_932293, f_156659, f_820b01, f_3c7003, f_30d188, f_47b507, f_5e618d, f_3e05f4, f_0b4a7b, f_3eb82d, f_290edc, f_d2f8aa, f_bc5b05, f_5dd77b, f_30ed0b, f_9d387e, f_8a1614, f_81a06d, f_84a42b, f_76862f, f_f6b758]
 history_sources: [f_a692b7]
 ---
 
@@ -162,6 +162,33 @@ Smoke suite 整體的 hang detection 門檻安全邊際已被 suite 耗時成長
 ## 查證 ACP session 實際跑什麼 model（raw JSON-RPC probe）
 
 唯一可靠法：spawn adapter → `initialize` → `session/new` → 讀回傳 `configOptions` 裡 `id==="model"` 的 `currentValue`（`options[].description` 開頭即真名如「Opus 5 with 1M context」）。`scripts/check-acp-model-effort.mjs` 只驗 pin 成不成功、不告訴你實際在跑什麼——`claude-agent-acp` 不支援 `effort` config option（`session/set_config_option` 設 effort 會回 `-32603 Unknown config option`，bridge 已 graceful ignore，屬已知限制非故障，該閘門因此必然報 effort 拒絕）。
+
+## 綠燈戳記紀律（2026-08-19）
+
+戳記只在工作區乾淨時才蓋得上（它描述的是 HEAD 的 tree）∴ 想讓 pre-push 免跑 smoke 必須在 **commit 之後**才跑 `npm run smoke -- --fast`；commit 前跑會全綠但印「未蓋」。驗證戳記要比對它自報的 tree 與 `git rev-parse HEAD^{tree}`——不要用 `git rev-parse HEAD | node scripts/smoke-stamp.mjs --check`，那支吃的是 git push 的 ref 格式，餵裸 SHA 會誤判兩個方向都錯。
+
+提示補在**唯一會感覺到痛的那一刻**（`.githooks/pre-push` 判定戳記沒中、即將開跑 4–5 分鐘 fast tier 的那一行**之前**）是正當的症狀式修法，但只有人看得到的提示消失不會有任何紅燈 ∴ 要自己配三條斷言鎖住（指引存在、在 smoke 之前、在戳記檢查之後）。已 push 的 commit message 若過度宣稱「覆蓋所有情況」，不改寫歷史、改記 erratum 寫進讀者真的會看到的地方（hook 註解）。
+
+## 爭用偵測門檻校準（2026-08-19，三版收斂）
+
+同機同組 170 支的空機耗時分布量到 250.9–367.0s（1.46 倍差），唯一可信的爭用觀測點是 mutation set + 覆核者 CLI 同跑的 466.7s（1.86 倍）。門檻連錯兩版才收斂：1.2（兩次誤報）→ 1.5（又量到 1.46 只剩 3% 餘裕）→ **1.75 定案並明文寫死：若再出現超過 1.75 的空機一輪，正確處置是移除這個功能，不是再調一次**。這個量測只分得出「嚴重爭用」（1.9 倍級），分不出中度爭用——不是門檻不夠低，是這個量測本來就沒有那個解析度。三條紀律：只在全綠時更新基準、`SMOKE_ONLY` 子集不參與、觀測不得變成失敗來源（try/catch 全包、只 warn）。
+
+## 變異存活的第三種解釋：防禦深度（2026-08-19）
+
+變異存活不必然代表斷言弱，也可能是**防禦深度**——這時要換一個真的造得出缺陷的變異，不是把斷言改鬆去遷就它。實例：把 `git-sha` 的 `{40}` 放寬成 `{40,}` 存活，但閘門沒有洞，因為 `long-hex-41` 排在它前面且兩個邊界都套、64 位 hex 先被攔下。診斷順序：變異存活 → 先追「有沒有別的機制先攔下它」→ 有就是防禦深度、改設計別動斷言；沒有才是覆蓋缺口。
+
+## 測不到的純防禦碼（2026-08-18）
+
+`src/preamble-secret-scan.ts:98` 的 `re.lastIndex = 0` 經實測：從 dist 移除仍 34/34 全綠，因為下面的 while 迴圈一定跑到 `exec` 回 null，而帶 `/g` 的正則對 `exec` 回 null 時本來就會自動歸零 `lastIndex`——**在現行程式碼形狀下觀察不到**。三個處置合起來才完整：①原始碼註解誠實標明「這行沒有任何測試蓋得到，它是純防禦」並寫清楚保護的是未來（迴圈裡加一個提早 `break`，跨呼叫的 `lastIndex` 污染就變真的漏報）；②對應斷言標明自己過度決定（BC-4「冪等」看起來像在守它，實則殺不掉這個突變，斷言名稱直接寫「不守 lastIndex」）；③突變清單刻意排除註定 survive 的突變（放進來只會讓 killed 比例看起來有缺口卻無從修）。面對不可測的防禦碼，正解不是刪掉也不是硬湊假守衛，是把「測不到」同時寫進原始碼與閘門註解兩邊。
+
+## 其他機械閘門的邊界
+
+- **守不住「這條建議是不是猜的」**（2026-08-19）：為排除法建議加的斷言 `direct.includes("排除法")` 被跨 vendor 覆核當場構造出反例——一條同樣寫成排除法形式的**新**錯誤歸因照樣全綠。這類斷言只能寫成「驗形式」（含某字樣、條目數、格式一致），不可寫成「驗它不是猜的」。
+- **`smoke-lock-*` 目錄不是孤兒鎖**（2026-08-20 查證，先前誤報兩次）：`scripts/check-smoke-command.mjs:397` 拿它當測試 fixture 暫存目錄，全 `scripts/` 只有這一處引用、沒有任何程式讀它來擋執行——名字裡的 lock 是命名誤導，殘留完全無害，與既有「smoke runner 無併發鎖」一致。
+
+## SDD（subagent-driven-development）在本專案的落地慣例（2026-08-20）
+
+`superpowers` 的 subagent-driven-development 流程實作用**feature branch 而非 worktree**——本 repo 的測試 `import dist/` 需要 `node_modules`，且既有 Windows junction 危害紀錄使新 worktree 的 `npm install` 有風險。Ledger 存於 `.superpowers/sdd/<plan>/progress.md`；每個 Task 派 sonnet 實作 + sonnet 覆核；fix loop 上限 5 輪。
 
 ## CI 決策（刻意不進版控的 ci.yml）
 

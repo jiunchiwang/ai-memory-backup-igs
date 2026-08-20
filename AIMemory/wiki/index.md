@@ -17,6 +17,7 @@
 - [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級、派工前能力軸/blind advisor 幻覺、scope 擴張敘述凍結、樣板知識同源天花板、修正動作本身產生假因果的獨立失效模式、覆核強度受 prompt 影響的受控對照、覆核者看不到 git 版控狀態；2026-08-05 從 bridge-acp 拆出，2026-08-16 更新）
 - [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、Kiro effort 值域 per-model 實測、sonnet-4.6[max] vs opus-4.5 對照實驗、advisor 顧問工具與其 token 成本／context 剝除機制、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
 - [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
+- [[bridge-persona]] — Bridge Persona 人格系統（設計定案 v4：人格語氣與工程紀律解耦、注入通道走 ACP `_meta.systemPrompt.append`、四階拆解、persona 檔進版控慣例、外部建議取用與反駁；2026-08-20 新建）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-draft-diag]] — Bridge Draft 診斷與重播修復（三個獨立成因、cutPendingTokenTail 扣留式設計、診斷探針、可重用方法論；2026-08-08 從 bridge-streaming 拆出）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份、判斷 wiki 保護不要自行 Grep 要直接呼叫 forget()、apply_topics token 機制阻塞已修（phase-aware guidance）、skill orphan 涵蓋不到 plugin marketplace、fact ID 完整性與 provenance 稽核缺陷、memory canary gold set 與 latency gate 翻面實測、skill 真孤兒 entry 直接刪不留墓碑、preamble 固定區塊只掛最長 return 的附帶損害型缺陷；2026-08-18 更新）
@@ -71,8 +72,10 @@
 
 ---
 
-Total pages: 54
-Last updated: 2026-08-20 wikisync（ingest-ripple 1 頁更新——uk-slot-clash-olympus 補 4 條 facts：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；Query Auto-save 候選皆判定內容不足跳過）
+Total pages: 55
+Last updated: 2026-08-21 wikilint（tool-wiki-stale-scan 覆蓋率 9/55 可判定：1 STALE 已補（bridge-secrets-backup +1 條）、8 FRESH；孤兒 0、斷連連結 0；tool-wiki-size-scan FAIL——4 頁 NEW 超標（adversarial-review 214／bridge-smoke-gate 204／uk-slot-clash-olympus 210／verification-diagnosis 202）、3 頁 GREW（bridge-acp 276／bridge-project 268／uk-slot 225），本輪未拆頁、留待下次處理）
+Previous: 2026-08-20 wikisync（新增 [[bridge-persona]]；ingest-ripple 3 頁更新——bridge-smoke-gate 補 8 條、bridge-project 補 2 條（f_e21eb1 已於 08-18 刻意改收進 verification-diagnosis 避免本頁超出行數棘輪基線，本輪未重複收）、adversarial-review 補 4 條；5 個 Query Auto-save 候選皆判定內容不足跳過，其中 1 個是被誤判為新內容的既有 fact memory-recall 回音）
+Previous: 2026-08-20 wikisync（ingest-ripple 1 頁更新——uk-slot-clash-olympus 補 4 條 facts：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；Query Auto-save 候選皆判定內容不足跳過）
 Previous: 2026-08-19 新增 [[munder-difflin]]（外部 repo 借鏡評估；M2 能力旗標式降級命中 run_plan 全有全無設計）
 Earlier: 2026-08-18 新增 [[kkterm]]（外部 repo 借鏡評估；K1 推翻 [[cloudflare-os]] B3 的成本前提）
 Earlier: 2026-08-18 新增 [[deepseek-harness]]（外部 repo 借鏡評估；補上 08-17 那份研究報告從未落成 wiki 頁的缺口——`wiki-auto-save-candidates.jsonl` 該筆仍 `processed:false`，**未手改該檔**，因全檔 100 筆有 92 筆同樣未處理 ∴ 該旗標不是 pipeline 的實際驅動）

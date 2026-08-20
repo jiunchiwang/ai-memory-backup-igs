@@ -1,6 +1,6 @@
 {
   "_schema_version": 1,
-  "_last_updated_at": "2026-08-19T20:25:19.626Z",
+  "_last_updated_at": "2026-08-20T20:28:47.330Z",
   "skills": {
     "ms-external-repo-absorption": {
       "created_at": "2026-07-10T00:00:00.000Z",
@@ -21,20 +21,20 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 3,
-      "last_routed_at": "2026-08-14T11:49:23.589Z"
+      "route_count": 4,
+      "last_routed_at": "2026-08-20T04:34:55.539Z"
     },
     "ms-wiki-knowledge-base": {
       "created_at": "2026-06-29T20:04:14.515Z",
       "last_bridge_listed_at": "2026-08-08T06:46:05.116Z",
-      "last_agent_used_at": "2026-08-19T20:08:35.021Z",
-      "use_count": 142,
-      "last_reason": "wikisync 步驟",
+      "last_agent_used_at": "2026-08-20T20:28:46.070Z",
+      "use_count": 145,
+      "last_reason": "wikilint 步驟",
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 6,
-      "last_routed_at": "2026-08-18T14:43:19.760Z"
+      "route_count": 7,
+      "last_routed_at": "2026-08-20T06:39:50.516Z"
     },
     "writing-skills": {
       "created_at": "2026-05-29T12:41:52.929Z",
@@ -79,8 +79,8 @@
       "pinned": false,
       "notes": null,
       "orphan": false,
-      "route_count": 7,
-      "last_routed_at": "2026-08-14T05:35:12.979Z"
+      "route_count": 9,
+      "last_routed_at": "2026-08-20T05:22:04.920Z"
     },
     "claude-mem-curate": {
       "created_at": "2026-06-19T07:53:36.451Z",
@@ -193,8 +193,8 @@
       "pinned": true,
       "notes": null,
       "orphan": false,
-      "route_count": 5,
-      "last_routed_at": "2026-08-15T14:24:53.868Z"
+      "route_count": 6,
+      "last_routed_at": "2026-08-20T13:41:45.088Z"
     },
     "ms-windows-shell-exit-code-false-positive": {
       "created_at": "2026-05-29T08:58:12.647Z",
@@ -487,8 +487,8 @@
       "last_bridge_listed_at": null,
       "last_agent_used_at": null,
       "use_count": 0,
-      "route_count": 2,
-      "last_routed_at": "2026-08-16T00:00:20.961Z",
+      "route_count": 3,
+      "last_routed_at": "2026-08-20T02:34:10.915Z",
       "last_reason": null,
       "pinned": false,
       "notes": null,
@@ -523,8 +523,8 @@
       "last_bridge_listed_at": null,
       "last_agent_used_at": null,
       "use_count": 0,
-      "route_count": 0,
-      "last_routed_at": null,
+      "route_count": 1,
+      "last_routed_at": "2026-08-20T02:34:10.915Z",
       "last_reason": null,
       "pinned": false,
       "notes": null,
@@ -535,8 +535,8 @@
       "last_bridge_listed_at": null,
       "last_agent_used_at": null,
       "use_count": 0,
-      "route_count": 0,
-      "last_routed_at": null,
+      "route_count": 1,
+      "last_routed_at": "2026-08-20T01:23:23.697Z",
       "last_reason": null,
       "pinned": false,
       "notes": null,
