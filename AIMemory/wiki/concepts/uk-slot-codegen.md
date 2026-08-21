@@ -36,6 +36,10 @@ sources: [f_ba8cc5, f_5fa621, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, 
 - spec_adapter.py 3 個實測 bug：Symbol idx 未依 ODDS 表 SymID 排序全錯位、音效表解析失敗、總數少算+HAS_JACKPOT 誤判
 - **結論**：codegen 當 M0a~M1 加速器成立，但規格轉換不能無人化，人工檢查點 1 必須保留
 
+⚠️ **未收斂的計數矛盾**（2026-08-21 dedup 時發現，刻意不消滅）：[[uk-slot]] 該節寫的是 **5 個** spec_adapter bug（列舉「SymID 排序、音效漏抽、JP 偵測等」），本頁寫 **3 個**且列出的三項與那三個具名項對得上。∴ 兩邊講的可能是同一批而其中一邊把「總數少算＋HAS_JACKPOT 誤判」拆算成兩項、也可能真的漏記兩項。**沒有第一手材料可判**（回饋文件在 `G:\AI\Skill\uk-slot-codegen-feedback.md`）——要用這個數字前先去讀那份檔，不要挑一個看起來對的抄。
+
+**proto 慣例覆蓋（原記在 [[uk-slot]]，2026-08-21 移來當主場）**：一律經 `Proto.ts` **單一間接點**，排除 codegen 原本的 replace-all-imports 做法（uk_917 實戰教訓）。這條與〈Clash of Olympus 交付案例〉第 1 點是同一個設計決策的兩面——正因為走單一間接點且刻意用 default export 保住 CJS runtime object，型別位置才必須另外補 `import type`。
+
 ## 回饋文件與修正
 
 - 8 項全部修正完畢（commit cee689e）

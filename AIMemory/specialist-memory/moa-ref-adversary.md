@@ -18,3 +18,7 @@
 
 1. 第一份 review：RoundInfo 不可變性、VsFeatureResult 跨局不殘留、mock 可觸發 Resolve() — 三項驗收點全過，0 High/Medium finding，9/9 unit tests PASS，tsc 0 error（目標三檔）。
 2. 第二份 review：`IsValidReel` 的 filter 行為與 dev-spec.md:19
+- [2026-08-21T01:06:35.553Z] (上面三個前置工項是同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.appe) [auto-summary] acts 要清除。如果這些操作在帶人格的 session 裡執行，「人格影響判斷」的風險不只在 extraction，而在整個 dream body 的 LLM 決策過程。三個方案都把問題定義為「extraction 的污染」，沒有人問「body 執行期間的決策污染」。這是共同的問題定義邊界，不是個別方案的設計疏漏。完成。總結：
+
+- **方案 C**：致命缺陷——自陳「最關鍵的未查證前提」（ACP per-request inject）卻仍推薦，前提若假則方案不存在。
+- **方案 B**：致命缺陷——清洗點在 extraction 層，但沒有機制阻止 LLM 在 dream body 直接

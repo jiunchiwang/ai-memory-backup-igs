@@ -10,14 +10,18 @@
 - [[uk-slot-codegen]] — UK Slot Codegen 工具整合（定位 M0a~M1 加速器、anchor merge 限制、驗證結果、回饋修正）
 - [[uk-slot-pirates-queen]] — UK Slot 海盜女王專案（6×5 盤面、懸賞令、RTCtrl 凍幀報獎進化版、PascalCase 搜尋陷阱）
 - [[uk-917]] — uk_917 3 Leprechaun's Pots（遊戲輪廓、M0a 進度、proto stub、規格確認事項）
-- [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（ROW=4/COL=6 4096 Ways、M0b 全綠、VS Feature 規則與編導多輪確認定案、M2.1 完成＋M2.2 資料接線切片完成、GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；2026-08-20 更新）
+- [[uk-slot-clash-olympus]] — Clash of Olympus 諸神之戰（**專案已改名 `uk_963_divine_duel_client`**，頁名暫未跟進）：ROW=4/COL=6 4096 Ways、M0b 全綠、M2.1~M2.5 進度、placeholder 字型、框架狀態機兩個執行期事實、Preview 實機驗收三個入口坑、Cocos prefab 踩坑；2026-08-21 規格裁決再拆出
+- [[uk-slot-clash-olympus-spec]] — 同專案的**規格層裁決**（分界線＝這句話由誰說了算）：GAP-01~10 缺口登記的唯一真相源在專案內 `docs/spec-gaps.md`（不在版控）、GAP-04 語意定案 2X、VS Feature 規則定案（符號 id 與模板撞車／1×4 轉型／兩層閘門／VS Collect 相加不連乘）、VS 轉型權威來源、規格圖是 A 級證據、設計文件單一真相源紀律；2026-08-21 從 uk-slot-clash-olympus 拆出
 - [[uk-slot-eye-strike]] — Eye Strike 系列（第一代 uk_658 + 續作 uk_872、7 個專案特有機制、SpineKit 規範、停輪曲線量化分析、baked path 動畫限制、CLAUDE.local.md 覆蓋技巧、型別檢查閘門唯一有效指令是 npm run typecheck＋診斷工具鏈的權威來源順序；2026-08-18 更新）
 - [[bridge-project]] — Telegram-Kiro-Bridge 專案（架構、AIMemory、Rich Messages、Reply Context、Smoke 隔離、Specialist Dashboard、Status Server 加固、背景通知 flakiness 診斷判準、Fable5 對抗覆核、claude-mem plugin worker 診斷、Claude Agent SDK 權限模型、heredoc \n 展開陷阱、POLICIES 假宣稱更正、Telegram 出站訊息重複投遞四層修復＋重放安全性三判準、同事接手 repo 用獨立 fork 而非 GitHub Fork 按鈕、grammY transformer 安裝順序更正；2026-08-16 更新）
-- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測、tool 結果狀態判定鏈與 is_error 可信度實測、Codex/Kiro hooks 能力更正）
-- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、覆核者成本分級、派工前能力軸/blind advisor 幻覺、scope 擴張敘述凍結、樣板知識同源天花板、修正動作本身產生假因果的獨立失效模式、覆核強度受 prompt 影響的受控對照、覆核者看不到 git 版控狀態；2026-08-05 從 bridge-acp 拆出，2026-08-16 更新）
+- [[bridge-acp]] — Bridge ACP 與 Model 配置（adapter 切換差異、/agent 熱切換、model pin（Codex 現 pin gpt-5.6-sol）、ACP adapter 能力偵測陷阱、AcpBackendDef 語意差異、session/resume 語意分析與能力探測、tool 結果狀態判定鏈與 is_error 可信度實測、Codex/Kiro hooks 能力更正、三套互不相干底層 harness、backend 身分判定要看真正命令列；2026-08-21 更新）
+- [[adversarial-review]] — 異源對抗覆核紀律（長期警戒模式清單、覆核紀律演化、價值實證時間序、findings 處置四維、scope 擴張敘述凍結、樣板知識同源天花板、修正動作本身產生假因果的獨立失效模式、覆核強度受 prompt 影響的受控對照、覆核者看不到 git 版控狀態；2026-08-05 從 bridge-acp 拆出，2026-08-21 派工決策再拆出）
+- [[adversarial-review-dispatch]] — 異源覆核**派工決策**（送出指令之前的事）：domain／tier／能力三軸不可互換、成本分級規則、降級階梯、vendor pin 自報只能否證、覆核者池三家與各自呼叫法、blind advisor 會捏造帶行號引用且無自報訊號、token 成本三個相乘項（冷啟 prefix 組成已於 08-17 重測改寫）、Windows `npm help` 靜默掛住；2026-08-21 從 adversarial-review 拆出
+- [[bridge-telegram-delivery]] — Bridge Telegram 出站投遞（HTML parse_mode 取捨、`planUncertainReplay` 的邊界、重試 instrumentation 只記失敗＝重試成功率結構上不可觀測、重複投遞四層修復與 R-A/R-B/R-C 重放安全性判準、H-1/H-2 兩條 high 開案不動手的理由、grammY transformer 安裝順序更正）；2026-08-21 從 bridge-project 拆出
+- [[gate-mutation-testing]] — 突變測試：證明斷言真的會紅（突變本身靜默沒套用的四個 Windows 機制、突變存活的三種解釋與固定診斷順序、突變體設計判準、mutate-gate harness 慣例、順序不變式三件套、測不到的純防禦碼、突變測試的能力上限）；2026-08-21 從 verification-diagnosis + bridge-smoke-gate 合併拆出，同時修好 `POLICIES/development-methodology.md:136` 的斷連引用
 - [[bridge-model-strategy]] — Bridge Model 選型與配額策略（pin 修正史、Kiro model 生態、Kiro effort 值域 per-model 實測、sonnet-4.6[max] vs opus-4.5 對照實驗、advisor 顧問工具與其 token 成本／context 剝除機制、Claude Max 5x 分配策略；2026-08-05 從 bridge-acp 拆出）
-- [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume、/session 多 session、transcript 路徑）
-- [[bridge-persona]] — Bridge Persona 人格系統（設計定案 v4：人格語氣與工程紀律解耦、注入通道走 ACP `_meta.systemPrompt.append`、四階拆解、persona 檔進版控慣例、外部建議取用與反駁；2026-08-20 新建）
+- [[bridge-session]] — Bridge Session 生命週期（archive 蒸餾層、ACP resume 能力探測、/session 多 session、transcript 路徑、退出路徑意圖物件旗標 vs threading 參數、maintenanceSession 被 Dream Executor 取代；2026-08-21 更新）
+- [[bridge-persona]] — Bridge Persona 人格系統（**Stage 1+2 皆已完成並實機驗證**：Dream Executor 取代 session carve-out、`/persona` 指令與 pin、outputStyle／CODEX_CONFIG 兩個外部注入通道旁路、R-5 降 scope 決策、突變測試三種假象；2026-08-21 更新）
 - [[bridge-streaming]] — Bridge Streaming 與訊息渲染（Draft API 三階段 lifecycle、4096 截斷、rate limit、Rich Messages）
 - [[bridge-draft-diag]] — Bridge Draft 診斷與重播修復（三個獨立成因、cutPendingTokenTail 扣留式設計、診斷探針、可重用方法論；2026-08-08 從 bridge-streaming 拆出）
 - [[bridge-memory]] — Bridge 記憶與維運系統（AIMemory 結構、/dream 14 步維運、factlint 三層防禦、topic 分類、wiki 知識庫、embedding router、備份、判斷 wiki 保護不要自行 Grep 要直接呼叫 forget()、apply_topics token 機制阻塞已修（phase-aware guidance）、skill orphan 涵蓋不到 plugin marketplace、fact ID 完整性與 provenance 稽核缺陷、memory canary gold set 與 latency gate 翻面實測、skill 真孤兒 entry 直接刪不留墓碑、preamble 固定區塊只掛最長 return 的附帶損害型缺陷；2026-08-18 更新）
@@ -38,7 +42,7 @@
 - [[user-pref]] — 使用者偏好與決策風格（ASK 優先、Git 紀律、自動化保守策略、除錯對策）
 - [[skill-and-eval]] — Skill 評估與管理（方法論整合、工具評估決策）[歷史頁面，topic 已併入其他分類]
 - [[igs-uof]] — IGS-UOF 加班單自動化（原 vc-uof-hours 改名擴充、加班單送出五層防線、刷卡時間 onchange 踩坑、Cloudflare CDP 接管；2026-08-16 provenance 修正）
-- [[verification-diagnosis]] — 驗證與診斷方法論（綠燈假象五型與突變測試、診斷實驗三原則、證據的 recovery 邊界、純觀測欄位、await 縫開 race、同源自審天花板、註解洩漏答案、行為測試 vs 模型冷讀判準、防禦性修法第二次被繞過即改驗不變式；2026-08-01 從 misc 拆出，2026-08-18 更新）
+- [[verification-diagnosis]] — 驗證與診斷方法論（綠燈假象五型與突變測試、診斷實驗三原則、證據的 recovery 邊界、純觀測欄位、await 縫開 race、同源自審天花板、註解洩漏答案、行為測試 vs 模型冷讀判準、防禦性修法第二次被繞過即改驗不變式、環境條件偵測儀器三種無效校準、純函式綠燈不等於接線、skip 守衛需負對照；2026-08-01 從 misc 拆出，2026-08-21 更新）
 
 ## Lessons
 
@@ -73,7 +77,19 @@
 ---
 
 Total pages: 55
-Last updated: 2026-08-21 wikilint（tool-wiki-stale-scan 覆蓋率 9/55 可判定：1 STALE 已補（bridge-secrets-backup +1 條）、8 FRESH；孤兒 0、斷連連結 0；tool-wiki-size-scan FAIL——4 頁 NEW 超標（adversarial-review 214／bridge-smoke-gate 204／uk-slot-clash-olympus 210／verification-diagnosis 202）、3 頁 GREW（bridge-acp 276／bridge-project 268／uk-slot 225），本輪未拆頁、留待下次處理）
+Last updated: 2026-08-21 wikisync（ingest-ripple 4 頁更新，皆命中優先清單）：
+- **[[bridge-persona]]** 補 13 條 facts（架構演進 Dream Executor 取代 session carve-out、outputStyle／CODEX_CONFIG 兩個外部注入通道旁路、Stage 2 `/persona` 指令與 pin 三個決策、測試與驗證紀律教訓）；1 條過時狀態（f_1bd398「尚未 push」）移入 `history_sources`，由 f_521237 取代
+- **[[bridge-session]]** 補 5 條（resume 能力探測與 replaying 旗標 gate 條件細節、session/resume 切換的既知測試陷阱、新增小節「Session 退出路徑的意圖傳遞：物件旗標 vs 逐一 threading 參數」記 maintenanceSession 旗標教訓與後續被 Dream Executor 取代的演進）；shard 內另 3 條（vc-uof-hours 改名、K2/K3 安全工作、persona 通道實測）查證後判定主題不符本頁（分屬 igs-uof／bridge-secrets-backup／bridge-persona 範疇），未收
+- **[[bridge-acp]]** 補 3 條（Codex pin 更新為 `gpt-5.6-sol`、新增「三套互不相干的底層 Harness」與「Backend 身分判定：看真正命令列」兩節）；shard 內另 5 條（`.claudedocs` 慣例、Claude Agent SDK 命名與 permissionMode 六值等）因頁面已達 227 行 baseline 上限，判斷主題可延後暫不收，本輪僅收與現有內容直接串接的三條——**⚠️ 本頁現為 235 行，超出既有 227 baseline，下次 size-scan 會標記，需拆頁或裁減**
+- **[[verification-diagnosis]]** 補 4 條（環境條件偵測儀器三種無效校準、新增第十節「測試設計三判準」：純函式綠燈不等於接線／skip 守衛需負對照／時序不可控就縮小斷言範圍）——**⚠️ 本頁現為 206 行，超出 200 行常規上限（無 baseline 例外），下次 size-scan 會標記**
+- **Query Auto-save 候選 5 個皆判定跳過**：`acp-agent-sdk`／`kiro-opus-sonnet-effort`／`kiro-sonnet46-effort-max-opus45` 已分別被 [[claude-agent-sdk]] §5、[[bridge-model-strategy]] 完整涵蓋，新建等於重複；`claude-mem`（原回覆 23,742 字）與 `gcocos-projectuk-872-eyestrike2-clientextensions`（原回覆僅 492 字）無持久化的原始回覆內容可供重建，現有 facts（f_a37cfa／f_c0ada7／f_7d05b7）只是片段、不足以忠實重建完整診斷，寧可跳過不造假頁面
+Previous: 2026-08-21 **行數棘輪 FAIL 已清除 → PASS**（處理 dream High Priority 第 1 項）。7 頁全部處理完畢，**沒有壓字數**：
+- **拆頁（3 個新頁）**：adversarial-review 214→149（拆出 [[adversarial-review-dispatch]] 108，分界線＝送出覆核指令之前／之後）；verification-diagnosis 202→190 ＋ bridge-smoke-gate 204→175（**合併**拆出 [[gate-mutation-testing]] 81，兩頁原本各記一半且重複部分內容不一致，同時修好 `POLICIES/development-methodology.md:136` 引用該頁名卻不存在的斷連）；uk-slot-clash-olympus 210→154（拆出 [[uk-slot-clash-olympus-spec]] 78）
+- **改主場（刪除過時副本，非搬移即棄）**：bridge-acp 276→227（覆核紀律／選型／Max5x／vc-kiro-delegate 四節是 08-05 拆頁時「只複製沒刪除」的殘留，舊版仍寫「不變式類→Fable 5」而 08-13 已改為跨 vendor 優先）；uk-slot 225→181（5 節，最嚴重是 Clash of Olympus 那節仍寫已實查不存在的 `clash_of_olympus_demo` 與反了的「6×4」）；bridge-project 268→189（11 節，各子系統頁皆為超集）。四處本頁獨有內容**先移主場再刪**：`/sync` exit-code 契約＋分享 repo 給同事→bridge-upstream-sync、Agent SDK 六階權限→claude-agent-sdk §4.1、字串陣列vs regex 等價→bridge-draft-diag、跨專案搬 Spine→uk-slot-pitfalls 第 13 條
+- **基線手動下修** `.size-baseline.json`：bridge-acp 275→227（不下修則可從 227 悄悄長回 275 而閘門全綠）；uk-slot、bridge-project 已 ≤200 移出基線
+- ⚠️ **第二輪修正——「剛好 200」不算過關**：bridge-project 第一輪停在 **恰好 200**、verification-diagnosis 停在 197，兩者零／近零餘裕 ∴ 下一次 ingest-ripple 加任何一行就會立刻翻紅。補做：bridge-project 再拆出 [[bridge-telegram-delivery]]（出站投遞叢集 35 行）→ **170**；verification-diagnosis 把「同源自審的天花板」整節移回 [[adversarial-review]] 主場（那一頁的存在理由就是這個天花板，留兩份等於兩個主場）→ **187**。判準記下來：**目標是留得下成長餘裕，不是壓到 200 以內**——第一輪就是因為只盯著「有沒有 ≤200」才做出兩個零餘裕的頁
+- **副作用（Watch List 連帶改善）**：7 頁的 `updated:` 從帶括號註記改為裸日期後，stale-scan 可判定覆蓋率 **8/55（14.5%）→ 16/58（27.6%）**，STALE 0
+- 斷連連結 0（`[[a|b]]` 別名與 backtick 內舉例是檢查器誤報，後者已改寫）
 Previous: 2026-08-20 wikisync（新增 [[bridge-persona]]；ingest-ripple 3 頁更新——bridge-smoke-gate 補 8 條、bridge-project 補 2 條（f_e21eb1 已於 08-18 刻意改收進 verification-diagnosis 避免本頁超出行數棘輪基線，本輪未重複收）、adversarial-review 補 4 條；5 個 Query Auto-save 候選皆判定內容不足跳過，其中 1 個是被誤判為新內容的既有 fact memory-recall 回音）
 Previous: 2026-08-20 wikisync（ingest-ripple 1 頁更新——uk-slot-clash-olympus 補 4 條 facts：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構；Query Auto-save 候選皆判定內容不足跳過）
 Previous: 2026-08-19 新增 [[munder-difflin]]（外部 repo 借鏡評估；M2 能力旗標式降級命中 run_plan 全有全無設計）

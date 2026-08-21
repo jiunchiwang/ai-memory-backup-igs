@@ -3,3 +3,5 @@
 - [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) plateAfter 不需要持久化，CollectFeatureShowState 直接用 MainPlateSymbol + VSResult 重算 Resolve() 即可
 - [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) AdaptRoundToVSInput 放在 VSManager.ts 而非 VsFeatureShowState，維持 ts-node 可測性
 - [2026-08-13T11:57:49.565Z] (根據前兩份審查結果，為 G:\Cocos_Project\uk_slot_clash_of_olympus 的 M2.2) GameView.VsFeatureResult 新增欄位承載 collectWins[col]，解決 CollectFeatureShowState 收分係數來源問題
+- [2026-08-21T01:04:46.519Z] (設計問題：目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dre) 提出放棄 session 層級人格 carve-out、改在 fact 寫入層一次攔截的簡化方案。核心取捨：犧牲 /dream 執行時模型不見人格的純粹性，換取移除 personaOverride、maintenanceSession、skipArchiveRestore、waitForTurnIdle、BC-16 測試等大量複雜度。
+- [2026-08-21T01:04:46.519Z] (設計問題：目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dre) 用 writeMaintenanceFacts() 取代 /dream 的 remember() 呼叫，該函式內部 spawn 獨立 client（走 extractFromTranscript）寫事實，不經帶人格的 session

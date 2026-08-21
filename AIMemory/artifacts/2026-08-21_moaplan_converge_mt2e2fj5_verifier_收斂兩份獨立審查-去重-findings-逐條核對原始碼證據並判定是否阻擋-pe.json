@@ -1,0 +1,50 @@
+{
+  "id": "moaplan_converge_mt2e2fj5",
+  "specialist": "verifier",
+  "task": "收斂兩份獨立審查。去重 findings，逐條核對原始碼證據並判定是否阻擋 Persona Dream Executor 提交。不得因 smoke 或 mutation 綠燈自行降級 finding。輸出 verdict 僅能是 READY 或 NOT_READY，並分列 blocking_findings 與 nonblocking_findings。",
+  "created": "2026-08-21T03:41:56.097Z",
+  "status": "done",
+  "summary": "h my own concurrent `mutate-gate.mjs` run (its DE15 injection window overlapped — the exact error signature matches DE15's target check). Not a real defect. Let me verify the tree is restored and rerun clean.Identical diff stat as before (695 insertions, 2400 deletions) — tree fully restored. Now rebuild and rerun smoke without contention.Both explicitly-required isolation items with mutation-detectable coverage confirmed (persona, agent pin, action credential, legacy token, working-state all ki",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "I'll independently verify the first review's findings against the actual source code, since the second review failed to produce usable output (repeated safeguard triggers, no structured_output call).Confirmed: `tsc --noEmit` clean. Now let me verify the mutation test results and check finding 4 (BC-DE-17/18).Confirmed. Now let me wait for the mutation gate result and also check the smoke suite independently.That smoke failure was contention with my own concurrent `mutate-gate.mjs` run (its DE15 injection window overlapped — the exact error signature matches DE15's target check). Not a real defect. Let me verify the tree is restored and rerun clean.Identical diff stat as before (695 insertions, 2400 deletions) — tree fully restored. Now rebuild and rerun smoke without contention.Both explicitly-required isolation items with mutation-detectable coverage confirmed (persona, agent pin, action credential, legacy token, working-state all killed by DE7/8/9/10/15/16). Only **resume registry** and **archive** — also explicitly required — have zero regression protection. That's the basis for my verdict. Let me submit the structured output.## 收斂結果：**NOT_READY**\n\n第二份審查因觸發安全防護反覆失敗、從未產出可用內容也未呼叫 `structured_output`，對收斂零貢獻，不採信其任何具體主張。以下完全基於我自己直接讀原始碼、重建 `dist/`、獨立重跑 `tsc --noEmit`、`SMOKE_ONLY=check-persona npm run smoke`、`node scripts/mutate-gate.mjs persona-stage1` 得到的結果。\n\n**Blocking（2 條，都命中任務明確列舉的隔離項目）：**\n\n1. **High** — `resumeSessionId`（resume registry 隔離守衛，`sessionManager.ts:913-915`）沒有任何測試/mutation 能偵測其回歸。`resolveResumeCandidate()` 內部自己先被 `config.acpSessionResume` 短路（測試環境刻意設 false），拿掉 913 行的 ephemeralDream 檢查依然全綠；`grep mutate-gate.mjs` 確認零匹配。萬一正式環境 `ACP_SESSION_RESUME=true` 且此守衛未來被誤刪，dream executor 可能對使用者互動 session 同一個遠端 ACP session 下 `session/load`。\n2. **Medium** — archive 消費守衛（`sessionManager.ts:851-875`）同樣零測試零 mutation 覆蓋，拿掉會靜默吃掉使用者的 turn-level 交接內容。\n\n**Nonblocking（2 條）：**\n\n3. **Medium** — `check-token-policy.mjs` Test 5 宣稱「all fields zeroed」實際只驗 3/13 個 `FIELD_ZERO` 欄位；已確認是本次 PR 之前就存在的既有缺口（`token-policy.ts` 本次只改 2 行），非本次改動引入。\n4. **Low** — BC-DE-17/18 是結構上無法有等效 mutation 的否定式存在性檢查，非缺陷。\n\n**額外過程觀察（非 finding）**：`mutate-gate.mjs` 直接原地變異 working tree（非隔離副本），與其他測試並行執行會互相汙染——我親身重現：並行跑 smoke 時撞見 mutate-gate 的 DE15 注入窗口，產出與 DE15 目標紅燈完全相同的假陽性；停止背景程序、重建、單獨重跑即全綠。建議記錄這條流程風險，避免未來覆核誤判。\n\n核心程式邏輯本身目前沒有 production 缺陷，但 7 個任務明確要求隔離的項目中有 2 個（resume registry、archive）完全沒有回歸保護網，依指示不得因現狀綠燈而降級，故判定 **NOT_READY**。已用 `structured_output` 提交完整欄位。",
+  "structured": {
+    "verdict": "NOT_READY",
+    "summary": "獨立覆核第一份審查的四條 finding（第二份審查因觸發安全防護反覆失敗、從未產出可用內容也未呼叫 structured_output，對收斂無實質貢獻，不採信其任何具體主張）。直接讀原始碼、重建 dist、獨立重跑 tsc/smoke/mutate-gate.mjs 逐一驗證：任務明確列舉的 7 個隔離項目中，persona、agent pin、action credential、legacy token、working-state 這 5 項各自有對應的 mutation 變異點（DE7/DE8/DE9/DE10/DE15/DE16）且 16/16 killed（本次重跑獨立複現，非採信舊結果）；但 resume registry 與 archive 這兩項——同樣是任務明確要求驗證的隔離項目——完全沒有任何測試或 mutation 變異點能偵測其守衛被拿掉，逐行讀 sessionManager.ts:913-915（resumeSessionId 守衛短路於 resolveResumeCandidate 內部的 config.acpSessionResume，測試環境刻意設為 false ∴ 守衛本身可被移除而不紅）與 sessionManager.ts:851-875（archive 消費守衛同樣零覆蓋）確認無誤，並 grep 全檔 mutate-gate.mjs 確認零匹配。核心程式邏輯本身目前無 production 缺陷，但兩個被任務明確點名要驗證的隔離項目缺乏回歸保護網——依指示不得因現狀綠燈而降級此 finding，故判定 NOT_READY。另一過程觀察：mutate-gate.mjs 直接原地變異 working tree（非隔離副本），與其他測試並行執行會互相污染（親身重現：並行跑 smoke 時撞見 mutate-gate 的 DE15 注入窗口，產出與 DE15 目標紅燈完全相同的假陽性），停止背景程序後重建、單獨重跑即全綠——這是流程風險非本次 finding，但送出前建議記录避免未來覆核誤判。",
+    "blocking_findings": [
+      {
+        "severity": "High",
+        "title": "resume registry 隔離守衛（resumeSessionId）沒有任何測試或 mutation 能偵測其回歸",
+        "file": "src/sessionManager.ts:913-915",
+        "evidence": "行 913-915 的三元運算式 `!opts?.ephemeralDream && activeType === \"acp\" ? await resolveResumeCandidate(...) : undefined` 是唯一的 ephemeralDream 守衛；但 resolveResumeCandidate() 本身（sessionManager.ts:114）第一行就是 `if (!config.acpSessionResume) return undefined`，與呼叫端的 ephemeralDream 判斷完全獨立。scripts/check-persona.mjs:127 的 BC-DE fixture 顯式設 config.acpSessionResume=false，導致此路徑在測試環境下永遠短路，拿掉 913 行的守衛不會產生任何紅燈。獨立 grep 全檔 scripts/mutate-gate.mjs 確認零匹配 resumeSessionId / resolveResumeCandidate。BC-DE-12 的結構 regex（check-persona.mjs:262）錨定的是另一段程式碼（sessionManager.ts:1171 附近，`if (!opts?.ephemeralDream && config.acpSessionResume`），逐字比對確認與 913 行的三元運算式不同位置，regex 對 913 行完全不匹配。",
+        "impact": "任務明確要求驗證『resume registry』隔離，但此守衛目前完全裸奔：若未來編輯不慎移除，且部署環境 ACP_SESSION_RESUME=true（既有、文件化功能，非本次改動範圍），dream executor 會用與使用者互動 session 相同的 chatId/backend/agentCommand 查詢同一筆 resumable 記錄，可能對使用者正在使用的遠端 ACP session 下 session/load——等同維運 agent 直接接上使用者對話 context，是本次七項隔離目標中風險最高的洩漏形態，且没有任何機制會發出警訊。",
+        "recommendation": "在 check-persona.mjs 的 BC-DE fixture 另開一段 config.acpSessionResume=true 的情境，實際造一筆 loadResumable 記錄再呼叫 createDreamSession，斷言 resumeSessionId 未拿到該記錄；或至少在 mutate-gate.mjs 補一個直接刪除 913 行 `!opts?.ephemeralDream &&` 的變異點，證明現有 16/16 killed 的信心涵蓋這個項目。"
+      },
+      {
+        "severity": "Medium",
+        "title": "archive 消費隔離守衛同樣零測試零 mutation 覆蓋",
+        "file": "src/sessionManager.ts:851-875",
+        "evidence": "行 853 `if (!opts?.ephemeralDream) { ... loadArchive(chatId) ... deleteArchive(chatId) ... }` 是唯一守衛。scripts/check-persona.mjs 的 BC-DE fixture 只建立 working-state 檔案（第138行附近）並驗證其存活，從未建立 session-archive fixture、也從未斷言 archive 是否被消費。獨立 grep 全檔 mutate-gate.mjs 確認零匹配 archiveBlock / loadArchive / priorArchive / deleteArchive。",
+        "impact": "任務明確要求驗證『archive』隔離。若此守衛被移除，每次 /dream 執行都會靜默 loadArchive(chatId)+deleteArchive(chatId)，吃掉使用者下次重建互動 session 時本該拿到的 turn-level 交接內容，且不會有任何測試變紅。",
+        "recommendation": "在既有 BC-DE fixture 補一段 archive fixture（寫入一筆 SessionArchive 後呼叫 createDreamSession），斷言 archive 檔案仍存在且未被消費；同時在 mutate-gate.mjs 補一個拿掉 853 行守衛的變異點。"
+      }
+    ],
+    "nonblocking_findings": [
+      {
+        "severity": "Medium",
+        "title": "check-token-policy.mjs Test 5 標題宣稱『all fields zeroed』實際只驗 3/13 個欄位",
+        "file": "scripts/check-token-policy.mjs:200-226",
+        "evidence": "input 只構造 SEND_FILE/ASK/STICKER 三種 token，斷言也只檢查對應三個欄位；已讀 src/token-policy.ts:83-97 確認 FIELD_ZERO 表實際有 13 個 kind，其中 scheduleTokens/skillUsages/goalDone/restartToken/skillPropose/wikiQuery/continueToken/specialistProxy/moaPlan/selfEval 這 10 個既未構造也未斷言。已確認 token-policy.ts 本次 diff 只有 2 行改動，此 Test 5 缺口是既有測試債，非本次 dream executor 改動引入，故列為 nonblocking，但建議一併修復以免掩蓋未來對 specialistProxy/moaPlan 這類與派工隔離直接相關欄位的回歸。",
+        "recommendation": "擴充 Test 5 的 input 至 13 個 kind 全構造、斷言全 13 個欄位歸零，或至少把測試標題改成準確反映目前只驗 3/13 的範圍。"
+      },
+      {
+        "severity": "Low",
+        "title": "BC-DE-17/18 是『舊識別字不存在』的否定式存在性斷言，結構上無法有等效 mutation",
+        "file": "scripts/check-persona.mjs:267-268",
+        "evidence": "BC-DE-17: !/maintenance-window|isMaintenanceWindowActive/.test(specialistSource)；BC-DE-18: !/maintenanceSession|personaOverride|skipArchiveRestore|runWithPersonaCarveOut/.test(sessionSource + dreamSource)。已獨立 grep src/ 確認這些舊識別字確實完全移除。",
+        "recommendation": "不需修改；僅在文件或驗證追溯段落註明這兩條的驗證性質與 DE1-16 不同（無法用『注入缺陷再看紅燈』的模式驗證），避免誤讀成同等強度的保護。"
+      }
+    ]
+  }
+}

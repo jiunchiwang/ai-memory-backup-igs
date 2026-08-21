@@ -131,7 +131,8 @@
         "uk-slot-clash-olympus",
         "uk-slot-eye-strike",
         "uk-slot-pirates-queen",
-        "codegen-git-init-gap"
+        "codegen-git-init-gap",
+        "uk-slot-clash-olympus-spec"
       ],
       "mcpServers": [
         "memory"
@@ -444,7 +445,8 @@
         "carve-out",
         "systemprompt.append",
         "persona-stage1",
-        "personaconfiguredbutnotapplicable"
+        "personaconfiguredbutnotapplicable",
+        "outputstyle"
       ],
       "wikiPages": [
         "bridge-project",
@@ -471,7 +473,8 @@
         "bridge-self-eval",
         "cloudflare-os",
         "deepseek-harness",
-        "bridge-persona"
+        "bridge-persona",
+        "bridge-telegram-delivery"
       ],
       "mcpServers": [
         "memory",

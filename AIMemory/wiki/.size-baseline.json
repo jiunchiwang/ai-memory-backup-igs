@@ -1,11 +1,9 @@
 {
   "limit": 200,
-  "note": "棘輪基線：這些頁在建立當下已超標，只擋它們繼續長大。縮回上限內後請手動移除該行。",
+  "note": "棘輪基線：這些頁在建立當下已超標，只擋它們繼續長大。縮回上限內後請手動移除該行。2026-08-21 拆頁後手動下修 bridge-acp 275→227（不下修的話它可以從 227 悄悄長回 275 而閘門全綠）；uk-slot 212→已縮到 181、bridge-project 263→已縮到 200 以內，兩者移出基線。",
   "pages": {
     "queries/cloudflare-os.md": 319,
     "concepts/bridge-research.md": 278,
-    "concepts/bridge-acp.md": 275,
-    "concepts/bridge-project.md": 263,
-    "concepts/uk-slot.md": 212
+    "concepts/bridge-acp.md": 227
   }
 }

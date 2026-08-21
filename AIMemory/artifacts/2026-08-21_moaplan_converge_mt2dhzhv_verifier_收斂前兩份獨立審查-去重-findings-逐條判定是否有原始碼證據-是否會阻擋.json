@@ -1,0 +1,71 @@
+{
+  "id": "moaplan_converge_mt2dhzhv",
+  "specialist": "verifier",
+  "task": "收斂前兩份獨立審查。去重 findings，逐條判定是否有原始碼證據、是否會阻擋 Persona Dream Executor 交付。輸出最終 verdict READY 或 NOT_READY，並列出必修項與可延後項；不得因 smoke 綠燈自行降級 finding。",
+  "created": "2026-08-21T03:17:55.704Z",
+  "status": "done",
+  "summary": "## 收斂結論：NOT_READY\n\n我獨立重讀了 `src/sessionManager.ts` 的原始碼（不只信兩份前置報告的敘述），把兩個最重要的 finding 逐行驗證到底。\n\n**必修（blocking，2 項）**：\n\n1. **High — `resumeSessionId` 讀取端守衛零覆蓋**（`sessionManager.ts:913-915`）。我追過完整資料流：913 的 `!opts?.ephemeralDream` 守衛→114 的 `resolveResumeCandidate` 回傳使用者真實 sessionId→946/1243 傳入 `createProvider`。這行守衛若被拿掉，且部署啟用 `ACP_SESSION_RESUME=true`，dream executor 會直接對使用者本人的互動 session 發 `session/load`——正是這整個隔離設計要防的最壞情境。BC-DE-12（check-persona.mjs:262）只鎖住「寫入 registry」那一側（:1171/:1181），完全沒鎖「讀取 resume 候選",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "## 收斂結論：NOT_READY\n\n我獨立重讀了 `src/sessionManager.ts` 的原始碼（不只信兩份前置報告的敘述），把兩個最重要的 finding 逐行驗證到底。\n\n**必修（blocking，2 項）**：\n\n1. **High — `resumeSessionId` 讀取端守衛零覆蓋**（`sessionManager.ts:913-915`）。我追過完整資料流：913 的 `!opts?.ephemeralDream` 守衛→114 的 `resolveResumeCandidate` 回傳使用者真實 sessionId→946/1243 傳入 `createProvider`。這行守衛若被拿掉，且部署啟用 `ACP_SESSION_RESUME=true`，dream executor 會直接對使用者本人的互動 session 發 `session/load`——正是這整個隔離設計要防的最壞情境。BC-DE-12（check-persona.mjs:262）只鎖住「寫入 registry」那一側（:1171/:1181），完全沒鎖「讀取 resume 候選」這一側；persona-stage1 的 DE1~DE16 mutation 也沒有一條打在 :913。既有行為測試把 `config.acpSessionResume` 設 false，結構上測不到這個缺口。\n2. **Medium — archive 消費守衛零覆蓋**（`sessionManager.ts:853`）。同一種缺口，守衛本身寫對了，但沒有 fixture 建過 archive 檔,拿掉守衛也不會變紅。影響是資料/脈絡遺失,不是身分接管,嚴重度較低,但屬同一類「測試給的信心是假的」問題,修補成本一樣小,建議同一輪一起補。\n\n兩者都不是「現在會發生的 bug」（程式碼本身是對的），而是「persona-stage1 mutate-gate 宣稱 16/16 killed、521/521 錨點找到」這個安全性證據本身有結構性空洞——不能拿這個當「已驗證安全」的依據。修補範圍很小（比照既有 BC-DE-12、BC-DE-5/8 的模式各加一條結構斷言＋mutation 錨點＋行為測試），預期一輪內可收斂為 READY。\n\n**可延後（nonblocking，4 項）**：AsyncLocalStorage 跨 tick fail-closed 驗證深度（已有部分緩解機制）、token-policy Test 5 名稱與斷言範圍不符（底層通用迴圈降低實際風險）、BC-DE-17/18 負向存在性檢查結構上驗不到（非缺陷）、/restart 語意變化（確認非本次重構回歸）。\n\n已呼叫 `structured_output` 提交完整欄位（verdict / summary / blocking_findings / nonblocking_findings，含逐條原始碼證據與最小修補建議）。",
+  "structured": {
+    "verdict": "NOT_READY",
+    "summary": "收斂兩份獨立審查（isolation 正確性審查 + check-persona.mjs/mutate-gate 測試覆蓋審查）。我對兩份報告中最重的兩條 finding（resumeSessionId 讀取端守衛、archive 消費守衛）親自重讀原始碼與正則驗證，確認皆為真、且彼此不重複、也不與第一份報告的 AsyncLocalStorage finding 重複——三者是三個不同程式碼位置的『守衛存在但零測試覆蓋』缺口。核心結論：目前 src/ 的隔離行為本身是正確的（三個守衛都確實在程式碼裡且邏輯正確），但 persona-stage1 mutate-gate 宣稱的『16/16 killed、521/521 錨點找到』不能被讀成『BC-DE-1~6 契約已完整驗證』——resumeSessionId 讀取端守衛（sessionManager.ts:913）是一個單點故障：只要它被移除、且部署啟用 ACP_SESSION_RESUME=true，dream executor 會透過 resolveResumeCandidate()→session/load 直接接管使用者本人真實互動 session 的 sessionId（我已逐行追蹤 913→946→1243 的資料流），而現有測試（BC-DE-10~18）與全部 16 條 mutation 都沒有任何一條覆蓋這一行，且既有行為測試把 config.acpSessionResume 設為 false，結構上測不到這個缺口。這正是整個 persona-stage1 隔離設計最壞情境的實現路徑，不能算『已驗證』。archive 消費守衛（:853）同型但影響較小（context 遺失非身分接管）。因此判定 NOT_READY——不是因為程式碼有已發生的 bug，而是因為『已驗證安全』這個交付前提本身尚未被證實，且該缺口的嚴重性（潛在身分接管）不允許用『先上車、之後補測試』處理。修補範圍很小（比照既有 BC-DE-12/BC-DE-5 模式各加一條結構斷言+mutation 錨點+行為測試即可），預期可在一輪內收斂為 READY。",
+    "blocking_findings": [
+      {
+        "severity": "High",
+        "title": "resumeSessionId 讀取端守衛（sessionManager.ts:913-915）零測試/mutation 覆蓋，且是 dream executor 接管使用者真實 session 的單點故障",
+        "file": "src/sessionManager.ts:913-915（`resumeSessionId` 計算）；連動 :114（resolveResumeCandidate 內的 config.acpSessionResume 短路）、:946 與 :1243（resumeSessionId 流入 createProvider）",
+        "source_evidence": "A 級（本人直讀原始碼確認，非轉述）。src/sessionManager.ts:913-915：`const resumeSessionId = !opts?.ephemeralDream && activeType === \"acp\" ? await resolveResumeCandidate(chatId, backend, agentCommand) : undefined;`。resolveResumeCandidate（:109-120）回傳 `rec.sessionId`——使用者同一 chatId 上一次互動 session 的真實 ACP sessionId。resumeSessionId 經 :946 傳入 createProvider(...)，:1243 再傳進 ACP provider 建構——即觸發 session/load 而非 session/new。check-persona.mjs 目前 BC-DE-10~18（scripts/check-persona.mjs:260-268）逐條核對後，唯一涵蓋 resume 相關的 BC-DE-12（:262）正則錨在 `!opts?.ephemeralDream && config.acpSessionResume ... this.sessions.set` ——這錨的是 :1171（寫入 resumable registry）與 :1181（不進 active map），不是 :913 的讀取端。persona-stage1 mutate-gate 的 DE1~DE16 亦無任何一條錨定 :913。既有行為測試（check-persona.mjs:127）明文 `config.acpSessionResume = false`，使 resolveResumeCandidate 在測試環境下無論 :913 的守衛存不存在都直接於 :114 短路回 undefined——這是為什麼刪掉 :913 的 `!opts?.ephemeralDream &&` 不會讓任何現有測試變紅。",
+        "impact_if_guard_removed": "在部署啟用 ACP_SESSION_RESUME=true（README 記載預設關閉，但這是一個文件化且有專屬 /session 功能的既存 feature flag，本次未能查證使用者實際 .env 狀態）的前提下，若 :913 的 ephemeralDream 檢查被未來的改動移除或漂移，dream executor 建立時會直接把使用者本人上一輪互動 session 的 sessionId 當 resumeSessionId 傳入，provider 對 ACP adapter 發出 session/load——等同 dream executor 接管使用者帶人格的真實 session，而非建立獨立 ephemeral session。這是 persona-stage1 整個隔離設計要防的最壞情境（比照 BC-DE-12 已防住的『不進 registry』方向，這是對稱缺的另一半：『不從 registry 讀』沒有被同等力度守住）。",
+        "verified_independently": true,
+        "blocks_delivery": true,
+        "reasoning": "程式碼目前是對的（守衛存在、邏輯正確），所以不是『現在就會發生』的 bug；但『persona-stage1 mutation gate 16/16 killed』被當成本次重構安全性的機械證據，而這個證據對此單點故障是空的——刪掉這行不會被任何機制發現。以此為交付依據的『已驗證』宣稱在事實上不成立（承重核事實主張閘門：無反例檢查＝不得輸出為事實）。blast radius 是身分接管（此設計最壞情境），不適用『先上、事後補』。",
+        "minimal_fix": "① check-persona.mjs 新增結構斷言（比照 BC-DE-12 模式，例如 BC-DE-19）：正則錨定 `!opts\\?\\.ephemeralDream && activeType === \"acp\"[\\s\\S]{0,50}\\? await resolveResumeCandidate` 存在於 sessionSource；② mutate-gate.mjs persona-stage1 新增 DE17，錨點打在 :913 的 `!opts?.ephemeralDream &&` 片段（需與現有錨定 :1171/:1181 的 mutation 區分開，用更窄的上下文避免打中兩處）；③ 補一條行為測試：`config.acpSessionResume = true`，先用 `saveResumable(chatId, {...})` 為該 chatId 寫一筆假 resumable 記錄（模擬使用者已有可續接的互動 session），呼叫 `createDreamSession`/`runInDreamSession`，斷言 dream 那次建立走的是 session/new 不是 session/load（比照既有 BC-DE-7 用 fake-acp-agent 的 record 檔驗方法名稱）。三件事均是既有模式的直接複製，範圍很小。"
+      },
+      {
+        "severity": "Medium",
+        "title": "Archive 消費讀取端守衛（sessionManager.ts:853）零測試/mutation 覆蓋，且既有 fixture 不建立 archive 檔，結構上測不到",
+        "file": "src/sessionManager.ts:846-864（`if (!opts?.ephemeralDream) { ... loadArchive/deleteArchive ... }` 區塊，守衛在 :853）",
+        "source_evidence": "A 級（本人直讀原始碼確認）。:849-850 comment 明文『Dream executor 不得消費使用者 archive；跳過時檔案原封保留』，:853 的守衛實作正確。逐行核對 check-persona.mjs BC-DE-10~18（:260-268）與 mutate-gate.mjs DE1~DE16，皆無任何一條錨定此區塊或 session-archive.ts 的 loadArchive/deleteArchive 呼叫。既有 Dream Executor 行為測試（check-persona.mjs:99-212）從頭到尾未替測試 chatId 建立過 archive 檔，故 loadArchive 對測試 chatId 恆回 null，整段程式碼即使被刪掉也不影響任何現有斷言結果。",
+        "impact_if_guard_removed": "若此守衛未來被移除或漂移，排程性質的 /dream（典型用法是夜間無人互動時執行）會讀取並**刪除**（deleteArchive 是消費式）使用者上一輪互動留下的 session archive（含 turn 統計、goal 狀態），導致下次真正互動 session 建立時已無 archive 可用於還原脈絡——在使用者完全不知情的情況下靜默遺失工作脈絡。影響範圍是資料/脈絡遺失，不是身分接管，嚴重度低於上一條。",
+        "verified_independently": true,
+        "blocks_delivery": true,
+        "reasoning": "與上一條同型缺口（守衛正確但零回歸保護），同屬本次重構『測試證明安全』這個交付前提的漏洞；影響較輕但修補成本同樣很小、且與上一條可在同一輪補齊，沒有理由分開處理或延後。",
+        "minimal_fix": "比照既有 working-state 正負對照（BC-DE-5/BC-DE-8）補一組 archive 版本：① 測試裡用 session-archive.ts 對應的寫入函式（或直接寫 archive 檔，命名規則需先讀 session-archive.ts 確認）為測試 chatId 預先建立一份假 archive；② 呼叫 createDreamSession 後斷言該檔仍存在、內容未變（dream 不消費）；③ 新增一條負對照：一般 sm.create() 會消費並刪除它（若已有其他 smoke 檔涵蓋一般消費行為則只需補 dream 不消費那一半）；④ check-persona.mjs 加對應結構斷言、mutate-gate.mjs 加對應 mutation 錨點，模式與上一條相同。"
+      }
+    ],
+    "nonblocking_findings": [
+      {
+        "severity": "Medium",
+        "title": "AsyncLocalStorage『executor 關閉後延遲回呼必須 fail-closed』僅用同步再進入驗證，未驗真正跨 tick 續體",
+        "file": "src/sessionManager.ts（get(), ~L195-210）；scripts/check-persona.mjs（BC-DE-4/BC-DE-6, L159-177）",
+        "why_nonblocking": "第一份報告已追蹤到目前唯一已知會產生跨 tick 續體的路徑（specialist dispatch 的 .then()）已被 run-prompt.ts 對 ephemeral session 的 delegate 陣列清空機制提前攔截，非現正可觸發的缺陷；剩餘風險是『未來新增未被該清空機制覆蓋的 detached callback』，屬於防禦深度加固而非現有缺口。",
+        "recommendation": "補一條用真實 setTimeout/.then() 續體（在 runInDreamSession callback resolve 前註冊、在 closeDreamSession 之後才 fire）驗證仍會 throw 的整合測試，可與下一輪 dream 相關改動一併處理。"
+      },
+      {
+        "severity": "Medium",
+        "title": "check-token-policy.mjs Test 5『delegate: all token fields zeroed』測試名稱承諾範圍大於實際斷言（僅驗 3/13 欄位）",
+        "file": "scripts/check-token-policy.mjs:203",
+        "why_nonblocking": "底層 filterTransformedByPolicy 用通用迴圈跑過整張 FIELD_ZERO 表（非逐欄位手寫分支），目前的一致性實作『恰好』把未測到的 10 個欄位也清空，不構成立即生產風險——純粹是測試名稱過度承諾，屬測試衛生問題。",
+        "recommendation": "Test 5 輸入補一個 <<SPECIALIST_PROXY:...>> 樣本並斷言其歸零，或至少把測試名稱改成明確列出涵蓋欄位，避免未來有人把某欄位改成特殊分支時被誤導以為已有保護。"
+      },
+      {
+        "severity": "Low",
+        "title": "BC-DE-17/18 是負向存在性檢查，結構上無法用單點字面 mutation 驗證",
+        "file": "scripts/check-persona.mjs:267-268",
+        "why_nonblocking": "已 grep 全 src/ 確認目前為真綠（無殘留死碼），且此類『識別字不再出現』檢查本質上不適合這套 mutation 框架表達，非疏漏。",
+        "recommendation": "無需動作；建議寫進 review checklist 提醒『新增 session 生命週期 flag 前先檢查是否在重造 ephemeralDream 已解決的問題』，把防線移到 review 而非機械層。"
+      },
+      {
+        "severity": "Low",
+        "title": "/restart 最終步驟不再等待 in-flight turn，屬既有行為非本次重構回歸",
+        "file": "src/commands/dream.ts（final restart branch, ~L360-366）；src/session-extract.ts（handleRestart, ~L423+）；src/sessionManager.ts（shutdown(), L2336+）",
+        "why_nonblocking": "第一份報告已追查 handleRestart/shutdown 在舊架構下對一般（非 dream）/restart 本來就未檢查 per-chat inflight 狀態；舊守衛是對 dream 自身 carve-out session 的自我參照檢查，新架構下 dream session 已完全獨立，該檢查失去意義，非安全網被移除。",
+        "recommendation": "無需動作。若要保護真正 in-flight 使用者輪次不被排程 dream 觸發的 /restart 打斷，屬新功能需求，非本次重構範圍。"
+      }
+    ],
+    "dedup_notes": "兩份報告的 finding 集合互不重複：第一份聚焦『AsyncLocalStorage 設計假設的驗證深度』與『/restart 既有行為』；第二份聚焦『check-persona.mjs/mutate-gate 對三個具體程式碼位置（resumeSessionId 讀取、archive 消費、token-policy Test 5 覆蓋範圍）的測試覆蓋缺口』。兩者共享的結構主題是『守衛在程式碼裡是對的，但回歸測試網對它是盲的』——這一主題本身不構成重複 finding，是同一類缺口在不同位置的獨立實例，故全部保留、未合併或互相取消。"
+  }
+}

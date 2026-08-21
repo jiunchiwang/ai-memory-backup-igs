@@ -31,3 +31,6 @@
 - [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 剔除 3 條虛報：(1) VS Collect 相乘非相加 — M2-VS-design.md:47+BC-VS-7 明文為 Σ(multiplier) 不連乘；(2) server 權威缺 rollback — client 不是權威不需要對帳；(3) 隱性依賴 RoundWin — 介面無此入參物理上無法耦合
 - [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 低嚴重度觀察：winningMultiplier 缺 NaN/負值邊界檢查，僅影響展示不影響派彩（安全 lens 命中）
 - [2026-08-13T10:57:57.851Z] (上面三個前置工項是同一個對象（G:\Cocos_Project\uk_slot_clash_of_olympus\doc) 後續補驗：(1) ts-node 實測可否跑通；(2) warnings 回報機制是否靜默吞掉；(3) proto adapter 契約
+- [2026-08-21T01:09:00.060Z] (前置工項給了你同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append) 收斂三份人格系統方案：選方案 A（session carve-out），因為方案 C 的 per-request ACP inject 不存在、方案 B 的唯一入口假設被 remember() 路徑推翻。嫁接方案 B 的 sink 守衛思路（已部分採用）與方案 C 的長期方向。
+- [2026-08-21T01:09:00.060Z] (前置工項給了你同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append) 維持現有 session carve-out 架構，它是唯一能處理「dream body 執行中 LLM 決策污染」這個三案共有盲點的方案
+- [2026-08-21T01:09:00.060Z] (前置工項給了你同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append) 四項未決：maintenanceWindow 必要性、waitForTurnIdle 上限、priorArchive 修正 commit 狀態、非 claude adapter 人格支援

@@ -1,0 +1,35 @@
+{
+  "id": "delegate_8fc3cf1ae278404fbf9d3b096bbeb0c6",
+  "specialist": "verifier",
+  "task": "做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁止修改檔案、禁止執行 mutate-gate、禁止跑會寫工作樹的測試。重點檢查：resume fixture 是否真的可命中 normal session/load 且拔 guard 會使 dream session/load；archive fixture 是否有 dream 保存＋一般 session 消費負對照；DE17/DE18 anchor 是否精準且 expect 指向行為斷言；跨 tick BC-DE-6b 是否真跨 async continuation。輸出唯一 verdict READY 或 NOT_READY；若 NOT_READY，列 blocking finding 與可重現因果鏈；若 READY，列逐項 A 級證據。不要採信 SPEC 或既有通過宣稱。",
+  "created": "2026-08-21T04:11:34.925Z",
+  "status": "done",
+  "summary": "post-fix 唯讀覆核：resume 與 archive 兩個 blocker 已由真實 fake-ACP fixture（BC-DE-5c/8c、BC-DE-5b/8b）與精準 mutation 錨點（DE17/DE18，各 1 次匹配、expect 指向行為斷言）封住；BC-DE-6b 確認為真正跨 tick 的 AsyncLocalStorage 續體驗證。判定 READY。",
+  "outputs": [
+    {
+      "type": "finding",
+      "content": "resumeSessionId 守衛（sessionManager.ts:913）：BC-DE-5c 正面驗證 + BC-DE-8c 負對照，DE17 mutation 精確命中且 expect 指向行為斷言，非結構恆真"
+    },
+    {
+      "type": "finding",
+      "content": "archive 消費守衛（sessionManager.ts:853）：BC-DE-5b 正面驗證 + BC-DE-8b 負對照，DE18 mutation 精確命中"
+    },
+    {
+      "type": "finding",
+      "content": "BC-DE-6b 使用手動控制的 barrier Promise，續體在 closeDreamSession 完成後的獨立 microtask 才執行，確認為真正跨 tick 而非同步巧合"
+    },
+    {
+      "type": "finding",
+      "content": "mutate-gate.mjs 對每條變異強制「錨點恰為 1 次才套用」+ tsc 重建 + 紅燈行必須點名 expect，防止 mutation 未套用或 false-kill 的假綠"
+    }
+  ],
+  "files_modified": [],
+  "tags": [
+    "persona-stage1",
+    "post-fix-review",
+    "mutation-testing",
+    "resume-guard",
+    "archive-guard",
+    "async-local-storage"
+  ]
+}

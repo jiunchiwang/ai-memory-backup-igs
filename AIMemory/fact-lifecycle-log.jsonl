@@ -16,3 +16,4 @@
 {"ts":"2026-08-17T00:56:38.466Z","userId":"509424983","action":"supersede","from":["f_99c92a"],"to":"f_0611d8","reason":"2026-08-17 以八臂探針重測，冷啟 prefix 組成已完全改變；舊 fact 的「--strict-mcp-config 免費砍半」在現行設定下只省 1.1%，屬會誤導的操作建議"}
 {"ts":"2026-08-17T01:24:23.196Z","userId":"509424983","action":"supersede","from":["f_3d90f2"],"to":"f_cf5316","reason":"同日已修復並實測驗證，狀態從「待處理的發現」變成「已修 + 有驗收數字」"}
 {"ts":"2026-08-17T23:22:44.115Z","userId":"509424983","action":"supersede","from":["f_a738db"],"to":"f_4f0022","reason":"2026-08-18 dream High Priority 矛盾裁決：f_a738db 的刪除決定於隔日被 f_a1f2f2 推翻，三條 artifact 佐證保留；合併兩者並保留原後半段的留觀清單，避免 factlint 每輪重複提報同一矛盾。使用者以 ASK 選 A 授權。"}
+{"ts":"2026-08-20T21:47:38.988Z","userId":"509424983","action":"supersede","from":["f_a2eb1a"],"to":"f_9b8920","reason":"f_a2eb1a 的待辦（把三項擴充寫進正本 SKILL.md）已於 2026-08-21 執行完畢，原文的「尚未寫入正本、下次互動 session 要補」已不成立"}

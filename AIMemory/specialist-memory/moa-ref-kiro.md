@@ -26,3 +26,12 @@
 
 ```
 
+- [2026-08-21T01:04:46.519Z] (設計問題：目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dre) [auto-summary] 都走 session manager，所以清洗點集中在 extraction。
+
+### 這個方案什麼情況下會是錯的選擇
+
+1. **人格不只是語氣，而是「身分」**——例如「你是這位使用者的秘書」，會改變 LLM 對「哪些資訊重要」的判斷。清洗後抽出的事實會跟「秘書人格下的對話」不一致，長期記憶會變成「兩個人格混合」。
+
+2. **有其他寫入 facts 的路徑**——例如 `/dream` body 裡 LLM 自己決定呼叫 `remember()`、或其他 command 也會觸發 extraction。那時要補的清洗點會變多，最終可能比現在的 carve-out 還複雜。
+
+3. **

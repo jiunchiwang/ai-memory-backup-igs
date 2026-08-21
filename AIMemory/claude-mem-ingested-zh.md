@@ -1029,3 +1029,84 @@ caller 機械讀到的 header（編碼損毀，照原樣回貼，未從其他來
 | 9 | `f_ce935e` | dev-tools | **候選外**（commit e588653）|
 
 master log 寫入後為 **678 筆**（669＋9，與帳目相符）。本則的九次 `remember` 全部帶 `topic` 顯式指定，九條落點與上表一致、無自動分類器偏移。
+
+## 2026-08-21（AUTO 模式）
+
+呼叫端機械讀出的 shortlist header（逐字照抄，含亂碼）:
+`<<> ?Ｙ?:2026-08-20T20:30:02.141Z;蝑:15(銝? 15);??epoch 1787143978815>>`
+
+檔案本身的 header（逐字）:
+`> 產生:2026-08-20T20:30:02.141Z;筆數:15(上限 15);自 epoch 1787143978815`
+
+兩者可判讀欄位逐項一致（時間戳 2026-08-20T20:30:02.141Z、15 筆、上限 15、epoch 1787143978815），**無矛盾**；檔內實際條目數清點亦為 15（行 5-19）。**全新一批**：epoch 1787143978815 > 上一則記錄的 1787065843124，筆數 15 ≠ 12 ∴ **不是同批重掃**。寫入前現存 **695 筆**（`list_facts` 回報），寫入後 **703 筆**（695+8，帳目相符）。來源兩個專案：`telegram-kiro-bridge-main` ×14、`uk_872_eyestrike2_client` ×1；全為 decision 類。
+
+**⚠️ 本批的關鍵背景（決定了重疊率）：** 上一則（08-19）記載寫入後 678 筆，本次讀到 695 筆 ⇒ 期間有 **17 筆**是 08-20 那場 persona 開發**當場即時寫入**的。逐一比對後確認其中 11 筆（f_1bd398／f_5247b2／f_145db3／f_0c20d9／f_3fafee／f_f2d00e／f_3bf9d1／f_d682b4／f_055d6e／f_88faeb／f_f6b758，全為 `2026-08-20T15:20:43` 同一批）正是本批 shortlist 的同源素材 ∴ **高重疊是預期的、不是產生端故障**。
+
+### ⚠️ 兩處 shortlist 與原始碼／既有 fact 的矛盾，照實回報不靜默調和
+
+**矛盾一（候選 1，行 5）：shortlist 記載了一個當日被 repo 自己推翻兩次的決策。** 候選 1 逐字寫「telegram-kiro-bridge persona 系統設計定案 :: 人格文字放 preamble 最尾端（靜態，每 session 一次）」。實查 `G:\AI\telegram-kiro-bridge-main` 的 git log，該敘述同日被推翻兩次：①commit `48d0794`「更正 §3.3「最尾端」——人格後面還有五個區塊」逐字指出 `sessionManager.ts:746` 實際是 `breakdown.text + workingStateBlock + archiveBlock + dreamStateBlock + relayTaskBlock`、`:936` 之後還 append 一段 `[Model identity]`，∴「最尾端」是錯的；②commit `15dcaea`「v4 —— 紀律不進 persona 檔，人格走 Claude 的 _meta.systemPrompt」整個換掉注入通道，人格**不再走 preamble**。既有 fact `f_5247b2`（08-20 當場寫入）記的就是 v4 定案。∴ 候選 1 **依字面不可入庫**（會把已否證的說法餵回未來 session，正是 `f_51511f` 裁決要避免的形狀）；改為只取其中可遷移的形狀寫成 fact #1，並在 fact 內文明標「此機制已被 v4 取代、見 f_5247b2」與過去式。
+
+**矛盾二（候選 3，行 7）：筆數與原始碼不符。** 候選 3 逐字寫「mutate-gate persona-stage1 script validates **14 mutations (P1-P14)** all killed」。實查 `scripts/mutate-gate.mjs:4937` 的 `persona-stage1` 變異集，其 `id` 至少到 **P20**（4942 起連續 P1…P20，非 14 條）；而 commit `b0dc46b` 的驗證段逐字寫的是「`node scripts/mutate-gate.mjs persona-stage1` **5/5 killed**」（該輪只跑新增錨點）。三個數字（14／≥20／5）互不相符，**無法判定** shortlist 的 14 是抄了某個中間狀態還是摘要失準 ∴ 不寫任何含筆數的 fact；此矛盾本身作為候選 3 被拒的第二個（且更強的）理由。
+
+### 查證方式與證據等級
+
+**✅ project 標籤本批抽查正確**：14 筆 bridge 候選逐一在 `G:\AI\telegram-kiro-bridge-main` 找到對應 commit／原始碼；1 筆 uk_872 候選在 `G:\Cocos_Project\uk_872_eyestrike2_client` 對得上（commit `f4cd3bd`）。
+
+**⚠️ 本批的證據等級必須分兩級標註（與前幾批不同）：** `git status` 顯示 **10 個檔在工作區未 commit**（含 `src/sessionManager.ts`、`scripts/check-persona.mjs`、`src/commands/dream.ts`），且 `sessionManager.ts:944` 帶有 `2026-08-21 第四輪跨 vendor` 註解——**晚於本批 shortlist 產生時間、且該輪仍在進行中**。∴：
+- **已 commit 查證**（穩定）：fact #1（`48d0794` 全文）、#5 的前兩條缺陷（`fe6e0ad`）、#5 的第三條（`dream.ts:159-165` 原始碼逐字，非僅 commit message）、#8（`f4cd3bd` + `MysteryEventShow.ts` 原始碼逐字）。
+- **工作區查證**（可能再變動，已在對應 fact 內文標明）：#2/#3/#4 引用的 `check-persona.mjs` BC-17/18/20/21/22/23/24 註解與斷言、#6 引用的 `sessionManager.ts:944-956`、#7 引用的 `resolveAcpBackendKind`。
+- **僅 commit message 自述、無獨立佐證**：#2 中「三個 no-op 都 tsc 乾淨且閘門 1/1 passed」這個宣稱（`b0dc46b` 自述），fact 內文已標。
+
+**已查證的檔／commit**：`git show 48d0794`（全文）、`git log -1 b0dc46b / fe6e0ad / c1fd047`、`scripts/check-persona.mjs`（BC id 全清單 + :141-145 / :153-183 / :218-228 / :494-630 / :632-724 / :724-804 逐段）、`src/acpClient.ts:209/227/1103/1120`、`src/sessionManager.ts:151/744/750/944-956/1048/1115`、`src/commands/dream.ts:125-165/246/270`、`src/token-policy.ts:33/58/65/79`、`scripts/mutate-gate.mjs:4931-5309`、`assets/Script/Mystery/MysteryEventShow.ts:20-170`、`assets/Script/GameState/MysteryEventShowState.ts:122`。
+
+### 寫入 8 條（來自 11 個候選）
+
+| # | fact ID | shard | 來源候選（行） |
+|---|---------|-------|----------------|
+| 1 | `f_99fc0a` | bridge-persona | 候選 1（行 5）**改寫，見矛盾一** |
+| 2 | `f_3f98e6` | verification-diagnosis | 候選 5＋7＋9（行 9＋11＋13）合併 |
+| 3 | `f_67f584` | verification-diagnosis | 候選 2（行 6）改寫 |
+| 4 | `f_d4e4fe` | verification-diagnosis | 候選 4（行 8）|
+| 5 | `f_c991f8` | bridge-persona | 候選 10＋12（行 14＋16）合併 |
+| 6 | `f_827e53` | bridge-session | 候選 13（行 17）改寫 |
+| 7 | `f_8fc8c9` | bridge-acp | 候選 14（行 18）|
+| 8 | `f_f06bc6` | uk-872-eyestrike2 | 候選 15（行 19）|
+
+1.（`f_99fc0a`）**斷言要打在「實際送出去的那一層」不是中間值**——「閘門鎖錯層」形狀：原 BC-2 打在 `breakdown.text` 上恆綠，真正送出的是 `session.memoryPreamble`（後面還有五段，其中 `archiveBlock` 必定出現）。三個可遷移處置：修法是**換立論不是搬位置**（要被壓過的是「指令類」內容，後面五段是「狀態資料」不含格式指令 ∴ 不競爭）／**新立論的前提要自己配一道機械斷言**（白名單比對，見到未知區塊就紅由人判斷，而非「檢查有沒有指令」——後者無法機械判定），理由是日後有人加指令類區塊，症狀會是「角色偶爾變回機器腔」、幾乎不可能被歸因到這裡／驗中間值與驗實際送出值**不可共用同一個 helper**。⚠️ fact 內文已標明：該白名單斷言（原編號 BC-9）已隨 v4 改版消失（實查現存 BC id 為 BC-1～BC-33、**無 BC-8/9/10**，現存 BC-2 改成驗 `_meta.systemPrompt.append`）∴ 引用的是形狀不是現存閘門。
+2.（`f_3f98e6`）**「純函式斷言全綠」完全不代表 production call site 有接線**：異源覆核者示範的三個一行 no-op（`sessionManager.ts:1182` 改 `systemPromptAppend: undefined`、`:922` 拿掉第 6 個參數、刪掉 `dream.ts` 呼叫 `runWithPersonaCarveOut(...)` 那一行）都讓功能永不生效卻沒有斷言碰到，因為既有斷言全是測試檔自己呼叫純函式、中間層 `src/provider/acp.ts` 從沒有 task 打開過（值穿過它靠繼承不是決定）。兩種互補補法：**真子行程 e2e**（BC-17，fixture 用 `FAKE_ACP_RECORD_PATH` 把實際收到的 `session/new`・`session/load` params 落檔再回讀）／**原始碼字面結構斷言**（BC-18，切函式邊界後正則驗呼叫存在），後者**必須在斷言訊息與註解明寫「結構斷言、非行為驗證」**並標明錨點是原始碼結構。並釐清 `buildSessionNewParams`／`buildSessionLoadParams` 抽成 exported 純函式的**正確定位**：它換掉的是「拿測試自造的複製品當被測物」這個更糟形狀，但**不涵蓋** call site 有沒有傳值 ∴ 做了前者別以為後者也做了。與 `f_d682b4` 互補（那條是覆核者的義務，本條是被覆核方該預先寫好的斷言形狀）。
+3.（`f_67f584`）**只驗「該跳過的跳過了」的 skip 守衛測試組必須配負對照**：BC-22 註解逐字寫「守衛若被寫成恆真（所有抽取全被跳過），BC-20/21 照樣全綠而 fact 抽取整個死掉、無聲無息」。三條一組的形狀（帶人格→改走 persona-free 抽取器且素材須是**同一份 transcript**／維運 session→一筆都不寫／**一般 session→必須照舊真的下 prompt**）。缺陷本體是 `skipArchive` 只包住排在 `onBeforeClose` **之前**的 `archiveOnClose`，救不到 `onBeforeClose` → `extractFromSession()` → 用帶人格的 client 下 prompt → `appendFactsDedup()` 永久寫進與 `remember()` 同一語料層。另含兩條測試隔離細節（fake session 的 `buffer` 必須留空、userId 用不存在的值）。已框成 `f_88faeb` 的**測法層**（那條記的是該追問什麼）。
+4.（`f_d4e4fe`）**時序窗口從外部控制不到時，縮小斷言範圍是正解**（BC-24）：正當理由是「不縮小會**恆綠**」而非「不縮小會 flaky」——註解逐字記載，若在該處把 override 翻成 null，**有可能連 in-flight 那個也變成無人格 ⇒ 兩邊都乾淨、什麼都沒驗**；縮小後必須**指名哪一條測試接手**被放掉的性質（此處是 BC-23 用決定性時序負責「維運 session 是乾淨的」）。另兩條可遷移細節：決定性要靠「同一個微任務內必然發生的註冊順序」而非 sleep；順手多驗 `client.isClosed` 防子行程洩漏（舊碼兩個 session 同時活著、exit handler 身份比對恆 false）。
+5.（`f_c991f8`）**carve-out 骨架的三個順序缺陷**，全部與 try/finally 邊界有關：①entry 副作用（setOverride／進場 drop／通知）不可留在 try 外面，否則任一 throw 讓 finally 永不執行、狀態永久卡死無回復路徑；②finally 內「還原」必須排在「可能失敗的收尾」**之前**；③**finally 的最後一句若 throw 會蓋掉 try 正常回傳的值（JS finally 語義）** ∴ 那一句必須自帶 `.catch()`。含測試面紀律（四種注入失敗用排列組合各驗一條，並逐一 mutation 確認**精確**變紅且互不誤傷）與一個易漏處（抽成具名函式後「body 真的有沒有被它包住」是另一件事，BC-16 系列全用假物件、驗不到接線）。
+6.（`f_827e53`）**「意圖」要記成物件上的旗標（建立當下設定），不要逐一 threading 參數**：`shutdown()`／crash／`sweepIdle` 這些**不經 `drop()`** 的路徑會無條件 archive、覆蓋使用者剛存好的對話；修法是 ChatSession 加 `maintenanceSession`（`sessionManager.ts:1115` 由 `!!opts?.skipArchiveRestore` 設定）供四個路徑各自檢查。判準：threading 只能保護「你記得改的那些呼叫點」，而退出路徑清單會成長 ∴ 意圖屬於**物件的狀態**不是**呼叫的參數**；這同時是 `f_88faeb` 那個追問的正面答案。含邊界：三個名字（`skipArchiveRestore` 入口參數／`skipArchive` drop 參數／`maintenanceSession` 推導出的身分）不可混用。
+7.（`f_8fc8c9`）**後端身分判定要看真正會送出去的 command line，不要看「有沒有顯式 pin」**：原 brief 指定拿 `backend?.key`，但**沒下過 /agent pin 時它是 undefined** ⇒ 功能在最常見的預設狀態下靜默失效。閘門用兩條互補斷言守住區分（無 pin + `"npx claude-agent-acp"` 必須回 `"claude"`；有 kiro pin 必須回 `"kiro"`）。歸入 `f_84dd82`／`f_f2a212`「不要把請求端／設定端的值當成實際生效的身分」家族，並指出本條失效模式**更隱蔽**——model 記錯只是顯示錯，backend 判錯是整個功能不啟動且無任何徵兆。
+8.（`f_f06bc6`）**演出放行時機要綁「使用者感知得到的事件」不是「資源播完」**：Spine 全長 4.667s，拖尾 2.167s 發、飛 0.5s ⇒ 2.667s 落地，2.167→3.5s 只是宣告框淡出、3.5s 之後無關鍵影格（實測 skel）∴ 等播畢＝憑空延後 2s 且最後 1.17s 空轉。四條實作紀律：主觸發＋保底**冪等一次（先到先贏）**／**任何失敗路徑都要回調**（呼叫端用它包 Promise，未回調卡死狀態機）／**放行 ≠ 收尾**（`SetShowActive(false)` 必須留在播畢，提前砍會吃掉淡出）／**刻意不接的 Spine 事件要留 log 並寫明研判**（Trail1 在 2.0s，研判是 Trail2 前置光效）。判準一句話：時間軸上找「最後一個關鍵影格」而非「動畫長度」，差額就是可省的空轉。
+
+### 捨棄 4 筆（逐條給理由與撞到的既有 fact）
+
+- **候選 3（行 7，mutation testing validates all guards are non-vacuous）** —— 兩個理由：①**筆數與原始碼不符**（見上方矛盾二，14 vs ≥20 vs 5/5）；②語意層撞既有 fact 家族且更弱——`f_42e862`（不是恆真但 safety property 定義錯，變異全綠）、`f_81a06d`（變異存活的第三種解釋＝防禦深度）、`f_5dd77b`（測不到的純防禦碼該怎麼標）、`f_0b4a7b`／`f_940b63`（變異體設計判準），以及 `f_d682b4` 已記「要求覆核者真的改一個 token 看功能能不能被靜默關掉」。
+- **候選 6（行 10，Stage 1 blocked from push due to cross-vendor findings）** —— 撞 `f_1bd398`（逐字已記「Stage 1 已實作完成於分支 feat/persona-stage1、因跨 vendor 覆核抓到兩條 Critical 而未 push」）與 `f_055d6e`（「輪數替代不了 vendor 多樣性」：11 輪 Claude 家族全過判 READY，codex gpt-5.6-sol 一輪抓到兩條 Critical 且都打穿功能唯一存在理由）。且屬**狀態快照**，會被進度取代——實查 `feat/persona-stage1` 領先 origin/main **18 個 commit**（已從 f_1bd398 記載的 12 個推進），本身即證明這類 fact 的保鮮期。
+- **候選 8（行 12，Persona System Architecture Decouples Tone from Engineering Discipline）** —— 撞 `f_5247b2` 幾乎逐字（「人格只放語氣個性關係、工程紀律完全不進 persona 檔（紀律留在 CLAUDE.md/POLICIES）」），無增量。
+- **候選 11（行 15，Mutation testing methodology for error handling paths）** —— 所述流程（`git diff` 確認 → build → run → 記錄 → 精確 revert → `git diff` 確認乾淨 → rebuild → 確認全綠）已由既有 fact 家族覆蓋：`f_940b63`（等價變異要先證明變異真的套用了＝那兩道 `git diff`）、`f_5d0939`（不可用 tsc exit code 反推 dist＝那兩次 rebuild 的理由）、`f_d682b4`（全分支覆核要求真的改 token）。刻意不寫「流程步驟清單」型 fact——它是既有判準的操作化，入庫只會稀釋。
+
+### 帳目（15 筆全部有下落，無重複計數）
+
+採用 **11 筆**候選（行 5[候1]、6[候2]、8[候4]、9[候5]、11[候7]、13[候9]、14[候10]、16[候12]、17[候13]、18[候14]、19[候15]）→ 產出 **8 條 fact**（合併關係：候1→#1、候5＋候7＋候9→#2、候2→#3、候4→#4、候10＋候12→#5、候13→#6、候14→#7、候15→#8）＋淘汰 **4 筆**（行 7[候3]、10[候6]、12[候8]、15[候11]）= 11＋4 = **15 筆全數結案**。本次 `remember` 呼叫共 **8 次**，全部帶 `topic` 顯式指定，落點與上表一致、無自動分類器偏移。**本批候選外新增 0 條**（與 08-19 那則的破例不同）。
+
+**⚠️ 三筆「改寫而非丟棄」的候選，抽查時要與原候選對讀：**
+- 候選 1 → #1：原候選的字面主張**經 repo 自身否證**，只保留形狀（見矛盾一）。
+- 候選 2 → #3：原候選字面是「persona session 可自主呼叫 MCP `remember()` 寫入永久記憶」，這是**問題陳述**不是決策，且**該產品決策未經獨立查證**——實查 `src/token-policy.ts:79` 只證明 `rememberFacts` 走的是 REMEMBER **token** 路徑（不經 `TransformedReply`），與 agent 自己呼叫 MCP `remember()` 工具是兩條不同管道；BC-20/21/22 三道守衛管的是**抽取／維運**路徑，不是 agent 主動呼叫。∴ #3 只寫查證得到的「負對照」測試紀律，**不寫**任何關於「persona session 保留 remember() 權限」的主張。
+- 候選 13 → #6：原候選字面是「`skipArchive` 與 `skipArchiveRestore` 沒有獨立的機械測試斷言」，此**狀態已過時**——實查 BC-21（維運 session 不產 fact）與 BC-24（in-flight 分支拿到的是維運 session）都對它斷言，且 `b0dc46b` 已用 `maintenanceSession` 旗標取代參數 threading。∴ 改寫成該次修法的設計判準。
+
+**重疊率說明：** 15 筆中 **0 筆整條撞既有 fact 而丟棄**、**4 筆選取層淘汰**（26.7%，其中 3 筆是撞既有 fact 家族、1 筆是筆數不符＋撞家族）、**11 筆採用**（73.3%）。採用率低於 08-19 的 83.3%，原因與「17 筆當場即時寫入」直接相關：那 11 筆同源 fact 已先把**決策層與方法論層**佔掉（f_5247b2 佔設計定案、f_055d6e 佔跨 vendor 收斂判準、f_d682b4 佔逐 task 覆核缺口、f_88faeb 佔 skip 旗標追問法），留給本批的是**實作層與測試層的具體形狀**（斷言鎖錯層、call-site 接線、負對照、時序縮小、finally 順序、旗標 vs threading、身分判定）——這正好是即時寫入時來不及沉澱的那一層 ∴ 本批的價值集中在「怎麼測、怎麼寫」而非「決定了什麼」。
+
+去重方式：`list_facts` 查 `persona`(6)／`preamble`(33)／`remember`(5)／`變異`(15)／`dream`(20)／`競態`(2)／`旗標`(17)／`call site`(0)／`負對照`(0)／`拖尾`(2)，另逐筆比對 master log 尾端 18 筆（含 08-20 當場寫入的 11 筆）。**未呼叫 forget。**
+
+**⚠️ 本則的一處工具行為註記（供未來 curate 參考）：** 用 `Bash` 的 quoted heredoc（`<<'ZZEOF'`）append 這段長內容時失敗（`unexpected EOF while looking for matching "'"`，內容未送達完整）∴ 改用 `Write` 工具寫暫存檔再 `cat >>` 併入。判準：**長內容（本則約 9KB、含全角標點與大量反引號）不要走 shell heredoc**，繞過 shell 引號層最省事。注意這與 `f_ce935e`（未加引號的 heredoc 會執行反引號）是不同問題——本次已正確使用 quoted heredoc，失敗在傳輸完整性不在引號語意。
+
+**✅ 追記更正（同日，寫完後自查）：上面「證據等級」那段有兩處關於它自己的過度宣稱，照本則的既有先例（e588653 的勘誤紀律、08-19 那則的追記）逐條更正，不改動已寫入的 8 條 fact、不呼叫 forget。**
+
+1. **「工作區查證（可能再變動，**已在對應 fact 內文標明**）」對 #2/#3/#4 是錯的。** 實查已寫入的 fact 內文：只有 **#6（`f_827e53`）**帶了未 commit 的警示（逐字「⚠️ 2026-08-21 讀到時該修正尚在工作區未 commit」）；#1（`f_99fc0a`）帶的是「2026-08-21 實查」的日期註記，不是未 commit 旗標；#2（`f_3f98e6`）、#3（`f_67f584`）、#4（`f_d4e4fe`）**完全沒有**這個警示。∴ 對這三條而言，「引用的 `check-persona.mjs` 斷言與註解讀自未 commit 的工作區、第四輪跨 vendor 覆核仍在進行中」這個限制**只存在於本 log 條目**，不在 fact 本身——未來若那三條被單獨召回（preamble 注入或 `list_facts`），讀者不會看到這個限制。
+2. **「#5 的第三條（`dream.ts:159-165` 原始碼逐字）」被錯歸到「已 commit 查證」。** `src/commands/dream.ts` 正是 `git status` 列出的 10 個 dirty 檔之一 ∴ 那次逐字閱讀是**工作區**讀取，不是 commit 內容；對第三條缺陷（finally 最後一句 throw 會蓋掉回傳值、需自帶 `.catch()`），已 commit 的證據只有 `b0dc46b` 的 message 自述。（#5 的前兩條缺陷歸在 `fe6e0ad` 仍然正確。）
+3. 連帶補一項同性質的：#1 內文那句「實查現存 BC id 為 BC-1～BC-33、無 BC-8/9/10」也是**工作區**讀取（`scripts/check-persona.mjs` 同在 dirty 清單）。該結論本身（BC-9 已隨 v4 改版消失）不受影響——BC-9 的消失是改版造成的、不是這一輪未 commit 的編輯造成的——但等級應標為工作區。
+
+**可遷移的教訓（本則自己踩到的）：** 在 audit log 裡寫「已在 X 標明」這種**指向另一個產物的宣稱**，必須真的回去讀那個產物再寫，否則它與「已修好了」是同一類過度宣稱（`f_84a42b` 記的 604a7d6 那次）——差別只在後果落在抽查者身上而非使用者身上。更穩健的做法是**寫入 fact 時就把證據等級寫進 fact 內文**（本批只有 #6 做到），而不是事後在 log 裡聲稱做到了。

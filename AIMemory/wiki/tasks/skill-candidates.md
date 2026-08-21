@@ -96,6 +96,12 @@
   - 觀察點：本輪已把最完整的一次實例（①③並發、且互相導致差點誤判）存成 fact `f_2210cb`，∴ 這條知識目前沒有遺失，只是還沒被提煉成可重用的探針衛生檢查清單。若第 3 次獨立事件出現（另一個專案／另一種活行程探針），評估 append 到 `ms-blackbox-probe-experiment-design` 新增「原則 5：探針自身狀態不可跨次呼叫存活／每次呼叫前清乾淨已知的覆寫」；屆時把上面五個實例當作 Common Mistakes 表的種子
   - 現有覆蓋：fact f_2210cb（①③最完整的一次，含 `clearedPatchedGetter` 驗證清乾淨的做法）
 
+- [ ] **isolation-gate-sibling-injection-channel-audit** | count=2 | score=0.40 | 留底觀察
+  - Pattern：對 agent／LLM harness 建立「這個通道不送某個參數 ∴ 就是乾淨/無人格」這類隔離保證時，同一個 SDK／CLI 常有另一條完全獨立的注入通道能達到同等效果並繞過保證——而所有針對該保證寫的斷言與覆核都只驗第一個通道，對第二個通道結構上是瞎的。兩個獨立實例，同一天、同一個隔離機制（Dream Executor 靠「不送 `_meta.systemPrompt`」保證維運無人格）：① Claude backend 的 `outputStyle`（settings.json 欄位，由 `settingSources` 載入，不經 `_meta` 就能進 ACP session，四臂探針證實與 `_meta.systemPrompt.append` 疊加不互相壓制）；② Codex backend 的 `CODEX_CONFIG` 環境變數（`developer_instructions` 完全繞過 `_meta`，四臂探針證實端到端生效）。兩案結構相同：隔離設計者只審過自己選用的那一個通道，另一個通道躺在外部設定/環境層，不在任何 diff／原始碼審查的視野內——連六輪覆核（含兩輪跨 vendor）都沒有人提過，因為覆核者看的也只是 diff 與原始碼
+  - 代表 session：2026-08-21T15-07-22（outputStyle 四臂探針）、2026-08-21（Codex CODEX_CONFIG 四臂探針，記於 f_1887dd）
+  - 觀察點：目前只在 telegram-kiro-bridge 這一個專案的 persona 系統上出現，且兩次實例是同一天連續發現、同一個隔離機制的兩個變體，尚不構成跨專案證據。若在另一個專案/另一種 agent harness 也出現「隔離保證只鎖了一個注入通道、另一個通道旁路」的形狀，可考慮 append 到 `ms-blackbox-probe-experiment-design`（新增「探針覆蓋範圍要含 SDK 已知的全部注入通道，不只是被審查的那一個」）或獨立成 skill（審查方法：列出目標 SDK/CLI 文件裡所有能讓內容進入 system prompt / 執行context 的參數與環境變數，逐一驗證隔離保證是否覆蓋）
+  - 現有覆蓋：fact f_5135e1（outputStyle 旁路）、f_1887dd（CODEX_CONFIG 旁路）、wiki `bridge-persona`
+
 ## 誤判紀錄（防重複偵測）
 
 - ~~"score" pattern（4 sessions）~~ — 2026-07-08 判定誤判：來源是 bridge skill-routing 注入 header 的 `(score 0.65)` metadata，非使用者行為模式
@@ -107,4 +113,4 @@
 - ~~"users jiunchiwang" / "users" / "jiunchiwang" pattern（4 sessions）~~ — 2026-08-13 判定誤判：全部命中同一個絕對路徑字串 `C:\Users\jiunchiwang\Downloads\Telegram Desktop\wheel-click-prototype.html`（使用者傳同一份 HTML 檔案討論多輪），是路徑字面值被重複引用，不是技術模式
 
 ---
-Last updated: 2026-08-18
+Last updated: 2026-08-21

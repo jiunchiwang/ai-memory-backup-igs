@@ -2,7 +2,7 @@
 title: UK Slot 老虎機專案群
 type: concept
 created: 2026-06-02
-updated: 2026-08-18（ingest-ripple：補 9 條——7 條為既有段落漏引用的 provenance、2 條為新內容：規格圖是 A 級證據、跨專案搬 Spine 資產的驗收陷阱）
+updated: 2026-08-21
 sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, f_cea694, f_3f7536, f_09acc4, f_89a745, f_f4621c, f_e22204, f_9322f0, f_82c757, f_46f6e0, f_94500e, f_0b3520, f_e9bd6a, f_73183f, f_49dae6, f_4cd205, f_59bf73, f_e2665f, f_ac9912, f_98e336, f_1b276f, f_4c48e6, f_f79167, f_e84e55, f_b20c5e, f_593c2e, f_c7ce92, f_a4bcd5, f_233d31, f_0376d5, f_8a9474, f_3165ae, f_4f4b55, f_500f52, f_800551, f_ba8cc5, f_b773d9, f_6fe390, f_b13c42, f_4367fb, f_189848, f_1284be, f_b4c328, f_0af12a, f_937a50, f_4b6004, f_437274, f_e68c39, f_165cc0, f_f82ff1, f_2d697b, f_4b088c, f_4b2a6c, f_65e102, f_769e08]
 ---
 
@@ -42,7 +42,7 @@ sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, 
 | uk_872_eyestrike2_client | `G:\Cocos_Project\uk_872_eyestrike2_client` | Eye Strike 2（續作） |
 | uk_slot_chachacha | `G:\Cocos_Project\uk_slot_chachacha` | Cha Cha Cha 拉丁舞/水果 |
 | uk_917_leprechauns_pots_client | `G:\Cocos_Project\uk_917_leprechauns_pots_client` | 3 Leprechaun's Pots（開發中）→ 詳見 [[uk-917]] |
-| clash_of_olympus_demo | `G:\Cocos_Project\clash_of_olympus_demo` | 諸神之戰 Clash of Olympus（6×4 4096-Ways，希臘神話，開發中）→ 基準 tripleCoinTreasure |
+| uk_963_divine_duel_client | `G:\Cocos_Project\uk_963_divine_duel_client` | 諸神之戰 Clash of Olympus（ROW=4／COL=6，4096 Ways，希臘神話，開發中）→ 詳見 [[uk-slot-clash-olympus]]。⚠️ 舊路徑 `clash_of_olympus_demo` 與盤面寫法「6×4」都是 2026-07 那批 spec-to-impl 的錯誤記錄，2026-08-12 已實查該路徑不存在 |
 
 ## 專案文件規範
 
@@ -52,29 +52,19 @@ sources: [f_4cfe4c, f_be8c07, f_093bcf, f_79c118, f_967ccc, f_e8b2cf, f_991386, 
 
 不管改動檔案數多少，進入老虎機專案時都主動建立/更新 AI.md。
 
-## uk-slot-codegen 整合（2026-07-09）
+## 五節已改主場（2026-08-21）
 
-同事開發的 `uk-slot-codegen` skill（全自動 codegen pipeline：xlsx→骨架→Mock→gate 驗證）已整合為 `uk-slot-spec-to-impl` 的 **M0a~M1 可選加速器**：
+本頁是**專案群 hub**，但下列五節長年在這裡留著一份與專屬頁重複的副本，而副本停在較早的結論——最嚴重的是 Clash of Olympus 那節仍寫「`clash_of_olympus_demo`／6×4 4096 Ways／待確認 8 項」，那個路徑 2026-08-12 已實查不存在、盤面也是反的。過時副本比沒有更糟 ∴ 刪除副本、改為指向主場：
 
-- **定位**：快速出可跑骨架 + Mock demo，不做特色機制（custom feature 報告不實作）
-- **分工**：正式開發全程走 spec-to-impl，codegen 只承接前段骨架生成
-- **proto 慣例覆蓋**：一律經 `Proto.ts` 單一間接點（排除 codegen 原本的 replace-all-imports，因 uk_917 實戰教訓）
-- **規格轉換**：`excel-to-ai-doc` 是 canonical SOT（抽圖+保真），`spec_adapter.py` 只是 codegen 內部餵料管
-- **實測**（uk_917 probe）：17/17 gate 全過，但 spec_adapter 有 5 個 bug（SymID 排序、音效漏抽、JP 偵測等），custom feature 偵測滿分（0 漏 0 誤報）
-- **8 項回饋**全部修正完畢（commit cee689e）；整合驗證包已交付同事
-- **不抽出整合**：自有 skill 體系已自包含，codegen 保留原樣偶爾借用
+| 原本在這裡的 | 主場 | 副本錯在哪 |
+|---|---|---|
+| Clash of Olympus（諸神之戰） | [[uk-slot-clash-olympus]] ＋ [[uk-slot-clash-olympus-spec]] | 路徑不存在、盤面反了、「待確認 8 項」已收斂成 GAP-01~10 登記表 |
+| uk-slot-codegen 整合 | [[uk-slot-codegen]] | 主場為超集；唯一本頁獨有的「proto 慣例覆蓋」已移過去，且兩邊 spec_adapter bug 計數 5 vs 3 的矛盾已在主場明文登記為未收斂 |
+| uk_slot_eye_strike 詳細 | [[uk-slot-eye-strike]] | 主場為超集（表格化 + 7 機制逐條展開 + baked path 等後續實證） |
+| Spine-Viewer 插件 | [[spine-viewer]] | 主場為超集（含 Batch Scan／DrawCall 模擬／Editor.Message.send 踩坑） |
+| spec-to-impl 教訓補充（2026-08-18） | 「規格圖是 A 級證據」→ [[uk-slot-clash-olympus-spec]]；「跨專案搬 Spine 資產」→ [[uk-slot-pitfalls]] 第 13 條 | 兩條是不同層級的知識混在同一節：一條是該專案的規格裁決，一條是跨專案驗收通則 |
 
-相關：回饋文件 `G:\AI\Skill\uk-slot-codegen-feedback.md`、驗證包 `uk-slot-integration-bundle.zip`、[[uk-slot-pitfalls]] 已回灌 5 條 codegen 來源踩坑
-
-## Clash of Olympus（諸神之戰）
-
-- **專案**：`G:\Cocos_Project\clash_of_olympus_demo`
-- **規格**：希臘神話主題、6×4 盤面 4096 Ways、基於 uk_slot_template + Astarte
-- **最近似參考**：tripleCoinTreasure-client（三幣瑞龍，GameId=399，5×3）
-- **spec-to-impl 完成**（2026-07-09）：docs/spec（80 圖）+ dev-spec.md + SPEC.md（25 任務 M0a~M4）
-- **分類**：唯一 🔴 是 VS Feature（Cash 乘倍 + Collect 乘倍 + 多 VS 順序），Collect Feature 和聚寶盆降為 🟡（模板有 Collect/Cash/CoinState + pattern-library 有驗證變體）
-- **待確認 8 項**：賠率表空白、BuyBonus 售價、FG 手數、VS 乘倍語意、聚寶盆機率、ExtraBet、Proto 時間、GameId
-- **下一步**：M0a 起專案，需先確認 GameId 和 Proto 狀態
+⚠️ 下方〈spec-to-impl 流程教訓（2026-07-09）〉**刻意保留**——那是流程層通則（回饋進 skill 正本的 5 條偏離），不是專案細節。
 
 ## spec-to-impl 流程教訓（2026-07-09 實證）
 
@@ -85,13 +75,6 @@ Clash of Olympus 實作過程暴露 5 個流程偏離，已回饋改善 skill �
 3. 步驟 2 必須讀 `uk-slot-pattern-library` 索引，否則會重複設計已驗證模式
 4. 新增步驟 0 前提確認 checklist + 步驟 2 前置 4 項 gate
 5. AI.md 綁定步驟 1 完成時建立
-
-## uk_slot_eye_strike 詳細
-
-- GameId=658、ShortGameName=ar2es
-- 盤面 6 列不等高（5-4-4-4-4-5）共 26 格
-- Proto 來自 `@igs-arcade-division-rd2/uk_658_eyestrike_proto`
-- 7 個專案特有機制：MagicPot 能量收集（4階）、Multiplier 乘倍輪盤、GoldBlitzRoulette（FG 內輪盤）、FakeReelManager（4 種投注模式）、NearMiss 聽牌、ReelSymbolMode（4 種顯示模式）、Mystery 神秘符號
 
 ## 開發參考文件
 
@@ -190,33 +173,6 @@ Cocos 版面在「兩項移除一項」時避免置中跳動（snap），使用 
 ### 並發 Gotcha
 
 在 `Promise.all` 之前的同步階段計算狀態決策（例如 `willGhost`），會與並發 group dispatch 產生 race condition。解法：把這類決策移到 async 階段計算。
-
-## Spine-Viewer 插件
-
-Cocos Creator 全域插件，位於 `~/.CocosCreator/extensions/spine-viewer`，用於分析 Spine 資源效能。
-
-- **Batch Scan**：掃描指定目錄下所有 Spine，輸出 Excel（5 欄：Spine檔名、Skin、Animation、Triangle數(最大)、DrawCall）
-- **Triangle 計算**：全 keyframe 掃描（從 animation timelines 抽取所有 frame time 取最大值）
-- **DrawCall 計算**：CPU 模擬 PolygonBatcher 合批規則（texture identity + blend mode 斷批），不需要 WebGL context
-- **效能**：用 `child_process.fork` 獨立進程執行批量掃描，不阻塞 Cocos 主進程
-- **注意**：spine-webgl TextureAtlas 的 texture factory callback 每次呼叫必須回傳獨立物件（含 getImage 方法），否則 DC 比對失效
-- **打包**：`pack.bat` 產出 `spine-viewer-release.zip`，對方解壓到 `~/.CocosCreator/extensions/` 即可
-
-### Cocos Creator 3.6 插件開發踩坑
-
-- `Editor.Message.send` 只路由到 main.ts methods，不直接送到 panel；跨進程通訊用 Electron BrowserWindow + IPC
-
-## spec-to-impl 教訓補充（2026-08-18，Clash of Olympus 實戰）
-
-### 規格圖是 A 級證據，文字歧義先看圖
-
-規格轉出的 markdown 裡，關鍵敘述附近的 image 條目常常就是文字歧義的裁決者——例如收集順序寫「1~4、5~8、9~12、13~16」有逐欄與逐列兩種讀法，金額不受影響 ∴ 讀錯不會被任何對帳或測試抓到，只會演出順序錯；而下一格恰好是一張圖，直接畫出逐欄讀法，當場確認為 A 級。同一張圖也可能反向削弱其他推論（例如只畫一組編號時，「另一側鏡像」就沒有規格支撐，只能登記成缺口）。∴ 讀 xlsx 轉出的規格時，關鍵敘述附近有 image 引用就先看圖再下判斷——圖能同時裁決歧義、以及暴露「我以為有規格、其實是自己推的」那類假前提。
-
-### 跨專案搬 Spine 資產：「動畫解析成功」≠「畫得對」
-
-從另一個專案借 Spine 資產（例如把 uk_872_eyestrike2_client 的拖尾動畫搬進 Clash of Olympus）時，若對方做法是把控制骨移到起訖世界座標、路徑交給 Spine 動畫自己畫，原樣搬過來後**執行期檢查可以全綠**（節點存在、動畫名正確、`hasSkeletonData` true、`findBone` 都拿得到），但畫面上可能完全不在飛行路徑上——因為骨頭座標依賴來源專案的節點階層與縮放。唯一抓得到的方法是「在飛行當下截圖」，資料層的取樣結構上看不到。
-
-**判準**：借來的 Spine 只要牽涉「用骨頭/插槽帶座標」就必須看畫面驗收，不能用回傳值或屬性快照代替；退而求其次的穩健做法是讓路徑由自己已驗證的 tween 決定、Spine 只當跟著跑的視覺。同型陷阱：視覺類懷疑（例如「壓暗是不是沒生效」）要造對照組（強制全套用再截圖比對），不要靠單張截圖的印象判斷。
 
 ## 相關
 

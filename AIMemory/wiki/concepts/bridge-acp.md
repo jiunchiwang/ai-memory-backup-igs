@@ -2,8 +2,8 @@
 title: Bridge ACP 與 Model 配置
 type: concept
 created: 2026-07-06
-updated: 2026-08-13（新增：Codex/Kiro hooks 能力更正——三個 backend 底層各自的 hook 支援現況；provenance 稽核清掉 16 個不存在於 master log 的舊 source ID）
-sources: [f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437, f_820b01, f_43da84, f_5e2e61, f_ec52e4, f_08445d]
+updated: 2026-08-21
+sources: [f_493309, f_fedf5c, f_efd659, f_0c44ff, f_51868b, f_0b0e71, f_c5dfde, f_130b5d, f_7fb676, f_611812, f_392c22, f_fb7004, f_b1b0f4, f_3c7a91, f_884e78, f_7bf9a8, f_948bf2, f_e17260, f_50d5f5, f_174485, f_b21c3a, f_bd8491, f_ceda58, f_5caae0, f_f6406d, f_2f4ae9, f_6d48aa, f_87efaf, f_61ec60, f_ab8e2f, f_30e280, f_244bfd, f_aad37e, f_5c5722, f_6e52ff, f_8e6494, f_c0459d, f_6ae02c, f_525552, f_5b7539, f_f2a212, f_8c08d6, f_3dddec, f_634e34, f_97d203, f_ec0c7c, f_4ef3e7, f_dccd98, f_3cad91, f_ca3437, f_820b01, f_43da84, f_5e2e61, f_ec52e4, f_08445d, f_66e468, f_8fc8c9, f_f3c769]
 history_sources: [f_20ed42]
 ---
 
@@ -63,7 +63,7 @@ repo 自己的 BC-13 fixture（`FAKE_ACP_MODELS_SHAPE=1` + `FAKE_ACP_CONFIG_OPTI
 - 三個 backend 配置（2026-08-01 對照實檔更正）：
   - `claude`：claude-agent-acp，pin `opus[1m]` / effort high
   - `kiro`：`kiro-cli acp --model claude-opus-4.5 -a --agent main`
-  - `codex`：`npx -y @agentclientprotocol/codex-acp`（2026-08-06 遷移自已 deprecated 的 `@zed-industries/codex-acp`），pin `gpt-5.6-terra` / effort high；auth 已用 ChatGPT 登入可正常運作，見下方「Codex authMethods 誤判」
+  - `codex`：`npx -y @agentclientprotocol/codex-acp`（2026-08-06 遷移自已 deprecated 的 `@zed-industries/codex-acp`），pin **`gpt-5.6-sol`** / effort high（2026-08-21 由 `gpt-5.6-terra` 改 pin，真實 codex-acp 驗證確認 Sol 生效；下方「效果後綴解析」與「套件遷移」節記錄的是遷移當下 08-06 的 terra pin 歷史事件，未回頭改寫）；auth 已用 ChatGPT 登入可正常運作，見下方「Codex authMethods 誤判」
 
 ## Kiro CLI Model 生態
 
@@ -72,66 +72,17 @@ repo 自己的 BC-13 fixture（`FAKE_ACP_MODELS_SHAPE=1` + `FAKE_ACP_CONFIG_OPTI
 - **注意**：`claude-opus-4.6` 已於 2026-07-27 被 Kiro CLI 移除
 - **非 Claude 系（2026-07）**：deepseek-3.2（0.25x, 164K）、qwen3-coder-next（0.05x, 256K）、minimax-m2.5/m2.1、glm-5
 
-## 異源對抗覆核紀律（常態化實踐）
+## 已搬走的三節（2026-08-21 改主場）
 
-### 核心原則
+本頁曾是覆核紀律與 model 分配的原始主場，2026-08-05 topic review 把它們拆成專門頁面時**只複製沒刪除**，留下的舊版還停在較早的結論（例如選型規則仍寫「最強模型（Fable 5）」，08-13 已更正為跨 vendor 優先）。過時副本比沒有更糟 ∴ 2026-08-21 刪除舊版、改為指向主場：
 
-異源模型對抗覆核能打破同源自審天花板，已常態化套用於高風險決策。
-
-### 覆核紀律（2026-08-02 最新版）
-
-1. **開放授權不給檢查清單**：讓覆核者自己探索
-2. **讀原始碼而非信 commit message**
-3. **多輪連續覆核要換新 context**：修法常是上一位覆核者提出的建議，讓他覆核自己的提案等於同源自審
-4. **第二輪起刻意不告知前一輪結論**：避免錨定
-5. **收斂條件**：第二輪若回報無 high/medium 即視為收斂可 push
-6. **誠實交代**：覆核者的可 push 判斷是針對它看過的那個 commit，之後的修正 commit 未經覆核
-7. **授權回報「已收斂」**：避免覆核者為交差硬湊 finding
-
-### 價值實證
-
-- 2026-07-26：Fable 5 對 commit afb9d8e 做覆核（37 次工具呼叫、587 秒），抓出 protobufjs 依賴論證的關鍵推理缺陷
-- 2026-07-31：抓到「commit message / 註解 / AI.md 三處共用同一個錯誤因果敘事」——教訓：寫「因為 X 所以要 Y」前必須讀到 X 的實際時序
-- 2026-08-01：Fable5 覆核抓出 cutPendingTokenTail 的結構性不變式缺陷（TOKEN_OPENERS 缺 `<<CONTINUE:`）
-
-### 可重用教訓（2026-08-01）
-
-兩份清單分別用「字串陣列」與「regex」表達同一個集合時，衍生自同一個 NAMES 常數並不足以保證等價——裸型 token（RESTART/CONTINUE）是在 regex 那邊手寫的，衍生機制蓋不到。
-
-### Advisor 工具 vs 異源覆核（2026-08-02 新增）
-
-Claude Code 的 `advisor` 是 server-side tool：零參數、呼叫時整段對話逐字稿自動轉發、回傳 `advisor_tool_result` content block（與 `web_search` 同族）。Gating 條件為 `advisorModel` 設定 + 僅第一方帳號（Bedrock/Vertex 不行）+ 顧問模型的 `advisor_rank` 必須 ≥ 主模型（Haiku 4.5=1、Sonnet 4.6=2、Sonnet 5／Opus 4.6=3、Opus 4.7/4.8/Opus 5=4、Fable 5=5），關閉用 `CLAUDE_CODE_DISABLE_ADVISOR_TOOL`。
-
-**不能取代 push 前異源覆核**：
-1. 它的視野等於主 agent 的視野，讀不到你沒讀過的檔案，無法「自己讀原始碼而不信敘事」
-2. 對象是「這場對話」不是「這個 commit」，跨 session 改動缺席
-3. 它是模型自主 opt-in，不是 gate（覆核紀律是 hard requirement）
-
-價值在時間軸另一端（設計決策前／卡住時），與 push 覆核互補，不是替代。
-
-### 覆核者選型（成本分級，2026-08-02 新增）
-
-Claude 家族相對單價（catalog pricing tier）：Sonnet 5 = 1x、Opus 5 = 1.7x、**Fable 5 = 3.3x**、Haiku 4.5 ≈ 0.3x。覆核者是 agentic 的（工具迴圈讀進去的碼全算 input），模型選型的成本差會被放大。
-
-分級規則（已寫進 `ms-cross-model-adversarial-review` 正本）：
-- 孤兒 import／死碼 → **不派人**，交給型別系統（見 [[bridge-smoke-gate]] 的 noUnusedLocals 閘門）
-- 敘事比對、恆真斷言 → Sonnet 級
-- 不變式／論證推理／時序 race → 最強模型（Fable 5）
-
-判準：**改動有沒有碰承重路徑**。
-
-## vc-kiro-delegate 三段 Review
-
-委派 Kiro 實作後的品質鏈：① Kiro self-review ② 獨立新 session 冷讀 git diff ③ 主 agent heavy review。
-
-**2026-07-14 教訓**：`kiro-cli` 的 prompt 走命令列參數有長度上限（37KB 會炸 `Argument list too long`），長 spec 應寫成檔案讓 Kiro 自己讀路徑。
-
-## Claude Max 5x 模型分配策略
-
-- Opus 只留給高認知決策（架構、最終審查、難 debug、對抗驗證）
-- ≥2k token 的實作產出委派 Kiro CLI
-- **快速判準**：自問「這個錯誤是 Sonnet 級還是 Opus 級」
-- Workflow / subagent 必須顯式指定 model override
+| 原本在這裡的 | 現在的主場 | 備註 |
+|---|---|---|
+| 異源對抗覆核紀律（核心原則／七條紀律／價值實證／Advisor 對比） | [[adversarial-review]] | 母頁還記錄了本頁沒有的 findings 處置四維與各失效模式 |
+| 覆核者選型（成本分級） | [[adversarial-review-dispatch]] | 舊版的「不變式類→ Fable 5」已被 08-13 的「跨 vendor 優先（glm-5，0.50x 且更強異源）」取代 |
+| Claude Max 5x 模型分配策略 | [[bridge-model-strategy]] | 完整版含 effort 值域實測與對照實驗 |
+| vc-kiro-delegate 三段 Review | [[bridge-specialist]] | 委派品質鏈屬分身系統；37KB 命令列上限那條同時記在 [[bridge-self-eval]] |
+| 「字串陣列 vs regex 表達同一集合不保證等價」 | [[bridge-draft-diag]] | 具體實例（`TOKEN_OPENERS` 缺 `<<CONTINUE:`）本來就在那一頁 |
 
 ## Skill 新增（2026-08-01）
 
@@ -230,19 +181,9 @@ bridge 判斷一次 tool call 成敗完全依賴 ACP 的顯式 `status`，自己
 
 **更正一條先前錯誤主張**：`agent-diagnostics.ts` 只 parse `type:"system"/subtype:"api_error"`，從頭到尾不看 tool result，跟這條判定鏈沒有交集。
 
-### is_error 可信度實測（研究外部 repo cc-session-reader 時查證）
+### is_error 可信度實測 → 完整版在 [[cc-session-reader]]
 
-外部 repo cc-session-reader 的 ADR-003 主張「Bash 結果沒有 `success` 欄位、`is_error` 也不可信」。拿本機 25 份 transcript、1260 個 `tool_result` block 實測現行 Claude Code：
-
-| 觀察 | 結果 |
-|---|---|
-| 非零 Exit code 的結果 | 18 筆，**18/18 都帶 `is_error: true`** |
-| Bash 的 `is_error` 欄位 | 從不缺席（false 497 / true 8） |
-| 欄位缺席的工具（Edit/Read/Agent/Write） | 缺席即代表成功，缺席但文字帶失敗特徵者 0 筆 |
-
-∴ **現行 Claude Code 的 `is_error` 是可信的失敗訊號**，上面 adapter 的映射正確，bridge 這條路徑健全；ADR-003 的主張在此不重現。
-
-⚠️ 誠實邊界：n=18 太小（錯誤率高到約 15% 仍有 5% 機率量到 0/18），單機單專案單版本，且未端到端驗 SDK 串流 chunk 的形狀——此段仍是 B 級推論，非普遍證實。完整研究脈絡見 [[cc-session-reader]]。
+外部 repo cc-session-reader 的 ADR-003 主張「Bash 結果沒有 `success` 欄位、`is_error` 也不可信」，本機 25 份 transcript／1260 個 `tool_result` block 實測**不重現**（18/18 非零 exit 皆帶 `is_error: true`，欄位從不缺席）——上面 adapter 的映射正確，bridge 這條路徑健全。完整量測表、誠實邊界（n=18 太小的機率換算）與研究脈絡見 [[cc-session-reader]] §6，不重複列在本頁。
 
 ## 三個 Backend 底層的 Hook 支援現況（2026-08-13，更正先前錯誤結論）
 
@@ -254,6 +195,14 @@ bridge 判斷一次 tool call 成敗完全依賴 ACP 的顯式 `status`，自己
 - **Claude**：走 Agent SDK 的 `PreToolUse` hook（見下方既有內容），機制最成熟且本 repo 已部署最小版（`.claude/hooks/impact-gate.mjs`）。
 
 第三方部落格「PreToolUse 只攔 shell 不攔 apply_patch」與「hooks 在 Windows 不可用」兩條說法皆已被官方文件與本機實測推翻。跨 backend 一致的機械閘門設計討論見 `docs/SPEC-causal-chain-permission-guard.md`（bridge 自己那層 `session/request_permission` 的方案）。
+
+## 三套互不相干的底層 Harness（2026-08-11）
+
+telegram-kiro-bridge 的三個 ACP backend 底下是**三套互不相干的 harness**，只有 claude 那一條經 Agent SDK：`@agentclientprotocol/claude-agent-acp` 0.63.0 的 dependencies 寫明 `@anthropic-ai/claude-agent-sdk` 0.3.220、codex-acp 是 Codex 驅動的 binary（依賴無任何 `@anthropic-ai/*`）、kiro 直接叫 `kiro-cli` 不經 npm adapter。ACP 只規範 bridge 與 adapter 之間的協定，右半邊各家自理——這正是本頁記錄的 authMethods 語意、model 回報形狀、effort 值域三家不一致的結構性原因，不是各別 bug，是架構上的必然。
+
+## Backend 身分判定：看真正送出去的 command line，不是「有沒有顯式 pin」
+
+2026-08-20 一手實例（`resolveAcpBackendKind`，`src/sessionManager.ts:151`）：原本直接拿 `backend?.key` 當判斷依據，但**沒有下過 `/agent` pin 時 backend 是 `undefined`** ⇒ 只支援 Claude backend 的功能（如人格注入）會在最常見的預設狀態下靜默失效。修法是同時吃「pin 定義」與「`config.agent.command`/`args`」兩個來源，沒 pin 時退回讀實際命令列；閘門逐字驗證這個區分：`resolveAcpBackendKind(undefined, "npx claude-agent-acp", [])` 必須回 `"claude"`（無 pin 不等於無身分），`resolveAcpBackendKind({command:"kiro-cli",...}, "npx claude-agent-acp", [])` 必須回 `"kiro"`（pin 優先於預設值）。與「不要把請求端／設定端的值當成實際生效的身分」同一家族——本例失效更隱蔽，因為判錯是整個功能不啟動且沒有任何徵兆。連帶紀律：同一個判斷若在多處呼叫要抽成共用函式，避免漂移。
 
 ## ACP Adapter 設定檔差異
 

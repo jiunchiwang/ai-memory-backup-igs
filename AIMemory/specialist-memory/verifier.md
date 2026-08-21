@@ -1,14 +1,12 @@
-- [2026-08-11T15:34:56.337Z] (目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo ) 獨立重跑驗證 commit 9897f46：tsc/smoke fast/單支 acp-model-effort 全綠（作者聲稱屬實），但發現 scripts/AI.md 新增段落自相矛盾——宣稱 kiro effort fallback「尚未修」，實際同一 commit 的 src/configRegistry.ts diff 已經修好，判定 fix-first。
-- [2026-08-11T15:34:56.337Z] (目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo ) scripts/AI.md 新增文字（約行750）稱 ACP_EFFORT_FALLBACK.kiro 缺 max、尚未修，但同commit的 src/configRegistry.ts 已將該陣列改為含 max，且 commit message 本身也寫『補上 max』——文件與程式碼/訊息自相矛盾
-- [2026-08-11T15:34:56.337Z] (目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo ) 其餘逐條事實主張（xhigh 被拒訊息、9個model一律回不支援、CLI層不驗證--effort、/config description補充、局部docblock例外註解）均與diff/檔案內容一致，非虛構
-- [2026-08-11T15:34:56.337Z] (目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo ) 實跑驗證：npx tsc --noEmit exit 0；npm run smoke -- --fast 132/132 passed（tree f3b974d 與HEAD一致）；SMOKE_ONLY=check-acp-model-effort 單跑 1/1 passed(25.5s)——三項作者聲稱可重現
-- [2026-08-11T15:34:56.337Z] (目標與動機：查證 git commit 9897f46 的「宣稱 vs 實際產出」是否一致，push 前把關。repo ) 未驗證項（--effort對sonnet-4.6是否真的套用）誠實邊界標注自洽，文件其他處查無暗示已確認生效的矛盾敘述
-- [2026-08-13T12:00:32.502Z] (請只回報 run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 是否已有可用整合結果；若無) 查無指定 run_plan ID 的記錄；最接近的 M2.2 設計審查 run_20260813114454_8txb 狀態為 done，已有實質收斂設計產出，但 ID 對應關係無法本機證實
-- [2026-08-13T12:00:32.502Z] (請只回報 run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 是否已有可用整合結果；若無) run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 在 plan-runs/events.jsonl/artifacts 全域搜尋均無命中
-- [2026-08-13T12:00:32.502Z] (請只回報 run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 是否已有可用整合結果；若無) run_20260813114454_8txb 是本機唯一與『M2.2 設計審查』語意吻合的 plan-run，三步全部 done，design_converge artifact 內容為實質設計（非空殼）
-- [2026-08-13T12:00:32.502Z] (請只回報 run_plan_c8e08cd114cf4ed49f7f8c0f845f6c5f 是否已有可用整合結果；若無) 發起端需自行確認 c8e08cd114cf4ed49f7f8c0f845f6c5f 與 8txb 是否為同一次 run；若是，可直接使用既有整合結果，不需重跑審查
-- [2026-08-13T12:16:03.387Z] (請 code review G:\Cocos_Project\uk_slot_clash_of_olympus 的 as) [auto-summary] 與斷言。目前盤面固定 6 輪、VS 只出現在既定位置 ∴ 現有資料踩不到，但這是規則明文要求、資料尚未觸發的潛伏缺陷。
+- [2026-08-21T03:27:37.776Z] (獨立審查 G:\AI\telegram-kiro-bridge-main 的 scripts/check-persona) [auto-summary] ies faster, but can sometimes flag legitimate cybersecurity work. Apply to the Cyber Verification Program to reduce these interruptions. Learn more: https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude
 
-**通過項**：adapter 對缺 reelIndex / 未知 vsType 的 fail-safe 正確、zero cc 依賴確認（唯一 colProto 引用是 `import type`）、`Resolve()` 純函式性質（不改動輸入盤面）經測試驗證、核心收分演算法（VS Cash 加總、VS Collect 相加不連乘、普通 Collect 收未乘倍 T）逐條對照規格皆正確，`ts-node --transpile-only` 實測 9/9 全過。
+Request ID: req_011CeFBBumu6AtWGZCpx2kLKThis request triggered cy
+- [2026-08-21T03:41:56.110Z] (收斂兩份獨立審查。去重 findings，逐條核對原始碼證據並判定是否阻擋 Persona Dream Executor) [auto-summary] 「all fields zeroed」實際只驗 3/13 個 `FIELD_ZERO` 欄位；已確認是本次 PR 之前就存在的既有缺口（`token-policy.ts` 本次只改 2 行），非本次改動引入。
+4. **Low** — BC-DE-17/18 是結構上無法有等效 mutation 的否定式存在性檢查，非缺陷。
 
-**次要
+**額外過程觀察（非 finding）**：`mutate-gate.mjs` 直接原地變異 working tree（非隔離副本），與其他測試並行執行會互相汙染——我親身重現：並行跑 smoke 時撞見 mutate-gate 的 DE15 注入窗口，產出與 DE15
+- [2026-08-21T04:11:34.934Z] (做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁) post-fix 唯讀覆核：resume 與 archive 兩個 blocker 已由真實 fake-ACP fixture（BC-DE-5c/8c、BC-DE-5b/8b）與精準 mutation 錨點（DE17/DE18，各 1 次匹配、expect 指向行為斷言）封住；BC-DE-6b 確認為真正跨 tick 的 AsyncLocalStorage 續體驗證。判定 READY。
+- [2026-08-21T04:11:34.934Z] (做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁) resumeSessionId 守衛（sessionManager.ts:913）：BC-DE-5c 正面驗證 + BC-DE-8c 負對照，DE17 mutation 精確命中且 expect 指向行為斷言，非結構恆真
+- [2026-08-21T04:11:34.934Z] (做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁) archive 消費守衛（sessionManager.ts:853）：BC-DE-5b 正面驗證 + BC-DE-8b 負對照，DE18 mutation 精確命中
+- [2026-08-21T04:11:34.934Z] (做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁) BC-DE-6b 使用手動控制的 barrier Promise，續體在 closeDreamSession 完成後的獨立 microtask 才執行，確認為真正跨 tick 而非同步巧合
+- [2026-08-21T04:11:34.934Z] (做 post-fix 唯讀覆核，判定上述兩個 blocker 是否已被真正封住。只讀 git diff 與現行原始碼；禁) mutate-gate.mjs 對每條變異強制「錨點恰為 1 次才套用」+ tsc 重建 + 紅燈行必須點名 expect，防止 mutation 未套用或 false-kill 的假綠

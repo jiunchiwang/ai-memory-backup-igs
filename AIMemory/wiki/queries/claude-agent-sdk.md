@@ -109,6 +109,17 @@ Subagents、MCP、Permissions、Sessions、Plugins；**Skills / slash commands /
 登入或吃 claude.ai 額度，除非事先核准；對外產品要走 API key。自用不受影響，但若要把
 bridge 對外分享會咬人。
 
+### 4.1 權限模型是六階評估（2026-08-11，2026-08-21 從 [[bridge-project]] 移來當主場）
+
+順序：**Hooks → deny → ask → permissionMode → allow → canUseTool**。四個實務陷阱：
+
+1. 裸名 `allowedTools` 會讓 `canUseTool` **被靜默跳過**（僅發 warning）
+2. `allowedTools` **完全不限制** `bypassPermissions`
+3. `disallowedTools` 裸名（移除工具定義）與有 scope（保留工具但擋 pattern）**語意不同**
+4. `Write(path)` 規則**永不被匹配**——要擋寫檔一律寫 `Edit(path)`，它同時管 Write 與 NotebookEdit
+
+⚠️ bridge 自己的 `permissionMode`（值為 `grant-all｜readonly`，`src/acpClient.ts:130`，作用在 ACP 的 `session/request_permission` 攔截點）與 SDK 的六值 `PermissionMode` 是**同名不同物**的兩套獨立命名空間，比對時不可混用。兩者且有**同形狀的弱點**——bridge 側 harness 帶 auto-approve（`kiro -a`）時根本不送 permission request，SDK 側 `bypassPermissions` 讓 `canUseTool` 形同虛設。
+
 ## 5. 與 telegram-kiro-bridge 的層次關係（本頁重點）
 
 實測層次（2026-08-11 本機 `node_modules` 實查）：

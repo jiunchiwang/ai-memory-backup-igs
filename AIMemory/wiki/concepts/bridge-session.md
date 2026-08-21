@@ -2,8 +2,8 @@
 title: Bridge Session 生命週期與多 Session 管理
 type: concept
 created: 2026-07-08
-updated: 2026-08-05（新增 ACP resume/load 規格分工與未接訊號）
-sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_ecaf0b, f_76faa7, f_42aed5, f_c73099, f_233da9, f_1d7bed]
+updated: 2026-08-21
+sources: [f_456de2, f_645ea3, f_046ffa, f_bafa71, f_bef432, f_ecaf0b, f_76faa7, f_42aed5, f_c73099, f_233da9, f_1d7bed, f_3dddec, f_634e34, f_a7d81f, f_827e53, f_ec382e]
 history_sources: [f_20ed42]
 ---
 
@@ -45,6 +45,17 @@ ACP 協定規定：`session/load` 的 Agent **MUST** 用 `session/update` 重播
 - `claude-agent-acp` 0.63.0 的 `resumeSession()` 與 `loadSession()` 呼叫同一個 `getOrCreateSession()`，唯一差別是 load 多一行 `replaySessionHistory()`——改走 resume 在 agent 端記憶復原上完全相同、無失憶風險（對照 opencode 的 resume 只讀 `limit:20`，不可推廣到所有 adapter）
 - bridge 現用 `session/load` + `replaying` 抑制旗標丟棄整段重播——該設計與能力探測結果見 [[bridge-acp]]
 - **兩個未接的免費訊號**：bridge 完全沒接 ACP 的 `usage_update` 與 `available_commands`（grep 0 命中），而 `claude-agent-acp` 的 resume 與 load 兩條路徑都會送 `available_commands`；bridge 的 resume 也沒用 `session/list` 做 pre-flight，現在是直接賭一發 `session/load`，失敗才 fallback 開新 session 並只寫 stderr（靜默降級）——追蹤於 [[bridge-roadmap]]
+- **能力探測實測**（2026-08-05，`scripts/probe-acp-session-capabilities.mjs`，initialize-only raw probe）：`claude-agent-acp` 0.63.0 無條件宣告 `{additionalDirectories, close, delete, fork, list, resume}`；`kiro-cli` 2.16.1 整塊缺席（只有 `loadSession: true`）；codex-acp 當時因 npx 下載逾時未測完，屬「未知」不可讀成不支援
+- **`replaying` 抑制旗標確定不可刪除，只能 capability-gate**：Kiro 未宣告 `resume` 且是使用者日常會切的 backend，`load + replaying` 是常態路徑而非邊緣 fallback；gate 條件為 `agentCapabilities.sessionCapabilities?.resume !== undefined`（ACP 用空物件表示能力存在，Kiro 是欄位不存在，可靠區分）
+- **若改走 `session/resume` 的既知測試陷阱**：`scripts/check-session-resume.mjs` 現有「A2b replay updates suppressed」斷言會變成恆真綠燈（沒有 replay 可洩漏），必須改成雙臂 smoke（resume 臂 + load 臂各自 mutation test 確認會紅）——這是切換前必須先補的回歸網，不是切換後才發現的坑
+
+## Session 退出路徑的意圖傳遞：物件旗標 vs 逐一 threading 參數
+
+當一個「意圖」需要被多條退出路徑看見時，把它記成物件上的旗標（建立當下設定），不要逐一 threading 參數。2026-08-20 的一手實例：`/dream` 的維運 session 只在走 `drop({skipArchive:true})` 這條路時才不落盤，但 `shutdown()`／crash／`sweepIdle` 這些**不經 `drop()`** 的路徑會無條件 archive，把使用者剛存好的對話覆蓋掉；修法是在 `ChatSession` 上加 `maintenanceSession` 旗標（於 `create` 當下由入口參數設定），四個退出路徑各自檢查，取代把參數逐一 threading 到每個呼叫點。
+
+可遷移判準：threading 參數只能保護「你記得改的那些呼叫點」，而退出路徑的完整清單是會成長的（新增一條 idle sweep 或 crash handler 時沒人會想到要傳這個參數）∴ 意圖屬於**物件的狀態**而不是**呼叫的參數**。⚠️ 邊界：旗標仍只保護讀它的那些 `if`，且旗標名與語意要對齊，不同開關（入口參數 vs 收尾參數 vs 由前者推導出的身分）不可混用。
+
+**後續演進**：這個 `maintenanceSession` 旗標式 carve-out 後來被整套推翻——2026-08-21 改為無人格、非註冊的 **Dream Executor**，讓 `/dream` 從一開始就不進 `this.sessions` map、不接觸 archive／working-state／resume registry，而不是進場後再靠旗標抑制。完整取捨見 [[bridge-persona]]。
 
 ## 風險備忘
 
@@ -54,3 +65,4 @@ ACP 協定規定：`session/load` 的 Agent **MUST** 用 `session/update` 重播
 
 - [[bridge-project]] — Bridge 本體架構
 - [[bridge-acp]] — adapter 能力差異（loadSession capability：kiro ✅ / claude ✅ / codex 未判定）
+- [[bridge-persona]] — Dream Executor 取代 maintenanceSession carve-out 的完整取捨（本頁只記舊旗標設計的可遷移教訓）

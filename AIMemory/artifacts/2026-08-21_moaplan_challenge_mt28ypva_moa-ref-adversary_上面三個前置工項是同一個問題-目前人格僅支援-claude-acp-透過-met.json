@@ -1,0 +1,33 @@
+{
+  "id": "moaplan_challenge_mt28ypva",
+  "specialist": "moa-ref-adversary",
+  "task": "上面三個前置工項是同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dream 與 close-time fact extraction 都可能將人格語氣寫入長期記憶，因此 Stage 1 加入 persona override、維運 session、archive/working-state 跳過、maintenanceSession、退出路徑守衛、並發封鎖與維運視窗禁止委派/代理。使用者質疑為何做很久、是否有更簡單方案。）的三份獨立方案，提案者彼此看不到對方。\n\n你的工作是**挑戰它們**，不是排名：\n1. 逐案找出**致命缺陷**——會讓該方案在約束（請讀 repo 一手實作：src/sessionManager.ts、src/commands/dream.ts、src/acpClient.ts、src/session-extract.ts、scripts/check-persona.mjs。比較：(A) 現有完整 session carve-out；(B) 資料層人格清洗或獨立 extraction client；(C) 人格限制為呈現層/互動回覆。核心不可接受後果：人格語氣或維運內容錯誤寫入 facts，維運消費或覆蓋使用者 archive/working-state。不可把註解、SPEC 或測試名稱當證據。產出繁中、結論先行，標示一手程式碼證據與推論邊界，指出架構必然/驗證累積/範圍漂移，給最小可交付範圍與推薦；只分析不改檔。）下直接不成立的那種，不是可以靠實作補救的粗糙處。\n2. 找出**三案共有的盲點**：三個提案者都沒想到、或都做了同一個未經查證的假設。這條最有價值，因為它不會在互相比較中被發現。\n3. 檢查每案自陳的「假設」有沒有漏——提案者沒意識到自己在假設的東西。\n\n不要提出第四個方案，你的職責是拆不是建。沒有致命缺陷就明說某案站得住，不要為了交差硬找。\n\n回報格式：逐案一段（致命缺陷 或 站得住的理由），最後獨立一段寫「三案共有的盲點」。每個致命缺陷都必須**逐字引用**該方案裡你要攻擊的那句話（不是你重述的版本）——沒有逐字引用的挑戰視為沒讀過那份方案，寧可不報。",
+  "created": "2026-08-21T01:06:35.552Z",
+  "status": "done",
+  "summary": "我沒有讀取任何檔案，因此所有「致命缺陷」都必須基於各方案自陳的假設與邏輯矛盾來攻擊——這是我唯一誠實的立場。\n\n---\n\n## 方案 C（呈現層隔離）\n\n**致命缺陷：方案的成立前提已被自己標記為「最關鍵的未查證前提」，但仍作為推薦方案交出。**\n\n方案自陳：「ACP 協定支援 per-request system message 注入（不只是 session/new 初始化時）——這是**最關鍵的未查證前提**，若不支援則方案在協定層不可行」。\n\n這不是「實作粗糙可以補救」，這是「如果這個前提為假，方案整個不存在」。一個架構方案把自己的存活條件列為未查證假設，然後還推薦它——邏輯上等同於說「如果協定允許我想做的，我就這樣做」，沒有任何資訊量。\n\n方案 C **站不住腳**，不是因為它的思路錯，而是它沒有先查最關鍵的那一條，就把結論交出來了。\n\n---\n\n## 方案 B（資料層人格清洗）\n\n**致命缺陷：攔截點的「唯一性」假設沒有被驗證，而方案自己承認這是死穴。**\n\n方案自陳：「`extractFromSession()` 是唯一的 facts 寫入路徑——沒有其他地方會把人格語氣寫",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "我沒有讀取任何檔案，因此所有「致命缺陷」都必須基於各方案自陳的假設與邏輯矛盾來攻擊——這是我唯一誠實的立場。\n\n---\n\n## 方案 C（呈現層隔離）\n\n**致命缺陷：方案的成立前提已被自己標記為「最關鍵的未查證前提」，但仍作為推薦方案交出。**\n\n方案自陳：「ACP 協定支援 per-request system message 注入（不只是 session/new 初始化時）——這是**最關鍵的未查證前提**，若不支援則方案在協定層不可行」。\n\n這不是「實作粗糙可以補救」，這是「如果這個前提為假，方案整個不存在」。一個架構方案把自己的存活條件列為未查證假設，然後還推薦它——邏輯上等同於說「如果協定允許我想做的，我就這樣做」，沒有任何資訊量。\n\n方案 C **站不住腳**，不是因為它的思路錯，而是它沒有先查最關鍵的那一條，就把結論交出來了。\n\n---\n\n## 方案 B（資料層人格清洗）\n\n**致命缺陷：攔截點的「唯一性」假設沒有被驗證，而方案自己承認這是死穴。**\n\n方案自陳：「`extractFromSession()` 是唯一的 facts 寫入路徑——沒有其他地方會把人格語氣寫入長期記憶。**若 `/dream` body 本身會呼叫 `remember()` 或直接寫檔，此方案失效。**」\n\n方案的資料流圖裡沒有任何機制阻止 dream body 的 LLM 直接呼叫 `remember()`。若 agent 在 /dream 執行過程中以人格語氣抽取事實並自行呼叫寫入，清洗點在 extraction 層完全沒有用——因為那是另一條路徑。方案 B 的「架構簡化」建立在一個未驗證的拓撲假設上：facts 只有一個入口。這正是核心不可接受後果（人格語氣寫入 facts）的風險所在，方案卻把驗證這件事留給讀者。\n\n方案 B **有致命缺陷**：在未確認寫入路徑唯一性之前，它提供的是一個假安全感，而不是架構保證。\n\n---\n\n## 方案 A（現有完整 session carve-out）\n\n三份提案裡只有 A（現有實作）是有 code 的，攻擊點在它被拿來和 B/C 比較的那個前提：「Stage 1 的複雜度是必要的」——這個主張在三份方案裡都沒有人去驗。\n\n**最可能出事的地方**：carve-out 的 try/finally 邊界問題（memory recall 裡已記錄：entry 副作用在 try 外、exit 順序錯誤、finally 最後一句 throw 蓋掉回傳值）——這些都是架構上的已知缺陷，不是假設，而且已經被找到過一次。如果 B/C 都不可行，A 仍是最有程式碼支撐的方案，但它的複雜度本身就是風險，每次有人碰 entry/exit 邊界都有機率引入新的 override 洩漏。\n\n---\n\n## 三案共有的盲點\n\n**三案都假設「人格污染」是一個 extraction 時間點的問題，但沒有人問：人格寫進 preamble 之後，LLM 在 /dream body 執行中用人格語氣進行的 reasoning 有沒有其他副作用路徑？**\n\n所有方案的「污染防護」都只針對 facts/archive/working-state 的寫入。但 /dream 執行的是維運步驟（dailylog、factlint、wikisync），這些步驟可能本身就會觸發寫入——例如 wikisync 更新 wiki 頁、factlint 決定哪些 facts 要清除。如果這些操作在帶人格的 session 裡執行，「人格影響判斷」的風險不只在 extraction，而在整個 dream body 的 LLM 決策過程。三個方案都把問題定義為「extraction 的污染」，沒有人問「body 執行期間的決策污染」。這是共同的問題定義邊界，不是個別方案的設計疏漏。完成。總結：\n\n- **方案 C**：致命缺陷——自陳「最關鍵的未查證前提」（ACP per-request inject）卻仍推薦，前提若假則方案不存在。\n- **方案 B**：致命缺陷——清洗點在 extraction 層，但沒有機制阻止 LLM 在 dream body 直接呼叫 `remember()`，唯一入口的假設未驗證。\n- **方案 A**：站得住腳，但 try/finally 邊界的已知缺陷是持續性風險。\n- **共有盲點**：三案都把污染問題定義在「extraction 時間點」，但 /dream body 執行中 LLM 的維運決策（wikisync 更新、factlint 清除判斷）本身也在帶人格的 session 裡，決策層的污染沒有任何方案觸碰。",
+  "structured": {
+    "per_plan": [
+      {
+        "plan": "C",
+        "verdict": "致命缺陷",
+        "reason": "方案自陳「ACP 協定支援 per-request system message 注入——這是最關鍵的未查證前提，若不支援則方案在協定層不可行」，卻仍作為推薦方案交出。前提未驗證，方案整個不存在，不是實作粗糙可補救的層次。"
+      },
+      {
+        "plan": "B",
+        "verdict": "致命缺陷",
+        "reason": "方案自陳「extractFromSession() 是唯一的 facts 寫入路徑——若 /dream body 本身會呼叫 remember() 或直接寫檔，此方案失效」，但方案資料流裡沒有任何機制阻止 LLM 在 dream body 直接呼叫 remember()。清洗點在 extraction 層，對另一條路徑完全無效，提供的是假安全感。",
+        "quoted_attack": "extractFromSession() 是唯一的 facts 寫入路徑——沒有其他地方會把人格語氣寫入長期記憶。若 /dream body 本身會呼叫 remember() 或直接寫檔，此方案失效。"
+      },
+      {
+        "plan": "A",
+        "verdict": "站得住，但最可能出事的地方",
+        "reason": "現有 carve-out 是三案中唯一有程式碼支撐的。但 try/finally 邊界的已知缺陷（entry 副作用在 try 外、exit 順序、finally throw 蓋回傳值）是架構層的固有風險，每次有人碰 entry/exit 邊界都有機率引入 override 洩漏，且這些缺陷已被找到過一次。"
+      }
+    ],
+    "shared_blindspot": "三案都把「人格污染」定義為 extraction 時間點的問題，沒有人問：/dream body 執行中，LLM 用人格語氣進行的 reasoning 對 wikisync/factlint 等步驟的決策有沒有副作用路徑。這些維運步驟本身就會觸發寫入（wiki 更新、facts 清除判斷），若在帶人格的 session 裡執行，污染不只在 extraction，而在整個 dream body 的 LLM 決策過程。三方共同把問題邊界劃在「寫入攔截」，跳過了「決策污染」這一層。"
+  }
+}

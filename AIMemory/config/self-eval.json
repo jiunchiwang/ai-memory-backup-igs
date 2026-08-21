@@ -2,90 +2,6 @@
   "_schema_version": 1,
   "entries": [
     {
-      "ts": "2026-08-01T13:22:11.150Z",
-      "chatId": 509424983,
-      "score": 90,
-      "evidence": "push 後以 git status -sb 確認 ahead 歸零、log 確認 HEAD 為新 commit；pre-push hook 獨立跑一次 build + 93/93 smoke 作為第二次驗證；未採納的 finding 已落地在 commit message"
-    },
-    {
-      "ts": "2026-08-01T13:27:17.598Z",
-      "chatId": 509424983,
-      "score": 72,
-      "evidence": "結論全部錨在 draft-diag.jsonl 的實際欄位與 run-prompt.ts:833 的常數；但「identical 覆寫導致視覺消失」是推論、未觀測到 client 行為，且與「21:19 才開始」不符，已標為未證實"
-    },
-    {
-      "ts": "2026-08-01T13:34:39.456Z",
-      "chatId": 509424983,
-      "score": 84,
-      "evidence": "結論錨在 draft-frames.jsonl 的真實 payload 雜湊比對（114 筆同內容重送、20.0s 節拍、12:36Z 起連續 43 次）與使用者兩次獨立回報時間點吻合；append-only 已用 startsWith 逐幀驗證；client 端重跑動畫的因果未直接觀測，已標為推論"
-    },
-    {
-      "ts": "2026-08-01T13:40:36.028Z",
-      "chatId": 509424983,
-      "score": 80,
-      "evidence": "機制改錨在官方文件明文（新 draft fade in 全部字元 vs 更新只 fade 新增字元、TTL 過期條件、無 keepalive 機制）+ run-prompt.ts:833/847 的實際碼與 draft-frames 實測的 20.0s 節拍；已明確撤回上一則的錯誤機制。未直接量測目前 message_typing_draft_ttl 實值，故「TTL < 20s」仍是推論"
-    },
-    {
-      "ts": "2026-08-01T13:47:48.363Z",
-      "chatId": 509424983,
-      "score": 78,
-      "evidence": "probe 已 dry-run 驗過計畫輸出與參數解析；判準錨在官方文件的 fade-in 公式而非目視秒數，且含陰性對照使 null 結果可解讀。尚未取得實測結果，故未對 keepalive 值下任何結論"
-    },
-    {
-      "ts": "2026-08-01T13:56:26.827Z",
-      "chatId": 509424983,
-      "score": 74,
-      "evidence": "ttl2 四臂全淡入為使用者直接觀測，據此明確撤回 TTL 假說；游標路徑用 telegram-ui.ts:561 原始碼與今日 DIVERGE=0 雙重確認排除。2×2 缺口是從三支探針的實際參數比對得出，非臆測；但新假說本身尚未驗證"
-    },
-    {
-      "ts": "2026-08-01T13:58:53.065Z",
-      "chatId": 509424983,
-      "score": 76,
-      "evidence": "已 dry-run 驗過三臂參數與 PLAN 輸出；本輪測的是 2×2 中唯一未測格，且對照臂 P 與 7/31 frames 段B 同參數可交叉驗證觀測法。結論尚未取得，未對修法下任何判斷"
-    },
-    {
-      "ts": "2026-08-01T14:35:47.698Z",
-      "chatId": 509424983,
-      "score": 70,
-      "evidence": "依 REFLEXION 紀律在同一做法連兩次失敗後改設計而非重跑：砍掉資訊量重疊的 R 臂、總長 105s→35s、延遲 30s→10s。R 臂的取捨已寫進碼註解。實測結果尚未取得"
-    },
-    {
-      "ts": "2026-08-01T14:38:33.652Z",
-      "chatId": 509424983,
-      "score": 72,
-      "evidence": "Q=重打 為使用者直接觀測，且是 2×2 唯一未測格；已明確指出缺對照的風險並補跑而非拿別場次結果代替，判讀表在取得結果前先寫死。根因尚未定案"
-    },
-    {
-      "ts": "2026-08-01T14:41:13.690Z",
-      "chatId": 509424983,
-      "score": 88,
-      "evidence": "根因由 P/Q 對照直接觀測確立，且 2×2 四格全部有實測資料、紅格與生產行為（run-prompt.ts:853 sentinel、114 筆 20.0s 重送）及使用者回報的固定週期三者吻合；三條修法的代價與未驗點都已標明，未挑一條直接動手"
-    },
-    {
-      "ts": "2026-08-01T14:45:06.401Z",
-      "chatId": 509424983,
-      "score": 82,
-      "evidence": "建議錨在今晚 P 臂直接觀測到的安全值（非外推）、文件明載的速率上限與實測 status.edit 頻率；delta 的沉默失敗風險與 draft/status 是否共用額度都標為未驗而非略過；已附可否證條件。尚未動碼"
-    },
-    {
-      "ts": "2026-08-01T14:55:32.500Z",
-      "chatId": 509424983,
-      "score": 87,
-      "evidence": "三條新斷言各經最小突變確認會紅、還原後綠（且已抓出並修正第一次突變測試自身的假綠）；tsc 綠 + fast smoke 93/93；根因錨在使用者直接觀測的 P/Q 對照與 114 筆 20.0s 生產資料。未實際重啟驗證症狀消失，故未宣稱已修好"
-    },
-    {
-      "ts": "2026-08-01T15:33:08.239Z",
-      "chatId": 509424983,
-      "score": 85,
-      "evidence": "修法已完成型別檢查、93/93 smoke 與三條斷言的突變驗證；未宣稱症狀已消失（尚未重啟、無生產觀測），並先寫死三種判讀含兩種否證結果。記憶三條均為跨 session 可重用事實"
-    },
-    {
-      "ts": "2026-08-02T00:11:09.494Z",
-      "chatId": 509424983,
-      "score": 85,
-      "evidence": "topics.json keywords 更新、rebuild 確認 misc 歸零、STATE.md 更新並 read-back 驗證；膨脹警告無法透過刪 facts 解決是正確判斷"
-    },
-    {
       "ts": "2026-08-02T00:39:09.103Z",
       "chatId": 509424983,
       "score": 80,
@@ -1200,6 +1116,90 @@
       "chatId": 509424983,
       "score": 86,
       "evidence": "commit 前先查暫存區與 git status，因此攔截到「變異體還在檔案裡」——若照常 commit 會把刻意注入的缺陷推上 main；工作狀態已在 restart 前存檔。未更高是因為驗證尚未回來、本次拆分的等價性未證實"
+    },
+    {
+      "ts": "2026-08-20T22:16:41.090Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "棘輪閘門與 stale-scan／provenance 三支機械驗證皆實跑通過、斷連連結自查 0；刪除副本前逐頁 grep 確認目標頁為超集、六處獨有內容先移主場。扣分處：第一輪做出兩個零餘裕的頁要第二輪才修正，且 index.md 一度寫了兩個算錯的行數（192／184）自己抓到並更正——說明我在收尾階段對「自己剛寫的數字」複查不足。"
+    },
+    {
+      "ts": "2026-08-20T22:52:08.844Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "純唯讀狀態確認：git/ledger/spec 三處交叉比對，並實跑 tsc（乾淨）與 check-persona（PASS）取得一手證據；mutate-gate 與 fast tier 未重跑，已標示為 ledger 記錄而非本輪驗證"
+    },
+    {
+      "ts": "2026-08-20T22:55:41.655Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "文件裁決落地並用四支 doc 閘門實跑驗證（PASS）；選項 1 不涉碼 ∴ 無 tsc/斷言風險。未驗項：第四輪覆核尚未派、mutate-gate 與 fast tier 全套本輪仍未重跑"
+    },
+    {
+      "ts": "2026-08-20T23:04:22.236Z",
+      "chatId": 509424983,
+      "score": 84,
+      "evidence": "三個 commit 皆已落地並實跑驗證（tsc 乾淨、check-persona PASS、doc 閘門 4/4）；自己抓到並更正了 commit 訊息與內容不符、以及把紀錄寫進 ignored 檔這兩個錯。未驗：mutate-gate 仍在跑、fast tier 未跑、第五輪覆核未派"
+    },
+    {
+      "ts": "2026-08-20T23:41:18.430Z",
+      "chatId": 509424983,
+      "score": 83,
+      "evidence": "sink 修法 tsc 乾淨且 check-persona PASS，錨點唯一性已驗；自己抓到並修掉註解過度宣稱與一處編造的回傳形狀。未驗：突變 21 條仍在跑、fast tier 未跑、第六輪覆核未派、「saveTranscript 是否真的是唯一 sink」只由我自己 grep 過一次"
+    },
+    {
+      "ts": "2026-08-21T00:23:17.973Z",
+      "chatId": 509424983,
+      "score": 81,
+      "evidence": "tsc 乾淨、check-persona PASS，四條斷言中三條是真行為測試（BC-38 用 fixture 走到真正的守衛）；自己抓到 fixture schema 錯並記下「catch 把 schema 錯降級成載入 0 個」這個誤導形狀。未驗：突變 24 條未回、fast tier 未重跑、C 是否真的關掉那兩條繞過只有我自己推論過（第七輪標的）"
+    },
+    {
+      "ts": "2026-08-21T01:13:05.272Z",
+      "chatId": 509424983,
+      "score": 72,
+      "evidence": "已以一手 payload builder 與 session-extract 路徑核對設計，並完成規格讀回；尚未進入程式與測試驗證。"
+    },
+    {
+      "ts": "2026-08-21T01:20:16.192Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "已完成第一段程式實作、讀回關鍵區塊並通過 TypeScript 型別檢查；尚未切換 /dream 或跑 persona smoke。"
+    },
+    {
+      "ts": "2026-08-21T01:51:37.575Z",
+      "chatId": 509424983,
+      "score": 94,
+      "evidence": "build 與專屬 smoke 通過，兩個承重突變皆成功轉紅，並以真 codex-acp 驗證回報 gpt-5.6-sol/high；未跑完整 fast tier"
+    },
+    {
+      "ts": "2026-08-21T04:13:34.639Z",
+      "chatId": 509424983,
+      "score": 98,
+      "evidence": "兩個獨立 commit 邊界清楚；build、171 支 smoke、18 條 mutation、523 個錨點與獨立 READY 覆核皆通過，工作樹乾淨且未 push"
+    },
+    {
+      "ts": "2026-08-21T04:23:35.343Z",
+      "chatId": 509424983,
+      "score": 100,
+      "evidence": "pre-push build 與 171 支 fast smoke 全綠，遠端 HEAD 已核對為 51e1c01，本地分支正確追蹤 origin 且工作樹乾淨"
+    },
+    {
+      "ts": "2026-08-21T15:19:56.703Z",
+      "chatId": 509424983,
+      "score": 82,
+      "evidence": "人格注入以 system prompt 原文為 A 級證據；outputStyle 三層 settings 與 output-styles 目錄實查為空（誠實邊界：managed 層讀不到）；兩邊 repo 的 git 狀態與目標 commit 皆逐一驗證，非推測。未跑 tsc/smoke，因本輪無碼改動。"
+    },
+    {
+      "ts": "2026-08-21T16:05:14.724Z",
+      "chatId": 509424983,
+      "score": 88,
+      "evidence": "四臂含有效的陽性與陰性對照、單次跑完全綠、跑完數行程無孤兒、發現並修掉兩個自製假象（非同步等待、delta/completed 重複計）；保留：每臂 n=1（對「命中＝通道可行」這個方向足夠，但若日後出現未命中不可用單次下結論），且 .mjs 無型別檢查可過"
+    },
+    {
+      "ts": "2026-08-21T16:23:24.882Z",
+      "chatId": 509424983,
+      "score": 89,
+      "evidence": "tsc exit 0 + smoke 171/171 全綠；§8.1 每條主張都錨在本輪自跑的四臂結果或 dist/schema 實查（非轉述），且逐字保留被否證的原句而非悄悄改掉；保留：文件內容的正確性沒有機械驗證，且刻意沒實作也沒補 env 隔離斷言，所以這輪不構成「Codex 人格可交付」"
     }
   ]
 }

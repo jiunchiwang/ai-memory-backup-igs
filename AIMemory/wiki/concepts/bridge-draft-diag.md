@@ -76,6 +76,8 @@ sources: [f_487476, f_585d7f, f_867564, f_20c975, f_7c00f6, f_bb1fcf, f_a9f3cf, 
 1. `TOKEN_OPENERS` 缺 `<<CONTINUE:`（hide 的 regex 有 `<<(?:RESTART|CONTINUE)(?::|>?$)`）
 2. cut 用 `lastIndexOf("<<")` 定錨而 hide 用 regex 全文掃描，payload 內含多個 `<<` 時定錨落錯位置
 
+**可推廣的教訓（2026-08-01，原記在 [[bridge-acp]]，2026-08-21 移來這裡當主場）**：兩份清單分別用**字串陣列**與**regex** 表達同一個集合時，「衍生自同一個 `NAMES` 常數」並不足以保證等價——裸型 token（`RESTART`／`CONTINUE`）是在 regex 那一邊**手寫**的，衍生機制蓋不到它。∴ 判「兩處是否等價」要看**實際枚舉出來的成員**，不是看它們是否共用上游常數。
+
 ### 單一權威架構（commit 32f8d0e）
 
 `transform()` 入口對 raw 輸入呼叫一次 `cutPendingTokenTail`，並移除尾端縮回式的 `hideTrailingUnterminatedToken`；draft / edit / final / proxy 四條路對同一段 buffer 產出完全相同的文字。

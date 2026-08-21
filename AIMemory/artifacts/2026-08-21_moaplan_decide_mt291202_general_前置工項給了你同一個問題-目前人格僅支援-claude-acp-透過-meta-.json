@@ -1,0 +1,33 @@
+{
+  "id": "moaplan_decide_mt291202",
+  "specialist": "general",
+  "task": "前置工項給了你同一個問題（目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dream 與 close-time fact extraction 都可能將人格語氣寫入長期記憶，因此 Stage 1 加入 persona override、維運 session、archive/working-state 跳過、maintenanceSession、退出路徑守衛、並發封鎖與維運視窗禁止委派/代理。使用者質疑為何做很久、是否有更簡單方案。）的三份獨立方案，以及一份對全部三案的對抗挑戰。\n\n請收斂成一份設計決策：\n1. **選一個主方案**，說明為什麼——理由要對得上約束（請讀 repo 一手實作：src/sessionManager.ts、src/commands/dream.ts、src/acpClient.ts、src/session-extract.ts、scripts/check-persona.mjs。比較：(A) 現有完整 session carve-out；(B) 資料層人格清洗或獨立 extraction client；(C) 人格限制為呈現層/互動回覆。核心不可接受後果：人格語氣或維運內容錯誤寫入 facts，維運消費或覆蓋使用者 archive/working-state。不可把註解、SPEC 或測試名稱當證據。產出繁中、結論先行，標示一手程式碼證據與推論邊界，指出架構必然/驗證累積/範圍漂移，給最小可交付範圍與推薦；只分析不改檔。），不是「比較完整」這種空話。\n2. **嫁接**：落選方案裡有哪些具體想法值得併進主方案，逐條說明。\n3. **回應挑戰**：對抗階段指出的致命缺陷與共有盲點，逐條說明主方案怎麼處理，或者誠實承認沒處理、代價是什麼。\n4. **標註未決**：仍需人決定或需要查證才能定案的點，明確列出來，不要自己替使用者決定。\n\n回報格式：主方案一段、嫁接一段、挑戰回應逐條、未決事項列表。結尾附一行「本次設計未覆蓋到的」。回應挑戰時每一條都要**逐字引用**你正在回答的那個挑戰，嫁接時逐字引用你要併進來的那個想法——沒有逐字引用就無法確認你真的讀過前一階，那條視為未處理。",
+  "created": "2026-08-21T01:09:00.053Z",
+  "status": "done",
+  "summary": "收斂三份人格系統方案：選方案 A（session carve-out），因為方案 C 的 per-request ACP inject 不存在、方案 B 的唯一入口假設被 remember() 路徑推翻。嫁接方案 B 的 sink 守衛思路（已部分採用）與方案 C 的長期方向。",
+  "outputs": [
+    {
+      "type": "analysis",
+      "content": "方案 C 致命缺陷：ACP 協定不支援 per-request system inject（acpClient.ts:175-176 實證）"
+    },
+    {
+      "type": "analysis",
+      "content": "方案 B 致命缺陷：dream 步驟本身會呼叫 remember()（dream.ts:53/:56/:739），清洗點只攔得到 extractFromSession 那條路徑"
+    },
+    {
+      "type": "recommendation",
+      "content": "維持現有 session carve-out 架構，它是唯一能處理「dream body 執行中 LLM 決策污染」這個三案共有盲點的方案"
+    },
+    {
+      "type": "finding",
+      "content": "四項未決：maintenanceWindow 必要性、waitForTurnIdle 上限、priorArchive 修正 commit 狀態、非 claude adapter 人格支援"
+    }
+  ],
+  "files_modified": [],
+  "tags": [
+    "persona",
+    "dream",
+    "architecture",
+    "decision"
+  ]
+}

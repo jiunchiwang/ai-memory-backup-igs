@@ -51,7 +51,21 @@ bridge repo 的 remote：`origin=jiunchiwang/telegram-kiro-bridge`、`upstream=r
 
 完成 merge/sync 後、push 到 origin 前，會先派一個**獨立 context 的異源覆核者**檢查合併安全性，確認無誤才 push——避免有問題的合併直接推上遠端。閘門本身不放寬。
 
-⚠️ **2026-08-13 換覆核者**：預設從 Claude Fable 5 改為 `kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read`。理由是 Fable 5 是 `anthropic`、與產出者**同源**（只算弱異源）且 3.3x 單價，而 glm-5 是 0.50x 的跨 vendor 強異源——同時更便宜且更強。Fable 5 保留為「跨 vendor 那輪產出明顯偏弱時才補的第二輪」。成本量測與選型判準見 [[adversarial-review]]。
+⚠️ **2026-08-13 換覆核者**：預設從 Claude Fable 5 改為 `kiro-cli chat --no-interactive --model glm-5 --trust-tools=fs_read`。理由是 Fable 5 是 `anthropic`、與產出者**同源**（只算弱異源）且 3.3x 單價，而 glm-5 是 0.50x 的跨 vendor 強異源——同時更便宜且更強。Fable 5 保留為「跨 vendor 那輪產出明顯偏弱時才補的第二輪」。成本量測與選型判準見 [[adversarial-review-dispatch]]。
+
+這個閘門已在至少 4 個 commit 中實際採用（如 `04cc0bc` 訊息明確標註「Fable5 push 前覆核」），是跨多次 merge 反覆使用的專案慣例、非單次紀錄。
+
+## /sync 指令的結果判定：exit code 為主（2026-08-16 決策，2026-08-21 從 [[bridge-project]] 移來）
+
+`10`→衝突、`11`→型別檢查失敗、`3`→preflight 失敗、`0`→成功。文字輸出只用來補充細節，**不用來判定結果種類**——理由是文字會隨工具版本與語系漂移，exit code 才是穩定契約。
+
+## 分享 repo 給同事：獨立 repo 而非 GitHub Fork 鈕（2026-08-14，2026-08-21 從 [[bridge-project]] 移來）
+
+同事接手時選了「同事自建 private repo 當 origin ＋ 使用者的 repo 當 upstream」而非按 GitHub 的 Fork 鈕。理由：使用者的 repo（`jiunchiwang/telegram-kiro-bridge`）與 upstream（`redkilin/telegram-kiro-bridge`）**皆為 private**（未認證打 GitHub API 兩者皆回 404；403=rate limit、301=改名 ∴ 推論成立），而 private repo 的 fork **綁在母 repo 的存取權限上**——撤存取即失效、也無法獨立轉 public；獨立 repo 沒這問題。
+
+⚠️ GitHub 個人帳號**沒有「唯讀 collaborator」角色**（細粒度角色只有 organization 才有）∴ 把人加成 collaborator 等於給 `main` 寫入權。下游設定流程因此把**廢掉 upstream 的 push URL**（`git remote set-url --push upstream no-push`）當成**必要步驟**而非建議。
+
+設定流程檔在 `scratch/SETUP-downstream-fork.md`（裁決不 commit 進版控、只轉給同事；刻意搬到 `scratch/` 是結構性避免被 `git add -A` 誤掃）。
 
 ## 相關
 

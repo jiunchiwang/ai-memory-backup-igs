@@ -4,6 +4,7 @@
 - [f_4f4b55] [2026-06-22T07:43:19.491Z] 使用者有一個 excel-to-ai-document 專案位於 G:\AI\excel-to-ai-document，含 skill/excel-to-ai-doc 資料夾（SKILL.md + scripts/convert.py），用於將 Excel 規格書轉為 AI 可讀的 Markdown + 圖片結構
 - [f_947e7a] [2026-06-24T20:31:30.593Z] 驗證 TypeScript 介面重構或整併時，用 npx tsc --noEmit 做型別檢查；若遇到 TS6.0 的 deprecation 警告，可加 --ignoreDeprecations 6.0 抑制以聚焦真正錯誤。
 - [f_a8a12e] [2026-07-06T05:19:36.045Z] 在 bash shell 呼叫 PowerShell 時引號（單引號/$_）會被 bash 層吃掉導致 ParserError，可靠做法是把指令轉 UTF-16LE 再 base64，用 powershell -EncodedCommand 執行
+- [f_10fbe3] [2026-07-13T03:23:05.711Z] 使用者的公司網路環境封鎖 QUIC 協定導致 cloudflared quick tunnel 無法取得 URL（卡在 Requesting new quick Tunnel 超過 35 秒無回應）；ngrok（走 TLS 443）是驗證過的可行替代但最終選擇不用 tunnel
 - [f_af2a3f] [2026-07-16T09:36:02.404Z] 使用者這台機器的 gh CLI 尚未執行 gh auth login／未設 GH_TOKEN，研究 GitHub repo 時 gh repo view 等指令會直接失敗，需改用 WebFetch 抓取
 - [f_ab7e0a] [2026-07-30T20:31:49.767Z] skill bundle 大幅更新的標準流程：先把未提交檔 commit 建立 restore point → 依差異分三類處理（整包替換／回填缺漏／選擇性合併）→ 被取代的舊 skill 轉成 deprecation pointer 並移除其觸發關鍵字避免撞名搶觸發 → 獨立審查通過才 push。
 - [f_129738] [2026-08-02T13:31:37.803Z] 在 Edit 工具做整行刪除或改解構名時，若目標字串在同檔重複出現（如 relay.ts 的 const { runPrompt, sessions } = deps() 全檔 9 個相同字串），必須用上下文定位而非 replace_all，否則會誤改其他 8 處——tsc 只標出未使用的那一處，行號才是唯一可靠依據

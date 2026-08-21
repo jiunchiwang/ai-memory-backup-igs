@@ -2,7 +2,7 @@
 title: Clash of Olympus（諸神之戰）
 type: concept
 created: 2026-07-16
-updated: 2026-08-20（補：GAP-04 語意確定 2X、placeholder 字型、設計文件紀律、staged show 重構）
+updated: 2026-08-21
 sources: [f_4c48e6, f_f79167, f_b20c5e, f_593c2e, f_c7ce92, f_385d4d, f_90d6e8, f_5927a3, f_6587d2, f_ab095f, f_baad41, f_2675c6, f_cf423c, f_e0a15e, f_9b909e, f_05937b, f_f8bf81, f_4b8603, f_a732fb, f_166468, f_676da8, f_fe2aba, f_8481cf]
 history_sources: []
 ---
@@ -70,35 +70,11 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 | 🟡 適配 | 聚寶盆 | 3+1 階狀態機，pattern-library 有驗證變體 |
 | — | 其他 | FG、JP 五階、BuyBonus、MAX WIN、預中、聽牌 |
 
-## 規格缺口 → 專案內的 `docs/spec-gaps.md`（2026-08-13 起唯一真相源）
+## 規格裁決與缺口登記 → 已拆出獨立頁
 
-**本頁不再保留缺口清單副本。** 收斂前同一批缺口存在五份（`docs/dev-spec.md` 11 項、
-`scratch/codegen-report.md` 11 項、`SPEC.md` 10 項、`AI.md` 概述、本頁 9 項），數量已對不起來。
-現行登記表為 GAP-01 ~ GAP-10，含逐項阻塞判定、暫代值、碼內錨點與「填上後要改哪裡」。
+規格缺口登記（GAP-01~10 的唯一真相源是專案內 `docs/spec-gaps.md`，不在版控）、GAP-04 語意定案、VS Feature 規則定案（符號 id／尺寸與轉型／兩層閘門／VS Collect 相加不連乘）、VS 轉型權威來源裁決、規格圖是 A 級證據、設計文件單一真相源紀律——全部移到 **[[uk-slot-clash-olympus-spec]]**（2026-08-21 拆出，本頁原 210 行超過 wiki 200 行上限）。
 
-⚠️ 該登記表**不在 git 版控內**（`.gitignore` 擋 `docs/`，比照 uk_917 慣例）∴ 碼內的
-`GAP-xx` 註解寫成自我描述式，不依賴那份檔案。
-
-需要記住的判斷（其餘查登記表）：
-
-- **阻塞判定的原則**：UK slot 架構下 server 算賠付、client 只顯示 ∴ 阻塞 client 的**不是
-  「數字」而是「基數」**（品項數／種類數／階數——決定 UI 結構與美術資產張數）。
-  原本把整個 M1 標「阻塞下游」是錯的框架。
-- **真正阻塞的只有 2 項**：GAP-02（BuyBonus 品項數）、GAP-04（VS 語意 `2X`/`X2` ＋ 倍率種類數）。
-  M2 的 VS Feature / Collect / 聚寶盆 / MAX WIN 現在就能開工，等的只有美術字。
-- **VS 語意 `NX` 是暫定非定案**（規格 sheet 3 `S44` 仍是問句）。
-- **道具卡是「不實作」不是「待辦」**——三張流程表零規格，不猜測是否為 ExtraBet。
-- 對帳：`node docs/check-spec-gaps.mjs`（雙向；三道斷言皆經突變測試確認會紅）。
-
-## GAP-04 語意確定（2026-08-14 編導口頭答覆，關閉）
-
-三小項處置不同：
-1. **語意確定為 `2X`**（數字在前、X 在後），與 2026-08-13 暫定的 `NX` 格式一致 ∴ 是「確認」不是「改變」
-2. **「倍率種類數」問題被消滅**——編導答倍率不固定 ∴ 無法逐張出美術字，改用 BitmapFont 動態組字（字符集只需 `0-9` + `X` 共 11 字符）
-3. 倍率數值由 server `winningMultiplier` 給，client 不持有倍率表
-
-⚠️ 遺留假設（非編導答覆）：倍率均為正整數，日後若出現 `1.5X` 需追加「.」字符。
-⚠️ 這是**口頭**答覆，規格 xlsx 的 S44 仍是問句，日後 xlsx 若更新成別的寫法要回頭確認。
+分界線是**這句話由誰說了算**：規格層的裁決在那一頁，專案現況與進度在本頁。
 
 ## 借來的 placeholder 字型（2026-08-14）
 
@@ -108,28 +84,6 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 - `Multiplier_Num.fnt`：**刻意未接線**——其 `.fnt` 表頭 `charset="32,48-57,120"` = 空白+`0-9`+小寫 `x`，**沒有大寫 X (88)** ∴ 畫不出 `2X`
 
 ∴ 倍率現階段共用 `SymbolCashNUM`（它含 88 與 120 兩者）。可遷移判準：接線點陣字型前先讀 `.fnt` 表頭的 charset 確認涵蓋所需字符，缺字不會報錯只會靜默少一個字。
-
-## 設計文件的單一真相源紀律（2026-08-18）
-
-同一份 `docs/M2-FirePot-design.md` 同時展示兩面：
-1. **放指標不複製**：對「已在別處登記的東西」（如 GAP-14/15/16）只列編號，內容以 `spec-gaps.md` 為準，並逐字寫明「此處刻意不複製表格」
-2. **改寫不追加**：對「已被推翻的判斷」直接改寫原文，不保留兩份互相矛盾的敘事
-
-⚠️ 改寫不等於湮滅：被推翻的判斷在 §9 技術債登記表以**刪除線 + ✅已解 + 來源 + 指向**的形式保留可追溯性。∴ 判準：一份設計文件裡「看得到但不是權威」的內容就是漂移來源。
-
-## VS Feature 規則定案（2026-08-13，多輪與編導確認）
-
-**符號 id 更正**（規格 A 級原文，與 `Game_Define.ts:63-73` 一致）：`Cash=13`／`CashJp(JP)=14`／`Collect=15`／`Vs=16`／`VsCash=17`／`VsCollect=18`。⚠️ 與 `uk_slot_template` 模板的 id 撞車（模板 `13=Collect`／`14=Cash`），引用文件裡的 id 前務必先確認講的是哪一邊。
-
-**尺寸與轉型**：`Vs`(16) 是 1×1「未發動態」；停輪時該輪有 Cash/JP 轉 `VsCash`(17)、有 Collect 轉 `VsCollect`(18)，兩者皆 1×4 覆蓋整輪；覆蓋後該輪四格的盤面**資料**（非純視覺）都變成對應 Symbol id，順序是「原符號先飛走加總 → 才覆蓋」。
-
-**觸發是兩層閘門**（編導口頭補充，規格未寫）：Level 1 盤面級＝有 Collect 且（有 Cash 或 JP）才可能發動；Level 2 輪級＝該輪有 Cash/JP 轉 VsCash、有 Collect 轉 VsCollect、都沒有則不發動。因 Collect 只在第 1/6 輪、Cash/JP 只在第 2~5 輪，型別由輪次唯一決定（col 0/5 → 只可能 VsCollect，col 1~4 → 只可能 VsCash），上限 4 個 VsCash + 2 個 VsCollect。
-
-**VS Collect 分數處置（編導 2026-08-13 改規格，推翻規格原文）**：倍率**不打到盤面上的 Cash/JP**，只在收集時才乘倍（每個 Collect 用自己的倍率乘它收到的分數）∴ 多個 VS Collect 是**相加**不是連乘（例：col0 ×10、col5 ×5、盤面總分 T=1000 → 10000+5000=15000），沒有 VS 的普通 Collect 收到未乘倍的 T。VS Cash 側不變（仍改寫分數、只乘自己那輪的加總，多個 VS Cash 互不影響）。
-
-## VS 轉型權威來源（2026-08-13 裁決）
-
-`server 給定 + client 推導對帳`：轉型結果以 server 下發為準，client 仍自行推導一份用來對帳而非自行判定 ∴ client 端任何「自己算出轉型結果就直接採用」的寫法都是違反 server 權威（M2.2 覆核據此開出過一條 High finding）。補上「尺寸與轉型」一節（轉型時機與 1×4 覆蓋順序）未涵蓋的「誰說了算」那一面。
 
 ## M2 實作進度
 
@@ -149,16 +103,6 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
   跨 vendor 覆核 7 條中採納 3 個新 warning（含把「proto 可能改用打包座標編碼」做成越界偵測）。
 - **尚未開始**：對決 Spine 本體與 1×4 美術（資產未交付）、聚寶盆、Jackpot 五階、BuyBonus、
   MAX WIN、預中／聽牌、完整 Unshow/replay UI。
-
-## 規格圖是 A 級證據，別只讀文字（2026-08-18）
-
-`[B25]` 的文字「收集的順序如下：1~4、5~8、9~12、13~16」有兩種讀法（逐欄 vs 逐列），
-而**下一格 `[B26]` 就是一張圖**（`docs/spec/images/3__玩法和表演流程_B26_image29.png`），
-直接畫出 1-4 在第一個中間欄由上而下、5-8 第二欄、9-12 第三欄、13-16 第四欄 ∴ 逐欄讀法確認。
-∴ 規格轉出的 markdown 裡看到 `image` 條目時要真的去看圖，它常常就是文字歧義的裁決者。
-
-同一張圖也**削弱**了另一個推論：它只畫一組編號、兩側都標 COLLECT ∴「右側 Collect 鏡像」
-沒有規格支撐，那是推論（GAP-13）。
 
 ## 框架狀態機的兩個事實（2026-08-18 執行期查證，A 級）
 
@@ -203,6 +147,7 @@ Cash/CollectVS 等皆為 feature symbol 不是 scatter）。
 
 ## 相關
 
+- [[uk-slot-clash-olympus-spec]] — 本頁拆出：規格裁決與缺口登記（含專案已改名 `uk_963_divine_duel_client` 的說明）
 - [[uk-slot]] — UK 老虎機專案群
 - [[uk-slot-template]] — 模板專案
 - [[uk-slot-codegen]] — 本作 M0a 使用的 codegen 工具

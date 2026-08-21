@@ -82,6 +82,12 @@ history_sources: [f_32a736, f_5a2532, f_493b31]
 
 ≥2 specialist 結果時自動注入交叉驗證指引，借鏡 Claude Code Dynamic Workflows 的 adversarial review 概念。設計決策：只借鏡 cross-check pattern，不搬動態 delegation plan 和 script 持久化（架構定位不同、規模不需要）。
 
+### vc-kiro-delegate 三段 Review（2026-08-21 從 [[bridge-acp]] 移來當主場）
+
+委派 Kiro 實作後的品質鏈：① Kiro self-review ② 獨立新 session 冷讀 git diff ③ 主 agent heavy review。
+
+**2026-07-14 教訓**：`kiro-cli` 的 prompt 走命令列參數有長度上限（37KB 會炸 `Argument list too long`），長 spec 應寫成檔案讓 Kiro 自己讀路徑（同一條也記在 [[bridge-self-eval]]）。
+
 ## Specialist Dashboard（2026-07-10）
 
 Status server（port 3847）擴充為 specialist 監控面板：

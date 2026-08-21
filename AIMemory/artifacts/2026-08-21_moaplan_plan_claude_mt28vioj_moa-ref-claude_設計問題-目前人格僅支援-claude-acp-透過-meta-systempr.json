@@ -1,0 +1,21 @@
+{
+  "id": "moaplan_plan_claude_mt28vioj",
+  "specialist": "moa-ref-claude",
+  "task": "設計問題：目前人格僅支援 Claude ACP，透過 _meta.systemPrompt.append 注入。/dream 與 close-time fact extraction 都可能將人格語氣寫入長期記憶，因此 Stage 1 加入 persona override、維運 session、archive/working-state 跳過、maintenanceSession、退出路徑守衛、並發封鎖與維運視窗禁止委派/代理。使用者質疑為何做很久、是否有更簡單方案。\n約束：請讀 repo 一手實作：src/sessionManager.ts、src/commands/dream.ts、src/acpClient.ts、src/session-extract.ts、scripts/check-persona.mjs。比較：(A) 現有完整 session carve-out；(B) 資料層人格清洗或獨立 extraction client；(C) 人格限制為呈現層/互動回覆。核心不可接受後果：人格語氣或維運內容錯誤寫入 facts，維運消費或覆蓋使用者 archive/working-state。不可把註解、SPEC 或測試名稱當證據。產出繁中、結論先行，標示一手程式碼證據與推論邊界，指出架構必然/驗證累積/範圍漂移，給最小可交付範圍與推薦；只分析不改檔。\n\n請提出**一個**你認為最好的方案。你是三個獨立提案者之一，彼此看不到對方的方案——所以不要試圖折衷或預留空間，就提出你真正認為對的那個。\n\n必須包含：\n1. 一句話的核心取捨（你選擇犧牲什麼換什麼）。\n2. 主要組件與資料流。\n3. **你假設了什麼**——特別是你沒有查證、但方案成立所依賴的前提。\n4. 這個方案什麼情況下會是錯的選擇（誠實寫，不要寫「幾乎沒有」）。\n\n回報格式：控制在可讀範圍，重點在取捨與假設，不要寫成完整實作細節。",
+  "created": "2026-08-21T01:04:46.512Z",
+  "status": "done",
+  "summary": "## 方案：呈現層隔離（Option C）\n\n**核心取捨**：犧牲「人格能改寫 agent 底層行為」，換取「人格永遠不進長期記憶」的結構保證。\n\n---\n\n### 核心立論\n\n人格污染記憶的根本原因是：人格注入在 session 層，而 fact extraction 也在 session 層，兩者共用同一個 client。只要這個結構不變，隔離機制（carve-out、skip flag、maintenanceSession）都是在用補丁追補丁。\n\n最簡單的解法是：**人格只活在回覆生成的那一瞬間，不存在於 session 生命週期裡。**\n\n---\n\n### 主要組件與資料流\n\n1. **人格移出 session 層**：`_meta.systemPrompt.append` 改為每次呼叫 ACP 時作為 per-request 參數帶入，不寫進 session config，session 本身永遠是 persona-free。\n\n2. **Fact extraction 不受影響**：extraction 用的是同一個 session client，但 session 裡沒",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "## 方案：呈現層隔離（Option C）\n\n**核心取捨**：犧牲「人格能改寫 agent 底層行為」，換取「人格永遠不進長期記憶」的結構保證。\n\n---\n\n### 核心立論\n\n人格污染記憶的根本原因是：人格注入在 session 層，而 fact extraction 也在 session 層，兩者共用同一個 client。只要這個結構不變，隔離機制（carve-out、skip flag、maintenanceSession）都是在用補丁追補丁。\n\n最簡單的解法是：**人格只活在回覆生成的那一瞬間，不存在於 session 生命週期裡。**\n\n---\n\n### 主要組件與資料流\n\n1. **人格移出 session 層**：`_meta.systemPrompt.append` 改為每次呼叫 ACP 時作為 per-request 參數帶入，不寫進 session config，session 本身永遠是 persona-free。\n\n2. **Fact extraction 不受影響**：extraction 用的是同一個 session client，但 session 裡沒有人格，所以不需要 skip flag、不需要 maintenanceSession、不需要 carve-out。\n\n3. **/dream 路徑**：只在最終 reply 組裝時注入人格文字（作為 system message prefix 或 user-side wrapper），不觸碰 session 狀態。\n\n4. **Archive/working-state**：正常運作，不需要跳過邏輯，因為 session 從未被人格污染。\n\n---\n\n### 我假設了什麼\n\n- ACP 協定支援 per-request 的 system message 注入（不只是 session 初始化時）。這是最關鍵的未查證前提。若 ACP 只在 session/new 時接受 system prompt，此方案在協定層就不可行。\n- 人格效果只需要影響「回覆語氣」，不需要讓 agent 在整個對話流程中持續記得自己是誰（亦即跨多輪的人格一致性不是硬需求，或可接受靠每次 re-inject 達成）。\n- `/dream` 的主要價值是「這次回覆用不同語氣」，不是「這個 session 從此活在另一個人格裡」。\n\n---\n\n### 什麼情況下這是錯的選擇\n\n- ACP 協定不支援 per-request system inject，只能在 session init 時設定 → 方案在架構層就死掉，必須回到 session 層操作。\n- 使用者需要的是跨多輪持續的人格（例如「整個 /dream 對話過程中都保持角色」），per-request inject 每輪都要帶入，且若中間有 extraction 觸發，仍有窗口問題。\n- 現有 Stage 1 已有大量測試（BC-13～BC-33）綁定 session 層行為 → 遷移成本可能比從零建新機制更高，特別是那些 carve-out 的邊界測試。\n- 若未來人格需要影響 agent 的工具選擇或決策（不只是語氣），呈現層注入的能力會不夠。完成。提出的方案是「呈現層隔離」（Option C）：將人格注入移至 per-request 呈現層，讓 session 本身永遠 persona-free，從根本消除污染長期記憶的結構性風險，代價是放棄跨 session 持續人格能力，且依賴 ACP 支援 per-request system inject 這個未查證的前提。",
+  "structured": {
+    "core_tradeoff": "犧牲跨 session 持續人格能力，換取人格永遠不進長期記憶的結構保證——把人格移到 per-request 呈現層，session 本身永遠 persona-free，carve-out/skip/maintenanceSession 全部不需要。",
+    "assumptions": [
+      "ACP 協定支援 per-request system message 注入（不只是 session/new 初始化時）——這是最關鍵的未查證前提，若不支援則方案在協定層不可行",
+      "人格效果只需影響回覆語氣，不需要 agent 在整個對話流程中持續記得自己是誰（跨多輪人格一致性非硬需求，或可接受每次 re-inject）",
+      "/dream 的主要價值是「這次回覆用不同語氣」而非「這個 session 從此活在另一個人格裡」"
+    ],
+    "wrong_when": "ACP 協定不支援 per-request system inject 時方案直接死掉；或使用者需要跨多輪持續人格（每輪都要帶入且仍有 extraction 窗口問題）；或現有 Stage 1 大量 session 層測試遷移成本超過收益；或未來人格需要影響 agent 工具選擇而非只有語氣。"
+  }
+}

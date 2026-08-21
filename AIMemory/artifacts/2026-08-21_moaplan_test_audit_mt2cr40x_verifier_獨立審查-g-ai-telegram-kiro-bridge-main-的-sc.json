@@ -1,0 +1,59 @@
+{
+  "id": "moaplan_test_audit_mt2cr40x",
+  "specialist": "verifier",
+  "task": "獨立審查 G:\\AI\\telegram-kiro-bridge-main 的 scripts/check-persona.mjs 與 mutate-gate persona-stage1。把測試名稱與註解都當不可信，確認斷言是否實際可達 production wiring、是否有恆真/只做結構搜尋/缺負對照/突變未執行的假綠；同時對照 src 實作找漏測。不要修改檔案。回報 High/Medium finding 與最小補強。",
+  "created": "2026-08-21T03:11:43.863Z",
+  "status": "done",
+  "summary": "## 覆核結論\n\n獨立審查了 `scripts/check-persona.mjs` 與 `scripts/mutate-gate.mjs` 的 persona-stage1 集合，並對照 `src/sessionManager.ts`、`src/commands/dream.ts`、`src/run-prompt.ts`、`src/session-extract.ts`、`src/token-policy.ts` 的實際接線（未修改任何檔案）。\n\n**整體判斷**：ephemeral-dream 隔離機制（session 不進 registry、close 路徑整條跳過、token-policy 清空 delegate 類 token）本身接線正確，BC-DE-17/18 宣稱移除的舊 `maintenanceSession` 機制在整個 `src/` 已無殘留。但發現兩個**結構性測試盲區**：\n\n- **High**：`sessionManager.ts:913` 的 `resumeSessionId` 計算，其 `!opts?.ephemeralDream` 守衛完全沒有結構檢",
+  "outputs": [],
+  "files_modified": [],
+  "tags": [],
+  "fullOutput": "## 覆核結論\n\n獨立審查了 `scripts/check-persona.mjs` 與 `scripts/mutate-gate.mjs` 的 persona-stage1 集合，並對照 `src/sessionManager.ts`、`src/commands/dream.ts`、`src/run-prompt.ts`、`src/session-extract.ts`、`src/token-policy.ts` 的實際接線（未修改任何檔案）。\n\n**整體判斷**：ephemeral-dream 隔離機制（session 不進 registry、close 路徑整條跳過、token-policy 清空 delegate 類 token）本身接線正確，BC-DE-17/18 宣稱移除的舊 `maintenanceSession` 機制在整個 `src/` 已無殘留。但發現兩個**結構性測試盲區**：\n\n- **High**：`sessionManager.ts:913` 的 `resumeSessionId` 計算，其 `!opts?.ephemeralDream` 守衛完全沒有結構檢查也沒有 mutation 覆蓋，且唯一的行為測試刻意把 `config.acpSessionResume` 設為 `false`（check-persona.mjs:127），導致這個守衛就算被拔掉也不會讓任何現有測試變紅。一旦部署啟用 session resume，`/dream` 有可能直接 resume 進使用者本人帶人格的遠端 ACP session——這是整個 persona-stage1 隔離設計要防的最壞情況。\n- **Medium**：`sessionManager.ts:853` 的 archive 消費守衛同樣零覆蓋，且現有 fixture 沒建 archive 檔可供觀察差異；guard 失效會讓排程 `/dream` 靜默吃掉使用者的 session archive。\n- **Medium**：`check-token-policy.mjs` Test 5「delegate: all token fields zeroed」名不符實，只驗了 3/13 個欄位，`specialistProxy` 等關鍵欄位完全沒被斷言（底層 `FIELD_ZERO` 通用迴圈機制降低了實際風險，但測試名稱過度承諾）。\n- **Low**：BC-DE-17/18 是負向存在性檢查，結構上無法用 mutation 驗證，只防得住「舊識別字原名復活」，防不住「同邏輯換個變數名重新長出來」——僅供留意，非缺陷。\n\n覆核期間發現 repo 有另一個 session 正在同時編輯這批檔案（`src/acpClient.ts` 中途從 diff 消失），且兩次 smoke 重跑分別紅在不同斷言，判定為編輯中的暫態雜訊，未列為 finding；已在 caveats 註明建議等對方收斂後重跑確認。",
+  "structured": {
+    "summary": "check-persona.mjs 與 mutate-gate.mjs 的 persona-stage1 覆核：核心 ephemeral-dream 機制（session 不進 registry、close 路徑整條跳過、token-policy 清空 delegate 類 token）經獨立追蹤 production 呼叫鏈證實真的接上，BC-DE-17/18 宣稱的舊機制（maintenanceSession 等）在整個 src/ 已無殘留。但發現兩條 sessionManager.ts 裡與現有 9 條 BC-DE 錨點同構、卻完全沒有結構檢查也沒有 mutation 覆蓋的 ephemeralDream guard（resumeSessionId 與 archive 消費），且既有行為測試因為刻意關閉 acpSessionResume、未建立 archive fixture，即使這兩道 guard 被拿掉也不會變紅。另外 check-token-policy.mjs 的『delegate: all token fields zeroed』測試名稱與斷言範圍不符。覆核期間 repo 明顯有另一個 session 正在同時編輯同一批檔案（src/acpClient.ts 中途從 diff 中消失），兩次 smoke 重跑分別紅在 BC-10 與 BC-DE-16 兩個不同斷言，判定為編輯中的暫態雜訊而非確認缺陷，未列為 finding。",
+    "verdict": "needs-attention",
+    "findings": [
+      {
+        "severity": "High",
+        "file": "src/sessionManager.ts",
+        "line": 913,
+        "title": "resumeSessionId 的 ephemeralDream 守衛無任何測試/mutation 覆蓋，且既有行為測試結構性地測不到它",
+        "detail": "第913行 `const resumeSessionId = !opts?.ephemeralDream && activeType === \"acp\" ? await resolveResumeCandidate(chatId, backend, agentCommand) : undefined;` 若拿掉 `!opts?.ephemeralDream &&`，dream executor 會用使用者本人的 chatId 去查 resumable 記錄——這正是使用者互動 session 用同一個 chatId 存的那筆——一旦命中就會對 dream executor 做 session/load，把它接進使用者帶人格的『真實』遠端 ACP session，等同整個 persona-stage1 隔離設計要防的最壞情境（不只是抽 fact 用錯 client，是整個 session 身分被接管）。\n\n查證結果：① check-persona.mjs 的 structuralChecks（BC-DE-10~18）沒有任何一條 regex 涵蓋這一行；② mutate-gate.mjs 的 persona-stage1 mutation 集（DE1~DE16）沒有任何一條打這一行；③ 唯一會實際 spawn SessionManager 跑 create()+createDreamSession() 的行為測試（check-persona.mjs:99-212）在文件127行明文 `config.acpSessionResume = false;`——`resolveResumeCandidate` 本身第一行就是 `if (!config.acpSessionResume) return undefined;`，所以無論這行 guard 存不存在，測試環境下這個函式都直接短路回 undefined，兩種狀態的可觀測行為完全相同。也就是說，即使刻意把這行 guard 刪掉重跑現有整套測試（check-persona 行為測試 + 全部 DE mutation），仍然全綠——這是一個結構上測不到、但後果最嚴重的 ephemeralDream 遺漏點。",
+        "reproduction": "1) 在 sessionManager.ts:913 把 `!opts?.ephemeralDream && activeType === \"acp\"` 改成單純 `activeType === \"acp\"`；2) 跑 `SMOKE_ONLY=check-persona npm run smoke`，預期全綠（因為 config.acpSessionResume=false 短路掉了差異）；3) 對照組：把 mutate-gate.mjs 的 persona-stage1 全部 DE1~DE16 逐一跑一遍，同樣不會有任何一條變紅——這條缺陷形狀對現有防護網完全隱形。",
+        "minimal_fix": "① 在 mutate-gate.mjs 的 persona-stage1 加一條新 mutation（如 DE17）直接打這一行的 `!opts?.ephemeralDream &&`；② 把 check-persona.mjs 的 Dream Executor 行為測試（99-212 那個區塊）改成 `config.acpSessionResume = true` 並在建立 interactive session 之後、建立 dream 之前，用 `saveResumable(chatId, {...})` 預先寫一筆 resumable 記錄，然後斷言 `dream.sessionId !== interactive.sessionId`（或更直接：dream 走的是 session/new 不是 session/load，可比照 BC-DE-7 從 fake-acp-agent 的 record 檔檢查 dream 那筆 record 的方法名稱不是 session/load）。"
+      },
+      {
+        "severity": "Medium",
+        "file": "src/sessionManager.ts",
+        "line": 853,
+        "title": "archive（session-archive）注入的 ephemeralDream 守衛同樣無結構檢查、無 mutation、且現有 fixture 建構不出能觀察到差異的情境",
+        "detail": "第853行 `if (!opts?.ephemeralDream) { ... loadArchive(chatId) ... deleteArchive(chatId) ... }`——若這個守衛被拿掉，dream executor 建立時會把使用者上一次互動 session 留下的 archive（含 turn 統計、goal 狀態、close 摘要）讀出並**刪除**（`deleteArchive` 是消費式的），等於下一次真正互動 session 建立時已經沒有 archive 可用，使用者的工作脈絡在完全沒有互動的情況下（/dream 的典型用法就是排程夜間執行、期間沒有真人在聊天）被 dream 靜默吃掉。這跟 working-state 的問題（BC-DE-5/BC-DE-8 已有正、負對照）是同一種風險形狀，但 archive 這條路徑完全沒有對應測試。\n\n查證結果：BC-DE-10~18 沒有任何一條涵蓋此行；DE1~DE16 mutation 沒有任何一條打此行；行為測試（check-persona.mjs 99-212）從頭到尾沒有呼叫過 `session-archive.js` 的任何 export，也沒有替 chatId=910098 建立過 archive 檔——所以就算這個守衛被整段刪掉，`loadArchive(chatId)` 對測試用的 chatId 一律回傳 null，測試結果不會有任何變化。",
+        "reproduction": "把 953(853) 行的 `if (!opts?.ephemeralDream) {` 改成 `if (true) {`，重跑 check-persona 全部通過（因為根本沒有 archive fixture 可供這段程式碼動到）。",
+        "minimal_fix": "比照 BC-DE-5/BC-DE-8 的 working-state 正負對照寫法：在 Dream Executor 測試區塊裡，透過 `saveArchive`（或直接寫 `${MEMORY_DIR}/session-archive-${chatId}.json` 之類的檔案，視 session-archive.ts 實際命名）先幫 chatId 寫一份假 archive，斷言 `createDreamSession` 之後該檔仍存在且內容不變（dream 不消費），並補一條負對照：一般 `sm.create()` 會消費並刪除它（若既有 archive 測試已在別支 smoke 檔涵蓋一般消費行為，這裡只需補 dream 不消費那一半）。"
+      },
+      {
+        "severity": "Medium",
+        "file": "scripts/check-token-policy.mjs",
+        "line": 203,
+        "title": "Test 5『delegate: all token fields zeroed』的斷言範圍遠小於測試名稱宣稱的範圍",
+        "detail": "Test 5 的輸入只放了 `<<SEND_FILE:...>>`、`<<ASK:...>>`、`<<STICKER:...>>` 三種 token，斷言也只檢查 `filtered.sendFiles/askTokens/stickerEmotions` 三個欄位歸零；但 token-policy.ts 的 `FIELD_ZERO` 表實際列了 13 個欄位（含 `specialistProxy`、`moaPlan`、`selfEval`、`skillPropose`、`wikiQuery`、`scheduleTokens`、`skillUsages`、`goalDone`、`restartToken`、`continueToken`），delegate policy 是把全部欄位清空（`delegate: new Set([])`）。測試名稱寫『all token fields zeroed』但實際只驗了 3/13，其餘 10 個欄位（尤其 `specialistProxy`——這正是 dream 執行期唯一還可能觸發 specialist 調用的 token 類別，run-prompt.ts:2623 靠 `ab7.specialistProxy` 短路）完全沒有輸入樣本、沒有斷言。\n\n對照：我已讀過 `filterTransformedByPolicy` 的實作（token-policy.ts:104-134），它是對 `FIELD_ZERO` 做通用迴圈，不是逐欄位手寫分支，所以這個測試名不符實的問題目前『恰好』被實作的一致性蓋住、不構成立即的生產風險；但這是典型的『測試名稱承諾比斷言範圍大』——名稱本身不可信任，之後如果有人把某個新 token kind 加進 `FIELD_ZERO` 卻少放進某個 policy 的允許清單判斷分支（例如未來把單一欄位改成特殊處理、不再走通用迴圈），Test 5 的名字會讓人誤以為已經涵蓋、實際上不會抓到。",
+        "reproduction": "在 token-policy.ts 手動把 `specialistProxy` 從 FIELD_ZERO 迴圈裡拿掉、改成不歸零的特例（模擬『某人加新分支忘記接上通用清空』），跑 `node scripts/check-token-policy.mjs`——全綠，因為 Test 5 從未把含 specialistProxy 的 reply 餵進 delegate policy。",
+        "minimal_fix": "Test 5 的輸入補上一個 `<<SPECIALIST_PROXY:...>>`（或直接建構帶 `specialistProxy` 欄位非空的 TransformedReply 物件，不必經過完整 parser），斷言 `filtered.specialistProxy === null`；同時把斷言訊息或測試名稱改成明確列出涵蓋了哪些欄位，不要用『all』這種會被誤讀成窮舉的字。"
+      },
+      {
+        "severity": "Low",
+        "file": "scripts/check-persona.mjs",
+        "line": 267,
+        "title": "BC-DE-17／BC-DE-18 是負向存在性檢查，persona-stage1 mutation 集完全沒有對應覆蓋（結構性上難以覆蓋，非疏漏）",
+        "detail": "BC-DE-17（`!/maintenance-window|isMaintenanceWindowActive/.test(specialistSource)`）與 BC-DE-18（`!/maintenanceSession|personaOverride|skipArchiveRestore|runWithPersonaCarveOut/.test(sessionSource + dreamSource)`）驗證的是『舊機制的特定識別字不再出現』，我已逐一 grep 整個 src/ 確認目前這些識別字唯一出現處就是 check-persona.mjs 自己（regex 字面值），沒有殘留死碼——這兩條檢查目前是真綠、非假綠。但註解 253 行宣稱『這些錨點會由 persona-stage1 mutation gate 反向證明會紅』對 BC-DE-17/18 不成立：DE1~DE16 沒有任何一條的 `expect` 指向這兩個 label，而且這種負向存在性檢查本質上很難用『注入一個缺陷、看它變紅』的 mutation 方式驗證（要驗證的是『不存在』，注入等於是把舊機制整段貼回來，不是本檔案 mutation 框架設計的單點字面替換能表達的）。這不是要求現在補 mutation，而是提醒：這兩條檢查只防得住『舊識別字用原名重新出現』，防不住『同樣的維運/人格 carve-out 邏輯換個變數名字重新長出來』。",
+        "reproduction": "無法用單一字面替換式 mutation 重現（本身即是這條 finding 的內容）；驗證方式是靜態閱讀，已完成。",
+        "minimal_fix": "不需要立即動作。若要加強，可在 code review checklist 或 AI.md 註記『新增任何跟 session 生命週期相關的 boolean flag/選項時，先檢查是不是在重造 ephemeralDream 已經解決的問題』，把防線從『機械 regex』移到『review 提醒』，因為機械層面能做的已經做到位。"
+      }
+    ],
+    "caveats": [
+      "覆核期間偵測到 repo 有另一個 session 正在同時編輯這批檔案：初始 git status 列出 src/acpClient.ts、scripts/check-acp-model-truth.mjs 為 modified，覆核中途重新查詢時這兩個檔案的 diff 已消失（回到與 HEAD 一致），確認不是我自己的操作造成。",
+      "在此期間跑了兩次 `SMOKE_ONLY=check-persona npm run smoke`：第一次紅在 BC-10（session/new｜load 遺失人格正文），第二次紅在 BC-DE-16（ephemeral 清除 relay 與派工 side effects），兩次失敗的斷言不同、且每次印出的 PASS 清單也不完整一致。靜態讀取 src/acpClient.ts、src/run-prompt.ts 對應邏輯當下都是正確的（buildSessionNewParams/LoadParams 均含 _meta spread；session.ephemeral 的 relay/delegate 清空區塊也在），研判是同時編輯造成的檔案/dist 暫態不一致（例如 tsc 尚未重新編譯、或某個檔案在讀取瞬間被覆寫），而不是可重現的產品缺陷，因此未列為正式 finding。建議在對方那個 session 收斂、分支進入靜止狀態後，重跑一次乾淨的 `npx tsc -p . && SMOKE_ONLY=check-persona npm run smoke` 以及完整 persona-stage1 mutation 集（`node scripts/mutate-gate.mjs persona-stage1`）做最終確認。",
+      "未修改任何檔案，純讀取＋執行既有 smoke/grep 驗證。"
+    ]
+  }
+}
